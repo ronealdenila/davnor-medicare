@@ -126,7 +126,7 @@ class _AuthenticationState extends State<Authentication> {
     );
   }
 }
-
+//ForgotPassword
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
@@ -186,6 +186,7 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 }
+//termsandCondition
 class Termsandcondition extends StatefulWidget {
   const Termsandcondition({ Key? key }) : super(key: key);
 
@@ -209,12 +210,62 @@ class _TermsandconditionState extends State<Termsandcondition> {
               child: Text ('Terms and Condition'),
             ),
             Text(
-            'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page.',
+            'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page. The following terminology applies to these Terms & Conditions, Privacy Policy and Disclaimer Notice and all Agreements: DavNor Medicare (“us”, “we”, or “our”) operates http://www.DavNorMedicare.com. This page informs you of our terms & condition regarding the collection, use and disclosure of Personal Information we receive from users of the application.',
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: kIsWeb ? 15 : 20),
           ),
 
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'Privacy Policy',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          Text(
+            'We use your Personal Information only for providing and improving the application. By using this application, you agree to the collection and use of information in accordance with this policy.'
+            ),
+
+           Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'Information Collection and Use',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+          Text(
+            'While using our application, we may ask you to provide us with certain personally identifiable information that can be used to contact or identified you. Personally identifiable information may include, but is not limited to your name ("Personal Information").'
+            ),
+                      
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'Termination',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+          Text(
+            'We may terminate or suspend access to our Service Immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.'
+            ),
+
           ],
-          )
+          ),
       ),
       ),
       );
