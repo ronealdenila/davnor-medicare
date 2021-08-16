@@ -54,32 +54,39 @@ class _AuthenticationState extends State<Authentication> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
               ),
-              TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                      hintText: 'Enter valid email id as abc@gmail.com'),
+                ),
               ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                      hintText: 'Enter secure password'),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const ForgotPasswordScreen(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: TextButton(
+                  onPressed: () {
+                    //TODO FORGOT PASSWORD SCREEN GOES HERE
+                  },
+                  child: Text(
+                    'Forgot Password',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 15,
                     ),
-                  );
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
+                  ),
                 ),
               ),
               Container(
@@ -135,14 +142,39 @@ class ForgotPasswordScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Text(
-            'Help us recover your password. Enter your registered email then enter the code 6-digit code.',
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: 'Enter valid email id as abc@gmail.com'),
+            ),
           ),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Email',
-              hintText: 'Enter email to request password reset',
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                  hintText: 'Enter secure password'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextButton(
+              onPressed: () {
+                //TODO FORGOT PASSWORD SCREEN GOES HERE
+              },
+              child: Text(
+                'Forgot Password',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
           ElevatedButton(
