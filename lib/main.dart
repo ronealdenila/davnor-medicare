@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -26,6 +31,34 @@ class Authentication extends StatefulWidget {
 }
 
 class _AuthenticationState extends State<Authentication> {
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('users');
+
+  void Auth() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: "admin@gmail.com", password: "123456"); //signinwithEmailPass
+      user = userCredential.user;
+      print('sucess');
+      getUserRole();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  getUserRole() {
+    var currentUser = FirebaseAuth.instance.currentUser; //get email
+    if (currentUser != null) {
+      print(currentUser.uid);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,18 +131,19 @@ class _AuthenticationState extends State<Authentication> {
                     color: Colors.blue[200],
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
-                  onPressed: () {
-                    //TODO: Authentication Function - sign in success and get user_role
-                    if (kIsWeb) {
-                      //if web login deretso
-                      print(
-                          'TODO: use user_role value for navigation for which screens');
-                    } else {
-                      //if mobile, only patient and doctor can login
-                      print(
-                          'TODO: use user_role value for navigation for which screens');
-                    }
-                  },
+                  // onPressed: () {
+                  //   //TODO: Authentication Function - sign in success and get user_role
+                  //   if (kIsWeb) {
+                  //     //if web login deretso
+                  //     print(
+                  //         'TODO: use user_role value for navigation for which screens - WEB');
+                  //   } else {
+                  //     //if mobile, only patient and doctor can login
+                  //     print(
+                  //         'TODO: use user_role value for navigation for which screens - MOBILE');
+                  //   }
+                  // },
+                  onPressed: Auth,
                   child: Text(
                     'Sign in',
                     style: TextStyle(color: Colors.white, fontSize: 25),
