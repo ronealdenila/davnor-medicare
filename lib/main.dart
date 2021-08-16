@@ -27,71 +27,78 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   title: Text("Login Page"),
-        // ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Welcome Back!',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
-              ),
-              TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
-              ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue[200],
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Sign in',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  ),
-                ),
-              ),
-              Text(
-                'Dont have an account?',
-              ),
-              TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
-                child: Text(
-                  'Signuo here',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
-              ),
-            ],
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   title: Text("Login Page"),
+      // ),
+      body: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 60.0),
+            child: Center(
+              child: Container(
+                  width: 200,
+                  height: 150,
+                  child: Image.asset('asset/images/auth-header.png')),
+            ),
           ),
-        ),
+          Text(
+            'Welcome Back!',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+          ),
+          TextField(
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Email',
+                hintText: 'Enter valid email id as abc@gmail.com'),
+          ),
+          TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+                hintText: 'Enter secure password'),
+          ),
+          TextButton(
+            onPressed: () {
+              //TODO FORGOT PASSWORD SCREEN GOES HERE
+            },
+            child: Text(
+              'Forgot Password',
+              style: TextStyle(color: Colors.blue, fontSize: 15),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 250,
+            decoration: BoxDecoration(
+                color: Colors.blue[200],
+                borderRadius: BorderRadius.circular(10)),
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Sign in',
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+            ),
+          ),
+          Row(children: <Widget>[
+            Text(
+              'Dont have an account?',
+            ),
+            TextButton(
+              onPressed: () {
+                //TODO FORGOT PASSWORD SCREEN GOES HERE
+              },
+              child: Text(
+                'Signup here',
+                style: TextStyle(color: Colors.blue, fontSize: 15),
+              ),
+            ),
+          ]),
+        ]),
       ),
-    );
+    ));
   }
 }
