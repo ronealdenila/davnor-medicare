@@ -102,7 +102,14 @@ class _AuthenticationState extends State<Authentication> {
                     color: Colors.blue[200],
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (kIsWeb) {
+                      //TODO: Authentication where i check kung nakalogin ba sa web or mobile
+                      print(' function where icheck kung unsa na role');
+                    } else {
+                      print('function na only patient and doctor can login');
+                    }
+                  },
                   child: Text(
                     'Sign in',
                     style: TextStyle(color: Colors.white, fontSize: 25),
@@ -116,13 +123,17 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                   TextButton(
                     onPressed: () {
-                      //TODO FORGOT PASSWORD SCREEN GOES HERE
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const Termsandcondition(),
-                        ),
-                      );
+                      //TODO MAKE A DIALOG FOR WEB
+                      if (kIsWeb) {
+                        print('Show dialog for terms and conditions page');
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const Termsandcondition(),
+                          ),
+                        );
+                      }
                     },
                     child: Text(
                       'Signup here',
@@ -161,32 +172,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                   hintText: 'Enter valid email id as abc@gmail.com'),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  hintText: 'Enter secure password'),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: TextButton(
-              onPressed: () {
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: Text(
-                'Forgot Password',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 15,
-                ),
-              ),
             ),
           ),
           ElevatedButton(
