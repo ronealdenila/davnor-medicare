@@ -142,7 +142,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Email',
-              hintText: 'Enter valid email id as abc@gmail.com',
+              hintText: 'Enter email to request password reset',
             ),
           ),
           ElevatedButton(
