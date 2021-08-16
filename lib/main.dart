@@ -34,15 +34,14 @@ class _AuthenticationState extends State<Authentication> {
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
 
-  void Auth() async {
+  void auth() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: "admin@gmail.com", password: "123456"); //signinwithEmailPass
+          email: "patient@gmail.com", password: "123456"); //signinwithEmailPass
       user = userCredential.user;
-      print('sucess');
-      getUserRole();
+      await getUserRole();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -53,9 +52,19 @@ class _AuthenticationState extends State<Authentication> {
   }
 
   getUserRole() {
-    var currentUser = FirebaseAuth.instance.currentUser; //get email
+    var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      print(currentUser.uid);
+      FirebaseFirestore.instance //get user roles
+          .collection('users')
+          .doc(currentUser.uid)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print('User Type: ' + documentSnapshot["usertype"]);
+          print('First Name: ' + documentSnapshot["firstname"]);
+          print('Last Name: ' + documentSnapshot["lastname"]);
+        }
+      });
     }
   }
 
@@ -143,7 +152,7 @@ class _AuthenticationState extends State<Authentication> {
                   //         'TODO: use user_role value for navigation for which screens - MOBILE');
                   //   }
                   // },
-                  onPressed: Auth,
+                  onPressed: auth,
                   child: Text(
                     'Sign in',
                     style: TextStyle(color: Colors.white, fontSize: 25),
