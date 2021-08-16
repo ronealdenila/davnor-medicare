@@ -78,6 +78,12 @@ class _AuthenticationState extends State<Authentication> {
                 child: TextButton(
                   onPressed: () {
                     //TODO FORGOT PASSWORD SCREEN GOES HERE
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const ForgotPasswordScreen(),
+                      ),
+                    );
                   },
                   child: Text(
                     'Forgot Password',
@@ -111,6 +117,12 @@ class _AuthenticationState extends State<Authentication> {
                   TextButton(
                     onPressed: () {
                       //TODO FORGOT PASSWORD SCREEN GOES HERE
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const Termsandcondition(),
+                        ),
+                      );
                     },
                     child: Text(
                       'Signup here',
@@ -186,8 +198,9 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 }
+
 class Termsandcondition extends StatefulWidget {
-  const Termsandcondition({ Key? key }) : super(key: key);
+  const Termsandcondition({Key? key}) : super(key: key);
 
   @override
   _TermsandconditionState createState() => _TermsandconditionState();
@@ -203,20 +216,21 @@ class _TermsandconditionState extends State<Termsandcondition> {
           title: Text('Terms and Condition Page'),
         ),
         body: Padding(
-          padding: EdgeInsets.all(2.0),
-          child: Column(children: <Widget>[
-            Center(
-              child: Text ('Terms and Condition'),
-            ),
-            Text(
-            'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page.',
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: kIsWeb ? 15 : 20),
-          ),
-
-          ],
-          )
+            padding: EdgeInsets.all(2.0),
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: Text('Terms and Condition'),
+                ),
+                Text(
+                  'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page.',
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: kIsWeb ? 15 : 20),
+                ),
+              ],
+            )),
       ),
-      ),
-      );
+    );
   }
 }
