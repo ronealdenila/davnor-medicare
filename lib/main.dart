@@ -29,82 +29,128 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text("Login Page"),
-      // ),
-      body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .3,
-              child: kIsWeb
-                  ? Placeholder()
-                  : Image.asset(
-                      'asset/images/auth_header.png',
-                      fit: BoxFit.fill,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        // appBar: AppBar(
+        //   title: Text("Login Page"),
+        // ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .3,
+                  child: kIsWeb
+                      ? Placeholder()
+                      : Image.asset(
+                          'asset/images/auth_header.png',
+                          fit: BoxFit.fill,
+                        ),
+                ),
+              ),
+              Text(
+                'Welcome Back!',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    hintText: 'Enter valid email id as abc@gmail.com'),
+              ),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    hintText: 'Enter secure password'),
+              ),
+              TextButton(
+                onPressed: () {
+                  //TODO FORGOT PASSWORD SCREEN GOES HERE
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const ForgotPasswordScreen(),
                     ),
+                  );
+                },
+                child: Text(
+                  'Forgot Password',
+                  style: TextStyle(color: Colors.blue, fontSize: 15),
+                ),
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    'Dont have an account?',
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      //TODO FORGOT PASSWORD SCREEN GOES HERE
+                    },
+                    child: Text(
+                      'Signup here',
+                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView(
+        children: [
+          Text(
+            'Recover Password',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            'Welcome Back!',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
+            'Help us recover your password. Enter your registered email then enter the code 6-digit code.',
           ),
           TextField(
             decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
-                hintText: 'Enter valid email id as abc@gmail.com'),
-          ),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
-                hintText: 'Enter secure password'),
-          ),
-          TextButton(
-            onPressed: () {
-              //TODO FORGOT PASSWORD SCREEN GOES HERE
-            },
-            child: Text(
-              'Forgot Password',
-              style: TextStyle(color: Colors.blue, fontSize: 15),
+              border: OutlineInputBorder(),
+              labelText: 'Email',
+              hintText: 'Enter valid email id as abc@gmail.com',
             ),
           ),
-          Container(
-            height: 50,
-            width: 250,
-            decoration: BoxDecoration(
-                color: Colors.blue[200],
-                borderRadius: BorderRadius.circular(10)),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Sign in',
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              ),
-            ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Request Password Reset'),
           ),
-          Row(children: <Widget>[
-            Text(
-              'Dont have an account?',
-            ),
-            TextButton(
-              onPressed: () {
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: Text(
-                'Signup here',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
-            ),
-          ]),
-        ]),
+        ],
       ),
-    ));
+    );
   }
 }
