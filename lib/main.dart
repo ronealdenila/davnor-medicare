@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       home: Authentication(),
     );
   }
@@ -34,18 +36,21 @@ class _AuthenticationState extends State<Authentication> {
       // ),
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 60.0),
-            child: Center(
-              child: Container(
-                  width: 200,
-                  height: 150,
-                  child: Image.asset('asset/images/auth-header.png')),
+          Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * .2,
+              child: kIsWeb
+                  ? Placeholder()
+                  : Image.asset(
+                      'asset/images/auth_header.png',
+                      fit: BoxFit.fill,
+                    ),
             ),
           ),
           Text(
             'Welcome Back!',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
           ),
           TextField(
             decoration: InputDecoration(
