@@ -81,8 +81,8 @@ class _AuthenticationState extends State<Authentication> {
       //TODO: Function where user type admin and pswd are not alllowed to login
       if (userRole == 'pswd-p' || userRole == 'doctor') {
         print('You are not allowed to logged in mobile app');
-      }
-      else print('Logged in');
+      } else
+        print('Logged in');
     }
   }
 
@@ -98,12 +98,10 @@ class _AuthenticationState extends State<Authentication> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * .3,
-                  child: kIsWeb
-                      ? Placeholder()
-                      : Image.asset(
-                          'asset/images/auth_header.png',
-                          fit: BoxFit.fill,
-                        ),
+                  child: Image.asset(
+                    'asset/images/auth_header.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Text(
