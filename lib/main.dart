@@ -53,26 +53,39 @@ class _AuthenticationState extends State<Authentication> {
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
           ),
-          TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
-                hintText: 'Enter valid email id as abc@gmail.com'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: 'Enter valid email id as abc@gmail.com'),
+            ),
           ),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
-                hintText: 'Enter secure password'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                  hintText: 'Enter secure password'),
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              //TODO FORGOT PASSWORD SCREEN GOES HERE
-            },
-            child: Text(
-              'Forgot Password',
-              style: TextStyle(color: Colors.blue, fontSize: 15),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextButton(
+              onPressed: () {
+                //TODO FORGOT PASSWORD SCREEN GOES HERE
+              },
+              child: Text(
+                'Forgot Password',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
           Container(
