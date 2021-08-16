@@ -39,7 +39,7 @@ class _AuthenticationState extends State<Authentication> {
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .2,
+              height: MediaQuery.of(context).size.height * .3,
               child: kIsWeb
                   ? Placeholder()
                   : Image.asset(
@@ -50,7 +50,8 @@ class _AuthenticationState extends State<Authentication> {
           ),
           Text(
             'Welcome Back!',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: kIsWeb ? 40 : 25),
           ),
           TextField(
             decoration: InputDecoration(
