@@ -34,13 +34,13 @@ class _AuthenticationState extends State<Authentication> {
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
 
+  String? userRole;
+
   void auth() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: "patient@gmail.com", password: "123456"); //signinwithEmailPass
-      user = userCredential.user;
+      await auth.signInWithEmailAndPassword(
+          email: "pswd@gmail.com", password: "123456"); //signinwithEmailPass
       await getUserRole();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -51,20 +51,38 @@ class _AuthenticationState extends State<Authentication> {
     }
   }
 
-  getUserRole() {
+  getUserRole() async {
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       FirebaseFirestore.instance //get user roles
           .collection('users')
           .doc(currentUser.uid)
           .get()
-          .then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('User Type: ' + documentSnapshot["usertype"]);
-          print('First Name: ' + documentSnapshot["firstname"]);
-          print('Last Name: ' + documentSnapshot["lastname"]);
-        }
-      });
+          .then(
+        (DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            userRole = documentSnapshot["usertype"];
+            print('User Type: ' + userRole!);
+            print('First Name: ' + documentSnapshot["firstname"]);
+            print('Last Name: ' + documentSnapshot["lastname"]);
+          }
+        },
+      );
+      await checkUserPlatform();
+    }
+  }
+
+  checkUserPlatform() async {
+    if (kIsWeb) {
+      //TODO: Function where when logged in on browser, all user type will accepted
+
+      print('Logged in on web browser');
+    } else {
+      //TODO: Function where user type admin and pswd are not alllowed to login
+      if (userRole == 'pswd-p' || userRole == 'doctor') {
+        print('You are not allowed to logged in mobile app');
+      }
+      else print('Logged in');
     }
   }
 
