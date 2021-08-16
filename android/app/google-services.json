@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "235924946289",
+    "project_id": "davnor-medicare-15c1d",
+    "storage_bucket": "davnor-medicare-15c1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235924946289:android:55a36801b528e57296cad0",
+        "android_client_info": {
+          "package_name": "com.example.davnor_medicare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235924946289-l1nltmtcf93h18jjno9t46sp74efiber.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7KjlUyujgCvDlopZyTuiDpJCAX7nRY9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235924946289-l1nltmtcf93h18jjno9t46sp74efiber.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
