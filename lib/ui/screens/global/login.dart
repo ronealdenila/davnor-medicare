@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/core/services/authentication_service.dart';
 import 'package:davnor_medicare/locator.dart';
-import 'package:davnor_medicare/main.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                     'Forgot Password',
                     textAlign: TextAlign.right,
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: kcInfoColor,
                       fontSize: 15,
                     ),
                   ),
@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: Colors.blue[200],
+                    color: kcVerySoftBlueColor,
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {},
                     child: Text(
                       'Signup here',
-                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                      style: TextStyle(color: kcInfoColor, fontSize: 15),
                     ),
                   ),
                 ],
