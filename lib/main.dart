@@ -31,16 +31,14 @@ class Authentication extends StatefulWidget {
 }
 
 class _AuthenticationState extends State<Authentication> {
-  CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection('users');
-
   String? userRole;
 
   void auth() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signInWithEmailAndPassword(
-          email: "pswd@gmail.com", password: "123456"); //signinwithEmailPass
+          email: "doctor@gmail.com",
+          password: "123456"); //TODO: get value from text field
       await getUserRole();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -54,7 +52,7 @@ class _AuthenticationState extends State<Authentication> {
   getUserRole() async {
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      FirebaseFirestore.instance //get user roles
+      await FirebaseFirestore.instance //get user roles
           .collection('users')
           .doc(currentUser.uid)
           .get()
@@ -62,7 +60,8 @@ class _AuthenticationState extends State<Authentication> {
         (DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
             userRole = documentSnapshot["usertype"];
-            print('User Type: ' + userRole!);
+            print('User Type: ' +
+                userRole!); //TODO: Store data in user object puhon
             print('First Name: ' + documentSnapshot["firstname"]);
             print('Last Name: ' + documentSnapshot["lastname"]);
           }
@@ -74,15 +73,42 @@ class _AuthenticationState extends State<Authentication> {
 
   checkUserPlatform() async {
     if (kIsWeb) {
-      //TODO: Function where when logged in on browser, all user type will accepted
-
-      print('Logged in on web browser');
+      //Web Platform
+      switch (userRole) {
+        case 'pswd-p':
+          print('Logged in as PSWD Personnel'); //TODO: Navigate pswd personnel
+          break;
+        case 'pswd-h':
+          print('Logged in as PSWD Head'); //TODO: Navigate to pswd head screen
+          break;
+        case 'admin':
+          print('Logged in as Admin'); //TODO: Navigate to admin screen
+          break;
+        case 'doctor':
+          print('Logged in as doctor'); //TODO: Navigate to doctor screen
+          break;
+        case 'patient':
+          print('Logged in as patient'); //TODO: Navigate to patient screen
+          break;
+        default:
+          print('Error Occured'); //TODO: Error Dialog
+      }
     } else {
-      //TODO: Function where user type admin and pswd are not alllowed to login
-      if (userRole == 'pswd-p' || userRole == 'doctor') {
-        print('You are not allowed to logged in mobile app');
-      } else
-        print('Logged in');
+      //Mobile Platform
+      if (userRole == 'pswd-p' || userRole == 'pswd-h' || userRole == 'admin') {
+        print('Please log in on Web Application'); //TODO: Error Dialog
+      } else {
+        switch (userRole) {
+          case 'doctor':
+            print('Logged in as doctor'); //TODO: Navigate to doctor screen
+            break;
+          case 'patient':
+            print('Logged in as patient'); //TODO: Navigate to patient screen
+            break;
+          default:
+            print('Error Occured'); //TODO: Error Dialog
+        }
+      }
     }
   }
 
@@ -156,18 +182,6 @@ class _AuthenticationState extends State<Authentication> {
                     color: Colors.blue[200],
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
-                  // onPressed: () {
-                  //   //TODO: Authentication Function - sign in success and get user_role
-                  //   if (kIsWeb) {
-                  //     //if web login deretso
-                  //     print(
-                  //         'TODO: use user_role value for navigation for which screens - WEB');
-                  //   } else {
-                  //     //if mobile, only patient and doctor can login
-                  //     print(
-                  //         'TODO: use user_role value for navigation for which screens - MOBILE');
-                  //   }
-                  // },
                   onPressed: auth,
                   child: Text(
                     'Sign in',
@@ -242,7 +256,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: TextButton(
               onPressed: () {
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
+                //TODO: Navigate to Forgot Pass Screen
               },
               child: Text(
                 'Forgot Password',
@@ -255,7 +269,9 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              //TODO: function for change pass
+            },
             child: Text('Request Password Reset'),
           ),
         ],
