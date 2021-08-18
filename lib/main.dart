@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: Authentication(),
+      home: Termsandcondition(),
     );
   }
 }
@@ -126,6 +126,7 @@ class _AuthenticationState extends State<Authentication> {
     );
   }
 }
+
 //ForgotPassword
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -186,9 +187,10 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 }
+
 //termsandCondition
 class Termsandcondition extends StatefulWidget {
-  const Termsandcondition({ Key? key }) : super(key: key);
+  const Termsandcondition({Key? key}) : super(key: key);
 
   @override
   _TermsandconditionState createState() => _TermsandconditionState();
@@ -197,77 +199,169 @@ class Termsandcondition extends StatefulWidget {
 class _TermsandconditionState extends State<Termsandcondition> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Terms and Condition Page'),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(2.0),
-          child: Column(children: <Widget>[
-            Center(
-              child: Text ('Terms and Condition'),
+    return Scaffold(
+      appBar: AppBar(),
+
+      body: ListView(
+        children: [
+          Text(
+            'Terms and Condition',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
-            Text(
-            'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page. The following terminology applies to these Terms & Conditions, Privacy Policy and Disclaimer Notice and all Agreements: DavNor Medicare (“us”, “we”, or “our”) operates http://www.DavNorMedicare.com. This page informs you of our terms & condition regarding the collection, use and disclosure of Personal Information we receive from users of the application.',
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: kIsWeb ? 15 : 20),
           ),
 
+          Text(
+                'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page. The following terminology applies to these Terms & Conditions, Privacy Policy and Disclaimer Notice and all Agreements: DavNor Medicare (“us”, “we”, or “our”) operates http://www.DavNorMedicare.com. This page informs you of our terms & condition regarding the collection, use and disclosure of Personal Information we receive from users of the application.',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 15,
+                    ),
+              ),
+
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                'Privacy Policy',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Privacy Policy',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 15,
                 ),
-              ),
             ),
-          Text(
-            'We use your Personal Information only for providing and improving the application. By using this application, you agree to the collection and use of information in accordance with this policy.'
-            ),
-
-           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                'Information Collection and Use',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-          Text(
-            'While using our application, we may ask you to provide us with certain personally identifiable information that can be used to contact or identified you. Personally identifiable information may include, but is not limited to your name ("Personal Information").'
-            ),
-                      
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                'Termination',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-          Text(
-            'We may terminate or suspend access to our Service Immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.'
-            ),
-
-          ],
           ),
+
+          Text(
+                'We use your Personal Information only for providing and improving the application. By using this application, you agree to the collection and use of information in accordance with this policy.',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 15,
+                    ),
+              ),
+
+         Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Information Collection and Use',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 15,
+                ),
+            ),
+          ),
+        Text(
+                  'While using our application, we may ask you to provide us with certain personally identifiable information that can be used to contact or identified you. Personally identifiable information may include, but is not limited to your name ("Personal Information").',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                  ),
+                  
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Termination',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 15,
+                ),
+            ),
+          ),
+        Text(
+              'We may terminate or suspend access to our Service Immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.',
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: 15,
+              fontWeight: FontWeight.normal,
+              ),
+              ),
+      ],
       ),
-      ),
+      
       );
+
+    }
+}
+
+//Join Our Team
+class Joinourteam extends StatefulWidget {
+  const Joinourteam({ Key? key }) : super(key: key);
+
+  @override
+  _JoinourteamState createState() => _JoinourteamState();
+}
+
+class _JoinourteamState extends State<Joinourteam> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+
+      body: ListView(
+        children: [
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Join Our Team',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 15,
+                ),
+            ),
+          ),
+
+        Text(
+              'Together lets provide healthcare, improve life, and help our community.',
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 30),
+                child: Text(
+                  'Are you concerned for the health of our community? Extend your care and medical skills by joining as a doctor here in DavNor MediCare. Together we can provide free online consultation, improve everyone’s lives, and feel rewarded for helping others in times of need.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 30),
+                child: Text(
+                  'In DavNor MediCare, we only want the best healthcare for our patients. Thats why before accepting clinicians to join our team, we ensure that they are licensed to practice medicine and can provide the level of services we guarantee to our people.',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ), 
+
+              Text(
+                'Join here',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+      ],
+      ),
+    );
   }
 }
