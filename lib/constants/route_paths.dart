@@ -8,3 +8,4 @@ const String AdminHomeRoute = 'AdminHome';
 const String DoctorHomeRoute = 'DoctorHome';
 const String PSWDHeadHomeRoute = 'PSWDHeadHome';
 const String PSWDPersonnelHomeRoute = 'PSWDPersonnelHome';
+const String DoctorProfileRoute = 'DoctorProfileRoute';

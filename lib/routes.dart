@@ -6,6 +6,7 @@ import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
+import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 
@@ -48,6 +49,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.PSWDPersonnelHomeRoute:
       return MaterialPageRoute(
         builder: (context) => PSWDPersonnelHomeScreen(),
+      );
+    case routes.DoctorProfileRoute:
+      return MaterialPageRoute(
+        builder: (context) => DoctorProfileScreen(),
       );
     default:
       return MaterialPageRoute(
