@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
 
@@ -34,6 +37,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
@@ -43,6 +47,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -72,8 +77,11 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
+                    //For testing. Use this accounts
+                    //PSWD Staff:  pswd@gmail.com //Admin: admin@gmail.com
+                    //Patient: patient@gmail.com //Doctor: doctor@gmail.com
                     _authenticationService.loginWithEmail(
-                        email: 'pswd@gmail.com', password: '123456');
+                        email: emailController.text, password: '123456');
                   },
                   child: Text(
                     'Sign in',

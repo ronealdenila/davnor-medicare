@@ -1,17 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/services/navigation_service.dart';
+import 'package:davnor_medicare/locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:davnor_medicare/constants/route_paths.dart' as routes;
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String? userRole;
+
+  final NavigationService _navigationService = locator<NavigationService>();
 
   Future loginWithEmail({
     required String? email,
     required String? password,
   }) async {
     try {
-      var user = await _firebaseAuth.signInWithEmailAndPassword(
+      var authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email!,
         password: password!,
       );
@@ -52,6 +58,7 @@ class AuthenticationService {
       switch (userRole) {
         case 'pswd-p':
           print('Logged in as PSWD Personnel'); //TODO: Navigate pswd personnel
+
           break;
         case 'pswd-h':
           print('Logged in as PSWD Head'); //TODO: Navigate to pswd head screen
@@ -78,7 +85,12 @@ class AuthenticationService {
             print('Logged in as doctor'); //TODO: Navigate to doctor screen
             break;
           case 'patient':
-            print('Logged in as patient'); //TODO: Navigate to patient screen
+            print('Logged in as patient');
+            // Since mag navigate man ta dria na method (out of context). akong
+            // gisolution is mag navigate ta without context. (R)
+            // reference: 
+            // https://www.filledstacks.com/post/navigate-without-build-context-in-flutter-using-a-navigation-service/
+            _navigationService.navigateTo(routes.PatientHomeRoute);
             break;
           default:
             print('Error Occured'); //TODO: Error Dialog
