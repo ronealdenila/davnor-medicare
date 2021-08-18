@@ -1,4 +1,6 @@
+import 'package:davnor_medicare/ui/screens/global/doctor_application_instruction.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
+import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 
 import 'constants/route_paths.dart' as routes;
@@ -10,9 +12,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.LoginRoute:
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case routes.PatientHomeRoute:
-      // if we want to have arguments for our screen
-      // var userName = settings.arguments as String;
       return MaterialPageRoute(builder: (context) => PatientHomeScreen());
+    case routes.TermsAndPolicyRoute:
+      return MaterialPageRoute(builder: (context) => TermsAndPolicyScreen());
+    case routes.DoctorApplicationInstructionRoute:
+      return MaterialPageRoute(
+          builder: (context) => DoctorApplicationInstructionScreen());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

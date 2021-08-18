@@ -1,8 +1,11 @@
 import 'package:davnor_medicare/core/services/authentication_service.dart';
+import 'package:davnor_medicare/core/services/navigation_service.dart';
 import 'package:davnor_medicare/locator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:davnor_medicare/constants/route_paths.dart' as routes;
 
 class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -10,6 +13,8 @@ class LoginScreen extends StatelessWidget {
 
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
+
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +100,9 @@ class LoginScreen extends StatelessWidget {
                     'Dont have an account?',
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // _navigationService.navigateTo(routes.)
+                    },
                     child: Text(
                       'Signup here',
                       style: TextStyle(color: kcInfoColor, fontSize: 15),
