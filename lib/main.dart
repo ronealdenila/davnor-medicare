@@ -1,7 +1,16 @@
+import 'package:davnor_medicare/core/services/navigation_service.dart';
+import 'package:davnor_medicare/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'routes.dart' as router;
+import 'constants/route_paths.dart' as routes;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // Register all the models and services before the app starts
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -14,6 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home: Termsandcondition(),
     );
   }
@@ -362,6 +372,11 @@ class _JoinourteamState extends State<Joinourteam> {
               ),
       ],
       ),
+=======
+      navigatorKey: locator<NavigationService>().navigatorKey,
+      initialRoute: routes.LoginRoute,
+      onGenerateRoute: router.generateRoute,
+>>>>>>> 70d330d445e854b9f817e4e32db30661a87e7b55
     );
   }
 }
