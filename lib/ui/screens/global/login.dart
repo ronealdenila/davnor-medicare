@@ -63,7 +63,9 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _navigationService.navigateTo(routes.ForgotPasswordRoute);
+                  },
                   child: Text(
                     'Forgot Password',
                     textAlign: TextAlign.right,
@@ -78,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: kcVerySoftBlueColor,
+                    color: kcVerySoftBlueColor[20],
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
@@ -101,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // _navigationService.navigateTo(routes.)
+                      _navigationService.navigateTo(routes.SignupRoute);
                     },
                     child: Text(
                       'Signup here',

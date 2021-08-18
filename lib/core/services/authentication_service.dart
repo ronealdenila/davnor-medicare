@@ -44,8 +44,8 @@ class AuthenticationService {
           if (documentSnapshot.exists) {
             userRole = documentSnapshot["usertype"];
             print('User Type: ' + userRole!);
-            print('First Name: ' + documentSnapshot["firstname"]);
-            print('Last Name: ' + documentSnapshot["lastname"]);
+            // print('First Name: ' + documentSnapshot["firstname"]);
+            // print('Last Name: ' + documentSnapshot["lastname"]);
           }
         },
       );
