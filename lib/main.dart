@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       navigatorKey: locator<NavigationService>().navigatorKey,
-      initialRoute: routes.LoginRoute,
+      initialRoute: routes.DoctorHomeRoute,
+      //initialRoute: routes.LoginRoute,
       onGenerateRoute: router.generateRoute,
     );
   }
