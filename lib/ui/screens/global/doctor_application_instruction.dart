@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class DoctorApplicationInstructionScreen extends StatelessWidget {
   const DoctorApplicationInstructionScreen({Key? key}) : super(key: key);
 
@@ -37,6 +39,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               ),
             ),
           ),
+
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
             child: Text(
@@ -49,6 +52,20 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               ),
             ),
           ),
+
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 30),
+          child: Text(
+            'For Interested Doctors',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ),
+
           Text(
             'Join here',
             textAlign: TextAlign.left,
@@ -58,6 +75,26 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               fontWeight: FontWeight.normal,
             ),
           ),
+
+          Text(
+            ' For any inquires, please email us at:',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: Colors.black,
+            ),
+            ),
+
+            Text(
+            'davnor.medicare@gmail.com',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 12,
+              color: Colors.blue,
+            ),
+            ),
         ],
       ),
     );
