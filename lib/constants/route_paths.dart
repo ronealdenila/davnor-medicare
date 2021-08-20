@@ -9,3 +9,7 @@ const String DoctorHomeRoute = 'DoctorHome';
 const String PSWDHeadHomeRoute = 'PSWDHeadHome';
 const String PSWDPersonnelHomeRoute = 'PSWDPersonnelHome';
 const String DoctorProfileRoute = 'DoctorProfileRoute';
+const String MADescriptionRoute = 'MADescriptionRoute';
+const String MARequestInfoRoute = 'MARequestInfoRoute';
+
+
