@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/ui/screens/global/authentication.dart';
-import 'package:davnor_medicare/ui/screens/global/widgets/login.dart';
+import 'package:davnor_medicare/ui/screens/global/login.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_h/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +36,7 @@ class AuthController extends GetxController {
   _setInitialScreen(User? user) async {
     if (user == null) {
       print('Send to signin');
-      Get.offAll(() => AuthenticationScreen());
+      Get.offAll(() => LoginScreen());
     } else {
       await _initializeUserModel(user.uid);
       _clearControllers();
@@ -77,6 +76,26 @@ class AuthController extends GetxController {
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
       );
+    }
+  }
+
+  //snippet code for
+  //password reset email
+  Future<void> sendPasswordResetEmail(BuildContext context) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: emailController.text);
+      Get.snackbar(
+          'auth.resetPasswordNoticeTitle'.tr, 'auth.resetPasswordNotice'.tr,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 5),
+          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+          colorText: Get.theme.snackBarTheme.actionTextColor);
+    } on FirebaseAuthException catch (error) {
+      Get.snackbar('auth.resetPasswordFailed'.tr, error.message!,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 10),
+          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+          colorText: Get.theme.snackBarTheme.actionTextColor);
     }
   }
 

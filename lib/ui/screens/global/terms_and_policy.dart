@@ -7,16 +7,11 @@ class TermsAndPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream
-      backgroundColor: Colors.white,
-      appBar: AppBar(),
-=======
       appBar: AppBar(
         leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
         ),
       ),
->>>>>>> Stashed changes
       body: ListView(
         children: [
            Padding(

@@ -22,6 +22,9 @@ class CustomButton extends Container {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       splashColor: this.splashColor,
       onPressed: () => this.onTap!(),
       color: this.color,

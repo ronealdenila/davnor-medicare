@@ -14,10 +14,14 @@ class BottomTextWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: RichText(
-          text: TextSpan(children: [
-        TextSpan(text: text1, style: TextStyle(color: Colors.black)),
-        TextSpan(text: " $text2", style: TextStyle(color: kcInfoColor))
-      ])),
+        text: TextSpan(
+          style: TextStyle(fontWeight: FontWeight.w500),
+          children: [
+            TextSpan(text: text1, style: TextStyle(color: Colors.black)),
+            TextSpan(text: " $text2", style: TextStyle(color: kcInfoColor))
+          ],
+        ),
+      ),
     );
   }
 }
