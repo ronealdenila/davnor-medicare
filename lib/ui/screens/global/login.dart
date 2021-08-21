@@ -7,6 +7,7 @@ import 'package:davnor_medicare/ui/screens/global/signup.dart';
 import 'package:davnor_medicare/ui/screens/global/widgets/bottom_text.dart';
 import 'package:davnor_medicare/ui/screens/global/widgets/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +50,7 @@ class LoginScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             verticalSpace18,
-                            Text(
-                              'Welcome Back!',
-                              style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
-                            ),
+                            Text('Welcome Back!', style: title32Bold),
                             verticalSpace10,
                             FormInputFieldWithIcon(
                               controller: authController.emailController,
