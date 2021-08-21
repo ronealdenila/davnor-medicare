@@ -25,6 +25,9 @@ class SignupScreen extends GetWidget<AuthController> {
           SliverAppBar(
             leading: CupertinoNavigationBarBackButton(
               color: Colors.black,
+              onPressed: () {
+                Get.back();
+              },
             ),
             expandedHeight: screenHeightPercentage(context, percentage: .2),
             pinned: true,
@@ -125,6 +128,7 @@ class SignupScreen extends GetWidget<AuthController> {
                                     onSaved: (value) => authController
                                         .passwordController.text = value!,
                                     maxLines: 1,
+                                    textInputAction: TextInputAction.done,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

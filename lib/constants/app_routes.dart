@@ -5,6 +5,7 @@ import 'package:davnor_medicare/ui/screens/global/doctor_application_instruction
 import 'package:davnor_medicare/ui/screens/global/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
 import 'package:davnor_medicare/ui/screens/global/signup.dart';
+import 'package:davnor_medicare/ui/screens/global/splash.dart';
 import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_RequestInfo.dart';
@@ -18,8 +19,8 @@ class AppRoutes {
   AppRoutes._(); //this is to prevent anyone from instantiating this object
   static final routes = [
     //SplashUI must be created soon
-    // GetPage(name: '/', page: () => SplashUI()),
-    GetPage(name: '/', page: () => LoginScreen()),
+    GetPage(name: '/', page: () => SplashScreen()),
+    GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignupScreen()),
     GetPage(name: '/PatientHome', page: () => PatientHomeScreen()),
     GetPage(name: '/ForgotPassword', page: () => ForgotPasswordScreen()),

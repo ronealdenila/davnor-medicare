@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:get/get.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
+  static AuthController to = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.white,
-            body: SingleChildScrollView(
-                child: Column(children: <Widget>[
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .4,
@@ -26,10 +31,15 @@ class DoctorProfileScreen extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Icon(
-                      Icons.keyboard_arrow_left,
-                      color: Colors.white,
-                      size: 50.0,
+                    child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.keyboard_arrow_left,
+                        color: Colors.white,
+                        size: 50.0,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -43,7 +53,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    'Dr. Chandler Bing',
+                    'Dr. ${to.userModel.value.firstName} ${to.userModel.value.lastName}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -54,7 +64,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     height: 3,
                   ),
                   Text(
-                    'chandler.bing@yahoo.com',
+                    '${to.userModel.value.email}',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
@@ -107,7 +117,8 @@ class DoctorProfileScreen extends StatelessWidget {
                                   height: 5.0,
                                 ),
                                 Text(
-                                  'Cardiologist',
+                                  //'${to.userModel.value.email}'
+                                  'Cardiologist  - x',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 18,
@@ -158,13 +169,14 @@ class DoctorProfileScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
+                                  //'${to.userModel.value.department}'
                                   'DEPARTMENT',
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
                                 ),
                                 Text(
-                                  'Internal Medicine',
+                                  'Internal Medicine  - x',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 18,
@@ -221,7 +233,8 @@ class DoctorProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '1pm - 6pm (Weekends)',
+                                  //clinic_hours
+                                  '1pm - 6pm (Weekends) - x',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 18,
@@ -258,6 +271,10 @@ class DoctorProfileScreen extends StatelessWidget {
                 label: Text('Change Password'),
               ),
               SizedBox(height: 20),
-            ]))));
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

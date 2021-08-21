@@ -90,14 +90,16 @@ class AuthController extends GetxController {
   Future<void> sendPasswordResetEmail(BuildContext context) async {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
-      Get.snackbar(
-          'auth.resetPasswordNoticeTitle'.tr, 'auth.resetPasswordNotice'.tr,
+      log.i(
+          'sendPasswordResetEmail | Request password reset success to email ${emailController.text}');
+      Get.snackbar('Password Reset Email Sent',
+          'Check your email and follow the instructions to reset your password.',
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 5),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor);
     } on FirebaseAuthException catch (error) {
-      Get.snackbar('auth.resetPasswordFailed'.tr, error.message!,
+      Get.snackbar('Password Reset Email Failed', error.message!,
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 10),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
@@ -189,6 +191,7 @@ class AuthController extends GetxController {
     } else {
       //Mobile Platform
       if (userRole == 'pswd-p' || userRole == 'pswd-h' || userRole == 'admin') {
+        Get.snackbar('Sign In failed', 'Try Again');
         log.w(
             'checkUserPlatform | user role is $userRole | Please log in on Web Application'); //TODO: Error Dialog or SnackBar
       } else {

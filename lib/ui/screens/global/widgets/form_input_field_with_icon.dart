@@ -6,18 +6,22 @@ class FormInputFieldWithIcon extends StatelessWidget {
       required this.iconPrefix,
       required this.labelText,
       required this.validator,
+      this.textInputAction = TextInputAction.next,
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.minLines = 1,
       this.maxLines,
+      this.suffixIcon,
       required this.onChanged,
       required this.onSaved});
 
   final TextEditingController controller;
   final IconData iconPrefix;
+  final Widget? suffixIcon;
   final String labelText;
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
+  final TextInputAction textInputAction;
   final bool obscureText;
   final int minLines;
   final int? maxLines;
@@ -28,11 +32,12 @@ class FormInputFieldWithIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        filled: true,
-        prefixIcon: Icon(iconPrefix),
-        labelText: labelText,
-        border: InputBorder.none
-      ),
+          filled: true,
+          prefixIcon: Icon(iconPrefix),
+          suffixIcon: suffixIcon,
+          labelText: labelText,
+          border: InputBorder.none),
+      textInputAction: textInputAction,
       controller: controller,
       onSaved: onSaved,
       onChanged: onChanged,

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   final AuthController authController = AuthController.to;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,41 +20,46 @@ class ForgotPasswordScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(40),
-        child: ListView(
-          children: [
-            verticalSpace25,
-            Text(
-              'Recover Password',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: ListView(
+            children: [
+              verticalSpace25,
+              Text(
+                'Recover Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
               ),
-            ),
-            verticalSpace10,
-            Text(
-              ForgotPasswordDescription,
-              style: TextStyle(fontSize: 18, color: kcNeutralColor),
-            ),
-            verticalSpace50,
-            FormInputFieldWithIcon(
-                controller: authController.emailController,
-                iconPrefix: Icons.email,
-                labelText: 'Email',
-                validator: Validator().email,
-                onChanged: (value) => null,
-                onSaved: (value) =>
-                    authController.emailController.text = value!),
-            verticalSpace25,
-            CustomButton(
-              onTap: () {
-                //TODO: Method for password reset
-              },
-              text: 'Request Password Reset',
-              color: kcVerySoftBlueColor,
-            ),
-          ],
+              verticalSpace10,
+              Text(
+                ForgotPasswordDescription,
+                style: TextStyle(fontSize: 18, color: kcNeutralColor),
+              ),
+              verticalSpace50,
+              FormInputFieldWithIcon(
+                  controller: authController.emailController,
+                  iconPrefix: Icons.email,
+                  labelText: 'Email',
+                  validator: Validator().email,
+                  onChanged: (value) => null,
+                  onSaved: (value) =>
+                      authController.emailController.text = value!),
+              verticalSpace25,
+              CustomButton(
+                onTap: () async {
+                  if (_formKey.currentState!.validate()) {
+                    await authController.sendPasswordResetEmail(context);
+                  }
+                },
+                text: 'Request Password Reset',
+                color: kcVerySoftBlueColor,
+              ),
+            ],
+          ),
         ),
       ),
     );
