@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class BottomTextWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class BottomTextWidget extends StatelessWidget {
       onTap: onTap,
       child: RichText(
         text: TextSpan(
-          style: TextStyle(fontWeight: FontWeight.w500),
+          style: body14SemiBold,
           children: [
             TextSpan(text: text1, style: TextStyle(color: Colors.black)),
             TextSpan(text: " $text2", style: TextStyle(color: kcInfoColor))

@@ -154,7 +154,7 @@ class SignupScreen extends StatelessWidget {
                                           text2: 'Terms & Condition'),
                                       validator: (value) {
                                         if (value == false)
-                                        //Wala ko kabalo unsay error message dapat ani (R)
+                                          //Wala ko kabalo unsay error message dapat ani (R)
                                           return 'Please check';
                                       },
                                     ),

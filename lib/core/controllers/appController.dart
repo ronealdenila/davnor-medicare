@@ -1,7 +1,10 @@
+import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppController extends GetxController {
   static AppController to = Get.find();
+  final log = getLogger('App Controller');
 
   //This is where to put the app logics e.g. toggle check box
 
@@ -9,10 +12,12 @@ class AppController extends GetxController {
   RxBool isCheckboxChecked = false.obs;
 
   toggleTextVisibility() {
+    log.i('toggleTextVisibility | Toggle Text Visibility');
     isObscureText.value = !isObscureText.value;
   }
 
-  toggleCheckBox(bool? newvalue) {
-    isCheckboxChecked.value = newvalue!;
+  void launchURL(String url) async {
+    log.i('launchURL | Launched at URL: $url');
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }

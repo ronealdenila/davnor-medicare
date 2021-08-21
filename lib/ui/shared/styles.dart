@@ -130,6 +130,13 @@ const TextStyle body16RegularUnderline = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle body14RegularUnderline = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  decoration: TextDecoration.underline,
+  fontFamily: 'Inter',
+);
+
 const TextStyle body14SemiBold = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,

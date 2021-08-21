@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                           children: <Widget>[
                             verticalSpace18,
                             Text('Welcome Back!', style: title32Bold),
-                            verticalSpace10,
+                            verticalSpace50,
                             FormInputFieldWithIcon(
                               controller: authController.emailController,
                               iconPrefix: Icons.email,
@@ -91,7 +91,8 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
-                                child: Text('Forgot Password'),
+                                child: Text('Forgot Password',
+                                    style: body14SemiBold),
                                 style:
                                     TextButton.styleFrom(primary: kcInfoColor),
                               ),
