@@ -5,17 +5,14 @@ class AppController extends GetxController {
 
   //This is where to put the app logics e.g. toggle check box
 
-  // Example snippet
-  RxBool isLoginWidgetDisplayed = true.obs;
   RxBool isObscureText = true.obs;
   RxBool isCheckboxChecked = false.obs;
 
   toggleTextVisibility() {
     isObscureText.value = !isObscureText.value;
   }
-  
 
-  changeDisplayedAuthWidget() {
-    isLoginWidgetDisplayed.value = !isLoginWidgetDisplayed.value;
+  toggleCheckBox(bool? newvalue) {
+    isCheckboxChecked.value = newvalue!;
   }
 }
