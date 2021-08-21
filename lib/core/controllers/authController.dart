@@ -31,7 +31,7 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
-    log.i('App ready');
+    log.i('onReady | App is ready');
     super.onReady();
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
@@ -40,10 +40,10 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user == null) {
-      log.i('User is $user. Send to Signin Screen');
+      log.i('_setInitialScreen | User is $user. Send to Signin Screen');
       Get.offAll(() => LoginScreen());
     } else {
-      log.v('User found. Data $user');
+      log.i('_setInitialScreen | User found. Data $user');
       await _initializeUserModel(user.uid);
       _clearControllers();
       await getUserRole(user.uid);
@@ -125,7 +125,7 @@ class AuthController extends GetxController {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'];
-          print('The current user $currentUserUid has user type of $userRole');
+          log.i('getUserRole | The current user has user role of $userRole');
         }
       },
     );
@@ -133,6 +133,7 @@ class AuthController extends GetxController {
   }
 
   _initializeUserModel(String userID) async {
+    log.i('_initializeUserModel | the userID fetched is $userID');
     userModel.value = await _db
         .collection('users')
         .doc(userID)
@@ -143,6 +144,7 @@ class AuthController extends GetxController {
   signOut() async {
     try {
       await _auth.signOut();
+      log.i('signOut | User signs out successfully');
     } catch (e) {
       Get.snackbar(
         'Error signing out',
@@ -153,6 +155,7 @@ class AuthController extends GetxController {
   }
 
   _clearControllers() {
+    log.i('_clearControllers | User Input on authentication is cleared');
     emailController.clear();
     passwordController.clear();
     firstNameController.clear();
@@ -160,6 +163,7 @@ class AuthController extends GetxController {
   }
 
   checkUserPlatform() {
+    log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (kIsWeb) {
       switch (userRole) {
         case 'pswd-p':
@@ -175,6 +179,8 @@ class AuthController extends GetxController {
           Get.offAll(() => DoctorHomeScreen());
           break;
         case 'patient':
+          log.i(
+              'checkUserPlatform | user role is $userRole | redirecting to Patient Home Screen');
           Get.offAll(() => PatientHomeScreen());
           break;
         default:
@@ -183,14 +189,16 @@ class AuthController extends GetxController {
     } else {
       //Mobile Platform
       if (userRole == 'pswd-p' || userRole == 'pswd-h' || userRole == 'admin') {
-        print(
-            'Please log in on Web Application'); //TODO: Error Dialog or SnackBar
+        log.w(
+            'checkUserPlatform | user role is $userRole | Please log in on Web Application'); //TODO: Error Dialog or SnackBar
       } else {
         switch (userRole) {
           case 'doctor':
             Get.offAll(() => DoctorHomeScreen());
             break;
           case 'patient':
+            log.i(
+                'checkUserPlatform | user role is $userRole | redirecting to Patient Home Screen');
             Get.offAll(() => PatientHomeScreen());
             break;
           default:
