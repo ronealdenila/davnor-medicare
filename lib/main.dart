@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.white,elevation: 0)
-      ),
+          primarySwatch: Colors.blue,
+          appBarTheme:
+              AppBarTheme(backgroundColor: Colors.white, elevation: 0)),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       getPages: AppRoutes.routes,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:flutter/foundation.dart';
@@ -9,9 +10,12 @@ import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
+  final log = getLogger('Auth Controller');
+
   static AuthController to = Get.find();
 
   TextEditingController emailController = TextEditingController();
@@ -27,6 +31,7 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
+    log.i('App ready');
     super.onReady();
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
@@ -35,9 +40,10 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user == null) {
-      print('Send to signin');
+      log.i('User is $user. Send to Signin Screen');
       Get.offAll(() => LoginScreen());
     } else {
+      log.v('User found. Data $user');
       await _initializeUserModel(user.uid);
       _clearControllers();
       await getUserRole(user.uid);
@@ -113,7 +119,6 @@ class AuthController extends GetxController {
     });
   }
 
-  //TODO(R): Refactor related to firestore requests and put into services folder named firestore_service
   //check user type of logged in user and navigate
   getUserRole(String currentUserUid) async {
     await _db.collection('users').doc(currentUserUid).get().then(

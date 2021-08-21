@@ -19,95 +19,97 @@ class LoginScreen extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: screenWidth(context),
-            height: screenHeightPercentage(context, percentage: .3),
-            child: Image.asset(authHeader, fit: BoxFit.fill),
-          ),
-          Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            margin: EdgeInsets.all(20),
-            elevation: 3,
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        verticalSpace18,
-                        Text(
-                          'Welcome Back!',
-                          style: TextStyle(
-                              fontSize: 32, fontWeight: FontWeight.bold),
-                        ),
-                        verticalSpace10,
-                        FormInputFieldWithIcon(
-                          controller: authController.emailController,
-                          iconPrefix: Icons.email,
-                          labelText: 'Email',
-                          validator: Validator().email,
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (value) => null,
-                          onSaved: (value) =>
-                              authController.emailController.text = value!,
-                        ),
-                        verticalSpace25,
-                        FormInputFieldWithIcon(
-                          controller: authController.passwordController,
-                          iconPrefix: Icons.lock,
-                          labelText: 'Password',
-                          validator: Validator().password,
-                          obscureText: true,
-                          onChanged: (value) => null,
-                          onSaved: (value) =>
-                              authController.passwordController.text = value!,
-                          maxLines: 1,
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              Get.to(() => ForgotPasswordScreen());
-                            },
-                            child: Text('Forgot Password'),
-                            style: TextButton.styleFrom(primary: kcInfoColor),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: screenWidth(context),
+              height: screenHeightPercentage(context, percentage: .3),
+              child: Image.asset(authHeader, fit: BoxFit.fill),
+            ),
+            Card(
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              margin: EdgeInsets.all(20),
+              elevation: 3,
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          verticalSpace18,
+                          Text(
+                            'Welcome Back!',
+                            style: TextStyle(
+                                fontSize: 32, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        verticalSpace25,
-                        CustomButton(
-                          onTap: () async {
-                            if (_formKey.currentState!.validate()) {
-                              authController
-                                  .signInWithEmailAndPassword(context);
-                            }
-                          },
-                          text: 'Sign In',
-                          color: kcVerySoftBlueColor,
-                          fontSize: 20,
-                        ),
-                        verticalSpace25,
-                      ],
+                          verticalSpace10,
+                          FormInputFieldWithIcon(
+                            controller: authController.emailController,
+                            iconPrefix: Icons.email,
+                            labelText: 'Email',
+                            validator: Validator().email,
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (value) => null,
+                            onSaved: (value) =>
+                                authController.emailController.text = value!,
+                          ),
+                          verticalSpace25,
+                          FormInputFieldWithIcon(
+                            controller: authController.passwordController,
+                            iconPrefix: Icons.lock,
+                            labelText: 'Password',
+                            validator: Validator().password,
+                            obscureText: true,
+                            onChanged: (value) => null,
+                            onSaved: (value) =>
+                                authController.passwordController.text = value!,
+                            maxLines: 1,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(() => ForgotPasswordScreen());
+                              },
+                              child: Text('Forgot Password'),
+                              style: TextButton.styleFrom(primary: kcInfoColor),
+                            ),
+                          ),
+                          verticalSpace25,
+                          CustomButton(
+                            onTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                authController
+                                    .signInWithEmailAndPassword(context);
+                              }
+                            },
+                            text: 'Sign In',
+                            color: kcVerySoftBlueColor,
+                            fontSize: 20,
+                          ),
+                          verticalSpace25,
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          BottomTextWidget(
-            onTap: () {
-              Get.to(() => SignupScreen());
-            },
-            text1: "Don't have an account?",
-            text2: 'Signup here',
-          )
-        ],
+            BottomTextWidget(
+              onTap: () {
+                Get.to(() => SignupScreen());
+              },
+              text1: "Don't have an account?",
+              text2: 'Signup here',
+            )
+          ],
+        ),
       ),
     );
   }
