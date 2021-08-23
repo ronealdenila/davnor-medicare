@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:flutter/foundation.dart';
@@ -52,11 +53,13 @@ class AuthController extends GetxController {
 
   signInWithEmailAndPassword(BuildContext context) async {
     try {
+      showLoading();
       await _auth.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
     } catch (e) {
+      dismissDialog();
       Get.snackbar(
         'Error logging in',
         e.toString(),
@@ -67,6 +70,7 @@ class AuthController extends GetxController {
 
   registerWithEmailAndPassword(BuildContext context) async {
     try {
+      showLoading();
       await _auth
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
@@ -77,6 +81,7 @@ class AuthController extends GetxController {
         },
       );
     } on FirebaseAuthException catch (e) {
+      dismissDialog();
       Get.snackbar(
         'Error creating account',
         e.toString(),
@@ -85,8 +90,6 @@ class AuthController extends GetxController {
     }
   }
 
-  //snippet code for
-  //password reset email
   Future<void> sendPasswordResetEmail(BuildContext context) async {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
@@ -191,9 +194,15 @@ class AuthController extends GetxController {
     } else {
       //Mobile Platform
       if (userRole == 'pswd-p' || userRole == 'pswd-h' || userRole == 'admin') {
-        Get.snackbar('Sign In failed', 'Try Again');
+        Get.defaultDialog(
+          title: 'Sign In failed. Try Again',
+          middleText:
+              '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
+          textConfirm: 'Okay',
+          onConfirm: signOut,
+        );
         log.w(
-            'checkUserPlatform | user role is $userRole | Please log in on Web Application'); //TODO: Error Dialog or SnackBar
+            'checkUserPlatform | user role is $userRole | Please log in on Web Application');
       } else {
         switch (userRole) {
           case 'doctor':
