@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/global/widgets/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -16,7 +16,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CupertinoNavigationBarBackButton(
+        leading: const CupertinoNavigationBarBackButton(
           color: Colors.black,
         ),
       ),
@@ -27,7 +27,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           child: ListView(
             children: [
               verticalSpace25,
-              Text(
+              const Text(
                 'Recover Password',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -35,8 +35,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
               ),
               verticalSpace10,
-              Text(
-                ForgotPasswordDescription,
+              const Text(
+                forgotPasswordDescription,
                 style: TextStyle(fontSize: 18, color: kcNeutralColor),
               ),
               verticalSpace50,

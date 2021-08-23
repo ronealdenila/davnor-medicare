@@ -1,19 +1,10 @@
 //User Model
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel {
-  String? uid;
-  String? email;
-  String? firstName;
-  String? lastName;
-  bool? hasActiveQueue;
-  bool? pStatus;
-  String? profileImage;
-  String? userType;
-  String? validID;
 
+// if dili magbutang og required mag fetch sa firestore kahit null ang value
+class UserModel {
   UserModel({
-    this.uid,
     this.email,
     this.firstName,
     this.lastName,
@@ -21,17 +12,26 @@ class UserModel {
     this.pStatus,
     this.profileImage,
     this.userType,
-    this.validID,
+    this.validId,
   });
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    firstName = (snapshot.data() as dynamic)["firstName"];
-    lastName = (snapshot.data() as dynamic)["lastName"];
-    email = (snapshot.data() as dynamic)["email"];
-    hasActiveQueue = (snapshot.data() as dynamic)["hasActiveQueue"];
-    pStatus = (snapshot.data() as dynamic)["pStatus"];
-    profileImage = (snapshot.data() as dynamic)["profileImage"];
-    userType = (snapshot.data() as dynamic)["userType"];
-    validID = (snapshot.data() as dynamic)["validID"];
+    email = (snapshot.data() as dynamic)['email'] as String;
+    firstName = (snapshot.data() as dynamic)['firstName'] as String;
+    lastName = (snapshot.data() as dynamic)['lastName'] as String;
+    hasActiveQueue = (snapshot.data() as dynamic)['hasActiveQueue'] as bool;
+    pStatus = (snapshot.data() as dynamic)['pStatus'] as bool;
+    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
+    userType = (snapshot.data() as dynamic)['userType'] as String;
+    validId = (snapshot.data() as dynamic)['validID'] as String;
   }
+
+  String? email;
+  String? firstName;
+  String? lastName;
+  bool? hasActiveQueue;
+  bool? pStatus;
+  String? profileImage;
+  String? userType;
+  String? validId;
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   static AuthController to = Get.find();
@@ -15,7 +15,7 @@ class AdminHomeScreen extends StatelessWidget {
               onPressed: () {
                 AuthController.to.signOut();
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),
@@ -33,7 +33,8 @@ class AdminHomeScreen extends StatelessWidget {
             children: [
               //Obx(()=>
               Text(
-                  'Hello ${to.userModel.value.firstName} ${to.userModel.value.lastName}'),
+                  // ignore: lines_longer_than_80_chars
+                  'Hello ${to.userModel.value!.firstName} ${to.userModel.value!.lastName}'),
               Text('Hello ${to.userRole}'),
             ],
           ),

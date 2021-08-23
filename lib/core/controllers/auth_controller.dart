@@ -13,9 +13,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
+
+  Logger logger = Logger();
 
   static AuthController to = Get.find();
 
@@ -24,9 +27,9 @@ class AuthController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  Rx<UserModel> userModel = UserModel().obs;
+  Rxn<UserModel> userModel = Rxn<UserModel>();
   late Rx<User?> _firebaseUser;
   String? userRole;
 
@@ -34,15 +37,16 @@ class AuthController extends GetxController {
   void onReady() {
     log.i('onReady | App is ready');
     super.onReady();
+
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
     ever(_firebaseUser, _setInitialScreen);
   }
 
-  _setInitialScreen(User? user) async {
+  Future<void> _setInitialScreen(User? user) async {
     if (user == null) {
       log.i('_setInitialScreen | User is $user. Send to Signin Screen');
-      Get.offAll(() => LoginScreen());
+      await Get.offAll(() => LoginScreen());
     } else {
       log.i('_setInitialScreen | User found. Data $user');
       await _initializeUserModel(user.uid);
@@ -51,7 +55,7 @@ class AuthController extends GetxController {
     }
   }
 
-  signInWithEmailAndPassword(BuildContext context) async {
+  Future<void> signInWithEmailAndPassword(BuildContext context) async {
     try {
       showLoading();
       await _auth.signInWithEmailAndPassword(
@@ -68,7 +72,7 @@ class AuthController extends GetxController {
     }
   }
 
-  registerWithEmailAndPassword(BuildContext context) async {
+  Future<void> registerWithEmailAndPassword(BuildContext context) async {
     try {
       showLoading();
       await _auth
@@ -76,7 +80,7 @@ class AuthController extends GetxController {
               email: emailController.text, password: passwordController.text)
           .then(
         (result) {
-          String _userID = result.user!.uid;
+          final _userID = result.user!.uid;
           _createUserFirestore(_userID);
         },
       );
@@ -94,7 +98,7 @@ class AuthController extends GetxController {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
       log.i(
-          'sendPasswordResetEmail | Request password reset success to email ${emailController.text}');
+          'sendPasswordResetEmail | Request password sent to email ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
           'Check your email and follow the instructions to reset your password.',
           snackPosition: SnackPosition.BOTTOM,
@@ -104,32 +108,32 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (error) {
       Get.snackbar('Password Reset Email Failed', error.message!,
           snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 10),
+          duration: const Duration(seconds: 10),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor);
     }
   }
 
-  void _createUserFirestore(String _userID) async {
-    await _db.collection('users').doc(_userID).set({
-      "uid": _userID,
-      "email": emailController.text,
-      "firstName": firstNameController.text,
-      "lastName": lastNameController.text,
-      "hasActiveQueue": false,
-      "pStatus": false,
-      "profileImage": "",
-      "validID": "",
-      "userType": 'patient',
+  Future<void> _createUserFirestore(String _userID) async {
+    await _db.collection('users').doc(_userID).set(<String, dynamic>{
+      'uid': _userID,
+      'email': emailController.text,
+      'firstName': firstNameController.text,
+      'lastName': lastNameController.text,
+      'hasActiveQueue': false,
+      'pStatus': false,
+      'profileImage': '',
+      'validID': '',
+      'userType': 'patient',
     });
   }
 
   //check user type of logged in user and navigate
-  getUserRole(String currentUserUid) async {
+  Future<void> getUserRole(String currentUserUid) async {
     await _db.collection('users').doc(currentUserUid).get().then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          userRole = documentSnapshot['userType'];
+          userRole = documentSnapshot['userType'] as String;
           log.i('getUserRole | The current user has user role of $userRole');
         }
       },
@@ -137,7 +141,7 @@ class AuthController extends GetxController {
     await checkUserPlatform();
   }
 
-  _initializeUserModel(String userID) async {
+  Future<void> _initializeUserModel(String userID) async {
     log.i('_initializeUserModel | the userID fetched is $userID');
     userModel.value = await _db
         .collection('users')
@@ -146,7 +150,7 @@ class AuthController extends GetxController {
         .then((doc) => UserModel.fromSnapshot(doc));
   }
 
-  signOut() async {
+  Future<void> signOut() async {
     try {
       await _auth.signOut();
       log.i('signOut | User signs out successfully');
@@ -159,7 +163,7 @@ class AuthController extends GetxController {
     }
   }
 
-  _clearControllers() {
+  void _clearControllers() {
     log.i('_clearControllers | User Input on authentication is cleared');
     emailController.clear();
     passwordController.clear();
@@ -167,12 +171,17 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
-  checkUserPlatform() {
+  void redirectedToScreenWithDelay(dynamic routename) {
+    Future.delayed(const Duration(seconds: 5), () => routename);
+  }
+
+  void checkUserPlatform() {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (kIsWeb) {
       switch (userRole) {
         case 'pswd-p':
-          Get.offAll(() => PSWDPersonnelHomeScreen());
+          redirectedToScreenWithDelay(
+              Get.offAll(() => PSWDPersonnelHomeScreen()));
           break;
         case 'pswd-h':
           Get.offAll(() => PSWDHeadHomeScreen());

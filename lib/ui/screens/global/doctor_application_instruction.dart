@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/appController.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/cupertino.dart';

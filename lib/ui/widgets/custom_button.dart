@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends Container {
-  final Function? onTap;
-  final String? text;
-  final Color color;
-  final Color textColor;
-  final Color splashColor;
-  final double fontSize;
-  final double buttonPadding;
-
   CustomButton({
+    Key? key,
     required this.onTap,
     required this.text,
     this.buttonPadding = 15,
     this.splashColor = Colors.blueGrey,
     this.fontSize = 16,
-    this.color = Colors.blue,
+    this.colors,
     this.textColor = Colors.white,
-  });
+  }) : super(key: key);
+
+  final Function? onTap;
+  final String? text;
+  final Color? colors;
+  final Color textColor;
+  final Color splashColor;
+  final double fontSize;
+  final double buttonPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +26,17 @@ class CustomButton extends Container {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
-      splashColor: this.splashColor,
-      onPressed: () => this.onTap!(),
-      color: this.color,
+      splashColor: splashColor,
+      onPressed: () => onTap!(),
+      color: color,
+      padding: EdgeInsets.all(buttonPadding),
       child: Text(
-        this.text!,
+        text!,
         style: TextStyle(
-          color: this.textColor,
-          fontSize: this.fontSize,
+          color: textColor,
+          fontSize: fontSize,
         ),
       ),
-      padding: EdgeInsets.all(buttonPadding),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/appController.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/global/doctor_application_instruction.dart';
 import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
@@ -28,7 +28,7 @@ class SignupScreen extends StatelessWidget {
       body: Obx(
         () => CustomScrollView(
           slivers: [
-            CustomSliverAppBar(),
+            const CustomSliverAppBar(),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
@@ -37,7 +37,7 @@ class SignupScreen extends StatelessWidget {
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         child: Form(
                           key: _formKey,
                           child: Padding(
@@ -51,7 +51,7 @@ class SignupScreen extends StatelessWidget {
                                       CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     verticalSpace18,
-                                    Text(
+                                    const Text(
                                       'Sign Up',
                                       style: TextStyle(
                                           fontSize: 32,
@@ -99,9 +99,8 @@ class SignupScreen extends StatelessWidget {
                                           authController.passwordController,
                                       iconPrefix: Icons.lock,
                                       suffixIcon: IconButton(
-                                        onPressed: () {
-                                          appController.toggleTextVisibility();
-                                        },
+                                        onPressed:
+                                            appController.toggleTextVisibility,
                                         icon: Icon(
                                           appController.isObscureText.value
                                               ? Icons.visibility
@@ -131,10 +130,11 @@ class SignupScreen extends StatelessWidget {
                                         }
                                         if (value !=
                                             authController
-                                                .passwordController.text)
+                                                .passwordController.text) {
                                           return 'Password does not match';
-                                        else
+                                        } else {
                                           return null;
+                                        }
                                       },
                                       obscureText:
                                           appController.isObscureText.value,
@@ -153,16 +153,17 @@ class SignupScreen extends StatelessWidget {
                                           text1: 'I agree to',
                                           text2: 'Terms & Condition'),
                                       validator: (value) {
-                                        if (value == false)
+                                        if (value == false) {
                                           //Wala ko kabalo unsay error message dapat ani (R)
                                           return 'Please check';
+                                        }
                                       },
                                     ),
                                     verticalSpace10,
                                     CustomButton(
                                       onTap: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          authController
+                                          await authController
                                               .registerWithEmailAndPassword(
                                                   context);
                                         }
@@ -214,14 +215,10 @@ class CustomSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       leading: CupertinoNavigationBarBackButton(
         color: Colors.black,
-        onPressed: () {
-          Get.back();
-        },
+        onPressed: Get.back,
       ),
       expandedHeight: screenHeightPercentage(context, percentage: .2),
       pinned: true,
-      snap: false,
-      floating: false,
       flexibleSpace: FlexibleSpaceBar(
         background: Image.asset(
           authHeader,

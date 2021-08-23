@@ -8,7 +8,7 @@ import 'package:davnor_medicare/ui/screens/global/signup.dart';
 import 'package:davnor_medicare/ui/screens/global/splash.dart';
 import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/ui/screens/patient/ma_RequestInfo.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';

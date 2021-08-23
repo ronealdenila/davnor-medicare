@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class PatientHomeScreen extends StatelessWidget {

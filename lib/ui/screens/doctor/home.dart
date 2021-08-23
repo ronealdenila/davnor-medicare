@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
@@ -20,12 +20,11 @@ class DoctorHomeScreen extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
@@ -36,25 +35,25 @@ class DoctorHomeScreen extends StatelessWidget {
                             Get.to(() => DoctorProfileScreen());
                             //Open Drawer pero Goto Profile lang sa For now for testing (E)
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.notes,
                             color: Colors.white,
-                            size: 35.0,
+                            size: 35,
                           ),
                         ),
                         IconButton(
                           onPressed: () {
                             AuthController.to.signOut();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.logout,
                             color: Colors.white,
-                            size: 30.0,
+                            size: 30,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Column(
@@ -69,7 +68,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${to.userModel.value.lastName}!',
+                          'Dr. ${to.userModel.value!.lastName}!',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,

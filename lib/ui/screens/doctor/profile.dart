@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
@@ -18,75 +18,76 @@ class DoctorProfileScreen extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .4,
-                decoration: new BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kcInfoColor,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(30),
                     bottomLeft: Radius.circular(30),
                   ),
                 ),
-                child: Column(children: <Widget>[
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.keyboard_arrow_left,
-                        color: Colors.white,
-                        size: 50.0,
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        onPressed: Get.back,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_left,
+                          color: Colors.white,
+                          size: 50,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage('asset/images/auth_header.png'),
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Dr. ${to.userModel.value.firstName} ${to.userModel.value.lastName}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.white,
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                    '${to.userModel.value.email}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: Colors.white),
-                  ),
-                ]),
+                    const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('asset/images/auth_header.png'),
+                      radius: 50,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Dr. ${to.userModel.value!.firstName} ${to.userModel.value!.lastName}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      to.userModel.value!.email!,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   elevation: 7,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20),
                     child: Row(
                       children: <Widget>[
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: new BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: kcInfoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
@@ -95,37 +96,35 @@ class DoctorProfileScreen extends StatelessWidget {
                               bottomLeft: Radius.circular(50),
                             ),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.perm_contact_calendar,
                             color: Colors.white,
-                            size: 24.0,
+                            size: 24,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(18.0, 0, 0, 0),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'SPECIALTY',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
+                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text(
+                                'SPECIALTY',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                SizedBox(
-                                  height: 5.0,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                //'${to.userModel.value.email}'
+                                'Cardiologist  - x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
                                 ),
-                                Text(
-                                  //'${to.userModel.value.email}'
-                                  'Cardiologist  - x',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -137,17 +136,17 @@ class DoctorProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   elevation: 7,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20),
                     child: Row(
                       children: <Widget>[
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: new BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: kcInfoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
@@ -156,34 +155,32 @@ class DoctorProfileScreen extends StatelessWidget {
                               bottomLeft: Radius.circular(50),
                             ),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.perm_contact_calendar,
                             color: Colors.white,
-                            size: 24.0,
+                            size: 24,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(18.0, 0, 0, 0),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  //'${to.userModel.value.department}'
-                                  'DEPARTMENT',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
+                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text(
+                                //'${to.userModel.value.department}'
+                                'DEPARTMENT',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                Text(
-                                  'Internal Medicine  - x',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
+                              ),
+                              Text(
+                                'Internal Medicine  - x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -195,17 +192,17 @@ class DoctorProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   elevation: 7,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20),
                     child: Row(
                       children: <Widget>[
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: new BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: kcInfoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
@@ -214,18 +211,18 @@ class DoctorProfileScreen extends StatelessWidget {
                               bottomLeft: Radius.circular(50),
                             ),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.perm_contact_calendar,
                             color: Colors.white,
-                            size: 24.0,
+                            size: 24,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(18.0, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
                           child: Container(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
+                              children: const <Widget>[
                                 Text(
                                   'CLINIC HOURS',
                                   style: TextStyle(
@@ -249,28 +246,31 @@ class DoctorProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.lock,
                   color: Colors.white,
-                  size: 20.0,
+                  size: 20,
                 ),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     primary: kcInfoColor,
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 35,
+                      vertical: 12,
+                    ),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    textStyle: TextStyle(
+                        borderRadius: BorderRadius.circular(10)),
+                    textStyle: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     )),
-                label: Text('Change Password'),
+                label: const Text('Change Password'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

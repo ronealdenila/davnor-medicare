@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/appController.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/global/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/global/signup.dart';
@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 elevation: 3,
                 child: Form(
                   key: _formKey,
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             verticalSpace18,
-                            Text('Welcome Back!', style: title32Bold),
+                            const Text('Welcome Back!', style: title32Bold),
                             verticalSpace50,
                             FormInputFieldWithIcon(
                               controller: authController.emailController,
@@ -67,9 +67,7 @@ class LoginScreen extends StatelessWidget {
                               controller: authController.passwordController,
                               iconPrefix: Icons.lock,
                               suffixIcon: IconButton(
-                                onPressed: () {
-                                  appController.toggleTextVisibility();
-                                },
+                                onPressed: appController.toggleTextVisibility,
                                 icon: Icon(
                                   appController.isObscureText.value
                                       ? Icons.visibility
@@ -91,17 +89,19 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
-                                child: Text('Forgot Password',
-                                    style: body14SemiBold),
                                 style:
                                     TextButton.styleFrom(primary: kcInfoColor),
+                                child: const Text(
+                                  'Forgot Password',
+                                  style: body14SemiBold,
+                                ),
                               ),
                             ),
                             verticalSpace25,
                             CustomButton(
                               onTap: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  authController
+                                  await authController
                                       .signInWithEmailAndPassword(context);
                                 }
                               },

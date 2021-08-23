@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-showLoading(){
+void showLoading() {
   Get.defaultDialog(
-    title: "Loading...",
-    content: CircularProgressIndicator(),
-    barrierDismissible: false
-  );
+      title: 'Loading...',
+      content: CircularProgressIndicator(),
+      barrierDismissible: false);
 }
 
-showErrorDialog(){
+void showErrorDialog() {
   Get.defaultDialog(
     title: 'Error Occurred',
     textConfirm: 'Okay',
   );
 }
 
-dismissDialog(){
+void dismissDialog() {
   Get.back();
 }

@@ -11,13 +11,13 @@ Logger getLogger(String className) {
 }
 
 class SimpleLogPrinter extends LogPrinter {
-  final String className;
   SimpleLogPrinter(this.className);
+  final String className;
 
   @override
   List<String> log(LogEvent event) {
-    var color = PrettyPrinter.levelColors[event.level];
-    var emoji = PrettyPrinter.levelEmojis[event.level];
+    final color = PrettyPrinter.levelColors[event.level];
+    final emoji = PrettyPrinter.levelEmojis[event.level];
     return [color!('$emoji $className - ${event.message}')];
   }
 }
