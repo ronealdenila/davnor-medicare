@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 const Color kcNeutralColor = Color(0xFF64748B);
 const Color kcInfoColor = Color(0xFF4D82F3);
 
-
 // Custom Color Palette
 const MaterialColor kcVerySoftBlueColor = MaterialColor(
   _verySoftBlueColorPrimaryValue,

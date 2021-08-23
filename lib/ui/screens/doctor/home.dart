@@ -5,7 +5,7 @@ import 'package:davnor_medicare/core/controllers/authController.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  static AuthController to = Get.find();
+  static AuthController authController = Get.find();
 
   //data needed for consultation process
   final int slot = 10;
@@ -16,6 +16,25 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kcVerySoftBlueColor,
+          actions: [
+            IconButton(
+              onPressed: () {
+                AuthController.to.signOut();
+              },
+              icon: Icon(Icons.logout),
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          child: TextButton(
+            child: Text('Profile'),
+            onPressed: () {
+              Get.to(() => DoctorProfileScreen());
+            },
+          ),
+        ),
         backgroundColor: kcVerySoftBlueColor,
         body: Column(
           children: [
@@ -28,32 +47,32 @@ class DoctorHomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => DoctorProfileScreen());
-                            //Open Drawer pero Goto Profile lang sa For now for testing (E)
-                          },
-                          icon: Icon(
-                            Icons.notes,
-                            color: Colors.white,
-                            size: 35.0,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            AuthController.to.signOut();
-                          },
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: <Widget>[
+                    //     IconButton(
+                    //       onPressed: () {
+                    //         Get.to(() => DoctorProfileScreen());
+                    //         //Open Drawer pero Goto Profile lang sa For now for testing (E)
+                    //       },
+                    //       icon: Icon(
+                    //         Icons.notes,
+                    //         color: Colors.white,
+                    //         size: 35.0,
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //       onPressed: () {
+                    //         AuthController.to.signOut();
+                    //       },
+                    //       icon: Icon(
+                    //         Icons.logout,
+                    //         color: Colors.white,
+                    //         size: 30.0,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -69,7 +88,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${to.userModel.value.lastName}!',
+                          'Dr. ${authController.userModel.value.lastName}!',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,

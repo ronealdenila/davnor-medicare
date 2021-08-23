@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -46,7 +47,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     height: 10,
                   ),
                   CircleAvatar(
-                    backgroundImage: AssetImage('asset/images/auth_header.png'),
+                    backgroundImage: AssetImage(authHeader),
                     radius: 50,
                   ),
                   SizedBox(
