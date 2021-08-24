@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -10,7 +11,7 @@ class MADescriptionScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(children: [
+        body: ListView(children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 30),
             child: Column(
@@ -20,7 +21,7 @@ class MADescriptionScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Medical Assistance MA',
+                      'Medical Assistance (MA)',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 24,
@@ -28,10 +29,10 @@ class MADescriptionScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Provincial Social Welfare and Development',
+                      madescriptionParagraph1,
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
@@ -40,36 +41,81 @@ class MADescriptionScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    'This service provides Medical Assistance to patient/s who are diagnosed and need medical treatment either an out-patient or confined in any government or districts hospitals in Davao del Norte and National Government Hospitals. The amount to be availed is based on the assessment of the assessing staff. Medical supplies and supplements/vitamins are not included/ allowed in the assistance. Client may avail once every month or 30 days from date of the last assistance.',
+                    madescriptionParagraph2,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 textDirection: TextDirection.ltr,
                   children: const <Widget>[
                     Text(
                       'REQUIREMENTS',
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                     Text(
+                      madescriptionParagraph3,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    
+                    Text(
+                      madescriptionParagraph4,
+                       textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+
+                    Text(
+                      'WHERE TO SECURE',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    
+                     Text(
+                      madescriptionParagraph5,
+                       textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
                         fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
                     Text(
-                      'WHERE TO SECURE',
+                      madescriptionParagraph6,
+                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
                   ],
                 ),
+
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10)),
+                
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
@@ -82,9 +128,13 @@ class MADescriptionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                 children: [
+                      const Text(
                   'Morning',
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -92,15 +142,49 @@ class MADescriptionScreen extends StatelessWidget {
                   ),
                 ),
                 const Text(
+                  '      Cut-off: 9:30 am & Releasing: 12:30 pm',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+                 ]
+              ),
+
+            const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10)),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                 children: [
+                      const Text(
                   'Afternoon',
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
+                const Text(
+                  '    Cut-off: 1:30 pm & Releasing: 4:30 pm',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+                 ]
+              ),
+
+               const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10)),
+                
                 Card(
+                  color: verySoftBlueColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -112,7 +196,7 @@ class MADescriptionScreen extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: verySoftBlueColor,
+                        color: Colors.black,
                       ),
                     ),
                   ),

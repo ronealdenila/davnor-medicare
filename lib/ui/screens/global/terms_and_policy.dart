@@ -78,7 +78,8 @@ class TermsAndPolicyScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: Text(
-              'While using our application, we may ask you to provide us with certain personally identifiable information that can be used to contact or identified you. Personally identifiable information may include, but is not limited to your name ("Personal Information").',
+              termsAndPolicyParagraph3 
+,
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -102,7 +103,7 @@ class TermsAndPolicyScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
             child: Text(
-              'We may terminate or suspend access to our Service Immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.',
+              termsAndPolicyParagraph4,
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 15,

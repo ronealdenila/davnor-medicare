@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 class DoctorApplicationInstructionScreen extends StatelessWidget {
   final AppController appController = AppController.to;
 
-  static const emailScheme = 'mailto:davnor.medicare@gmail.com?subject=Davnor Medicare Doctor Application';
+  static const emailScheme = doctorapplicationinstructionParagraph0;
   static const formUrl = 'https://forms.gle/WKWnBsG9EuivmY1dA';
 
   @override
@@ -20,7 +21,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Text(
               'Join Our Team',
@@ -28,34 +29,34 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               style: title24Bold,
             ),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
             child: Text(
-              'Together lets provide healthcare, improve life, and help our community.',
+              doctorapplicationinstructionParagraph1,
               style: body14Regular,
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 40, horizontal: 35),
             child: Text(
-              'Are you concerned for the health of our community? Extend your care and medical skills by joining as a doctor here in DavNor MediCare. Together we can provide free online consultation, improve everyone’s lives, and feel rewarded for helping others in times of need.',
+              doctorapplicationinstructionParagraph2,
               textAlign: TextAlign.justify,
               style: body16Regular,
             ),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 35),
             child: Text(
-              'In DavNor MediCare, we only want the best healthcare for our patients. Thats why before accepting clinicians to join our team, we ensure that they are licensed to practice medicine and can provide the level of services we guarantee to our people.',
+              doctorapplicationinstructionParagraph3,
               textAlign: TextAlign.justify,
               style: body16Regular,
             ),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 35),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(horizontal: 35),
             child: Text(
               'For Interested Doctors:',
@@ -64,7 +65,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: GestureDetector(
               onTap: () => appController
                   .launchURL(formUrl),
@@ -75,10 +76,10 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 35),
           ),
-          Padding(
+    const Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: Text(
               'For any inquiries, please email us at:',
@@ -87,7 +88,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: GestureDetector(
               onTap: () => appController.launchURL(emailScheme),
               child: Text(

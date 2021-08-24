@@ -1,18 +1,20 @@
 import 'package:davnor_medicare/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+//import 'package:davnor_medicare/core/controllers/appController.dart';
+//import 'package:davnor_medicare/core/controllers/authController.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:get/get.dart';
+
+import 'core/controllers/app_controller.dart';
+import 'core/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Get.put<AppController>(AppController());
-  Get.put<AuthController>(AuthController());
+//  Get.put<AppController>(AppController());
+//  Get.put<AuthController>(AuthController());
   runApp(MyApp());
 }
 
@@ -22,16 +24,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme:
-            const AppBarTheme(backgroundColor: Colors.white, elevation: 0),
-      ),
+          primarySwatch: Colors.blue,
+          appBarTheme:
+              AppBarTheme(backgroundColor: Colors.white, elevation: 0)),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute:'/MADescriptionRoute',
       getPages: AppRoutes.routes,
-      // navigatorKey: locator<NavigationService>().navigatorKey,
-      // initialRoute: routes.LoginRoute,
-      // onGenerateRoute: router.generateRoute,
+    //   navigatorKey: locator<NavigationService>().navigatorKey,
+     // initialRoute: routes.LoginRoute,
+     // onGenerateRoute: router.generateRoute,
     );
   }
 }
