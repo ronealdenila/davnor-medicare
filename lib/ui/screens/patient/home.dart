@@ -35,7 +35,7 @@ class PatientHomeScreen extends StatelessWidget {
             children: [
               //Obx(()=>
               Text(
-                  'Hello ${controller.userModel.value!.firstName} ${controller.userModel.value!.lastName}'),
+                  'Hello ${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
               Text('Hello ${controller.userRole}'),
             ],
           ),

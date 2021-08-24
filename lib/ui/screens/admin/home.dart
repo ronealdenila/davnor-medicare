@@ -34,7 +34,7 @@ class AdminHomeScreen extends StatelessWidget {
               //Obx(()=>
               Text(
                   // ignore: lines_longer_than_80_chars
-                  'Hello ${to.userModel.value!.firstName} ${to.userModel.value!.lastName}'),
+                  'Hello ${to.adminModel.value!.firstName} ${to.adminModel.value!.lastName}'),
               Text('Hello ${to.userRole}'),
             ],
           ),

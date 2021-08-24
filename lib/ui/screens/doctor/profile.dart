@@ -54,7 +54,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    'Dr. ${authController.userModel.value!.firstName} ${authController.userModel.value!.lastName}',
+                    'Dr. ${authController.doctorModel.value!.firstName} ${authController.doctorModel.value!.lastName}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -65,7 +65,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     height: 3,
                   ),
                   Text(
-                    '${authController.userModel.value!.email}',
+                    '${authController.doctorModel.value!.email}',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,

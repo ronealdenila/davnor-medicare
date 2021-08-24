@@ -16,7 +16,7 @@ class PatientProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                        '${controller.userModel.value!.firstName} ${controller.userModel.value!.lastName}'),
+                        '${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
                     //TODO: To be refactor
                     //   '${controller.firestoreUser.value!.firstName}' +
                     //       ' ' +

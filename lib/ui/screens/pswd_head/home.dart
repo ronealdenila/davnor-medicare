@@ -32,7 +32,7 @@ class PSWDHeadHomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                  'Hello ${to.userModel.value!.firstName} ${to.userModel.value!.lastName}'),
+                  'Hello ${to.pswdModel.value!.firstName} ${to.pswdModel.value!.lastName}'),
               Text('Hello ${to.userRole}'),
             ],
           ),

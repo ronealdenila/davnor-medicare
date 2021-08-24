@@ -26,10 +26,10 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Rxn<UserModel> userModel = Rxn<UserModel>();
+  Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
   Rxn<AdminModel> adminModel = Rxn<AdminModel>();
-  Rxn<PswdHModel> pswdHModel = Rxn<PswdHModel>();
+  Rxn<PswdModel> pswdModel = Rxn<PswdModel>();
 
   late Rx<User?> _firebaseUser;
   String? userRole;
@@ -48,18 +48,14 @@ class AuthController extends GetxController {
     if (user == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
-        //if nag signout si user, deretso na sa login screen without delay
         await Get.offAll(() => LoginScreen());
       } else {
-        //wala nag signout (null = wala pa nag log in), delay before niya tabunan si splashscreen
         navigateWithDelay('/login');
       }
     } else {
       userSignedOut = false;
       log.i('_setInitialScreen | User found. Data $user');
-      // await getUserRole(user.uid);
-      await _initializeUserId(user.uid);
-      // await _initializeUserModelBasedOnRole(user);
+      await getUserRole(user.uid);
     }
   }
 
@@ -147,18 +143,7 @@ class AuthController extends GetxController {
         }
       },
     );
-    await _initializeUserModelBasedOnRole(currentUserUid);
-    // await checkUserPlatform();
-  }
-
-  Future<void> _initializeUserId(String userId) async {
-    log.i('_initializeUserModel | the userID fetched is $userId');
-    await getUserRole(userId);
-    // userModel.value = await _db
-    //     .collection('users')
-    //     .doc(userID)
-    //     .get()
-    //     .then((doc) => UserModel.fromSnapshot(doc));
+    await checkUserPlatform(currentUserUid);
   }
 
   Future<void> signOut() async {
@@ -183,93 +168,48 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
-  Future<void> _initializeUserModelBasedOnRole(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    switch (userRole) {
-      case 'doctor':
-        doctorModel.value = await _db
-            .collection('users')
-            .doc(userId)
-            .get()
-            .then((doc) => DoctorModel.fromSnapshot(doc));
-        log.i('Fetched Data: ${doctorModel.value!.firstName}');
-        break;
-      case 'patient':
-        userModel.value = await _db
-            .collection('users')
-            .doc(userId)
-            .get()
-            .then((doc) => UserModel.fromSnapshot(doc));
-        log.i(userModel.value!.firstName);
-        break;
-      case 'admin':
-        adminModel.value = await _db
-            .collection('users')
-            .doc(userId)
-            .get()
-            .then((doc) => AdminModel.fromSnapshot(doc));
-        log.i(adminModel.value!.firstName);
-        break;
-      case 'pswd-h':
-        pswdHModel.value = await _db
-            .collection('users')
-            .doc(userId)
-            .get()
-            .then((doc) => PswdHModel.fromSnapshot(doc));
-        break;
-      default:
-    }
-    await checkUserPlatform();
-  }
-
-  Future<void> checkUserPlatform() async {
+  Future<void> checkUserPlatform(String uid) async {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (userSignedOut == false) {
-      if (kIsWeb) {
-        switch (userRole) {
-          case 'pswd-p':
-            // navigateWithDelay('/PSWDPersonnelHome');
-            break;
-          case 'pswd-h':
-            // navigateWithDelay('/PSWDHeadHome');
-            break;
-          case 'admin':
-            // navigateWithDelay('/AdminHome');
-            break;
-          case 'doctor':
-            // navigateWithDelay('/DoctorHome');
-            break;
-          case 'patient':
-            // navigateWithDelay('/PatientHome');
-            break;
-          default:
-            print('Error Occured'); //TODO: Error Dialog or SnackBar
-        }
-      } else {
-        //Mobile Platform
-        if (userRole == 'pswd-p' ||
-            userRole == 'pswd-h' ||
-            userRole == 'admin') {
-          await Get.defaultDialog(
-            title: 'Sign In failed. Try Again',
-            middleText:
-                '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
-            textConfirm: 'Okay',
-            onConfirm: signOut,
-          );
-        } else {
-          switch (userRole) {
-            case 'doctor':
-              navigateWithDelay('/DoctorHome');
-              break;
-            case 'patient':
-              // navigateWithDelay('/PatientHome');
-              break;
-            default:
-              print('Error Occured'); //TODO: Error Dialog or SnackBar
-          }
-        }
+      switch (userRole) {
+        case 'pswd-p':
+          await _initializePSWDModel(uid);
+          await checkAppRestriction('/PSWDPersonnelHome');
+          break;
+        case 'pswd-h':
+          await _initializePSWDModel(uid);
+          await checkAppRestriction('/PSWDHeadHome');
+          break;
+        case 'admin':
+          await _initializeAdminModel(uid);
+          await checkAppRestriction('/AdminHome');
+          break;
+        case 'doctor':
+          await _initializeDoctorModel(uid);
+          navigateWithDelay('/DoctorHome');
+          break;
+        case 'patient':
+          await _initializePatientModel(uid);
+          navigateWithDelay('/PatientHome');
+          break;
+        default:
+          print('Error Occured'); //TODO: Error Dialog or SnackBar
       }
+    }
+  }
+
+  //Restrict admin and pswd from logging in mobile app
+  Future<void> checkAppRestriction(String route) async {
+    if (!kIsWeb) {
+      await Get.defaultDialog(
+        title: 'Sign In failed. Try Again',
+        middleText:
+            '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
+        textConfirm: 'Okay',
+        onConfirm: signOut,
+      );
+    } else {
+      navigateWithDelay(route);
     }
   }
 
@@ -277,5 +217,45 @@ class AuthController extends GetxController {
     Future.delayed(const Duration(seconds: 1), () {
       Get.offAllNamed(route);
     });
+  }
+
+  //initializedBaseOnUserRoles
+  Future<void> _initializePatientModel(String userId) async {
+    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
+    patientModel.value = await _db
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((doc) => PatientModel.fromSnapshot(doc));
+    log.i(patientModel.value!.firstName);
+  }
+
+  Future<void> _initializeDoctorModel(String userId) async {
+    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
+    doctorModel.value = await _db
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((doc) => DoctorModel.fromSnapshot(doc));
+    log.i('Fetched Data: ${doctorModel.value!.firstName}');
+  }
+
+  Future<void> _initializePSWDModel(String userId) async {
+    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
+    pswdModel.value = await _db
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((doc) => PswdModel.fromSnapshot(doc));
+  }
+
+  Future<void> _initializeAdminModel(String userId) async {
+    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
+    adminModel.value = await _db
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((doc) => AdminModel.fromSnapshot(doc));
+    log.i(adminModel.value!.firstName);
   }
 }
