@@ -121,6 +121,7 @@ const TextStyle body16Regular = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+  height: 1.3,
 );
 
 const TextStyle body16RegularUnderline = TextStyle(
@@ -153,6 +154,7 @@ const TextStyle body14Regular = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+  height: 1.3,
 );
 
 // Captions
@@ -172,6 +174,7 @@ const TextStyle caption12Regular = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+  height: 1.3,
 );
 
 const TextStyle caption10Regular = TextStyle(

@@ -89,8 +89,7 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
-                                style:
-                                    TextButton.styleFrom(primary: infoColor),
+                                style: TextButton.styleFrom(primary: infoColor),
                                 child: const Text(
                                   'Forgot Password',
                                   style: body14SemiBold,

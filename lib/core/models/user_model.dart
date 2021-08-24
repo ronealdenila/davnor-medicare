@@ -8,7 +8,6 @@ class PatientModel {
     this.email,
     this.firstName,
     this.lastName,
-    this.userType,
     this.profileImage,
     this.pStatus,
     this.validID,
@@ -20,7 +19,6 @@ class PatientModel {
     email = (snapshot.data() as dynamic)['email'] as String;
     firstName = (snapshot.data() as dynamic)['firstName'] as String;
     lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
     profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
     validID = (snapshot.data() as dynamic)['validID'] as String;
     validSelfie = (snapshot.data() as dynamic)['validSelfie'] as String;
@@ -31,12 +29,13 @@ class PatientModel {
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
+  //data that will change --------
   String? profileImage;
   String? validID;
   String? validSelfie;
   bool? pStatus;
   bool? hasActiveQueue;
+  // -----------------------------
 }
 
 class DoctorModel {
@@ -44,7 +43,6 @@ class DoctorModel {
     this.email,
     this.firstName,
     this.lastName,
-    this.userType,
     this.title,
     this.department,
     this.clinicHours,
@@ -58,7 +56,6 @@ class DoctorModel {
     email = (snapshot.data() as dynamic)['email'] as String;
     firstName = (snapshot.data() as dynamic)['firstName'] as String;
     lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
     title = (snapshot.data() as dynamic)['title'] as String;
     department = (snapshot.data() as dynamic)['department'] as String;
     clinicHours = (snapshot.data() as dynamic)['clinicHours'] as String;
@@ -71,14 +68,15 @@ class DoctorModel {
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
   String? title;
   String? department;
   String? clinicHours;
+  //data that will change --------
   String? profileImage;
   int? numToAccomodate;
   bool? dStatus;
   bool? hasOngoingCons;
+  // -----------------------------
 }
 
 class AdminModel {
@@ -86,7 +84,6 @@ class AdminModel {
     this.email,
     this.firstName,
     this.lastName,
-    this.userType,
     this.profileImage,
   });
 
@@ -94,15 +91,13 @@ class AdminModel {
     email = (snapshot.data() as dynamic)['email'] as String;
     firstName = (snapshot.data() as dynamic)['firstName'] as String;
     lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
     profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
   }
 
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
-  String? profileImage;
+  String? profileImage; //data that will change
 }
 
 class PswdModel {
@@ -110,7 +105,6 @@ class PswdModel {
     this.email,
     this.firstName,
     this.lastName,
-    this.userType,
     this.position,
     this.profileImage,
   });
@@ -119,7 +113,6 @@ class PswdModel {
     email = (snapshot.data() as dynamic)['email'] as String;
     firstName = (snapshot.data() as dynamic)['firstName'] as String;
     lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
     position = (snapshot.data() as dynamic)['position'] as String;
     profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
   }
@@ -127,7 +120,6 @@ class PswdModel {
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
   String? position;
-  String? profileImage;
+  String? profileImage; //data that will change
 }

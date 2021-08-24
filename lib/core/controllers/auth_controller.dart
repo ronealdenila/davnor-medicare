@@ -37,6 +37,7 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
+    //signOut(); //For Signout sa user na nag error (i.e., patient)
     log.i('onReady | App is ready');
     super.onReady();
     _firebaseUser = Rx<User?>(_auth.currentUser);
@@ -77,7 +78,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> registerWithEmailAndPassword(BuildContext context) async {
+  Future<void> registerPatient(BuildContext context) async {
     try {
       showLoading();
       await _auth
@@ -86,10 +87,10 @@ class AuthController extends GetxController {
           .then(
         (result) {
           final _userID = result.user!.uid;
-          _createUserFirestore(_userID);
+          _createPatientUser(_userID);
         },
       );
-      _clearControllers();
+      await _clearControllers();
     } on FirebaseAuthException catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -120,8 +121,11 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> _createUserFirestore(String _userID) async {
+  Future<void> _createPatientUser(String _userID) async {
     await _db.collection('users').doc(_userID).set(<String, dynamic>{
+      'userType': 'patient',
+    });
+    await _db.collection('patients').doc(_userID).set(<String, dynamic>{
       'email': emailController.text,
       'firstName': firstNameController.text,
       'lastName': lastNameController.text,
@@ -160,7 +164,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void _clearControllers() {
+  Future<void> _clearControllers() async {
     log.i('_clearControllers | User Input on authentication is cleared');
     emailController.clear();
     passwordController.clear();
@@ -222,18 +226,18 @@ class AuthController extends GetxController {
   //initializedBaseOnUserRoles
   Future<void> _initializePatientModel(String userId) async {
     log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    patientModel.value = await _db
-        .collection('users')
-        .doc(userId)
-        .get()
-        .then((doc) => PatientModel.fromSnapshot(doc));
+    patientModel.value =
+        await _db.collection('patients').doc(userId).get().then((doc) {
+      //kini neal, document snapshot does not exist huhu (E)
+      PatientModel.fromSnapshot(doc);
+    });
     log.i(patientModel.value!.firstName);
   }
 
   Future<void> _initializeDoctorModel(String userId) async {
     log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
     doctorModel.value = await _db
-        .collection('users')
+        .collection('doctors')
         .doc(userId)
         .get()
         .then((doc) => DoctorModel.fromSnapshot(doc));
@@ -243,7 +247,7 @@ class AuthController extends GetxController {
   Future<void> _initializePSWDModel(String userId) async {
     log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
     pswdModel.value = await _db
-        .collection('users')
+        .collection('pswd_personnel')
         .doc(userId)
         .get()
         .then((doc) => PswdModel.fromSnapshot(doc));
@@ -252,7 +256,7 @@ class AuthController extends GetxController {
   Future<void> _initializeAdminModel(String userId) async {
     log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
     adminModel.value = await _db
-        .collection('users')
+        .collection('admins')
         .doc(userId)
         .get()
         .then((doc) => AdminModel.fromSnapshot(doc));

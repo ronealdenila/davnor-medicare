@@ -164,8 +164,7 @@ class SignupScreen extends StatelessWidget {
                                       onTap: () async {
                                         if (_formKey.currentState!.validate()) {
                                           await authController
-                                              .registerWithEmailAndPassword(
-                                                  context);
+                                              .registerPatient(context);
                                         }
                                       },
                                       text: 'Sign Up Now',
