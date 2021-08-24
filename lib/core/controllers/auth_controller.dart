@@ -24,12 +24,14 @@ class AuthController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
   Rxn<AdminModel> adminModel = Rxn<AdminModel>();
   Rxn<PswdModel> pswdModel = Rxn<PswdModel>();
+
+  Rxn<User> firebaseUser = Rxn<User>();
 
   late Rx<User?> _firebaseUser;
   String? userRole;
@@ -37,16 +39,21 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
-    //signOut(); //For Signout sa user na nag error (i.e., patient)
+    // signOut(); //For Signout sa user na nag error (i.e., patient)
     log.i('onReady | App is ready');
+
+    ever(firebaseUser, _setInitialScreen);
+    firebaseUser.bindStream(user);
     super.onReady();
-    _firebaseUser = Rx<User?>(_auth.currentUser);
-    _firebaseUser.bindStream(_auth.userChanges());
-    ever(_firebaseUser, _setInitialScreen);
+    // _firebaseUser = Rx<User?>(_auth.currentUser);
+    // _firebaseUser.bindStream(_auth.userChanges());
+    // ever(_firebaseUser, _setInitialScreen);
   }
 
-  Future<void> _setInitialScreen(User? user) async {
-    if (user == null) {
+  Stream<User?> get user => _auth.authStateChanges();
+
+  Future<void> _setInitialScreen(_firebaseUser) async {
+    if (_firebaseUser == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
         await Get.offAll(() => LoginScreen());
@@ -55,8 +62,8 @@ class AuthController extends GetxController {
       }
     } else {
       userSignedOut = false;
-      log.i('_setInitialScreen | User found. Data $user');
-      await getUserRole(user.uid);
+      log.i('_setInitialScreen | User found. Data $_firebaseUser');
+      await getUserRole();
     }
   }
 
@@ -83,11 +90,13 @@ class AuthController extends GetxController {
       showLoading();
       await _auth
           .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text)
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      )
           .then(
-        (result) {
+        (result) async {
           final _userID = result.user!.uid;
-          _createPatientUser(_userID);
+          await _createPatientUser(_userID);
         },
       );
       await _clearControllers();
@@ -122,24 +131,34 @@ class AuthController extends GetxController {
   }
 
   Future<void> _createPatientUser(String _userID) async {
-    await _db.collection('users').doc(_userID).set(<String, dynamic>{
+    await firebaseFirestore
+        .collection('users')
+        .doc(_userID)
+        .set(<String, dynamic>{
       'userType': 'patient',
     });
-    await _db.collection('patients').doc(_userID).set(<String, dynamic>{
-      'email': emailController.text,
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
+    await firebaseFirestore
+        .collection('patients')
+        .doc(_userID)
+        .set(<String, dynamic>{
+      'email': emailController.text.trim(),
+      'firstName': firstNameController.text.trim(),
+      'lastName': lastNameController.text.trim(),
       'hasActiveQueue': false,
       'pStatus': false,
       'profileImage': '',
       'validID': '',
-      'userType': 'patient',
+      'validSelfie': '',
     });
   }
 
   //check user type of logged in user and navigate
-  Future<void> getUserRole(String currentUserUid) async {
-    await _db.collection('users').doc(currentUserUid).get().then(
+  Future<void> getUserRole() async {
+    await firebaseFirestore
+        .collection('users')
+        .doc(firebaseUser.value!.uid)
+        .get()
+        .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
@@ -147,7 +166,7 @@ class AuthController extends GetxController {
         }
       },
     );
-    await checkUserPlatform(currentUserUid);
+    await checkUserPlatform();
   }
 
   Future<void> signOut() async {
@@ -172,28 +191,28 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
-  Future<void> checkUserPlatform(String uid) async {
+  Future<void> checkUserPlatform() async {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (userSignedOut == false) {
       switch (userRole) {
         case 'pswd-p':
-          await _initializePSWDModel(uid);
+          await _initializePSWDModel();
           await checkAppRestriction('/PSWDPersonnelHome');
           break;
         case 'pswd-h':
-          await _initializePSWDModel(uid);
+          await _initializePSWDModel();
           await checkAppRestriction('/PSWDHeadHome');
           break;
         case 'admin':
-          await _initializeAdminModel(uid);
+          await _initializeAdminModel();
           await checkAppRestriction('/AdminHome');
           break;
         case 'doctor':
-          await _initializeDoctorModel(uid);
+          await _initializeDoctorModel();
           navigateWithDelay('/DoctorHome');
           break;
         case 'patient':
-          await _initializePatientModel(uid);
+          await _initializePatientModel();
           navigateWithDelay('/PatientHome');
           break;
         default:
@@ -224,40 +243,45 @@ class AuthController extends GetxController {
   }
 
   //initializedBaseOnUserRoles
-  Future<void> _initializePatientModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    patientModel.value =
-        await _db.collection('patients').doc(userId).get().then((doc) {
-      //kini neal, document snapshot does not exist huhu (E)
-      PatientModel.fromSnapshot(doc);
-    });
-    log.i(patientModel.value!.firstName);
+  Future<void> _initializePatientModel() async {
+    log.i(
+        '_initializePatientModel | ${firebaseUser.value!.uid} has role $userRole');
+    await firebaseFirestore
+        .collection('patients')
+        .doc(firebaseUser.value!.uid)
+        .get()
+        .then((doc) =>
+            //kini neal, document snapshot does not exist huhu (E)
+            PatientModel.fromJson(doc.data()!));
   }
 
-  Future<void> _initializeDoctorModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    doctorModel.value = await _db
+  Future<void> _initializeDoctorModel() async {
+    log.i(
+        '_initializeDoctorModel | ${firebaseUser.value!.uid} has role $userRole');
+    doctorModel.value = await firebaseFirestore
         .collection('doctors')
-        .doc(userId)
+        .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => DoctorModel.fromSnapshot(doc));
     log.i('Fetched Data: ${doctorModel.value!.firstName}');
   }
 
-  Future<void> _initializePSWDModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    pswdModel.value = await _db
+  Future<void> _initializePSWDModel() async {
+    log.i(
+        '_initializePSWDModel | ${firebaseUser.value!.uid} has role $userRole');
+    pswdModel.value = await firebaseFirestore
         .collection('pswd_personnel')
-        .doc(userId)
+        .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PswdModel.fromSnapshot(doc));
   }
 
-  Future<void> _initializeAdminModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    adminModel.value = await _db
+  Future<void> _initializeAdminModel() async {
+    log.i(
+        '_initializeAdminModel | ${firebaseUser.value!.uid} has role $userRole');
+    adminModel.value = await firebaseFirestore
         .collection('admins')
-        .doc(userId)
+        .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => AdminModel.fromSnapshot(doc));
     log.i(adminModel.value!.firstName);

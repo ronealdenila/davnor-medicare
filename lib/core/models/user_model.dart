@@ -2,40 +2,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-// if dili magbutang og required mag fetch sa firestore kahit null ang value
+//gamit kaayo si required / null safety kay para di nato mag appear ang null error
 class PatientModel {
   PatientModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.profileImage,
-    this.pStatus,
-    this.validID,
-    this.validSelfie,
-    this.hasActiveQueue,
+    required this.email,
+    required this.firstname,
+    required this.lastName,
+    required this.profileImage,
+    required this.pStatus,
+    required this.validId,
+    required this.validSelfie,
+    required this.hasActiveQueue,
   });
 
-  PatientModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-    validID = (snapshot.data() as dynamic)['validID'] as String;
-    validSelfie = (snapshot.data() as dynamic)['validSelfie'] as String;
-    pStatus = (snapshot.data() as dynamic)['pStatus'] as bool;
-    hasActiveQueue = (snapshot.data() as dynamic)['hasActiveQueue'] as bool;
-  }
+  factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
+        email: json['email'] as String,
+        firstname: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        profileImage: json['profileImage'] as String,
+        pStatus: json['pStatus'] as bool,
+        validId: json['validID'] as String,
+        validSelfie: json['validSelfie'] as String,
+        hasActiveQueue: json['hasActiveQueue'] as bool,
+      );
 
-  String? email;
-  String? firstName;
-  String? lastName;
-  //data that will change --------
-  String? profileImage;
-  String? validID;
-  String? validSelfie;
-  bool? pStatus;
-  bool? hasActiveQueue;
-  // -----------------------------
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstname': firstname,
+        'lastName': lastName,
+        'profileImage': profileImage,
+        'pStatus': pStatus,
+        'validID': validId,
+        'validSelfie': validSelfie,
+        'hasActiveQueue': hasActiveQueue,
+      };
+
+  final String? email;
+  final String? firstname;
+  final String? lastName;
+  final String? profileImage;
+  final bool? pStatus;
+  final String? validId;
+  final String? validSelfie;
+  final bool? hasActiveQueue;
 }
 
 class DoctorModel {

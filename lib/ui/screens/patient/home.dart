@@ -34,8 +34,8 @@ class PatientHomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //Obx(()=>
-              Text(
-                  'Hello ${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
+              // Text(
+              //     'Hello ${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
               Text('Hello ${controller.userRole}'),
             ],
           ),
