@@ -32,12 +32,12 @@ class AuthController extends GetxController {
   Rxn<UserModel> userModel = Rxn<UserModel>();
   late Rx<User?> _firebaseUser;
   String? userRole;
+  bool? userSignedOut = false;
 
   @override
   void onReady() {
     log.i('onReady | App is ready');
     super.onReady();
-
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
     ever(_firebaseUser, _setInitialScreen);
@@ -46,8 +46,15 @@ class AuthController extends GetxController {
   Future<void> _setInitialScreen(User? user) async {
     if (user == null) {
       log.i('_setInitialScreen | User is $user. Send to Signin Screen');
-      await Get.offAll(() => LoginScreen());
+      if (userSignedOut == true) {
+        //if nag signout si user, deretso na sa login screen without delay
+        Get.offAll(() => LoginScreen());
+      } else {
+        //wala nag signout (null = wala pa nag log in), delay before niya tabunan si splashscreen
+        navigateWithDelay('/login');
+      }
     } else {
+      userSignedOut = false;
       log.i('_setInitialScreen | User found. Data $user');
       await _initializeUserModel(user.uid);
       _clearControllers();
@@ -152,6 +159,7 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
+      userSignedOut = true;
       await _auth.signOut();
       log.i('signOut | User signs out successfully');
     } catch (e) {
@@ -171,61 +179,60 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
-  void redirectedToScreenWithDelay(dynamic routename) {
-    Future.delayed(const Duration(seconds: 5), () => routename);
-  }
-
-  void checkUserPlatform() {
+  Future<void> checkUserPlatform() async {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
-    if (kIsWeb) {
-      switch (userRole) {
-        case 'pswd-p':
-          redirectedToScreenWithDelay(
-              Get.offAll(() => PSWDPersonnelHomeScreen()));
-          break;
-        case 'pswd-h':
-          Get.offAll(() => PSWDHeadHomeScreen());
-          break;
-        case 'admin':
-          Get.offAll(() => AdminHomeScreen());
-          break;
-        case 'doctor':
-          Get.offAll(() => DoctorHomeScreen());
-          break;
-        case 'patient':
-          log.i(
-              'checkUserPlatform | user role is $userRole | redirecting to Patient Home Screen');
-          Get.offAll(() => PatientHomeScreen());
-          break;
-        default:
-          print('Error Occured'); //TODO: Error Dialog or SnackBar
-      }
-    } else {
-      //Mobile Platform
-      if (userRole == 'pswd-p' || userRole == 'pswd-h' || userRole == 'admin') {
-        Get.defaultDialog(
-          title: 'Sign In failed. Try Again',
-          middleText:
-              '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
-          textConfirm: 'Okay',
-          onConfirm: signOut,
-        );
-        log.w(
-            'checkUserPlatform | user role is $userRole | Please log in on Web Application');
-      } else {
+    if (userSignedOut == false) {
+      if (kIsWeb) {
         switch (userRole) {
+          case 'pswd-p':
+            navigateWithDelay('/PSWDPersonnelHome');
+            break;
+          case 'pswd-h':
+            navigateWithDelay('/PSWDHeadHome');
+            break;
+          case 'admin':
+            navigateWithDelay('/AdminHome');
+            break;
           case 'doctor':
-            Get.offAll(() => DoctorHomeScreen());
+            navigateWithDelay('/DoctorHome');
             break;
           case 'patient':
-            log.i(
-                'checkUserPlatform | user role is $userRole | redirecting to Patient Home Screen');
-            Get.offAll(() => PatientHomeScreen());
+            navigateWithDelay('/PatientHome');
             break;
           default:
             print('Error Occured'); //TODO: Error Dialog or SnackBar
         }
+      } else {
+        //Mobile Platform
+        if (userRole == 'pswd-p' ||
+            userRole == 'pswd-h' ||
+            userRole == 'admin') {
+          Get.defaultDialog(
+            title: 'Sign In failed. Try Again',
+            middleText:
+                '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
+            textConfirm: 'Okay',
+            onConfirm: signOut,
+          );
+        } else {
+          switch (userRole) {
+            case 'doctor':
+              navigateWithDelay('/DoctorHome');
+              break;
+            case 'patient':
+              navigateWithDelay('/PatientHome');
+              break;
+            default:
+              print('Error Occured'); //TODO: Error Dialog or SnackBar
+          }
+        }
       }
     }
+  }
+
+  navigateWithDelay(String route) {
+    new Future.delayed(const Duration(seconds: 5), () {
+      Get.offAllNamed(route);
+    });
   }
 }

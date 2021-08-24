@@ -5,7 +5,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  static AuthController to = Get.find();
+  static AuthController authController = Get.find();
 
   //data needed for consultation process
   final int slot = 10;
@@ -16,6 +16,25 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kcVerySoftBlueColor,
+          actions: [
+            IconButton(
+              onPressed: () {
+                authController.signOut();
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          child: TextButton(
+            child: Text('Profile'),
+            onPressed: () {
+              Get.to(() => DoctorProfileScreen());
+            },
+          ),
+        ),
         backgroundColor: kcVerySoftBlueColor,
         body: Column(
           children: [
@@ -26,32 +45,6 @@ class DoctorHomeScreen extends StatelessWidget {
                   children: <Widget>[
                     const SizedBox(
                       height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => DoctorProfileScreen());
-                            //Open Drawer pero Goto Profile lang sa For now for testing (E)
-                          },
-                          icon: const Icon(
-                            Icons.notes,
-                            color: Colors.white,
-                            size: 35,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            AuthController.to.signOut();
-                          },
-                          icon: const Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                        ),
-                      ],
                     ),
                     const SizedBox(
                       height: 20,
@@ -68,8 +61,8 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${to.userModel.value!.lastName}!',
-                          style: TextStyle(
+                          'Dr. ${authController.userModel.value!.lastName}!',
+                          style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
                             color: Colors.white,
@@ -77,7 +70,7 @@ class DoctorHomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Align(
+                    const Align(
                       alignment: Alignment.centerRight,
                       child: Text(
                         'DOCTOR STATUS',
@@ -93,7 +86,7 @@ class DoctorHomeScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '$count out of $slot patients',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                             color: Colors.white,
@@ -110,7 +103,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               isAvailable
                                   ? 'Available for Consultation'
                                   : 'Unavailable',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                                 color: kcVerySoftBlueColor,
@@ -120,8 +113,8 @@ class DoctorHomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10.0,
+                    const SizedBox(
+                      height: 10,
                     ),
                   ]),
             ),

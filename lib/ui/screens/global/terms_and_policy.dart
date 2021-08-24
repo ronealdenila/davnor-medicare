@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 
 class TermsAndPolicyScreen extends StatelessWidget {
   const TermsAndPolicyScreen({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class TermsAndPolicyScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 35),
             child: Text(
-              'These terms and conditions outline the rules and regulators for the use of DavNor Medicare Multi-Platform Application. By accessing this application, we assume you accept these terms and conditions. Do not continue to use this application if you do not agree to take all of the terms and conditions stated on this page. The following terminology applies to these Terms & Conditions, Privacy Policy and Disclaimer Notice and all Agreements: DavNor Medicare (“us”, “we”, or “our”) operates http://www.DavNorMedicare.com. This page informs you of our terms & condition regarding the collection, use and disclosure of Personal Information we receive from users of the application.',
+              termsAndPolicyParagraph1,
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -54,7 +55,7 @@ class TermsAndPolicyScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: Text(
-              'We use your Personal Information only for providing and improving the application. By using this application, you agree to the collection and use of information in accordance with this policy.',
+              termsAndPolicyParagraph2,
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.normal,

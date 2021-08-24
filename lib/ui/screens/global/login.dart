@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                                 }
                               },
                               text: 'Sign In',
-                              color: kcVerySoftBlueColor,
+                              colors: kcVerySoftBlueColor,
                               fontSize: 20,
                             ),
                             verticalSpace25,
