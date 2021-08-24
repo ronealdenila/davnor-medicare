@@ -28,7 +28,7 @@ class CustomButton extends Container {
       ),
       splashColor: splashColor,
       onPressed: () => onTap!(),
-      color: color,
+      color: colors,
       padding: EdgeInsets.all(buttonPadding),
       child: Text(
         text!,

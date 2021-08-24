@@ -61,7 +61,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${authController.userModel.value!.lastName}!',
+                          'Dr. ${authController.doctorModel.value!.lastName}!',
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,

@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
-import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
-import 'package:davnor_medicare/ui/screens/doctor/home.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/ui/screens/admin/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +25,12 @@ class AuthController extends GetxController {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   Rxn<UserModel> userModel = Rxn<UserModel>();
+  Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
+  Rxn<AdminModel> adminModel = Rxn<AdminModel>();
+  Rxn<PswdHModel> pswdHModel = Rxn<PswdHModel>();
+
   late Rx<User?> _firebaseUser;
   String? userRole;
   bool? userSignedOut = false;
@@ -45,10 +46,10 @@ class AuthController extends GetxController {
 
   Future<void> _setInitialScreen(User? user) async {
     if (user == null) {
-      log.i('_setInitialScreen | User is $user. Send to Signin Screen');
+      log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
         //if nag signout si user, deretso na sa login screen without delay
-        Get.offAll(() => LoginScreen());
+        await Get.offAll(() => LoginScreen());
       } else {
         //wala nag signout (null = wala pa nag log in), delay before niya tabunan si splashscreen
         navigateWithDelay('/login');
@@ -56,9 +57,9 @@ class AuthController extends GetxController {
     } else {
       userSignedOut = false;
       log.i('_setInitialScreen | User found. Data $user');
-      await _initializeUserModel(user.uid);
-      _clearControllers();
-      await getUserRole(user.uid);
+      // await getUserRole(user.uid);
+      await _initializeUserId(user.uid);
+      // await _initializeUserModelBasedOnRole(user);
     }
   }
 
@@ -69,6 +70,7 @@ class AuthController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      _clearControllers();
     } catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -91,6 +93,7 @@ class AuthController extends GetxController {
           _createUserFirestore(_userID);
         },
       );
+      _clearControllers();
     } on FirebaseAuthException catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -123,7 +126,6 @@ class AuthController extends GetxController {
 
   Future<void> _createUserFirestore(String _userID) async {
     await _db.collection('users').doc(_userID).set(<String, dynamic>{
-      'uid': _userID,
       'email': emailController.text,
       'firstName': firstNameController.text,
       'lastName': lastNameController.text,
@@ -145,16 +147,18 @@ class AuthController extends GetxController {
         }
       },
     );
-    await checkUserPlatform();
+    await _initializeUserModelBasedOnRole(currentUserUid);
+    // await checkUserPlatform();
   }
 
-  Future<void> _initializeUserModel(String userID) async {
-    log.i('_initializeUserModel | the userID fetched is $userID');
-    userModel.value = await _db
-        .collection('users')
-        .doc(userID)
-        .get()
-        .then((doc) => UserModel.fromSnapshot(doc));
+  Future<void> _initializeUserId(String userId) async {
+    log.i('_initializeUserModel | the userID fetched is $userId');
+    await getUserRole(userId);
+    // userModel.value = await _db
+    //     .collection('users')
+    //     .doc(userID)
+    //     .get()
+    //     .then((doc) => UserModel.fromSnapshot(doc));
   }
 
   Future<void> signOut() async {
@@ -179,25 +183,64 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
+  Future<void> _initializeUserModelBasedOnRole(String userId) async {
+    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
+    switch (userRole) {
+      case 'doctor':
+        doctorModel.value = await _db
+            .collection('users')
+            .doc(userId)
+            .get()
+            .then((doc) => DoctorModel.fromSnapshot(doc));
+        log.i('Fetched Data: ${doctorModel.value!.firstName}');
+        break;
+      case 'patient':
+        userModel.value = await _db
+            .collection('users')
+            .doc(userId)
+            .get()
+            .then((doc) => UserModel.fromSnapshot(doc));
+        log.i(userModel.value!.firstName);
+        break;
+      case 'admin':
+        adminModel.value = await _db
+            .collection('users')
+            .doc(userId)
+            .get()
+            .then((doc) => AdminModel.fromSnapshot(doc));
+        log.i(adminModel.value!.firstName);
+        break;
+      case 'pswd-h':
+        pswdHModel.value = await _db
+            .collection('users')
+            .doc(userId)
+            .get()
+            .then((doc) => PswdHModel.fromSnapshot(doc));
+        break;
+      default:
+    }
+    await checkUserPlatform();
+  }
+
   Future<void> checkUserPlatform() async {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (userSignedOut == false) {
       if (kIsWeb) {
         switch (userRole) {
           case 'pswd-p':
-            navigateWithDelay('/PSWDPersonnelHome');
+            // navigateWithDelay('/PSWDPersonnelHome');
             break;
           case 'pswd-h':
-            navigateWithDelay('/PSWDHeadHome');
+            // navigateWithDelay('/PSWDHeadHome');
             break;
           case 'admin':
-            navigateWithDelay('/AdminHome');
+            // navigateWithDelay('/AdminHome');
             break;
           case 'doctor':
-            navigateWithDelay('/DoctorHome');
+            // navigateWithDelay('/DoctorHome');
             break;
           case 'patient':
-            navigateWithDelay('/PatientHome');
+            // navigateWithDelay('/PatientHome');
             break;
           default:
             print('Error Occured'); //TODO: Error Dialog or SnackBar
@@ -207,7 +250,7 @@ class AuthController extends GetxController {
         if (userRole == 'pswd-p' ||
             userRole == 'pswd-h' ||
             userRole == 'admin') {
-          Get.defaultDialog(
+          await Get.defaultDialog(
             title: 'Sign In failed. Try Again',
             middleText:
                 '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
@@ -220,7 +263,7 @@ class AuthController extends GetxController {
               navigateWithDelay('/DoctorHome');
               break;
             case 'patient':
-              navigateWithDelay('/PatientHome');
+              // navigateWithDelay('/PatientHome');
               break;
             default:
               print('Error Occured'); //TODO: Error Dialog or SnackBar
@@ -230,8 +273,8 @@ class AuthController extends GetxController {
     }
   }
 
-  navigateWithDelay(String route) {
-    new Future.delayed(const Duration(seconds: 5), () {
+  void navigateWithDelay(String route) {
+    Future.delayed(const Duration(seconds: 1), () {
       Get.offAllNamed(route);
     });
   }
