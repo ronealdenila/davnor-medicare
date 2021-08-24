@@ -112,7 +112,7 @@ class MADescriptionScreen extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: kcVerySoftBlueColor,
+                        color: verySoftBlueColor,
                       ),
                     ),
                   ),

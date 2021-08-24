@@ -71,7 +71,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               child: Text(
                 'Join us here',
                 textAlign: TextAlign.left,
-                style: body14RegularUnderline.copyWith(color: kcInfoColor),
+                style: body14RegularUnderline.copyWith(color: infoColor),
               ),
             ),
           ),
@@ -93,7 +93,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               child: Text(
                 'davnor.medicare@gmail.com',
                 textAlign: TextAlign.left,
-                style: body14Regular.copyWith(color: kcInfoColor),
+                style: body14Regular.copyWith(color: infoColor),
               ),
             ),
           ),

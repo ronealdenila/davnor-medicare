@@ -37,7 +37,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               verticalSpace10,
               const Text(
                 forgotPasswordDescription,
-                style: TextStyle(fontSize: 18, color: kcNeutralColor),
+                style: TextStyle(fontSize: 18, color: neutralColor),
               ),
               verticalSpace50,
               FormInputFieldWithIcon(
@@ -56,7 +56,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   }
                 },
                 text: 'Request Password Reset',
-                colors: kcVerySoftBlueColor,
+                colors: verySoftBlueColor,
               ),
             ],
           ),

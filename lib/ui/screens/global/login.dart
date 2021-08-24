@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
                                 style:
-                                    TextButton.styleFrom(primary: kcInfoColor),
+                                    TextButton.styleFrom(primary: infoColor),
                                 child: const Text(
                                   'Forgot Password',
                                   style: body14SemiBold,
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                                 }
                               },
                               text: 'Sign In',
-                              colors: kcVerySoftBlueColor,
+                              colors: verySoftBlueColor,
                               fontSize: 20,
                             ),
                             verticalSpace25,

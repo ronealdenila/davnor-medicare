@@ -20,7 +20,7 @@ class DoctorProfileScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .4,
                 decoration: new BoxDecoration(
-                  color: kcInfoColor,
+                  color: infoColor,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(30),
                     bottomLeft: Radius.circular(30),
@@ -88,7 +88,7 @@ class DoctorProfileScreen extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: kcInfoColor,
+                            color: infoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
                               topLeft: Radius.circular(50),
@@ -149,7 +149,7 @@ class DoctorProfileScreen extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: kcInfoColor,
+                            color: infoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
                               topLeft: Radius.circular(50),
@@ -207,7 +207,7 @@ class DoctorProfileScreen extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: kcInfoColor,
+                            color: infoColor,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
                               topLeft: Radius.circular(50),
@@ -259,7 +259,7 @@ class DoctorProfileScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
-                    primary: kcInfoColor,
+                    primary: infoColor,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 12),
                     shape: RoundedRectangleBorder(

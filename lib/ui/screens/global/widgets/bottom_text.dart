@@ -19,7 +19,7 @@ class BottomTextWidget extends StatelessWidget {
           style: body14SemiBold,
           children: [
             TextSpan(text: text1, style: TextStyle(color: Colors.black)),
-            TextSpan(text: " $text2", style: TextStyle(color: kcInfoColor))
+            TextSpan(text: " $text2", style: TextStyle(color: infoColor))
           ],
         ),
       ),

@@ -7,6 +7,8 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 class DoctorHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
 
+  final fetchedData = authController.doctorModel.value;
+
   //data needed for consultation process
   final int slot = 10;
   final int count = 0;
@@ -17,7 +19,7 @@ class DoctorHomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: kcVerySoftBlueColor,
+          backgroundColor: verySoftBlueColor,
           actions: [
             IconButton(
               onPressed: () {
@@ -29,13 +31,13 @@ class DoctorHomeScreen extends StatelessWidget {
         ),
         drawer: Drawer(
           child: TextButton(
-            child: Text('Profile'),
             onPressed: () {
               Get.to(() => DoctorProfileScreen());
             },
+            child: const Text('Profile'),
           ),
         ),
-        backgroundColor: kcVerySoftBlueColor,
+        backgroundColor: verySoftBlueColor,
         body: Column(
           children: [
             Padding(
@@ -52,7 +54,7 @@ class DoctorHomeScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Hello',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -61,7 +63,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${authController.doctorModel.value!.lastName}!',
+                          'Dr. ${fetchedData!.lastName}!',
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
@@ -106,7 +108,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
-                                color: kcVerySoftBlueColor,
+                                color: verySoftBlueColor,
                               ),
                             ),
                           ),

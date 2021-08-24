@@ -169,7 +169,7 @@ class SignupScreen extends StatelessWidget {
                                         }
                                       },
                                       text: 'Sign Up Now',
-                                      colors: kcVerySoftBlueColor,
+                                      colors: verySoftBlueColor,
                                       fontSize: 20,
                                     ),
                                     verticalSpace18,

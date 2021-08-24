@@ -11,7 +11,7 @@ class PatientHomeScreen extends StatelessWidget {
       init: AuthController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          backgroundColor: kcVerySoftBlueColor,
+          backgroundColor: verySoftBlueColor,
           actions: [
             IconButton(
               onPressed: () {
