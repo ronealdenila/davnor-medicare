@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/doctor/history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/ui/screens/global/doctor_application_instruction.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
     GetPage(name: '/PSWDHeadHome', page: () => PSWDHeadHomeScreen()),
     GetPage(name: '/PSWDPersonnelHome', page: () => PSWDPersonnelHomeScreen()),
     GetPage(name: '/DoctorProfileRoute', page: () => DoctorProfileScreen()),
+    GetPage(name: '/DoctorHistoryInfo', page: () => HistoryInfoScreen()),
     GetPage(name: '/MADescriptionRoute', page: () => MADescriptionScreen()),
     GetPage(name: '/MARequestInfoRoute', page: () => MARequestInfoScreen()),
   ];

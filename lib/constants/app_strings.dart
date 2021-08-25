@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 const String ForgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
     
@@ -37,4 +39,48 @@ const String madescriptionParagraph5 =
     ' *Doctor’s Prescription with complete name, signature and license number\n';
 const String madescriptionParagraph6 =
     ' *Any National Government and District Hospitals of Davao del Norte such as: DRMC, SPMC, 3 District Hospitals (Kapalong Zone, Samal Zone and Carmen Zone), CHO, MHO, PHO and PGH.';
+
+//Dialog Verification Request
+const String dialogueverificationrequest =
+    'We will verify your account 24hrs. Thank you';
+
+//Dialog Queue
+const String dialogQueue1 =
+    'Sorry you have no queue';
+const String dialogQueue2 =
+    'You need to request consultation or medical assistance to be in a queue'; //label text sa dialogqueue1
+
+//Dialog1
+const String dialogConsultationScreen =
+    'Is the consultation for you?';
+//Consultation Menu
+const String ConsultationMenuScreen =
+    'Where are you experiencing discomfort?';
+const String ConsultationMenuScreen1 =
+    'Tell us more about the discomfort';  
+
+//Additional Details Follow up Consultation
+const String FollowupConsultation1 =
+    'Upload past prescription or laboratory results'; 
+const String FollowupConsultation2 =
+    'Select and upload images to support your follow-up consultation'; 
+//dialo4
+const String dialogConsultationScreen1 =
+    'You have successfully requested a consultation!';
+const String dialogConsultationScreen2 =
+    'Your priority number is C024. Please check the queue and wait for your turn. Thank you'; //label text sa dialogconsultationscreen1
+
+//Dialog2
+const String dialogMedicalAssistanceScreen =
+    'Is the medical assistance request for you?';
+//Proof of Prescription
+const String ProofOfPrescriptionScreen=
+    'Please upload a valid prescription issued not more than a month'; 
+//Dialog5
+const String dialogMedicalAssistanceScreen1 =    
+    'You have successfully requested MA!';
+const String dialogMedicalAssistanceScreen2 =    
+    'Your priority number is MA24. Please check the queue and wait for your turn. Thank you';//label text sa dialogmdicalassistancescreen1 
+
+
 

@@ -179,3 +179,9 @@ const TextStyle caption10Regular = TextStyle(
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
 );
+
+const TextStyle caption18Regular = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+);

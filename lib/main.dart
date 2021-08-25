@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           appBarTheme:
               AppBarTheme(backgroundColor: Colors.white, elevation: 0)),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/MADescriptionRoute',
+      initialRoute:'/MARequestInfoRoute',
       getPages: AppRoutes.routes,
     //   navigatorKey: locator<NavigationService>().navigatorKey,
      // initialRoute: routes.LoginRoute,
