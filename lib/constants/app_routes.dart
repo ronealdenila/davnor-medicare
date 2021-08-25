@@ -5,6 +5,7 @@ import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/screens/auth/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
+import 'package:davnor_medicare/ui/screens/doctor/history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 
@@ -34,9 +35,8 @@ class AppRoutes {
     GetPage(name: '/PSWDHeadHome', page: () => PSWDHeadHomeScreen()),
     GetPage(name: '/PSWDPersonnelHome', page: () => PSWDPersonnelHomeScreen()),
     GetPage(name: '/DoctorProfileRoute', page: () => DoctorProfileScreen()),
-    GetPage(
-        name: '/MADescriptionRoute', page: () => const MADescriptionScreen()),
-    GetPage(
-        name: '/MARequestInfoRoute', page: () => const MARequestInfoScreen()),
+    GetPage(name: '/DoctorHistoryInfo', page: () => HistoryInfoScreen()),
+    GetPage(name: '/MADescriptionRoute', page: () => MADescriptionScreen()),
+    GetPage(name: '/MARequestInfoRoute', page: () => MARequestInfoScreen()),
   ];
 }

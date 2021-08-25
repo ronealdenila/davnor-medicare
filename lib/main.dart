@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute:'/MARequestInfoRoute',
       getPages: AppRoutes.routes,
     );
   }
