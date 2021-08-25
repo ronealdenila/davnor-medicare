@@ -192,16 +192,15 @@ class AuthController extends GetxController {
       switch (userRole) {
         case 'pswd-p':
           await _initializePSWDModel();
-          await checkAppRestriction(
-              Get.offAll(() => PSWDPersonnelHomeScreen()));
+          await checkAppRestriction(userRole);
           break;
         case 'pswd-h':
           await _initializePSWDModel();
-          await checkAppRestriction(Get.offAll(() => PSWDHeadHomeScreen()));
+          await checkAppRestriction(userRole);
           break;
         case 'admin':
           await _initializeAdminModel();
-          await checkAppRestriction(Get.offAll(() => AdminHomeScreen()));
+          await checkAppRestriction(userRole);
           break;
         case 'doctor':
           await _initializeDoctorModel();
@@ -218,8 +217,22 @@ class AuthController extends GetxController {
   }
 
   //Restrict admin and pswd from logging in mobile app
-  Future<void> checkAppRestriction(dynamic route) async {
-    if (!kIsWeb) {
+  Future<void> checkAppRestriction(String? userRole) async {
+    if (kIsWeb) {
+      switch (userRole) {
+        case 'pswd-p':
+          await navigateWithDelay(Get.offAll(() => PSWDPersonnelHomeScreen()));
+          break;
+        case 'pswd-h':
+          await navigateWithDelay(Get.offAll(() => PSWDHeadHomeScreen()));
+          break;
+        case 'admin':
+          await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
+          break;
+        default:
+          await Get.defaultDialog(title: 'Error Occured');
+      }
+    } else {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
         middleText:
@@ -227,8 +240,6 @@ class AuthController extends GetxController {
         textConfirm: 'Okay',
         onConfirm: signOut,
       );
-    } else {
-      await navigateWithDelay(route);
     }
   }
 
