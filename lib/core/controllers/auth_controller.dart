@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/doctor/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
-import 'package:flutter/foundation.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -28,32 +32,27 @@ class AuthController extends GetxController {
   Rxn<PswdModel> pswdModel = Rxn<PswdModel>();
 
   Rxn<User> firebaseUser = Rxn<User>();
-
   String? userRole;
   bool? userSignedOut = false;
 
   @override
   void onReady() {
-    // signOut(); //For Signout sa user na nag error (i.e., patient)
     log.i('onReady | App is ready');
-
     ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(user);
     super.onReady();
-    // _firebaseUser = Rx<User?>(_auth.currentUser);
-    // _firebaseUser.bindStream(_auth.userChanges());
-    // ever(_firebaseUser, _setInitialScreen);
   }
 
   Stream<User?> get user => _auth.authStateChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {
+    log.i('_setInitialScreen');
     if (_firebaseUser == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
         await Get.offAll(() => LoginScreen());
       } else {
-        navigateWithDelay('/login');
+        await navigateWithDelay(LoginScreen());
       }
     } else {
       userSignedOut = false;
@@ -192,23 +191,23 @@ class AuthController extends GetxController {
       switch (userRole) {
         case 'pswd-p':
           await _initializePSWDModel();
-          await checkAppRestriction('/PSWDPersonnelHome');
+          await checkAppRestriction(PSWDPersonnelHomeScreen());
           break;
         case 'pswd-h':
           await _initializePSWDModel();
-          await checkAppRestriction('/PSWDHeadHome');
+          await checkAppRestriction(PSWDHeadHomeScreen());
           break;
         case 'admin':
           await _initializeAdminModel();
-          await checkAppRestriction('/AdminHome');
+          await checkAppRestriction(AdminHomeScreen());
           break;
         case 'doctor':
           await _initializeDoctorModel();
-          navigateWithDelay('/DoctorHome');
+          await navigateWithDelay(DoctorHomeScreen());
           break;
         case 'patient':
           await _initializePatientModel();
-          navigateWithDelay('/PatientHome');
+          await navigateWithDelay(PatientHomeScreen());
           break;
         default:
           print('Error Occured'); //TODO: Error Dialog or SnackBar
@@ -217,7 +216,7 @@ class AuthController extends GetxController {
   }
 
   //Restrict admin and pswd from logging in mobile app
-  Future<void> checkAppRestriction(String route) async {
+  Future<void> checkAppRestriction(Widget route) async {
     if (!kIsWeb) {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
@@ -227,13 +226,13 @@ class AuthController extends GetxController {
         onConfirm: signOut,
       );
     } else {
-      navigateWithDelay(route);
+      await navigateWithDelay(route);
     }
   }
 
-  void navigateWithDelay(String route) {
-    Future.delayed(const Duration(seconds: 1), () {
-      Get.offAllNamed(route);
+  Future<void> navigateWithDelay(Widget route) async {
+    await Future.delayed(const Duration(seconds: 1), () {
+      Get.offAll(() => route);
     });
   }
 
@@ -245,9 +244,7 @@ class AuthController extends GetxController {
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) =>
-            //kini neal, document snapshot does not exist huhu (E)
-            PatientModel.fromJson(doc.data()!));
+        .then((doc) => PatientModel.fromJson(doc.data()!));
   }
 
   Future<void> _initializeDoctorModel() async {
@@ -258,7 +255,6 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
-    log.i('Fetched Data: ${doctorModel.value!.firstName}');
   }
 
   Future<void> _initializePSWDModel() async {
@@ -277,6 +273,5 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => AdminModel.fromJson(doc.data()!));
-    log.i(adminModel.value!.firstName);
   }
 }
