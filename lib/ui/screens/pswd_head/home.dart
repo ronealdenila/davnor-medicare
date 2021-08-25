@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class PSWDHeadHomeScreen extends StatelessWidget {
-  static AuthController to = Get.find();
+  static AuthController authController = Get.find();
+
+  final fetchedData = authController.pswdModel.value;
 
   @override
   Widget build(BuildContext context) {
@@ -15,25 +17,24 @@ class PSWDHeadHomeScreen extends StatelessWidget {
               onPressed: () {
                 AuthController.to.signOut();
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),
         drawer: Drawer(
           child: TextButton(
-            child: Text('Profile'),
             onPressed: () {
               //go to profile screen
             },
+            child: const Text('Profile'),
           ),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                  'Hello ${to.pswdModel.value!.firstName} ${to.pswdModel.value!.lastName}'),
-              Text('Hello ${to.userRole}'),
+              Text('Hello ${fetchedData!.firstName} ${fetchedData!.lastName}'),
+              Text('Hello ${authController.userRole}'),
             ],
           ),
         ),

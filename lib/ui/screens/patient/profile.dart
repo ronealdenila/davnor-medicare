@@ -14,7 +14,7 @@ class PatientProfileScreen extends StatelessWidget {
               body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const <Widget>[
                     // Text(
                     //     '${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
                     //TODO: To be refactor

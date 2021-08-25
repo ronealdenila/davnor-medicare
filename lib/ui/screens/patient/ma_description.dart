@@ -39,14 +39,14 @@ class MADescriptionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(
                         'REQUIREMENTS',
                         style: body14SemiBold,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(
                         'WHERE TO SECURE',
@@ -62,13 +62,13 @@ class MADescriptionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(madescriptionParagraph3,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(madescriptionParagraph4,
                           textAlign: TextAlign.justify,
@@ -83,13 +83,13 @@ class MADescriptionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(madescriptionParagraph5,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
-                    Container(
+                    SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
                       child: const Text(madescriptionParagraph6,
                           textAlign: TextAlign.justify,
@@ -137,7 +137,6 @@ class MADescriptionScreen extends StatelessWidget {
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Align(
-                  alignment: Alignment.center,
                   child: CustomButton(
                     onTap: () async {
                       //Go to MADetailsFill

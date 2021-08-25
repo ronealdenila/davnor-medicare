@@ -6,7 +6,7 @@ import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/ui/screens/global/login.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -39,6 +39,7 @@ class AuthController extends GetxController {
   void onReady() {
     log.i('onReady | App is ready');
     ever(firebaseUser, _setInitialScreen);
+
     firebaseUser.bindStream(user);
     super.onReady();
   }
@@ -108,11 +109,11 @@ class AuthController extends GetxController {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
       log.i(
-          'sendPasswordResetEmail | Request password sent to email ${emailController.text}');
+          'sendPasswordResetEmail | Password link send ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
           'Check your email for a password reset link.',
           snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor);
     } on FirebaseAuthException catch (error) {
@@ -210,7 +211,7 @@ class AuthController extends GetxController {
           await navigateWithDelay(PatientHomeScreen());
           break;
         default:
-          print('Error Occured'); //TODO: Error Dialog or SnackBar
+          await Get.defaultDialog(title: 'Error Occured');
       }
     }
   }
