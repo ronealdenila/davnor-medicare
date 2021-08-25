@@ -14,28 +14,24 @@ class PatientHomeScreen extends StatelessWidget {
           backgroundColor: verySoftBlueColor,
           actions: [
             IconButton(
-              onPressed: () {
-                AuthController.to.signOut();
-              },
-              icon: Icon(Icons.logout),
+              onPressed: controller.signOut,
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),
         drawer: Drawer(
           child: TextButton(
-            child: Text('Profile'),
             onPressed: () {
-              Get.to(() => PatientProfileScreen());
+              Get.to(() => const PatientProfileScreen());
             },
+            child: const Text('Profile'),
           ),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //Obx(()=>
-              Text(
-                  'Hello ${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
+              Text('Hello ${controller.patientModel.value!.firstName}'),
               Text('Hello ${controller.userRole}'),
             ],
           ),

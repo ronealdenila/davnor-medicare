@@ -96,13 +96,13 @@ class DoctorHomeScreen extends StatelessWidget {
                         ),
                         Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           elevation: 5,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8),
                             child: Text(
-                              isAvailable
+                              fetchedData!.dStatus!
                                   ? 'Available for Consultation'
                                   : 'Unavailable',
                               style: const TextStyle(
@@ -122,7 +122,7 @@ class DoctorHomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                decoration: new BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(55),

@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
-import 'package:davnor_medicare/ui/screens/global/login.dart';
-import 'package:flutter/foundation.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
-
-  Logger logger = Logger();
 
   static AuthController to = Get.find();
 
@@ -24,38 +24,41 @@ class AuthController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
   Rxn<AdminModel> adminModel = Rxn<AdminModel>();
   Rxn<PswdModel> pswdModel = Rxn<PswdModel>();
 
-  late Rx<User?> _firebaseUser;
+  Rxn<User> firebaseUser = Rxn<User>();
   String? userRole;
   bool? userSignedOut = false;
 
   @override
   void onReady() {
     log.i('onReady | App is ready');
+    ever(firebaseUser, _setInitialScreen);
+
+    firebaseUser.bindStream(user);
     super.onReady();
-    _firebaseUser = Rx<User?>(_auth.currentUser);
-    _firebaseUser.bindStream(_auth.userChanges());
-    ever(_firebaseUser, _setInitialScreen);
   }
 
-  Future<void> _setInitialScreen(User? user) async {
-    if (user == null) {
+  Stream<User?> get user => _auth.authStateChanges();
+
+  Future<void> _setInitialScreen(_firebaseUser) async {
+    log.i('_setInitialScreen');
+    if (_firebaseUser == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
         await Get.offAll(() => LoginScreen());
       } else {
-        navigateWithDelay('/login');
+        await navigateWithDelay(Get.offAll(() => LoginScreen()));
       }
     } else {
       userSignedOut = false;
-      log.i('_setInitialScreen | User found. Data $user');
-      await getUserRole(user.uid);
+      log.i('_setInitialScreen | User found. Data $_firebaseUser');
+      await getUserRole();
     }
   }
 
@@ -66,7 +69,7 @@ class AuthController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      _clearControllers();
+      await _clearControllers();
     } catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -77,19 +80,21 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> registerWithEmailAndPassword(BuildContext context) async {
+  Future<void> registerPatient(BuildContext context) async {
     try {
       showLoading();
       await _auth
           .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text)
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      )
           .then(
-        (result) {
+        (result) async {
           final _userID = result.user!.uid;
-          _createUserFirestore(_userID);
+          await _createPatientUser(_userID);
         },
       );
-      _clearControllers();
+      await _clearControllers();
     } on FirebaseAuthException catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -104,11 +109,11 @@ class AuthController extends GetxController {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
       log.i(
-          'sendPasswordResetEmail | Request password sent to email ${emailController.text}');
+          'sendPasswordResetEmail | Password link send ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
-          'Check your email and follow the instructions to reset your password.',
+          'Check your email for a password reset link.',
           snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor);
     } on FirebaseAuthException catch (error) {
@@ -120,22 +125,35 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> _createUserFirestore(String _userID) async {
-    await _db.collection('users').doc(_userID).set(<String, dynamic>{
-      'email': emailController.text,
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
+  Future<void> _createPatientUser(String _userID) async {
+    await firebaseFirestore
+        .collection('users')
+        .doc(_userID)
+        .set(<String, dynamic>{
+      'userType': 'patient',
+    });
+    await firebaseFirestore
+        .collection('patients')
+        .doc(_userID)
+        .set(<String, dynamic>{
+      'email': emailController.text.trim(),
+      'firstName': firstNameController.text.trim(),
+      'lastName': lastNameController.text.trim(),
       'hasActiveQueue': false,
       'pStatus': false,
       'profileImage': '',
       'validID': '',
-      'userType': 'patient',
+      'validSelfie': '',
     });
   }
 
   //check user type of logged in user and navigate
-  Future<void> getUserRole(String currentUserUid) async {
-    await _db.collection('users').doc(currentUserUid).get().then(
+  Future<void> getUserRole() async {
+    await firebaseFirestore
+        .collection('users')
+        .doc(firebaseUser.value!.uid)
+        .get()
+        .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
@@ -143,7 +161,7 @@ class AuthController extends GetxController {
         }
       },
     );
-    await checkUserPlatform(currentUserUid);
+    await checkUserPlatform();
   }
 
   Future<void> signOut() async {
@@ -160,7 +178,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void _clearControllers() {
+  Future<void> _clearControllers() async {
     log.i('_clearControllers | User Input on authentication is cleared');
     emailController.clear();
     passwordController.clear();
@@ -168,94 +186,92 @@ class AuthController extends GetxController {
     lastNameController.clear();
   }
 
-  Future<void> checkUserPlatform(String uid) async {
+  Future<void> checkUserPlatform() async {
     log.i('checkUserPlatform | is user logged on web: $kIsWeb');
     if (userSignedOut == false) {
       switch (userRole) {
         case 'pswd-p':
-          await _initializePSWDModel(uid);
-          await checkAppRestriction('/PSWDPersonnelHome');
+          await _initializePSWDModel();
+          await checkAppRestriction(
+              Get.offAll(() => PSWDPersonnelHomeScreen()));
           break;
         case 'pswd-h':
-          await _initializePSWDModel(uid);
-          await checkAppRestriction('/PSWDHeadHome');
+          await _initializePSWDModel();
+          await checkAppRestriction(Get.offAll(() => PSWDHeadHomeScreen()));
           break;
         case 'admin':
-          await _initializeAdminModel(uid);
-          await checkAppRestriction('/AdminHome');
+          await _initializeAdminModel();
+          await checkAppRestriction(Get.offAll(() => AdminHomeScreen()));
           break;
         case 'doctor':
-          await _initializeDoctorModel(uid);
-          navigateWithDelay('/DoctorHome');
+          await _initializeDoctorModel();
+          await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
           break;
         case 'patient':
-          await _initializePatientModel(uid);
-          navigateWithDelay('/PatientHome');
+          await _initializePatientModel();
+          await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
           break;
         default:
-          print('Error Occured'); //TODO: Error Dialog or SnackBar
+          await Get.defaultDialog(title: 'Error Occured');
       }
     }
   }
 
   //Restrict admin and pswd from logging in mobile app
-  Future<void> checkAppRestriction(String route) async {
+  Future<void> checkAppRestriction(dynamic route) async {
     if (!kIsWeb) {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
         middleText:
-            '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
+            '$userRole has no access to mobile platform. Login to Web Application',
         textConfirm: 'Okay',
         onConfirm: signOut,
       );
     } else {
-      navigateWithDelay(route);
+      await navigateWithDelay(route);
     }
   }
 
-  void navigateWithDelay(String route) {
-    Future.delayed(const Duration(seconds: 1), () {
-      Get.offAllNamed(route);
-    });
+  Future<void> navigateWithDelay(dynamic route) async {
+    await Future.delayed(const Duration(seconds: 1), () => route);
   }
 
   //initializedBaseOnUserRoles
-  Future<void> _initializePatientModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    patientModel.value = await _db
-        .collection('users')
-        .doc(userId)
+  Future<void> _initializePatientModel() async {
+    log.i(
+        '_initializePatientModel | ${firebaseUser.value!.uid} role: $userRole');
+    patientModel.value = await firebaseFirestore
+        .collection('patients')
+        .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => PatientModel.fromSnapshot(doc));
-    log.i(patientModel.value!.firstName);
+        .then((doc) => PatientModel.fromJson(doc.data()!));
   }
 
-  Future<void> _initializeDoctorModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    doctorModel.value = await _db
-        .collection('users')
-        .doc(userId)
+  Future<void> _initializeDoctorModel() async {
+    log.i(
+        '_initializeDoctorModel | ${firebaseUser.value!.uid} role: $userRole');
+    doctorModel.value = await firebaseFirestore
+        .collection('doctors')
+        .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => DoctorModel.fromSnapshot(doc));
-    log.i('Fetched Data: ${doctorModel.value!.firstName}');
+        .then((doc) => DoctorModel.fromJson(doc.data()!));
   }
 
-  Future<void> _initializePSWDModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    pswdModel.value = await _db
-        .collection('users')
-        .doc(userId)
+  Future<void> _initializePSWDModel() async {
+    log.i('_initializePSWDModel | ${firebaseUser.value!.uid} role: $userRole');
+    pswdModel.value = await firebaseFirestore
+        .collection('pswd_personnel')
+        .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => PswdModel.fromSnapshot(doc));
+        .then((doc) => PswdModel.fromJson(doc.data()!));
   }
 
-  Future<void> _initializeAdminModel(String userId) async {
-    log.i('_initializeUserModelBasedOnRole | $userId has role $userRole');
-    adminModel.value = await _db
-        .collection('users')
-        .doc(userId)
+  Future<void> _initializeAdminModel() async {
+    log.i('_initializeAdminModel | ${firebaseUser.value!.uid} role: $userRole');
+    adminModel.value = await firebaseFirestore
+        .collection('admins')
+        .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => AdminModel.fromSnapshot(doc));
-    log.i(adminModel.value!.firstName);
+        .then((doc) => AdminModel.fromJson(doc.data()!));
   }
 }

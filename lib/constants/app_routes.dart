@@ -1,13 +1,14 @@
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/auth/doctor_application_instruction.dart';
+import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
+import 'package:davnor_medicare/ui/screens/auth/signup.dart';
+import 'package:davnor_medicare/ui/screens/auth/splash.dart';
+import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/doctor/history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
-import 'package:davnor_medicare/ui/screens/global/doctor_application_instruction.dart';
-import 'package:davnor_medicare/ui/screens/global/forgot_password.dart';
-import 'package:davnor_medicare/ui/screens/global/login.dart';
-import 'package:davnor_medicare/ui/screens/global/signup.dart';
-import 'package:davnor_medicare/ui/screens/global/splash.dart';
-import 'package:davnor_medicare/ui/screens/global/terms_and_policy.dart';
+
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
@@ -20,12 +21,12 @@ class AppRoutes {
   AppRoutes._(); //this is to prevent anyone from instantiating this object
   static final routes = [
     //SplashUI must be created soon
-    GetPage(name: '/', page: () => SplashScreen()),
+    GetPage(name: '/', page: () => const SplashScreen()),
     GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignupScreen()),
     GetPage(name: '/PatientHome', page: () => PatientHomeScreen()),
     GetPage(name: '/ForgotPassword', page: () => ForgotPasswordScreen()),
-    GetPage(name: '/TermsAndPolicy', page: () => TermsAndPolicyScreen()),
+    GetPage(name: '/TermsAndPolicy', page: () => const TermsAndPolicyScreen()),
     GetPage(
         name: '/DoctorApplicationInstruction',
         page: () => DoctorApplicationInstructionScreen()),

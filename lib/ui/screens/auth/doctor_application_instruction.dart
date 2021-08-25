@@ -15,13 +15,13 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CupertinoNavigationBarBackButton(
+        leading: const CupertinoNavigationBarBackButton(
           color: Colors.black,
         ),
       ),
       body: ListView(
         children: [
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Text(
               'Join Our Team',
@@ -29,7 +29,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               style: title24Bold,
             ),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
             child: Text(
               doctorapplicationinstructionParagraph1,
@@ -37,7 +37,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 40, horizontal: 35),
             child: Text(
               doctorapplicationinstructionParagraph2,
@@ -45,18 +45,18 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               style: body16Regular,
             ),
           ),
-    const Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 35),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 35),
             child: Text(
               doctorapplicationinstructionParagraph3,
               textAlign: TextAlign.justify,
               style: body16Regular,
             ),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 35),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 35),
             child: Text(
               'For Interested Doctors:',
@@ -67,8 +67,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: GestureDetector(
-              onTap: () => appController
-                  .launchURL(formUrl),
+              onTap: () => appController.launchURL(formUrl),
               child: Text(
                 'Join us here',
                 textAlign: TextAlign.left,
@@ -76,10 +75,10 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
               ),
             ),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 35),
           ),
-    const Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: Text(
               'For any inquiries, please email us at:',

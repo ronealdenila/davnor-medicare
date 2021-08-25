@@ -13,6 +13,7 @@ const Color verySoftRedCustomColor = Color(0xFFDE928F);
 
 const Color neutralWhiteColor = Color(0xFF64748B);
 const Color neutralBubbleColor = Color(0xFF64748B);
+const Color sidePanelColor = Color(0xFFF5F5F5);
 
 // Neutral Color Palette
 const MaterialColor neutralColor = MaterialColor(

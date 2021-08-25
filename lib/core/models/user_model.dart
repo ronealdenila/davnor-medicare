@@ -1,77 +1,91 @@
 //User Model
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 
-// if dili magbutang og required mag fetch sa firestore kahit null ang value
 class PatientModel {
   PatientModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.userType,
-    this.profileImage,
-    this.pStatus,
-    this.validID,
-    this.validSelfie,
-    this.hasActiveQueue,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.profileImage,
+    required this.pStatus,
+    required this.validId,
+    required this.validSelfie,
+    required this.hasActiveQueue,
   });
 
-  PatientModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-    validID = (snapshot.data() as dynamic)['validID'] as String;
-    validSelfie = (snapshot.data() as dynamic)['validSelfie'] as String;
-    pStatus = (snapshot.data() as dynamic)['pStatus'] as bool;
-    hasActiveQueue = (snapshot.data() as dynamic)['hasActiveQueue'] as bool;
-  }
+  factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
+        email: json['email'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        profileImage: json['profileImage'] as String,
+        pStatus: json['pStatus'] as bool,
+        validId: json['validID'] as String,
+        validSelfie: json['validSelfie'] as String,
+        hasActiveQueue: json['hasActiveQueue'] as bool,
+      );
 
-  String? email;
-  String? firstName;
-  String? lastName;
-  String? userType;
-  String? profileImage;
-  String? validID;
-  String? validSelfie;
-  bool? pStatus;
-  bool? hasActiveQueue;
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'profileImage': profileImage,
+        'pStatus': pStatus,
+        'validID': validId,
+        'validSelfie': validSelfie,
+        'hasActiveQueue': hasActiveQueue,
+      };
+
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? profileImage;
+  final bool? pStatus;
+  final String? validId;
+  final String? validSelfie;
+  final bool? hasActiveQueue;
 }
 
 class DoctorModel {
   DoctorModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.userType,
-    this.title,
-    this.department,
-    this.clinicHours,
-    this.profileImage,
-    this.numToAccomodate,
-    this.dStatus,
-    this.hasOngoingCons,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.title,
+    required this.department,
+    required this.clinicHours,
+    required this.profileImage,
+    required this.numToAccomodate,
+    required this.dStatus,
+    required this.hasOngoingCons,
   });
 
-  DoctorModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
-    title = (snapshot.data() as dynamic)['title'] as String;
-    department = (snapshot.data() as dynamic)['department'] as String;
-    clinicHours = (snapshot.data() as dynamic)['clinicHours'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-    numToAccomodate = (snapshot.data() as dynamic)['numToAccomodate'] as int;
-    dStatus = (snapshot.data() as dynamic)['dStatus'] as bool;
-    hasOngoingCons = (snapshot.data() as dynamic)['hasOngoingCons'] as bool;
-  }
+  factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+        email: json['email'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        title: json['title'] as String,
+        department: json['department'] as String,
+        clinicHours: json['clinicHours'] as String,
+        profileImage: json['profileImage'] as String,
+        numToAccomodate: json['numToAccomodate'] as int,
+        dStatus: json['dStatus'] as bool,
+        hasOngoingCons: json['hasOngoingCons'] as bool,
+      );
 
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'title': title,
+        'department': department,
+        'clinicHours': clinicHours,
+        'profileImage': profileImage,
+        'numToAccomodate': numToAccomodate,
+        'dStatus': dStatus,
+        'hasOngoingCons': hasOngoingCons,
+      };
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
   String? title;
   String? department;
   String? clinicHours;
@@ -83,51 +97,59 @@ class DoctorModel {
 
 class AdminModel {
   AdminModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.userType,
-    this.profileImage,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.profileImage,
   });
 
-  AdminModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-  }
+  factory AdminModel.fromJson(Map<String, dynamic> json) => AdminModel(
+        email: json['email'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        profileImage: json['profileImage'] as String,
+      );
 
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'profileImage': profileImage,
+      };
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
-  String? profileImage;
+  String? profileImage; //data that will change
 }
 
 class PswdModel {
   PswdModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.userType,
-    this.position,
-    this.profileImage,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.position,
+    required this.profileImage,
   });
 
-  PswdModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    userType = (snapshot.data() as dynamic)['userType'] as String;
-    position = (snapshot.data() as dynamic)['position'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-  }
+  factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
+        email: json['email'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        position: json['position'] as String,
+        profileImage: json['profileImage'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'position': position,
+        'profileImage': profileImage,
+      };
 
   String? email;
   String? firstName;
   String? lastName;
-  String? userType;
   String? position;
-  String? profileImage;
+  String? profileImage; //data that will change
 }
