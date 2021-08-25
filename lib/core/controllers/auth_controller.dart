@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/global/login.dart';
+import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,6 +39,7 @@ class AuthController extends GetxController {
     log.i('onReady | App is ready');
 
     ever(firebaseUser, _setInitialScreen);
+
     firebaseUser.bindStream(user);
     super.onReady();
     // _firebaseUser = Rx<User?>(_auth.currentUser);
@@ -109,11 +111,11 @@ class AuthController extends GetxController {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
       log.i(
-          'sendPasswordResetEmail | Request password sent to email ${emailController.text}');
+          'sendPasswordResetEmail | Password link send ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
           'Check your email for a password reset link.',
           snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor);
     } on FirebaseAuthException catch (error) {
@@ -211,7 +213,7 @@ class AuthController extends GetxController {
           navigateWithDelay('/PatientHome');
           break;
         default:
-          print('Error Occured'); //TODO: Error Dialog or SnackBar
+          await Get.defaultDialog(title: 'Error Occured');
       }
     }
   }
@@ -227,12 +229,12 @@ class AuthController extends GetxController {
         onConfirm: signOut,
       );
     } else {
-      navigateWithDelay(route);
+      await Get.offAll(() => AdminHomeScreen());
     }
   }
 
-  void navigateWithDelay(String route) {
-    Future.delayed(const Duration(seconds: 1), () {
+  Future<void> navigateWithDelay(String route) async {
+    await Future.delayed(const Duration(seconds: 1), () {
       Get.offAllNamed(route);
     });
   }

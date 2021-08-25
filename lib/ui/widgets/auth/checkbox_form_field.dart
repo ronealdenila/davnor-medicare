@@ -5,8 +5,7 @@ class CheckboxFormField extends FormField<bool> {
       {Widget? title,
       FormFieldSetter<bool>? onSaved,
       FormFieldValidator<bool>? validator,
-      bool initialValue = false,
-      bool autovalidate = false})
+      bool initialValue = false})
       : super(
           onSaved: onSaved,
           validator: validator,

@@ -9,3 +9,5 @@ linter:
     public_member_api_docs: false
     avoid_dynamic_calls: false
     sort_pub_dependencies: false
+    use_key_in_widget_constructors: false
+    cascade_invocations: false

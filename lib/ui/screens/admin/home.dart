@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class AdminHomeScreen extends StatelessWidget {
-  static AuthController to = Get.find();
+  static AuthController authController = Get.find();
+
+  final fetchedData = authController.adminModel.value;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,10 @@ class AdminHomeScreen extends StatelessWidget {
         ),
         drawer: Drawer(
           child: TextButton(
-            child: Text('Profile'),
             onPressed: () {
               //go to profile screen
             },
+            child: const Text('Profile'),
           ),
         ),
         body: Center(
@@ -34,8 +36,8 @@ class AdminHomeScreen extends StatelessWidget {
               //Obx(()=>
               Text(
                   // ignore: lines_longer_than_80_chars
-                  'Hello ${to.adminModel.value!.firstName} ${to.adminModel.value!.lastName}'),
-              Text('Hello ${to.userRole}'),
+                  'Hello ${fetchedData!.firstName} ${fetchedData!.lastName}'),
+              Text('Hello ${authController.userRole}'),
             ],
           ),
         ),

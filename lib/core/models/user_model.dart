@@ -1,6 +1,4 @@
 //User Model
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 
 class PatientModel {
   PatientModel({
@@ -62,7 +60,7 @@ class DoctorModel {
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
         email: json['email'] as String,
-        firstName: json['firstname'] as String,
+        firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         title: json['title'] as String,
         department: json['department'] as String,
@@ -107,14 +105,14 @@ class AdminModel {
 
   factory AdminModel.fromJson(Map<String, dynamic> json) => AdminModel(
         email: json['email'] as String,
-        firstName: json['firstname'] as String,
+        firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         profileImage: json['profileImage'] as String,
       );
 
   Map<String, dynamic> toJson() => {
         'email': email,
-        'firstname': firstName,
+        'firstName': firstName,
         'lastName': lastName,
         'profileImage': profileImage,
       };
@@ -135,7 +133,7 @@ class PswdModel {
 
   factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
         email: json['email'] as String,
-        firstName: json['firstname'] as String,
+        firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         position: json['position'] as String,
         profileImage: json['profileImage'] as String,
@@ -143,7 +141,7 @@ class PswdModel {
 
   Map<String, dynamic> toJson() => {
         'email': email,
-        'firstname': firstName,
+        'firstName': firstName,
         'lastName': lastName,
         'position': position,
         'profileImage': profileImage,

@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 class DoctorProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
 
+  final fetchedData = authController.doctorModel.value;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,59 +21,60 @@ class DoctorProfileScreen extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .4,
-                decoration: new BoxDecoration(
+                decoration: const BoxDecoration(
                   color: infoColor,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(30),
                     bottomLeft: Radius.circular(30),
                   ),
                 ),
-                child: Column(children: <Widget>[
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        color: Colors.white,
-                        size: 50,
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        onPressed: Get.back,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_left,
+                          color: Colors.white,
+                          size: 50,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(authHeader),
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Dr. ${authController.doctorModel.value!.firstName} ${authController.doctorModel.value!.lastName}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.white,
+                    //Please use our global helper (R)
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                    '${authController.doctorModel.value!.email}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: Colors.white),
-                  ),
-                ]),
+                    CircleAvatar(
+                      backgroundImage: AssetImage(authHeader),
+                      radius: 50,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      authController.doctorModel.value!.email!,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
@@ -104,29 +107,27 @@ class DoctorProfileScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const <Widget>[
-                                Text(
-                                  'SPECIALTY',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text(
+                                'SPECIALTY',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                SizedBox(
-                                  height: 5,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                //'${to.userModel.value.email}'
+                                'Cardiologist  - x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
                                 ),
-                                Text(
-                                  //'${to.userModel.value.email}'
-                                  'Cardiologist  - x',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -165,26 +166,24 @@ class DoctorProfileScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  //'${to.userModel.value.department}'
-                                  'DEPARTMENT',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text(
+                                //'${to.userModel.value.department}'
+                                'DEPARTMENT',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                Text(
-                                  'Internal Medicine  - x',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
+                              ),
+                              Text(
+                                'Internal Medicine  - x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -222,26 +221,24 @@ class DoctorProfileScreen extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(18.0, 0, 0, 0),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                const Text(
-                                  'CLINIC HOURS',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
+                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text(
+                                'CLINIC HOURS',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
-                                const Text(
-                                  '1pm - 6pm (Weekends) - x',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
+                              ),
+                              Text(
+                                '1pm - 6pm (Weekends) - x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -263,7 +260,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 12),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
+                        borderRadius: BorderRadius.circular(10)),
                     textStyle: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
