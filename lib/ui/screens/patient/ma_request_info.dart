@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,167 +13,129 @@ class MARequestInfoScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: ListView(
-            children: <Widget> [
-              Container(
-                width: MediaQuery.of(context).size.width,
-
-                child: Column(children: <Widget>[
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: Get.back,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        color: Colors.black,
-                        size: 50,
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-
-              Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget> [
-            const Text(
-                'Patients Information',
-                textAlign: TextAlign.left,
-                style: subtitle20Medium,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      'Patient Information',
+                      style: title20Regular,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ]
                 ),
-              
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Name',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Age',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Address',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Gender',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Type',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
 
-               const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10)),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 0),
-              child: Text(
-                'MA Request Information',
-                textAlign: TextAlign.left,
-                style: subtitle20Medium,
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
 
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Received by',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
+                Row(
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const <Widget>[
+                          Text('Patients Name',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Patients Age',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),   
+                          Text('Address',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Gender',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ),
+                          Text('Patients Type',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ), 
+                    ]),
+                  ],
                 ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Pharmacy',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Medecine Worth',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Date Requested',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-            
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Date MA Claimed',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
 
-             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10)),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  child: Text('MA Request Information',
+                      textAlign: TextAlign.justify, style: title20Regular),
+                ),
 
-            Card(
-              color: verySoftBlueColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              elevation: 5,
-              child: const Padding(
-                padding: EdgeInsets.all(13),
-                child: Text(
-                  'See attached photos',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.white,
+                Row(
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const <Widget>[
+                          Text('Received by',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Pharmacy',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),   
+                          Text('Medecine Worth',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Date Requested',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ),
+                          Text('Date MA Claimed',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ), 
+                    ]),
+                  ],
+                ),
+
+                const Padding(padding: EdgeInsets.symmetric(vertical: 35)),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: CustomButton(
+                    onTap: () async {
+                      //
+                    },
+                    text: 'See Attached Photos',
+                    colors: verySoftBlueColor,
+                    fontSize: 18,
                   ),
                 ),
-              ),
-            ),
-              ],
-            )),
 
-        ])
-    ));
+              ],  
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

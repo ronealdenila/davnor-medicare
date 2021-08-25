@@ -1,13 +1,14 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class HistoryInfoScreen extends StatelessWidget {
-  const HistoryInfoScreen({ Key? key }) : super(key: key);
+ // static AuthController authController = Get.find();
+
+  //final fetchedData = authController.doctorModel.value;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class HistoryInfoScreen extends StatelessWidget {
             children: <Widget> [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .4,
+                height: MediaQuery.of(context).size.height * .3,
                 decoration: const BoxDecoration(
                 border: Border(bottom: BorderSide(
                   width: 2, color: Color(0xFFCBD4E1),),),
@@ -47,98 +48,76 @@ class HistoryInfoScreen extends StatelessWidget {
                     radius: 50,
                   ),
               const    SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
-
-              //    Text(
-              //   'Dr. ${authController.doctorModel.value!.firstName} ${authController.doctorModel.value!.lastName}',
-              //      style: TextStyle(
-              //        fontWeight: FontWeight.bold,
+              //  Text(
+              //       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
+              //       style: const TextStyle(
+              //         fontWeight: FontWeight.bold,
               //        fontSize: 24,
-              //        color: Colors.white,
+              //          color: Colors.white,
+              //       )),
+                    const SizedBox(
+                      height: 3,
+                    ),
+              //      Text(
+              //        authController.doctorModel.value!.email!,
+              //        style: const TextStyle(
+              //            fontWeight: FontWeight.w400,
+              //            fontSize: 18,
+              //            color: Colors.white),
               //      ),
-              //    ),
-              //    SizedBox(
-              //      height: 3,
-              //    ),
-              //    Text(
-              //      '${authController.doctorModel.value!.email}',
-              //      style: TextStyle(
-              //          fontWeight: FontWeight.w400,
-              //          fontSize: 18,
-              //          color: Colors.white),
-              //    ),
-              //  ]),
-             // ),
-              ],
-              ),
-            ),
+                ]),
+             ),
 
             Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: const[
-                 Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Consultation Info',
-                textAlign: TextAlign.left,
-                style: caption18Regular,
+                  padding:const EdgeInsets.symmetric(vertical: 30,horizontal: 30
+                  ),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const <Widget>[
+                          Text('Consultation Info',
+                              textAlign: TextAlign.left,
+                              style: title20Regular),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Patients Name',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),   
+                          Text('Age of Patient',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Consultation Started',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ),
+                          Text('Consultation Ended',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+                           SizedBox(
+                            height: 20,
+                          ), 
+                    ]),
+                  ],
                 ),
-              ),
-
-               Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Name',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-
-               Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Age',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-
-               Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Consultation Started',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-
-               Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Consultation Ended',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-
-               Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Patients Age',
-                textAlign: TextAlign.left,
-                style: body16SemiBold,
-                ),
-              ),
-
-            ],
-            ),
-            ),
-            
-  
-          ]),
-        ),
-      );
+              ],
+            )
+          ),
+        ]),
+      ),
+    );
   }
 }
