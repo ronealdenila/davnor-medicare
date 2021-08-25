@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/DoctorHistoryInfo',
+      initialRoute:'/MADescriptionRoute',
       getPages: AppRoutes.routes,
     );
   }

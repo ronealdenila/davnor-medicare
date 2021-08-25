@@ -38,7 +38,7 @@ const String madescriptionParagraph4 =
 const String madescriptionParagraph5 =
     '\u2022 Doctor’s Prescription with complete name, signature and license number';
 const String madescriptionParagraph6 =
-    ' *Any National Government and District Hospitals of Davao del Norte such as: DRMC, SPMC, 3 District Hospitals (Kapalong Zone, Samal Zone and Carmen Zone), CHO, MHO, PHO and PGH.';
+    '\u2022 Any National Government and District Hospitals of Davao del Norte such as: DRMC, SPMC, 3 District Hospitals (Kapalong Zone, Samal Zone and Carmen Zone), CHO, MHO, PHO and PGH.';
 
 //Dialog Verification Request
 const String dialogueverificationrequest =
