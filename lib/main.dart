@@ -25,9 +25,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: AppRoutes.routes,
-      //   navigatorKey: locator<NavigationService>().navigatorKey,
-      // initialRoute: routes.LoginRoute,
-      // onGenerateRoute: router.generateRoute,
     );
   }
 }

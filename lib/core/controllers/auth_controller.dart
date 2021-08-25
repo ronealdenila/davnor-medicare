@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/global/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
@@ -9,12 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
-
-  Logger logger = Logger();
 
   static AuthController to = Get.find();
 
@@ -33,7 +29,6 @@ class AuthController extends GetxController {
 
   Rxn<User> firebaseUser = Rxn<User>();
 
-  late Rx<User?> _firebaseUser;
   String? userRole;
   bool? userSignedOut = false;
 
@@ -74,7 +69,7 @@ class AuthController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      _clearControllers();
+      await _clearControllers();
     } catch (e) {
       dismissDialog();
       Get.snackbar(
@@ -116,7 +111,7 @@ class AuthController extends GetxController {
       log.i(
           'sendPasswordResetEmail | Request password sent to email ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
-          'Check your email and follow the instructions to reset your password.',
+          'Check your email for a password reset link.',
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 5),
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
@@ -227,7 +222,7 @@ class AuthController extends GetxController {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
         middleText:
-            '$userRole is not authorized to log in at mobile platform. Please log in on Web Application',
+            '$userRole has no access to mobile platform. Login to Web Application',
         textConfirm: 'Okay',
         onConfirm: signOut,
       );
@@ -245,8 +240,8 @@ class AuthController extends GetxController {
   //initializedBaseOnUserRoles
   Future<void> _initializePatientModel() async {
     log.i(
-        '_initializePatientModel | ${firebaseUser.value!.uid} has role $userRole');
-    await firebaseFirestore
+        '_initializePatientModel | ${firebaseUser.value!.uid} role: $userRole');
+    patientModel.value = await firebaseFirestore
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .get()
@@ -257,33 +252,31 @@ class AuthController extends GetxController {
 
   Future<void> _initializeDoctorModel() async {
     log.i(
-        '_initializeDoctorModel | ${firebaseUser.value!.uid} has role $userRole');
+        '_initializeDoctorModel | ${firebaseUser.value!.uid} role: $userRole');
     doctorModel.value = await firebaseFirestore
         .collection('doctors')
         .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => DoctorModel.fromSnapshot(doc));
+        .then((doc) => DoctorModel.fromJson(doc.data()!));
     log.i('Fetched Data: ${doctorModel.value!.firstName}');
   }
 
   Future<void> _initializePSWDModel() async {
-    log.i(
-        '_initializePSWDModel | ${firebaseUser.value!.uid} has role $userRole');
+    log.i('_initializePSWDModel | ${firebaseUser.value!.uid} role: $userRole');
     pswdModel.value = await firebaseFirestore
         .collection('pswd_personnel')
         .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => PswdModel.fromSnapshot(doc));
+        .then((doc) => PswdModel.fromJson(doc.data()!));
   }
 
   Future<void> _initializeAdminModel() async {
-    log.i(
-        '_initializeAdminModel | ${firebaseUser.value!.uid} has role $userRole');
+    log.i('_initializeAdminModel | ${firebaseUser.value!.uid} role: $userRole');
     adminModel.value = await firebaseFirestore
         .collection('admins')
         .doc(firebaseUser.value!.uid)
         .get()
-        .then((doc) => AdminModel.fromSnapshot(doc));
+        .then((doc) => AdminModel.fromJson(doc.data()!));
     log.i(adminModel.value!.firstName);
   }
 }

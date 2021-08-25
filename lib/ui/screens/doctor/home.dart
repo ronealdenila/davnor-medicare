@@ -102,7 +102,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              isAvailable
+                              fetchedData!.dStatus!
                                   ? 'Available for Consultation'
                                   : 'Unavailable',
                               style: const TextStyle(

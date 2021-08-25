@@ -2,11 +2,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-//gamit kaayo si required / null safety kay para di nato mag appear ang null error
 class PatientModel {
   PatientModel({
     required this.email,
-    required this.firstname,
+    required this.firstName,
     required this.lastName,
     required this.profileImage,
     required this.pStatus,
@@ -17,7 +16,7 @@ class PatientModel {
 
   factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
         email: json['email'] as String,
-        firstname: json['firstName'] as String,
+        firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         profileImage: json['profileImage'] as String,
         pStatus: json['pStatus'] as bool,
@@ -28,7 +27,7 @@ class PatientModel {
 
   Map<String, dynamic> toJson() => {
         'email': email,
-        'firstname': firstname,
+        'firstname': firstName,
         'lastName': lastName,
         'profileImage': profileImage,
         'pStatus': pStatus,
@@ -38,7 +37,7 @@ class PatientModel {
       };
 
   final String? email;
-  final String? firstname;
+  final String? firstName;
   final String? lastName;
   final String? profileImage;
   final bool? pStatus;
@@ -49,60 +48,76 @@ class PatientModel {
 
 class DoctorModel {
   DoctorModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.title,
-    this.department,
-    this.clinicHours,
-    this.profileImage,
-    this.numToAccomodate,
-    this.dStatus,
-    this.hasOngoingCons,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.title,
+    required this.department,
+    required this.clinicHours,
+    required this.profileImage,
+    required this.numToAccomodate,
+    required this.dStatus,
+    required this.hasOngoingCons,
   });
 
-  DoctorModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    title = (snapshot.data() as dynamic)['title'] as String;
-    department = (snapshot.data() as dynamic)['department'] as String;
-    clinicHours = (snapshot.data() as dynamic)['clinicHours'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-    numToAccomodate = (snapshot.data() as dynamic)['numToAccomodate'] as int;
-    dStatus = (snapshot.data() as dynamic)['dStatus'] as bool;
-    hasOngoingCons = (snapshot.data() as dynamic)['hasOngoingCons'] as bool;
-  }
+  factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+        email: json['email'] as String,
+        firstName: json['firstname'] as String,
+        lastName: json['lastName'] as String,
+        title: json['title'] as String,
+        department: json['department'] as String,
+        clinicHours: json['clinicHours'] as String,
+        profileImage: json['profileImage'] as String,
+        numToAccomodate: json['numToAccomodate'] as int,
+        dStatus: json['dStatus'] as bool,
+        hasOngoingCons: json['hasOngoingCons'] as bool,
+      );
 
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstname': firstName,
+        'lastName': lastName,
+        'title': title,
+        'department': department,
+        'clinicHours': clinicHours,
+        'profileImage': profileImage,
+        'numToAccomodate': numToAccomodate,
+        'dStatus': dStatus,
+        'hasOngoingCons': hasOngoingCons,
+      };
   String? email;
   String? firstName;
   String? lastName;
   String? title;
   String? department;
   String? clinicHours;
-  //data that will change --------
   String? profileImage;
   int? numToAccomodate;
   bool? dStatus;
   bool? hasOngoingCons;
-  // -----------------------------
 }
 
 class AdminModel {
   AdminModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.profileImage,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.profileImage,
   });
 
-  AdminModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-  }
+  factory AdminModel.fromJson(Map<String, dynamic> json) => AdminModel(
+        email: json['email'] as String,
+        firstName: json['firstname'] as String,
+        lastName: json['lastName'] as String,
+        profileImage: json['profileImage'] as String,
+      );
 
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstname': firstName,
+        'lastName': lastName,
+        'profileImage': profileImage,
+      };
   String? email;
   String? firstName;
   String? lastName;
@@ -111,20 +126,28 @@ class AdminModel {
 
 class PswdModel {
   PswdModel({
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.position,
-    this.profileImage,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.position,
+    required this.profileImage,
   });
 
-  PswdModel.fromSnapshot(DocumentSnapshot snapshot) {
-    email = (snapshot.data() as dynamic)['email'] as String;
-    firstName = (snapshot.data() as dynamic)['firstName'] as String;
-    lastName = (snapshot.data() as dynamic)['lastName'] as String;
-    position = (snapshot.data() as dynamic)['position'] as String;
-    profileImage = (snapshot.data() as dynamic)['profileImage'] as String;
-  }
+  factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
+        email: json['email'] as String,
+        firstName: json['firstname'] as String,
+        lastName: json['lastName'] as String,
+        position: json['position'] as String,
+        profileImage: json['profileImage'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'firstname': firstName,
+        'lastName': lastName,
+        'position': position,
+        'profileImage': profileImage,
+      };
 
   String? email;
   String? firstName;
