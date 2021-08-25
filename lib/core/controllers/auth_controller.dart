@@ -53,7 +53,7 @@ class AuthController extends GetxController {
       if (userSignedOut == true) {
         await Get.offAll(() => LoginScreen());
       } else {
-        await navigateWithDelay(LoginScreen());
+        await navigateWithDelay(Get.offAll(() => LoginScreen()));
       }
     } else {
       userSignedOut = false;
@@ -192,23 +192,24 @@ class AuthController extends GetxController {
       switch (userRole) {
         case 'pswd-p':
           await _initializePSWDModel();
-          await checkAppRestriction(PSWDPersonnelHomeScreen());
+          await checkAppRestriction(
+              Get.offAll(() => PSWDPersonnelHomeScreen()));
           break;
         case 'pswd-h':
           await _initializePSWDModel();
-          await checkAppRestriction(PSWDHeadHomeScreen());
+          await checkAppRestriction(Get.offAll(() => PSWDHeadHomeScreen()));
           break;
         case 'admin':
           await _initializeAdminModel();
-          await checkAppRestriction(AdminHomeScreen());
+          await checkAppRestriction(Get.offAll(() => AdminHomeScreen()));
           break;
         case 'doctor':
           await _initializeDoctorModel();
-          await navigateWithDelay(DoctorHomeScreen());
+          await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
           break;
         case 'patient':
           await _initializePatientModel();
-          await navigateWithDelay(PatientHomeScreen());
+          await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');
@@ -217,7 +218,7 @@ class AuthController extends GetxController {
   }
 
   //Restrict admin and pswd from logging in mobile app
-  Future<void> checkAppRestriction(Widget route) async {
+  Future<void> checkAppRestriction(dynamic route) async {
     if (!kIsWeb) {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
@@ -231,10 +232,8 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> navigateWithDelay(Widget route) async {
-    await Future.delayed(const Duration(seconds: 1), () {
-      Get.offAll(() => route);
-    });
+  Future<void> navigateWithDelay(dynamic route) async {
+    await Future.delayed(const Duration(seconds: 1), () => route);
   }
 
   //initializedBaseOnUserRoles
