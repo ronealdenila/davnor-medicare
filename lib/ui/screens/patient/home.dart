@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -11,31 +11,27 @@ class PatientHomeScreen extends StatelessWidget {
       init: AuthController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          backgroundColor: kcVerySoftBlueColor,
+          backgroundColor: verySoftBlueColor,
           actions: [
             IconButton(
-              onPressed: () {
-                AuthController.to.signOut();
-              },
-              icon: Icon(Icons.logout),
+              onPressed: controller.signOut,
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),
         drawer: Drawer(
           child: TextButton(
-            child: Text('Profile'),
             onPressed: () {
-              Get.to(() => PatientProfileScreen());
+              Get.to(() => const PatientProfileScreen());
             },
+            child: const Text('Profile'),
           ),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //Obx(()=>
-              Text(
-                  'Hello ${controller.userModel.value.firstName} ${controller.userModel.value.lastName}'),
+              Text('Hello ${controller.patientModel.value!.firstName}'),
               Text('Hello ${controller.userRole}'),
             ],
           ),

@@ -1,14 +1,14 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/appController.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/global/forgot_password.dart';
-import 'package:davnor_medicare/ui/screens/global/signup.dart';
-import 'package:davnor_medicare/ui/screens/global/widgets/bottom_text.dart';
-import 'package:davnor_medicare/ui/screens/global/widgets/form_input_field_with_icon.dart';
+import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
+import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
+import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
         () => SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: screenWidth(context),
                 height: screenHeightPercentage(context, percentage: .3),
                 child: Image.asset(authHeader, fit: BoxFit.fill),
@@ -37,12 +37,12 @@ class LoginScreen extends StatelessWidget {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 elevation: 3,
                 child: Form(
                   key: _formKey,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Center(
                       child: SingleChildScrollView(
                         child: Column(
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             verticalSpace18,
-                            Text('Welcome Back!', style: title32Bold),
+                            const Text('Welcome Back!', style: title32Bold),
                             verticalSpace50,
                             FormInputFieldWithIcon(
                               controller: authController.emailController,
@@ -58,7 +58,9 @@ class LoginScreen extends StatelessWidget {
                               labelText: 'Email',
                               validator: Validator().email,
                               keyboardType: TextInputType.emailAddress,
-                              onChanged: (value) => null,
+                              onChanged: (value) {
+                                return;
+                              },
                               onSaved: (value) =>
                                   authController.emailController.text = value!,
                             ),
@@ -67,9 +69,7 @@ class LoginScreen extends StatelessWidget {
                               controller: authController.passwordController,
                               iconPrefix: Icons.lock,
                               suffixIcon: IconButton(
-                                onPressed: () {
-                                  appController.toggleTextVisibility();
-                                },
+                                onPressed: appController.toggleTextVisibility,
                                 icon: Icon(
                                   appController.isObscureText.value
                                       ? Icons.visibility
@@ -79,7 +79,9 @@ class LoginScreen extends StatelessWidget {
                               labelText: 'Password',
                               validator: Validator().password,
                               obscureText: appController.isObscureText.value,
-                              onChanged: (value) => null,
+                              onChanged: (value) {
+                                return;
+                              },
                               onSaved: (value) => authController
                                   .passwordController.text = value!,
                               maxLines: 1,
@@ -91,22 +93,23 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
-                                child: Text('Forgot Password',
-                                    style: body14SemiBold),
-                                style:
-                                    TextButton.styleFrom(primary: kcInfoColor),
+                                style: TextButton.styleFrom(primary: infoColor),
+                                child: const Text(
+                                  'Forgot Password',
+                                  style: body14SemiBold,
+                                ),
                               ),
                             ),
                             verticalSpace25,
                             CustomButton(
                               onTap: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  authController
+                                  await authController
                                       .signInWithEmailAndPassword(context);
                                 }
                               },
                               text: 'Sign In',
-                              color: kcVerySoftBlueColor,
+                              colors: verySoftBlueColor,
                               fontSize: 20,
                             ),
                             verticalSpace25,

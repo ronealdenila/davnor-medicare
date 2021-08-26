@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,9 +14,9 @@ class PatientProfileScreen extends StatelessWidget {
               body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                        '${controller.userModel.value.firstName} ${controller.userModel.value.lastName}'),
+                  children: const <Widget>[
+                    // Text(
+                    //     '${controller.patientModel.value!.firstName} ${controller.patientModel.value!.lastName}'),
                     //TODO: To be refactor
                     //   '${controller.firestoreUser.value!.firstName}' +
                     //       ' ' +

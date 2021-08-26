@@ -1,44 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/authController.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:flutter/cupertino.dart';
 
 class AdminHomeScreen extends StatelessWidget {
-  static AuthController to = Get.find();
+  static AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                AuthController.to.signOut();
-              },
-              icon: Icon(Icons.logout),
+        body: Column(
+          children: [
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    width: screenWidth(context),
+                    height: screenHeightPercentage(context, percentage: .25),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(50)),
+                    ),
+                  ),
+                ]),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      color: verySoftBlueColor,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
-        ),
-        drawer: Drawer(
-          child: TextButton(
-            child: Text('Profile'),
-            onPressed: () {
-              //go to profile screen
-            },
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //Obx(()=>
-              Text(
-                  'Hello ${to.userModel.value.firstName} ${to.userModel.value.lastName}'),
-              Text('Hello ${to.userRole}'),
-            ],
-          ),
         ),
       ),
     );
   }
 }
+     //Obx(()=>
+            // Text(
+            //     // ignore: lines_longer_than_80_chars
+            //     'Hello ${authController.adminModel.value!.firstName}'),
+            // Text('Hello ${authController.userRole}'),

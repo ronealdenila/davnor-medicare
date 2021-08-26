@@ -11,13 +11,15 @@ class AppController extends GetxController {
   RxBool isObscureText = true.obs;
   RxBool isCheckboxChecked = false.obs;
 
-  toggleTextVisibility() {
+  bool toggleTextVisibility() {
     log.i('toggleTextVisibility | Toggle Text Visibility');
-    isObscureText.value = !isObscureText.value;
+    return isObscureText.value = !isObscureText.value;
   }
 
-  void launchURL(String url) async {
+  Future<void> launchURL(String url) async {
     log.i('launchURL | Launched at URL: $url');
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    await canLaunch(url)
+        ? await launch(url)
+        : Get.defaultDialog(title: 'Could not launch $url');
   }
 }
