@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 
 // Titles
@@ -160,6 +161,13 @@ const TextStyle body14SemiBold = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle body14SemiBoldWhite = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  color: Colors.white,
+);
+
 const TextStyle body14Medium = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w500,
@@ -170,6 +178,14 @@ const TextStyle body14Regular = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+  height: 1.3,
+);
+
+TextStyle body14RegularNeutral = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: neutralColor[60],
   height: 1.3,
 );
 

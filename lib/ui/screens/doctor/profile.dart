@@ -90,14 +90,9 @@ class DoctorProfileScreen extends StatelessWidget {
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: infoColor,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(50),
-                              topLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
-                              bottomLeft: Radius.circular(50),
-                            ),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
                             Icons.perm_contact_calendar,
@@ -149,14 +144,9 @@ class DoctorProfileScreen extends StatelessWidget {
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: infoColor,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(50),
-                              topLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
-                              bottomLeft: Radius.circular(50),
-                            ),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
                             Icons.perm_contact_calendar,
@@ -205,14 +195,9 @@ class DoctorProfileScreen extends StatelessWidget {
                         Container(
                           height: 50,
                           width: 50,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: infoColor,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(50),
-                              topLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
-                              bottomLeft: Radius.circular(50),
-                            ),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
                             Icons.perm_contact_calendar,

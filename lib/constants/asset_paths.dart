@@ -2,6 +2,7 @@ const String imageAssetRoot = 'assets/images/';
 
 final String authHeader = _getImagePath('auth_header.png');
 final String logo = _getImagePath('logo.png');
+final String patientHomeHeader = _getImagePath('home_samp.png');
 
 //Cons Form
 final String earIconPath = _getImagePath('ear.png');
