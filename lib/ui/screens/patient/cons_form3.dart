@@ -2,13 +2,19 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
-class ConsForm3Screen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
+
+class ConsForm3Screen extends StatefulWidget {
   const ConsForm3Screen({Key? key}) : super(key: key);
 
+  @override
+  _ConsForm3ScreenState createState() => _ConsForm3ScreenState();
+}
+
+class _ConsForm3ScreenState extends State<ConsForm3Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,21 +35,36 @@ class ConsForm3Screen extends StatelessWidget {
               style: subtitle18Regular,
             ),
             verticalSpace18,
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Enter your description here?',
-                alignLabelWithHint: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12),
+            DottedBorder(
+              borderType: BorderType.RRect,
+              radius: const Radius.circular(12),
+              padding: const EdgeInsets.all(6),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: Container(
+                  width: 307,
+                  height: 186,
+                  color: neutralColor[10],
+                  child: Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.file_upload,
+                          size: 67,
+                          color: neutralColor[60],
+                        ),
+                      ),
+                      verticalSpace50,
+                      const Text(
+                        'Upload here',
+                        style: subtitle18Regular,
+                      )
+                    ],
                   ),
                 ),
               ),
-              maxLines: 6,
-              keyboardType: TextInputType.multiline,
             ),
-            verticalSpace18,
-            verticalSpace25,
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,

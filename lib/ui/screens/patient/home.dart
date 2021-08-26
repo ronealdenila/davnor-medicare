@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -10,6 +11,9 @@ import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  static AuthController authController = Get.find();
+  final fetchedData = authController.patientModel.value;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +24,7 @@ class PatientHomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  //authController.signOut();
+                  authController.signOut();
                 },
                 icon: const Icon(
                   Icons.notifications_outlined,
@@ -28,7 +32,7 @@ class PatientHomeScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  //authController.signOut();
+                  authController.signOut();
                 },
                 icon: const Icon(Icons.logout),
               ),
@@ -54,8 +58,8 @@ class PatientHomeScreen extends StatelessWidget {
                     style: title32Regular,
                   ),
                   verticalSpace5,
-                  const Text(
-                    'David!',
+                  Text(
+                    '${fetchedData!.firstName}!',
                     style: subtitle20Medium,
                   ),
                   verticalSpace25,
