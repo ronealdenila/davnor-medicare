@@ -1,10 +1,12 @@
 import 'package:davnor_medicare/app_data.dart';
+import 'package:davnor_medicare/ui/screens/patient/const_form2.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/category_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConsFormScreen extends StatelessWidget {
   @override
@@ -51,6 +53,7 @@ class ConsFormScreen extends StatelessWidget {
                     shape: const CircleBorder(),
                     value: true,
                     onChanged: (bool? newValue) {},
+                    activeColor: verySoftBlueColor,
                   ),
                   const Text(
                     'Follow-up',
@@ -115,7 +118,7 @@ class ConsFormScreen extends StatelessWidget {
                   SizedBox(
                     width: 160,
                     child: CustomButton(
-                      onTap: () {},
+                      onTap: () => Get.to(() => const ConsForm2Screen()),
                       text: 'Next',
                       buttonColor: verySoftBlueColor,
                     ),
