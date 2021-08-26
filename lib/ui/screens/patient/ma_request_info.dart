@@ -126,7 +126,7 @@ class MARequestInfoScreen extends StatelessWidget {
                       //
                     },
                     text: 'See Attached Photos',
-                    colors: verySoftBlueColor,
+                    buttonColor: verySoftBlueColor,
                     fontSize: 18,
                   ),
                 ),

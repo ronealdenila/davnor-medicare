@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends Container {
@@ -7,17 +8,15 @@ class CustomButton extends Container {
     required this.text,
     this.buttonPadding = 15,
     this.splashColor = Colors.blueGrey,
-    this.fontSize = 16,
-    this.colors,
-    this.textColor = Colors.white,
+    this.buttonColor,
+    this.fontSize,
   }) : super(key: key);
 
   final Function? onTap;
   final String? text;
-  final Color? colors;
-  final Color textColor;
+  final Color? buttonColor;
   final Color splashColor;
-  final double fontSize;
+  final double? fontSize;
   final double buttonPadding;
 
   @override
@@ -28,13 +27,13 @@ class CustomButton extends Container {
       ),
       splashColor: splashColor,
       onPressed: () => onTap!(),
-      color: colors,
+      color: buttonColor,
       padding: EdgeInsets.all(buttonPadding),
       child: Text(
         text!,
-        style: TextStyle(
-          color: textColor,
+        style: subtitle20Medium.copyWith(
           fontSize: fontSize,
+          color: Colors.white,
         ),
       ),
     );

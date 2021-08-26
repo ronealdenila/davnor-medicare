@@ -58,7 +58,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   }
                 },
                 text: 'Request Password Reset',
-                colors: verySoftBlueColor,
+                buttonColor: verySoftBlueColor,
               ),
             ],
           ),

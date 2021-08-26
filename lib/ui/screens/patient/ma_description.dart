@@ -142,7 +142,7 @@ class MADescriptionScreen extends StatelessWidget {
                       //Go to MADetailsFill
                     },
                     text: 'Avail Medical Assistance',
-                    colors: verySoftBlueColor,
+                    buttonColor: verySoftBlueColor,
                     fontSize: 20,
                   ),
                 ),
