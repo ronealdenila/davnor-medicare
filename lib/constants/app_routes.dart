@@ -36,7 +36,7 @@ class AppRoutes {
     GetPage(name: '/PSWDPersonnelHome', page: () => PSWDPersonnelHomeScreen()),
     GetPage(name: '/DoctorProfileRoute', page: () => DoctorProfileScreen()),
     GetPage(name: '/DoctorHistoryInfo', page: () => HistoryInfoScreen()),
-    GetPage(name: '/MADescriptionRoute', page: () => MADescriptionScreen()),
-    GetPage(name: '/MARequestInfoRoute', page: () => MARequestInfoScreen()),
+    GetPage(name: '/MADescriptionRoute', page: () => const MADescriptionScreen()),
+    GetPage(name: '/MARequestInfoRoute', page: () => const MARequestInfoScreen()),
   ];
 }

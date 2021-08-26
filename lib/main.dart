@@ -9,8 +9,8 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //Get.put<AppController>(AppController());
-  //Get.put<AuthController>(AuthController());
+  Get.put<AppController>(AppController());
+  Get.put<AuthController>(AuthController());
   runApp(MyApp());
 }
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/MADescriptionRoute',
+      initialRoute:'/',
       getPages: AppRoutes.routes,
     );
   }

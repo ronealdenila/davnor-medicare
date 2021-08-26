@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
@@ -108,8 +109,7 @@ class AuthController extends GetxController {
   Future<void> sendPasswordResetEmail(BuildContext context) async {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
-      log.i(
-          'sendPasswordResetEmail | Password link send ${emailController.text}');
+      log.i('Password link sent to: ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
           'Check your email for a password reset link.',
           snackPosition: SnackPosition.BOTTOM,
@@ -235,8 +235,7 @@ class AuthController extends GetxController {
     } else {
       await Get.defaultDialog(
         title: 'Sign In failed. Try Again',
-        middleText:
-            '$userRole has no access to mobile platform. Login to Web Application',
+        middleText: checkAppRestrictionErrorMiddleText,
         textConfirm: 'Okay',
         onConfirm: signOut,
       );

@@ -1,6 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-const String ForgotPasswordDescription =
+const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 
 //Global
@@ -45,25 +45,21 @@ const String dialogueverificationrequest =
     'We will verify your account 24hrs. Thank you';
 
 //Dialog Queue
-const String dialogQueue1 =
-    'Sorry you have no queue';
+const String dialogQueue1 = 'Sorry you have no queue';
 const String dialogQueue2 =
     'You need to request consultation or medical assistance to be in a queue'; //label text sa dialogqueue1
 
 //Dialog1
-const String dialogConsultationScreen =
-    'Is the consultation for you?';
+const String dialogConsultationScreen = 'Is the consultation for you?';
 //Consultation Menu
-const String ConsultationMenuScreen =
-    'Where are you experiencing discomfort?';
-const String ConsultationMenuScreen1 =
-    'Tell us more about the discomfort';  
+const String consultationMenuScreen = 'Where are you experiencing discomfort?';
+const String consultationMenuScreen1 = 'Tell us more about the discomfort';
 
 //Additional Details Follow up Consultation
-const String FollowupConsultation1 =
-    'Upload past prescription or laboratory results'; 
-const String FollowupConsultation2 =
-    'Select and upload images to support your follow-up consultation'; 
+const String followupConsultation1 =
+    'Upload past prescription or laboratory results';
+const String followupConsultation2 =
+    'Select and upload images to support your follow-up consultation';
 //dialo4
 const String dialogConsultationScreen1 =
     'You have successfully requested a consultation!';
@@ -74,13 +70,14 @@ const String dialogConsultationScreen2 =
 const String dialogMedicalAssistanceScreen =
     'Is the medical assistance request for you?';
 //Proof of Prescription
-const String ProofOfPrescriptionScreen=
-    'Please upload a valid prescription issued not more than a month'; 
+const String proofOfPrescriptionScreen =
+    'Please upload a valid prescription issued not more than a month';
 //Dialog5
-const String dialogMedicalAssistanceScreen1 =    
+const String dialogMedicalAssistanceScreen1 =
     'You have successfully requested MA!';
-const String dialogMedicalAssistanceScreen2 =    
-    'Your priority number is MA24. Please check the queue and wait for your turn. Thank you';//label text sa dialogmdicalassistancescreen1 
+const String dialogMedicalAssistanceScreen2 =
+    'Your priority number is MA24. Please check the queue and wait for your turn. Thank you'; //label text sa dialogmdicalassistancescreen1
 
-
-
+//Auth Controller
+const String checkAppRestrictionErrorMiddleText =
+    'You are not allowed to login on the mobile app. Please login to Web Application';

@@ -36,7 +36,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
               verticalSpace10,
               const Text(
-                ForgotPasswordDescription,
+                forgotPasswordDescription,
                 style: TextStyle(fontSize: 18, color: neutralColor),
               ),
               verticalSpace50,
