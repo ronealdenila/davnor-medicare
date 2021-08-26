@@ -29,6 +29,9 @@ dependencies:
   # Url launcher
   url_launcher: ^6.0.9
 
+  #image picker
+  image_picker: ^0.8.3+3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

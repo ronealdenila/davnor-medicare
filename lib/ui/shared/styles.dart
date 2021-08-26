@@ -194,6 +194,7 @@ const TextStyle caption12SemiBold = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w600,
   fontFamily: 'Inter',
+  height: 1.5,
 );
 
 const TextStyle caption12Medium = TextStyle(
@@ -206,13 +207,20 @@ const TextStyle caption12Regular = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
-  height: 1.3,
 );
 
 const TextStyle caption10Regular = TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+);
+
+TextStyle caption10RegularNeutral = TextStyle(
+  fontSize: 10,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: neutralColor[60],
+  height: 1.5,
 );
 
 const TextStyle caption18Regular = TextStyle(
