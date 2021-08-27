@@ -178,11 +178,12 @@ const TextStyle body16Regular = TextStyle(
   height: 1.3,
 );
 
-const TextStyle body16RegularUnderline = TextStyle(
+TextStyle body16RegularUnderlineBlue = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
   decoration: TextDecoration.underline,
   fontFamily: 'Inter',
+  color: verySoftBlueColor[100],
 );
 
 const TextStyle body14RegularUnderline = TextStyle(
