@@ -7,10 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
+import 'package:davnor_medicare/core/services/article_service.dart';
 
-class PatientHomeScreen extends StatelessWidget {
-  static AuthController authController = Get.find();
-  final fetchedData = authController.patientModel.value;
+class PatientHomeScreen extends StatefulWidget {
+  @override
+  _PatientHomeScreenState createState() => _PatientHomeScreenState();
+}
+
+class _PatientHomeScreenState extends State<PatientHomeScreen> {
+  //static AuthController authController = Get.find();
+  //final fetchedData = PatientHomeScreen.authController.patientModel.value;
+  ArticleService as = ArticleService();
+
+  @override
+  void initState() {
+    as.getArticlesList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +41,7 @@ class PatientHomeScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  authController.signOut();
+                  //PatientHomeScreen.authController.signOut();
                 },
                 icon: const Icon(Icons.logout),
               ),
@@ -54,10 +67,10 @@ class PatientHomeScreen extends StatelessWidget {
                     style: title32Regular,
                   ),
                   verticalSpace5,
-                  Text(
-                    '${fetchedData!.firstName}!',
-                    style: subtitle20Medium,
-                  ),
+                  // Text(
+                  //   '${fetchedData!.firstName}!',
+                  //   style: subtitle20Medium,
+                  // ),
                   verticalSpace25,
                   SizedBox(
                     child: ClipRRect(
@@ -71,40 +84,49 @@ class PatientHomeScreen extends StatelessWidget {
                     style: body16SemiBold,
                   ),
                   verticalSpace10,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ActionCard(
-                          text: 'Request Consultation',
-                          textStyle: body14SemiBoldWhite,
-                          width: 107,
-                          height: 107,
-                          color: verySoftMagenta[60],
-                          secondaryColor: verySoftMagentaCustomColor,
-                          secondaryWidth: 99,
-                          secondaryHeight: 25,
-                          onTap: () {}),
-                      ActionCard(
-                          text: 'Request Medical Assistance',
-                          textStyle: body14SemiBoldWhite,
-                          width: 107,
-                          height: 107,
-                          color: verySoftOrange[60],
-                          secondaryColor: verySoftOrangeCustomColor,
-                          secondaryWidth: 99,
-                          secondaryHeight: 25,
-                          onTap: () {}),
-                      ActionCard(
-                          text: 'View\nQueue',
-                          textStyle: body14SemiBoldWhite,
-                          width: 107,
-                          height: 107,
-                          color: verySoftRed[60],
-                          secondaryColor: verySoftRedCustomColor,
-                          secondaryWidth: 99,
-                          secondaryHeight: 25,
-                          onTap: () {}),
-                    ],
+                  SizedBox(
+                    width: screenWidth(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: ActionCard(
+                              text: 'Request Consultation',
+                              textStyle: body14SemiBoldWhite,
+                              //width: 107,
+                              height: 107,
+                              color: verySoftMagenta[60],
+                              secondaryColor: verySoftMagentaCustomColor,
+                              secondaryWidth: 99,
+                              secondaryHeight: 25,
+                              onTap: () {}),
+                        ),
+                        Expanded(
+                          child: ActionCard(
+                              text: 'Request Medical Assistance',
+                              textStyle: body14SemiBoldWhite,
+                              //width: 107,
+                              height: 107,
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                              secondaryWidth: 99,
+                              secondaryHeight: 25,
+                              onTap: () {}),
+                        ),
+                        Expanded(
+                          child: ActionCard(
+                              text: 'View\nQueue',
+                              textStyle: body14SemiBoldWhite,
+                              //width: 107,
+                              height: 107,
+                              color: verySoftRed[60],
+                              secondaryColor: verySoftRedCustomColor,
+                              secondaryWidth: 99,
+                              secondaryHeight: 25,
+                              onTap: () {}),
+                        ),
+                      ],
+                    ),
                   ),
                   verticalSpace25,
                   Row(

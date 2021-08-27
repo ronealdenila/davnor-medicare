@@ -5,7 +5,7 @@ class ActionCard extends StatelessWidget {
     Key? key,
     required this.text,
     required this.textStyle,
-    required this.width,
+    //required this.width,
     required this.height,
     required this.color,
     required this.secondaryColor,
@@ -16,7 +16,7 @@ class ActionCard extends StatelessWidget {
 
   final String text;
   final TextStyle textStyle;
-  final double width;
+  //final double width;
   final double height;
   final Color? color;
   final Color? secondaryColor;
@@ -35,7 +35,7 @@ class ActionCard extends StatelessWidget {
         ),
         child: Container(
           height: height,
-          width: width,
+          //width: width,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(10),
