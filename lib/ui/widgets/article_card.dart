@@ -40,8 +40,8 @@ class ArticleCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 17.5, horizontal: 17.5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 17.5, horizontal: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
-import 'package:davnor_medicare/core/services/article_service.dart';
+import 'package:davnor_medicare/core/models/article_model.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   @override
@@ -15,15 +15,9 @@ class PatientHomeScreen extends StatefulWidget {
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
-  //static AuthController authController = Get.find();
-  //final fetchedData = PatientHomeScreen.authController.patientModel.value;
-  ArticleService as = ArticleService();
-
-  @override
-  void initState() {
-    as.getArticlesList();
-    super.initState();
-  }
+  static AuthController authController = Get.find();
+  final fetchedData = authController.patientModel.value;
+  final List<ArticleModel> articleList = authController.articlesList;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +35,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  //PatientHomeScreen.authController.signOut();
+                  authController.signOut();
                 },
                 icon: const Icon(Icons.logout),
               ),
@@ -58,7 +52,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -67,10 +61,10 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     style: title32Regular,
                   ),
                   verticalSpace5,
-                  // Text(
-                  //   '${fetchedData!.firstName}!',
-                  //   style: subtitle20Medium,
-                  // ),
+                  Text(
+                    '${fetchedData!.firstName}!',
+                    style: subtitle20Medium,
+                  ),
                   verticalSpace25,
                   SizedBox(
                     child: ClipRRect(
@@ -93,7 +87,6 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                           child: ActionCard(
                               text: 'Request Consultation',
                               textStyle: body14SemiBoldWhite,
-                              //width: 107,
                               height: 107,
                               color: verySoftMagenta[60],
                               secondaryColor: verySoftMagentaCustomColor,
@@ -105,7 +98,6 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                           child: ActionCard(
                               text: 'Request Medical Assistance',
                               textStyle: body14SemiBoldWhite,
-                              //width: 107,
                               height: 107,
                               color: verySoftOrange[60],
                               secondaryColor: verySoftOrangeCustomColor,
@@ -117,7 +109,6 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                           child: ActionCard(
                               text: 'View\nQueue',
                               textStyle: body14SemiBoldWhite,
-                              //width: 107,
                               height: 107,
                               color: verySoftRed[60],
                               secondaryColor: verySoftRedCustomColor,
@@ -137,37 +128,31 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         'Health Articles',
                         style: body16SemiBold,
                       ),
-                      Text(
-                        'See all',
-                        style: body14RegularNeutral,
+                      InkWell(
+                        onTap: () {
+                          //see all list of articles
+                        },
+                        child: Text(
+                          'See all',
+                          style: body14RegularNeutral,
+                        ),
                       ),
                     ],
                   ),
                   verticalSpace18,
-                  Column(
-                    children: [
-                      ArticleCard(
-                          title: 'Philippines eyes "total health"',
-                          content: 'Lorem ipsum dolor sit amet, consectetur.',
-                          photoURL:
-                              'https://googleflutter.com/sample_image.jpg',
-                          textStyleTitle: caption12SemiBold,
-                          textStyleContent: caption10RegularNeutral,
-                          height: 115,
-                          onTap: () {}),
-                      ArticleCard(
-                          title:
-                              'Philippines eyes "total health" after detecting',
-                          content:
-                              'Lorem ipsum dolor sit amet, consectetur adipisc',
-                          photoURL:
-                              'https://googleflutter.com/sample_image.jpg',
-                          textStyleTitle: caption12SemiBold,
-                          textStyleContent: caption10RegularNeutral,
-                          height: 115,
-                          onTap: () {}),
-                    ],
-                  )
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: articleList.length,
+                      itemBuilder: (context, index) {
+                        return ArticleCard(
+                            title: articleList[index].title!,
+                            content: articleList[index].content!,
+                            photoURL: articleList[index].photoURL!,
+                            textStyleTitle: caption12SemiBold,
+                            textStyleContent: caption10RegularNeutral,
+                            height: 115,
+                            onTap: () {});
+                      }),
                 ],
               ),
             ),

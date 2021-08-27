@@ -2,7 +2,6 @@ import 'package:davnor_medicare/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/ConsForm',
+      initialRoute: '/',
       getPages: AppRoutes.routes,
     );
   }
