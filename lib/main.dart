@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/ConsForm',
+      initialRoute:'/MAForm',
       getPages: AppRoutes.routes,
     );
   }

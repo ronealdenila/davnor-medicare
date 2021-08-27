@@ -78,6 +78,10 @@ const String dialogMedicalAssistanceScreen1 =
 const String dialogMedicalAssistanceScreen2 =
     'Your priority number is MA24. Please check the queue and wait for your turn. Thank you'; //label text sa dialogmdicalassistancescreen1
 
+//MAForm
+const String maFormScreen =
+    'Upload a valid ID or barangay \ncertificate of the patient';
+
 //Auth Controller
 const String checkAppRestrictionErrorMiddleText =
     'You are not allowed to login on the mobile app. Please login to Web Application';

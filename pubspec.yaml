@@ -29,6 +29,9 @@ dependencies:
   # Url launcher
   url_launcher: ^6.0.9
 
+  #fdottedline
+  fdottedline: ^1.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
