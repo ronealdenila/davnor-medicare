@@ -144,6 +144,7 @@ class AuthController extends GetxController {
       'profileImage': '',
       'validID': '',
       'validSelfie': '',
+      'queueNum': '',
     });
   }
 

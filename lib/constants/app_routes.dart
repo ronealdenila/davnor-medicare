@@ -11,6 +11,8 @@ import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
@@ -48,5 +50,7 @@ class AppRoutes {
     GetPage(name: '/ConsForm2', page: () => const ConsForm2Screen()),
     GetPage(name: '/ConsForm3', page: () => const ConsForm3Screen()),
     GetPage(name: '/Verification', page: () => const VerifyAccountScreen()),
+    GetPage(name: '/QueueCons', page: () => const QueueConsScreen()),
+    GetPage(name: '/QueueMA', page: () => const QueueMAScreen()),
   ];
 }
