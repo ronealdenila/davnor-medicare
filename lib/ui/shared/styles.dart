@@ -117,12 +117,14 @@ const TextStyle subtitle18Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
-// Body
-const TextStyle body20Regular = TextStyle(
-  fontSize: 20,
+TextStyle subtitle18RegularNeutral = TextStyle(
+  fontSize: 18,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+  color: neutralColor[60],
 );
+
+// Body
 const TextStyle body16Bold = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w700,

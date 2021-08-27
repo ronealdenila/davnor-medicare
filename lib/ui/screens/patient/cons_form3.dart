@@ -34,31 +34,33 @@ class _ConsForm3ScreenState extends State<ConsForm3Screen> {
               'Select and upload images to support your follow-up consultation',
               style: subtitle18Regular,
             ),
-            verticalSpace18,
+            verticalSpace20,
             DottedBorder(
               borderType: BorderType.RRect,
               radius: const Radius.circular(12),
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(12),
+              dashPattern: const [8, 8, 8, 8],
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
                 child: Container(
-                  width: 307,
+                  width: screenWidth(context),
                   height: 186,
                   color: neutralColor[10],
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.file_upload,
+                      InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.file_upload_outlined,
                           size: 67,
                           color: neutralColor[60],
                         ),
                       ),
-                      verticalSpace50,
-                      const Text(
+                      verticalSpace10,
+                      Text(
                         'Upload here',
-                        style: subtitle18Regular,
+                        style: subtitle18RegularNeutral,
                       )
                     ],
                   ),
