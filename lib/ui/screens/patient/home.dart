@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -6,8 +7,13 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/ui/widgets/action_card.dart';
+import 'package:davnor_medicare/ui/widgets/article_card.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  static AuthController authController = Get.find();
+  final fetchedData = authController.patientModel.value;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,7 +24,7 @@ class PatientHomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  //authController.signOut();
+                  authController.signOut();
                 },
                 icon: const Icon(
                   Icons.notifications_outlined,
@@ -26,7 +32,7 @@ class PatientHomeScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  //authController.signOut();
+                  authController.signOut();
                 },
                 icon: const Icon(Icons.logout),
               ),
@@ -52,8 +58,8 @@ class PatientHomeScreen extends StatelessWidget {
                     style: title32Regular,
                   ),
                   verticalSpace5,
-                  const Text(
-                    'David!',
+                  Text(
+                    '${fetchedData!.firstName}!',
                     style: subtitle20Medium,
                   ),
                   verticalSpace25,
@@ -72,129 +78,36 @@ class PatientHomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          height: 107,
+                      ActionCard(
+                          text: 'Request Consultation',
+                          textStyle: body14SemiBoldWhite,
                           width: 107,
-                          decoration: BoxDecoration(
-                            color: verySoftMagenta[60],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 10),
-                                child: Text('Request Consultation',
-                                    style: body14SemiBoldWhite),
-                              ),
-                              Align(
-                                child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: 25,
-                                  width: 99,
-                                  decoration: const BoxDecoration(
-                                      color: verySoftMagentaCustomColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(100),
-                                        topRight: Radius.circular(100),
-                                        bottomLeft: Radius.circular(15),
-                                        bottomRight: Radius.circular(15),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
                           height: 107,
+                          color: verySoftMagenta[60],
+                          secondaryColor: verySoftMagentaCustomColor,
+                          secondaryWidth: 99,
+                          secondaryHeight: 25,
+                          onTap: () {}),
+                      ActionCard(
+                          text: 'Request Medical Assistance',
+                          textStyle: body14SemiBoldWhite,
                           width: 107,
-                          decoration: BoxDecoration(
-                            color: verySoftOrange,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 10),
-                                child: Text('Request Medical Assistance',
-                                    style: body14SemiBoldWhite),
-                              ),
-                              Align(
-                                child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: 25,
-                                  width: 99,
-                                  decoration: const BoxDecoration(
-                                      color: verySoftOrangeCustomColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(100),
-                                        topRight: Radius.circular(100),
-                                        bottomLeft: Radius.circular(15),
-                                        bottomRight: Radius.circular(15),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
                           height: 107,
+                          color: verySoftOrange[60],
+                          secondaryColor: verySoftOrangeCustomColor,
+                          secondaryWidth: 99,
+                          secondaryHeight: 25,
+                          onTap: () {}),
+                      ActionCard(
+                          text: 'View\nQueue',
+                          textStyle: body14SemiBoldWhite,
                           width: 107,
-                          decoration: BoxDecoration(
-                            color: verySoftRed[60],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 10),
-                                child: Text('View\nQueue',
-                                    style: body14SemiBoldWhite),
-                              ),
-                              Align(
-                                child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: 25,
-                                  width: 99,
-                                  decoration: const BoxDecoration(
-                                      color: verySoftRedCustomColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(100),
-                                        topRight: Radius.circular(100),
-                                        bottomLeft: Radius.circular(15),
-                                        bottomRight: Radius.circular(15),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                          height: 107,
+                          color: verySoftRed[60],
+                          secondaryColor: verySoftRedCustomColor,
+                          secondaryWidth: 99,
+                          secondaryHeight: 25,
+                          onTap: () {}),
                     ],
                   ),
                   verticalSpace25,
@@ -215,52 +128,30 @@ class PatientHomeScreen extends StatelessWidget {
                   verticalSpace18,
                   Column(
                     children: [
-                      Card(
-                        elevation: 9,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
+                      ArticleCard(
+                          title:
+                              'Philippines eyes "total health" after detecting first local cases of Delta COVID-19 variant',
+                          content:
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.',
+                          photoURL:
+                              'https://googleflutter.com/sample_image.jpg',
+                          textStyleTitle: caption12SemiBold,
+                          textStyleContent: caption10RegularNeutral,
                           height: 115,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 17.5, horizontal: 17.5),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(13),
-                                      child: Image.asset(patientHomeHeader,
-                                          fit: BoxFit.cover)),
-                                ),
-                                horizontalSpace18,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      'Title',
-                                      style: caption12SemiBold,
-                                    ),
-                                    Text(
-                                      'description',
-                                      style: caption10Regular,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                          onTap: () {}),
+                      ArticleCard(
+                          title:
+                              'Philippines eyes "total health" after detecting',
+                          content:
+                              'Lorem ipsum dolor sit amet, consectetur adipisc',
+                          photoURL:
+                              'https://googleflutter.com/sample_image.jpg',
+                          textStyleTitle: caption12SemiBold,
+                          textStyleContent: caption10RegularNeutral,
+                          height: 115,
+                          onTap: () {}),
                     ],
-                  ),
+                  )
                 ],
               ),
             ),

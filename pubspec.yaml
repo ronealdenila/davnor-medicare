@@ -29,8 +29,8 @@ dependencies:
   # Url launcher
   url_launcher: ^6.0.9
 
-  #fdottedline
-  fdottedline: ^1.0.1
+  #dashed border
+  dotted_border: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:

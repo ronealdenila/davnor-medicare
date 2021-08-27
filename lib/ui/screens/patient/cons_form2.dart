@@ -1,9 +1,11 @@
+import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConsForm2Screen extends StatelessWidget {
   const ConsForm2Screen({Key? key}) : super(key: key);
@@ -62,7 +64,9 @@ class ConsForm2Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 162,
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => const ConsForm3Screen());
+                    },
                     text: 'Next',
                     buttonColor: verySoftBlueColor,
                   ),
