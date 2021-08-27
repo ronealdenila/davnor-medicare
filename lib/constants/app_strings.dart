@@ -81,3 +81,8 @@ const String dialogMedicalAssistanceScreen2 =
 //Auth Controller
 const String checkAppRestrictionErrorMiddleText =
     'You are not allowed to login on the mobile app. Please login to Web Application';
+
+//Verification
+
+const String verificationDescription =
+    'For those who do not own any valid ID, please provide barangay certificate as an alternative.';

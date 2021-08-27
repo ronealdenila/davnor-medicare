@@ -39,9 +39,9 @@ class AuthController extends GetxController {
   @override
   void onReady() {
     log.i('onReady | App is ready');
-    // ever(firebaseUser, _setInitialScreen);
+    ever(firebaseUser, _setInitialScreen);
 
-    // firebaseUser.bindStream(user);
+    firebaseUser.bindStream(user);
     super.onReady();
   }
 

@@ -1,6 +1,4 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/user_model.dart';
-import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -23,9 +21,7 @@ class PatientHomeScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             actions: [
               IconButton(
-                onPressed: () {
-                  authController.signOut();
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.notifications_outlined,
                 ),
@@ -129,10 +125,8 @@ class PatientHomeScreen extends StatelessWidget {
                   Column(
                     children: [
                       ArticleCard(
-                          title:
-                              'Philippines eyes "total health" after detecting first local cases of Delta COVID-19 variant',
-                          content:
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.',
+                          title: 'Philippines eyes "total health"',
+                          content: 'Lorem ipsum dolor sit amet, consectetur.',
                           photoURL:
                               'https://googleflutter.com/sample_image.jpg',
                           textStyleTitle: caption12SemiBold,
