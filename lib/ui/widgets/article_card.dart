@@ -49,8 +49,15 @@ class ArticleCard extends StatelessWidget {
                       width: 80,
                       height: 80,
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(13),
-                          child: Image.network(photoURL, fit: BoxFit.cover)),
+                        borderRadius: BorderRadius.circular(13),
+                        child: Hero(
+                          tag: title,
+                          child: Image.network(
+                            photoURL,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                     horizontalSpace18,
                     Expanded(

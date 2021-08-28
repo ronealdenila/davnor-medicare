@@ -27,8 +27,11 @@ class ArticleItemScreen extends StatelessWidget {
               SizedBox(
                   width: screenWidth(context),
                   height: 220,
-                  child: Image.network(articleList[index].photoURL!,
-                      fit: BoxFit.cover)),
+                  child: Hero(
+                    tag: articleList[index].title!,
+                    child: Image.network(articleList[index].photoURL!,
+                        fit: BoxFit.cover),
+                  )),
               Container(
                 transform: Matrix4.translationValues(0, -20, 0),
                 width: screenWidth(context),
