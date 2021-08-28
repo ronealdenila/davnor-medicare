@@ -26,7 +26,7 @@ class ArticleService extends GetxController {
 
   Future<void> _initArticleList() async {
     log.i('_initArticleList | Initiliazing Articles');
-    // await getArticlesList();
+    await getArticlesList();
     articlesList = getArticles();
   }
 
