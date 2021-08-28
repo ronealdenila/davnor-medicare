@@ -1,16 +1,16 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class ArticleItemScreen extends StatelessWidget {
   ArticleItemScreen({Key? key}) : super(key: key);
-  static AuthController authController = Get.find();
-  final List<ArticleModel> articleList = authController.articlesList;
+  static ArticleService articleService = Get.find();
+  final List<ArticleModel> articleList = articleService.articlesList;
   final int index = Get.arguments as int;
 
   @override
