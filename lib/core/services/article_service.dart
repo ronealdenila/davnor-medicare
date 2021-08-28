@@ -5,7 +5,6 @@ import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
 
 class ArticleService extends GetxController {
-  final FirebaseFirestore _instance = FirebaseFirestore.instance;
   final log = getLogger('Article Service');
   static ArticleService to = Get.find();
 
@@ -38,7 +37,8 @@ class ArticleService extends GetxController {
 
   Future<void> getArticlesList() async {
     log.i('getArticlesList | Returning List of Articles');
-    final CollectionReference articles = _instance.collection('articles');
+    final CollectionReference articles =
+        firebaseFirestore.collection('articles');
     await articles.get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         title = doc['title'] as String;
