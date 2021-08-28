@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
@@ -24,9 +25,6 @@ class AuthController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
   Rxn<AdminModel> adminModel = Rxn<AdminModel>();
@@ -38,17 +36,15 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
-    log.i('onReady | App is ready');
-    // ever(firebaseUser, _setInitialScreen);
-
-    // firebaseUser.bindStream(user);
+    log.i('onReady | Auth Controller is ready');
+    ever(firebaseUser, _setInitialScreen);
+    firebaseUser.bindStream(user);
     super.onReady();
   }
 
-  Stream<User?> get user => _auth.authStateChanges();
+  Stream<User?> get user => auth.authStateChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {
-    log.i('_setInitialScreen');
     if (_firebaseUser == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
@@ -66,7 +62,7 @@ class AuthController extends GetxController {
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
     try {
       showLoading();
-      await _auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
@@ -84,7 +80,7 @@ class AuthController extends GetxController {
   Future<void> registerPatient(BuildContext context) async {
     try {
       showLoading();
-      await _auth
+      await auth
           .createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
@@ -108,7 +104,7 @@ class AuthController extends GetxController {
 
   Future<void> sendPasswordResetEmail(BuildContext context) async {
     try {
-      await _auth.sendPasswordResetEmail(email: emailController.text);
+      await auth.sendPasswordResetEmail(email: emailController.text);
       log.i('Password link sent to: ${emailController.text}');
       Get.snackbar('Password Reset Email Sent',
           'Check your email for a password reset link.',
@@ -144,6 +140,7 @@ class AuthController extends GetxController {
       'profileImage': '',
       'validID': '',
       'validSelfie': '',
+      'queueNum': '',
     });
   }
 
@@ -167,7 +164,7 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     try {
       userSignedOut = true;
-      await _auth.signOut();
+      await auth.signOut();
       log.i('signOut | User signs out successfully');
     } catch (e) {
       Get.snackbar(

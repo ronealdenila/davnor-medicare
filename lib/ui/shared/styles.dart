@@ -8,6 +8,13 @@ const TextStyle title150Bold = TextStyle(
   fontFamily: 'Inter',
 );
 
+TextStyle title90BoldBlue = TextStyle(
+  fontSize: 90,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: verySoftBlueColor[80],
+);
+
 const TextStyle title58Regular = TextStyle(
   fontSize: 58,
   fontWeight: FontWeight.w400,
@@ -18,6 +25,13 @@ const TextStyle title42Bold = TextStyle(
   fontSize: 42,
   fontWeight: FontWeight.w700,
   fontFamily: 'Inter',
+);
+
+TextStyle title42BoldNeutral100 = TextStyle(
+  fontSize: 42,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: neutralColor[100],
 );
 
 const TextStyle title40Regular = TextStyle(
@@ -87,6 +101,13 @@ const TextStyle subtitle20Bold = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle subtitle20BoldWhite = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: Colors.white,
+);
+
 const TextStyle subtitle20Medium = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.w500,
@@ -111,10 +132,24 @@ const TextStyle subtitle18Medium = TextStyle(
   fontFamily: 'Inter',
 );
 
+TextStyle subtitle18MediumNeutral = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+  color: neutralColor[60],
+);
+
 const TextStyle subtitle18Regular = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+);
+
+const TextStyle subtitle18RegularWhite = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: Colors.white,
 );
 
 TextStyle subtitle18RegularNeutral = TextStyle(
@@ -143,11 +178,12 @@ const TextStyle body16Regular = TextStyle(
   height: 1.3,
 );
 
-const TextStyle body16RegularUnderline = TextStyle(
+TextStyle body16RegularUnderlineBlue = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
   decoration: TextDecoration.underline,
   fontFamily: 'Inter',
+  color: verySoftBlueColor[100],
 );
 
 const TextStyle body14RegularUnderline = TextStyle(

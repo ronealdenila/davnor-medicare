@@ -17,6 +17,7 @@ const Widget verticalSpace15 = SizedBox(height: 15);
 const Widget verticalSpace18 = SizedBox(height: 18);
 const Widget verticalSpace20 = SizedBox(height: 20);
 const Widget verticalSpace25 = SizedBox(height: 25);
+const Widget verticalSpace35 = SizedBox(height: 35);
 const Widget verticalSpace50 = SizedBox(height: 50);
 
 // Screen Size helpers

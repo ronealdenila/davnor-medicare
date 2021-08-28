@@ -16,6 +16,11 @@ import 'package:davnor_medicare/ui/screens/patient/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
+import 'package:davnor_medicare/ui/screens/patient/verification.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
@@ -53,5 +58,10 @@ class AppRoutes {
     GetPage(name: '/MAForm', page: () => const MAFormScreen()),
     GetPage(name: '/MAForm2', page: () => const MAForm2Screen()),
 
+    GetPage(name: '/ConsForm3', page: () => const ConsForm3Screen()),
+    GetPage(name: '/Verification', page: () => const VerifyAccountScreen()),
+    GetPage(name: '/QueueCons', page: () => const QueueConsScreen()),
+    GetPage(name: '/QueueMA', page: () => const QueueMAScreen()),
+    GetPage(name: '/ArticleItem', page: () => ArticleItemScreen()),
   ];
 }

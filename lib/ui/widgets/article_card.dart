@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({
@@ -42,8 +40,8 @@ class ArticleCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 17.5, horizontal: 17.5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 17.5, horizontal: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,8 +49,15 @@ class ArticleCard extends StatelessWidget {
                       width: 80,
                       height: 80,
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(13),
-                          child: Image.network(photoURL, fit: BoxFit.cover)),
+                        borderRadius: BorderRadius.circular(13),
+                        child: Hero(
+                          tag: title,
+                          child: Image.network(
+                            photoURL,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                     horizontalSpace18,
                     Expanded(

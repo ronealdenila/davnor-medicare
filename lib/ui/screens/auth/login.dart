@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  //TODO: Register them into one file. kay if daghan nag controller sa widget
+  //TODO: Register them into one file. kay if daghan nag controller
   //mutaas na ang variable declaration dria
   final AuthController authController = AuthController.to;
   final AppController appController = AppController.to;

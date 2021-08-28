@@ -6,7 +6,7 @@ class CustomButton extends Container {
     Key? key,
     required this.onTap,
     required this.text,
-    this.buttonPadding = 15,
+    this.buttonPadding = const EdgeInsets.all(15),
     this.splashColor = Colors.blueGrey,
     this.buttonColor,
     this.fontSize,
@@ -17,7 +17,7 @@ class CustomButton extends Container {
   final Color? buttonColor;
   final Color splashColor;
   final double? fontSize;
-  final double buttonPadding;
+  final EdgeInsetsGeometry? buttonPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomButton extends Container {
       splashColor: splashColor,
       onPressed: () => onTap!(),
       color: buttonColor,
-      padding: EdgeInsets.all(buttonPadding),
+      padding: buttonPadding,
       child: Text(
         text!,
         style: subtitle20Medium.copyWith(

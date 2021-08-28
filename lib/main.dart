@@ -1,8 +1,8 @@
 import 'package:davnor_medicare/constants/app_routes.dart';
+import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
@@ -11,6 +11,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Get.put<AppController>(AppController());
   Get.put<AuthController>(AuthController());
+  Get.put<ArticleService>(ArticleService());
   runApp(MyApp());
 }
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute:'/MAForm',
+      initialRoute: '/',
       getPages: AppRoutes.routes,
     );
   }
