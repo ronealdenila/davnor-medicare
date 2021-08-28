@@ -50,7 +50,8 @@ const String dialogQueue2 =
     'You need to request consultation or medical assistance to be in a queue'; //label text sa dialogqueue1
 
 //Dialog1
-const String dialogConsultationScreen = 'Is the consultation for you?';
+const String dialogConsultationScreenTitle = 'Is the consultation for you?';
+const String dialogConsultationScreenCaption = 'Please select if the consultation is for you';
 //Consultation Menu
 const String consultationMenuScreen = 'Where are you experiencing discomfort?';
 const String consultationMenuScreen1 = 'Tell us more about the discomfort';

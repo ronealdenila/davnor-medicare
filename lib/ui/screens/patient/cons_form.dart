@@ -12,8 +12,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConsFormScreen extends StatelessWidget {
-  static AppController appController = Get.find();
+class ConsFormScreen extends StatefulWidget {
+  @override
+  _ConsFormScreenState createState() => _ConsFormScreenState();
+}
+
+class _ConsFormScreenState extends State<ConsFormScreen> {
+  final AppController appController = AppController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -59,26 +64,41 @@ class ConsFormScreen extends StatelessWidget {
                   style: subtitle20Medium,
                 ),
                 verticalSpace10,
+                //TODO(R): Store data so next screen will depends on its value
+                //Radiobutton toggle implementation: https://api.flutter.dev/flutter/material/Radio-class.html
                 Row(
                   children: [
-                    Checkbox(
-                      shape: const CircleBorder(),
-                      value: true,
-                      onChanged: (bool? newValue) {},
-                      activeColor: verySoftBlueColor,
+                    Expanded(
+                      child: RadioListTile<CategoryType>(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text(
+                          'Follow-Up',
+                          style: body16Regular,
+                        ),
+                        value: CategoryType.followUp,
+                        groupValue: appController.categoryType,
+                        onChanged: (CategoryType? value) {
+                          setState(() {
+                            appController.categoryType = value;
+                          });
+                        },
+                      ),
                     ),
-                    const Text(
-                      'Follow-up',
-                      style: body16Regular,
-                    ),
-                    Checkbox(
-                      shape: const CircleBorder(),
-                      value: false,
-                      onChanged: (bool? newValue) {},
-                    ),
-                    const Text(
-                      'New Consultation',
-                      style: body16Regular,
+                    Expanded(
+                      child: RadioListTile<CategoryType>(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text(
+                          'New Consultation',
+                          style: body16Regular,
+                        ),
+                        value: CategoryType.newConsult,
+                        groupValue: appController.categoryType,
+                        onChanged: (CategoryType? value) {
+                          setState(() {
+                            appController.categoryType = value;
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),

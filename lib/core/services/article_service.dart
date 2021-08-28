@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
