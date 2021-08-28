@@ -27,7 +27,7 @@ class ArticleService extends GetxController {
 
   Future<void> _initArticleList() async {
     log.i('_initArticleList | Initiliazing Articles');
-    await getArticlesList();
+    // await getArticlesList();
     articlesList = getArticles();
   }
 
@@ -36,29 +36,30 @@ class ArticleService extends GetxController {
     return _articlesList;
   }
 
-  Future<void> getArticlesList() async {
-    log.i('getArticlesList | Returning List of Articles');
-    final CollectionReference articles =
-        firebaseFirestore.collection('articles');
-    await articles.get().then(
-      (QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach(
-          (doc) {
-            title = doc['title'] as String;
-            content = doc['content'] as String;
-            photoURL = doc['photoURL'] as String;
-            source = doc['source'] as String;
-            date = doc['date'] as Timestamp;
-            _initArticle = ArticleModel(
-                title: title,
-                content: content,
-                photoURL: photoURL,
-                source: source,
-                date: date);
-            _articlesList.add(_initArticle);
-          },
-        );
-      },
-    );
-  }
+  // Future<void> getArticlesList() async {
+  //   log.i('getArticlesList | Returning List of Articles');
+  //   final CollectionReference articles =
+  //       firebaseFirestore.collection('articles');
+  //   await articles.get().then(
+  //     (QuerySnapshot querySnapshot) {
+  //       querySnapshot.docs.forEach(
+  //         (doc) {
+  //           title = doc['title'] as String;
+  //           content = doc['content'] as String;
+  //           photoURL = doc['photoURL'] as String;
+  //           source = doc['source'] as String;
+  //           // date = doc['date'] as Timestamp;
+  //           _initArticle = ArticleModel(
+  //             title: title,
+  //             content: content,
+  //             photoURL: photoURL,
+  //             source: source,
+  //             // date: date,
+  //           );
+  //           _articlesList.add(_initArticle);
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 }

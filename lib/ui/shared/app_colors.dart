@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 const Color infoColor = Color(0xFF4D82F3);
 
+const Color dialogButtonColor = Color(0xFF0280FD);
+
 //Sorry sa naming hihi wala koy lain mahunahunaan na dali
 //dali ra unta nato maindentify huehue (R)
 const Color verySoftMagentaCustomColor = Color(0xFFDB96DF);

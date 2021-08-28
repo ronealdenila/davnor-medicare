@@ -6,7 +6,7 @@ class ArticleModel {
     required this.content,
     required this.photoURL,
     required this.source,
-    required this.date,
+    // required this.date,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
@@ -14,7 +14,7 @@ class ArticleModel {
         content: json['content'] as String,
         photoURL: json['photoURL'] as String,
         source: json['source'] as String,
-        date: json['date'] as Timestamp,
+        // date: json['date'] as Timestamp,
       );
 
   Map<String, dynamic> toJson() => {
@@ -22,12 +22,12 @@ class ArticleModel {
         'content': content,
         'photoURL': photoURL,
         'source': source,
-        'date': date,
+        // 'date': date,
       };
 
   final String? title;
   final String? content;
   final String? photoURL;
   final String? source;
-  final Timestamp? date;
+  // final Timestamp? date;
 }
