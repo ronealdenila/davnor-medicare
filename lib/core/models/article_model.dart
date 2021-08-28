@@ -2,9 +2,9 @@ class ArticleModel {
   ArticleModel({
     required this.title,
     required this.content,
+    required this.short,
     required this.photoURL,
     required this.source,
-    // required this.date,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
@@ -12,7 +12,7 @@ class ArticleModel {
         content: json['content'] as String,
         photoURL: json['photoURL'] as String,
         source: json['source'] as String,
-        // date: json['date'] as Timestamp,
+        short: json['short'] as String,
       );
 
   Map<String, dynamic> toJson() => {
@@ -20,12 +20,12 @@ class ArticleModel {
         'content': content,
         'photoURL': photoURL,
         'source': source,
-        // 'date': date,
+        'short': short,
       };
 
   final String? title;
   final String? content;
   final String? photoURL;
   final String? source;
-  // final Timestamp? date;
+  final String? short;
 }

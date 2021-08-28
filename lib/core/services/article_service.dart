@@ -7,7 +7,6 @@ class ArticleService extends GetxController {
   final log = getLogger('Article Service');
   static ArticleService to = Get.find();
 
-  final List<ArticleModel> _articlesList = [];
   List<ArticleModel> articlesList = [];
   late ArticleModel _initArticle;
 
@@ -15,7 +14,7 @@ class ArticleService extends GetxController {
   String? content;
   String? photoURL;
   String? source;
-  Timestamp? date;
+  String? short;
 
   @override
   void onReady() {
@@ -26,39 +25,34 @@ class ArticleService extends GetxController {
 
   Future<void> _initArticleList() async {
     log.i('_initArticleList | Initiliazing Articles');
-    // await getArticlesList();
+    await getArticlesList();
     articlesList = getArticles();
   }
 
   List<ArticleModel> getArticles() {
     log.i('getArticles | Returning Articles');
-    return _articlesList;
+    return articlesList;
   }
 
-  // Future<void> getArticlesList() async {
-  //   log.i('getArticlesList | Returning List of Articles');
-  //   final CollectionReference articles =
-  //       firebaseFirestore.collection('articles');
-  //   await articles.get().then(
-  //     (QuerySnapshot querySnapshot) {
-  //       querySnapshot.docs.forEach(
-  //         (doc) {
-  //           title = doc['title'] as String;
-  //           content = doc['content'] as String;
-  //           photoURL = doc['photoURL'] as String;
-  //           source = doc['source'] as String;
-  //           // date = doc['date'] as Timestamp;
-  //           _initArticle = ArticleModel(
-  //             title: title,
-  //             content: content,
-  //             photoURL: photoURL,
-  //             source: source,
-  //             // date: date,
-  //           );
-  //           _articlesList.add(_initArticle);
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  Future<void> getArticlesList() async {
+    log.i('getArticlesList | Returning List of Articles');
+    final CollectionReference articles =
+        firebaseFirestore.collection('articles');
+    await articles.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        title = doc['title'] as String;
+        content = doc['content'] as String;
+        photoURL = doc['photoURL'] as String;
+        source = doc['source'] as String;
+        short = doc['short'] as String;
+        _initArticle = ArticleModel(
+            title: title,
+            content: content,
+            photoURL: photoURL,
+            source: source,
+            short: short);
+        articlesList.add(_initArticle);
+      });
+    });
+  }
 }
