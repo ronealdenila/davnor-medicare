@@ -19,10 +19,6 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
 
-  //neal naglibog ko where ni i initialize diri nalang sa for now(E)
-  final ArticleService aService = ArticleService();
-  List<ArticleModel> articlesList = [];
-
   static AuthController to = Get.find();
 
   TextEditingController emailController = TextEditingController();
@@ -44,20 +40,15 @@ class AuthController extends GetxController {
 
   @override
   void onReady() {
-    log.i('onReady | App is ready');
+    log.i('onReady | Auth Controller is ready');
     ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(user);
-    //diri nako gibutang kay if sa home screen wala pa nako natry jud ug
-    //experiment neal kay if didtoa i initialize dugay mahuman mag null
-    //ang list maong mag error. Palihug nalang ko neal unsa mas better saimo(E)
-    _initArticleList();
     super.onReady();
   }
 
   Stream<User?> get user => _auth.authStateChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {
-    log.i('_setInitialScreen');
     if (_firebaseUser == null) {
       log.i('_setInitialScreen | User is null. Proceed Signin Screen');
       if (userSignedOut == true) {
@@ -293,10 +284,5 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => AdminModel.fromJson(doc.data()!));
-  }
-
-  Future<void> _initArticleList() async {
-    await aService.getArticlesList();
-    articlesList = aService.getArticles();
   }
 }
