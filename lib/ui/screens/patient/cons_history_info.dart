@@ -5,7 +5,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
-class HistoryInfoScreen extends StatelessWidget {
+class PatientConsHistoryInfoScreen extends StatelessWidget {
  // static AuthController authController = Get.find();
 
   //final fetchedData = authController.doctorModel.value;
@@ -14,12 +14,13 @@ class HistoryInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+         appBar: AppBar(),
         backgroundColor: Colors.white,
         body: ListView(
             children: <Widget> [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .3,
+                height: MediaQuery.of(context).size.height *.3,
                 decoration: const BoxDecoration(
                 border: Border(bottom: BorderSide(
                   width: 1, color: Color(0xFFCBD4E1),),),
@@ -27,19 +28,9 @@ class HistoryInfoScreen extends StatelessWidget {
 
                 child: Column(children: <Widget>[
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: Get.back,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        color: Colors.black,
-                        size: 50,
-                      ),
-                    ),
-                  ),
+                  
                 const SizedBox(
                        height: 10,
                          ),
@@ -47,8 +38,8 @@ class HistoryInfoScreen extends StatelessWidget {
                     backgroundImage: AssetImage(authHeader),
                     radius: 50,
                   ),
-              const    SizedBox(
-                    height: 25,
+                const    SizedBox(
+                    height: 20,
                   ),
               //  Text(
               //       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -57,19 +48,8 @@ class HistoryInfoScreen extends StatelessWidget {
               //        fontSize: 24,
               //          color: Colors.white,
               //       )),
-                    const SizedBox(
-                      height: 3,
-                    ),
-              //      Text(
-              //        authController.doctorModel.value!.email!,
-              //        style: const TextStyle(
-              //            fontWeight: FontWeight.w400,
-              //            fontSize: 18,
-              //            color: Colors.white),
-              //      ),
                 ]),
              ),
-
             Padding(
                   padding:const EdgeInsets.symmetric(vertical: 30,horizontal: 30
                   ),
@@ -82,33 +62,40 @@ class HistoryInfoScreen extends StatelessWidget {
                         children: const <Widget>[
                           Text('Consultation Info',
                               textAlign: TextAlign.left,
-                              style: title20Regular),
+                              style: title20Regular,),
                           SizedBox(
-                            height: 20,
+                            height: 22,
                           ),
-                          Text('Patients Name',
+                          Text('Patient',
                               textAlign: TextAlign.left,
                               style: body16Bold),
                           SizedBox(
-                            height: 20,
+                            height: 22,
                           ),   
                           Text('Age of Patient',
                               textAlign: TextAlign.left,
                               style: body16Bold),
                           SizedBox(
-                            height: 20,
+                            height: 22,
+                          ),
+                          Text('Date Requested',
+                              textAlign: TextAlign.left,
+                              style: body16Bold),
+
+                          SizedBox(
+                            height: 22,
                           ),
                           Text('Consultation Started',
                               textAlign: TextAlign.left,
                               style: body16Bold),
                            SizedBox(
-                            height: 20,
+                            height: 22,
                           ),
                           Text('Consultation Ended',
                               textAlign: TextAlign.left,
                               style: body16Bold),
                            SizedBox(
-                            height: 20,
+                            height: 22,
                           ), 
                     ]),
                   ],

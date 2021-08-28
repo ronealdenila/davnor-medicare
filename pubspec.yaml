@@ -31,6 +31,9 @@ dependencies:
 
   #dashed border
   dotted_border: ^2.0.0+1
+  #dropdown button
+  dropdownfield: ^1.0.0
+  dropdown_below: ^1.0.0
 
 dev_dependencies:
   flutter_test:

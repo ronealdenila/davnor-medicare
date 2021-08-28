@@ -13,6 +13,7 @@ class MADescriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        //appBar: AppBar(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
