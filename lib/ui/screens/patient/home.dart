@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -16,8 +17,9 @@ class PatientHomeScreen extends StatefulWidget {
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
   static AuthController authController = Get.find();
+  static ArticleService articleService = Get.find();
   final fetchedData = authController.patientModel.value;
-  final List<ArticleModel> articleList = authController.articlesList;
+  final List<ArticleModel> articleList = articleService.articlesList;
 
   @override
   Widget build(BuildContext context) {
