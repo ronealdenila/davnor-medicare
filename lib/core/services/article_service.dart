@@ -4,16 +4,16 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 class ArticleService {
   final FirebaseFirestore _instance = FirebaseFirestore.instance;
 
-  List<ArticleModel> _articlesList = [];
+  List<ArticleModel> articlesList = [];
   late ArticleModel _initArticle;
   String? title;
   String? content;
   String? photoURL;
   String? source;
-  Timestamp? date;
+  String? short;
 
   List<ArticleModel> getArticles() {
-    return _articlesList;
+    return articlesList;
   }
 
   Future<void> getArticlesList() async {
@@ -24,14 +24,14 @@ class ArticleService {
         content = doc['content'] as String;
         photoURL = doc['photoURL'] as String;
         source = doc['source'] as String;
-        date = doc['date'] as Timestamp;
+        short = doc['short'] as String;
         _initArticle = ArticleModel(
             title: title,
             content: content,
             photoURL: photoURL,
             source: source,
-            date: date);
-        _articlesList.add(_initArticle);
+            short: short);
+        articlesList.add(_initArticle);
       });
     });
   }

@@ -32,6 +32,9 @@ dependencies:
   #dashed border
   dotted_border: ^2.0.0+1
 
+  #html formatter
+  flutter_html: ^2.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

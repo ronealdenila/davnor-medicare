@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
+import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
+import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   @override
@@ -129,9 +131,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         style: body16SemiBold,
                       ),
                       InkWell(
-                        onTap: () {
-                          //see all list of articles
-                        },
+                        onTap: seeAllArticles,
                         child: Text(
                           'See all',
                           style: body14RegularNeutral,
@@ -142,21 +142,31 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                   verticalSpace18,
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: articleList.length,
+                      itemCount: 3,
                       itemBuilder: (context, index) {
                         return ArticleCard(
                             title: articleList[index].title!,
-                            content: articleList[index].content!,
+                            content: articleList[index].short!,
                             photoURL: articleList[index].photoURL!,
                             textStyleTitle: caption12SemiBold,
                             textStyleContent: caption10RegularNeutral,
                             height: 115,
-                            onTap: () {});
+                            onTap: () {
+                              goToArticleItemScreen(index);
+                            });
                       }),
                 ],
               ),
             ),
           )),
     );
+  }
+
+  void goToArticleItemScreen(int index) {
+    Get.to(() => ArticleItemScreen(), arguments: index);
+  }
+
+  void seeAllArticles() {
+    Get.to(() => ArticleListScreen());
   }
 }
