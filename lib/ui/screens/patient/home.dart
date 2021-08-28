@@ -1,5 +1,7 @@
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -12,14 +14,10 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
-class PatientHomeScreen extends StatefulWidget {
-  @override
-  _PatientHomeScreenState createState() => _PatientHomeScreenState();
-}
-
-class _PatientHomeScreenState extends State<PatientHomeScreen> {
+class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   static ArticleService articleService = Get.find();
+  static AppController appController = Get.find();
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 
@@ -89,14 +87,15 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       children: [
                         Expanded(
                           child: ActionCard(
-                              text: 'Request Consultation',
-                              textStyle: body14SemiBoldWhite,
-                              height: 107,
-                              color: verySoftMagenta[60],
-                              secondaryColor: verySoftMagentaCustomColor,
-                              secondaryWidth: 99,
-                              secondaryHeight: 25,
-                              onTap: () {}),
+                            text: 'Request Consultation',
+                            textStyle: body14SemiBoldWhite,
+                            height: 107,
+                            color: verySoftMagenta[60],
+                            secondaryColor: verySoftMagentaCustomColor,
+                            secondaryWidth: 99,
+                            secondaryHeight: 25,
+                            onTap: () => appController.requestConsultation(),
+                          ),
                         ),
                         Expanded(
                           child: ActionCard(
