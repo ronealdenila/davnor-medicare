@@ -51,7 +51,8 @@ const String dialogQueue2 =
 
 //Dialog1
 const String dialogConsultationScreenTitle = 'Is the consultation for you?';
-const String dialogConsultationScreenCaption = 'Please select if the consultation is for you';
+const String dialogConsultationScreenCaption =
+    'Please select if the consultation is for you';
 //Consultation Menu
 const String consultationMenuScreen = 'Where are you experiencing discomfort?';
 const String consultationMenuScreen1 = 'Tell us more about the discomfort';
@@ -88,6 +89,9 @@ const String checkAppRestrictionErrorMiddleText =
     'You are not allowed to login on the mobile app. Please login to Web Application';
 
 //Verification
-
 const String verificationDescription =
     'For those who do not own any valid ID, please provide barangay certificate as an alternative.';
+
+//Consultation Form 3
+const String consForm3Description =
+    'Select and upload images to support your follow-up consultation';

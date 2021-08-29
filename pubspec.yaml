@@ -24,19 +24,25 @@ dependencies:
 
   # Lint
   very_good_analysis: ^2.3.0
+
   # logger
   logger: ^1.0.0
+
   # Url launcher
   url_launcher: ^6.0.9
 
   #dashed border
   dotted_border: ^2.0.0+1
+
   #dropdown button
   dropdownfield: ^1.0.0
   dropdown_below: ^1.0.0
 
   #html formatter
   flutter_html: ^2.1.1
+
+  #multi image picker
+  multi_image_picker: ^4.8.1
 
 dev_dependencies:
   flutter_test:
