@@ -15,6 +15,7 @@ class MAFormScreen extends  StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -35,17 +36,15 @@ class MAFormScreen extends  StatelessWidget {
                     ),
                     SizedBox(
                       width: 40,
-                       child: Container(
                           child: InkWell(
                             onTap: () {},
                             child: Icon(
                               Icons.info,
-                              size: 30,
+                              size: 28,
                               color: verySoftBlueColor[10],
                             ),
                           ),
                         ),
-                      ),
                   ],
                 ),
               
@@ -100,16 +99,29 @@ class MAFormScreen extends  StatelessWidget {
                     ),
                   ),
                verticalSpace10,
-                ]),
-                
-                verticalSpace10,
+              SizedBox(
+              width: 180,
+              height: 70,
+              child: CustomDropdown(),
+              ),
+              ]),
+          
+              Align(
+                alignment: FractionalOffset.centerLeft,
+                child: SizedBox(
+                width: 150,
+                height: 60,
+                //child: CustomDropdown(),
+              ),
+              ),
+
+              verticalSpace10,
                 const Text(
                 maFormScreen,
                 style: subtitle20Medium,
               ),
-              verticalSpace10,
 
-              
+              verticalSpace10,
               DottedBorder(
               borderType: BorderType.RRect,
               radius: const Radius.circular(12),
@@ -119,7 +131,7 @@ class MAFormScreen extends  StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 child: Container(
                   width: screenWidth(context),
-                  height: 186,
+                  height: 150,
                   color: neutralColor[10],
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -142,13 +154,7 @@ class MAFormScreen extends  StatelessWidget {
                 ),
               ),
             ),
-            verticalSpace20,
-            SizedBox(
-              width: 5,
-                child: DropDown(),
-            ),
-            
-
+            verticalSpace10,
              Align(
                 alignment: FractionalOffset.bottomRight,
                 child: SizedBox(
@@ -160,9 +166,9 @@ class MAFormScreen extends  StatelessWidget {
                   ),
                 ),
               ),
-            verticalSpace10,
-            ],
-          ),
+              verticalSpace10,
+
+            ]),
         ),
       ),
     );

@@ -29,7 +29,7 @@ dependencies:
   # Url launcher
   url_launcher: ^6.0.9
 
-  #dashed border
+  #dashed borderS
   dotted_border: ^2.0.0+1
   #dropdown button
   dropdownfield: ^1.0.0

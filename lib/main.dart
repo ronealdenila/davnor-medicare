@@ -10,8 +10,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Get.put<AppController>(AppController());
-  Get.put<AuthController>(AuthController());
-  Get.put<ArticleService>(ArticleService());
+  //Get.put<AuthController>(AuthController());
+  //Get.put<ArticleService>(ArticleService());
   runApp(MyApp());
 }
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/MAForm',
       getPages: AppRoutes.routes,
     );
   }
