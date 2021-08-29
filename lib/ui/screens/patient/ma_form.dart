@@ -7,10 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:dropdown_below/dropdown_below.dart';
+//import 'package:dropdown_below/dropdown_below.dart';
 
-class MAFormScreen extends  StatelessWidget {
-  const MAFormScreen({ Key? key }) : super(key: key);
+class MAFormScreen extends StatelessWidget {
+  const MAFormScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +24,15 @@ class MAFormScreen extends  StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget> [
-                    const SizedBox(
-                      width: 255,
-                      child:  Text(
-                        ' Patients Information',
-                        style: subtitle20Medium,
-                      ),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(
+                    width: 255,
+                    child: Text(
+                      'Patients Information',
+                      style: subtitle20Medium,
+                    ),
                     ),
                     SizedBox(
                       width: 40,
@@ -42,14 +42,13 @@ class MAFormScreen extends  StatelessWidget {
                               Icons.info,
                               size: 28,
                               color: verySoftBlueColor[10],
-                            ),
                           ),
-                        ),
-                  ],
-                ),
-              
+                      ),
+                    ),
+                ]),               
+          
               verticalSpace10,
-                  TextFormField(
+              TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(
@@ -71,7 +70,7 @@ class MAFormScreen extends  StatelessWidget {
                 ),
               ),
               verticalSpace10,
-                  TextFormField(
+              TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Address',
                   border: OutlineInputBorder(
@@ -82,29 +81,30 @@ class MAFormScreen extends  StatelessWidget {
                 ),
               ),
               verticalSpace10,
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 145,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Age',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                children: <Widget>[
+                SizedBox(
+                  width: 145,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Age',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
                       ),
                     ),
-                  ),
-               verticalSpace10,
-              SizedBox(
-              width: 180,
-              height: 70,
-              child: CustomDropdown(),
-              ),
-              ]),
+                ),
+                ),
+                verticalSpace10,
+                SizedBox(
+                width: 180,
+                height: 70,
+                child: CustomDropdown(),
+                ),
+                ]), 
           
               Align(
                 alignment: FractionalOffset.centerLeft,
@@ -120,8 +120,8 @@ class MAFormScreen extends  StatelessWidget {
                 maFormScreen,
                 style: subtitle20Medium,
               ),
-
               verticalSpace10,
+
               DottedBorder(
               borderType: BorderType.RRect,
               radius: const Radius.circular(12),
@@ -143,18 +143,13 @@ class MAFormScreen extends  StatelessWidget {
                           size: 67,
                           color: neutralColor[60],
                         ),
-                      ),
-                      verticalSpace10,
-                      Text(
-                        'Upload here',
-                        style: subtitle18RegularNeutral,
-                      )
-                    ],
-                  ),
+                        )
+                    ]),
                 ),
               ),
             ),
             verticalSpace10,
+
              Align(
                 alignment: FractionalOffset.bottomRight,
                 child: SizedBox(

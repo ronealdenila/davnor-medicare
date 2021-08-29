@@ -65,7 +65,7 @@ class ConsForm2Screen extends StatelessWidget {
                   width: 162,
                   child: CustomButton(
                     onTap: () {
-                      Get.to(() => const ConsForm3Screen());
+                      Get.to(() => ConsForm3Screen());
                     },
                     text: 'Next',
                     buttonColor: verySoftBlueColor,
