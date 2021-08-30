@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +9,20 @@ class CategoryCard extends StatelessWidget {
     required this.title,
     required this.iconPath,
     required this.onTap,
+    required this.isSelected,
   }) : super(key: key);
 
   final String title;
   final String iconPath;
   final Function() onTap;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Card(
+        color: isSelected ? verySoftBlueColor[10] : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             10,

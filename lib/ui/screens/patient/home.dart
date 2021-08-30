@@ -31,7 +31,6 @@ class PatientHomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
             actions: [
               IconButton(
                 onPressed: () {},

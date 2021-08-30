@@ -1,5 +1,7 @@
 import 'package:davnor_medicare/app_data.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/models/category_model.dart';
+import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -18,7 +20,19 @@ class ConsFormScreen extends StatefulWidget {
 }
 
 class _ConsFormScreenState extends State<ConsFormScreen> {
+  final log = getLogger('Cons Form Screen');
   final AppController appController = AppController.to;
+
+  void toggleSingleCardSelection(int index, List<Category> items) {
+    for (var indexBtn = 0; indexBtn < items.length; indexBtn++) {
+      if (indexBtn == index) {
+        items[indexBtn].isSelected = true;
+        log.i('${items[indexBtn].title} is selected');
+      } else {
+        items[indexBtn].isSelected = false;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +40,7 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(
-            color: Colors.black,
+            // color: Colors.black,
             onPressed: () => Get.to(
               () => PatientHomeScreen(),
               transition: Transition.cupertino,
@@ -50,13 +64,26 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
                     padding: const EdgeInsets.all(10),
                     child: Wrap(
                       spacing: 10,
-                      children: AppData.categories.map((e) {
-                        return CategoryCard(
-                          title: e.title!,
-                          iconPath: e.iconPath!,
-                          onTap: () {},
-                        );
-                      }).toList(),
+                      children: AppData.categories.map(
+                        (e) {
+                          final index = AppData.categories.indexOf(e);
+                          return CategoryCard(
+                            title: e.title!,
+                            iconPath: e.iconPath!,
+                            isSelected: e.isSelected!,
+                            onTap: () {
+                              setState(
+                                () {
+                                  toggleSingleCardSelection(
+                                    index,
+                                    AppData.categories,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ).toList(),
                     ),
                   ),
                 ),

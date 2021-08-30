@@ -25,11 +25,14 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
         ),
         //Diria ta mag set sa scaffold bg kay incase gusto ta mag dark mode
         //kas-a ra atong basehan dili na adtuon pa nato tanan screens
         //para maghatag og condition sa scaffold (R)
-        scaffoldBackgroundColor: Colors.white
+        scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/PatientHome',
