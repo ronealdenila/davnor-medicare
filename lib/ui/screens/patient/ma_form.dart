@@ -1,4 +1,9 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/models/category_model.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -7,23 +12,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:get/get.dart';
 //import 'package:dropdown_below/dropdown_below.dart';
 
 class MAFormScreen extends StatelessWidget {
-  const MAFormScreen({Key? key}) : super(key: key);
+  final AppController appController = AppController.to;
+
+  //To be refactor
+  final List<Item> gender = <Item>[
+    const Item('Female'),
+    const Item('Male'),
+  ];
+
+  final List<Item> type = <Item>[
+    const Item('None'),
+    const Item('Senior'),
+    const Item('Pregnant Women'),
+    const Item('Person with Disabiity (PWD)'),
+    const Item('Indigenous People (IP)'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: CupertinoNavigationBarBackButton(
+          color: Colors.black,
+          onPressed: () => Get.to(
+            () => MADescriptionScreen(),
+            transition: Transition.cupertino,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -33,22 +60,25 @@ class MAFormScreen extends StatelessWidget {
                       'Patients Information',
                       style: subtitle20Medium,
                     ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.info,
-                              size: 28,
-                              color: verySoftBlueColor[10],
-                          ),
+                  ),
+                  SizedBox(
+                    width: 40,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.info,
+                        size: 28,
+                        color: verySoftBlueColor[10],
                       ),
                     ),
-                ]),               
-          
-              verticalSpace10,
-              TextFormField(
+                  ),
+                ]),
+            verticalSpace10,
+            Visibility(
+              visible: !appController.isMedicalAssistForYou.value,
+              //CustomFormField was created for patient global widget
+              //please utilize it.
+              child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(
@@ -58,8 +88,11 @@ class MAFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              verticalSpace10,
-              TextFormField(
+            ),
+            verticalSpace10,
+            Visibility(
+              visible: !appController.isMedicalAssistForYou.value,
+              child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(
@@ -69,22 +102,22 @@ class MAFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              verticalSpace10,
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Address',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
+            ),
+            verticalSpace10,
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
                   ),
                 ),
               ),
-              verticalSpace10,
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
+            ),
+            verticalSpace10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
                 SizedBox(
                   width: 145,
                   child: TextFormField(
@@ -96,74 +129,90 @@ class MAFormScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                ),
+                  ),
                 ),
                 verticalSpace10,
                 SizedBox(
-                width: 180,
-                height: 70,
-                child: CustomDropdown(),
+                  width: 180,
+                  height: 70,
+                  child: CustomDropdown(
+                    hintText: 'Select Gender',
+                    dropdownItems: gender,
+                  ),
                 ),
-                ]), 
-          
-              Align(
-                alignment: FractionalOffset.centerLeft,
-                child: SizedBox(
-                width: 150,
+              ],
+            ),
+            verticalSpace10,
+            Align(
+              alignment: FractionalOffset.centerLeft,
+              child: SizedBox(
+                width: screenWidth(context),
                 height: 60,
-                //child: CustomDropdown(),
+                child: CustomDropdown(
+                  hintText: 'Select Type',
+                  dropdownItems: type,
+                ),
               ),
-              ),
-
-              verticalSpace10,
-                const Text(
-                maFormScreen,
-                style: subtitle20Medium,
-              ),
-              verticalSpace10,
-
-              DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(12),
-              padding: const EdgeInsets.all(12),
-              dashPattern: const [8, 8, 8, 8],
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: Container(
-                  width: screenWidth(context),
-                  height: 150,
-                  color: neutralColor[10],
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.file_upload_outlined,
-                          size: 67,
-                          color: neutralColor[60],
+            ),
+            verticalSpace15,
+            Visibility(
+              visible: !appController.isMedicalAssistForYou.value,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    maFormScreen,
+                    style: subtitle20Medium,
+                  ),
+                  verticalSpace10,
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(12),
+                    padding: const EdgeInsets.all(12),
+                    dashPattern: const [8, 8, 8, 8],
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      child: Container(
+                        width: screenWidth(context),
+                        height: 150,
+                        color: neutralColor[10],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.file_upload_outlined,
+                                size: 67,
+                                color: neutralColor[60],
+                              ),
+                            )
+                          ],
                         ),
-                        )
-                    ]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            verticalSpace10,
+            //To be achieved: next button must be pinned on bottom right
+            //sa current code wala siya na pin
+            Align(
+              alignment: FractionalOffset.bottomRight,
+              child: SizedBox(
+                width: 160,
+                child: CustomButton(
+                  onTap: () {
+                    Get.to(() => MAForm2Screen());
+                  },
+                  text: 'Next',
+                  buttonColor: verySoftBlueColor,
                 ),
               ),
             ),
             verticalSpace10,
-
-             Align(
-                alignment: FractionalOffset.bottomRight,
-                child: SizedBox(
-                  width: 160,
-                  child: CustomButton(
-                    onTap: () {},
-                    text: 'Next',
-                    buttonColor: verySoftBlueColor,
-                  ),
-                ),
-              ),
-              verticalSpace10,
-
-            ]),
+          ]),
         ),
       ),
     );

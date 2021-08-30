@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -198,9 +199,14 @@ class PatientProfileScreen extends StatelessWidget {
                             children: <Widget>[
                               const Text('STATUS', style: body14Regular),
                               TextButton(
-                                  onPressed: () {},
-                                  child: Text('Click here to get verified',
-                                      style: body16RegularUnderlineBlue)),
+                                onPressed: () {
+                                  Get.to(() => VerificationScreen());
+                                },
+                                child: Text(
+                                  'Click here to get verified',
+                                  style: body16RegularUnderlineBlue,
+                                ),
+                              ),
                             ],
                           ),
                         ),

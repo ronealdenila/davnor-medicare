@@ -27,8 +27,10 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(
             color: Colors.black,
-            onPressed: () => Get.to(() => PatientHomeScreen(),
-                transition: Transition.cupertino),
+            onPressed: () => Get.to(
+              () => PatientHomeScreen(),
+              transition: Transition.cupertino,
+            ),
           ),
         ),
         body: Padding(
@@ -64,8 +66,6 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
                   style: subtitle20Medium,
                 ),
                 verticalSpace10,
-                //TODO(R): Store data so next screen will depends on its value
-                //Radiobutton toggle implementation: https://api.flutter.dev/flutter/material/Radio-class.html
                 Row(
                   children: [
                     Expanded(
@@ -80,6 +80,7 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
                         onChanged: (CategoryType? value) {
                           setState(() {
                             appController.categoryType = value;
+                            appController.isFollowUp.value = true;
                           });
                         },
                       ),
@@ -96,6 +97,7 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
                         onChanged: (CategoryType? value) {
                           setState(() {
                             appController.categoryType = value;
+                            appController.isFollowUp.value = false;
                           });
                         },
                       ),
@@ -128,7 +130,7 @@ class _ConsFormScreenState extends State<ConsFormScreen> {
                     SizedBox(
                       width: 160,
                       child: CustomButton(
-                        onTap: () => Get.to(() => const ConsForm2Screen()),
+                        onTap: () => Get.to(() => ConsForm2Screen()),
                         text: 'Next',
                         buttonColor: verySoftBlueColor,
                       ),

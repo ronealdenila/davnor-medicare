@@ -1,28 +1,29 @@
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class ActionCard extends StatelessWidget {
   const ActionCard({
     Key? key,
     required this.text,
-    required this.textStyle,
-    //required this.width,
-    required this.height,
     required this.color,
     required this.secondaryColor,
-    required this.secondaryWidth,
-    required this.secondaryHeight,
     required this.onTap,
+    //required this.width,
+    this.height = 107,
+    this.secondaryWidth = 99,
+    this.secondaryHeight = 25,
+    this.textStyle = body14SemiBoldWhite,
   }) : super(key: key);
 
   final String text;
-  final TextStyle textStyle;
-  //final double width;
-  final double height;
   final Color? color;
   final Color? secondaryColor;
-  final double secondaryWidth;
-  final double secondaryHeight;
-  final Function() onTap;
+  final Function()? onTap;
+  //final double width;
+  final double? height;
+  final double? secondaryWidth;
+  final double? secondaryHeight;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {

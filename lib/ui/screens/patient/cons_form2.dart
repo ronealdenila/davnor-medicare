@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -8,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ConsForm2Screen extends StatelessWidget {
-  const ConsForm2Screen({Key? key}) : super(key: key);
+  final AppController appController = AppController.to;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //app bar to be refactor for global use
       appBar: AppBar(
         leading: const CupertinoNavigationBarBackButton(
           color: Colors.black,
@@ -47,28 +49,34 @@ class ConsForm2Screen extends StatelessWidget {
               keyboardType: TextInputType.multiline,
             ),
             verticalSpace18,
-            Align(
-              child: SizedBox(
-                width: 211,
-                child: CustomButton(
-                  onTap: () {},
-                  text: 'Consult Now',
-                  buttonColor: verySoftBlueColor,
+            Visibility(
+              visible: !appController.isFollowUp.value,
+              child: Align(
+                child: SizedBox(
+                  width: 211,
+                  child: CustomButton(
+                    onTap: () {},
+                    text: 'Consult Now',
+                    buttonColor: verySoftBlueColor,
+                  ),
                 ),
               ),
             ),
             verticalSpace25,
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomRight,
-                child: SizedBox(
-                  width: 162,
-                  child: CustomButton(
-                    onTap: () {
-                      Get.to(() => ConsForm3Screen());
-                    },
-                    text: 'Next',
-                    buttonColor: verySoftBlueColor,
+            Visibility(
+              visible: appController.isFollowUp.value,
+              child: Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomRight,
+                  child: SizedBox(
+                    width: 162,
+                    child: CustomButton(
+                      onTap: () {
+                        Get.to(() => ConsForm3Screen());
+                      },
+                      text: 'Next',
+                      buttonColor: verySoftBlueColor,
+                    ),
                   ),
                 ),
               ),

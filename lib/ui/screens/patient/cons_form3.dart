@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -15,6 +17,9 @@ class ConsForm3Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
   RxList<Asset> images = RxList<Asset>();
   List<Asset> resultList = [];
+
+  //I Fetch ang code from database then i set sa variable;
+  String generatedCode = 'C025';
 
   Future<void> pickImages() async {
     try {
@@ -34,6 +39,7 @@ class ConsForm3Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dialog = 'Your priority number is $generatedCode.\n$dialog5Caption';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -78,7 +84,15 @@ class ConsForm3Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      showDefaultDialog(
+                        dialogTitle: dialog5Title,
+                        dialogCaption: dialog,
+                        onConfirmTap: () {
+                          Get.to(() => PatientHomeScreen());
+                        },
+                      );
+                    },
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
                   ),

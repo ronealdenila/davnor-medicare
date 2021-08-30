@@ -1,51 +1,54 @@
+import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:flutter/material.dart';
 
-class Item {
-  const Item(this.name);
-  final String name;
-}
 class CustomDropdown extends StatefulWidget {
-  State createState() =>  CustomDropdownState();
+  const CustomDropdown({
+    required this.hintText,
+    required this.dropdownItems,
+  });
+  final String? hintText;
+  final List<Item>? dropdownItems;
+
+  @override
+  State createState() => CustomDropdownState();
 }
+
 class CustomDropdownState extends State<CustomDropdown> {
-  Item? selectedUser;
-  List<Item> users = <Item>[
-    const Item('Female'),
-    const Item('Male'),
-  ];
+  Item? selectedItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:  Center(
-          child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5 ),
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
+            border: Border.all(
+              color: Colors.grey,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
-           borderRadius: BorderRadius.all(
-              Radius.circular(10)),
-              ),
-          child:  DropdownButton<Item>(
-             underline:Container(),
+          child: DropdownButton<Item>(
+            underline: Container(),
             isExpanded: true,
-            hint:  Text('Select Gender'),
-            value: selectedUser,
-            onChanged: ( Value) {
+            hint: Text(widget.hintText!),
+            value: selectedItem,
+            onChanged: (value) {
               setState(() {
-                selectedUser = Value;
+                selectedItem = value;
               });
             },
-            items: users.map((Item user) {
-              return  DropdownMenuItem<Item>(
+            items: widget.dropdownItems!.map((user) {
+              return DropdownMenuItem<Item>(
                 value: user,
                 child: Row(
                   children: <Widget>[
-                    SizedBox(width: 1,),
+                    const SizedBox(
+                      width: 1,
+                    ),
                     Text(
                       user.name,
-                      style:  TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   ],
                 ),

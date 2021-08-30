@@ -8,12 +8,14 @@ class AppController extends GetxController {
   static AppController to = Get.find();
   final log = getLogger('App Controller');
 
-  //This is where to put the app logics e.g. toggle check box
-
   RxBool isObscureText = true.obs;
   RxBool isCheckboxChecked = false.obs;
 
   RxBool isConsultForYou = true.obs;
+
+  RxBool isMedicalAssistForYou = true.obs;
+
+  RxBool isFollowUp = true.obs;
 
   CategoryType? categoryType = CategoryType.followUp;
 

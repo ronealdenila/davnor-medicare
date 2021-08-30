@@ -45,20 +45,19 @@ class AppRoutes {
     GetPage(name: '/PSWDPersonnelHome', page: () => PSWDPersonnelHomeScreen()),
     GetPage(name: '/DoctorProfileRoute', page: () => DoctorProfileScreen()),
     GetPage(name: '/DoctorHistoryInfo', page: () => HistoryInfoScreen()),
-    GetPage(
-        name: '/MADescriptionRoute', page: () => const MADescriptionScreen()),
+    GetPage(name: '/MADescriptionRoute', page: () => MADescriptionScreen()),
     GetPage(
         name: '/MARequestInfoRoute', page: () => const MARequestInfoScreen()),
 
     GetPage(name: '/ConsForm', page: () => ConsFormScreen()),
-    GetPage(name: '/ConsForm2', page: () => const ConsForm2Screen()),
+    GetPage(name: '/ConsForm2', page: () => ConsForm2Screen()),
     GetPage(
         name: '/ConsHistoryInfo', page: () => PatientConsHistoryInfoScreen()),
-    GetPage(name: '/MAForm', page: () => const MAFormScreen()),
-    GetPage(name: '/MAForm2', page: () => const MAForm2Screen()),
+    GetPage(name: '/MAForm', page: () => MAFormScreen()),
+    GetPage(name: '/MAForm2', page: () => MAForm2Screen()),
 
     GetPage(name: '/ConsForm3', page: () => ConsForm3Screen()),
-    GetPage(name: '/Verification', page: () => const VerifyAccountScreen()),
+    GetPage(name: '/Verification', page: () => VerificationScreen()),
     GetPage(name: '/QueueCons', page: () => const QueueConsScreen()),
     GetPage(name: '/QueueMA', page: () => const QueueMAScreen()),
     GetPage(name: '/ArticleItem', page: () => ArticleItemScreen()),

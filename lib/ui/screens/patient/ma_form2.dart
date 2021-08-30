@@ -1,4 +1,7 @@
 //import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +9,14 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:get/get.dart';
 
 class MAForm2Screen extends StatelessWidget {
-  const MAForm2Screen({Key? key}) : super(key: key);
-
+  //I Fetch ang code from database then i set sa variable;
+  final String generatedCode = 'MA24';
   @override
   Widget build(BuildContext context) {
+    final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(),
@@ -68,7 +73,15 @@ class MAForm2Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      showDefaultDialog(
+                        dialogTitle: dialog5Title,
+                        dialogCaption: caption,
+                        onConfirmTap: () {
+                          Get.to(() => PatientHomeScreen());
+                        },
+                      );
+                    },
                     text: 'Request Assistance',
                     buttonColor: verySoftBlueColor,
                   ),

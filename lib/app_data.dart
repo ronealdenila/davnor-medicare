@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/models/category.dart';
+import 'package:davnor_medicare/core/models/category_model.dart';
 
 class AppData {
   static List<Category> categories = [

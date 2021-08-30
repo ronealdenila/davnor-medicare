@@ -50,9 +50,29 @@ const String dialogQueue2 =
     'You need to request consultation or medical assistance to be in a queue'; //label text sa dialogqueue1
 
 //Dialog1
-const String dialogConsultationScreenTitle = 'Is the consultation for you?';
-const String dialogConsultationScreenCaption =
-    'Please select if the consultation is for you';
+const String dialog1Title = 'Is the consultation for you?';
+const String dialog1Caption =
+    'Please select yes if the consultation is for you';
+
+//Dialog2
+const String dialog2Title = 'Is the medical assistance request for you?';
+const String dialog2Caption =
+    'Please select yes if the medical assistance is for you';
+
+//Dialog4
+const String dialog4Title = 'You have successfully requested a consultation!';
+const String dialog4Caption =
+    'Please check the queue and wait for your turn. Thank you';
+
+//Dialog5
+const String dialog5Title = 'You have successfully requested MA!';
+const String dialog5Caption =
+    'Please check the queue and wait for your turn. Thank you';
+
+//Dialog5
+const String dialog6Title = 'Verification request sent';
+const String dialog6Caption = 'We will verify your account 24hrs. Thank you';
+
 //Consultation Menu
 const String consultationMenuScreen = 'Where are you experiencing discomfort?';
 const String consultationMenuScreen1 = 'Tell us more about the discomfort';

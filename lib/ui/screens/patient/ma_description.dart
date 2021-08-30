@@ -1,19 +1,23 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  const MADescriptionScreen({Key? key}) : super(key: key);
+  static AppController appController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //appBar: AppBar(),
+        appBar: AppBar(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
@@ -139,9 +143,18 @@ class MADescriptionScreen extends StatelessWidget {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Align(
                   child: CustomButton(
-                    onTap: () async {
-                      //Go to MADetailsFill
-                    },
+                    onTap: () => showConfirmationDialog(
+                      dialogTitle: dialog2Title,
+                      dialogCaption: dialog2Caption,
+                      onYesTap: () {
+                        appController.isMedicalAssistForYou.value = true;
+                        Get.to(() => MAFormScreen());
+                      },
+                      onNoTap: () {
+                        appController.isMedicalAssistForYou.value = false;
+                        Get.to(() => MAFormScreen());
+                      },
+                    ),
                     text: 'Avail Medical Assistance',
                     buttonColor: verySoftBlueColor,
                     fontSize: 20,
