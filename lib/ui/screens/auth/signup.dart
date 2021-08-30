@@ -153,8 +153,8 @@ class SignupScreen extends StatelessWidget {
                                     CheckboxFormField(
                                       title: BottomTextWidget(
                                           onTap: () {
-                                            Get.to(() =>
-                                                const TermsAndPolicyScreen());
+                                            Get.to(
+                                                () => TermsAndPolicyScreen());
                                           },
                                           text1: 'I agree to',
                                           text2: 'Terms & Condition'),

@@ -9,7 +9,6 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class ArticleListScreen extends StatelessWidget {
-  ArticleListScreen({Key? key}) : super(key: key);
   static ArticleService articleService = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
 

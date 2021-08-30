@@ -8,7 +8,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class ArticleItemScreen extends StatelessWidget {
-  ArticleItemScreen({Key? key}) : super(key: key);
   static ArticleService articleService = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
   final int index = Get.arguments as int;
@@ -17,7 +16,6 @@ class ArticleItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: verySoftBlueColor[100],
         ),
@@ -58,18 +56,18 @@ class ArticleItemScreen extends StatelessWidget {
                           fontFamily: 'Inter',
                         ),
                         'blockquote': Style(
-                         fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w600,
                           fontSize: const FontSize(16),
-                         fontStyle: FontStyle.italic,
-                         fontFamily: 'Inter',
-                       ),
-                     }),
+                          fontStyle: FontStyle.italic,
+                          fontFamily: 'Inter',
+                        ),
+                      }),
                       verticalSpace10,
                       const Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
                           'See original source here:',
-                         style: body16SemiBold,
+                          style: body16SemiBold,
                         ),
                       ),
                       verticalSpace5,

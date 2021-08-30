@@ -3,21 +3,16 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
-class QueueMAScreen extends StatefulWidget {
-  const QueueMAScreen({Key? key}) : super(key: key);
-
-  @override
-  _QueueMAScreenState createState() => _QueueMAScreenState();
-}
-
-class _QueueMAScreenState extends State<QueueMAScreen> {
+class QueueMAScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 30),
+        padding: const EdgeInsets.symmetric(
+          vertical: 50,
+          horizontal: 30,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

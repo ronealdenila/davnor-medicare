@@ -3,7 +3,7 @@ import 'package:davnor_medicare/ui/screens/auth/doctor_application_instruction.d
 import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
-import 'package:davnor_medicare/ui/screens/auth/splash.dart';
+import 'package:davnor_medicare/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/doctor/history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
@@ -31,35 +31,111 @@ class AppRoutes {
   static final routes = [
     //SplashUI must be created soon
     GetPage(name: '/', page: () => const SplashScreen()),
-    GetPage(name: '/login', page: () => LoginScreen()),
-    GetPage(name: '/signup', page: () => SignupScreen()),
-    GetPage(name: '/PatientHome', page: () => PatientHomeScreen()),
-    GetPage(name: '/ForgotPassword', page: () => ForgotPasswordScreen()),
-    GetPage(name: '/TermsAndPolicy', page: () => const TermsAndPolicyScreen()),
-    GetPage(
-        name: '/DoctorApplicationInstruction',
-        page: () => DoctorApplicationInstructionScreen()),
-    GetPage(name: '/AdminHome', page: () => AdminHomeScreen()),
-    GetPage(name: '/DoctorHome', page: () => DoctorHomeScreen()),
-    GetPage(name: '/PSWDHeadHome', page: () => PSWDHeadHomeScreen()),
-    GetPage(name: '/PSWDPersonnelHome', page: () => PSWDPersonnelHomeScreen()),
-    GetPage(name: '/DoctorProfileRoute', page: () => DoctorProfileScreen()),
-    GetPage(name: '/DoctorHistoryInfo', page: () => HistoryInfoScreen()),
-    GetPage(name: '/MADescriptionRoute', page: () => MADescriptionScreen()),
-    GetPage(
-        name: '/MARequestInfoRoute', page: () => const MARequestInfoScreen()),
 
-    GetPage(name: '/ConsForm', page: () => ConsFormScreen()),
-    GetPage(name: '/ConsForm2', page: () => ConsForm2Screen()),
+    //Auth
     GetPage(
-        name: '/ConsHistoryInfo', page: () => PatientConsHistoryInfoScreen()),
-    GetPage(name: '/MAForm', page: () => MAFormScreen()),
-    GetPage(name: '/MAForm2', page: () => MAForm2Screen()),
+      name: '/login',
+      page: () => LoginScreen(),
+    ),
+    GetPage(
+      name: '/signup',
+      page: () => SignupScreen(),
+    ),
+    GetPage(
+      name: '/ForgotPassword',
+      page: () => ForgotPasswordScreen(),
+    ),
+    GetPage(
+      name: '/TermsAndPolicy',
+      page: () => TermsAndPolicyScreen(),
+    ),
+    GetPage(
+      name: '/DoctorApplicationInstruction',
+      page: () => DoctorApplicationInstructionScreen(),
+    ),
 
-    GetPage(name: '/ConsForm3', page: () => ConsForm3Screen()),
-    GetPage(name: '/Verification', page: () => VerificationScreen()),
-    GetPage(name: '/QueueCons', page: () => const QueueConsScreen()),
-    GetPage(name: '/QueueMA', page: () => const QueueMAScreen()),
-    GetPage(name: '/ArticleItem', page: () => ArticleItemScreen()),
+    //Patient
+    GetPage(
+      name: '/PatientHome',
+      page: () => PatientHomeScreen(),
+    ),
+    GetPage(
+      name: '/MADescriptionRoute',
+      page: () => MADescriptionScreen(),
+    ),
+    GetPage(
+      name: '/MARequestInfoRoute',
+      page: () => MARequestInfoScreen(),
+    ),
+    GetPage(
+      name: '/ConsForm',
+      page: () => ConsFormScreen(),
+    ),
+    GetPage(
+      name: '/ConsForm2',
+      page: () => ConsForm2Screen(),
+    ),
+    GetPage(
+      name: '/ConsForm3',
+      page: () => ConsForm3Screen(),
+    ),
+    GetPage(
+      name: '/PatientConsHistoryInfo',
+      page: () => PatientConsHistoryInfoScreen(),
+    ),
+    GetPage(
+      name: '/ArticleItem',
+      page: () => ArticleItemScreen(),
+    ),
+    GetPage(
+      name: '/QueueCons',
+      page: () => QueueConsScreen(),
+    ),
+    GetPage(
+      name: '/QueueMA',
+      page: () => QueueMAScreen(),
+    ),
+    GetPage(
+      name: '/MAForm',
+      page: () => MAFormScreen(),
+    ),
+    GetPage(
+      name: '/MAForm2',
+      page: () => MAForm2Screen(),
+    ),
+    GetPage(
+      name: '/Verification',
+      page: () => VerificationScreen(),
+    ),
+
+    //Doctor
+    GetPage(
+      name: '/DoctorHome',
+      page: () => DoctorHomeScreen(),
+    ),
+    GetPage(
+      name: '/DoctorProfileRoute',
+      page: () => DoctorProfileScreen(),
+    ),
+    GetPage(
+      name: '/DoctorHistoryInfo',
+      page: () => HistoryInfoScreen(),
+    ),
+
+    //PSWD
+    GetPage(
+      name: '/PSWDHeadHome',
+      page: () => PSWDHeadHomeScreen(),
+    ),
+    GetPage(
+      name: '/PSWDPersonnelHome',
+      page: () => PSWDPersonnelHomeScreen(),
+    ),
+
+    //Admin
+    GetPage(
+      name: '/AdminHome',
+      page: () => AdminHomeScreen(),
+    ),
   ];
 }

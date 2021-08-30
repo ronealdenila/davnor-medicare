@@ -32,7 +32,6 @@ class PatientHomeScreen extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white,
             actions: [
               IconButton(
                 onPressed: () {},
@@ -75,9 +74,9 @@ class PatientHomeScreen extends StatelessWidget {
                   verticalSpace25,
                   SizedBox(
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(13),
-                        child:
-                            Image.asset(patientHomeHeader, fit: BoxFit.fill)),
+                      borderRadius: BorderRadius.circular(13),
+                      child: Image.asset(patientHomeHeader, fit: BoxFit.fill),
+                    ),
                   ),
                   verticalSpace25,
                   const Text(
