@@ -23,7 +23,9 @@ import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-
+import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -107,6 +109,8 @@ class AppRoutes {
       name: '/Verification',
       page: () => VerificationScreen(),
     ),
+    GetPage(name: '/ConsHistory', page: () => ConsHistoryScreen()),
+    GetPage(name: '/MAHistory', page: () => MAHistoryScreen()),
 
     //Doctor
     GetPage(
@@ -121,6 +125,7 @@ class AppRoutes {
       name: '/DoctorHistoryInfo',
       page: () => HistoryInfoScreen(),
     ),
+    GetPage(name: '/DocConsHistory', page: () => DocConsHistoryScreen()),
 
     //PSWD
     GetPage(

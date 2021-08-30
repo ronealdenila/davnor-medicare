@@ -12,6 +12,9 @@ class AdminHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: verySoftBlueColor,
+        ),
         body: Column(
           children: [
             Row(
