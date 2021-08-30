@@ -26,7 +26,6 @@ import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
-
 import 'package:get/get.dart';
 
 class AppRoutes {
