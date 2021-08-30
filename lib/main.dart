@@ -26,6 +26,10 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
+        //Diria ta mag set sa scaffold bg kay incase gusto ta mag dark mode
+        //kas-a ra atong basehan dili na adtuon pa nato tanan screens
+        //para maghatag og condition sa scaffold (R)
+        scaffoldBackgroundColor: Colors.white
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/PatientHome',

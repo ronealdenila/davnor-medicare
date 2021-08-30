@@ -18,8 +18,11 @@ class MAForm2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(30),
         child: Column(

@@ -14,7 +14,6 @@ class ConsForm2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //app bar to be refactor for global use
       appBar: AppBar(
         leading: const CupertinoNavigationBarBackButton(
           color: Colors.black,

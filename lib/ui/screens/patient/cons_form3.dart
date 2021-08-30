@@ -41,7 +41,6 @@ class ConsForm3Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dialog = 'Your priority number is $generatedCode.\n$dialog5Caption';
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
       ),

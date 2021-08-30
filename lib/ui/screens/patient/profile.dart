@@ -8,8 +8,6 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
-  PatientProfileScreen({Key? key}) : super(key: key);
-
   static AuthController authController = Get.find();
 
   final fetchedData = authController.patientModel.value;
@@ -18,7 +16,6 @@ class PatientProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
