@@ -13,24 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
 //import 'package:dropdown_below/dropdown_below.dart';
 
 class MAFormScreen extends StatelessWidget {
   final AppController appController = AppController.to;
-
-  //To be refactor
-  final List<Item> gender = <Item>[
-    const Item('Female'),
-    const Item('Male'),
-  ];
-
-  final List<Item> type = <Item>[
-    const Item('None'),
-    const Item('Senior'),
-    const Item('Pregnant Women'),
-    const Item('Person with Disabiity (PWD)'),
-    const Item('Indigenous People (IP)'),
-  ];
 
   @override
   Widget build(BuildContext context) {

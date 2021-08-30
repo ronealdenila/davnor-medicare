@@ -6,9 +6,3 @@ class Category {
   String? iconPath;
   String? title;
 }
-
-//for testing
-class Item {
-  const Item(this.name);
-  final String name;
-}

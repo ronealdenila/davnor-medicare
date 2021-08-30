@@ -9,14 +9,12 @@ class ActionCard extends StatelessWidget {
     required this.color,
     required this.secondaryColor,
     required this.onTap,
-    //required this.width,
   }) : super(key: key);
 
   final String text;
   final Color? color;
   final Color? secondaryColor;
   final Function()? onTap;
-  //final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +41,15 @@ class ActionCard extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 child: Text(
                   text,
-                  style: kIsWeb ? body14SemiBoldWhite : body16SemiBold,
+                  style: kIsWeb ? body16SemiBold : body14SemiBoldWhite,
                 ),
               ),
               Align(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  height: kIsWeb ? null : 25,
+                  height: kIsWeb ? 29 : 25,
                   //wala ko kabalo asa na value ang basehan ani sa figma
-                  width: kIsWeb ? null : 99,
+                  width: kIsWeb ? 440 : 99,
                   decoration: BoxDecoration(
                       color: secondaryColor,
                       borderRadius: const BorderRadius.only(
