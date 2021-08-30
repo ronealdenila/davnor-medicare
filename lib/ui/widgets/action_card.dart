@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ActionCard extends StatelessWidget {
@@ -9,10 +10,6 @@ class ActionCard extends StatelessWidget {
     required this.secondaryColor,
     required this.onTap,
     //required this.width,
-    this.height = 107,
-    this.secondaryWidth = 99,
-    this.secondaryHeight = 25,
-    this.textStyle = body14SemiBoldWhite,
   }) : super(key: key);
 
   final String text;
@@ -20,10 +17,6 @@ class ActionCard extends StatelessWidget {
   final Color? secondaryColor;
   final Function()? onTap;
   //final double width;
-  final double? height;
-  final double? secondaryWidth;
-  final double? secondaryHeight;
-  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +28,7 @@ class ActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          height: height,
+          height: kIsWeb ? 448.43 : 107,
           //width: width,
           decoration: BoxDecoration(
             color: color,
@@ -48,13 +41,17 @@ class ActionCard extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: Text(text, style: textStyle),
+                child: Text(
+                  text,
+                  style: kIsWeb ? body14SemiBoldWhite : body16SemiBold,
+                ),
               ),
               Align(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  height: secondaryHeight,
-                  width: secondaryWidth,
+                  height: kIsWeb ? null : 25,
+                  //wala ko kabalo asa na value ang basehan ani sa figma
+                  width: kIsWeb ? null : 99,
                   decoration: BoxDecoration(
                       color: secondaryColor,
                       borderRadius: const BorderRadius.only(
