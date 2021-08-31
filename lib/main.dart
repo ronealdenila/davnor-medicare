@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/MAForm',
+      initialRoute: '/AdmPswdRegist',
       getPages: AppRoutes.routes,
     );
   }

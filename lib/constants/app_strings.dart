@@ -95,3 +95,9 @@ const String verificationDescription =
 //Consultation Form 3
 const String consForm3Description =
     'Select and upload images to support your follow-up consultation';
+
+//Admin
+const String doctorRegister =
+    'Please fill  in the information of the  Doctor.';
+const String pswdStuffRegister =
+    'Please fill  in the information of the PSWD Personnel.';

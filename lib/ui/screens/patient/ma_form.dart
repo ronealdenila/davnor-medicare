@@ -45,8 +45,7 @@ class MAFormScreen extends StatelessWidget {
                           ),
                       ),
                     ),
-                ]),               
-          
+                ]),
               verticalSpace10,
               TextFormField(
                 decoration: const InputDecoration(
@@ -81,7 +80,6 @@ class MAFormScreen extends StatelessWidget {
                 ),
               ),
               verticalSpace10,
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -105,7 +103,6 @@ class MAFormScreen extends StatelessWidget {
                 child: CustomDropdown(),
                 ),
                 ]), 
-          
               Align(
                 alignment: FractionalOffset.centerLeft,
                 child: SizedBox(
@@ -143,13 +140,12 @@ class MAFormScreen extends StatelessWidget {
                           size: 67,
                           color: neutralColor[60],
                         ),
-                        )
+                        ),
                     ]),
                 ),
               ),
             ),
             verticalSpace10,
-
              Align(
                 alignment: FractionalOffset.bottomRight,
                 child: SizedBox(
