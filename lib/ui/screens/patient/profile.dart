@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,6 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
-  PatientProfileScreen({Key? key}) : super(key: key);
-
   static AuthController authController = Get.find();
 
   final fetchedData = authController.patientModel.value;
@@ -17,7 +16,6 @@ class PatientProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -198,9 +196,14 @@ class PatientProfileScreen extends StatelessWidget {
                             children: <Widget>[
                               const Text('STATUS', style: body14Regular),
                               TextButton(
-                                  onPressed: () {},
-                                  child: Text('Click here to get verified',
-                                      style: body16RegularUnderlineBlue)),
+                                onPressed: () {
+                                  Get.to(() => VerificationScreen());
+                                },
+                                child: Text(
+                                  'Click here to get verified',
+                                  style: body16RegularUnderlineBlue,
+                                ),
+                              ),
                             ],
                           ),
                         ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 const Widget horizontalSpace5 = SizedBox(width: 5);
 const Widget horizontalSpace10 = SizedBox(width: 10);
-const Widget horizontalSpace15 = SizedBox(height: 15);
+const Widget horizontalSpace15 = SizedBox(width: 15);
 const Widget horizontalSpace18 = SizedBox(width: 18);
 const Widget horizontalSpace20 = SizedBox(width: 20);
 const Widget horizontalSpace25 = SizedBox(width: 25);

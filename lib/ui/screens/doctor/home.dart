@@ -1,13 +1,18 @@
+import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 
-class DoctorHomeScreen extends StatelessWidget {
-  static AuthController authController = Get.find();
+import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
-  final fetchedData = authController.doctorModel.value;
+class DoctorHomeScreen extends StatelessWidget {
+  //static AuthController authController = Get.find();
+
+  //final fetchedData = authController.doctorModel.value;
 
   //data needed for consultation process
   final int slot = 10;
@@ -23,7 +28,7 @@ class DoctorHomeScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                authController.signOut();
+                //authController.signOut();
               },
               icon: const Icon(Icons.logout),
             ),
@@ -39,22 +44,18 @@ class DoctorHomeScreen extends StatelessWidget {
         ),
         backgroundColor: verySoftBlueColor,
         body: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    verticalSpace20,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
+                      children: const <Widget>[
+                        Text(
                           'Hello',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -63,8 +64,9 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. ${fetchedData!.lastName}!',
-                          style: const TextStyle(
+                          'Dr. Chan!',
+                          //'Dr. ${fetchedData!.lastName}!'
+                          style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
                             color: Colors.white,
@@ -99,13 +101,12 @@ class DoctorHomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           elevation: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8),
                             child: Text(
-                              fetchedData!.dStatus!
-                                  ? 'Available for Consultation'
-                                  : 'Unavailable',
-                              style: const TextStyle(
+                              'Available for Consultation',
+                              //fetchedData!.dStatus!? : 'Unavailable',
+                              style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                                 color: verySoftBlueColor,
@@ -115,18 +116,78 @@ class DoctorHomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    verticalSpace10,
                   ]),
             ),
             Expanded(
               child: Container(
+                width: screenWidth(context),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(55),
                   ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    verticalSpace50,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: SizedBox(
+                        width: screenWidth(context),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: ActionCard(
+                                  text: 'Change Status',
+                                  color: verySoftMagenta[60],
+                                  secondaryColor: verySoftMagentaCustomColor,
+                                  onTap: () {}),
+                            ),
+                            Expanded(
+                              child: ActionCard(
+                                  text: 'Add More Patients to Examine',
+                                  color: verySoftOrange[60],
+                                  secondaryColor: verySoftOrangeCustomColor,
+                                  onTap: () {}),
+                            ),
+                            Expanded(
+                              child: ActionCard(
+                                  text: 'Read \nHealth Articles',
+                                  color: verySoftRed[60],
+                                  secondaryColor: verySoftRedCustomColor,
+                                  onTap: () {}),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    verticalSpace35,
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Text(
+                        'Consultation Requests',
+                        style: body16SemiBold,
+                      ),
+                    ),
+                    verticalSpace18,
+                    Expanded(
+                      child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          shrinkWrap: true,
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return ConsultationCard(
+                                title: 'Howard Wolowitz',
+                                subtitle: 'Patient Information:',
+                                data: 'Bernadette Wolowitz (28)',
+                                profileImage: '',
+                                onTap: () {});
+                          }),
+                    ),
+                  ],
                 ),
               ),
             ),

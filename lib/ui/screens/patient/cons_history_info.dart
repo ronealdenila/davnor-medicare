@@ -15,7 +15,6 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        backgroundColor: Colors.white,
         body: ListView(children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,

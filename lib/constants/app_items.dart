@@ -1,0 +1,71 @@
+class Item {
+  const Item(this.name);
+  final String name;
+}
+
+class ItemNum {
+  const ItemNum(this.num);
+  final int num;
+}
+
+final List<Item> gender = <Item>[
+  const Item('Female'),
+  const Item('Male'),
+];
+
+final List<Item> type = <Item>[
+  const Item('None'),
+  const Item('Senior'),
+  const Item('Pregnant Women'),
+  const Item('Person with Disabiity (PWD)'),
+  const Item('Indigenous People (IP)'),
+];
+
+final List<Item> month = <Item>[
+  const Item('Jan'),
+  const Item('Feb'),
+  const Item('Mar'),
+  const Item('Apr'),
+  const Item('May'),
+  const Item('June'),
+  const Item('July'),
+  const Item('Aug'),
+  const Item('sept'),
+  const Item('Oct'),
+  const Item('Nov'),
+  const Item('Dec'),
+];
+
+final List<Item> day = <Item>[
+  const Item('01'),
+  const Item('02'),
+  const Item('03'),
+  const Item('04'),
+  const Item('05'),
+  const Item('06'),
+  const Item('07'),
+  const Item('08'),
+  const Item('09'),
+  const Item('10'),
+  const Item('11'),
+  const Item('12'),
+  const Item('13'),
+  const Item('14'),
+  const Item('15'),
+  const Item('16'),
+  const Item('17'),
+  const Item('18'),
+  const Item('19'),
+  const Item('20'),
+  const Item('21'),
+  const Item('22'),
+  const Item('23'),
+  const Item('24'),
+  const Item('25'),
+  const Item('26'),
+  const Item('27'),
+  const Item('28'),
+  const Item('29'),
+  const Item('30'),
+  const Item('31'),
+];

@@ -5,7 +5,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DoctorApplicationInstructionScreen extends StatelessWidget {
+class DoctorApplicationGuideScreen extends StatelessWidget {
   final AppController appController = AppController.to;
 
   static const emailScheme = doctorapplicationinstructionParagraph0;

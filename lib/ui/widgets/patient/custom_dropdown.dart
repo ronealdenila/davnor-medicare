@@ -1,59 +1,72 @@
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:flutter/material.dart';
 
-class Item {
-  const Item(this.name);
-  final String name;
-}
 class CustomDropdown extends StatefulWidget {
-  State createState() =>  CustomDropdownState();
+  const CustomDropdown({
+    required this.hintText,
+    required this.dropdownItems,
+  });
+  final String? hintText;
+  final List<Item>? dropdownItems;
+
+  @override
+  State createState() => CustomDropdownState();
 }
+
 class CustomDropdownState extends State<CustomDropdown> {
-  Item? selectedUser;
-  List<Item> users = <Item>[
-    const Item('Female'),
-    const Item('Male'),
-  ];
+  Item? selectedItem;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body:  Center(
-          child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5 ),
-          decoration: BoxDecoration(
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey,
           ),
-           borderRadius: BorderRadius.all(
-              Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: DropdownButton<Item>(
+          underline: Container(),
+          isExpanded: true,
+          hint: Text(widget.hintText!),
+          value: selectedItem,
+          onChanged: (value) {
+            setState(() {
+              selectedItem = value;
+            });
+          },
+          items: widget.dropdownItems!.map((user) {
+            return DropdownMenuItem<Item>(
+              value: user,
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 1,
+                  ),
+                  Text(
+                    user.name,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                ],
               ),
-          child:  DropdownButton<Item>(
-             underline:Container(),
-            isExpanded: true,
-            hint:  Text('Select Gender'),
-            value: selectedUser,
-            onChanged: ( Value) {
-              setState(() {
-                selectedUser = Value;
-              });
-            },
-            items: users.map((Item user) {
-              return  DropdownMenuItem<Item>(
-                value: user,
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 1,),
-                    Text(
-                      user.name,
-                      style:  TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+            );
+          }).toList(),
         ),
       ),
     );
   }
+}
+
+class CustomDropdown2 extends StatefulWidget {
+  const CustomDropdown2({
+    required this.hintText,
+    required this.dropdownItems,
+  });
+  final String? hintText;
+  final List<Item>? dropdownItems;
+
+  @override
+  State createState() => CustomDropdownState();
 }

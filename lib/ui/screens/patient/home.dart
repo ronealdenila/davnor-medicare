@@ -2,7 +2,10 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
+import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -28,8 +31,6 @@ class PatientHomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white,
             actions: [
               IconButton(
                 onPressed: () {},
@@ -48,7 +49,7 @@ class PatientHomeScreen extends StatelessWidget {
           drawer: Drawer(
             child: TextButton(
               onPressed: () {
-                //Get.to(() => ---);
+                Get.to(() => PatientProfileScreen());
               },
               child: const Text('Profile'),
             ),
@@ -72,9 +73,9 @@ class PatientHomeScreen extends StatelessWidget {
                   verticalSpace25,
                   SizedBox(
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(13),
-                        child:
-                            Image.asset(patientHomeHeader, fit: BoxFit.fill)),
+                      borderRadius: BorderRadius.circular(13),
+                      child: Image.asset(patientHomeHeader, fit: BoxFit.fill),
+                    ),
                   ),
                   verticalSpace25,
                   const Text(
@@ -90,133 +91,52 @@ class PatientHomeScreen extends StatelessWidget {
                         Expanded(
                           child: ActionCard(
                             text: 'Request Consultation',
-                            textStyle: body14SemiBoldWhite,
-                            height: 107,
                             color: verySoftMagenta[60],
                             secondaryColor: verySoftMagentaCustomColor,
-                            secondaryWidth: 99,
-                            secondaryHeight: 25,
-                            //Refactor me
-                            onTap: () => Get.dialog(
-                              Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                elevation: 0,
-                                backgroundColor: Colors.transparent,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 284,
-                                      width: 343,
-                                      padding: const EdgeInsets.only(
-                                        top: 18,
-                                      ),
-                                      margin: const EdgeInsets.only(
-                                          top: 13, right: 8),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          boxShadow: const <BoxShadow>[
-                                            BoxShadow(
-                                              color: Colors.black26,
-                                            ),
-                                          ]),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: <Widget>[
-                                          const Padding(
-                                            padding: EdgeInsets.all(30),
-                                            child: Text(
-                                              dialogConsultationScreenTitle,
-                                              style: title24Bold,
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: Text(
-                                              dialogConsultationScreenCaption,
-                                              style: body16SemiBold.copyWith(
-                                                  color: neutralColor[60]),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          verticalSpace10,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              DialogButton(
-                                                buttonText: 'Yes',
-                                                onTap: () {
-                                                  appController.isConsultForYou
-                                                      .value = true;
-                                                  Get.to(
-                                                      () => ConsFormScreen());
-                                                },
-                                              ),
-                                              DialogButton(
-                                                buttonText: 'No',
-                                                onTap: () {
-                                                  appController.isConsultForYou
-                                                      .value = false;
-                                                  Get.to(
-                                                      () => ConsFormScreen());
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 20,
-                                      top: 20,
-                                      child: GestureDetector(
-                                        onTap: Get.back,
-                                        child: Align(
-                                          alignment: Alignment.topRight,
-                                          child: CircleAvatar(
-                                            radius: 14,
-                                            //TO BE REGISTERED ON APP COLOR
-                                            backgroundColor:
-                                                const Color(0xFFE3E6E8),
-                                            child: Icon(Icons.close,
-                                                color: neutralColor[100]),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            onTap: () => showConfirmationDialog(
+                              dialogTitle: dialog1Title,
+                              dialogCaption: dialog1Caption,
+                              onYesTap: () {
+                                appController.isConsultForYou.value = true;
+                                Get.to(() => ConsFormScreen());
+                              },
+                              onNoTap: () {
+                                appController.isConsultForYou.value = false;
+                                Get.to(() => ConsFormScreen());
+                              },
                             ),
                           ),
                         ),
                         Expanded(
                           child: ActionCard(
-                              text: 'Request Medical Assistance',
-                              textStyle: body14SemiBoldWhite,
-                              height: 107,
-                              color: verySoftOrange[60],
-                              secondaryColor: verySoftOrangeCustomColor,
-                              secondaryWidth: 99,
-                              secondaryHeight: 25,
-                              onTap: () {}),
+                            text: 'Request Medical Assistance',
+                            color: verySoftOrange[60],
+                            secondaryColor: verySoftOrangeCustomColor,
+                            //Note: Has weird transition
+                            onTap: () => Get.to(
+                              () => MADescriptionScreen(),
+                            ),
+                          ),
                         ),
                         Expanded(
                           child: ActionCard(
-                              text: 'View\nQueue',
-                              textStyle: body14SemiBoldWhite,
-                              height: 107,
-                              color: verySoftRed[60],
-                              secondaryColor: verySoftRedCustomColor,
-                              secondaryWidth: 99,
-                              secondaryHeight: 25,
-                              onTap: () {}),
+                            text: 'View\nQueue',
+                            color: verySoftRed[60],
+                            secondaryColor: verySoftRedCustomColor,
+                            onTap: () {
+                              //sa business logic na ata ta magdecide kung
+                              //kani nga dialog mag appear for now dria nako
+                              //ibutang (R)
+                              showDefaultDialog(
+                                dialogTitle: dialogQueue1,
+                                dialogCaption: dialogQueue2,
+                                textConfirm: 'Okay',
+                                onConfirmTap: () {
+                                  Get.back();
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

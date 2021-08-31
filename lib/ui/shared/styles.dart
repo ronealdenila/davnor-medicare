@@ -70,6 +70,13 @@ const TextStyle title29Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle title24BoldWhite = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: Colors.white,
+);
+
 const TextStyle title24Bold = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w700,
@@ -245,6 +252,13 @@ const TextStyle caption12Regular = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
+);
+
+const TextStyle caption12RegularNeutral = TextStyle(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: customNeutralColor,
 );
 
 const TextStyle caption10Regular = TextStyle(

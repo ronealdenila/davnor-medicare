@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
@@ -13,29 +16,17 @@ import 'package:davnor_medicare/core/services/logger.dart';
 // ignore: must_be_immutable
 class ConsForm3Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
+  static AppController to = Get.find();
   RxList<Asset> images = RxList<Asset>();
   List<Asset> resultList = [];
 
-  Future<void> pickImages() async {
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        selectedAssets: images,
-        materialOptions: const MaterialOptions(
-          actionBarTitle: 'FlutterCorner.com',
-        ),
-      );
-    } on Exception catch (e) {
-      log.i('pickImages | $e');
-    }
-    images.value = resultList;
-  }
+  //I Fetch ang code from database then i set sa variable;
+  String generatedCode = 'C025';
 
   @override
   Widget build(BuildContext context) {
+    final dialog = 'Your priority number is $generatedCode.\n$dialog5Caption';
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -78,7 +69,15 @@ class ConsForm3Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      showDefaultDialog(
+                        dialogTitle: dialog5Title,
+                        dialogCaption: dialog,
+                        onConfirmTap: () {
+                          Get.to(() => PatientHomeScreen());
+                        },
+                      );
+                    },
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -94,7 +93,9 @@ class ConsForm3Screen extends StatelessWidget {
   Widget getWidget() {
     if (images.isEmpty) {
       return InkWell(
-        onTap: pickImages,
+        onTap: () async {
+          await to.pickMultipleImages(images, resultList);
+        },
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -133,7 +134,9 @@ class ConsForm3Screen extends StatelessWidget {
                   ),
                   color: verySoftBlueColor[100],
                   iconSize: 58,
-                  onPressed: pickImages,
+                  onPressed: () async {
+                    await to.pickMultipleImages(images, resultList);
+                  },
                 ));
               }
               return AssetThumb(

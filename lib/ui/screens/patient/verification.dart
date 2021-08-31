@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -6,20 +8,17 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-class VerifyAccountScreen extends StatefulWidget {
-  const VerifyAccountScreen({Key? key}) : super(key: key);
-
-  @override
-  _VerifyAccountScreenState createState() => _VerifyAccountScreenState();
-}
-
-class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
+class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -117,7 +116,15 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      showDefaultDialog(
+                        dialogTitle: dialog6Title,
+                        dialogCaption: dialog6Caption,
+                        onConfirmTap: () {
+                          Get.to(() => PatientHomeScreen());
+                        },
+                      );
+                    },
                     text: 'Submit',
                     buttonColor: verySoftBlueColor,
                   ),

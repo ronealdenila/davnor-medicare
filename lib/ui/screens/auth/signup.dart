@@ -2,7 +2,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/auth/doctor_application_instruction.dart';
+import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -153,8 +153,8 @@ class SignupScreen extends StatelessWidget {
                                     CheckboxFormField(
                                       title: BottomTextWidget(
                                           onTap: () {
-                                            Get.to(() =>
-                                                const TermsAndPolicyScreen());
+                                            Get.to(
+                                                () => TermsAndPolicyScreen());
                                           },
                                           text1: 'I agree to',
                                           text2: 'Terms & Condition'),
@@ -180,7 +180,7 @@ class SignupScreen extends StatelessWidget {
                                     Align(
                                       child: BottomTextWidget(
                                         onTap: () => Get.to(
-                                          DoctorApplicationInstructionScreen(),
+                                          DoctorApplicationGuideScreen(),
                                         ),
                                         text1: 'Are you a doctor?',
                                         text2: 'Join us now!',
