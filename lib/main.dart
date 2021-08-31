@@ -1,10 +1,11 @@
-import 'package:davnor_medicare/constants/app_routes.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+
+import 'package:davnor_medicare/routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,14 +30,11 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        //Diria ta mag set sa scaffold bg kay incase gusto ta mag dark mode
-        //kas-a ra atong basehan dili na adtuon pa nato tanan screens
-        //para maghatag og condition sa scaffold (R)
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/PatientHome',
-      getPages: AppRoutes.routes,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }
