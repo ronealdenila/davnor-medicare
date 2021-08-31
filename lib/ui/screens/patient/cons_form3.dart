@@ -58,7 +58,7 @@ class ConsForm3Screen extends StatelessWidget {
                     return Container(
                       width: screenWidth(context),
                       color: neutralColor[10],
-                      child: Obx(getWidget),
+                      child: Obx(getPrescriptionAndLabResults),
                     );
                   }),
                 ),
@@ -90,7 +90,7 @@ class ConsForm3Screen extends StatelessWidget {
     );
   }
 
-  Widget getWidget() {
+  Widget getPrescriptionAndLabResults() {
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {

@@ -58,7 +58,7 @@ class MAForm2Screen extends StatelessWidget {
                   return Container(
                     width: screenWidth(context),
                     color: neutralColor[10],
-                    child: Obx(getWidget),
+                    child: Obx(getPrescription),
                   );
                 }),
               ),
@@ -70,6 +70,7 @@ class MAForm2Screen extends StatelessWidget {
                 width: 300,
                 child: CustomButton(
                   onTap: () {
+                    //if images = null, must tell user to select first
                     showDefaultDialog(
                       dialogTitle: dialog5Title,
                       dialogCaption: caption,
@@ -89,7 +90,7 @@ class MAForm2Screen extends StatelessWidget {
     );
   }
 
-  Widget getWidget() {
+  Widget getPrescription() {
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {

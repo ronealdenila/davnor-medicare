@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -9,8 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 
 class VerificationScreen extends StatelessWidget {
+  static AppController to = Get.find();
+  var imgOfValidID = ''.obs;
+  var imgOfValidIDWithSelfie = ''.obs;
+
+  bool hasImagesSelected() {
+    if (imgOfValidID.value != '' && imgOfValidIDWithSelfie.value != '') {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,24 +65,7 @@ class VerificationScreen extends StatelessWidget {
                     width: screenWidth(context),
                     height: 150,
                     color: neutralColor[10],
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.file_upload_outlined,
-                            size: 51,
-                            color: neutralColor[60],
-                          ),
-                        ),
-                        verticalSpace10,
-                        Text(
-                          'Upload here',
-                          style: subtitle18RegularNeutral,
-                        )
-                      ],
-                    ),
+                    child: Obx(getValidID),
                   ),
                 ),
               ),
@@ -89,41 +86,30 @@ class VerificationScreen extends StatelessWidget {
                     width: screenWidth(context),
                     height: 150,
                     color: neutralColor[10],
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.file_upload_outlined,
-                            size: 51,
-                            color: neutralColor[60],
-                          ),
-                        ),
-                        verticalSpace10,
-                        Text(
-                          'Upload here',
-                          style: subtitle18RegularNeutral,
-                        )
-                      ],
-                    ),
+                    child: Obx(getValidIDWithSelfie),
                   ),
                 ),
               ),
               verticalSpace25,
               Align(
-                alignment: FractionalOffset.bottomCenter,
+                alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
                     onTap: () {
-                      showDefaultDialog(
-                        dialogTitle: dialog6Title,
-                        dialogCaption: dialog6Caption,
-                        onConfirmTap: () {
-                          Get.to(() => PatientHomeScreen());
-                        },
-                      );
+                      if (hasImagesSelected()) {
+                        //Upload photos to storage and get url,
+                        //then save data to firestore for verification
+                        showDefaultDialog(
+                          dialogTitle: dialog6Title,
+                          dialogCaption: dialog6Caption,
+                          onConfirmTap: () {
+                            Get.to(() => PatientHomeScreen());
+                          },
+                        );
+                      } else {
+                        //TODO: Error snackbar: "Please provide images"
+                      }
                     },
                     text: 'Submit',
                     buttonColor: verySoftBlueColor,
@@ -133,6 +119,74 @@ class VerificationScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget getValidID() {
+    if (imgOfValidID.value == '') {
+      return InkWell(
+        onTap: () async {
+          await to.pickSingleImage(imgOfValidID);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              size: 51,
+              color: neutralColor[60],
+            ),
+            verticalSpace10,
+            Text(
+              'Upload here',
+              style: subtitle18RegularNeutral,
+            )
+          ],
+        ),
+      );
+    }
+    return InkWell(
+      onTap: () {
+        to.pickSingleImage(imgOfValidID);
+      },
+      child: Image.file(
+        File(imgOfValidID.value),
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget getValidIDWithSelfie() {
+    if (imgOfValidIDWithSelfie.value == '') {
+      return InkWell(
+        onTap: () async {
+          await to.pickSingleImage(imgOfValidIDWithSelfie);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              size: 51,
+              color: neutralColor[60],
+            ),
+            verticalSpace10,
+            Text(
+              'Upload here',
+              style: subtitle18RegularNeutral,
+            )
+          ],
+        ),
+      );
+    }
+    return InkWell(
+      onTap: () {
+        to.pickSingleImage(imgOfValidIDWithSelfie);
+      },
+      child: Image.file(
+        File(imgOfValidIDWithSelfie.value),
+        fit: BoxFit.fill,
       ),
     );
   }

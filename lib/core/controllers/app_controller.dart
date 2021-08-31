@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 enum CategoryType { followUp, newConsult }
 
@@ -47,5 +49,13 @@ class AppController extends GetxController {
       log.i('pickImages | $e');
     }
     images.value = resultList;
+  }
+
+  Future<void> pickSingleImage(var image) async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      image.value = pickedImage.path;
+    }
   }
 }
