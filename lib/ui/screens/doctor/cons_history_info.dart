@@ -14,6 +14,7 @@ class HistoryInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(),
         backgroundColor: Colors.white,
         body: ListView(children: <Widget>[
           Container(
@@ -22,35 +23,21 @@ class HistoryInfoScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  width: 2,
+                  width: 1,
                   color: Color(0xFFCBD4E1),
                 ),
               ),
             ),
             child: Column(children: <Widget>[
               const SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  onPressed: Get.back,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.black,
-                    size: 50,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
+                height: 20,
               ),
               CircleAvatar(
                 backgroundImage: AssetImage(authHeader),
                 radius: 50,
               ),
               const SizedBox(
-                height: 25,
+                height: 20,
               ),
               //  Text(
               //       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -60,7 +47,7 @@ class HistoryInfoScreen extends StatelessWidget {
               //          color: Colors.white,
               //       )),
               const SizedBox(
-                height: 3,
+                height: 5,
               ),
               //      Text(
               //        authController.doctorModel.value!.email!,

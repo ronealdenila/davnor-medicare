@@ -9,7 +9,10 @@ const Widget horizontalSpace15 = SizedBox(width: 15);
 const Widget horizontalSpace18 = SizedBox(width: 18);
 const Widget horizontalSpace20 = SizedBox(width: 20);
 const Widget horizontalSpace25 = SizedBox(width: 25);
-const Widget horizontalSpace75 = SizedBox(width: 50);
+const Widget horizontalSpace35 = SizedBox(width: 35);
+const Widget horizontalSpace40 = SizedBox(width: 40);
+const Widget horizontalSpace45 = SizedBox(width: 45);
+const Widget horizontalSpace50 = SizedBox(width: 50);
 
 const Widget verticalSpace5 = SizedBox(height: 5);
 const Widget verticalSpace10 = SizedBox(height: 10);
