@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,6 +50,7 @@ class AppController extends GetxController {
     images.value = resultList;
   }
 
+  // ignore: type_annotate_public_apis
   Future<void> pickSingleImage(var image) async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);

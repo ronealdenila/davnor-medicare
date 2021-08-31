@@ -23,6 +23,13 @@ class ConsForm3Screen extends StatelessWidget {
   //I Fetch ang code from database then i set sa variable;
   String generatedCode = 'C025';
 
+  bool hasImagesSelected() {
+    if (images.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final dialog = 'Your priority number is $generatedCode.\n$dialog5Caption';
@@ -70,13 +77,18 @@ class ConsForm3Screen extends StatelessWidget {
                   width: 211,
                   child: CustomButton(
                     onTap: () {
-                      showDefaultDialog(
-                        dialogTitle: dialog5Title,
-                        dialogCaption: dialog,
-                        onConfirmTap: () {
-                          Get.to(() => PatientHomeScreen());
-                        },
-                      );
+                      if (hasImagesSelected()) {
+                        showDefaultDialog(
+                          dialogTitle: dialog5Title,
+                          dialogCaption: dialog,
+                          onConfirmTap: () {
+                            Get.to(() => PatientHomeScreen());
+                          },
+                        );
+                      } else {
+                        //Error: Please provide prescriptions
+                        //or laboratory results first
+                      }
                     },
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
@@ -97,7 +109,7 @@ class ConsForm3Screen extends StatelessWidget {
           await to.pickMultipleImages(images, resultList);
         },
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -133,7 +145,7 @@ class ConsForm3Screen extends StatelessWidget {
                     Icons.add_circle_outline_rounded,
                   ),
                   color: verySoftBlueColor[100],
-                  iconSize: 58,
+                  iconSize: 45,
                   onPressed: () async {
                     await to.pickMultipleImages(images, resultList);
                   },

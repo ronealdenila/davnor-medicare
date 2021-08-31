@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 
 class LiveConsInfoScreen extends StatelessWidget {
-  const LiveConsInfoScreen({ Key? key }) : super(key: key);
+  const LiveConsInfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class LiveConsInfoScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  width: 1,
                   color: Color(0xFFCBD4E1),
                 ),
               ),
@@ -31,7 +30,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                 backgroundImage: AssetImage(authHeader),
                 radius: 50,
               ),
-          verticalSpace15,
+              verticalSpace15,
               //  Text(
               //       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
               //       style: const TextStyle(
@@ -39,7 +38,7 @@ class LiveConsInfoScreen extends StatelessWidget {
               //        fontSize: 24,
               //          color: Colors.white,
               //       )),
-          verticalSpace15,
+              verticalSpace15,
               //      Text(
               //        authController.doctorModel.value!.email!,
               //        style: const TextStyle(
@@ -50,39 +49,37 @@ class LiveConsInfoScreen extends StatelessWidget {
             ]),
           ),
           verticalSpace25,
-           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  <Widget>[
-                         const Text('Actions',
-                            textAlign: TextAlign.left,
-                            style: title20Regular),
-                          verticalSpace10,
-                            InkWell(
-                             onTap: () {},
-                             child: const Text(
-                              'End Consultation',
-                              textAlign:TextAlign.left,
-                              style: body16Bold
-                            ),
-                            ),
-                          verticalSpace10,
-                            InkWell(
-                            onTap: () {},
-                            child: const Text(
-                              'Skip Consultation',
-                              textAlign: TextAlign.left,
-                              style: body16Bold),
-                            ),
-                        ],),
-                    ],),
-                ],),),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text('Actions',
+                            textAlign: TextAlign.left, style: title20Regular),
+                        verticalSpace10,
+                        InkWell(
+                          onTap: () {},
+                          child: const Text('End Consultation',
+                              textAlign: TextAlign.left, style: body16Bold),
+                        ),
+                        verticalSpace10,
+                        InkWell(
+                          onTap: () {},
+                          child: const Text('Skip Consultation',
+                              textAlign: TextAlign.left, style: body16Bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           verticalSpace35,
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),

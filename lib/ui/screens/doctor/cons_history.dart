@@ -2,11 +2,9 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 
+// ignore: must_be_immutable
 class DocConsHistoryScreen extends StatelessWidget {
   //static AuthController authController = Get.find();
   TextEditingController searchKeyword = TextEditingController();

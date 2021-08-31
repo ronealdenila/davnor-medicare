@@ -14,6 +14,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 
+// ignore: must_be_immutable
 class MAForm2Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
   static AppController to = Get.find();
@@ -22,69 +23,83 @@ class MAForm2Screen extends StatelessWidget {
 
   //I Fetch ang code from database then i set sa variable;
   final String generatedCode = 'MA24';
+
+  bool hasImagesSelected() {
+    if (images.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     return Scaffold(
       appBar: AppBar(
-        leading: const CupertinoNavigationBarBackButton(
+        leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
+          onPressed: () {},
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Upload prescription',
-              style: title32Regular,
-            ),
-            verticalSpace20,
-            const Text(
-              'Please upload a valid prescription issued not more than a month',
-              style: subtitle18Regular,
-            ),
-            verticalSpace25,
-            DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(12),
-              padding: const EdgeInsets.all(12),
-              dashPattern: const [8, 8, 8, 8],
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  return Container(
-                    width: screenWidth(context),
-                    color: neutralColor[10],
-                    child: Obx(getPrescription),
-                  );
-                }),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Upload prescription',
+                style: title32Regular,
               ),
-            ),
-            verticalSpace25,
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 300,
-                child: CustomButton(
-                  onTap: () {
-                    //if images = null, must tell user to select first
-                    showDefaultDialog(
-                      dialogTitle: dialog5Title,
-                      dialogCaption: caption,
-                      onConfirmTap: () {
-                        Get.to(() => PatientHomeScreen());
-                      },
+              verticalSpace20,
+              const Text(
+                maForm2Screen,
+                style: subtitle18Regular,
+              ),
+              verticalSpace25,
+              DottedBorder(
+                borderType: BorderType.RRect,
+                radius: const Radius.circular(12),
+                padding: const EdgeInsets.all(12),
+                dashPattern: const [8, 8, 8, 8],
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: screenWidth(context),
+                      color: neutralColor[10],
+                      child: Obx(getPrescription),
                     );
-                  },
-                  text: 'Request Assistance',
-                  buttonColor: verySoftBlueColor,
+                  }),
                 ),
               ),
-            ),
-          ],
+              verticalSpace25,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 300,
+                  child: CustomButton(
+                    onTap: () {
+                      if (hasImagesSelected()) {
+                        showDefaultDialog(
+                          dialogTitle: dialog5Title,
+                          dialogCaption: caption,
+                          onConfirmTap: () {
+                            Get.to(() => PatientHomeScreen());
+                          },
+                        );
+                      } else {
+                        //Error: Please provide prescriptions
+                      }
+                    },
+                    text: 'Request Assistance',
+                    buttonColor: verySoftBlueColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -133,7 +148,7 @@ class MAForm2Screen extends StatelessWidget {
                     Icons.add_circle_outline_rounded,
                   ),
                   color: verySoftBlueColor[100],
-                  iconSize: 58,
+                  iconSize: 45,
                   onPressed: () async {
                     await to.pickMultipleImages(images, resultList);
                   },

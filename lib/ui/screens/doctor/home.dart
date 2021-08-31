@@ -10,9 +10,8 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  //static AuthController authController = Get.find();
-
-  //final fetchedData = authController.doctorModel.value;
+  static AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value;
 
   //data needed for consultation process
   final int slot = 10;
@@ -54,8 +53,8 @@ class DoctorHomeScreen extends StatelessWidget {
                     verticalSpace20,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const <Widget>[
-                        Text(
+                      children: <Widget>[
+                        const Text(
                           'Hello',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -64,9 +63,8 @@ class DoctorHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Dr. Chan!',
-                          //'Dr. ${fetchedData!.lastName}!'
-                          style: TextStyle(
+                          'Dr. ${fetchedData!.lastName}!',
+                          style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
                             color: Colors.white,

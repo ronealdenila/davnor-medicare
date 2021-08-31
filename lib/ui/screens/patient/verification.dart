@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -13,9 +12,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 
+// ignore: must_be_immutable
 class VerificationScreen extends StatelessWidget {
   static AppController to = Get.find();
+  // ignore: type_annotate_public_apis
   var imgOfValidID = ''.obs;
+  // ignore: type_annotate_public_apis
   var imgOfValidIDWithSelfie = ''.obs;
 
   bool hasImagesSelected() {
@@ -108,7 +110,7 @@ class VerificationScreen extends StatelessWidget {
                           },
                         );
                       } else {
-                        //TODO: Error snackbar: "Please provide images"
+                        //Error: "Please provide images"
                       }
                     },
                     text: 'Submit',

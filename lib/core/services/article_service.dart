@@ -40,6 +40,7 @@ class ArticleService extends GetxController {
     final CollectionReference articles =
         firebaseFirestore.collection('articles');
     await articles.get().then((QuerySnapshot querySnapshot) {
+      // ignore: avoid_function_literals_in_foreach_calls
       querySnapshot.docs.forEach((doc) {
         title = doc['title'] as String;
         content = doc['content'] as String;

@@ -1,7 +1,7 @@
+import 'dart:io';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/core/models/category_model.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
+//import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -16,8 +16,18 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
 //import 'package:dropdown_below/dropdown_below.dart';
 
+// ignore: must_be_immutable
 class MAFormScreen extends StatelessWidget {
-  final AppController appController = AppController.to;
+  final AppController to = Get.find();
+  // ignore: type_annotate_public_apis
+  var imgOfValidID = ''.obs;
+
+  bool hasImageSelected() {
+    if (imgOfValidID.value != '') {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +72,7 @@ class MAFormScreen extends StatelessWidget {
                 ]),
             verticalSpace10,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !to.isMedicalAssistForYou.value,
               //CustomFormField was created for patient global widget
               //please utilize it.
               child: TextFormField(
@@ -78,7 +88,7 @@ class MAFormScreen extends StatelessWidget {
             ),
             verticalSpace10,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !to.isMedicalAssistForYou.value,
               child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
@@ -143,7 +153,7 @@ class MAFormScreen extends StatelessWidget {
             ),
             verticalSpace15,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !to.isMedicalAssistForYou.value,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -163,19 +173,7 @@ class MAFormScreen extends StatelessWidget {
                         width: screenWidth(context),
                         height: 150,
                         color: neutralColor[10],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.file_upload_outlined,
-                                size: 67,
-                                color: neutralColor[60],
-                              ),
-                            )
-                          ],
-                        ),
+                        child: Obx(getValidID),
                       ),
                     ),
                   ),
@@ -191,7 +189,13 @@ class MAFormScreen extends StatelessWidget {
                 width: 160,
                 child: CustomButton(
                   onTap: () {
-                    Get.to(() => MAForm2Screen());
+                    if (hasImageSelected()) {
+                      //and if all fields not empty (by isMedicalAssistForYou)
+                      Get.to(() => MAForm2Screen());
+                      //else - please dont leave any empty fields
+                    } else {
+                      //please provide valid ID
+                    }
                   },
                   text: 'Next',
                   buttonColor: verySoftBlueColor,
@@ -201,6 +205,40 @@ class MAFormScreen extends StatelessWidget {
             verticalSpace10,
           ]),
         ),
+      ),
+    );
+  }
+
+  Widget getValidID() {
+    if (imgOfValidID.value == '') {
+      return InkWell(
+        onTap: () async {
+          await to.pickSingleImage(imgOfValidID);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              size: 67,
+              color: neutralColor[60],
+            ),
+            verticalSpace10,
+            Text(
+              'Upload here',
+              style: subtitle18RegularNeutral,
+            )
+          ],
+        ),
+      );
+    }
+    return InkWell(
+      onTap: () {
+        to.pickSingleImage(imgOfValidID);
+      },
+      child: Image.file(
+        File(imgOfValidID.value),
+        fit: BoxFit.fill,
       ),
     );
   }
