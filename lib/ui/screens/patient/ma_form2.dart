@@ -10,8 +10,16 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:davnor_medicare/core/services/logger.dart';
 
 class MAForm2Screen extends StatelessWidget {
+  final log = getLogger('Cons Form 3');
+  static AppController to = Get.find();
+  RxList<Asset> images = RxList<Asset>();
+  List<Asset> resultList = [];
+
   //I Fetch ang code from database then i set sa variable;
   final String generatedCode = 'MA24';
   @override
@@ -45,54 +53,105 @@ class MAForm2Screen extends StatelessWidget {
               dashPattern: const [8, 8, 8, 8],
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: Container(
-                  width: screenWidth(context),
-                  height: 355,
-                  color: neutralColor[10],
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.file_upload_outlined,
-                          size: 67,
-                          color: neutralColor[60],
-                        ),
-                      ),
-                      verticalSpace10,
-                      Text(
-                        'Upload here',
-                        style: subtitle18RegularNeutral,
-                      )
-                    ],
-                  ),
-                ),
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  return Container(
+                    width: screenWidth(context),
+                    color: neutralColor[10],
+                    child: Obx(getWidget),
+                  );
+                }),
               ),
             ),
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: SizedBox(
-                  width: 300,
-                  child: CustomButton(
-                    onTap: () {
-                      showDefaultDialog(
-                        dialogTitle: dialog5Title,
-                        dialogCaption: caption,
-                        onConfirmTap: () {
-                          Get.to(() => PatientHomeScreen());
-                        },
-                      );
-                    },
-                    text: 'Request Assistance',
-                    buttonColor: verySoftBlueColor,
-                  ),
+            verticalSpace25,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 300,
+                child: CustomButton(
+                  onTap: () {
+                    showDefaultDialog(
+                      dialogTitle: dialog5Title,
+                      dialogCaption: caption,
+                      onConfirmTap: () {
+                        Get.to(() => PatientHomeScreen());
+                      },
+                    );
+                  },
+                  text: 'Request Assistance',
+                  buttonColor: verySoftBlueColor,
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget getWidget() {
+    if (images.isEmpty) {
+      return InkWell(
+        onTap: () async {
+          await to.pickMultipleImages(images, resultList);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 80),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.file_upload_outlined,
+                size: 67,
+                color: neutralColor[60],
+              ),
+              verticalSpace10,
+              Text(
+                'Upload here',
+                style: subtitle18RegularNeutral,
+              )
+            ],
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          GridView.count(
+            shrinkWrap: true,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            crossAxisCount: 3,
+            children: List.generate(images.length + 1, (index) {
+              if (index == images.length) {
+                return Center(
+                    child: IconButton(
+                  icon: const Icon(
+                    Icons.add_circle_outline_rounded,
+                  ),
+                  color: verySoftBlueColor[100],
+                  iconSize: 58,
+                  onPressed: () async {
+                    await to.pickMultipleImages(images, resultList);
+                  },
+                ));
+              }
+              return AssetThumb(
+                asset: images[index],
+                width: 140,
+                height: 140,
+              );
+            }),
+          ),
+          verticalSpace15,
+          ElevatedButton(
+              onPressed: () {
+                images.value = [];
+              },
+              child: const Text('Clear All Photos')),
+        ],
       ),
     );
   }
