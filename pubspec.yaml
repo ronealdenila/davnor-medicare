@@ -43,10 +43,7 @@ dependencies:
   #html formatter
   flutter_html: ^2.1.1
 
-  #multi image picker
-  multi_image_picker: ^4.8.1
-
-  #single image picker
+  #image picker
   image_picker: ^0.8.3+3
 
 dev_dependencies:

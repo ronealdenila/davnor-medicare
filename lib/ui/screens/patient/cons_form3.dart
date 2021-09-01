@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -9,19 +10,17 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 
-// ignore: must_be_immutable
 class ConsForm3Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
-  static AppController to = Get.find();
-  RxList<Asset> images = RxList<Asset>();
-  List<Asset> resultList = [];
+  final AppController to = Get.find();
+  final RxList<XFile> images = RxList<XFile>();
 
   //I Fetch ang code from database then i set sa variable;
-  String generatedCode = 'C025';
+  final String generatedCode = 'C025';
 
   bool hasImagesSelected() {
     if (images.isNotEmpty) {
@@ -106,7 +105,7 @@ class ConsForm3Screen extends StatelessWidget {
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await to.pickMultipleImages(images, resultList);
+          await to.pickImages(images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -145,16 +144,17 @@ class ConsForm3Screen extends StatelessWidget {
               color: verySoftBlueColor[100],
               iconSize: 45,
               onPressed: () async {
-                await to.pickMultipleImages(images, resultList);
+                await to.pickImages(images);
               },
             ));
           }
           return Stack(
             children: [
-              AssetThumb(
-                asset: images[index],
+              Image.file(
+                File(images[index].path),
                 width: 140,
                 height: 140,
+                fit: BoxFit.fill,
               ),
               Positioned(
                 right: 5,
