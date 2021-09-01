@@ -1,7 +1,6 @@
 import 'dart:io';
 //import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,27 +11,16 @@ import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 
 class MAForm2Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
   final AppController to = Get.find();
-  final RxList<XFile> images = RxList<XFile>();
-
-  //I Fetch ang code from database then i set sa variable;
-  final String generatedCode = 'MA24';
-
-  bool hasImagesSelected() {
-    if (images.isNotEmpty) {
-      return true;
-    }
-    return false;
-  }
+  final MAController ma = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     return Scaffold(
       appBar: AppBar(
         leading: CupertinoNavigationBarBackButton(
@@ -79,19 +67,7 @@ class MAForm2Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: CustomButton(
-                    onTap: () {
-                      if (hasImagesSelected()) {
-                        showDefaultDialog(
-                          dialogTitle: dialog5Title,
-                          dialogCaption: caption,
-                          onConfirmTap: () {
-                            Get.to(() => PatientHomeScreen());
-                          },
-                        );
-                      } else {
-                        //Error: Please provide prescriptions
-                      }
-                    },
+                    onTap: ma.requestMAButton,
                     text: 'Request Assistance',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -105,10 +81,10 @@ class MAForm2Screen extends StatelessWidget {
   }
 
   Widget getPrescription() {
-    if (images.isEmpty) {
+    if (ma.images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await to.pickImages(images);
+          await to.pickImages(ma.images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 80),
@@ -137,8 +113,8 @@ class MAForm2Screen extends StatelessWidget {
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
         crossAxisCount: 3,
-        children: List.generate(images.length + 1, (index) {
-          if (index == images.length) {
+        children: List.generate(ma.images.length + 1, (index) {
+          if (index == ma.images.length) {
             return Center(
                 child: IconButton(
               icon: const Icon(
@@ -147,14 +123,14 @@ class MAForm2Screen extends StatelessWidget {
               color: verySoftBlueColor[100],
               iconSize: 45,
               onPressed: () async {
-                await to.pickImages(images);
+                await to.pickImages(ma.images);
               },
             ));
           }
           return Stack(
             children: [
               Image.file(
-                File(images[index].path),
+                File(ma.images[index].path),
                 width: 140,
                 height: 140,
                 fit: BoxFit.fill,
@@ -164,7 +140,7 @@ class MAForm2Screen extends StatelessWidget {
                 top: 5,
                 child: InkWell(
                   onTap: () {
-                    images.remove(images[index]);
+                    ma.images.remove(ma.images[index]);
                   },
                   child: const Icon(
                     Icons.remove_circle,

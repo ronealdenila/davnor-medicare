@@ -10,8 +10,6 @@ class AppController extends GetxController {
   RxBool isObscureText = true.obs;
   RxBool isCheckboxChecked = false.obs;
 
-  RxBool isMedicalAssistForYou = true.obs;
-
   bool toggleTextVisibility() {
     log.i('toggleTextVisibility | Toggle Text Visibility');
     return isObscureText.value = !isObscureText.value;
