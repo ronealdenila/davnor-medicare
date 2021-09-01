@@ -12,13 +12,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 
-// ignore: must_be_immutable
 class VerificationScreen extends StatelessWidget {
-  static AppController to = Get.find();
-  // ignore: type_annotate_public_apis
-  var imgOfValidID = ''.obs;
-  // ignore: type_annotate_public_apis
-  var imgOfValidIDWithSelfie = ''.obs;
+  final AppController to = Get.find();
+  final RxString imgOfValidID = ''.obs;
+  final RxString imgOfValidIDWithSelfie = ''.obs;
 
   bool hasImagesSelected() {
     if (imgOfValidID.value != '' && imgOfValidIDWithSelfie.value != '') {
@@ -31,8 +28,11 @@ class VerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CupertinoNavigationBarBackButton(
+        leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
+          onPressed: () {
+            //back to...
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -152,9 +152,29 @@ class VerificationScreen extends StatelessWidget {
       onTap: () {
         to.pickSingleImage(imgOfValidID);
       },
-      child: Image.file(
-        File(imgOfValidID.value),
-        fit: BoxFit.fill,
+      child: Stack(
+        children: [
+          Image.file(
+            File(imgOfValidID.value),
+            width: Get.width,
+            height: Get.height,
+            fit: BoxFit.fill,
+          ),
+          Positioned(
+            right: 5,
+            top: 5,
+            child: InkWell(
+              onTap: () {
+                imgOfValidID.value = '';
+              },
+              child: const Icon(
+                Icons.remove_circle,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -186,9 +206,29 @@ class VerificationScreen extends StatelessWidget {
       onTap: () {
         to.pickSingleImage(imgOfValidIDWithSelfie);
       },
-      child: Image.file(
-        File(imgOfValidIDWithSelfie.value),
-        fit: BoxFit.fill,
+      child: Stack(
+        children: [
+          Image.file(
+            File(imgOfValidIDWithSelfie.value),
+            width: Get.width,
+            height: Get.height,
+            fit: BoxFit.fill,
+          ),
+          Positioned(
+            right: 5,
+            top: 5,
+            child: InkWell(
+              onTap: () {
+                imgOfValidIDWithSelfie.value = '';
+              },
+              child: const Icon(
+                Icons.remove_circle,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

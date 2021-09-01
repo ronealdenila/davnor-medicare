@@ -130,41 +130,49 @@ class ConsForm3Screen extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          GridView.count(
-            shrinkWrap: true,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            crossAxisCount: 3,
-            children: List.generate(images.length + 1, (index) {
-              if (index == images.length) {
-                return Center(
-                    child: IconButton(
-                  icon: const Icon(
-                    Icons.add_circle_outline_rounded,
-                  ),
-                  color: verySoftBlueColor[100],
-                  iconSize: 45,
-                  onPressed: () async {
-                    await to.pickMultipleImages(images, resultList);
-                  },
-                ));
-              }
-              return AssetThumb(
+      child: GridView.count(
+        shrinkWrap: true,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        crossAxisCount: 3,
+        children: List.generate(images.length + 1, (index) {
+          if (index == images.length) {
+            return Center(
+                child: IconButton(
+              icon: const Icon(
+                Icons.add_circle_outline_rounded,
+              ),
+              color: verySoftBlueColor[100],
+              iconSize: 45,
+              onPressed: () async {
+                await to.pickMultipleImages(images, resultList);
+              },
+            ));
+          }
+          return Stack(
+            children: [
+              AssetThumb(
                 asset: images[index],
                 width: 140,
                 height: 140,
-              );
-            }),
-          ),
-          verticalSpace15,
-          ElevatedButton(
-              onPressed: () {
-                images.value = [];
-              },
-              child: const Text('Clear All Photos')),
-        ],
+              ),
+              Positioned(
+                right: 5,
+                top: 5,
+                child: InkWell(
+                  onTap: () {
+                    images.remove(images[index]);
+                  },
+                  child: const Icon(
+                    Icons.remove_circle,
+                    size: 25,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

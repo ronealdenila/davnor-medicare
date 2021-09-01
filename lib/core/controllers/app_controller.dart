@@ -50,8 +50,7 @@ class AppController extends GetxController {
     images.value = resultList;
   }
 
-  // ignore: type_annotate_public_apis
-  Future<void> pickSingleImage(var image) async {
+  Future<void> pickSingleImage(RxString image) async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
