@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
+import 'core/controllers/bindings/all_controller_binding.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Get.put<AppController>(AppController());
-  Get.put<AuthController>(AuthController());
-  Get.put<ArticleService>(ArticleService());
   runApp(MyApp());
 }
 
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: AllControllerBinding(),
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,

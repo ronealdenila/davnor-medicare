@@ -16,11 +16,9 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
 //import 'package:dropdown_below/dropdown_below.dart';
 
-// ignore: must_be_immutable
 class MAFormScreen extends StatelessWidget {
   final AppController to = Get.find();
-  // ignore: type_annotate_public_apis
-  var imgOfValidID = ''.obs;
+  final RxString imgOfValidID = ''.obs;
 
   bool hasImageSelected() {
     if (imgOfValidID.value != '') {

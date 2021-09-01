@@ -12,13 +12,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 
-// ignore: must_be_immutable
 class VerificationScreen extends StatelessWidget {
   static AppController to = Get.find();
-  // ignore: type_annotate_public_apis
-  var imgOfValidID = ''.obs;
-  // ignore: type_annotate_public_apis
-  var imgOfValidIDWithSelfie = ''.obs;
+
+  final RxString imgOfValidID = ''.obs;
+  final RxString imgOfValidIDWithSelfie = ''.obs;
 
   bool hasImagesSelected() {
     if (imgOfValidID.value != '' && imgOfValidIDWithSelfie.value != '') {

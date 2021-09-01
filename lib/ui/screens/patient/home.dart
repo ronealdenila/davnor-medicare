@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
@@ -23,6 +24,7 @@ class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   static ArticleService articleService = Get.find();
   static AppController appController = Get.find();
+  static ConsController consController = Get.find();
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 
@@ -97,11 +99,11 @@ class PatientHomeScreen extends StatelessWidget {
                               dialogTitle: dialog1Title,
                               dialogCaption: dialog1Caption,
                               onYesTap: () {
-                                appController.isConsultForYou.value = true;
+                                consController.isConsultForYou.value = true;
                                 Get.to(() => ConsFormScreen());
                               },
                               onNoTap: () {
-                                appController.isConsultForYou.value = false;
+                                consController.isConsultForYou.value = false;
                                 Get.to(() => ConsFormScreen());
                               },
                             ),

@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ConsForm2Screen extends StatelessWidget {
-  final AppController appController = AppController.to;
+  final ConsController consController = Get.put(ConsController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class ConsForm2Screen extends StatelessWidget {
             ),
             verticalSpace18,
             Visibility(
-              visible: !appController.isFollowUp.value,
+              visible: !consController.isFollowUp.value,
               child: Align(
                 child: SizedBox(
                   width: 211,
@@ -63,16 +64,14 @@ class ConsForm2Screen extends StatelessWidget {
             ),
             verticalSpace25,
             Visibility(
-              visible: appController.isFollowUp.value,
+              visible: consController.isFollowUp.value,
               child: Expanded(
                 child: Align(
                   alignment: FractionalOffset.bottomRight,
                   child: SizedBox(
                     width: 162,
                     child: CustomButton(
-                      onTap: () {
-                        Get.to(() => ConsForm3Screen());
-                      },
+                      onTap: () => Get.to(() => ConsForm3Screen()),
                       text: 'Next',
                       buttonColor: verySoftBlueColor,
                     ),

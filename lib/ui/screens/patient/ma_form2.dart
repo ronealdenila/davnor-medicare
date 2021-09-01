@@ -14,12 +14,12 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 
-// ignore: must_be_immutable
 class MAForm2Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
   static AppController to = Get.find();
-  RxList<Asset> images = RxList<Asset>();
-  List<Asset> resultList = [];
+
+  final RxList<Asset> images = RxList<Asset>();
+  final List<Asset> resultList = [];
 
   //I Fetch ang code from database then i set sa variable;
   final String generatedCode = 'MA24';
