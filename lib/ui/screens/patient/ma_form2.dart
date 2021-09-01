@@ -1,3 +1,4 @@
+import 'dart:io';
 //import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -11,15 +12,13 @@ import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 
 class MAForm2Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
-  static AppController to = Get.find();
-
-  final RxList<Asset> images = RxList<Asset>();
-  final List<Asset> resultList = [];
+  final AppController to = Get.find();
+  final RxList<XFile> images = RxList<XFile>();
 
   //I Fetch ang code from database then i set sa variable;
   final String generatedCode = 'MA24';
@@ -109,7 +108,7 @@ class MAForm2Screen extends StatelessWidget {
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await to.pickMultipleImages(images, resultList);
+          await to.pickImages(images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 80),
@@ -133,41 +132,50 @@ class MAForm2Screen extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          GridView.count(
-            shrinkWrap: true,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            crossAxisCount: 3,
-            children: List.generate(images.length + 1, (index) {
-              if (index == images.length) {
-                return Center(
-                    child: IconButton(
-                  icon: const Icon(
-                    Icons.add_circle_outline_rounded,
-                  ),
-                  color: verySoftBlueColor[100],
-                  iconSize: 45,
-                  onPressed: () async {
-                    await to.pickMultipleImages(images, resultList);
-                  },
-                ));
-              }
-              return AssetThumb(
-                asset: images[index],
+      child: GridView.count(
+        shrinkWrap: true,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        crossAxisCount: 3,
+        children: List.generate(images.length + 1, (index) {
+          if (index == images.length) {
+            return Center(
+                child: IconButton(
+              icon: const Icon(
+                Icons.add_circle_outline_rounded,
+              ),
+              color: verySoftBlueColor[100],
+              iconSize: 45,
+              onPressed: () async {
+                await to.pickImages(images);
+              },
+            ));
+          }
+          return Stack(
+            children: [
+              Image.file(
+                File(images[index].path),
                 width: 140,
                 height: 140,
-              );
-            }),
-          ),
-          verticalSpace15,
-          ElevatedButton(
-              onPressed: () {
-                images.value = [];
-              },
-              child: const Text('Clear All Photos')),
-        ],
+                fit: BoxFit.fill,
+              ),
+              Positioned(
+                right: 5,
+                top: 5,
+                child: InkWell(
+                  onTap: () {
+                    images.remove(images[index]);
+                  },
+                  child: const Icon(
+                    Icons.remove_circle,
+                    size: 25,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

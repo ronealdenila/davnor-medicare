@@ -232,11 +232,31 @@ class MAFormScreen extends StatelessWidget {
     }
     return InkWell(
       onTap: () {
-        to.pickSingleImage(imgOfValidID);
+        to.pickSingleImage(imgOfValidID); //not sure here if naa dapat func
       },
-      child: Image.file(
-        File(imgOfValidID.value),
-        fit: BoxFit.fill,
+      child: Stack(
+        children: [
+          Image.file(
+            File(imgOfValidID.value),
+            width: Get.width,
+            height: Get.height,
+            fit: BoxFit.fill,
+          ),
+          Positioned(
+            right: 5,
+            top: 5,
+            child: InkWell(
+              onTap: () {
+                imgOfValidID.value = '';
+              },
+              child: const Icon(
+                Icons.remove_circle,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

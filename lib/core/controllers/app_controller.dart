@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AppController extends GetxController {
@@ -25,28 +24,19 @@ class AppController extends GetxController {
         : Get.defaultDialog(title: 'Could not launch $url');
   }
 
-  Future<void> pickMultipleImages(
-      RxList<Asset> images, List<Asset> resultList) async {
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        selectedAssets: images,
-        materialOptions: const MaterialOptions(
-          actionBarTitle: 'Select Images',
-        ),
-      );
-    } on Exception catch (e) {
-      log.i('pickImages | $e');
-    }
-    images.value = resultList;
-  }
-
   Future<void> pickSingleImage(RxString image) async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       image.value = pickedImage.path;
+    }
+  }
+
+  Future<void> pickImages(RxList<XFile> images) async {
+    final pickedFileList = await ImagePicker().pickMultiImage();
+
+    if (pickedFileList != null) {
+      images.value = pickedFileList;
     }
   }
 }
