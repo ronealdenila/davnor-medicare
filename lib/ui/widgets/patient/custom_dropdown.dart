@@ -5,9 +5,13 @@ class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
     required this.hintText,
     required this.dropdownItems,
+    required this.onChanged,
+    required this.onSaved,
   });
   final String? hintText;
   final List<Item>? dropdownItems;
+  final void Function()? onChanged;
+  final void Function()? onSaved;
 
   @override
   State createState() => CustomDropdownState();
@@ -27,10 +31,9 @@ class CustomDropdownState extends State<CustomDropdown> {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        child: DropdownButton<Item>(
-          underline: Container(),
+        child: DropdownButtonFormField<Item>(
+          decoration: const InputDecoration(enabledBorder: InputBorder.none),
           isExpanded: true,
-          hint: Text(widget.hintText!),
           value: selectedItem,
           onChanged: (value) {
             setState(() {

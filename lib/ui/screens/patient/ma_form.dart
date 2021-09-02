@@ -145,6 +145,8 @@ class MAFormScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select Gender',
                     dropdownItems: gender,
+                    onChanged: () {},
+                    onSaved: () {},
                   ),
                 ),
               ],
@@ -158,6 +160,8 @@ class MAFormScreen extends StatelessWidget {
                 child: CustomDropdown(
                   hintText: 'Select Type',
                   dropdownItems: type,
+                  onChanged: () {},
+                  onSaved: () {},
                 ),
               ),
             ),
