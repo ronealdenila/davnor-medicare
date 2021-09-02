@@ -10,8 +10,8 @@ class CustomDropdown extends StatefulWidget {
   });
   final String? hintText;
   final List<Item>? dropdownItems;
-  final void Function()? onChanged;
-  final void Function()? onSaved;
+  final void Function(Item?)? onChanged;
+  final void Function(Item?)? onSaved;
 
   @override
   State createState() => CustomDropdownState();
@@ -35,11 +35,9 @@ class CustomDropdownState extends State<CustomDropdown> {
           decoration: const InputDecoration(enabledBorder: InputBorder.none),
           isExpanded: true,
           value: selectedItem,
-          onChanged: (value) {
-            setState(() {
-              selectedItem = value;
-            });
-          },
+          hint: Text(widget.hintText!),
+          onChanged: widget.onChanged,
+          onSaved: widget.onSaved,
           items: widget.dropdownItems!.map((user) {
             return DropdownMenuItem<Item>(
               value: user,

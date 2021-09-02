@@ -145,8 +145,8 @@ class MAFormScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select Gender',
                     dropdownItems: gender,
-                    onChanged: () {},
-                    onSaved: () {},
+                    onChanged: (Item? item) => print(item!.name),
+                    onSaved: (Item? item) => print(item!.name),
                   ),
                 ),
               ],
@@ -160,8 +160,8 @@ class MAFormScreen extends StatelessWidget {
                 child: CustomDropdown(
                   hintText: 'Select Type',
                   dropdownItems: type,
-                  onChanged: () {},
-                  onSaved: () {},
+                  onChanged: (Item? item) => print(item!.name),
+                  onSaved: (Item? item) => print(item!.name),
                 ),
               ),
             ),
