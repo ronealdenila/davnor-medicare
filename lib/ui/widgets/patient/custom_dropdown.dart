@@ -59,15 +59,3 @@ class CustomDropdownState extends State<CustomDropdown> {
     );
   }
 }
-
-class CustomDropdown2 extends StatefulWidget {
-  const CustomDropdown2({
-    required this.hintText,
-    required this.dropdownItems,
-  });
-  final String? hintText;
-  final List<Item>? dropdownItems;
-
-  @override
-  State createState() => CustomDropdownState();
-}

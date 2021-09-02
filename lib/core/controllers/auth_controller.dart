@@ -122,16 +122,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> _createPatientUser(String _userID) async {
-    await firebaseFirestore
-        .collection('users')
-        .doc(_userID)
-        .set(<String, dynamic>{
+    await firestore.collection('users').doc(_userID).set(<String, dynamic>{
       'userType': 'patient',
     });
-    await firebaseFirestore
-        .collection('patients')
-        .doc(_userID)
-        .set(<String, dynamic>{
+    await firestore.collection('patients').doc(_userID).set(<String, dynamic>{
       'email': emailController.text.trim(),
       'firstName': firstNameController.text.trim(),
       'lastName': lastNameController.text.trim(),
@@ -146,11 +140,7 @@ class AuthController extends GetxController {
 
   //check user type of logged in user and navigate
   Future<void> getUserRole() async {
-    await firebaseFirestore
-        .collection('users')
-        .doc(firebaseUser.value!.uid)
-        .get()
-        .then(
+    await firestore.collection('users').doc(firebaseUser.value!.uid).get().then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
@@ -245,7 +235,7 @@ class AuthController extends GetxController {
 
   //initializedBaseOnUserRoles
   Future<void> _initializePatientModel() async {
-    patientModel.value = await firebaseFirestore
+    patientModel.value = await firestore
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .get()
@@ -254,7 +244,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> _initializeDoctorModel() async {
-    doctorModel.value = await firebaseFirestore
+    doctorModel.value = await firestore
         .collection('doctors')
         .doc(firebaseUser.value!.uid)
         .get()
@@ -263,7 +253,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> _initializePSWDModel() async {
-    pswdModel.value = await firebaseFirestore
+    pswdModel.value = await firestore
         .collection('pswd_personnel')
         .doc(firebaseUser.value!.uid)
         .get()
@@ -272,7 +262,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> _initializeAdminModel() async {
-    adminModel.value = await firebaseFirestore
+    adminModel.value = await firestore
         .collection('admins')
         .doc(firebaseUser.value!.uid)
         .get()

@@ -16,8 +16,8 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 
 class MAFormScreen extends StatelessWidget {
-  final AppController to = Get.find();
-  final MAController ma = Get.find();
+  static AppController to = Get.find();
+  static MAController ma = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +132,7 @@ class MAFormScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    keyboardType: TextInputType.number,
                     onChanged: (value) {
                       return;
                     },
@@ -145,8 +146,8 @@ class MAFormScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select Gender',
                     dropdownItems: gender,
-                    onChanged: (Item? item) => print(item!.name),
-                    onSaved: (Item? item) => print(item!.name),
+                    onChanged: (Item? item) => ma.gender.value = item!.name,
+                    onSaved: (Item? item) => ma.gender.value = item!.name,
                   ),
                 ),
               ],
@@ -160,8 +161,8 @@ class MAFormScreen extends StatelessWidget {
                 child: CustomDropdown(
                   hintText: 'Select Type',
                   dropdownItems: type,
-                  onChanged: (Item? item) => print(item!.name),
-                  onSaved: (Item? item) => print(item!.name),
+                  onChanged: (Item? item) => ma.type.value = item!.name,
+                  onSaved: (Item? item) => ma.type.value = item!.name,
                 ),
               ),
             ),
