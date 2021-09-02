@@ -54,7 +54,7 @@ class AuthController extends GetxController {
       }
     } else {
       userSignedOut = false;
-      log.i('_setInitialScreen | User found. Data $_firebaseUser');
+      log.i('_setInitialScreen | User found. Data: ${_firebaseUser.email}');
       await getUserRole();
     }
   }
@@ -245,40 +245,38 @@ class AuthController extends GetxController {
 
   //initializedBaseOnUserRoles
   Future<void> _initializePatientModel() async {
-    log.i(
-        '_initializePatientModel | ${firebaseUser.value!.uid} role: $userRole');
     patientModel.value = await firebaseFirestore
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+    log.i('_initializePatientModel | Initializing ${patientModel.value}');
   }
 
   Future<void> _initializeDoctorModel() async {
-    log.i(
-        '_initializeDoctorModel | ${firebaseUser.value!.uid} role: $userRole');
     doctorModel.value = await firebaseFirestore
         .collection('doctors')
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
+    log.i('_initializePatientModel | Initializing ${doctorModel.value}');
   }
 
   Future<void> _initializePSWDModel() async {
-    log.i('_initializePSWDModel | ${firebaseUser.value!.uid} role: $userRole');
     pswdModel.value = await firebaseFirestore
         .collection('pswd_personnel')
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PswdModel.fromJson(doc.data()!));
+    log.i('_initializePatientModel | Initializing ${pswdModel.value}');
   }
 
   Future<void> _initializeAdminModel() async {
-    log.i('_initializeAdminModel | ${firebaseUser.value!.uid} role: $userRole');
     adminModel.value = await firebaseFirestore
         .collection('admins')
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => AdminModel.fromJson(doc.data()!));
+    log.i('_initializePatientModel | Initializing ${adminModel.value}');
   }
 }

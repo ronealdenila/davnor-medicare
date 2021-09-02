@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -10,28 +9,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 
 class ConsForm3Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
-  final AppController to = Get.find();
-  final RxList<XFile> images = RxList<XFile>();
-
-  //I Fetch ang code from database then i set sa variable;
-  final String generatedCode = 'C025';
-
-  bool hasImagesSelected() {
-    if (images.isNotEmpty) {
-      return true;
-    }
-    return false;
-  }
+  final AppController appController = Get.put(AppController());
+  final ConsController consController = Get.put(ConsController());
 
   @override
   Widget build(BuildContext context) {
-    final dialog = 'Your priority number is $generatedCode.\n$dialog5Caption';
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -75,20 +62,7 @@ class ConsForm3Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: () {
-                      if (hasImagesSelected()) {
-                        showDefaultDialog(
-                          dialogTitle: dialog5Title,
-                          dialogCaption: dialog,
-                          onConfirmTap: () {
-                            Get.to(() => PatientHomeScreen());
-                          },
-                        );
-                      } else {
-                        //Error: Please provide prescriptions
-                        //or laboratory results first
-                      }
-                    },
+                    onTap: consController.submitNewConsult,
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -102,10 +76,11 @@ class ConsForm3Screen extends StatelessWidget {
   }
 
   Widget getPrescriptionAndLabResults() {
+    final images = consController.images;
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await to.pickImages(images);
+          await appController.pickImages(images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -144,7 +119,7 @@ class ConsForm3Screen extends StatelessWidget {
               color: verySoftBlueColor[100],
               iconSize: 45,
               onPressed: () async {
-                await to.pickImages(images);
+                await appController.pickImages(images);
               },
             ));
           }

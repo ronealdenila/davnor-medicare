@@ -11,7 +11,7 @@ import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  final MAController ma = Get.find();
+  static MAController ma = Get.find();
 
   @override
   Widget build(BuildContext context) {
