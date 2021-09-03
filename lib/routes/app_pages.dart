@@ -38,7 +38,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.PSWD_STAFF_REGISTRATION;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -175,6 +175,5 @@ class AppPages {
       name: _Paths.VERIFICATION_REQ_ITEM,
       page: () => VerificationRequestScreen(),
     ),
-
   ];
 }

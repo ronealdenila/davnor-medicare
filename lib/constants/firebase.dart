@@ -6,5 +6,5 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
-Reference storageReference = storage.ref();
+Reference storageRef = storage.ref();
 FirebaseMessaging messaging = FirebaseMessaging.instance;

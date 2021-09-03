@@ -62,7 +62,7 @@ class MAFormScreen extends StatelessWidget {
                 ]),
             verticalSpace10,
             Visibility(
-              visible: !ma.isMedicalAssistForYou.value,
+              visible: !ma.isMAForYou.value,
               //CustomFormField was created for patient global widget
               //please utilize it.
               child: TextFormField(
@@ -83,7 +83,7 @@ class MAFormScreen extends StatelessWidget {
             ),
             verticalSpace10,
             Visibility(
-              visible: !ma.isMedicalAssistForYou.value,
+              visible: !ma.isMAForYou.value,
               child: TextFormField(
                 controller: ma.lastNameController,
                 decoration: const InputDecoration(
@@ -168,7 +168,7 @@ class MAFormScreen extends StatelessWidget {
             ),
             verticalSpace15,
             Visibility(
-              visible: !ma.isMedicalAssistForYou.value,
+              visible: !ma.isMAForYou.value,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
