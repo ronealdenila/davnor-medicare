@@ -1,9 +1,8 @@
+import 'dart:io';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/core/models/category_model.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
+//import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
-import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -14,10 +13,11 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
-//import 'package:dropdown_below/dropdown_below.dart';
+import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 
 class MAFormScreen extends StatelessWidget {
-  final AppController appController = AppController.to;
+  static AppController to = Get.find();
+  static MAController ma = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +62,11 @@ class MAFormScreen extends StatelessWidget {
                 ]),
             verticalSpace10,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !ma.isMedicalAssistForYou.value,
               //CustomFormField was created for patient global widget
               //please utilize it.
               child: TextFormField(
+                controller: ma.firstNameController,
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(
@@ -74,12 +75,17 @@ class MAFormScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                onChanged: (value) {
+                  return;
+                },
+                onSaved: (value) => ma.firstNameController.text = value!,
               ),
             ),
             verticalSpace10,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !ma.isMedicalAssistForYou.value,
               child: TextFormField(
+                controller: ma.lastNameController,
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(
@@ -88,10 +94,15 @@ class MAFormScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                onChanged: (value) {
+                  return;
+                },
+                onSaved: (value) => ma.lastNameController.text = value!,
               ),
             ),
             verticalSpace10,
             TextFormField(
+              controller: ma.addressController,
               decoration: const InputDecoration(
                 labelText: 'Address',
                 border: OutlineInputBorder(
@@ -100,6 +111,10 @@ class MAFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              onChanged: (value) {
+                return;
+              },
+              onSaved: (value) => ma.addressController.text = value!,
             ),
             verticalSpace10,
             Row(
@@ -108,6 +123,7 @@ class MAFormScreen extends StatelessWidget {
                 SizedBox(
                   width: 145,
                   child: TextFormField(
+                    controller: ma.ageController,
                     decoration: const InputDecoration(
                       labelText: 'Age',
                       border: OutlineInputBorder(
@@ -116,6 +132,11 @@ class MAFormScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      return;
+                    },
+                    onSaved: (value) => ma.ageController.text = value!,
                   ),
                 ),
                 verticalSpace10,
@@ -125,6 +146,8 @@ class MAFormScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select Gender',
                     dropdownItems: gender,
+                    onChanged: (Item? item) => ma.gender.value = item!.name,
+                    onSaved: (Item? item) => ma.gender.value = item!.name,
                   ),
                 ),
               ],
@@ -138,12 +161,14 @@ class MAFormScreen extends StatelessWidget {
                 child: CustomDropdown(
                   hintText: 'Select Type',
                   dropdownItems: type,
+                  onChanged: (Item? item) => ma.type.value = item!.name,
+                  onSaved: (Item? item) => ma.type.value = item!.name,
                 ),
               ),
             ),
             verticalSpace15,
             Visibility(
-              visible: !appController.isMedicalAssistForYou.value,
+              visible: !ma.isMedicalAssistForYou.value,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -163,19 +188,7 @@ class MAFormScreen extends StatelessWidget {
                         width: screenWidth(context),
                         height: 150,
                         color: neutralColor[10],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.file_upload_outlined,
-                                size: 67,
-                                color: neutralColor[60],
-                              ),
-                            )
-                          ],
-                        ),
+                        child: Obx(getValidID),
                       ),
                     ),
                   ),
@@ -190,9 +203,7 @@ class MAFormScreen extends StatelessWidget {
               child: SizedBox(
                 width: 160,
                 child: CustomButton(
-                  onTap: () {
-                    Get.to(() => MAForm2Screen());
-                  },
+                  onTap: ma.nextButton,
                   text: 'Next',
                   buttonColor: verySoftBlueColor,
                 ),
@@ -201,6 +212,61 @@ class MAFormScreen extends StatelessWidget {
             verticalSpace10,
           ]),
         ),
+      ),
+    );
+  }
+
+  Widget getValidID() {
+    if (ma.imgOfValidID.value == '') {
+      return InkWell(
+        onTap: () async {
+          await to.pickSingleImage(ma.imgOfValidID);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              size: 67,
+              color: neutralColor[60],
+            ),
+            verticalSpace10,
+            Text(
+              'Upload here',
+              style: subtitle18RegularNeutral,
+            )
+          ],
+        ),
+      );
+    }
+    return InkWell(
+      onTap: () {
+        to.pickSingleImage(ma.imgOfValidID);
+        //not sure here if naa dapat func
+      },
+      child: Stack(
+        children: [
+          Image.file(
+            File(ma.imgOfValidID.value),
+            width: Get.width,
+            height: Get.height,
+            fit: BoxFit.fill,
+          ),
+          Positioned(
+            right: 5,
+            top: 5,
+            child: InkWell(
+              onTap: () {
+                ma.imgOfValidID.value = '';
+              },
+              child: const Icon(
+                Icons.remove_circle,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

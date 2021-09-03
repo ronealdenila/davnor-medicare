@@ -2,7 +2,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+//import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
 import 'package:davnor_medicare/constants/app_items.dart';

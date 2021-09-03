@@ -5,9 +5,13 @@ class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
     required this.hintText,
     required this.dropdownItems,
+    required this.onChanged,
+    required this.onSaved,
   });
   final String? hintText;
   final List<Item>? dropdownItems;
+  final void Function(Item?)? onChanged;
+  final void Function(Item?)? onSaved;
 
   @override
   State createState() => CustomDropdownState();
@@ -27,16 +31,13 @@ class CustomDropdownState extends State<CustomDropdown> {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        child: DropdownButton<Item>(
-          underline: Container(),
+        child: DropdownButtonFormField<Item>(
+          decoration: const InputDecoration(enabledBorder: InputBorder.none),
           isExpanded: true,
-          hint: Text(widget.hintText!),
           value: selectedItem,
-          onChanged: (value) {
-            setState(() {
-              selectedItem = value;
-            });
-          },
+          hint: Text(widget.hintText!),
+          onChanged: widget.onChanged,
+          onSaved: widget.onSaved,
           items: widget.dropdownItems!.map((user) {
             return DropdownMenuItem<Item>(
               value: user,
@@ -57,16 +58,4 @@ class CustomDropdownState extends State<CustomDropdown> {
       ),
     );
   }
-}
-
-class CustomDropdown2 extends StatefulWidget {
-  const CustomDropdown2({
-    required this.hintText,
-    required this.dropdownItems,
-  });
-  final String? hintText;
-  final List<Item>? dropdownItems;
-
-  @override
-  State createState() => CustomDropdownState();
 }

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 //import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:get/get.dart';
 
 class HistoryInfoScreen extends StatelessWidget {
   // static AuthController authController = Get.find();
@@ -23,7 +22,6 @@ class HistoryInfoScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  width: 1,
                   color: Color(0xFFCBD4E1),
                 ),
               ),

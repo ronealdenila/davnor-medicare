@@ -1,6 +1,6 @@
+import 'dart:io';
 //import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,89 +11,80 @@ import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 
 class MAForm2Screen extends StatelessWidget {
   final log = getLogger('Cons Form 3');
-  static AppController to = Get.find();
-  RxList<Asset> images = RxList<Asset>();
-  List<Asset> resultList = [];
+  final AppController to = Get.find();
+  final MAController ma = Get.find();
 
-  //I Fetch ang code from database then i set sa variable;
-  final String generatedCode = 'MA24';
   @override
   Widget build(BuildContext context) {
-    final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     return Scaffold(
       appBar: AppBar(
-        leading: const CupertinoNavigationBarBackButton(
+        leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
+          onPressed: () {},
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Upload prescription',
-              style: title32Regular,
-            ),
-            verticalSpace20,
-            const Text(
-              'Please upload a valid prescription issued not more than a month',
-              style: subtitle18Regular,
-            ),
-            verticalSpace25,
-            DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(12),
-              padding: const EdgeInsets.all(12),
-              dashPattern: const [8, 8, 8, 8],
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  return Container(
-                    width: screenWidth(context),
-                    color: neutralColor[10],
-                    child: Obx(getWidget),
-                  );
-                }),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Upload prescription',
+                style: title32Regular,
               ),
-            ),
-            verticalSpace25,
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 300,
-                child: CustomButton(
-                  onTap: () {
-                    showDefaultDialog(
-                      dialogTitle: dialog5Title,
-                      dialogCaption: caption,
-                      onConfirmTap: () {
-                        Get.to(() => PatientHomeScreen());
-                      },
+              verticalSpace20,
+              const Text(
+                maForm2Screen,
+                style: subtitle18Regular,
+              ),
+              verticalSpace25,
+              DottedBorder(
+                borderType: BorderType.RRect,
+                radius: const Radius.circular(12),
+                padding: const EdgeInsets.all(12),
+                dashPattern: const [8, 8, 8, 8],
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      width: screenWidth(context),
+                      color: neutralColor[10],
+                      child: Obx(getPrescription),
                     );
-                  },
-                  text: 'Request Assistance',
-                  buttonColor: verySoftBlueColor,
+                  }),
                 ),
               ),
-            ),
-          ],
+              verticalSpace25,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 300,
+                  child: CustomButton(
+                    onTap: ma.requestMAButton,
+                    text: 'Request Assistance',
+                    buttonColor: verySoftBlueColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget getWidget() {
-    if (images.isEmpty) {
+  Widget getPrescription() {
+    if (ma.images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await to.pickMultipleImages(images, resultList);
+          await to.pickImages(ma.images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 80),
@@ -117,41 +108,50 @@ class MAForm2Screen extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          GridView.count(
-            shrinkWrap: true,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            crossAxisCount: 3,
-            children: List.generate(images.length + 1, (index) {
-              if (index == images.length) {
-                return Center(
-                    child: IconButton(
-                  icon: const Icon(
-                    Icons.add_circle_outline_rounded,
-                  ),
-                  color: verySoftBlueColor[100],
-                  iconSize: 58,
-                  onPressed: () async {
-                    await to.pickMultipleImages(images, resultList);
-                  },
-                ));
-              }
-              return AssetThumb(
-                asset: images[index],
+      child: GridView.count(
+        shrinkWrap: true,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        crossAxisCount: 3,
+        children: List.generate(ma.images.length + 1, (index) {
+          if (index == ma.images.length) {
+            return Center(
+                child: IconButton(
+              icon: const Icon(
+                Icons.add_circle_outline_rounded,
+              ),
+              color: verySoftBlueColor[100],
+              iconSize: 45,
+              onPressed: () async {
+                await to.pickImages(ma.images);
+              },
+            ));
+          }
+          return Stack(
+            children: [
+              Image.file(
+                File(ma.images[index].path),
                 width: 140,
                 height: 140,
-              );
-            }),
-          ),
-          verticalSpace15,
-          ElevatedButton(
-              onPressed: () {
-                images.value = [];
-              },
-              child: const Text('Clear All Photos')),
-        ],
+                fit: BoxFit.fill,
+              ),
+              Positioned(
+                right: 5,
+                top: 5,
+                child: InkWell(
+                  onTap: () {
+                    ma.images.remove(ma.images[index]);
+                  },
+                  child: const Icon(
+                    Icons.remove_circle,
+                    size: 25,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
@@ -10,7 +11,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
+//import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -23,6 +24,7 @@ class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   static ArticleService articleService = Get.find();
   static AppController appController = Get.find();
+  static ConsController consController = Get.find();
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 
@@ -97,11 +99,11 @@ class PatientHomeScreen extends StatelessWidget {
                               dialogTitle: dialog1Title,
                               dialogCaption: dialog1Caption,
                               onYesTap: () {
-                                appController.isConsultForYou.value = true;
+                                consController.isConsultForYou.value = true;
                                 Get.to(() => ConsFormScreen());
                               },
                               onNoTap: () {
-                                appController.isConsultForYou.value = false;
+                                consController.isConsultForYou.value = false;
                                 Get.to(() => ConsFormScreen());
                               },
                             ),

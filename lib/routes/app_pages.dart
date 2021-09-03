@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:get/get.dart';
-
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
@@ -33,7 +32,6 @@ import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-
 part 'app_routes.dart';
 
 class AppPages {

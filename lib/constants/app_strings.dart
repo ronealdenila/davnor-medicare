@@ -104,6 +104,10 @@ const String dialogMedicalAssistanceScreen2 =
 const String maFormScreen =
     'Upload a valid ID or barangay \ncertificate of the patient';
 
+//MAForm2
+const String maForm2Screen =
+    'Please upload a valid prescription issued not more than a month';
+
 //Auth Controller
 const String checkAppRestrictionErrorMiddleText =
     'You are not allowed to login on the mobile app. Please login to Web Application';
@@ -117,7 +121,6 @@ const String consForm3Description =
     'Select and upload images to support your follow-up consultation';
 
 //Admin
-const String doctorRegister =
-    'Please fill  in the information of the  Doctor.';
-const String pswdStuffRegister =
+const String doctorRegister = 'Please fill  in the information of the  Doctor.';
+const String pswdStaffRegister =
     'Please fill  in the information of the PSWD Personnel.';
