@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -10,18 +11,64 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 
 class VerificationScreen extends StatelessWidget {
+  final log = getLogger('Verification Screen');
   final AppController to = Get.find();
+  final String userID = auth.currentUser!.uid;
+
   final RxString imgOfValidID = ''.obs;
   final RxString imgOfValidIDWithSelfie = ''.obs;
+  final RxString imgURL = ''.obs;
+  final RxString imgURLselfie = ''.obs;
+
+  Future<void> uploadID(String filePathID) async {
+    final ref = storageReference.child('validID/$userID.png');
+    final uploadTask = ref.putFile(File(filePathID));
+    await uploadTask.then((res) async {
+      imgURL.value = await res.ref.getDownloadURL();
+    });
+  }
+
+  Future<void> uploadIDS(String filePathIDS) async {
+    final ref = storageReference.child('validIDSelfie/$userID.png');
+    final uploadTask = ref.putFile(File(filePathIDS));
+    await uploadTask.then((res) async {
+      imgURLselfie.value = await res.ref.getDownloadURL();
+    });
+  }
 
   bool hasImagesSelected() {
     if (imgOfValidID.value != '' && imgOfValidIDWithSelfie.value != '') {
       return true;
     }
     return false;
+  }
+
+  Future<void> addVerificationRequest(String pathID, String pathIDS) async {
+    await uploadID(pathID);
+    await uploadIDS(pathIDS);
+    await firestore.collection('to_verify').add({
+      'patient_id': auth.currentUser!.uid,
+      'valid_id': imgURL.value,
+      'valid_selfie': imgURLselfie.value,
+      'date_rqstd': Timestamp.fromDate(DateTime.now()),
+    });
+    //update user hasPendingStatus
+    await showDialog();
+  }
+
+  Future<void> showDialog() async {
+    showDefaultDialog(
+      dialogTitle: dialog6Title,
+      dialogCaption: dialog6Caption,
+      onConfirmTap: () {
+        Get.to(() => PatientHomeScreen());
+      },
+    );
   }
 
   @override
@@ -100,17 +147,10 @@ class VerificationScreen extends StatelessWidget {
                   child: CustomButton(
                     onTap: () {
                       if (hasImagesSelected()) {
-                        //Upload photos to storage and get url,
-                        //then save data to firestore for verification
-                        showDefaultDialog(
-                          dialogTitle: dialog6Title,
-                          dialogCaption: dialog6Caption,
-                          onConfirmTap: () {
-                            Get.to(() => PatientHomeScreen());
-                          },
-                        );
+                        addVerificationRequest(
+                            imgOfValidID.value, imgOfValidIDWithSelfie.value);
                       } else {
-                        //Error: "Please provide images"
+                        log.i('Verification Screen | Please provide images');
                       }
                     },
                     text: 'Submit',
