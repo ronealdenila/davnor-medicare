@@ -1,4 +1,5 @@
 // ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
 
 import 'package:davnor_medicare/ui/screens/splash.dart';
@@ -9,8 +10,11 @@ import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
+import 'package:davnor_medicare/ui/screens/admin/pswd_staff_registration.dart';
+import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
-import 'package:davnor_medicare/ui/screens/doctor/history_info.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
@@ -36,7 +40,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.PSWD_STAFF_REGISTRATION;
 
   static final routes = [
     GetPage(
@@ -161,5 +165,18 @@ class AppPages {
       name: _Paths.ADMIN_HOME,
       page: () => AdminHomeScreen(),
     ),
+    GetPage(
+      name: _Paths.DOCTOR_REGISTRATION,
+      page: () => DoctorRegistrationScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_STAFF_REGISTRATION,
+      page: () => PSWDStaffRegistrationScreen(),
+    ),
+    GetPage(
+      name: _Paths.VERIFICATION_REQ_ITEM,
+      page: () => VerificationRequestScreen(),
+    ),
+
   ];
 }

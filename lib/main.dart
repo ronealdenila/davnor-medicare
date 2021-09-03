@@ -1,4 +1,3 @@
-import 'package:davnor_medicare/constants/app_routes.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,8 +11,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Get.put<AppController>(AppController());
-  Get.put<AuthController>(AuthController());
-  Get.put<ArticleService>(ArticleService());
+  //Get.put<AuthController>(AuthController());
+  //Get.put<ArticleService>(ArticleService());
   runApp(MyApp());
 }
 
@@ -34,8 +33,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/AdmPswdRegist',
-      getPages: AppRoutes.routes,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }
