@@ -151,11 +151,11 @@ class MADescriptionScreen extends StatelessWidget {
                       dialogTitle: dialog2Title,
                       dialogCaption: dialog2Caption,
                       onYesTap: () {
-                        ma.isMedicalAssistForYou.value = true;
+                        ma.isMAForYou.value = true;
                         Get.to(() => MAFormScreen());
                       },
                       onNoTap: () {
-                        ma.isMedicalAssistForYou.value = false;
+                        ma.isMAForYou.value = false;
                         Get.to(() => MAFormScreen());
                       },
                     ),

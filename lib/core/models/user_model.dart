@@ -41,7 +41,7 @@ class PatientModel {
   final bool? pStatus;
   final String? validId;
   final String? validSelfie;
-  final bool? hasActiveQueue;
+  bool? hasActiveQueue;
 }
 
 class DoctorModel {

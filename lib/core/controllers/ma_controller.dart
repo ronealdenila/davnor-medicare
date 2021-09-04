@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,12 +10,15 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:uuid/uuid.dart';
 
 class MAController extends GetxController {
   final log = getLogger('MA Controller');
+  final uuid = const Uuid();
   static AuthController authController = Get.find();
   final fetchedData = authController.patientModel.value;
-  RxBool isMedicalAssistForYou = true.obs;
+  RxBool isMAForYou = true.obs;
+  final String userID = auth.currentUser!.uid;
 
   //Input Data from MA Form
   final RxString imgOfValidID = ''.obs;
@@ -28,6 +32,9 @@ class MAController extends GetxController {
 
   //Saving Data
   final RxString documentID = ''.obs;
+  final RxString fileName = ''.obs;
+  final RxString listPhotoURL = ''.obs;
+  final RxString photoURL = ''.obs;
   final RxString generatedCode = 'MA24'.obs; //MA24 -> mock code
 
   bool hasIDSelected() {
@@ -38,7 +45,7 @@ class MAController extends GetxController {
   }
 
   Future<void> assignValues() async {
-    if (isMedicalAssistForYou.value) {
+    if (isMAForYou.value) {
       firstNameController.text = fetchedData!.firstName!;
       lastNameController.text = fetchedData!.lastName!;
       imgOfValidID.value = 'kay null sa firestore'; //fetchedData!.validId!;
@@ -75,18 +82,48 @@ class MAController extends GetxController {
   }
 
   Future<void> requestMAButton() async {
+    //should have loading progress
     if (hasPrescriptionSelected()) {
       //check slot
-      await uploadImages();
+
+      await uploadAndSaveImgs();
       await saveRequestforMA();
     } else {
       log.i('ERROR: please provide prescriptions');
     }
   }
 
+  Future<void> uploadAndSaveImgs() async {
+    if (isMAForYou.value == false) {
+      await uploadImage();
+    }
+    await uploadImages();
+  }
+
+  Future<void> uploadImage() async {
+    final img = imgOfValidID.value;
+    final v4 = uuid.v4();
+    log.i('UNQ? -> $v4');
+    fileName.value = img.split('/').last;
+    final ref = storageRef.child('MA/ID-$v4$fileName');
+    final uploadTask = ref.putFile(File(img));
+    await uploadTask.then((res) async {
+      photoURL.value = await res.ref.getDownloadURL();
+    });
+  }
+
   Future<void> uploadImages() async {
-    //upload images to firebase storage
-    //get urls and save
+    for (var i = 0; i < images.length; i++) {
+      final v4 = uuid.v4();
+      fileName.value = images[i].path.split('/').last;
+      final ref = storageRef.child('MA/$i-Pr-$v4$fileName');
+      await ref.putFile(File(images[i].path)).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          listPhotoURL.value += '$value>>>';
+        });
+      });
+      log.i('$i -> fileName: $i-Presc$fileName');
+    }
   }
 
   Future<void> saveRequestforMA() async {
@@ -98,8 +135,8 @@ class MAController extends GetxController {
       'address': addressController.text,
       'gender': gender.value,
       'type': type.value,
-      'prescription': '',
-      'valid_id': '',
+      'prescriptions': listPhotoURL.value,
+      'valid_id': isMAForYou.value ? imgOfValidID.value : photoURL.value,
       'date_rqstd': Timestamp.fromDate(DateTime.now()),
       'isTurn': false, //should be true if mao ang first request
     });
@@ -140,5 +177,7 @@ class MAController extends GetxController {
     imgOfValidID.value = '';
     gender.value = '';
     type.value = '';
+    listPhotoURL.value = '';
+    photoURL.value = '';
   }
 }

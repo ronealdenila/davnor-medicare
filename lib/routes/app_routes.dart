@@ -29,6 +29,7 @@ abstract class Routes {
   static const VERIFICATION = _Paths.VERIFICATION;
   static const CONS_HISTORY = _Paths.CONS_HISTORY;
   static const MA_HISTORY = _Paths.MA_HISTORY;
+  static const LIVE_CHAT = _Paths.LIVE_CHAT;
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
@@ -46,8 +47,6 @@ abstract class Routes {
   static const DOCTOR_REGISTRATION = _Paths.DOCTOR_REGISTRATION;
   static const PSWD_STAFF_REGISTRATION = _Paths.PSWD_STAFF_REGISTRATION;
   static const VERIFICATION_REQ_ITEM = _Paths.VERIFICATION_REQ_ITEM;
-
-
 }
 
 //Note(R): gilahi nako ang class for path para diri nata mag configure sa unsa
@@ -79,6 +78,7 @@ abstract class _Paths {
   static const VERIFICATION = '/verification';
   static const CONS_HISTORY = '/cons-history';
   static const MA_HISTORY = '/MA-history';
+  static const LIVE_CHAT = '/live-chat';
 
   //Doctor
   static const DOCTOR_HOME = '/home';
@@ -96,5 +96,4 @@ abstract class _Paths {
   static const DOCTOR_REGISTRATION = '/adm-doctor-registration';
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';
   static const VERIFICATION_REQ_ITEM = '/adm-verification-req-item';
-
 }

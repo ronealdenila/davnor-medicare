@@ -24,9 +24,11 @@ class VerificationScreen extends StatelessWidget {
   final RxString imgOfValidIDWithSelfie = ''.obs;
   final RxString imgURL = ''.obs;
   final RxString imgURLselfie = ''.obs;
+  final RxString file = ''.obs;
 
   Future<void> uploadID(String filePathID) async {
-    final ref = storageReference.child('validID/$userID.png');
+    file.value = filePathID.split('/').last;
+    final ref = storageRef.child('verification/$userID/Valid-ID-$file');
     final uploadTask = ref.putFile(File(filePathID));
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -34,7 +36,8 @@ class VerificationScreen extends StatelessWidget {
   }
 
   Future<void> uploadIDS(String filePathIDS) async {
-    final ref = storageReference.child('validIDSelfie/$userID.png');
+    file.value = filePathIDS.split('/').last;
+    final ref = storageRef.child('verification/$userID/Valid-ID-Selfie-$file');
     final uploadTask = ref.putFile(File(filePathIDS));
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();
