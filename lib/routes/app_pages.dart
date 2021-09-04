@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
@@ -32,13 +33,14 @@ import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req.dart';
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.PSWD_STAFF_REGISTRATION;
+  static const INITIAL = Routes.PSWD_MA_REQ;
 
   static final routes = [
     GetPage(
@@ -156,6 +158,10 @@ class AppPages {
     GetPage(
       name: _Paths.PSWD_PERSONNEL_HOME,
       page: () => PSWDPersonnelHomeScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_MA_REQ,
+      page: () => MARequestScreen(),
     ),
 
     //Admin
