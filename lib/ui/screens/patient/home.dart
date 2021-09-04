@@ -2,7 +2,7 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/core/models/prescription_model.dart';
+import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
