@@ -33,6 +33,7 @@ import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -161,6 +162,10 @@ class AppPages {
     GetPage(
       name: _Paths.PSWD_PERSONNEL_HOME,
       page: () => PSWDPersonnelHomeScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_MA_REQ,
+      page: () => MARequestScreen(),
     ),
 
     //Admin

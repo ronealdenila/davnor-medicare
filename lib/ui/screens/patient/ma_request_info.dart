@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +26,7 @@ class MARequestInfoScreen extends StatelessWidget {
                         textAlign: TextAlign.justify,
                       ),
                     ]),
-                const SizedBox(
-                  height: 20,
-                ),
+                verticalSpace20,
                 Row(
                   children: [
                     Column(
@@ -35,29 +34,19 @@ class MARequestInfoScreen extends StatelessWidget {
                         children: const <Widget>[
                           Text('Patients Name',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Patients Age',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Address',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Gender',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Patients Type',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                         ]),
                   ],
                 ),
@@ -73,29 +62,19 @@ class MARequestInfoScreen extends StatelessWidget {
                         children: const <Widget>[
                           Text('Received by',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Pharmacy',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Medecine Worth',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Date Requested',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                           Text('Date MA Claimed',
                               textAlign: TextAlign.left, style: body16Bold),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          verticalSpace20,
                         ]),
                   ],
                 ),

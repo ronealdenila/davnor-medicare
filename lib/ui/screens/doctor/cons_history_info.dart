@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -27,16 +28,12 @@ class HistoryInfoScreen extends StatelessWidget {
               ),
             ),
             child: Column(children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
+             verticalSpace20,
               CircleAvatar(
                 backgroundImage: AssetImage(authHeader),
                 radius: 50,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              verticalSpace20,
               //  Text(
               //       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
               //       style: const TextStyle(
@@ -69,14 +66,10 @@ class HistoryInfoScreen extends StatelessWidget {
                             Text('Consultation Info',
                                 textAlign: TextAlign.left,
                                 style: title20Regular),
-                            SizedBox(
-                              height: 20,
-                            ),
+                           verticalSpace20,
                             Text('Patients Name',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            verticalSpace20,
                             Text('Age of Patient',
                                 textAlign: TextAlign.left, style: body16Bold),
                             SizedBox(
@@ -84,14 +77,10 @@ class HistoryInfoScreen extends StatelessWidget {
                             ),
                             Text('Consultation Started',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
-                              height: 20,
-                            ),
+                           verticalSpace20,
                             Text('Consultation Ended',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            verticalSpace20,
                           ]),
                     ],
                   ),
