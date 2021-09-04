@@ -12,10 +12,16 @@ void showLoading() {
       barrierDismissible: false);
 }
 
-void showErrorDialog() {
+void showErrorDialog({
+  String? errorTitle,
+  String? errorDescription,
+}) {
   Get.defaultDialog(
-    title: 'Error Occurred',
+    title: errorTitle!,
+    middleText: errorDescription!,
     textConfirm: 'Okay',
+    confirmTextColor: Colors.white,
+    onConfirm: Get.back,
   );
 }
 

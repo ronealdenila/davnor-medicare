@@ -29,6 +29,7 @@ abstract class Routes {
   static const VERIFICATION = _Paths.VERIFICATION;
   static const CONS_HISTORY = _Paths.CONS_HISTORY;
   static const MA_HISTORY = _Paths.MA_HISTORY;
+  static const LIVE_CHAT = _Paths.LIVE_CHAT;
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
@@ -76,6 +77,7 @@ abstract class _Paths {
   static const VERIFICATION = '/verification';
   static const CONS_HISTORY = '/cons-history';
   static const MA_HISTORY = '/MA-history';
+  static const LIVE_CHAT = '/live-chat';
 
   //Doctor
   static const DOCTOR_HOME = '/home';

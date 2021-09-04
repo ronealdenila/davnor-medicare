@@ -62,7 +62,7 @@ class ConsForm3Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: consController.submitNewConsult,
+                    onTap: consController.submitConsultRequest,
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -80,7 +80,8 @@ class ConsForm3Screen extends StatelessWidget {
     if (images.isEmpty) {
       return InkWell(
         onTap: () async {
-          await appController.pickImages(images);
+          await consController.pickMultiImage();
+          // await appController.pickImages(images);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -119,7 +120,7 @@ class ConsForm3Screen extends StatelessWidget {
               color: verySoftBlueColor[100],
               iconSize: 45,
               onPressed: () async {
-                await appController.pickImages(images);
+                await consController.pickMultiImage();
               },
             ));
           }

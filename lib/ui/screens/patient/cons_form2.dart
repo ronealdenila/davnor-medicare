@@ -78,7 +78,7 @@ class ConsForm2Screen extends StatelessWidget {
                     child: CustomButton(
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
-                          await consController.submitNewConsult();
+                          await consController.submitConsultRequest();
                         }
                       },
                       text: 'Consult Now',

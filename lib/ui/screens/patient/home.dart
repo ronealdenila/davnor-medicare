@@ -2,9 +2,11 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/models/prescription_model.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
+import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -32,6 +34,14 @@ class PatientHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          floatingActionButton: fetchedData!.hasActiveQueue!
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Get.to(() => LiveChatScreen());
+                  },
+                  child: const Icon(Icons.message),
+                )
+              : Container(),
           appBar: AppBar(
             actions: [
               IconButton(
@@ -95,18 +105,8 @@ class PatientHomeScreen extends StatelessWidget {
                             text: 'Request Consultation',
                             color: verySoftMagenta[60],
                             secondaryColor: verySoftMagentaCustomColor,
-                            onTap: () => showConfirmationDialog(
-                              dialogTitle: dialog1Title,
-                              dialogCaption: dialog1Caption,
-                              onYesTap: () {
-                                consController.isConsultForYou.value = true;
-                                Get.to(() => ConsFormScreen());
-                              },
-                              onNoTap: () {
-                                consController.isConsultForYou.value = false;
-                                Get.to(() => ConsFormScreen());
-                              },
-                            ),
+                            onTap: () =>
+                                consController.checkRequestConsultation(),
                           ),
                         ),
                         Expanded(

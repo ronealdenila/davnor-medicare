@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
@@ -128,6 +129,10 @@ class AppPages {
     GetPage(
       name: _Paths.MA_HISTORY,
       page: () => MAHistoryScreen(),
+    ),
+    GetPage(
+      name: _Paths.LIVE_CHAT,
+      page: () => LiveChatScreen(),
     ),
 
     //Doctor
