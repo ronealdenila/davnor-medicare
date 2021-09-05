@@ -14,22 +14,22 @@ class PrescriptionModel {
 
   factory PrescriptionModel.fromJson(Map<String, dynamic> json) =>
       PrescriptionModel(
-        patientId: json['patient_id'] as String,
+        patientId: json['patientId'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
         category: json['category'] as String,
-        dateRqstd: json['date_rqstd'] as Timestamp,
+        dateRqstd: json['dateRqstd'] as Timestamp,
         description: json['description'] as String,
         isFollowUp: json['isFollowUp'] as bool,
         imgs: json['imgs'] as String,
       );
 
   Map<String, dynamic> toJson() => {
-        'patient_id': patientId,
+        'patientId': patientId,
         'fullName': fullName,
         'age': age,
         'category': category,
-        'date_rqstd': dateRqstd,
+        'dateRqstd': dateRqstd,
         'description': description,
         'isFollowUp': isFollowUp,
         'imgs': imgs,
