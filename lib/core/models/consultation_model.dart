@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PrescriptionModel {
-  PrescriptionModel({
+class ConsultationModel {
+  ConsultationModel({
     this.patientId,
     this.fullName,
     this.age,
@@ -12,8 +12,8 @@ class PrescriptionModel {
     this.imgs,
   });
 
-  factory PrescriptionModel.fromJson(Map<String, dynamic> json) =>
-      PrescriptionModel(
+  factory ConsultationModel.fromJson(Map<String, dynamic> json) =>
+      ConsultationModel(
         patientId: json['patientId'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,

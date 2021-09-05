@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class LiveChatScreen extends StatelessWidget {
   static ConsController consController = Get.find();
-  final fetchedPrescription = consController.prescription.value;
+  final fetchedPrescription = consController.consultation.value;
 
   @override
   Widget build(BuildContext context) {
