@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
@@ -24,7 +23,7 @@ class ConsController extends GetxController {
   static AuthController authController = Get.find();
   final fetchedData = authController.patientModel.value;
   final String userID = auth.currentUser!.uid;
-  Rxn<PrescriptionModel> prescription = Rxn<PrescriptionModel>();
+  Rxn<ConsultationModel> consultation = Rxn<ConsultationModel>();
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -48,9 +47,9 @@ class ConsController extends GetxController {
   //* giprovide mao akong gi basehan
   final prescriptionRef = firestore
       .collection('consultation_request')
-      .withConverter<PrescriptionModel>(
+      .withConverter<ConsultationModel>(
         fromFirestore: (snapshot, _) =>
-            PrescriptionModel.fromJson(snapshot.data()!),
+            ConsultationModel.fromJson(snapshot.data()!),
         toFirestore: (movie, _) => movie.toJson(),
       );
 
@@ -88,7 +87,7 @@ class ConsController extends GetxController {
     showLoading();
     await uploadPrescription();
     assignValues();
-    final prescription = PrescriptionModel(
+    final consultation = ConsultationModel(
       patientId: auth.currentUser!.uid,
       fullName: fullName,
       age: ageController.text,
@@ -98,7 +97,7 @@ class ConsController extends GetxController {
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
     );
-    final docRef = await prescriptionRef.add(prescription);
+    final docRef = await prescriptionRef.add(consultation);
     await initializePrescriptionModel(docRef.id);
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -121,7 +120,7 @@ class ConsController extends GetxController {
   }
 
   Future<void> initializePrescriptionModel(String docRef) async {
-    prescription.value = await prescriptionRef
+    consultation.value = await prescriptionRef
         .doc(docRef)
         .get()
         .then((snapshot) => snapshot.data()!);
