@@ -46,7 +46,7 @@ class ConsController extends GetxController {
   //* (R) how I implemented it: ctrl + left click sa .withConverted naay sample
   //* giprovide mao akong gi basehan
   final prescriptionRef = firestore
-      .collection('consultation_request')
+      .collection('cons_request')
       .withConverter<ConsultationModel>(
         fromFirestore: (snapshot, _) =>
             ConsultationModel.fromJson(snapshot.data()!),
