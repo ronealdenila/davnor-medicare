@@ -177,7 +177,11 @@ const TextStyle body16SemiBold = TextStyle(
   fontWeight: FontWeight.w600,
   fontFamily: 'Inter',
 );
-
+const TextStyle body16Medium = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+);
 const TextStyle body16Regular = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
