@@ -2,18 +2,18 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
+import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-//import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
+import 'package:davnor_medicare/ui/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -50,21 +50,23 @@ class PatientHomeScreen extends StatelessWidget {
                   Icons.notifications_outlined,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  authController.signOut();
-                },
-                icon: const Icon(Icons.logout),
-              ),
             ],
           ),
-          drawer: Drawer(
-            child: TextButton(
-              onPressed: () {
-                Get.to(() => PatientProfileScreen());
-              },
-              child: const Text('Profile'),
-            ),
+          drawer: CustomDrawer(
+            accountName: fetchedData!.firstName,
+            accountEmail: fetchedData!.email,
+            userProfile: fetchedData!.profileImage == ''
+                ? const Icon(
+                    Icons.person,
+                    size: 56,
+                  )
+                : Image.network(fetchedData!.profileImage!),
+            onProfileTap: () => Get.to(() => PatientProfileScreen()),
+            onCurrentConsultTap: () => Get.to(() => LiveChatScreen()),
+            onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
+            onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
+            onSettingsTap: () => Get.to(() => MAHistoryScreen()),
+            onLogoutTap: authController.signOut,
           ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
@@ -105,8 +107,7 @@ class PatientHomeScreen extends StatelessWidget {
                             text: 'Request Consultation',
                             color: verySoftMagenta[60],
                             secondaryColor: verySoftMagentaCustomColor,
-                            onTap: () =>
-                                consController.checkRequestConsultation(),
+                            onTap: consController.checkRequestConsultation,
                           ),
                         ),
                         Expanded(

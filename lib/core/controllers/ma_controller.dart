@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/core/services/image_picker_service.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
@@ -14,8 +15,12 @@ import 'package:uuid/uuid.dart';
 
 class MAController extends GetxController {
   final log = getLogger('MA Controller');
-  final uuid = const Uuid();
+
   static AuthController authController = Get.find();
+  final ImagePickerService _imagePickerService = ImagePickerService();
+
+  final uuid = const Uuid();
+
   final fetchedData = authController.patientModel.value;
   RxBool isMAForYou = true.obs;
   final String userID = auth.currentUser!.uid;
@@ -179,5 +184,13 @@ class MAController extends GetxController {
     type.value = '';
     listPhotoURL.value = '';
     photoURL.value = '';
+  }
+
+  void pickSingleImage() {
+    _imagePickerService.pickImage(imgOfValidID);
+  }
+
+  void pickMultiImage() {
+    _imagePickerService.pickMultiImage(images);
   }
 }

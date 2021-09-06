@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/core/controllers/verification_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -11,69 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 
-class VerificationScreen extends StatelessWidget {
-  final log = getLogger('Verification Screen');
-  final AppController to = Get.find();
-  final String userID = auth.currentUser!.uid;
-
-  final RxString imgOfValidID = ''.obs;
-  final RxString imgOfValidIDWithSelfie = ''.obs;
-  final RxString imgURL = ''.obs;
-  final RxString imgURLselfie = ''.obs;
-  final RxString file = ''.obs;
-
-  Future<void> uploadID(String filePathID) async {
-    file.value = filePathID.split('/').last;
-    final ref = storageRef.child('verification/$userID/Valid-ID-$file');
-    final uploadTask = ref.putFile(File(filePathID));
-    await uploadTask.then((res) async {
-      imgURL.value = await res.ref.getDownloadURL();
-    });
-  }
-
-  Future<void> uploadIDS(String filePathIDS) async {
-    file.value = filePathIDS.split('/').last;
-    final ref = storageRef.child('verification/$userID/Valid-ID-Selfie-$file');
-    final uploadTask = ref.putFile(File(filePathIDS));
-    await uploadTask.then((res) async {
-      imgURLselfie.value = await res.ref.getDownloadURL();
-    });
-  }
-
-  bool hasImagesSelected() {
-    if (imgOfValidID.value != '' && imgOfValidIDWithSelfie.value != '') {
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> addVerificationRequest(String pathID, String pathIDS) async {
-    await uploadID(pathID);
-    await uploadIDS(pathIDS);
-    await firestore.collection('to_verify').add({
-      'patient_id': auth.currentUser!.uid,
-      'valid_id': imgURL.value,
-      'valid_selfie': imgURLselfie.value,
-      'date_rqstd': Timestamp.fromDate(DateTime.now()),
-    });
-    //update user hasPendingStatus
-    await showDialog();
-  }
-
-  Future<void> showDialog() async {
-    showDefaultDialog(
-      dialogTitle: dialog6Title,
-      dialogCaption: dialog6Caption,
-      onConfirmTap: () {
-        Get.to(() => PatientHomeScreen());
-      },
-    );
-  }
-
+class VerificationScreen extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,14 +85,7 @@ class VerificationScreen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: () {
-                      if (hasImagesSelected()) {
-                        addVerificationRequest(
-                            imgOfValidID.value, imgOfValidIDWithSelfie.value);
-                      } else {
-                        log.i('Verification Screen | Please provide images');
-                      }
-                    },
+                    onTap: controller.submitVerification,
                     text: 'Submit',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -169,11 +99,9 @@ class VerificationScreen extends StatelessWidget {
   }
 
   Widget getValidID() {
-    if (imgOfValidID.value == '') {
+    if (controller.imgOfValidID.value == '') {
       return InkWell(
-        onTap: () async {
-          await to.pickSingleImage(imgOfValidID);
-        },
+        onTap: controller.pickValidID,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -192,13 +120,11 @@ class VerificationScreen extends StatelessWidget {
       );
     }
     return InkWell(
-      onTap: () {
-        to.pickSingleImage(imgOfValidID);
-      },
+      onTap: controller.pickValidID,
       child: Stack(
         children: [
           Image.file(
-            File(imgOfValidID.value),
+            File(controller.imgOfValidID.value),
             width: Get.width,
             height: Get.height,
             fit: BoxFit.fill,
@@ -208,7 +134,7 @@ class VerificationScreen extends StatelessWidget {
             top: 5,
             child: InkWell(
               onTap: () {
-                imgOfValidID.value = '';
+                controller.imgOfValidID.value = '';
               },
               child: const Icon(
                 Icons.remove_circle,
@@ -223,11 +149,9 @@ class VerificationScreen extends StatelessWidget {
   }
 
   Widget getValidIDWithSelfie() {
-    if (imgOfValidIDWithSelfie.value == '') {
+    if (controller.imgOfValidIDWithSelfie.value == '') {
       return InkWell(
-        onTap: () async {
-          await to.pickSingleImage(imgOfValidIDWithSelfie);
-        },
+        onTap: controller.pickValidIDWithSelfie,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -246,13 +170,11 @@ class VerificationScreen extends StatelessWidget {
       );
     }
     return InkWell(
-      onTap: () {
-        to.pickSingleImage(imgOfValidIDWithSelfie);
-      },
+      onTap: controller.pickValidIDWithSelfie,
       child: Stack(
         children: [
           Image.file(
-            File(imgOfValidIDWithSelfie.value),
+            File(controller.imgOfValidIDWithSelfie.value),
             width: Get.width,
             height: Get.height,
             fit: BoxFit.fill,
@@ -262,7 +184,7 @@ class VerificationScreen extends StatelessWidget {
             top: 5,
             child: InkWell(
               onTap: () {
-                imgOfValidIDWithSelfie.value = '';
+                controller.imgOfValidIDWithSelfie.value = '';
               },
               child: const Icon(
                 Icons.remove_circle,

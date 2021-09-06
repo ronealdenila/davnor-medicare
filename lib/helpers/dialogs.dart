@@ -29,7 +29,7 @@ void showDefaultDialog({
   String? dialogTitle,
   String? dialogCaption,
   String? textConfirm = 'Got it!',
-  Function()? onConfirmTap,
+  void Function()? onConfirmTap,
 }) {
   //wala pako kaexplore sa ubang parameter sadefault dialog pero limit ra
   //ang pag configure sa dialog niya if gusto nato i custom ni pwede ta mag

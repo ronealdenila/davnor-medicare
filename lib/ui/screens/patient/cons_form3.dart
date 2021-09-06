@@ -8,15 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
 
-class ConsForm3Screen extends StatelessWidget {
-  final log = getLogger('Cons Form 3');
-  final AppController appController = Get.put(AppController());
-  final ConsController consController = Get.put(ConsController());
-
+class ConsForm3Screen extends GetView<ConsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +56,7 @@ class ConsForm3Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: consController.submitConsultRequest,
+                    onTap: controller.submitConsultRequest,
                     text: 'Consult Now',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -76,13 +70,10 @@ class ConsForm3Screen extends StatelessWidget {
   }
 
   Widget getPrescriptionAndLabResults() {
-    final images = consController.images;
+    final images = controller.images;
     if (images.isEmpty) {
       return InkWell(
-        onTap: () async {
-          await consController.pickMultiImage();
-          // await appController.pickImages(images);
-        },
+        onTap: controller.pickForFollowUpImages,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: Column(
@@ -113,16 +104,15 @@ class ConsForm3Screen extends StatelessWidget {
         children: List.generate(images.length + 1, (index) {
           if (index == images.length) {
             return Center(
-                child: IconButton(
-              icon: const Icon(
-                Icons.add_circle_outline_rounded,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.add_circle_outline_rounded,
+                ),
+                color: verySoftBlueColor[100],
+                iconSize: 45,
+                onPressed: controller.pickForFollowUpImages,
               ),
-              color: verySoftBlueColor[100],
-              iconSize: 45,
-              onPressed: () async {
-                await consController.pickMultiImage();
-              },
-            ));
+            );
           }
           return Stack(
             children: [

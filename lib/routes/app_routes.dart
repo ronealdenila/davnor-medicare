@@ -4,7 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   //Splash
-  static const SPLASH = _Paths.DOCTOR_REGISTRATION;
+  static const SPLASH = _Paths.SPLASH;
 
   //Auth
   static const LOGIN = _Paths.LOGIN;
