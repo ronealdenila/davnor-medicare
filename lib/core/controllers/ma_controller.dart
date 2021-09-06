@@ -128,16 +128,15 @@ class MAController extends GetxController {
 
   Future<void> saveRequestforMA() async {
     final docRef = await firestore.collection('ma_request').add({
-      'requester_id': auth.currentUser!.uid,
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
+      'requesterID': auth.currentUser!.uid,
+      'fullName': '${firstNameController.text} ${lastNameController.text}',
       'age': ageController.text,
       'address': addressController.text,
       'gender': gender.value,
       'type': type.value,
       'prescriptions': listPhotoURL.value,
-      'valid_id': isMAForYou.value ? imgOfValidID.value : photoURL.value,
-      'date_rqstd': Timestamp.fromDate(DateTime.now()),
+      'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
+      'dateRqstd': Timestamp.fromDate(DateTime.now()),
       'isTurn': false, //should be true if mao ang first request
     });
 
