@@ -56,7 +56,6 @@ class DoctorModel {
     required this.numToAccomodate,
     required this.dStatus,
     required this.hasOngoingCons,
-    required this.queueNum,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
@@ -70,7 +69,6 @@ class DoctorModel {
         numToAccomodate: json['numToAccomodate'] as int,
         dStatus: json['dStatus'] as bool,
         hasOngoingCons: json['hasOngoingCons'] as bool,
-        queueNum: json['queueNum'] as String,
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,7 +82,6 @@ class DoctorModel {
         'numToAccomodate': numToAccomodate,
         'dStatus': dStatus,
         'hasOngoingCons': hasOngoingCons,
-        'queueNum': queueNum,
       };
   String? email;
   String? firstName;
@@ -96,7 +93,6 @@ class DoctorModel {
   int? numToAccomodate;
   bool? dStatus;
   bool? hasOngoingCons;
-  String? queueNum;
 }
 
 class AdminModel {

@@ -27,7 +27,7 @@ class DoctorHomeScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                //authController.signOut();
+                authController.signOut();
               },
               icon: const Icon(Icons.logout),
             ),
