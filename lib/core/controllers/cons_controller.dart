@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
@@ -21,6 +22,7 @@ class ConsController extends GetxController {
   final RxString fileName = ''.obs;
 
   static AuthController authController = Get.find();
+  static AppController appController = Get.find();
   final fetchedData = authController.patientModel.value;
   final String userID = auth.currentUser!.uid;
   Rxn<ConsultationModel> consultation = Rxn<ConsultationModel>();
@@ -45,13 +47,12 @@ class ConsController extends GetxController {
 
   //* (R) how I implemented it: ctrl + left click sa .withConverted naay sample
   //* giprovide mao akong gi basehan
-  final prescriptionRef = firestore
-      .collection('consultation_request')
-      .withConverter<ConsultationModel>(
-        fromFirestore: (snapshot, _) =>
-            ConsultationModel.fromJson(snapshot.data()!),
-        toFirestore: (movie, _) => movie.toJson(),
-      );
+  final prescriptionRef =
+      firestore.collection('cons_request').withConverter<ConsultationModel>(
+            fromFirestore: (snapshot, _) =>
+                ConsultationModel.fromJson(snapshot.data()!),
+            toFirestore: (movie, _) => movie.toJson(),
+          );
 
   bool hasImagesSelected() {
     if (images.isNotEmpty) {
@@ -61,12 +62,7 @@ class ConsController extends GetxController {
   }
 
   Future<void> pickMultiImage() async {
-    final pickedImages = await ImagePicker().pickMultiImage();
-    if (pickedImages != null) {
-      images.value = pickedImages;
-    } else {
-      log.e('error occured');
-    }
+    await appController.pickImages(images);
   }
 
   Future<void> uploadPrescription() async {
