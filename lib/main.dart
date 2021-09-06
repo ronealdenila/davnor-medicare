@@ -7,9 +7,10 @@ import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
