@@ -83,25 +83,26 @@ class ConsHistoryScreen extends StatelessWidget {
                     topLeft: Radius.circular(55),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                  ),
-                  child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 30),
-                      shrinkWrap: true,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return ConsultationCard(
-                            title: 'Dr. Chandler Bing',
-                            subtitle: 'Cardiologist',
-                            data: 'July 27, 2021 (11:40 am)',
-                            profileImage:
-                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-                            onTap: () {});
-                      }),
-                ),
+                // child: Padding(
+                //   padding: const EdgeInsets.only(
+                //     top: 25,
+                //   ),
+                //   child: ListView.builder(
+                //     padding: const EdgeInsets.symmetric(
+                //         vertical: 10, horizontal: 30),
+                //     shrinkWrap: true,
+                //     itemCount: 6,
+                //     itemBuilder: (context, index) {
+                //       return ConsultationCard(
+                //           title: 'Dr. Chandler Bing',
+                //           subtitle: 'Cardiologist',
+                //           data: 'July 27, 2021 (11:40 am)',
+                //           profileImage:
+                //               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+                //           onTap: () {});
+                //     },
+                //   ),
+                // ),
               ),
             ),
           ],

@@ -26,7 +26,7 @@ class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   static ArticleService articleService = Get.find();
   static AppController appController = Get.find();
-  static ConsController consController = Get.find();
+  static ConsController consController = Get.put(ConsController());
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 
@@ -134,9 +134,7 @@ class PatientHomeScreen extends StatelessWidget {
                                 dialogTitle: dialogQueue1,
                                 dialogCaption: dialogQueue2,
                                 textConfirm: 'Okay',
-                                onConfirmTap: () {
-                                  Get.back();
-                                },
+                                onConfirmTap: Get.back,
                               );
                             },
                           ),
