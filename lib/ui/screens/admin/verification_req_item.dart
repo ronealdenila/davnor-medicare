@@ -23,7 +23,6 @@ class VerificationRequestScreen extends StatelessWidget {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
 
-  //TODO(R): Try to achieve phone and tablet must have same view
   @override
   Widget phone() => Column(
         children: [
