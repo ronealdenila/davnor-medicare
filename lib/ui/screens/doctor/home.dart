@@ -1,3 +1,6 @@
+import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
@@ -10,6 +13,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
+  // final ConsController consController = Get.put(ConsController());
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
 
@@ -26,9 +30,7 @@ class DoctorHomeScreen extends StatelessWidget {
           backgroundColor: verySoftBlueColor,
           actions: [
             IconButton(
-              onPressed: () {
-                authController.signOut();
-              },
+              onPressed: authController.signOut,
               icon: const Icon(Icons.logout),
             ),
           ],
@@ -172,19 +174,45 @@ class DoctorHomeScreen extends StatelessWidget {
                     ),
                     verticalSpace18,
                     Expanded(
-                      child: ListView.builder(
+                      child: GetX<ConsController>(
+                        builder: (_dx) => ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           shrinkWrap: true,
-                          itemCount: 4,
+                          itemCount: _dx.consultations.length,
                           itemBuilder: (context, index) {
                             return ConsultationCard(
-                                title: 'Howard Wolowitz',
-                                subtitle: 'Patient Information:',
-                                data: 'Bernadette Wolowitz (28)',
-                                profileImage: '',
-                                onTap: () {});
-                          }),
+                              consultation: _dx.consultations[index],
+                              onItemTap: () {
+                                Get.to(
+                                  () => ConsRequestItemScreen(),
+                                  arguments: index,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
                     ),
+                    // Expanded(
+                    //   child: Obx(
+                    //     () => ListView(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 25),
+                    //       shrinkWrap: true,
+                    //       children: consController.consultations
+                    //           .map((ConsultationModel consultations) {
+                    //         return ConsultationCard(
+                    //           consultation: consultations,
+                    //           onItemTap: () {
+                    //             Get.to(
+                    //               () => ConsRequestItemScreen(),
+                    //               arguments: consultations.patientId,
+                    //             );
+                    //           },
+                    //         );
+                    //       }).toList(),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -46,14 +46,40 @@ class ConsController extends GetxController {
   RxList<XFile> images = RxList<XFile>();
   String imageUrls = '';
 
+  //Doctor variables
+  RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);
+
+  @override
+  void onReady() {
+    super.onReady();
+    consultations.bindStream(getConsultations());
+  }
+
   final String generatedCode = 'C025';
 
-  final prescriptionRef =
+  final consultRef =
       firestore.collection('cons_request').withConverter<ConsultationModel>(
             fromFirestore: (snapshot, _) =>
                 ConsultationModel.fromJson(snapshot.data()!),
-            toFirestore: (movie, _) => movie.toJson(),
+            toFirestore: (snapshot, _) => snapshot.toJson(),
           );
+
+  //?To be refactor: even mag login si patient ma call ni nga method
+  Stream<List<ConsultationModel>> getConsultations() {
+    log.w('getConsultations | Streaming Consultation Request');
+    return firestore
+        .collection('cons_request')
+        .orderBy('dateRqstd', descending: true)
+        //category is hard coded for now. must be initialized based on title of
+        //logged in doctor
+        .where('category', isEqualTo: 'Heart')
+        .snapshots()
+        .map(
+          (query) => query.docs
+              .map((item) => ConsultationModel.fromJson(item.data()))
+              .toList(),
+        );
+  }
 
   bool hasImagesSelected() {
     if (images.isNotEmpty) {
@@ -90,7 +116,7 @@ class ConsController extends GetxController {
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
     );
-    final docRef = await prescriptionRef.add(consultation);
+    final docRef = await consultRef.add(consultation);
     await initializePrescriptionModel(docRef.id);
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -103,20 +129,18 @@ class ConsController extends GetxController {
     await updateActiveQueue();
 
     log.i('submitConsultRequest | Consultation Submit Succesfully');
-    log.i('Setting active queue to true');
   }
 
   Future<void> updateActiveQueue() async {
+    log.i('updateActiveQueue | Setting active queue to true');
     await firestore.collection('patients').doc(userID).update(
       {'hasActiveQueue': fetchedData!.hasActiveQueue},
     );
   }
 
   Future<void> initializePrescriptionModel(String docRef) async {
-    consultation.value = await prescriptionRef
-        .doc(docRef)
-        .get()
-        .then((snapshot) => snapshot.data()!);
+    consultation.value =
+        await consultRef.doc(docRef).get().then((snapshot) => snapshot.data()!);
   }
 
   void assignValues() {
