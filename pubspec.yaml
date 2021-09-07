@@ -49,6 +49,9 @@ dependencies:
   #uid generator
   uuid: ^3.0.4
 
+  #carousel slider
+  carousel_slider: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

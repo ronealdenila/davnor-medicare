@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
@@ -48,11 +48,11 @@ class ConsController extends GetxController {
 
   final String generatedCode = 'C025';
 
-  final prescriptionRef =
+  final consultRef =
       firestore.collection('cons_request').withConverter<ConsultationModel>(
             fromFirestore: (snapshot, _) =>
                 ConsultationModel.fromJson(snapshot.data()!),
-            toFirestore: (movie, _) => movie.toJson(),
+            toFirestore: (snapshot, _) => snapshot.toJson(),
           );
 
   bool hasImagesSelected() {
@@ -90,7 +90,7 @@ class ConsController extends GetxController {
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
     );
-    final docRef = await prescriptionRef.add(consultation);
+    final docRef = await consultRef.add(consultation);
     await initializePrescriptionModel(docRef.id);
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -103,20 +103,18 @@ class ConsController extends GetxController {
     await updateActiveQueue();
 
     log.i('submitConsultRequest | Consultation Submit Succesfully');
-    log.i('Setting active queue to true');
   }
 
   Future<void> updateActiveQueue() async {
+    log.i('updateActiveQueue | Setting active queue to true');
     await firestore.collection('patients').doc(userID).update(
       {'hasActiveQueue': fetchedData!.hasActiveQueue},
     );
   }
 
   Future<void> initializePrescriptionModel(String docRef) async {
-    consultation.value = await prescriptionRef
-        .doc(docRef)
-        .get()
-        .then((snapshot) => snapshot.data()!);
+    consultation.value =
+        await consultRef.doc(docRef).get().then((snapshot) => snapshot.data()!);
   }
 
   void assignValues() {
@@ -130,13 +128,14 @@ class ConsController extends GetxController {
     log.v('patient name: $fullName');
   }
 
-  void toggleSingleCardSelection(int index, List<Category> items) {
-    for (var indexBtn = 0; indexBtn < items.length; indexBtn++) {
+  void toggleSingleCardSelection(int index) {
+    for (var indexBtn = 0; indexBtn < categories.length; indexBtn++) {
       if (indexBtn == index) {
-        items[indexBtn].isSelected = true;
-        selectedDiscomfort = items[indexBtn].title;
+        categories[index].isSelected = true;
+        selectedDiscomfort = categories[indexBtn].title;
+        log.wtf('$selectedDiscomfort is selected');
       } else {
-        items[indexBtn].isSelected = false;
+        categories[index].isSelected = false;
       }
     }
   }

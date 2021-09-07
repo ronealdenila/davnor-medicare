@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/core/services/image_picker_service.dart';
 //import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
