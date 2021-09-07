@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/app_data.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
@@ -45,30 +45,19 @@ class ConsFormScreen extends GetView<ConsController> {
                       style: title32Regular,
                     ),
                     verticalSpace18,
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Wrap(
-                          spacing: 10,
-                          children: AppData.categories.map(
-                            (e) {
-                              final index = AppData.categories.indexOf(e);
-                              return CategoryCard(
-                                title: e.title!,
-                                iconPath: e.iconPath!,
-                                isSelected: e.isSelected!,
-                                onTap: () {
-                                  //TODO(R): isSelected must be observable
-                                  controller.toggleSingleCardSelection(
-                                    index,
-                                    AppData.categories,
-                                  );
-                                },
-                              );
+                    SizedBox(
+                      height: 120,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (ctx, index) {
+                          return CategoryCard(
+                            category: categories[index],
+                            onItemTap: () {
+                              controller.toggleSingleCardSelection(index);
                             },
-                          ).toList(),
-                        ),
+                          );
+                        },
                       ),
                     ),
                     verticalSpace10,

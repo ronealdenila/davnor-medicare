@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
@@ -46,14 +46,9 @@ class ConsController extends GetxController {
   RxList<XFile> images = RxList<XFile>();
   String imageUrls = '';
 
-  //Doctor variables
-  RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);
+ 
 
-  @override
-  void onReady() {
-    super.onReady();
-    consultations.bindStream(getConsultations());
-  }
+
 
   final String generatedCode = 'C025';
 
@@ -64,22 +59,7 @@ class ConsController extends GetxController {
             toFirestore: (snapshot, _) => snapshot.toJson(),
           );
 
-  //?To be refactor: even mag login si patient ma call ni nga method
-  Stream<List<ConsultationModel>> getConsultations() {
-    log.w('getConsultations | Streaming Consultation Request');
-    return firestore
-        .collection('cons_request')
-        .orderBy('dateRqstd', descending: true)
-        //category is hard coded for now. must be initialized based on title of
-        //logged in doctor
-        .where('category', isEqualTo: 'Heart')
-        .snapshots()
-        .map(
-          (query) => query.docs
-              .map((item) => ConsultationModel.fromJson(item.data()))
-              .toList(),
-        );
-  }
+
 
   bool hasImagesSelected() {
     if (images.isNotEmpty) {
@@ -154,13 +134,14 @@ class ConsController extends GetxController {
     log.v('patient name: $fullName');
   }
 
-  void toggleSingleCardSelection(int index, List<Category> items) {
-    for (var indexBtn = 0; indexBtn < items.length; indexBtn++) {
+  void toggleSingleCardSelection(int index) {
+    for (var indexBtn = 0; indexBtn < categories.length; indexBtn++) {
       if (indexBtn == index) {
-        items[indexBtn].isSelected = true;
-        selectedDiscomfort = items[indexBtn].title;
+        categories[index].isSelected = true;
+        selectedDiscomfort = categories[indexBtn].title;
+        log.wtf('$selectedDiscomfort is selected');
       } else {
-        items[indexBtn].isSelected = false;
+        categories[index].isSelected = false;
       }
     }
   }
