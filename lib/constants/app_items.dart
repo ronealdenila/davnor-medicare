@@ -1,3 +1,6 @@
+import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/models/category_model.dart';
+
 class Item {
   const Item(this.name);
   final String name;
@@ -7,6 +10,18 @@ class ItemNum {
   const ItemNum(this.num);
   final int num;
 }
+
+List<Category> categories = <Category>[
+  Category(iconPath: earIconPath, title: 'Ear'),
+  Category(iconPath: heartIconPath, title: 'Heart'),
+  Category(iconPath: kidneyIconPath, title: 'Kidney'),
+  Category(iconPath: liverIconPath, title: 'Liver'),
+  Category(iconPath: lungsIconPath, title: 'Lungs'),
+  Category(iconPath: noseIconPath, title: 'Lungs'),
+  Category(iconPath: skinIconPath, title: 'Skin'),
+  Category(iconPath: stomachIconPath, title: 'Stomach'),
+  Category(iconPath: throatIconPath, title: 'Throat'),
+];
 
 final List<Item> gender = <Item>[
   const Item('Female'),

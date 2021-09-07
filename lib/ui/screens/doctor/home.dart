@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor_home_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -13,7 +14,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  // final ConsController consController = Get.put(ConsController());
+  final DoctorHomeController doctorHomeController = Get.find();
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
 
@@ -174,14 +175,15 @@ class DoctorHomeScreen extends StatelessWidget {
                     ),
                     verticalSpace18,
                     Expanded(
-                      child: GetX<ConsController>(
-                        builder: (_dx) => ListView.builder(
+                      child: Obx(
+                        () => ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           shrinkWrap: true,
-                          itemCount: _dx.consultations.length,
+                          itemCount: doctorHomeController.consultations.length,
                           itemBuilder: (context, index) {
                             return ConsultationCard(
-                              consultation: _dx.consultations[index],
+                              consultation:
+                                  doctorHomeController.consultations[index],
                               onItemTap: () {
                                 Get.to(
                                   () => ConsRequestItemScreen(),
@@ -193,26 +195,6 @@ class DoctorHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //   child: Obx(
-                    //     () => ListView(
-                    //       padding: const EdgeInsets.symmetric(horizontal: 25),
-                    //       shrinkWrap: true,
-                    //       children: consController.consultations
-                    //           .map((ConsultationModel consultations) {
-                    //         return ConsultationCard(
-                    //           consultation: consultations,
-                    //           onItemTap: () {
-                    //             Get.to(
-                    //               () => ConsRequestItemScreen(),
-                    //               arguments: consultations.patientId,
-                    //             );
-                    //           },
-                    //         );
-                    //       }).toList(),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
