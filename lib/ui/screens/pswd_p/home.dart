@@ -14,9 +14,7 @@ class PSWDPersonnelHomeScreen extends StatelessWidget {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () {
-                AuthController.to.signOut();
-              },
+              onPressed: authController.signOut,
               icon: const Icon(Icons.logout),
             ),
           ],

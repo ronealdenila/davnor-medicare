@@ -1,5 +1,4 @@
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -8,11 +7,8 @@ import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:very_good_analysis/very_good_analysis.dart';
 
-class ConsForm2Screen extends StatelessWidget {
-  final ConsController consController = Get.put(ConsController());
-
+class ConsForm2Screen extends GetView<ConsController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -42,7 +38,7 @@ class ConsForm2Screen extends StatelessWidget {
               ),
               verticalSpace18,
               TextFormField(
-                  controller: consController.descriptionController,
+                  controller: controller.descriptionController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'This is a required field';
@@ -67,18 +63,18 @@ class ConsForm2Screen extends StatelessWidget {
                     return;
                   },
                   onSaved: (value) {
-                    consController.descriptionController.text = value!;
+                    controller.descriptionController.text = value!;
                   }),
               verticalSpace18,
               Visibility(
-                visible: !consController.isFollowUp.value,
+                visible: !controller.isFollowUp.value,
                 child: Align(
                   child: SizedBox(
                     width: 211,
                     child: CustomButton(
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
-                          await consController.submitConsultRequest();
+                          await controller.submitConsultRequest();
                         }
                       },
                       text: 'Consult Now',
@@ -89,7 +85,7 @@ class ConsForm2Screen extends StatelessWidget {
               ),
               verticalSpace25,
               Visibility(
-                visible: consController.isFollowUp.value,
+                visible: controller.isFollowUp.value,
                 child: Expanded(
                   child: Align(
                     alignment: FractionalOffset.bottomRight,
@@ -98,7 +94,7 @@ class ConsForm2Screen extends StatelessWidget {
                       child: CustomButton(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            await Get.to(ConsForm3Screen());
+                            await Get.to(() => ConsForm3Screen());
                           }
                         },
                         text: 'Next',

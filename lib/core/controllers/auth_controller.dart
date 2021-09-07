@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
@@ -18,12 +20,14 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
 
-  static AuthController to = Get.find();
+  final UrlLauncherService _urlLauncherService = UrlLauncherService();
+  final AppController _appController = AppController();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
 
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
@@ -31,8 +35,15 @@ class AuthController extends GetxController {
   Rxn<PswdModel> pswdModel = Rxn<PswdModel>();
 
   Rxn<User> firebaseUser = Rxn<User>();
+
   String? userRole;
   bool? userSignedOut = false;
+  RxBool? isObscureText = true.obs;
+  RxBool isCheckboxChecked = false.obs;
+
+  //Doctor Application Guide
+  static const emailScheme = doctorapplicationinstructionParagraph0;
+  static const formUrl = 'https://forms.gle/WKWnBsG9EuivmY1dA';
 
   @override
   void onReady() {
@@ -268,5 +279,17 @@ class AuthController extends GetxController {
         .get()
         .then((doc) => AdminModel.fromJson(doc.data()!));
     log.i('_initializePatientModel | Initializing ${adminModel.value}');
+  }
+
+  void togglePasswordVisibility() {
+    _appController.toggleTextVisibility(isObscureText!);
+  }
+
+  void launchDoctorApplicationForm() {
+    _urlLauncherService.launchURL(formUrl);
+  }
+
+  void launchDoctorApplicationEmail() {
+    _urlLauncherService.launchURL(emailScheme);
   }
 }

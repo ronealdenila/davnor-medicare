@@ -7,9 +7,10 @@ import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart'
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  final AuthController authController = AuthController.to;
+  final AuthController authController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

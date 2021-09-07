@@ -1,7 +1,5 @@
 import 'dart:io';
-//import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +8,9 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
 import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 
-class MAForm2Screen extends StatelessWidget {
-  final log = getLogger('Cons Form 3');
-  final AppController to = Get.find();
-  final MAController ma = Get.find();
-
+class MAForm2Screen extends GetView<MAController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +59,7 @@ class MAForm2Screen extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: CustomButton(
-                    onTap: ma.requestMAButton,
+                    onTap: controller.requestMAButton,
                     text: 'Request Assistance',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -81,11 +73,9 @@ class MAForm2Screen extends StatelessWidget {
   }
 
   Widget getPrescription() {
-    if (ma.images.isEmpty) {
+    if (controller.images.isEmpty) {
       return InkWell(
-        onTap: () async {
-          await to.pickImages(ma.images);
-        },
+        onTap: controller.pickMultiImage,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
@@ -113,24 +103,23 @@ class MAForm2Screen extends StatelessWidget {
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
         crossAxisCount: 3,
-        children: List.generate(ma.images.length + 1, (index) {
-          if (index == ma.images.length) {
+        children: List.generate(controller.images.length + 1, (index) {
+          if (index == controller.images.length) {
             return Center(
-                child: IconButton(
-              icon: const Icon(
-                Icons.add_circle_outline_rounded,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.add_circle_outline_rounded,
+                ),
+                color: verySoftBlueColor[100],
+                iconSize: 45,
+                onPressed: controller.pickMultiImage,
               ),
-              color: verySoftBlueColor[100],
-              iconSize: 45,
-              onPressed: () async {
-                await to.pickImages(ma.images);
-              },
-            ));
+            );
           }
           return Stack(
             children: [
               Image.file(
-                File(ma.images[index].path),
+                File(controller.images[index].path),
                 width: 140,
                 height: 140,
                 fit: BoxFit.fill,
@@ -140,7 +129,7 @@ class MAForm2Screen extends StatelessWidget {
                 top: 5,
                 child: InkWell(
                   onTap: () {
-                    ma.images.remove(ma.images[index]);
+                    controller.images.remove(controller.images[index]);
                   },
                   child: const Icon(
                     Icons.remove_circle,

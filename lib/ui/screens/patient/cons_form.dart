@@ -12,11 +12,8 @@ import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:very_good_analysis/very_good_analysis.dart';
 
-class ConsFormScreen extends StatelessWidget {
-  final ConsController consController = Get.put(ConsController());
-
+class ConsFormScreen extends GetView<ConsController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -63,7 +60,7 @@ class ConsFormScreen extends StatelessWidget {
                                 isSelected: e.isSelected!,
                                 onTap: () {
                                   //TODO(R): isSelected must be observable
-                                  consController.toggleSingleCardSelection(
+                                  controller.toggleSingleCardSelection(
                                     index,
                                     AppData.categories,
                                   );
@@ -90,9 +87,9 @@ class ConsFormScreen extends StatelessWidget {
                               style: body16Regular,
                             ),
                             value: true,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: controller.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                controller.isFollowUp.value = value!,
                           ),
                         ),
                         Expanded(
@@ -103,9 +100,9 @@ class ConsFormScreen extends StatelessWidget {
                               style: body16Regular,
                             ),
                             value: false,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: controller.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                controller.isFollowUp.value = value!,
                           ),
                         ),
                       ],
@@ -117,30 +114,30 @@ class ConsFormScreen extends StatelessWidget {
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: !consController.isConsultForYou.value,
+                      visible: !controller.isConsultForYou.value,
                       child: CustomTextFormField(
-                        controller: consController.firstNameController,
+                        controller: controller.firstNameController,
                         labelText: 'First Name',
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
                         },
                         onSaved: (value) =>
-                            consController.firstNameController.text = value!,
+                            controller.firstNameController.text = value!,
                       ),
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: !consController.isConsultForYou.value,
+                      visible: !controller.isConsultForYou.value,
                       child: CustomTextFormField(
-                        controller: consController.lastNameController,
+                        controller: controller.lastNameController,
                         labelText: 'Last Name',
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
                         },
                         onSaved: (value) =>
-                            consController.lastNameController.text = value!,
+                            controller.lastNameController.text = value!,
                       ),
                     ),
                     verticalSpace10,
@@ -150,18 +147,18 @@ class ConsFormScreen extends StatelessWidget {
                         SizedBox(
                           width: 160,
                           child: CustomTextFormField(
-                            controller: consController.ageController,
+                            controller: controller.ageController,
                             labelText: 'Age',
                             validator: Validator().notEmpty,
                             keyboardType: TextInputType.number,
-                            //* for improvement: pwede ta pag click sa done 
+                            //* for improvement: pwede ta pag click sa done
                             //* magsubmit na ang form
                             textInputAction: TextInputAction.done,
                             onChanged: (value) {
                               return;
                             },
                             onSaved: (value) =>
-                                consController.ageController.text = value!,
+                                controller.ageController.text = value!,
                           ),
                         ),
                         SizedBox(

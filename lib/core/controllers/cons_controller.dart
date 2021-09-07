@@ -1,13 +1,12 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
-import 'package:davnor_medicare/core/services/logger.dart';
+import 'package:davnor_medicare/core/services/image_picker_service.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
@@ -18,12 +17,14 @@ import 'package:uuid/uuid.dart';
 
 class ConsController extends GetxController {
   final log = getLogger('Cons Controller');
+
+  static AuthController authController = Get.find();
+  final ImagePickerService _imagePickerService = ImagePickerService();
+  final fetchedData = authController.patientModel.value;
+
   final uuid = const Uuid();
   final RxString fileName = ''.obs;
 
-  static AuthController authController = Get.find();
-  static AppController appController = Get.find();
-  final fetchedData = authController.patientModel.value;
   final String userID = auth.currentUser!.uid;
   Rxn<ConsultationModel> consultation = Rxn<ConsultationModel>();
 
@@ -36,6 +37,8 @@ class ConsController extends GetxController {
       '${firstNameController.text} ${lastNameController.text}';
 
   RxBool isConsultForYou = true.obs;
+
+  //Cons Form 2
   RxBool isFollowUp = true.obs;
   String? selectedDiscomfort;
 
@@ -45,8 +48,6 @@ class ConsController extends GetxController {
 
   final String generatedCode = 'C025';
 
-  //* (R) how I implemented it: ctrl + left click sa .withConverted naay sample
-  //* giprovide mao akong gi basehan
   final prescriptionRef =
       firestore.collection('cons_request').withConverter<ConsultationModel>(
             fromFirestore: (snapshot, _) =>
@@ -59,10 +60,6 @@ class ConsController extends GetxController {
       return true;
     }
     return false;
-  }
-
-  Future<void> pickMultiImage() async {
-    await appController.pickImages(images);
   }
 
   Future<void> uploadPrescription() async {
@@ -171,5 +168,9 @@ class ConsController extends GetxController {
         },
       );
     }
+  }
+
+  void pickForFollowUpImages() {
+    _imagePickerService.pickMultiImage(images);
   }
 }

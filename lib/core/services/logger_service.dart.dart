@@ -1,11 +1,5 @@
 import 'package:logger/logger.dart';
 
-//You can use this instead of print so that we can track the progress
-//of our app formally.
-
-//to find different kinds of log visits:
-//https://pub.dev/packages/logger
-
 Logger getLogger(String className) {
   return Logger(printer: SimpleLogPrinter(className));
 }
