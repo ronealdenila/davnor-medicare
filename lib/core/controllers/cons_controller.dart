@@ -65,6 +65,8 @@ class ConsController extends GetxController {
           );
 
   //?To be refactor: even mag login si patient ma call ni nga method
+  //I think need nimo i call ang stream neal directly sa doctor/home
+  //since sya raman ang nanginahanglan ani (E)
   Stream<List<ConsultationModel>> getConsultations() {
     log.w('getConsultations | Streaming Consultation Request');
     return firestore
