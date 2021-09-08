@@ -184,7 +184,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VERIFICATION_REQ_ITEM,
-      page: () => VerificationRequestScreen(),
+      page: () => VerificationReqItemScreen(),
     ),
     GetPage(
       name: _Paths.VERIFICATION_REQ_LIST,

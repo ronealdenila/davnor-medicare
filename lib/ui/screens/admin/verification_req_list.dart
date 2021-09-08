@@ -7,7 +7,10 @@ import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  final VerificationRequestController vf = Get.find();
+  //final VerificationRequestController vf = Get.find();
+
+  static VerificationRequestController vf =
+      Get.put(VerificationRequestController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +41,10 @@ class VerificationReqListScreen extends StatelessWidget {
           itemCount: vf.verifReq.length,
           itemBuilder: (context, index) {
             return VerificationReqCard(
-                verificationReq: vf.verifReq[index],
+                verifiReq: vf.verifReq[index],
                 onItemTap: () {
                   Get.to(
-                    () => VerificationRequestScreen(),
+                    () => VerificationReqItemScreen(),
                     arguments: index,
                   );
                 });

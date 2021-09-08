@@ -5,16 +5,19 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
 import 'package:get/get.dart';
 
-class VerificationRequestScreen extends StatelessWidget {
+//TODO: clickable attached photos also
+//Use Image.network -> for profile of user who requested here, else blank pic
+
+class VerificationReqItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: SingleChildScrollView(child: ResponsiveView())),
     );
   }
@@ -22,7 +25,8 @@ class VerificationRequestScreen extends StatelessWidget {
 
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
-
+  final index = Get.arguments as int;
+  final VerificationRequestController vf = Get.find();
   @override
   Widget phone() => Column(
         children: [
@@ -136,7 +140,7 @@ class ResponsiveView extends GetResponsiveView {
               height: 150,
               color: neutralColor[10],
               child: Image.network(
-                'https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2FtcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+                vf.getValidID(index),
                 height: 106,
                 fit: BoxFit.cover,
               ),
@@ -169,7 +173,7 @@ class ResponsiveView extends GetResponsiveView {
               height: 150,
               color: neutralColor[10],
               child: Image.network(
-                'https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2FtcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+                vf.getValidIDWithSelfie(index),
                 height: 106,
                 fit: BoxFit.cover,
               ),
@@ -190,7 +194,6 @@ class ResponsiveView extends GetResponsiveView {
         Row(
           children: [
             CircleAvatar(
-              //change to image network puhon
               backgroundImage: AssetImage(
                 authHeader,
               ),
@@ -202,14 +205,14 @@ class ResponsiveView extends GetResponsiveView {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'First Name:',
                       style: body14Medium,
                     ),
                     horizontalSpace25,
                     Text(
-                      'Daenerys',
+                      vf.getFirstNamebyIndex(index),
                       style: subtitle18Bold,
                     ),
                   ],
@@ -217,14 +220,14 @@ class ResponsiveView extends GetResponsiveView {
                 verticalSpace5,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Last Name:',
                       style: body14Medium,
                     ),
                     horizontalSpace25,
                     Text(
-                      'Targaryen',
+                      vf.getLastNamebyIndex(index),
                       style: subtitle18Bold,
                     ),
                   ],
@@ -232,14 +235,14 @@ class ResponsiveView extends GetResponsiveView {
                 verticalSpace10,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Date Requested',
                       style: caption12Regular,
                     ),
                     horizontalSpace10,
                     Text(
-                      'July 01, 2021',
+                      vf.getDateTime(index),
                       style: caption12RegularNeutral,
                     ),
                   ],

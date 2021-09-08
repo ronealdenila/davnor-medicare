@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:get/get.dart';
 
 class VerificationReqModel {
   VerificationReqModel({
@@ -27,4 +29,5 @@ class VerificationReqModel {
   String? validID;
   String? validSelfie;
   Timestamp? dateRqstd;
+  Rxn<PatientModel> data = Rxn<PatientModel>();
 }
