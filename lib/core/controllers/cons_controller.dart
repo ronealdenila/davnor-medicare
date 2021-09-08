@@ -37,6 +37,7 @@ class ConsController extends GetxController {
       '${firstNameController.text} ${lastNameController.text}';
 
   RxBool isConsultForYou = true.obs;
+  RxInt selectedIndex = 0.obs;
 
   //Cons Form 2
   RxBool isFollowUp = true.obs;
@@ -129,14 +130,12 @@ class ConsController extends GetxController {
   }
 
   void toggleSingleCardSelection(int index) {
-    for (var indexBtn = 0; indexBtn < categories.length; indexBtn++) {
+    for (var indexBtn = 0; indexBtn < discomfortData.length; indexBtn++) {
       if (indexBtn == index) {
-        categories[index].isSelected = true;
-        selectedDiscomfort = categories[indexBtn].title;
+        selectedIndex.value = index;
+        selectedDiscomfort = discomfortData[indexBtn].title;
         log.wtf('$selectedDiscomfort is selected');
-      } else {
-        categories[index].isSelected = false;
-      }
+      } else {}
     }
   }
 
