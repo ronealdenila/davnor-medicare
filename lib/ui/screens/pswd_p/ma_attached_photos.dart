@@ -62,7 +62,7 @@ class AttachedPhotosScreen extends StatelessWidget {
             ],
           ),
           verticalSpace35,
-          Obx(buildImgIndicator),
+          buildImgIndicator(),
         ],
       ),
     ));

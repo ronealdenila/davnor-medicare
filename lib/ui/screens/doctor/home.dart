@@ -14,7 +14,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  final DoctorHomeController doctorHomeController = Get.find();
+  final DoctorHomeController doctorController = Get.put(DoctorHomeController());
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
 
@@ -179,11 +179,11 @@ class DoctorHomeScreen extends StatelessWidget {
                         () => ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           shrinkWrap: true,
-                          itemCount: doctorHomeController.consultations.length,
+                          itemCount: doctorController.consultations.length,
                           itemBuilder: (context, index) {
                             return ConsultationCard(
                               consultation:
-                                  doctorHomeController.consultations[index],
+                                  doctorController.consultations[index],
                               onItemTap: () {
                                 Get.to(
                                   () => ConsRequestItemScreen(),
