@@ -7,7 +7,6 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
-import 'package:davnor_medicare/ui/widgets/patient/category_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,21 +44,7 @@ class ConsFormScreen extends GetView<ConsController> {
                       style: title32Regular,
                     ),
                     verticalSpace18,
-                    SizedBox(
-                      height: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categories.length,
-                        itemBuilder: (ctx, index) {
-                          return CategoryCard(
-                            category: categories[index],
-                            onItemTap: () {
-                              controller.toggleSingleCardSelection(index);
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    DiscomfortCategoryWidget(),
                     verticalSpace10,
                     const Text(
                       'What type of consultation?',
@@ -170,6 +155,52 @@ class ConsFormScreen extends GetView<ConsController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DiscomfortCategoryWidget extends GetView<ConsController> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 120,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: discomfortData.length,
+        itemBuilder: (ctx, index) {
+          return Obx(
+            () => Card(
+              color: controller.selectedIndex.value == index
+                  ? verySoftBlueColor[10]
+                  : Colors.white,
+              child: InkWell(
+                onTap: () => controller.toggleSingleCardSelection(index),
+                child: SizedBox(
+                  height: 120,
+                  width: 120,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 55,
+                        width: 55,
+                        child: Image.asset(
+                          discomfortData[index].iconPath!,
+                        ),
+                      ),
+                      verticalSpace5,
+                      Text(
+                        discomfortData[index].title!,
+                        style: body16Regular,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

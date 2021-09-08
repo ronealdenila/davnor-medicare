@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
@@ -37,6 +38,7 @@ class ConsController extends GetxController {
       '${firstNameController.text} ${lastNameController.text}';
 
   RxBool isConsultForYou = true.obs;
+  RxInt selectedIndex = 0.obs;
 
   //Cons Form 2
   RxBool isFollowUp = true.obs;
@@ -129,14 +131,12 @@ class ConsController extends GetxController {
   }
 
   void toggleSingleCardSelection(int index) {
-    for (var indexBtn = 0; indexBtn < categories.length; indexBtn++) {
+    for (var indexBtn = 0; indexBtn < discomfortData.length; indexBtn++) {
       if (indexBtn == index) {
-        categories[index].isSelected = true;
-        selectedDiscomfort = categories[indexBtn].title;
+        selectedIndex.value = index;
+        selectedDiscomfort = discomfortData[indexBtn].title;
         log.wtf('$selectedDiscomfort is selected');
-      } else {
-        categories[index].isSelected = false;
-      }
+      } else {}
     }
   }
 
