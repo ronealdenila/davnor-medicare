@@ -2,6 +2,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor_home_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/verification_controller.dart';
 import 'package:davnor_medicare/core/services/article_service.dart';
@@ -19,6 +20,8 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MAController>(() => MAController());
     Get.lazyPut<VerificationController>(() => VerificationController());
     Get.lazyPut<PSWDController>(() => PSWDController());
+    Get.lazyPut<VerificationRequestController>(
+        () => VerificationRequestController());
   }
 }
 

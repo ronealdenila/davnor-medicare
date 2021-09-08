@@ -10,13 +10,15 @@ class AttachedPhotosScreen extends StatelessWidget {
   final RxList<String> imgs = RxList<String>();
   final controller = CarouselController();
   final RxInt activeInx = 0.obs;
+  final RxBool isSelected = false.obs;
 
   @override
   Widget build(BuildContext context) {
     activeInx.value = args[0] as int;
     imgs.value = args[1] as List<String>;
-    return Scaffold(
-        body: SingleChildScrollView(
+    return SafeArea(
+        child: Scaffold(
+            body: SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,7 +67,7 @@ class AttachedPhotosScreen extends StatelessWidget {
           buildImgIndicator(),
         ],
       ),
-    ));
+    )));
   }
 
   Widget buildImage(String image, int index) {
