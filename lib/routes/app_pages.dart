@@ -13,6 +13,7 @@ import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
+import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
@@ -184,6 +185,10 @@ class AppPages {
     GetPage(
       name: _Paths.VERIFICATION_REQ_ITEM,
       page: () => VerificationRequestScreen(),
+    ),
+    GetPage(
+      name: _Paths.VERIFICATION_REQ_LIST,
+      page: () => VerificationReqListScreen(),
     ),
   ];
 }
