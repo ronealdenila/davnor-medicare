@@ -42,7 +42,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.PSWD_MA_REQ_LIST;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -169,11 +169,10 @@ class AppPages {
       name: _Paths.PSWD_MA_REQ,
       page: () => MARequestScreen(),
     ),
-     GetPage(
+    GetPage(
       name: _Paths.PSWD_MA_REQ_LIST,
       page: () => MARequestListScreen(),
     ),
-
 
     //Admin
     GetPage(

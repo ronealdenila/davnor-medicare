@@ -6,6 +6,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class VerificationReqCard extends StatelessWidget {
   VerificationReqCard({
@@ -27,10 +28,7 @@ class VerificationReqCard extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               return card();
             }
-            return const Center(
-              child: SizedBox(
-                  width: 30, height: 30, child: CircularProgressIndicator()),
-            );
+            return loadingCard();
           },
         ));
   }
@@ -105,6 +103,22 @@ class VerificationReqCard extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget loadingCard() {
+    return Shimmer.fromColors(
+      baseColor: neutralColor[10]!,
+      highlightColor: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: neutralColor[10],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        width: Get.width,
+        height: 105,
       ),
     );
   }

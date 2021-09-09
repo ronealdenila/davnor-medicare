@@ -7,8 +7,6 @@ import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  //final VerificationRequestController vf = Get.find();
-
   static VerificationRequestController vf =
       Get.put(VerificationRequestController());
 
@@ -27,7 +25,7 @@ class VerificationReqListScreen extends StatelessWidget {
             Text('Users to be Verified',
                 textAlign: TextAlign.left, style: title24BoldNeutral80),
             verticalSpace50,
-            Expanded(child: Obx(requestList))
+            requestList()
           ],
         ),
       ),
@@ -35,21 +33,30 @@ class VerificationReqListScreen extends StatelessWidget {
   }
 
   Widget requestList() {
-    if (vf.verifReq.isNotEmpty) {
-      return ListView.builder(
-          shrinkWrap: true,
-          itemCount: vf.verifReq.length,
-          itemBuilder: (context, index) {
-            return VerificationReqCard(
-                verifiReq: vf.verifReq[index],
-                onItemTap: () {
-                  Get.to(
-                    () => VerificationReqItemScreen(),
-                    arguments: index,
-                  );
-                });
-          });
-    }
-    return const Text('No verification request at the moment');
+    return StreamBuilder(
+        stream: vf.getCollection(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (vf.verifReq.isNotEmpty) {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: vf.verifReq.length,
+                  itemBuilder: (context, index) {
+                    return VerificationReqCard(
+                        verifiReq: vf.verifReq[index],
+                        onItemTap: () {
+                          Get.to(
+                            () => VerificationReqItemScreen(),
+                            arguments: index,
+                          );
+                        });
+                  });
+            } else {
+              return const Text('No verification request at the moment');
+            }
+          }
+          return const SizedBox(
+              width: 20, height: 20, child: CircularProgressIndicator());
+        });
   }
 }
