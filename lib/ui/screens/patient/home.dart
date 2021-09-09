@@ -169,7 +169,7 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget showArticles() {
-    if (articleService.loading.value) {
+    if (articleService.doneLoading.value) {
       return ListView.builder(
           shrinkWrap: true,
           itemCount: 3,

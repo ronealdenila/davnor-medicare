@@ -9,7 +9,7 @@ class ArticleService extends GetxController {
 
   List<ArticleModel> articlesList = [];
   late ArticleModel _initArticle;
-  RxBool loading = false.obs;
+  RxBool doneLoading = false.obs;
 
   String? title;
   String? content;
@@ -55,6 +55,6 @@ class ArticleService extends GetxController {
         articlesList.add(_initArticle);
       });
     });
-    loading.value = true;
+    doneLoading.value = true;
   }
 }
