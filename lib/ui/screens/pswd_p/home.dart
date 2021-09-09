@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
@@ -32,7 +32,7 @@ class PSWDPersonnelHomeScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Get.to(() => MARequestScreen());
+                  Get.to(() => MARequestItemScreen());
                 },
                 child: const Text('Medical Assistance Request'),
               ),

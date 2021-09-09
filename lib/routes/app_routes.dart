@@ -40,7 +40,7 @@ abstract class Routes {
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
-  static const PSWD_MA_REQ = _Paths.PSWD_MA_REQ;
+  static const PSWD_MA_REQ_ITEM = _Paths.PSWD_MA_REQ_ITEM;
   static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
 
   //Admin
@@ -91,7 +91,7 @@ abstract class _Paths {
   //PSWD
   static const PSWD_HEAD_HOME = '/home';
   static const PSWD_PERSONNEL_HOME = '/home';
-  static const PSWD_MA_REQ = '/MARequestScreen';
+  static const PSWD_MA_REQ_ITEM = '/MARequestItemScreen';
   static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
 
   //Admin
