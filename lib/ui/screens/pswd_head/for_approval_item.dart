@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 
-class MARequestItemScreen extends StatelessWidget {
+class ForApprovalItemScreen extends StatelessWidget {
   final PSWDController controller = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,7 @@ class MARequestItemScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              PSWDItemView(context, 'request'),
-              //request accepted transferred approved medReady completed
+              PSWDItemView(context, 'transferred'),
               screenButtons(),
               verticalSpace35,
             ],
@@ -33,7 +32,7 @@ Widget screenButtons() {
   return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
     CustomButton(
       onTap: () async {},
-      text: 'Accept',
+      text: 'Approve',
       buttonColor: verySoftOrange[60],
       fontSize: 15,
     ),

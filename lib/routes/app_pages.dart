@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:get/get.dart';
@@ -36,6 +35,12 @@ import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -171,7 +176,27 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PSWD_MA_REQ_LIST,
-      page: () => MARequestListScreen(),
+      page: () => const MARequestListScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_ACCEPTED_MA_REQ,
+      page: () => AcceptedMARequestScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_MA_HISTORY_ITEM,
+      page: () => MAHistoryItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.RELEASING_AREA_ITEM,
+      page: () => ReleasingAreaItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.ON_PROGRESS_REQ_ITEM,
+      page: () => OnProgressReqItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.FOR_APPROVAL_ITEM,
+      page: () => ForApprovalItemScreen(),
     ),
 
     //Admin

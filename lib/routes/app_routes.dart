@@ -42,6 +42,11 @@ abstract class Routes {
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
   static const PSWD_MA_REQ_ITEM = _Paths.PSWD_MA_REQ_ITEM;
   static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
+  static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
+  static const PSWD_MA_HISTORY_ITEM = _Paths.PSWD_MA_HISTORY_ITEM;
+  static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
+  static const ON_PROGRESS_REQ_ITEM = _Paths.ON_PROGRESS_REQ_ITEM;
+  static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
 
   //Admin
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
@@ -93,6 +98,11 @@ abstract class _Paths {
   static const PSWD_PERSONNEL_HOME = '/home';
   static const PSWD_MA_REQ_ITEM = '/MARequestItemScreen';
   static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
+  static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';
+  static const PSWD_MA_HISTORY_ITEM = '/MAHistoryItemScreen';
+  static const RELEASING_AREA_ITEM = '/ReleasingAreaItemScreen';
+  static const ON_PROGRESS_REQ_ITEM = '/OnProgressReqItemScreen';
+  static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
 
   //Admin
   static const ADMIN_HOME = '/home';

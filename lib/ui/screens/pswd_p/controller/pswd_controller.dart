@@ -23,4 +23,6 @@ class PSWDController extends GetxController {
   }
 
   void animateToSlide(int index) => crslController.animateToPage(index);
+  //next & prev function should be added here soon
+  //instead of calling controller.crslController.nextPage
 }

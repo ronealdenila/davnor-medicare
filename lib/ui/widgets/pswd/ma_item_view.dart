@@ -73,6 +73,19 @@ class PSWDItemView extends GetResponsiveView {
               style: caption12Medium,
             ),
           ]),
+          horizontalSpace20,
+          Visibility(
+            visible: status == 'accepted',
+            child: IconButton(
+              icon: const Icon(
+                Icons.videocam_rounded,
+                color: verySoftBlueCustomColor,
+              ),
+              onPressed: () {
+                //call request patient for interview
+              },
+            ),
+          )
         ],
       ),
       verticalSpace25,
