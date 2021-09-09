@@ -222,6 +222,13 @@ const TextStyle body14SemiBold = TextStyle(
   fontWeight: FontWeight.w600,
   fontFamily: 'Inter',
 );
+const TextStyle body14MediumUnderline = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  decoration: TextDecoration.underline,
+  fontFamily: 'Inter',
+  color: verySoftBlueColor,
+);
 
 const TextStyle body14SemiBoldWhite = TextStyle(
   fontSize: 14,
