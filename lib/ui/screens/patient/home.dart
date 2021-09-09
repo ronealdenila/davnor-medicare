@@ -24,7 +24,7 @@ import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
-  static ArticleService articleService = Get.find();
+  static ArticleService articleService = Get.put(ArticleService());
   static ConsController consController = Get.put(ConsController());
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
@@ -160,26 +160,35 @@ class PatientHomeScreen extends StatelessWidget {
                     ],
                   ),
                   verticalSpace18,
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return ArticleCard(
-                            title: articleList[index].title!,
-                            content: articleList[index].short!,
-                            photoURL: articleList[index].photoURL!,
-                            textStyleTitle: caption12SemiBold,
-                            textStyleContent: caption10RegularNeutral,
-                            height: 115,
-                            onTap: () {
-                              goToArticleItemScreen(index);
-                            });
-                      }),
+                  Obx(showArticles)
                 ],
               ),
             ),
           )),
     );
+  }
+
+  Widget showArticles() {
+    if (articleService.loading.value) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return ArticleCard(
+                title: articleList[index].title!,
+                content: articleList[index].short!,
+                photoURL: articleList[index].photoURL!,
+                textStyleTitle: caption12SemiBold,
+                textStyleContent: caption10RegularNeutral,
+                height: 115,
+                onTap: () {
+                  goToArticleItemScreen(index);
+                });
+          });
+    }
+    return const Center(
+        child: SizedBox(
+            width: 20, height: 20, child: CircularProgressIndicator()));
   }
 
   void goToArticleItemScreen(int index) {

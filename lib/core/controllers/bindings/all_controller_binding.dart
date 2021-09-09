@@ -13,7 +13,7 @@ class AllControllerBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.put<ArticleService>(ArticleService());
+    Get.lazyPut<ArticleService>(() => ArticleService());
     Get.lazyPut<DoctorHomeController>(() => DoctorHomeController());
     Get.lazyPut<ConsController>(() => ConsController());
     Get.lazyPut<AppController>(() => AppController());
