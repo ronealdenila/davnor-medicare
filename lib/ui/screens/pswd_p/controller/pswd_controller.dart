@@ -20,6 +20,7 @@ class PSWDController extends GetxController {
     log.wtf(fetchedImages);
   }
 
+  //TODO! Image preview must also be change when item is click (R)
   void toggleSingleImage(int index) {
     for (var indexBtn = 0; indexBtn < fetchedImages.length; indexBtn++) {
       if (indexBtn == index) {

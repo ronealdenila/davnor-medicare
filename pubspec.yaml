@@ -55,6 +55,9 @@ dependencies:
   #date formatter
   intl: ^0.17.0
 
+  #shimmer loading effect
+  shimmer: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
