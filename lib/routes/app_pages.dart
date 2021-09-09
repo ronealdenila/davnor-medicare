@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:get/get.dart';
@@ -42,7 +43,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.PSWD_MA_REQ_LIST;
+  static const INITIAL = Routes.ADMIN_PROFILE;
 
   static final routes = [
     GetPage(
@@ -196,5 +197,10 @@ class AppPages {
       name: _Paths.VERIFICATION_REQ_LIST,
       page: () => VerificationReqListScreen(),
     ),
+    GetPage(
+      name: _Paths.ADMIN_PROFILE,
+      page: () => AdminProfileScreen(),
+    ),
+
   ];
 }

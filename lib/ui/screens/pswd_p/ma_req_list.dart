@@ -145,7 +145,7 @@ class ResponsiveView extends GetResponsiveView {
             DataCell(Text('Arya Stark', style: body14Medium,)),
             DataCell(Text('Visayan, Tagum', style: body14Medium,)),
             DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Senior', style: body14Medium,)),
+            DataCell(Text('Senior', style: body14Medium,)),
             DataCell(Text('View', style: body14MediumUnderline,)),
           ],
         ),
