@@ -4,7 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   //Splash
-  static const SPLASH = _Paths.SPLASH;
+  static const SPLASH = '/';
 
   //Auth
   static const LOGIN = _Paths.LOGIN;
@@ -41,6 +41,7 @@ abstract class Routes {
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
   static const PSWD_MA_REQ = _Paths.PSWD_MA_REQ;
+  static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
 
   //Admin
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
@@ -91,6 +92,7 @@ abstract class _Paths {
   static const PSWD_HEAD_HOME = '/home';
   static const PSWD_PERSONNEL_HOME = '/home';
   static const PSWD_MA_REQ = '/MARequestScreen';
+  static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
 
   //Admin
   static const ADMIN_HOME = '/home';
