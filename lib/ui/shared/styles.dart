@@ -77,6 +77,13 @@ const TextStyle title24BoldWhite = TextStyle(
   color: Colors.white,
 );
 
+TextStyle title24BoldNeutral80 = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: neutralColor[80],
+);
+
 const TextStyle title24Bold = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w700,
@@ -126,6 +133,12 @@ const TextStyle subtitle20Regular = TextStyle(
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
 );
+
+const TextStyle subtitle18BoldWhite = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Inter',
+    color: Colors.white);
 
 const TextStyle subtitle18Bold = TextStyle(
   fontSize: 18,

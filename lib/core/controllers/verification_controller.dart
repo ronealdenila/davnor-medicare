@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
@@ -7,13 +6,18 @@ import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
   final log = getLogger('Verification Screen');
+
+  static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
 
   final String userID = auth.currentUser!.uid;
+
+  final fetchedData = authController.patientModel.value;
 
   final RxString imgOfValidID = ''.obs;
   final RxString imgOfValidIDWithSelfie = ''.obs;
@@ -50,10 +54,12 @@ class VerificationController extends GetxController {
     await uploadID(imgOfValidID.value);
     await uploadIDS(imgOfValidIDWithSelfie.value);
     await firestore.collection('to_verify').add({
-      'patient_id': auth.currentUser!.uid,
-      'valid_id': imgURL.value,
-      'valid_selfie': imgURLselfie.value,
-      'date_rqstd': Timestamp.fromDate(DateTime.now()),
+      'patientID': userID,
+      'firstName': fetchedData!.firstName,
+      'lastName': fetchedData!.lastName,
+      'validID': imgURL.value,
+      'validSelfie': imgURLselfie.value,
+      'dateRqstd': Timestamp.fromDate(DateTime.now()),
     });
     //update user hasPendingStatus
     await showDialog();

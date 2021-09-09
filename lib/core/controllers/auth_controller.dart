@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
+import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
@@ -225,7 +226,9 @@ class AuthController extends GetxController {
           await navigateWithDelay(Get.offAll(() => PSWDHeadHomeScreen()));
           break;
         case 'admin':
-          await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
+          //await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
+          await navigateWithDelay(
+              Get.offAll(() => VerificationReqListScreen()));
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');

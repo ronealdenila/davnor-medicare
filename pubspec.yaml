@@ -52,6 +52,9 @@ dependencies:
   #carousel slider
   carousel_slider: ^4.0.0
 
+  #date formatter
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
