@@ -8,8 +8,8 @@ import 'package:davnor_medicare/core/controllers/patient/verification_req_contro
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/menu_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:get/get.dart';
 
 class AllControllerBinding implements Bindings {

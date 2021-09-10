@@ -19,7 +19,7 @@ class DoctorHomeController extends GetxController {
     log.i('getConsultations | Streaming Consultation Request');
     return firestore
         .collection('cons_request')
-        .orderBy('dateRqstd', descending: true)
+        .orderBy('dateRqstd', descending: false)
         //category is hard coded for now. must be initialized based on title of
         //logged in doctor
         .where('category', isEqualTo: 'Heart')

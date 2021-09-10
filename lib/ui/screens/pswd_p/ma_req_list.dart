@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';

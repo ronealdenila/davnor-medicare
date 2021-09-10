@@ -9,6 +9,7 @@ import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -126,15 +127,16 @@ class PatientHomeScreen extends StatelessWidget {
                             color: verySoftRed[60],
                             secondaryColor: verySoftRedCustomColor,
                             onTap: () {
+                              Get.to(() => QueueMAScreen());
                               //sa business logic na ata ta magdecide kung
                               //kani nga dialog mag appear for now dria nako
                               //ibutang (R)
-                              showDefaultDialog(
-                                dialogTitle: dialogQueue1,
-                                dialogCaption: dialogQueue2,
-                                textConfirm: 'Okay',
-                                onConfirmTap: Get.back,
-                              );
+                              // showDefaultDialog(
+                              //   dialogTitle: dialogQueue1,
+                              //   dialogCaption: dialogQueue2,
+                              //   textConfirm: 'Okay',
+                              //   onConfirmTap: Get.back,
+                              // );
                             },
                           ),
                         ),

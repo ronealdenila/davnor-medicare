@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:flutter/material.dart';
