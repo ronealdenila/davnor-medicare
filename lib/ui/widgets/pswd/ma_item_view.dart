@@ -5,9 +5,9 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/controller/attached_photos_controller.dart';
 
-final PSWDController controller = Get.find();
+final AttachedPhotosController controller = Get.find();
 
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status) : super(alwaysUseBuilder: false);
@@ -225,9 +225,12 @@ class PSWDItemView extends GetResponsiveView {
           crossAxisCount: 3,
           children: List.generate(controller.fetchedImages.length - 1, (index) {
             return GestureDetector(
-              onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => attachedPhotosDialog()),
+              onTap: () {
+                controller.selectedIndex.value = index;
+                showDialog(
+                    context: context,
+                    builder: (context) => attachedPhotosDialog());
+              },
               child: Image.network(
                 controller.fetchedImages[index],
                 width: 5,
@@ -285,7 +288,7 @@ Widget attachedPhotosDialog() {
         children: [
           Expanded(
             child: IconButton(
-              onPressed: controller.crslController.previousPage,
+              onPressed: controller.prevPhoto,
               icon: const Icon(
                 Icons.arrow_back_ios_rounded,
               ),
@@ -319,7 +322,7 @@ Widget attachedPhotosDialog() {
           ),
           Expanded(
             child: IconButton(
-              onPressed: controller.crslController.nextPage,
+              onPressed: controller.nextPhoto,
               icon: const Icon(
                 Icons.arrow_forward_ios_rounded,
               ),

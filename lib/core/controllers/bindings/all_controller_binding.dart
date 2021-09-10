@@ -5,21 +5,21 @@ import 'package:davnor_medicare/core/controllers/doctor_home_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/verification_controller.dart';
-import 'package:davnor_medicare/core/services/article_service.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
+import 'package:davnor_medicare/core/controllers/article_service.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/controller/attached_photos_controller.dart';
 import 'package:get/get.dart';
 
 class AllControllerBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.lazyPut<ArticleService>(() => ArticleService());
+    Get.lazyPut<ArticleController>(() => ArticleController());
     Get.lazyPut<DoctorHomeController>(() => DoctorHomeController());
     Get.lazyPut<ConsController>(() => ConsController());
     Get.lazyPut<AppController>(() => AppController());
     Get.lazyPut<MAController>(() => MAController());
     Get.lazyPut<VerificationController>(() => VerificationController());
-    Get.lazyPut<PSWDController>(() => PSWDController());
+    Get.lazyPut<AttachedPhotosController>(() => AttachedPhotosController());
     Get.lazyPut<VerificationRequestController>(
         () => VerificationRequestController());
   }

@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/controller/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,8 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
 class PSWDPersonnelHomeScreen extends GetResponsiveView {
-  final PSWDController pswdController = Get.put(PSWDController());
+  final AttachedPhotosController pswdController =
+      Get.put(AttachedPhotosController());
   @override
   Widget? builder() => screen.isDesktop
       ? PSWDPersonnelHomeScreenDesktop()

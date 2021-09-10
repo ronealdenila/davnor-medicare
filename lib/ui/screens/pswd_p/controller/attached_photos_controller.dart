@@ -2,8 +2,8 @@ import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class PSWDController extends GetxController {
-  final log = getLogger('PSWD Controller');
+class AttachedPhotosController extends GetxController {
+  final log = getLogger('Attached Photos Controller');
 
   final crslController = CarouselController();
   final String tempFetchedImage =
@@ -23,6 +23,8 @@ class PSWDController extends GetxController {
   }
 
   void animateToSlide(int index) => crslController.animateToPage(index);
-  //next & prev function should be added here soon
-  //instead of calling controller.crslController.nextPage
+
+  void nextPhoto() => crslController.nextPage();
+
+  void prevPhoto() => crslController.previousPage();
 }
