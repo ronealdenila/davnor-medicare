@@ -24,6 +24,7 @@ abstract class Routes {
   static const ARTICLE_ITEM = _Paths.ARTICLE_ITEM;
   static const QUEUE_CONS = _Paths.QUEUE_CONS;
   static const QUEUE_MA = _Paths.QUEUE_MA;
+  static const QUEUE_MA_TABLE = _Paths.QUEUE_MA_TABLE;
   static const MA_FORM = _Paths.MA_FORM;
   static const MA_FORM2 = _Paths.MA_FORM2;
   static const VERIFICATION = _Paths.VERIFICATION;
@@ -80,6 +81,7 @@ abstract class _Paths {
   static const ARTICLE_ITEM = '/article-item';
   static const QUEUE_CONS = '/queue-cons';
   static const QUEUE_MA = '/queue-MA';
+  static const QUEUE_MA_TABLE = '/queue-MA-table';
   static const MA_FORM = '/MA-form';
   static const MA_FORM2 = '/MA-form2';
   static const VERIFICATION = '/verification';

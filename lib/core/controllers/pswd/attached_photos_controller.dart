@@ -4,8 +4,8 @@ import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class PSWDController extends GetxController {
-  final log = getLogger('PSWD Controller');
+class AttachedPhotosController extends GetxController {
+  final log = getLogger('Attached Photos Controller');
 
   RxList<MedicalAssistanceModel> medicalAssistances =
       RxList<MedicalAssistanceModel>([]);
@@ -43,4 +43,8 @@ class PSWDController extends GetxController {
               .toList(),
         );
   }
+
+  void nextPhoto() => crslController.nextPage();
+
+  void prevPhoto() => crslController.previousPage();
 }

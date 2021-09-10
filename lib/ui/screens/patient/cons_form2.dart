@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';

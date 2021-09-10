@@ -4,7 +4,7 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 
-class ArticleService extends GetxController {
+class ArticleController extends GetxController {
   final log = getLogger('Article Service');
 
   List<ArticleModel> articlesList = [];

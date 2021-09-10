@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:intl/intl.dart';
 
-class VerificationRequestController extends GetxController {
+class ForVerificationController extends GetxController {
   final log = getLogger('Admin Verification Request Controller');
 
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();

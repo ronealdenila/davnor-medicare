@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/doctor_home_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/doctor_home_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';

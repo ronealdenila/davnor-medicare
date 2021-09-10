@@ -1,5 +1,5 @@
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/core/controllers/doctor_home_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/doctor_home_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';

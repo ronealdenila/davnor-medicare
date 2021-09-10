@@ -5,18 +5,18 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:shimmer/shimmer.dart';
 
-class VerificationReqCard extends StatelessWidget {
-  VerificationReqCard({
+class ForVerificationCard extends StatelessWidget {
+  ForVerificationCard({
     this.verifiReq,
     this.onItemTap,
   });
 
   final VerificationReqModel? verifiReq;
   final void Function()? onItemTap;
-  final VerificationRequestController vf = Get.find();
+  final ForVerificationController vf = Get.find();
 
   @override
   Widget build(BuildContext context) {

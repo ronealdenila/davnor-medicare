@@ -5,9 +5,11 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 
-class PSWDItemView extends GetResponsiveView<PSWDController> {
+final AttachedPhotosController controller = Get.find();
+
+class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status) : super(alwaysUseBuilder: false);
   final String status;
   final BuildContext context;
@@ -216,25 +218,28 @@ class PSWDItemView extends GetResponsiveView<PSWDController> {
           color: neutralColor[10],
           borderRadius: BorderRadius.circular(2),
         ),
-        // child: GridView.count(
-        //   shrinkWrap: true,
-        //   mainAxisSpacing: 10,
-        //   crossAxisSpacing: 10,
-        //   crossAxisCount: 3,
-        //   children: List.generate(controller.fetchedImages.length - 1, (index) {
-        //     return GestureDetector(
-        //       onTap: () => showDialog(
-        //           context: context,
-        //           builder: (context) => attachedPhotosDialog()),
-        //       child: Image.network(
-        //         controller.fetchedImages[index],
-        //         width: 5,
-        //         height: 5,
-        //         fit: BoxFit.fill,
-        //       ),
-        //     );
-        //   }),
-        // ),
+        child: GridView.count(
+          shrinkWrap: true,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          crossAxisCount: 3,
+          children: List.generate(controller.fetchedImages.length - 1, (index) {
+            return GestureDetector(
+              onTap: () {
+                controller.selectedIndex.value = index;
+                showDialog(
+                    context: context,
+                    builder: (context) => attachedPhotosDialog());
+              },
+              child: Image.network(
+                controller.fetchedImages[index],
+                width: 5,
+                height: 5,
+                fit: BoxFit.fill,
+              ),
+            );
+          }),
+        ),
       ),
       verticalSpace20,
       Row(children: const [
@@ -273,102 +278,102 @@ class PSWDItemView extends GetResponsiveView<PSWDController> {
   }
 }
 
-// Widget attachedPhotosDialog() {
-//   return SimpleDialog(
-//     contentPadding: EdgeInsets.zero,
-//     titlePadding: EdgeInsets.zero,
-//     children: [
-//       Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Expanded(
-//             child: IconButton(
-//               onPressed: controller.crslController.previousPage,
-//               icon: const Icon(
-//                 Icons.arrow_back_ios_rounded,
-//               ),
-//             ),
-//           ),
-//           Expanded(
-//             flex: 8,
-//             child: Container(
-//               padding: const EdgeInsets.symmetric(vertical: 10),
-//               height: Get.height * .7,
-//               width: Get.width * .7,
-//               color: Colors.transparent,
-//               child: Obx(
-//                 () => CarouselSlider.builder(
-//                   carouselController: controller.crslController,
-//                   itemCount: controller.fetchedImages.length - 1,
-//                   itemBuilder: (context, index, realIndex) {
-//                     return buildImage(index);
-//                   },
-//                   options: CarouselOptions(
-//                       initialPage: controller.selectedIndex.value,
-//                       viewportFraction: 1,
-//                       height: double.infinity,
-//                       enlargeCenterPage: true,
-//                       enableInfiniteScroll: false,
-//                       onPageChanged: (index, reason) =>
-//                           controller.selectedIndex.value = index),
-//                 ),
-//               ),
-//             ),
-//           ),
-//           Expanded(
-//             child: IconButton(
-//               onPressed: controller.crslController.nextPage,
-//               icon: const Icon(
-//                 Icons.arrow_forward_ios_rounded,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//       SizedBox(
-//         height: 110,
-//         width: Get.width,
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Expanded(
-//               child: Center(
-//                 child: ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount: controller.fetchedImages.length - 1,
-//                     scrollDirection: Axis.horizontal,
-//                     itemBuilder: (context, index) {
-//                       return Center(
-//                         child: Obx(
-//                           () => Container(
-//                             padding: const EdgeInsets.all(6),
-//                             color: index == controller.selectedIndex.value
-//                                 ? verySoftBlueColor
-//                                 : Colors.transparent,
-//                             child: InkWell(
-//                               onTap: () {
-//                                 controller.selectedIndex.value = index;
-//                                 controller.animateToSlide(index);
-//                               },
-//                               child: Image.network(
-//                                 controller.fetchedImages[index],
-//                                 height: 100,
-//                                 width: 100,
-//                                 fit: BoxFit.cover,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       );
-//                     }),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     ],
-//   );
-// }
+Widget attachedPhotosDialog() {
+  return SimpleDialog(
+    contentPadding: EdgeInsets.zero,
+    titlePadding: EdgeInsets.zero,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: IconButton(
+              onPressed: controller.prevPhoto,
+              icon: const Icon(
+                Icons.arrow_back_ios_rounded,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 8,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              height: Get.height * .7,
+              width: Get.width * .7,
+              color: Colors.transparent,
+              child: Obx(
+                () => CarouselSlider.builder(
+                  carouselController: controller.crslController,
+                  itemCount: controller.fetchedImages.length - 1,
+                  itemBuilder: (context, index, realIndex) {
+                    return buildImage(index);
+                  },
+                  options: CarouselOptions(
+                      initialPage: controller.selectedIndex.value,
+                      viewportFraction: 1,
+                      height: double.infinity,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      onPageChanged: (index, reason) =>
+                          controller.selectedIndex.value = index),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: IconButton(
+              onPressed: controller.nextPhoto,
+              icon: const Icon(
+                Icons.arrow_forward_ios_rounded,
+              ),
+            ),
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 110,
+        width: Get.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.fetchedImages.length - 1,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Obx(
+                          () => Container(
+                            padding: const EdgeInsets.all(6),
+                            color: index == controller.selectedIndex.value
+                                ? verySoftBlueColor
+                                : Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedIndex.value = index;
+                                controller.animateToSlide(index);
+                              },
+                              child: Image.network(
+                                controller.fetchedImages[index],
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
 
 // Widget buildImage(int index) {
 //   return Container(

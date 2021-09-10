@@ -8,7 +8,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/ma_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
 class MAForm2Screen extends GetView<MAController> {
   @override
