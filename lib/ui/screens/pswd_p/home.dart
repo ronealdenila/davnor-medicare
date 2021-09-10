@@ -6,6 +6,7 @@ import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dar
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +18,7 @@ import 'package:get/get.dart';
 //!TO be refactoooor
 //TODO(R): item name must be removed when on tablet/phone resolution
 
-class PSWDPersonnelHome extends GetView<NavigationController> {
+class PSWDPersonnelHome extends StatelessWidget {
   final PSWDController pswdController = Get.put(PSWDController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
@@ -143,6 +144,7 @@ class DashboardScreen extends GetView<MenuController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        verticalSpace50,
         Container(
           margin: const EdgeInsets.only(top: 20),
           child: Align(

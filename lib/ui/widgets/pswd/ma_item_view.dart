@@ -375,12 +375,12 @@ Widget attachedPhotosDialog() {
   );
 }
 
-// Widget buildImage(int index) {
-//   return Container(
-//     color: Colors.grey,
-//     child: Image.network(
-//       controller.fetchedImages[index],
-//       fit: BoxFit.cover,
-//     ),
-//   );
-// }
+Widget buildImage(int index) {
+  return Container(
+    color: Colors.grey,
+    child: Image.network(
+      controller.fetchedImages[index],
+      fit: BoxFit.cover,
+    ),
+  );
+}
