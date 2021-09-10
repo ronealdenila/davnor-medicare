@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
@@ -220,7 +221,7 @@ class AuthController extends GetxController {
     if (kIsWeb) {
       switch (userRole) {
         case 'pswd-p':
-          await navigateWithDelay(Get.offAll(() => PSWDPersonnelHomeScreen()));
+          await navigateWithDelay(Get.offAllNamed(Routes.PSWD_PERSONNEL_HOME));
           break;
         case 'pswd-h':
           await navigateWithDelay(Get.offAll(() => PSWDHeadHomeScreen()));

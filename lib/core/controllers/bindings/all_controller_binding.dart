@@ -6,8 +6,10 @@ import 'package:davnor_medicare/core/controllers/admin/for_verification_controll
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/controller/menu_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/controller/navigation_controller.dart';
 import 'package:get/get.dart';
 
 class AllControllerBinding implements Bindings {
@@ -21,7 +23,9 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MAController>(() => MAController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());
     Get.lazyPut<VerificationController>(() => VerificationController());
-    Get.lazyPut<AttachedPhotosController>(() => AttachedPhotosController());
+    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<MenuController>(() => MenuController());
+    Get.lazyPut<NavigationController>(() => NavigationController());
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());
   }
 }

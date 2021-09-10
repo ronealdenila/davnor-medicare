@@ -173,7 +173,11 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PSWD_PERSONNEL_HOME,
-      page: () => PSWDPersonnelHomeScreen(),
+      page: () => PSWDPersonnelHome(),
+    ),
+    GetPage(
+      name: _Paths.DASHBOARD,
+      page: () => DashboardScreen(),
     ),
     GetPage(
       name: _Paths.PSWD_MA_REQ_ITEM,
@@ -181,7 +185,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PSWD_MA_REQ_LIST,
-      page: () => const MARequestListScreen(),
+      page: () => MARequestListScreen(),
     ),
     GetPage(
       name: _Paths.PSWD_ACCEPTED_MA_REQ,

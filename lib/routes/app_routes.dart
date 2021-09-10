@@ -41,6 +41,8 @@ abstract class Routes {
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
+  static const DASHBOARD = _Paths.DASHBOARD;
+
   static const PSWD_MA_REQ_ITEM = _Paths.PSWD_MA_REQ_ITEM;
   static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
   static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
@@ -57,8 +59,6 @@ abstract class Routes {
   static const VERIFICATION_REQ_LIST = _Paths.VERIFICATION_REQ_LIST;
 }
 
-//Note(R): gilahi nako ang class for path para diri nata mag configure sa unsa
-//ang dapat makita sa url if sa web mag access
 abstract class _Paths {
   //Splash
   static const SPLASH = '/';
@@ -97,7 +97,9 @@ abstract class _Paths {
 
   //PSWD
   static const PSWD_HEAD_HOME = '/home';
-  static const PSWD_PERSONNEL_HOME = '/home';
+  static const PSWD_PERSONNEL_HOME = '/pswd-home';
+  static const DASHBOARD = '/dashboard';
+
   static const PSWD_MA_REQ_ITEM = '/MARequestItemScreen';
   static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
   static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';

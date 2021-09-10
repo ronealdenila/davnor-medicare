@@ -141,7 +141,7 @@ class MAController extends GetxController {
       'type': type.value,
       'prescriptions': listPhotoURL.value,
       'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
-      'dateRqstd': Timestamp.fromDate(DateTime.now()),
+      'date_rqstd': Timestamp.fromDate(DateTime.now()),
       'isTurn': false, //should be true if mao ang first request
     });
 

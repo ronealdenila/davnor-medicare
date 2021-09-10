@@ -86,7 +86,7 @@ class ConsController extends GetxController {
       fullName: fullName,
       age: ageController.text,
       category: selectedDiscomfort,
-      dateRqstd: Timestamp.now(),
+      dateRqstd: Timestamp.now().microsecondsSinceEpoch.toString(),
       description: descriptionController.text,
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
