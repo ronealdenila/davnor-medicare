@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:davnor_medicare/core/controllers/verification_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';

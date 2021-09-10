@@ -5,7 +5,7 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 
 final AttachedPhotosController controller = Get.find();
 

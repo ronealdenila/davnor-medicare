@@ -1,8 +1,8 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/core/controllers/article_service.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';

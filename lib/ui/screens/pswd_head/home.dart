@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 
 class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();

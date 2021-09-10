@@ -12,7 +12,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/core/controllers/ma_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
 class MAFormScreen extends GetView<MAController> {
   @override

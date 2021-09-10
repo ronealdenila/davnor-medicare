@@ -5,7 +5,7 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:get/get.dart';
 
 //TODO: clickable attached photos also
@@ -26,7 +26,7 @@ class VerificationReqItemScreen extends StatelessWidget {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
   final index = Get.arguments as int;
-  final VerificationRequestController vf = Get.find();
+  final ForVerificationController vf = Get.find();
   @override
   Widget phone() => Column(
         children: [

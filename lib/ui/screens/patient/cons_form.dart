@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
