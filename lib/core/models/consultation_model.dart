@@ -18,7 +18,7 @@ class ConsultationModel {
         fullName: json['fullName'] as String,
         age: json['age'] as String,
         category: json['category'] as String,
-        dateRqstd: json['dateRqstd'] as Timestamp,
+        dateRqstd: json['dateRqstd'] as String,
         description: json['description'] as String,
         isFollowUp: json['isFollowUp'] as bool,
         imgs: json['imgs'] as String,
@@ -39,7 +39,7 @@ class ConsultationModel {
   String? fullName;
   String? age;
   String? category;
-  Timestamp? dateRqstd;
+  String? dateRqstd;
   String? description;
   bool? isFollowUp;
   String? imgs;

@@ -1,9 +1,14 @@
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/models/ma_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class PSWDController extends GetxController {
   final log = getLogger('PSWD Controller');
+
+  RxList<MedicalAssistanceModel> medicalAssistances =
+      RxList<MedicalAssistanceModel>([]);
 
   final crslController = CarouselController();
   final String tempFetchedImage =
@@ -12,9 +17,9 @@ class PSWDController extends GetxController {
   RxInt selectedIndex = 0.obs;
 
   @override
-  void onInit() {
-    splitFetchedImage();
-    super.onInit();
+  void onReady() {
+    super.onReady();
+    medicalAssistances.bindStream(getMedicalAssistances());
   }
 
   void splitFetchedImage() {
@@ -25,4 +30,17 @@ class PSWDController extends GetxController {
   void animateToSlide(int index) => crslController.animateToPage(index);
   //next & prev function should be added here soon
   //instead of calling controller.crslController.nextPage
+
+  Stream<List<MedicalAssistanceModel>> getMedicalAssistances() {
+    log.i('getMedicalAssistance | Streaming Medical Assistance Request');
+    return firestore
+        .collection('ma_request')
+        .orderBy('date_rqstd', descending: true)
+        .snapshots()
+        .map(
+          (query) => query.docs
+              .map((item) => MedicalAssistanceModel.fromJson(item.data()))
+              .toList(),
+        );
+  }
 }
