@@ -1,5 +1,5 @@
+import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/controller/menu_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -33,51 +33,51 @@ class MARequestListScreen extends GetView<MenuController> {
   }
 }
 
-class MARequestListTable extends GetView<PSWDController> {
+class MARequestListTable extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => DataTable2(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        columnSpacing: 12,
-        horizontalMargin: 12,
-        minWidth: 600,
-        headingRowColor: MaterialStateColor.resolveWith(
-          (states) => Colors.blue.shade200,
-        ),
-        headingTextStyle: body16Bold.copyWith(color: neutralColor[10]),
-        columns: const [
-          DataColumn2(
-            label: Text('PATIENT NAME'),
-            size: ColumnSize.L,
+      () => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+        child: DataTable2(
+          columnSpacing: 12,
+          horizontalMargin: 12,
+          minWidth: 600,
+          headingRowColor: MaterialStateColor.resolveWith(
+            (states) => Colors.blue.shade200,
           ),
-          DataColumn(
-            label: Text('ADDRESS'),
-          ),
-          DataColumn(
-            label: Text('DATE'),
-          ),
-          DataColumn(
-            label: Text('PATIENT TYPE'),
-          ),
-          DataColumn(
-            label: Text('ACTION'),
-          ),
-        ],
-        rows: List<DataRow>.generate(
-          controller.medicalAssistances.length,
-          (index) => DataRow(
-            cells: [
-              DataCell(Text(controller.medicalAssistances[index].fullName!)),
-              DataCell(Text(controller.medicalAssistances[index].address!)),
-              //TODO(R): Fetched date must be on proper format
-              DataCell(Text(
-                  controller.medicalAssistances[index].dateRqstd!.toString())),
-              DataCell(Text(controller.medicalAssistances[index].type!)),
-              const DataCell(Text('View')),
-            ],
+          headingTextStyle: body16Bold.copyWith(color: neutralColor[10]),
+          columns: const [
+            DataColumn2(
+              label: Text('PATIENT NAME'),
+              size: ColumnSize.L,
+            ),
+            DataColumn(
+              label: Text('ADDRESS'),
+            ),
+            DataColumn(
+              label: Text('DATE'),
+            ),
+            DataColumn(
+              label: Text('PATIENT TYPE'),
+            ),
+            DataColumn(
+              label: Text('ACTION'),
+            ),
+          ],
+          rows: List<DataRow>.generate(
+            controller.medicalAssistances.length,
+            (index) => DataRow(
+              cells: [
+                DataCell(Text(controller.medicalAssistances[index].fullName!)),
+                DataCell(Text(controller.medicalAssistances[index].address!)),
+                //TODO(R): Fetched date must be on proper format
+                DataCell(Text(controller.medicalAssistances[index].dateRqstd!
+                    .toString())),
+                DataCell(Text(controller.medicalAssistances[index].type!)),
+                const DataCell(Text('View')),
+              ],
+            ),
           ),
         ),
       ),

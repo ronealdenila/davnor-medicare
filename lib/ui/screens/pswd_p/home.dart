@@ -1,8 +1,8 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/controller/menu_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/controller/navigation_controller.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/controller/pswd_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -19,7 +19,7 @@ import 'package:get/get.dart';
 //TODO(R): item name must be removed when on tablet/phone resolution
 
 class PSWDPersonnelHome extends StatelessWidget {
-  final PSWDController pswdController = Get.put(PSWDController());
+  final HomeController pswdController = Get.put(HomeController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
