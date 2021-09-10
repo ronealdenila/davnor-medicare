@@ -31,6 +31,7 @@ import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
@@ -141,6 +142,10 @@ class AppPages {
     GetPage(
       name: _Paths.LIVE_CHAT,
       page: () => LiveChatScreen(),
+    ),
+    GetPage(
+      name: _Paths.QUEUE_MA_TABLE,
+      page: () => QueueMATableScreen(),
     ),
 
     //Doctor
