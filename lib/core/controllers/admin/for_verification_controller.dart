@@ -59,28 +59,20 @@ class ForVerificationController extends GetxController {
     return '${getFirstName(model)} ${getLastName(model)}';
   }
 
-  String getProfilePhoto(int index) {
-    return verifReq[index].data.value!.profileImage!;
+  String getProfilePhoto(VerificationReqModel model) {
+    return model.data.value!.profileImage!;
   }
 
-  String getFirstNamebyIndex(int index) {
-    return verifReq[index].data.value!.firstName!;
+  String getValidID(VerificationReqModel model) {
+    return model.validID!;
   }
 
-  String getLastNamebyIndex(int index) {
-    return verifReq[index].data.value!.lastName!;
+  String getValidIDWithSelfie(VerificationReqModel model) {
+    return model.validSelfie!;
   }
 
-  String getValidID(int index) {
-    return verifReq[index].validID!;
-  }
-
-  String getValidIDWithSelfie(int index) {
-    return verifReq[index].validSelfie!;
-  }
-
-  String getDateTime(int index) {
-    final temp = verifReq[index].dateRqstd;
+  String getDateTime(VerificationReqModel model) {
+    final temp = model.dateRqstd;
     return convertTimeStamp(temp!);
   }
 }

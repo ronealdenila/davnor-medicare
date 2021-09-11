@@ -46,7 +46,7 @@ class VerificationReqListScreen extends StatelessWidget {
                         onItemTap: () {
                           Get.to(
                             () => VerificationReqItemScreen(),
-                            arguments: index,
+                            arguments: vf.verifReq[index],
                           );
                         });
                   });

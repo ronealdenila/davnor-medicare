@@ -5,6 +5,7 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,7 @@ class VerificationReqItemScreen extends StatelessWidget {
 
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
-  final index = Get.arguments as int;
+  final VerificationReqModel vfModel = Get.arguments as VerificationReqModel;
   final ForVerificationController vf = Get.find();
   @override
   Widget phone() => Column(
@@ -140,7 +141,7 @@ class ResponsiveView extends GetResponsiveView {
               height: 150,
               color: neutralColor[10],
               child: Image.network(
-                vf.getValidID(index),
+                vf.getValidID(vfModel),
                 height: 106,
                 fit: BoxFit.cover,
               ),
@@ -173,7 +174,7 @@ class ResponsiveView extends GetResponsiveView {
               height: 150,
               color: neutralColor[10],
               child: Image.network(
-                vf.getValidIDWithSelfie(index),
+                vf.getValidIDWithSelfie(vfModel),
                 height: 106,
                 fit: BoxFit.cover,
               ),
@@ -212,7 +213,7 @@ class ResponsiveView extends GetResponsiveView {
                     ),
                     horizontalSpace25,
                     Text(
-                      vf.getFirstNamebyIndex(index),
+                      vf.getFirstName(vfModel),
                       style: subtitle18Bold,
                     ),
                   ],
@@ -227,7 +228,7 @@ class ResponsiveView extends GetResponsiveView {
                     ),
                     horizontalSpace25,
                     Text(
-                      vf.getLastNamebyIndex(index),
+                      vf.getLastName(vfModel),
                       style: subtitle18Bold,
                     ),
                   ],
@@ -242,7 +243,7 @@ class ResponsiveView extends GetResponsiveView {
                     ),
                     horizontalSpace10,
                     Text(
-                      vf.getDateTime(index),
+                      vf.getDateTime(vfModel),
                       style: caption12RegularNeutral,
                     ),
                   ],
