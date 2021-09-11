@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
@@ -180,19 +180,19 @@ class AppPages {
       page: () => DashboardScreen(),
     ),
     GetPage(
-      name: _Paths.PSWD_MA_REQ_ITEM,
+      name: _Paths.ON_PROGRESS_REQ_ITEM,
       page: () => MARequestItemScreen(),
     ),
     GetPage(
-      name: _Paths.PSWD_MA_REQ_LIST,
-      page: () => MARequestListScreen(),
+      name: _Paths.ON_PROGRESS_REQ_LIST,
+      page: () => OnProgressReqListScreen(),
     ),
     GetPage(
       name: _Paths.PSWD_ACCEPTED_MA_REQ,
       page: () => AcceptedMARequestScreen(),
     ),
     GetPage(
-      name: _Paths.PSWD_MA_HISTORY_ITEM,
+      name: _Paths.MA_HISTORY_ITEM,
       page: () => MAHistoryItemScreen(),
     ),
     GetPage(

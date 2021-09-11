@@ -15,9 +15,6 @@ import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart
 //*https://youtu.be/udsysUj-X4w
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
-//!TO be refactoooor
-//TODO(R): item name must be removed when on tablet/phone resolution
-
 class PSWDPersonnelHome extends StatelessWidget {
   final HomeController pswdController = Get.put(HomeController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -169,7 +166,9 @@ class MenuItem {
 
 List<MenuItem> sideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
-  MenuItem('Medical Assistance Request', Routes.PSWD_MA_REQ_LIST),
+  MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
+  MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
+  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];
 
 class SideMenuItem extends GetView<MenuController> {

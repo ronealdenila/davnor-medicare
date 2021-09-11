@@ -43,12 +43,13 @@ abstract class Routes {
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
   static const DASHBOARD = _Paths.DASHBOARD;
 
-  static const PSWD_MA_REQ_ITEM = _Paths.PSWD_MA_REQ_ITEM;
-  static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
-  static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
-  static const PSWD_MA_HISTORY_ITEM = _Paths.PSWD_MA_HISTORY_ITEM;
-  static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
+  static const ON_PROGRESS_REQ_LIST = _Paths.ON_PROGRESS_REQ_LIST;
   static const ON_PROGRESS_REQ_ITEM = _Paths.ON_PROGRESS_REQ_ITEM;
+  static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
+  static const MA_HISTORY_ITEM = _Paths.MA_HISTORY_ITEM;
+  static const MA_HISTORY_LIST = _Paths.MA_HISTORY_LIST;
+  static const RELEASING_AREA_LIST = _Paths.RELEASING_AREA_LIST;
+  static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
   static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
 
   //Admin
@@ -100,12 +101,13 @@ abstract class _Paths {
   static const PSWD_PERSONNEL_HOME = '/pswd-home';
   static const DASHBOARD = '/dashboard';
 
-  static const PSWD_MA_REQ_ITEM = '/MARequestItemScreen';
-  static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
-  static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';
-  static const PSWD_MA_HISTORY_ITEM = '/MAHistoryItemScreen';
-  static const RELEASING_AREA_ITEM = '/ReleasingAreaItemScreen';
   static const ON_PROGRESS_REQ_ITEM = '/OnProgressReqItemScreen';
+  static const ON_PROGRESS_REQ_LIST = '/OnProgressReqListScreen';
+  static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';
+  static const MA_HISTORY_ITEM = '/MAHistoryItemScreen';
+  static const MA_HISTORY_LIST = '/MAHistoryListScreen';
+  static const RELEASING_AREA_ITEM = '/ReleasingAreaItemScreen';
+  static const RELEASING_AREA_LIST = '/ReleasingAreaListScreen';
   static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
 
   //Admin

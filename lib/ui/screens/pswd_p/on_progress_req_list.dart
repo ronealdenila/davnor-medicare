@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 import 'package:data_table_2/data_table_2.dart';
 
-class MARequestListScreen extends GetView<MenuController> {
+class OnProgressReqListScreen extends GetView<MenuController> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -75,7 +75,10 @@ class MARequestListTable extends GetView<HomeController> {
                 DataCell(Text(controller.medicalAssistances[index].dateRqstd!
                     .toString())),
                 DataCell(Text(controller.medicalAssistances[index].type!)),
-                const DataCell(Text('View')),
+                DataCell(TextButton(
+                  onPressed: () {},
+                  child: const Text('View'),
+                )),
               ],
             ),
           ),
