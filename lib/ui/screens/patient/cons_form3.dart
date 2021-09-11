@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 
-class ConsForm3Screen extends GetView<ConsController> {
+class ConsForm3Screen extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

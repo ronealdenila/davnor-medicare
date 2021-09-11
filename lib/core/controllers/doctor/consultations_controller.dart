@@ -4,7 +4,7 @@ import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 
 //To be rename
-class DoctorHomeController extends GetxController {
+class ForConsultationsController extends GetxController {
   final log = getLogger('Doctor Home Controller');
 
   RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);

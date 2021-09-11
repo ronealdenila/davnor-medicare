@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/doctor/doctor_home_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ConsRequestItemScreen extends StatelessWidget {
-  static DoctorHomeController doctorHomeController = Get.find();
+  static ConsultationsController doctorHomeController = Get.find();
   final List<ConsultationModel> consultationList =
       doctorHomeController.consultations;
   final int index = Get.arguments as int;

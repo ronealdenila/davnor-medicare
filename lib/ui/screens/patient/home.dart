@@ -26,7 +26,8 @@ import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   static ArticleController articleService = Get.put(ArticleController());
-  static ConsController consController = Get.put(ConsController());
+  static ConsRequestController consController =
+      Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 

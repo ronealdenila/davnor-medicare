@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
-import 'package:davnor_medicare/core/controllers/doctor/doctor_home_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -14,7 +14,8 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  final DoctorHomeController doctorController = Get.put(DoctorHomeController());
+  final ConsultationsController doctorController =
+      Get.put(ConsultationsController());
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
 
