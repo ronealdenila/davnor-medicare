@@ -7,9 +7,7 @@ import 'package:get/get.dart';
 
 class ConsRequestItemScreen extends StatelessWidget {
   static ConsultationsController doctorHomeController = Get.find();
-  final List<ConsultationModel> consultationList =
-      doctorHomeController.consultations;
-  final int index = Get.arguments as int;
+  final ConsultationModel consData = Get.arguments as ConsultationModel;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class ConsRequestItemScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 1,
           title: Text(
-            consultationList[index].fullName!,
+            doctorHomeController.getFullName(consData),
             style: subtitle18Medium.copyWith(color: Colors.black),
           ),
           actions: [
@@ -37,7 +35,7 @@ class ConsRequestItemScreen extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.all(25),
           children: [
-            Text(consultationList[index].description!),
+            Text(consData.description!),
           ],
         ),
       ),

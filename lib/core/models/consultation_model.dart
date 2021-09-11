@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:get/get.dart';
 
 class ConsultationModel {
   ConsultationModel({
@@ -43,4 +44,5 @@ class ConsultationModel {
   String? description;
   bool? isFollowUp;
   String? imgs;
+  Rxn<PatientModel> data = Rxn<PatientModel>();
 }
