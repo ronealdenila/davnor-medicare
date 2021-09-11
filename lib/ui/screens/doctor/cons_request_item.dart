@@ -1,11 +1,9 @@
 import 'dart:ui';
-
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
