@@ -23,8 +23,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => SingleChildScrollView(
+      body: Scaffold(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
@@ -46,50 +46,32 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
+                          children: <Widget>[
                             verticalSpace18,
-                            const Text('Welcome Back!', style: title32Bold),
+                            DmText.title32Bold('Welcome Back!'),
                             verticalSpace50,
                             DmInputField(
                               controller: authController.emailController,
                               placeholder: 'Email',
-                              leading: const Icon(Icons.email),
-                            ),
-                            FormInputFieldWithIcon(
-                              controller: authController.emailController,
-                              iconPrefix: Icons.email,
-                              labelText: 'Email',
+                              leading: Icon(Icons.email),
                               validator: Validator().email,
-                              keyboardType: TextInputType.emailAddress,
-                              onChanged: (value) {
-                                return;
-                              },
-                              onSaved: (value) =>
-                                  authController.emailController.text = value!,
+                              isRequired: true,
                             ),
                             verticalSpace25,
-                            FormInputFieldWithIcon(
-                              controller: authController.passwordController,
-                              iconPrefix: Icons.lock,
-                              suffixIcon: IconButton(
-                                onPressed:
+                            Obx(
+                              () => DmInputField(
+                                controller: authController.passwordController,
+                                placeholder: 'Password',
+                                leading: const Icon(Icons.lock),
+                                trailing: authController.isObscureText!.value
+                                    ? const Icon(Icons.visibility)
+                                    : const Icon(Icons.visibility_off),
+                                trailingTapped:
                                     authController.togglePasswordVisibility,
-                                icon: Icon(
-                                  authController.isObscureText!.value
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                ),
+                                password: authController.isObscureText!.value,
+                                isRequired: true,
+                                validator: Validator().password,
                               ),
-                              labelText: 'Password',
-                              validator: Validator().password,
-                              obscureText: authController.isObscureText!.value,
-                              onChanged: (value) {
-                                return;
-                              },
-                              onSaved: (value) => authController
-                                  .passwordController.text = value!,
-                              maxLines: 1,
-                              textInputAction: TextInputAction.done,
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -97,26 +79,26 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(() => ForgotPasswordScreen());
                                 },
-                                style: TextButton.styleFrom(primary: infoColor),
+                                style: TextButton.styleFrom(
+                                  primary: infoColor,
+                                ),
                                 child: const Text(
                                   'Forgot Password',
                                   style: body14SemiBold,
                                 ),
                               ),
                             ),
-                            verticalSpace25,
-                            CustomButton(
+                            verticalSpace25, //to be on package
+                            DmButton(
+                              title: 'Sign In',
                               onTap: () async {
                                 if (_formKey.currentState!.validate()) {
                                   await authController
                                       .signInWithEmailAndPassword(context);
                                 }
                               },
-                              text: 'Sign In',
-                              buttonColor: verySoftBlueColor,
-                              fontSize: 20,
                             ),
-                            verticalSpace25,
+                            verticalSpace25, //to be on package
                           ],
                         ),
                       ),
@@ -124,17 +106,136 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              BottomTextWidget(
-                onTap: () {
-                  Get.to(() => SignupScreen());
-                },
-                text1: "Don't have an account?",
-                text2: 'Signup here',
-              )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DmText.body14SemiBold('Dont Have an account?'),
+                  horizontalSpace10,
+                  TextButton(
+                    onPressed: () {
+                      Get.to(() => SignupScreen());
+                    },
+                    child: DmText.body14SemiBold('Signup here'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
+    //   body: Obx(
+    //     () => SingleChildScrollView(
+    //       child: Column(
+    //         children: [
+    //           SizedBox(
+    //             width: context.width,
+    //             height: context.height * .3,
+    //             child: Image.asset(authHeader, fit: BoxFit.fill),
+    //           ),
+    //           Card(
+    //             shape: RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.circular(20)),
+    //             margin: const EdgeInsets.all(20),
+    //             elevation: 3,
+    //             child: Form(
+    //               key: _formKey,
+    //               child: Padding(
+    //                 padding: const EdgeInsets.symmetric(horizontal: 24),
+    //                 child: Center(
+    //                   child: SingleChildScrollView(
+    //                     child: Column(
+    //                       mainAxisAlignment: MainAxisAlignment.center,
+    //                       crossAxisAlignment: CrossAxisAlignment.stretch,
+    //                       children: [
+    //                         verticalSpace18,
+    //                         const Text('Welcome Back!', style: title32Bold),
+    //                         verticalSpace50,
+    //                         DmInputField(
+    //                           controller: authController.emailController,
+    //                           placeholder: 'Email',
+    //                           leading: const Icon(Icons.email),
+    //                         ),
+    //                         FormInputFieldWithIcon(
+    //                           controller: authController.emailController,
+    //                           iconPrefix: Icons.email,
+    //                           labelText: 'Email',
+    //                           validator: Validator().email,
+    //                           keyboardType: TextInputType.emailAddress,
+    //                           onChanged: (value) {
+    //                             return;
+    //                           },
+    //                           onSaved: (value) =>
+    //                               authController.emailController.text = value!,
+    //                         ),
+    //                         verticalSpace25,
+    //                         FormInputFieldWithIcon(
+    //                           controller: authController.passwordController,
+    //                           iconPrefix: Icons.lock,
+    //                           suffixIcon: IconButton(
+    //                             onPressed:
+    //                                 authController.togglePasswordVisibility,
+    //                             icon: Icon(
+    //                               authController.isObscureText!.value
+    //                                   ? Icons.visibility
+    //                                   : Icons.visibility_off,
+    //                             ),
+    //                           ),
+    //                           labelText: 'Password',
+    //                           validator: Validator().password,
+    //                           obscureText: authController.isObscureText!.value,
+    //                           onChanged: (value) {
+    //                             return;
+    //                           },
+    //                           onSaved: (value) => authController
+    //                               .passwordController.text = value!,
+    //                           maxLines: 1,
+    //                           textInputAction: TextInputAction.done,
+    //                         ),
+    //                         Align(
+    //                           alignment: Alignment.centerRight,
+    //                           child: TextButton(
+    //                             onPressed: () {
+    //                               Get.to(() => ForgotPasswordScreen());
+    //                             },
+    //                             style: TextButton.styleFrom(primary: infoColor),
+    //                             child: const Text(
+    //                               'Forgot Password',
+    //                               style: body14SemiBold,
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         verticalSpace25,
+    //                         CustomButton(
+    //                           onTap: () async {
+    //                             if (_formKey.currentState!.validate()) {
+    //                               await authController
+    //                                   .signInWithEmailAndPassword(context);
+    //                             }
+    //                           },
+    //                           text: 'Sign In',
+    //                           buttonColor: verySoftBlueColor,
+    //                           fontSize: 20,
+    //                         ),
+    //                         verticalSpace25,
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //           BottomTextWidget(
+    //             onTap: () {
+    //               Get.to(() => SignupScreen());
+    //             },
+    //             text1: "Don't have an account?",
+    //             text2: 'Signup here',
+    //           )
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
