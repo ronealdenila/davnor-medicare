@@ -5,11 +5,13 @@ import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+// import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 
 import 'package:get/get.dart';
 
@@ -26,8 +28,8 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                width: screenWidth(context),
-                height: screenHeightPercentage(context, percentage: .3),
+                width: context.width,
+                height: context.height * .3,
                 child: Image.asset(authHeader, fit: BoxFit.fill),
               ),
               Card(
@@ -44,10 +46,15 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
+                          children: [
                             verticalSpace18,
                             const Text('Welcome Back!', style: title32Bold),
                             verticalSpace50,
+                            DmInputField(
+                              controller: authController.emailController,
+                              placeholder: 'Email',
+                              leading: const Icon(Icons.email),
+                            ),
                             FormInputFieldWithIcon(
                               controller: authController.emailController,
                               iconPrefix: Icons.email,

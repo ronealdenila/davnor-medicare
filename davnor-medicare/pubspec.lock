@@ -120,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  davnor_medicare_ui:
+    dependency: "direct main"
+    description:
+      path: "../davnor_medicare_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
   dotted_border:
     dependency: "direct main"
     description:
