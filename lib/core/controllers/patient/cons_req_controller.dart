@@ -63,6 +63,8 @@ class ConsRequestController extends GetxController {
     return false;
   }
 
+  late String documentId;
+
   Future<void> uploadPrescription() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
@@ -82,6 +84,7 @@ class ConsRequestController extends GetxController {
     await uploadPrescription();
     assignValues();
     final consultation = ConsultationModel(
+      consId: 'null',
       patientId: auth.currentUser!.uid,
       fullName: fullName,
       age: ageController.text,
@@ -92,6 +95,8 @@ class ConsRequestController extends GetxController {
       imgs: imageUrls,
     );
     final docRef = await consultRef.add(consultation);
+    documentId = docRef.id;
+    await updateId();
     await initializePrescriptionModel(docRef.id);
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -105,6 +110,15 @@ class ConsRequestController extends GetxController {
 
     log.i('submitConsultRequest | Consultation Submit Succesfully');
   }
+
+  Future<void> updateId() async => firestore
+      .collection('cons_request')
+      .doc(documentId)
+      .update({
+        'consId': documentId,
+      })
+      .then((value) => log.i('Consultation ID initialized'))
+      .catchError((error) => log.w('Failed to update cons Id'));
 
   Future<void> updateActiveQueue() async {
     log.i('updateActiveQueue | Setting active queue to true');

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class ConsultationModel {
   ConsultationModel({
+    this.consId,
     this.patientId,
     this.fullName,
     this.age,
@@ -15,6 +16,7 @@ class ConsultationModel {
 
   factory ConsultationModel.fromJson(Map<String, dynamic> json) =>
       ConsultationModel(
+        consId: json['consId'] as String,
         patientId: json['patientId'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
@@ -26,6 +28,7 @@ class ConsultationModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'consId': consId,
         'patientId': patientId,
         'fullName': fullName,
         'age': age,
@@ -35,7 +38,7 @@ class ConsultationModel {
         'isFollowUp': isFollowUp,
         'imgs': imgs,
       };
-
+  String? consId;
   String? patientId;
   String? fullName;
   String? age;
