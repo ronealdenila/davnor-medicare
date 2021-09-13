@@ -16,6 +16,8 @@ const Color kcSidePanelColor = Color(0xFFF5F5F5);
 const Color kcCustomNeutralColor = Color(0xFF27364B);
 const Color kcCustomNeutralColor2 = Color(0xFFF6F6F6);
 
+Color onSurface12 = Color(0xFF000000).withOpacity(.12);
+
 // Neutral Color Palette
 const MaterialColor kcNeutralColor = MaterialColor(
   _lightFontsValue,

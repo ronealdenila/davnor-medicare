@@ -30,8 +30,8 @@ class DmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return MaterialButton(
+      onPressed: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
         width: double.infinity,

@@ -8,10 +8,12 @@ class DmText extends StatelessWidget {
 
   const DmText.title90Bold(this.text) : style = title90Bold;
   const DmText.title58Regular(this.text) : style = title58Regular;
+    const DmText.title32Bold(this.text) : style = title32Bold;
   const DmText.subtitle20Bold(this.text) : style = subtitle20Bold;
   const DmText.subtitle20Medium(this.text) : style = subtitle20Medium;
   const DmText.body16Regular(this.text) : style = body16Regular;
   const DmText.body16Bold(this.text) : style = body16Bold;
+  const DmText.body14SemiBold(this.text) : style = body14SemiBold;
 
   DmText.body(this.text, {Color color = kcNeutralWhiteColor})
       : style = body16Regular.copyWith(color: color);

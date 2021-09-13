@@ -30,6 +30,8 @@ class ExampleView extends StatelessWidget {
         verticalSpace18,
         DmText.title58Regular('Title 58 Regular'),
         verticalSpace18,
+        DmText.title32Bold('Title 32 Bold'),
+        verticalSpace18,
         DmText.subtitle20Bold('Subtitle 20 Bold'),
         verticalSpace18,
         DmText.subtitle20Medium('Subtitle 20 Medium'),
@@ -37,6 +39,8 @@ class ExampleView extends StatelessWidget {
         DmText.body16Bold('Body 16 Bold'),
         verticalSpace18,
         DmText.body16Regular('Body 16 Regular'),
+        verticalSpace18,
+        DmText.body14SemiBold('Body 14 Semi Bold'),
         verticalSpace18,
       ];
 
@@ -83,6 +87,7 @@ class ExampleView extends StatelessWidget {
         DmInputField(
           controller: TextEditingController(),
           placeholder: 'Enter Password',
+          isRequired: true,
         ),
         verticalSpace10,
         DmText.body('Leading Icon'),
