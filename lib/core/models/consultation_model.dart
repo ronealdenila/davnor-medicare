@@ -46,3 +46,51 @@ class ConsultationModel {
   String? imgs;
   Rxn<PatientModel> data = Rxn<PatientModel>();
 }
+
+//another model for cons history
+class ConsultationHistoryModel {
+  ConsultationHistoryModel({
+    this.consID,
+    this.patientId,
+    this.docID,
+    this.fullName,
+    this.age,
+    this.dateRqstd,
+    this.dateConsStart,
+    this.dateConsEnd,
+  });
+
+  factory ConsultationHistoryModel.fromJson(Map<String, dynamic> json) =>
+      ConsultationHistoryModel(
+        consID: json['consID'] as String,
+        patientId: json['patientId'] as String,
+        docID: json['docID'] as String,
+        fullName: json['fullName'] as String,
+        age: json['age'] as String,
+        dateRqstd: json['dateRqstd'] as String,
+        dateConsStart: json['dateConsStart'] as String,
+        dateConsEnd: json['dateConsEnd'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'consID': consID,
+        'patientId': patientId,
+        'docID': docID,
+        'fullName': fullName,
+        'age': age,
+        'dateRqstd': dateRqstd,
+        'dateConsStart': dateConsStart,
+        'dateConsEnd': dateConsEnd,
+      };
+
+  String? consID;
+  String? patientId;
+  String? docID;
+  String? fullName;
+  String? age;
+  String? dateRqstd;
+  String? dateConsStart;
+  String? dateConsEnd;
+  Rxn<PatientModel> patient = Rxn<PatientModel>(); //data of the requester
+  Rxn<DoctorModel> doc = Rxn<DoctorModel>(); //data of the doctor
+}

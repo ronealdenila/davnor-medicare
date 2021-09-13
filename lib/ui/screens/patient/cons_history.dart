@@ -1,15 +1,17 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
+import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 import 'package:flutter/material.dart';
-//import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:get/get.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
+import 'package:davnor_medicare/core/models/consultation_model.dart';
 
 class ConsHistoryScreen extends StatelessWidget {
-  //static AuthController authController = Get.find();
-
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,31 +85,48 @@ class ConsHistoryScreen extends StatelessWidget {
                     topLeft: Radius.circular(55),
                   ),
                 ),
-                // child: Padding(
-                //   padding: const EdgeInsets.only(
-                //     top: 25,
-                //   ),
-                //   child: ListView.builder(
-                //     padding: const EdgeInsets.symmetric(
-                //         vertical: 10, horizontal: 30),
-                //     shrinkWrap: true,
-                //     itemCount: 6,
-                //     itemBuilder: (context, index) {
-                //       return ConsultationCard(
-                //           title: 'Dr. Chandler Bing',
-                //           subtitle: 'Cardiologist',
-                //           data: 'July 27, 2021 (11:40 am)',
-                //           profileImage:
-                //               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-                //           onTap: () {});
-                //     },
-                //   ),
-                // ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 25,
+                  ),
+                  child: FutureBuilder(
+                      future: consHController.getConsHistory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return ListView.builder(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 30),
+                            shrinkWrap: true,
+                            itemCount: consHController.consHistory.length,
+                            itemBuilder: (context, index) {
+                              return displayConsHistory(
+                                  consHController.consHistory[index]);
+                            },
+                          );
+                        }
+                        return loadingCardIndicator();
+                      }),
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget displayConsHistory(ConsultationHistoryModel model) {
+    return FutureBuilder(
+      future: consHController.getAdditionalData(model),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return ConsultationHistoryCard(
+            consHistory: model,
+            onItemTap: () {}, //TO DO: Cons History Item Screen
+          );
+        }
+        return loadingCardIndicator();
+      },
     );
   }
 }
