@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 
-class ConsForm3Screen extends GetView<ConsController> {
+class ConsForm3Screen extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

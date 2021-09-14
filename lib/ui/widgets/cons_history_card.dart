@@ -6,17 +6,19 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
-class ConsultationCard extends StatelessWidget {
-  const ConsultationCard({
-    this.consReq,
+class ConsultationHistoryCard extends StatelessWidget {
+  const ConsultationHistoryCard({
+    this.consHistory,
     this.onItemTap,
   });
 
-  final ConsultationModel? consReq;
+  final ConsultationHistoryModel? consHistory;
   final void Function()? onItemTap;
-  static ConsultationsController docConsController = Get.find();
+  static ConsHistoryController consHController = Get.find();
+  static AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class ConsultationCard extends StatelessWidget {
                       height: 75,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: getPhoto(consReq!)),
+                          child: getPhoto(consHistory!)),
                     ),
                     horizontalSpace20,
                     SizedBox(
@@ -54,23 +56,50 @@ class ConsultationCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            docConsController.getFullName(consReq!),
+                            (authController.userRole! == 'patient')
+                                ? consHController
+                                    .getDoctorFullName(consHistory!)
+                                : consHistory!.fullName!,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: body16SemiBold,
                           ),
                           verticalSpace5,
-                          const Text(
-                            'Patient Information:',
+                          Text(
+                            (authController.userRole! == 'patient')
+                                ? consHistory!.doc.value!.title!
+                                : 'Consultation Date:',
                             style: caption12RegularNeutral,
                             overflow: TextOverflow.ellipsis,
                           ),
                           verticalSpace5,
                           Text(
-                            '${consReq!.fullName!} (${consReq!.age!})',
+                            consHistory!.dateConsEnd!,
                             style: caption12Medium,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
+                          ),
+                          Visibility(
+                            visible: authController.userRole! == 'doctor',
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                verticalSpace5,
+                                const Text(
+                                  'Requested By:',
+                                  style: caption12RegularNeutral,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                verticalSpace5,
+                                Text(
+                                  consHController
+                                      .getPatientFullName(consHistory!),
+                                  style: caption12Medium,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -86,12 +115,30 @@ class ConsultationCard extends StatelessWidget {
     );
   }
 
-  Widget getPhoto(ConsultationModel model) {
-    if (docConsController.getProfilePhoto(model) == '') {
+  Widget getPhoto(ConsultationHistoryModel model) {
+    if (authController.userRole! == 'patient') {
+      return forPatientHistory(model);
+    } else {
+      return getDoctorPhoto(model);
+    }
+  }
+
+  Widget forPatientHistory(ConsultationHistoryModel model) {
+    if (model.doc.value!.profileImage! == '') {
       return Image.asset(blankProfile, fit: BoxFit.cover);
     }
     return Image.network(
-      docConsController.getProfilePhoto(model),
+      model.doc.value!.profileImage!,
+      fit: BoxFit.cover,
+    );
+  }
+
+  Widget getDoctorPhoto(ConsultationHistoryModel model) {
+    if (model.patient.value!.profileImage! == '') {
+      return Image.asset(blankProfile, fit: BoxFit.cover);
+    }
+    return Image.network(
+      model.patient.value!.profileImage!,
       fit: BoxFit.cover,
     );
   }

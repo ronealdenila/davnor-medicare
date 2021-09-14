@@ -26,7 +26,7 @@ class MedicalAssistanceModel {
         type: json['type'] as String,
         prescriptions: json['prescriptions'] as String,
         validID: json['validID'] as String,
-        dateRqstd: json['dateRqstd'] as Timestamp,
+        dateRqstd: json['date_rqstd'] as Timestamp,
         isTurn: json['isTurn'] as bool,
       );
 

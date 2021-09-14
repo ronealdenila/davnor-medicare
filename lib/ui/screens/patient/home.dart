@@ -1,14 +1,15 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
-import 'package:davnor_medicare/core/services/article_service.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -24,8 +25,9 @@ import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
-  static ArticleService articleService = Get.find();
-  static ConsController consController = Get.put(ConsController());
+  static ArticleController articleService = Get.put(ArticleController());
+  static ConsRequestController consController =
+      Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
   final List<ArticleModel> articleList = articleService.articlesList;
 
@@ -126,15 +128,16 @@ class PatientHomeScreen extends StatelessWidget {
                             color: verySoftRed[60],
                             secondaryColor: verySoftRedCustomColor,
                             onTap: () {
+                              Get.to(() => QueueMAScreen());
                               //sa business logic na ata ta magdecide kung
                               //kani nga dialog mag appear for now dria nako
                               //ibutang (R)
-                              showDefaultDialog(
-                                dialogTitle: dialogQueue1,
-                                dialogCaption: dialogQueue2,
-                                textConfirm: 'Okay',
-                                onConfirmTap: Get.back,
-                              );
+                              // showDefaultDialog(
+                              //   dialogTitle: dialogQueue1,
+                              //   dialogCaption: dialogQueue2,
+                              //   textConfirm: 'Okay',
+                              //   onConfirmTap: Get.back,
+                              // );
                             },
                           ),
                         ),
@@ -160,26 +163,35 @@ class PatientHomeScreen extends StatelessWidget {
                     ],
                   ),
                   verticalSpace18,
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return ArticleCard(
-                            title: articleList[index].title!,
-                            content: articleList[index].short!,
-                            photoURL: articleList[index].photoURL!,
-                            textStyleTitle: caption12SemiBold,
-                            textStyleContent: caption10RegularNeutral,
-                            height: 115,
-                            onTap: () {
-                              goToArticleItemScreen(index);
-                            });
-                      }),
+                  Obx(showArticles)
                 ],
               ),
             ),
           )),
     );
+  }
+
+  Widget showArticles() {
+    if (articleService.doneLoading.value) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return ArticleCard(
+                title: articleList[index].title!,
+                content: articleList[index].short!,
+                photoURL: articleList[index].photoURL!,
+                textStyleTitle: caption12SemiBold,
+                textStyleContent: caption10RegularNeutral,
+                height: 115,
+                onTap: () {
+                  goToArticleItemScreen(index);
+                });
+          });
+    }
+    return const Center(
+        child: SizedBox(
+            width: 20, height: 20, child: CircularProgressIndicator()));
   }
 
   void goToArticleItemScreen(int index) {

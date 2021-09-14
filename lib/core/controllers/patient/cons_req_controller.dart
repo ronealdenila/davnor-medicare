@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
-class ConsController extends GetxController {
+class ConsRequestController extends GetxController {
   final log = getLogger('Cons Controller');
 
   static AuthController authController = Get.find();
@@ -63,6 +63,8 @@ class ConsController extends GetxController {
     return false;
   }
 
+  late String documentId;
+
   Future<void> uploadPrescription() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
@@ -82,16 +84,19 @@ class ConsController extends GetxController {
     await uploadPrescription();
     assignValues();
     final consultation = ConsultationModel(
+      consId: 'null',
       patientId: auth.currentUser!.uid,
       fullName: fullName,
       age: ageController.text,
       category: selectedDiscomfort,
-      dateRqstd: Timestamp.now(),
+      dateRqstd: Timestamp.now().microsecondsSinceEpoch.toString(),
       description: descriptionController.text,
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
     );
     final docRef = await consultRef.add(consultation);
+    documentId = docRef.id;
+    await updateId();
     await initializePrescriptionModel(docRef.id);
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -105,6 +110,15 @@ class ConsController extends GetxController {
 
     log.i('submitConsultRequest | Consultation Submit Succesfully');
   }
+
+  Future<void> updateId() async => firestore
+      .collection('cons_request')
+      .doc(documentId)
+      .update({
+        'consId': documentId,
+      })
+      .then((value) => log.i('Consultation ID initialized'))
+      .catchError((error) => log.w('Failed to update cons Id'));
 
   Future<void> updateActiveQueue() async {
     log.i('updateActiveQueue | Setting active queue to true');

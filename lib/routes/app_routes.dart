@@ -24,6 +24,7 @@ abstract class Routes {
   static const ARTICLE_ITEM = _Paths.ARTICLE_ITEM;
   static const QUEUE_CONS = _Paths.QUEUE_CONS;
   static const QUEUE_MA = _Paths.QUEUE_MA;
+  static const QUEUE_MA_TABLE = _Paths.QUEUE_MA_TABLE;
   static const MA_FORM = _Paths.MA_FORM;
   static const MA_FORM2 = _Paths.MA_FORM2;
   static const VERIFICATION = _Paths.VERIFICATION;
@@ -40,8 +41,16 @@ abstract class Routes {
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
-  static const PSWD_MA_REQ = _Paths.PSWD_MA_REQ;
-  static const PSWD_MA_REQ_LIST = _Paths.PSWD_MA_REQ_LIST;
+  static const DASHBOARD = _Paths.DASHBOARD;
+
+  static const ON_PROGRESS_REQ_LIST = _Paths.ON_PROGRESS_REQ_LIST;
+  static const ON_PROGRESS_REQ_ITEM = _Paths.ON_PROGRESS_REQ_ITEM;
+  static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
+  static const MA_HISTORY_ITEM = _Paths.MA_HISTORY_ITEM;
+  static const MA_HISTORY_LIST = _Paths.MA_HISTORY_LIST;
+  static const RELEASING_AREA_LIST = _Paths.RELEASING_AREA_LIST;
+  static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
+  static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
 
   //Admin
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
@@ -54,8 +63,6 @@ abstract class Routes {
   static const EDIT_PSWD_STAFF = _Paths.EDIT_PSWD_STAFF;
 }
 
-//Note(R): gilahi nako ang class for path para diri nata mag configure sa unsa
-//ang dapat makita sa url if sa web mag access
 abstract class _Paths {
   //Splash
   static const SPLASH = '/';
@@ -78,6 +85,7 @@ abstract class _Paths {
   static const ARTICLE_ITEM = '/article-item';
   static const QUEUE_CONS = '/queue-cons';
   static const QUEUE_MA = '/queue-MA';
+  static const QUEUE_MA_TABLE = '/queue-MA-table';
   static const MA_FORM = '/MA-form';
   static const MA_FORM2 = '/MA-form2';
   static const VERIFICATION = '/verification';
@@ -93,9 +101,17 @@ abstract class _Paths {
 
   //PSWD
   static const PSWD_HEAD_HOME = '/home';
-  static const PSWD_PERSONNEL_HOME = '/home';
-  static const PSWD_MA_REQ = '/MARequestScreen';
-  static const PSWD_MA_REQ_LIST = '/MARequestListScreen';
+  static const PSWD_PERSONNEL_HOME = '/pswd-home';
+  static const DASHBOARD = '/dashboard';
+
+  static const ON_PROGRESS_REQ_ITEM = '/OnProgressReqItemScreen';
+  static const ON_PROGRESS_REQ_LIST = '/OnProgressReqListScreen';
+  static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';
+  static const MA_HISTORY_ITEM = '/MAHistoryItemScreen';
+  static const MA_HISTORY_LIST = '/MAHistoryListScreen';
+  static const RELEASING_AREA_ITEM = '/ReleasingAreaItemScreen';
+  static const RELEASING_AREA_LIST = '/ReleasingAreaListScreen';
+  static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
 
   //Admin
   static const ADMIN_HOME = '/home';

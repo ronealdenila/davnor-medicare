@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConsForm2Screen extends GetView<ConsController> {
+class ConsForm2Screen extends GetView<ConsRequestController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

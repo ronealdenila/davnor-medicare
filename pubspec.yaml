@@ -58,6 +58,9 @@ dependencies:
   #shimmer loading effect
   shimmer: ^2.0.0
 
+  #data table 2
+  data_table_2: ^2.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

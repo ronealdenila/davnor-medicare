@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:get/get.dart';
 
 class ConsultationModel {
   ConsultationModel({
+    this.consId,
     this.patientId,
     this.fullName,
     this.age,
@@ -14,17 +16,19 @@ class ConsultationModel {
 
   factory ConsultationModel.fromJson(Map<String, dynamic> json) =>
       ConsultationModel(
+        consId: json['consId'] as String,
         patientId: json['patientId'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
         category: json['category'] as String,
-        dateRqstd: json['dateRqstd'] as Timestamp,
+        dateRqstd: json['dateRqstd'] as String,
         description: json['description'] as String,
         isFollowUp: json['isFollowUp'] as bool,
         imgs: json['imgs'] as String,
       );
 
   Map<String, dynamic> toJson() => {
+        'consId': consId,
         'patientId': patientId,
         'fullName': fullName,
         'age': age,
@@ -34,13 +38,62 @@ class ConsultationModel {
         'isFollowUp': isFollowUp,
         'imgs': imgs,
       };
-
+  String? consId;
   String? patientId;
   String? fullName;
   String? age;
   String? category;
-  Timestamp? dateRqstd;
+  String? dateRqstd;
   String? description;
   bool? isFollowUp;
   String? imgs;
+  Rxn<PatientModel> data = Rxn<PatientModel>();
+}
+
+//another model for cons history
+class ConsultationHistoryModel {
+  ConsultationHistoryModel({
+    this.consID,
+    this.patientId,
+    this.docID,
+    this.fullName,
+    this.age,
+    this.dateRqstd,
+    this.dateConsStart,
+    this.dateConsEnd,
+  });
+
+  factory ConsultationHistoryModel.fromJson(Map<String, dynamic> json) =>
+      ConsultationHistoryModel(
+        consID: json['consID'] as String,
+        patientId: json['patientId'] as String,
+        docID: json['docID'] as String,
+        fullName: json['fullName'] as String,
+        age: json['age'] as String,
+        dateRqstd: json['dateRqstd'] as String,
+        dateConsStart: json['dateConsStart'] as String,
+        dateConsEnd: json['dateConsEnd'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'consID': consID,
+        'patientId': patientId,
+        'docID': docID,
+        'fullName': fullName,
+        'age': age,
+        'dateRqstd': dateRqstd,
+        'dateConsStart': dateConsStart,
+        'dateConsEnd': dateConsEnd,
+      };
+
+  String? consID;
+  String? patientId;
+  String? docID;
+  String? fullName;
+  String? age;
+  String? dateRqstd;
+  String? dateConsStart;
+  String? dateConsEnd;
+  Rxn<PatientModel> patient = Rxn<PatientModel>(); //data of the requester
+  Rxn<DoctorModel> doc = Rxn<DoctorModel>(); //data of the doctor
 }

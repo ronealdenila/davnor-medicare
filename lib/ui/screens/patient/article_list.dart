@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/services/article_service.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -9,7 +9,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class ArticleListScreen extends StatelessWidget {
-  static ArticleService articleService = Get.find();
+  static ArticleController articleService = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
 
   @override

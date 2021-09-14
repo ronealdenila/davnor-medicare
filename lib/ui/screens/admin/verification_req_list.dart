@@ -1,14 +1,13 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:davnor_medicare/ui/widgets/admin/verification_req_card.dart';
+import 'package:davnor_medicare/ui/widgets/admin/for_verification_card.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
-import 'package:davnor_medicare/core/controllers/admin_for_verif_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  static VerificationRequestController vf =
-      Get.put(VerificationRequestController());
+  static ForVerificationController vf = Get.put(ForVerificationController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +41,12 @@ class VerificationReqListScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: vf.verifReq.length,
                   itemBuilder: (context, index) {
-                    return VerificationReqCard(
+                    return ForVerificationCard(
                         verifiReq: vf.verifReq[index],
                         onItemTap: () {
                           Get.to(
                             () => VerificationReqItemScreen(),
-                            arguments: index,
+                            arguments: vf.verifReq[index],
                           );
                         });
                   });

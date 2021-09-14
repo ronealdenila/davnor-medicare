@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConsFormScreen extends GetView<ConsController> {
+class ConsFormScreen extends GetView<ConsRequestController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -160,7 +160,7 @@ class ConsFormScreen extends GetView<ConsController> {
   }
 }
 
-class DiscomfortCategoryWidget extends GetView<ConsController> {
+class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

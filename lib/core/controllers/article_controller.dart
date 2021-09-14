@@ -4,11 +4,12 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart.dart';
 import 'package:get/get.dart';
 
-class ArticleService extends GetxController {
+class ArticleController extends GetxController {
   final log = getLogger('Article Service');
 
   List<ArticleModel> articlesList = [];
   late ArticleModel _initArticle;
+  RxBool doneLoading = false.obs;
 
   String? title;
   String? content;
@@ -54,5 +55,6 @@ class ArticleService extends GetxController {
         articlesList.add(_initArticle);
       });
     });
+    doneLoading.value = true;
   }
 }

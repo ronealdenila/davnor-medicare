@@ -1,9 +1,9 @@
-import 'package:davnor_medicare/core/controllers/cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LiveChatScreen extends StatelessWidget {
-  static ConsController consController = Get.find();
+  static ConsRequestController consController = Get.find();
   final fetchedPrescription = consController.consultation.value;
 
   @override

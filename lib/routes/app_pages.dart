@@ -1,10 +1,9 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswdstaff.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
@@ -35,10 +34,17 @@ import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -140,6 +146,10 @@ class AppPages {
       name: _Paths.LIVE_CHAT,
       page: () => LiveChatScreen(),
     ),
+    GetPage(
+      name: _Paths.QUEUE_MA_TABLE,
+      page: () => QueueMATableScreen(),
+    ),
 
     //Doctor
     GetPage(
@@ -166,15 +176,39 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PSWD_PERSONNEL_HOME,
-      page: () => PSWDPersonnelHomeScreen(),
+      page: () => PSWDPersonnelHome(),
     ),
     GetPage(
-      name: _Paths.PSWD_MA_REQ,
-      page: () => MARequestScreen(),
+      name: _Paths.DASHBOARD,
+      page: () => DashboardScreen(),
     ),
     GetPage(
-      name: _Paths.PSWD_MA_REQ_LIST,
-      page: () => MARequestListScreen(),
+      name: _Paths.ON_PROGRESS_REQ_ITEM,
+      page: () => MARequestItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.ON_PROGRESS_REQ_LIST,
+      page: () => OnProgressReqListScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_ACCEPTED_MA_REQ,
+      page: () => AcceptedMARequestScreen(),
+    ),
+    GetPage(
+      name: _Paths.MA_HISTORY_ITEM,
+      page: () => MAHistoryItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.RELEASING_AREA_ITEM,
+      page: () => ReleasingAreaItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.ON_PROGRESS_REQ_ITEM,
+      page: () => OnProgressReqItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.FOR_APPROVAL_ITEM,
+      page: () => ForApprovalItemScreen(),
     ),
 
     //Admin
