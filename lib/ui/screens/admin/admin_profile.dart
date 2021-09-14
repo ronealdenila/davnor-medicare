@@ -83,32 +83,20 @@ class ResponsiveView extends GetResponsiveView{
           const Text(
             'admin@gmail.com',
             style: body14Regular,),
-          verticalSpace35, 
+          verticalSpace50,  
           Row(
-            children: [
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  <Widget>[
-                        InkWell(
-                          onTap: () {},
-                          child: const Text('Change Password',
-                              textAlign: TextAlign.center, 
-                              style: body14Regular),
-                        ),
+            mainAxisSize: MainAxisSize.min,
+            children:  <Widget>[
+              const Icon(Icons.lock_outline),
+              InkWell(
+                onTap: () {},
+                child: const Text('Change Password',
+                style: body14Regular,
+                ) ,
+            ),
                       
-                    ]),
-              ),
-            ],
-        ),
-  
-      ])
+        ])
       ])
     );
   }
-
 }

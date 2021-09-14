@@ -122,5 +122,4 @@ const String consForm3Description =
 
 //Admin
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';
-const String pswdStaffRegister =
-    'Please fill  in the information of the PSWD Personnel.';
+const String pswdStaffRegister = 'Please fill  in the information of the PSWD Personnel.';
