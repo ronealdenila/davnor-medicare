@@ -11,12 +11,24 @@ class ConsHistoryController extends GetxController {
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
 
-  Future<void> getConsHistory() async {
-    log.i('get Cons History');
-    log.i(auth.currentUser!.uid);
+  Future<void> getConsHistoryForPatient() async {
+    log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
+        .get()
+        .then((value) {
+      value.docs.forEach((result) {
+        consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
+      });
+    });
+  }
+
+  Future<void> getConsHistoryForDoctor() async {
+    log.i('Get Cons History for Doctor - ${auth.currentUser!.uid}');
+    await firestore
+        .collection('cons_history')
+        .where('docID', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
       value.docs.forEach((result) {
@@ -58,7 +70,7 @@ class ConsHistoryController extends GetxController {
     return model.patient.value!.lastName!;
   }
 
-  String getPatientFullName(ConsultationHistoryModel model) {
+  String getPatientName(ConsultationHistoryModel model) {
     return '${getPatientFirstName(model)} ${getPatientLastName(model)}';
   }
 

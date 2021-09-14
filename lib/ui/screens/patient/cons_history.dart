@@ -90,7 +90,7 @@ class ConsHistoryScreen extends StatelessWidget {
                     top: 25,
                   ),
                   child: FutureBuilder(
-                      future: consHController.getConsHistory(),
+                      future: consHController.getConsHistoryForPatient(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           return ListView.builder(

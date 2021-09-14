@@ -84,7 +84,7 @@ class ConsRequestController extends GetxController {
     await uploadPrescription();
     assignValues();
     final consultation = ConsultationModel(
-      consId: 'null',
+      consID: 'null',
       patientId: auth.currentUser!.uid,
       fullName: fullName,
       age: ageController.text,
@@ -115,7 +115,7 @@ class ConsRequestController extends GetxController {
       .collection('cons_request')
       .doc(documentId)
       .update({
-        'consId': documentId,
+        'consID': documentId,
       })
       .then((value) => log.i('Consultation ID initialized'))
       .catchError((error) => log.w('Failed to update cons Id'));

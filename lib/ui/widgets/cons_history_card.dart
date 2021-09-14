@@ -17,7 +17,7 @@ class ConsultationHistoryCard extends StatelessWidget {
 
   final ConsultationHistoryModel? consHistory;
   final void Function()? onItemTap;
-  static ConsHistoryController consHController = Get.find();
+  static ConsHistoryController consHCont = Get.find();
   static AuthController authController = Get.find();
 
   @override
@@ -32,7 +32,7 @@ class ConsultationHistoryCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Container(
-              height: 95,
+              height: (authController.userRole! == 'patient') ? 95 : 105,
               width: screenWidth(context),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -43,8 +43,8 @@ class ConsultationHistoryCard extends StatelessWidget {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 75,
-                      height: 75,
+                      width: (authController.userRole! == 'patient') ? 75 : 85,
+                      height: (authController.userRole! == 'patient') ? 75 : 85,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: getPhoto(consHistory!)),
@@ -57,8 +57,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                         children: [
                           Text(
                             (authController.userRole! == 'patient')
-                                ? consHController
-                                    .getDoctorFullName(consHistory!)
+                                ? consHCont.getDoctorFullName(consHistory!)
                                 : consHistory!.fullName!,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -79,26 +78,14 @@ class ConsultationHistoryCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
+                          verticalSpace5,
                           Visibility(
                             visible: authController.userRole! == 'doctor',
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                verticalSpace5,
-                                const Text(
-                                  'Requested By:',
-                                  style: caption12RegularNeutral,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                verticalSpace5,
-                                Text(
-                                  consHController
-                                      .getPatientFullName(consHistory!),
-                                  style: caption12Medium,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
+                            child: Text(
+                              'By: ${consHCont.getPatientName(consHistory!)}',
+                              style: caption12Medium,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                         ],
