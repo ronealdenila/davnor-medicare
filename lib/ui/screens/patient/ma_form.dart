@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
-class MAFormScreen extends GetView<MAController> {
+class MAFormScreen extends GetView<MARequestController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

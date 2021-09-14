@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:uuid/uuid.dart';
 
-class MAController extends GetxController {
+class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
 
   static AuthController authController = Get.find();

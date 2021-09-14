@@ -51,7 +51,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.ADMIN_PROFILE;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -244,7 +244,5 @@ class AppPages {
       name: _Paths.EDIT_PSWD_STAFF,
       page: () => EditPSWDStaffScrenn(),
     ),
-
-
   ];
 }

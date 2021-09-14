@@ -21,7 +21,7 @@ class AllControllerBinding implements Bindings {
 
     //patient
     Get.lazyPut<ConsRequestController>(() => ConsRequestController());
-    Get.lazyPut<MAController>(() => MAController());
+    Get.lazyPut<MARequestController>(() => MARequestController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());
     Get.lazyPut<VerificationController>(() => VerificationController());
 

@@ -11,7 +11,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  static MAController ma = Get.find();
+  static MARequestController ma = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MADescriptionScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

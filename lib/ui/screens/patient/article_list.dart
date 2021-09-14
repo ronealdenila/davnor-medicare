@@ -18,11 +18,11 @@ class ArticleListScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: verySoftBlueColor[100],
+          toolbarHeight: 50,
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Column(
               children: [
                 const Text(
