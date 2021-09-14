@@ -58,6 +58,9 @@ abstract class Routes {
   static const PSWD_STAFF_REGISTRATION = _Paths.PSWD_STAFF_REGISTRATION;
   static const VERIFICATION_REQ_ITEM = _Paths.VERIFICATION_REQ_ITEM;
   static const VERIFICATION_REQ_LIST = _Paths.VERIFICATION_REQ_LIST;
+  static const ADMIN_PROFILE = _Paths.ADMIN_PROFILE;
+  static const EDIT_DOCTOR = _Paths.EDIT_DOCTOR;
+  static const EDIT_PSWD_STAFF = _Paths.EDIT_PSWD_STAFF;
 }
 
 abstract class _Paths {
@@ -116,4 +119,7 @@ abstract class _Paths {
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';
   static const VERIFICATION_REQ_ITEM = '/adm-verification-req-item';
   static const VERIFICATION_REQ_LIST = '/adm-verification-req-list';
+  static const ADMIN_PROFILE ='/admin-profile';
+  static const EDIT_DOCTOR ='/edit-doctor';
+  static const EDIT_PSWD_STAFF ='/edit-pswd-staff';
 }
