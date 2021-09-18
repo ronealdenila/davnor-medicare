@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
-import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';

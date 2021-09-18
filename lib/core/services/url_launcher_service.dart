@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:url_launcher/url_launcher.dart';
 

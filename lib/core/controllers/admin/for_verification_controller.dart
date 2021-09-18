@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';

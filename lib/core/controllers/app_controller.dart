@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 
 class AppController {

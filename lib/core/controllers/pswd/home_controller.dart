@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/ma_req_model.dart';
-import 'package:davnor_medicare/core/services/logger_service.dart.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
