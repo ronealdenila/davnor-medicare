@@ -18,21 +18,25 @@ class ConsRequestItemScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 90,
+          toolbarHeight: 80,
           elevation: 1,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Card(
                   elevation: 3,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   child: getPhoto(consData)),
               horizontalSpace15,
-              Text(
-                doctorHomeController.getFullName(consData),
-                style: subtitle20Medium.copyWith(color: Colors.black),
+              SizedBox(
+                width: 144,
+                child: Text(
+                  doctorHomeController.getFullName(consData),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: subtitle18Medium.copyWith(color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -132,12 +136,12 @@ class ConsRequestItemScreen extends StatelessWidget {
   Widget getPhoto(ConsultationModel model) {
     if (doctorHomeController.getProfilePhoto(model) == '') {
       return CircleAvatar(
-        radius: 30,
+        radius: 25,
         backgroundImage: AssetImage(blankProfile),
       );
     }
     return CircleAvatar(
-      radius: 30,
+      radius: 25,
       backgroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
     );

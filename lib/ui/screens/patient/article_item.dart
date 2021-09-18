@@ -16,9 +16,7 @@ class ArticleItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: verySoftBlueColor[100],
-        ),
+        //appBar: AppBar(),
         body: SingleChildScrollView(
           child: Column(
             children: [
