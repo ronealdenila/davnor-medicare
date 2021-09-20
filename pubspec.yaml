@@ -14,6 +14,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # Davnor_medicare_ui
+  davnor_medicare_ui:
+    git: https://github.com/ronealdenila/davnor-medicare-ui.git
+
   # Service provider
   get: ^4.3.8
 
@@ -60,6 +64,9 @@ dependencies:
 
   #data table 2
   data_table_2: ^2.1.1
+
+  #Auto Size Text
+  auto_size_text: ^3.0.0-nullsafety.0
 
 dev_dependencies:
   flutter_test:

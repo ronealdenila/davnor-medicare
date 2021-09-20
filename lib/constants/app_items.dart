@@ -1,5 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/models/category_model.dart';
+import 'package:davnor_medicare/core/models/menu_item_model.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 
 class Item {
   const Item(this.name);
@@ -82,4 +84,11 @@ final List<Item> day = <Item>[
   const Item('29'),
   const Item('30'),
   const Item('31'),
+];
+
+List<MenuItem> sideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DASHBOARD),
+  MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
+  MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
+  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];

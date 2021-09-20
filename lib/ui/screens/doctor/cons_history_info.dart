@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -28,7 +29,7 @@ class HistoryInfoScreen extends StatelessWidget {
               ),
             ),
             child: Column(children: <Widget>[
-             verticalSpace20,
+              verticalSpace20,
               CircleAvatar(
                 backgroundImage: AssetImage(authHeader),
                 radius: 50,
@@ -66,7 +67,7 @@ class HistoryInfoScreen extends StatelessWidget {
                             Text('Consultation Info',
                                 textAlign: TextAlign.left,
                                 style: title20Regular),
-                           verticalSpace20,
+                            verticalSpace20,
                             Text('Patients Name',
                                 textAlign: TextAlign.left, style: body16Bold),
                             verticalSpace20,
@@ -77,7 +78,7 @@ class HistoryInfoScreen extends StatelessWidget {
                             ),
                             Text('Consultation Started',
                                 textAlign: TextAlign.left, style: body16Bold),
-                           verticalSpace20,
+                            verticalSpace20,
                             Text('Consultation Ended',
                                 textAlign: TextAlign.left, style: body16Bold),
                             verticalSpace20,

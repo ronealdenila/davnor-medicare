@@ -120,6 +120,12 @@ const String verificationDescription =
 const String consForm3Description =
     'Select and upload images to support your follow-up consultation';
 
+//PSWD
+const String cardSubtitle1 = 'in-charge of Medical Assistance (MA)';
+const String cardSubtitle2 =
+    "Together let's provide healthcare, improve life, and help our community.";
+
 //Admin
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';
-const String pswdStaffRegister = 'Please fill  in the information of the PSWD Personnel.';
+const String pswdStaffRegister =
+    'Please fill  in the information of the PSWD Personnel.';

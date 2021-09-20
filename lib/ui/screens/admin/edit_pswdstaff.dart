@@ -1,27 +1,26 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class EditPSWDStaffScrenn extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: SingleChildScrollView(child: ResponsiveView())),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: SingleChildScrollView(child: ResponsiveView())),
     );
   }
 }
 
-class ResponsiveView extends GetResponsiveView{
-  ResponsiveView() : super (alwaysUseBuilder: false);
+class ResponsiveView extends GetResponsiveView {
+  ResponsiveView() : super(alwaysUseBuilder: false);
 
   @override
   Widget phone() => Column(
@@ -30,7 +29,7 @@ class ResponsiveView extends GetResponsiveView{
             height: Get.height,
             width: Get.width,
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               textTitle(),
               Column(
                 children: <Widget>[
@@ -116,43 +115,37 @@ class ResponsiveView extends GetResponsiveView{
   }
 
   Widget userPSWDImage() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                authHeader,
-              ),
-              radius: 40,
-            ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(children: [
+        CircleAvatar(
+          backgroundImage: AssetImage(
+            authHeader,
+          ),
+          radius: 40,
+        ),
       ])
-      ]);
+    ]);
   }
 
-   Widget editInfoofPSWDStaff() {
+  Widget editInfoofPSWDStaff() {
     //bool _isEditable = false;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalSpace15,
-        const Text(
-          'Last Name',
-          style: body14Medium,
-        ),
-        verticalSpace10,
-        SizedBox(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      verticalSpace15,
+      const Text(
+        'Last Name',
+        style: body14Medium,
+      ),
+      verticalSpace10,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
           decoration: InputDecoration(
-            suffixIcon:
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
-                iconSize: 20,
-              ),
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+              iconSize: 20,
+            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -162,21 +155,20 @@ class ResponsiveView extends GetResponsiveView{
         ),
       ),
       const Text(
-          'First Name',
-          style: body14Medium,
-        ),
-        verticalSpace10,
-        SizedBox(
+        'First Name',
+        style: body14Medium,
+      ),
+      verticalSpace10,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
           decoration: InputDecoration(
-            suffixIcon:
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
-                iconSize: 20,
-              ),
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+              iconSize: 20,
+            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -185,22 +177,21 @@ class ResponsiveView extends GetResponsiveView{
           ),
         ),
       ),
-        const Text(
-          'Position',
-          style: body14Medium,
-        ),
-        verticalSpace10,
-        SizedBox(
+      const Text(
+        'Position',
+        style: body14Medium,
+      ),
+      verticalSpace10,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
           decoration: InputDecoration(
-            suffixIcon:
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
-                iconSize: 20,
-              ),
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+              iconSize: 20,
+            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -209,21 +200,19 @@ class ResponsiveView extends GetResponsiveView{
           ),
         ),
       ),
-      ]);
+    ]);
   }
 
   Widget textTitle() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Edit PSWD Staff Details',
-        textAlign: TextAlign.left, style: title24Bold),
-        
-        horizontalSpace80,
-        IconButton(
-          onPressed: () {}, 
-          icon: const Icon(Icons.remove_circle_outline_outlined,)
-       )
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('Edit PSWD Staff Details',
+          textAlign: TextAlign.left, style: title24Bold),
+      horizontalSpace80,
+      IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.remove_circle_outline_outlined,
+          ))
     ]);
   }
 }

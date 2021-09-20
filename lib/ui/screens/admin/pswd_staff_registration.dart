@@ -2,8 +2,8 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
 //import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -119,34 +119,13 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget regPSWDInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Last Name',
-          style: body14Medium,
-        ),
-        verticalSpace15,
-        SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text(
-          'First Name',
-          style: body14Medium,
-        ),
-        verticalSpace15,
-        SizedBox(
+        'Last Name',
+        style: body14Medium,
+      ),
+      verticalSpace15,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
@@ -160,11 +139,11 @@ class ResponsiveView extends GetResponsiveView {
         ),
       ),
       const Text(
-          'Email Address',
-          style: body14Medium,
-        ),
-        verticalSpace15,
-        SizedBox(
+        'First Name',
+        style: body14Medium,
+      ),
+      verticalSpace15,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
@@ -177,19 +156,35 @@ class ResponsiveView extends GetResponsiveView {
           ),
         ),
       ),
-      ]);
-  }  
+      const Text(
+        'Email Address',
+        style: body14Medium,
+      ),
+      verticalSpace15,
+      SizedBox(
+        width: 340,
+        height: 90,
+        child: TextFormField(
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ]);
+  }
 
-    Widget regPSWDInfop() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Position',
-          style: body14Medium,
-        ),
-        verticalSpace15,
-        SizedBox(
+  Widget regPSWDInfop() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text(
+        'Position',
+        style: body14Medium,
+      ),
+      verticalSpace15,
+      SizedBox(
         width: 340,
         height: 90,
         child: TextFormField(
@@ -202,19 +197,18 @@ class ResponsiveView extends GetResponsiveView {
           ),
         ),
       ),
-      ]);
+    ]);
   }
 
   Widget pswdInfo() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const[
-         Text('PSWD Staff Registration Form ',
-        textAlign: TextAlign.left, style: title24Bold),
-        verticalSpace10,
-         Text(pswdStaffRegister,
-        textAlign: TextAlign.left, style: body16SemiBold),
-      ]
-    );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text('PSWD Staff Registration Form ',
+              textAlign: TextAlign.left, style: title24Bold),
+          verticalSpace10,
+          Text(pswdStaffRegister,
+              textAlign: TextAlign.left, style: body16SemiBold),
+        ]);
   }
 }
