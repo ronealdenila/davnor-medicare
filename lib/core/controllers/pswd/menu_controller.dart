@@ -38,6 +38,19 @@ class MenuController extends GetxController {
     }
   }
 
+  Widget pswdHeadreturnIconFor(String itemName) {
+    switch (itemName) {
+      case 'Dashboard':
+        return _customIcon(Icons.dashboard, itemName);
+      case 'For Approval':
+        return _customIcon(Icons.description, itemName);
+      case 'Medical Assistance History':
+        return _customIcon(Icons.description, itemName);
+      default:
+        return _customIcon(Icons.exit_to_app, itemName);
+    }
+  }
+
   Widget _customIcon(IconData icon, String itemName) {
     if (isActive(itemName)!) {
       return Icon(

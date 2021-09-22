@@ -100,7 +100,7 @@ abstract class _Paths {
   static const DOC_CONS_HISTORY = '/cons-history';
 
   //PSWD
-  static const PSWD_HEAD_HOME = '/home';
+  static const PSWD_HEAD_HOME = '/pswd-head-home';
   static const PSWD_PERSONNEL_HOME = '/pswd-home';
   static const DASHBOARD = '/dashboard';
 
@@ -119,7 +119,7 @@ abstract class _Paths {
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';
   static const VERIFICATION_REQ_ITEM = '/adm-verification-req-item';
   static const VERIFICATION_REQ_LIST = '/adm-verification-req-list';
-  static const ADMIN_PROFILE ='/admin-profile';
-  static const EDIT_DOCTOR ='/edit-doctor';
-  static const EDIT_PSWD_STAFF ='/edit-pswd-staff';
+  static const ADMIN_PROFILE = '/admin-profile';
+  static const EDIT_DOCTOR = '/edit-doctor';
+  static const EDIT_PSWD_STAFF = '/edit-pswd-staff';
 }

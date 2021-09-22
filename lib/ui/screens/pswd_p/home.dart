@@ -36,7 +36,7 @@ class PSWDPersonnelHome extends StatelessWidget {
         scaffoldKey,
         fetchedData!.firstName,
       ),
-      drawer: Drawer(child: SideMenu()),
+      drawer: Drawer(child: PswdPSideMenu()),
       body: ResponsiveBody(),
     );
   }
@@ -61,7 +61,7 @@ class DesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: SideMenu()),
+        Expanded(child: PswdPSideMenu()),
         Expanded(
           flex: 5,
           child: Container(
@@ -115,8 +115,9 @@ class ResponsiveLeading extends GetResponsiveView {
   }
 }
 
-class DashboardScreen extends GetView<MenuController> {
+class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
+  HomeController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override
@@ -139,7 +140,7 @@ class DashboardScreen extends GetView<MenuController> {
               width: context.width,
               height: context.height * .2,
               decoration: const BoxDecoration(
-                color: verySoftBlueColor,
+                color: kcVerySoftBlueColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(50),
                 ),
@@ -307,8 +308,8 @@ class DashboardScreen extends GetView<MenuController> {
                                             style: title32Bold.copyWith(
                                                 color: kcNeutralColor),
                                           ),
-                                          const TextSpan(
-                                            text: '(Dec 21, 2021)',
+                                          TextSpan(
+                                            text: '(${homeController.dateNow})',
                                             style: subtitle18Regular,
                                           ),
                                         ],
@@ -318,7 +319,7 @@ class DashboardScreen extends GetView<MenuController> {
                                   // verticalSpace15,
 
                                   DmText.subtitle18Regular(
-                                    'The number of people who filled medical assistance request are',
+                                    medicalStatusSubtitle1,
                                   ),
                                   // verticalSpace20,
                                   Align(
@@ -541,8 +542,8 @@ class DashboardScreen extends GetView<MenuController> {
   }
 }
 
-class SideMenuItem extends GetView<MenuController> {
-  const SideMenuItem({required this.itemName, required this.onTap});
+class PswdPSideMenuItem extends GetView<MenuController> {
+  const PswdPSideMenuItem({required this.itemName, required this.onTap});
   final String? itemName;
   final void Function()? onTap;
 
