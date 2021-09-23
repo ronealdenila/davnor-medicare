@@ -15,7 +15,8 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
-class MAFormScreen extends GetView<MARequestController> {
+class MAFormScreen extends StatelessWidget {
+  static MARequestController ma = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +60,11 @@ class MAFormScreen extends GetView<MARequestController> {
                 ]),
             verticalSpace10,
             Visibility(
-              visible: !controller.isMAForYou.value,
+              visible: !ma.isMAForYou.value,
               //CustomFormField was created for patient global widget
               //please utilize it.
               child: TextFormField(
-                controller: controller.firstNameController,
+                controller: ma.firstNameController,
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   border: OutlineInputBorder(
@@ -75,15 +76,14 @@ class MAFormScreen extends GetView<MARequestController> {
                 onChanged: (value) {
                   return;
                 },
-                onSaved: (value) =>
-                    controller.firstNameController.text = value!,
+                onSaved: (value) => ma.firstNameController.text = value!,
               ),
             ),
             verticalSpace10,
             Visibility(
-              visible: !controller.isMAForYou.value,
+              visible: !ma.isMAForYou.value,
               child: TextFormField(
-                controller: controller.lastNameController,
+                controller: ma.lastNameController,
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   border: OutlineInputBorder(
@@ -95,12 +95,12 @@ class MAFormScreen extends GetView<MARequestController> {
                 onChanged: (value) {
                   return;
                 },
-                onSaved: (value) => controller.lastNameController.text = value!,
+                onSaved: (value) => ma.lastNameController.text = value!,
               ),
             ),
             verticalSpace10,
             TextFormField(
-              controller: controller.addressController,
+              controller: ma.addressController,
               decoration: const InputDecoration(
                 labelText: 'Address',
                 border: OutlineInputBorder(
@@ -112,7 +112,7 @@ class MAFormScreen extends GetView<MARequestController> {
               onChanged: (value) {
                 return;
               },
-              onSaved: (value) => controller.addressController.text = value!,
+              onSaved: (value) => ma.addressController.text = value!,
             ),
             verticalSpace10,
             Row(
@@ -121,7 +121,7 @@ class MAFormScreen extends GetView<MARequestController> {
                 SizedBox(
                   width: 145,
                   child: TextFormField(
-                    controller: controller.ageController,
+                    controller: ma.ageController,
                     decoration: const InputDecoration(
                       labelText: 'Age',
                       border: OutlineInputBorder(
@@ -134,7 +134,7 @@ class MAFormScreen extends GetView<MARequestController> {
                     onChanged: (value) {
                       return;
                     },
-                    onSaved: (value) => controller.ageController.text = value!,
+                    onSaved: (value) => ma.ageController.text = value!,
                   ),
                 ),
                 verticalSpace10,
@@ -144,10 +144,8 @@ class MAFormScreen extends GetView<MARequestController> {
                   child: CustomDropdown(
                     hintText: 'Select Gender',
                     dropdownItems: gender,
-                    onChanged: (Item? item) =>
-                        controller.gender.value = item!.name,
-                    onSaved: (Item? item) =>
-                        controller.gender.value = item!.name,
+                    onChanged: (Item? item) => ma.gender.value = item!.name,
+                    onSaved: (Item? item) => ma.gender.value = item!.name,
                   ),
                 ),
               ],
@@ -161,14 +159,14 @@ class MAFormScreen extends GetView<MARequestController> {
                 child: CustomDropdown(
                   hintText: 'Select Type',
                   dropdownItems: type,
-                  onChanged: (Item? item) => controller.type.value = item!.name,
-                  onSaved: (Item? item) => controller.type.value = item!.name,
+                  onChanged: (Item? item) => ma.type.value = item!.name,
+                  onSaved: (Item? item) => ma.type.value = item!.name,
                 ),
               ),
             ),
             verticalSpace15,
             Visibility(
-              visible: !controller.isMAForYou.value,
+              visible: !ma.isMAForYou.value,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -203,7 +201,7 @@ class MAFormScreen extends GetView<MARequestController> {
               child: SizedBox(
                 width: 160,
                 child: CustomButton(
-                  onTap: controller.nextButton,
+                  onTap: ma.nextButton,
                   text: 'Next',
                   buttonColor: verySoftBlueColor,
                 ),
@@ -217,9 +215,9 @@ class MAFormScreen extends GetView<MARequestController> {
   }
 
   Widget getValidID() {
-    if (controller.imgOfValidID.value == '') {
+    if (ma.imgOfValidID.value == '') {
       return InkWell(
-        onTap: controller.pickSingleImage,
+        onTap: ma.pickSingleImage,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -238,11 +236,11 @@ class MAFormScreen extends GetView<MARequestController> {
       );
     }
     return InkWell(
-      onTap: controller.pickSingleImage,
+      onTap: ma.pickSingleImage,
       child: Stack(
         children: [
           Image.file(
-            File(controller.imgOfValidID.value),
+            File(ma.imgOfValidID.value),
             width: Get.width,
             height: Get.height,
             fit: BoxFit.fill,
@@ -252,7 +250,7 @@ class MAFormScreen extends GetView<MARequestController> {
             top: 5,
             child: InkWell(
               onTap: () {
-                controller.imgOfValidID.value = '';
+                ma.imgOfValidID.value = '';
               },
               child: const Icon(
                 Icons.remove_circle,

@@ -12,10 +12,10 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:uuid/uuid.dart';
+import 'package:davnor_medicare/core/models/pswd_stats_model.dart';
 
 class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
-
   static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
 
@@ -44,21 +44,31 @@ class MARequestController extends GetxController {
   final RxString photoURL = ''.obs;
   final RxString generatedCode = 'MA24'.obs; //MA24 -> mock code
 
+  RxList<PSWDStatusModel> statusList = RxList<PSWDStatusModel>();
+
   @override
-  void onReady() async {
+  void onReady() {
     super.onReady();
-    isAvailable = hasAvailableSlot();
-    print('has available slot: $isAvailable');
+    log.i('ONREADY');
+    statusList.bindStream(getStatus());
+  }
+
+  Stream<List<PSWDStatusModel>> getStatus() {
+    log.i('MA Queue Controller | Get PSWD Status');
+    return firestore.collection('pswd_status').snapshots().map(
+          (query) => query.docs
+              .map((item) => PSWDStatusModel.fromJson(item.data()))
+              .toList(),
+        );
   }
 
   bool hasAvailableSlot() {
-    log.i('Fetch data');
-    const _slot = 0; //dummy data
-    if (_slot < 1) {
-      return false;
-    } else {
+    final slot = statusList[0].maSlot!;
+    final rqstd = statusList[0].maRequested!;
+    if (slot > rqstd) {
       return true;
     }
+    return false;
   }
 
   bool hasIDSelected() {
@@ -107,11 +117,16 @@ class MARequestController extends GetxController {
 
   Future<void> requestMAButton() async {
     //should have loading progress
+    //showLoading();
     if (hasPrescriptionSelected()) {
-      //check slot
-
-      await uploadAndSaveImgs();
-      await saveRequestforMA();
+      if (hasAvailableSlot()) {
+        //check slot again
+        await uploadAndSaveImgs();
+        await saveRequestforMA();
+      } else {
+        //sorry naunhan naka, naay mas paspas mu fill up
+      }
+      //remove loading progress
     } else {
       log.i('ERROR: please provide prescriptions');
     }
@@ -167,9 +182,41 @@ class MARequestController extends GetxController {
     documentID.value = docRef.id; //save id bcs it will be save w/ the queueNum
 
     //Generate MA Queue
+    final lastNum = statusList[0].qLastNum! + 1;
+    if (lastNum < 10) {
+      generatedCode.value = 'MA0$lastNum';
+    } else {
+      generatedCode.value = 'MA$lastNum';
+    }
+
+    await addToMAQueueCollection();
+    await updateStatus();
+
     await showAllData(); //FOR TESTING ONLY
     await clearControllers();
     await showDialog();
+  }
+
+  Future<void> addToMAQueueCollection() async {
+    await firestore.collection('ma_queue').doc(documentID.value).set({
+      'requesterID': auth.currentUser!.uid,
+      'maID': documentID.value,
+      'queueNum': generatedCode.value,
+      'dateCreated':
+          Timestamp.fromDate(DateTime.now()), //to be changed -> epoch
+    });
+  }
+
+  Future<void> updateStatus() async {
+    return firestore
+        .collection('pswd_status')
+        .doc('status')
+        .update({
+          'qLastNum': statusList[0].qLastNum! + 1,
+          'maRequested': statusList[0].maRequested! + 1
+        })
+        .then((value) => print("Status Updated"))
+        .catchError((error) => print("Failed to update status: $error"));
   }
 
   Future<void> showDialog() async {
@@ -188,6 +235,8 @@ class MARequestController extends GetxController {
     log.i('Full Name: ${firstNameController.text} ${lastNameController.text}');
     log.i('Age: ${ageController.text}, Address: ${addressController.text}');
     log.i('Gender: ${gender.value}, Patient Type: ${type.value}');
+    log.i('Document ID: ${documentID.value}');
+    log.i('Generated Queue Number: ${generatedCode.value}');
   }
 
   Future<void> clearControllers() async {

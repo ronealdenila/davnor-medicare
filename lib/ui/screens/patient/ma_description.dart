@@ -11,7 +11,6 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  static MARequestController ma = Get.find();
   MARequestController controller = Get.put(MARequestController());
 
   @override
@@ -149,16 +148,17 @@ class MADescriptionScreen extends StatelessWidget {
                 Align(
                   child: CustomButton(
                     onTap: () {
-                      if (controller.isAvailable) {
+                      if (controller.hasAvailableSlot()) {
+                        //check activeQueue/slot/fund
                         showConfirmationDialog(
                           dialogTitle: dialog2Title,
                           dialogCaption: dialog2Caption,
                           onYesTap: () {
-                            ma.isMAForYou.value = true;
+                            controller.isMAForYou.value = true;
                             Get.to(() => MAFormScreen());
                           },
                           onNoTap: () {
-                            ma.isMAForYou.value = false;
+                            controller.isMAForYou.value = false;
                             Get.to(() => MAFormScreen());
                           },
                         );
@@ -166,7 +166,7 @@ class MADescriptionScreen extends StatelessWidget {
                         showErrorDialog(
                           errorTitle: 'No Slot Available',
                           errorDescription:
-                              'No Slot available at the moment please bla bla',
+                              'No available slot at the moment. Please check..',
                         );
                       }
                     },
@@ -180,6 +180,21 @@ class MADescriptionScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showDialog() {
+    return showConfirmationDialog(
+      dialogTitle: dialog2Title,
+      dialogCaption: dialog2Caption,
+      onYesTap: () {
+        controller.isMAForYou.value = true;
+        Get.to(() => MAFormScreen());
+      },
+      onNoTap: () {
+        controller.isMAForYou.value = false;
+        Get.to(() => MAFormScreen());
+      },
     );
   }
 }
