@@ -25,6 +25,8 @@ class MARequestController extends GetxController {
   RxBool isMAForYou = true.obs;
   final String userID = auth.currentUser!.uid;
 
+  bool isAvailable = true;
+
   //Input Data from MA Form
   final RxString imgOfValidID = ''.obs;
   final RxString gender = ''.obs;
@@ -41,6 +43,23 @@ class MARequestController extends GetxController {
   final RxString listPhotoURL = ''.obs;
   final RxString photoURL = ''.obs;
   final RxString generatedCode = 'MA24'.obs; //MA24 -> mock code
+
+  @override
+  void onReady() async {
+    super.onReady();
+    isAvailable = hasAvailableSlot();
+    print('has available slot: $isAvailable');
+  }
+
+  bool hasAvailableSlot() {
+    log.i('Fetch data');
+    const _slot = 0; //dummy data
+    if (_slot < 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   bool hasIDSelected() {
     if (imgOfValidID.value != '') {

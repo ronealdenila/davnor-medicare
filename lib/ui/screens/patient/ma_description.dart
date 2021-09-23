@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
   static MARequestController ma = Get.find();
+  MARequestController controller = Get.put(MARequestController());
 
   @override
   Widget build(BuildContext context) {
@@ -147,18 +148,28 @@ class MADescriptionScreen extends StatelessWidget {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Align(
                   child: CustomButton(
-                    onTap: () => showConfirmationDialog(
-                      dialogTitle: dialog2Title,
-                      dialogCaption: dialog2Caption,
-                      onYesTap: () {
-                        ma.isMAForYou.value = true;
-                        Get.to(() => MAFormScreen());
-                      },
-                      onNoTap: () {
-                        ma.isMAForYou.value = false;
-                        Get.to(() => MAFormScreen());
-                      },
-                    ),
+                    onTap: () {
+                      if (controller.isAvailable) {
+                        showConfirmationDialog(
+                          dialogTitle: dialog2Title,
+                          dialogCaption: dialog2Caption,
+                          onYesTap: () {
+                            ma.isMAForYou.value = true;
+                            Get.to(() => MAFormScreen());
+                          },
+                          onNoTap: () {
+                            ma.isMAForYou.value = false;
+                            Get.to(() => MAFormScreen());
+                          },
+                        );
+                      } else {
+                        showErrorDialog(
+                          errorTitle: 'No Slot Available',
+                          errorDescription:
+                              'No Slot available at the moment please bla bla',
+                        );
+                      }
+                    },
                     text: 'Avail Medical Assistance',
                     buttonColor: verySoftBlueColor,
                     fontSize: 20,
