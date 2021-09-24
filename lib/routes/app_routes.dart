@@ -114,7 +114,7 @@ abstract class _Paths {
   static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
 
   //Admin
-  static const ADMIN_HOME = '/home';
+  static const ADMIN_HOME = '/admin-home';
   static const DOCTOR_REGISTRATION = '/adm-doctor-registration';
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';
   static const VERIFICATION_REQ_ITEM = '/adm-verification-req-item';

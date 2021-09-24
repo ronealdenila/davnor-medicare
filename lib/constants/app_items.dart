@@ -93,6 +93,13 @@ List<MenuItem> pswdPSideMenuItemRoutes = [
   MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];
 
+List<MenuItem> adminSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DASHBOARD),
+  //Change me to my appropriate route
+  MenuItem('List Of Doctors', Routes.VERIFICATION_REQ_LIST),
+  MenuItem('List of PSWD Personnel', Routes.DASHBOARD),
+];
+
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
   MenuItem('For Approval', Routes.ON_PROGRESS_REQ_LIST),

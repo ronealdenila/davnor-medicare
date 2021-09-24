@@ -132,3 +132,6 @@ const String medicalStatusSubtitle2 =
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';
 const String pswdStaffRegister =
     'Please fill  in the information of the PSWD Personnel.';
+
+const String medicareDataSubtitle =
+    'The number of government doctors we have in the application';

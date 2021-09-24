@@ -50,7 +50,6 @@ class ActionCard extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   height: kIsWeb ? 29 : 25,
-                  //wala ko kabalo asa na value ang basehan ani sa figma
                   width: kIsWeb ? 440 : 99,
                   decoration: BoxDecoration(
                       color: secondaryColor,
