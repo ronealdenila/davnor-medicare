@@ -109,9 +109,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
 
   Widget bubbleChat(ChatModel chat) {
     if (chat.senderID == auth.currentUser!.uid) {
-      return leftBubbleChat(chat);
+      return rightBubbleChat(chat);
     }
-    return rightBubbleChat(chat);
+    return leftBubbleChat(chat);
   }
 
   Widget leftBubbleChat(ChatModel chat) {

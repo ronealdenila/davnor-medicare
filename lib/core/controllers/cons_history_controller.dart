@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');

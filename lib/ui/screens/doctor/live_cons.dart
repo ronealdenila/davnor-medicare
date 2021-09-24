@@ -1,5 +1,6 @@
 import 'dart:ui';
-import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -8,107 +9,214 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 
 class LiveConsultationScreen extends StatelessWidget {
-  static ConsultationsController doctorHomeController = Get.find();
-  final ConsultationModel consData = Get.arguments as ConsultationModel;
+  static LiveConsController liveCont = Get.find();
+  final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
+  final LiveChatController liveChatCont = Get.put(LiveChatController());
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          elevation: 1,
-          title: Row(
-            children: [
-              Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: getPhoto(consData)),
-              horizontalSpace15,
-              SizedBox(
-                width: 144,
-                child: Text(
-                  doctorHomeController.getFullName(consData),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: subtitle18Medium.copyWith(color: Colors.black),
+      child: FutureBuilder(
+          future: liveCont.getPatientData(consData),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return liveConsScreen();
+            }
+            return const Text('Loading..');
+          }),
+    );
+  }
+
+  Widget liveConsScreen() {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 1,
+        title: Row(
+          children: [
+            Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
+                child: getPhoto(consData)),
+            horizontalSpace15,
+            SizedBox(
+              width: 144,
+              child: Text(
+                liveCont.getPatientName(consData),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: subtitle18Medium.copyWith(color: Colors.black),
               ),
-            ],
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.videocam_outlined,
-                size: 30,
-              ),
-              onPressed: () {},
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.info_outline,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
-            horizontalSpace10,
           ],
         ),
-        body: SizedBox(
-          width: Get.width,
-          height: Get.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Column(
-                        children: [
-                          Row(
-                            //Bubble chat
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: const BoxDecoration(
-                                    color: neutralBubbleColor,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    consData.description!,
-                                    style: body16Medium,
-                                  )),
-                            ],
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.videocam_outlined,
+              size: 30,
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.info_outline,
+              size: 30,
+            ),
+            onPressed: () {},
+          ),
+          horizontalSpace10,
+        ],
+      ),
+      body: SizedBox(
+        width: Get.width,
+        height: Get.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+                child: StreamBuilder(
+                    stream: liveChatCont.getLiveChatMessages(consData),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        return ListView.builder(
+                          padding: const EdgeInsets.all(25),
+                          shrinkWrap: true,
+                          itemCount: liveChatCont.liveChat.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                bubbleChat(liveChatCont.liveChat[index]),
+                                verticalSpace15
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      return const Text('Loading ..');
+                    })),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: SizedBox(
+                width: Get.width,
+                height: 100,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.attach_file,
+                            color: kcInfoColor,
                           ),
-                          verticalSpace15,
-                        ],
-                      ),
+                          onPressed: () {},
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              controller: liveChatCont.chatController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
+                                  ),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                return;
+                              },
+                              onSaved: (value) =>
+                                  liveChatCont.chatController.text = value!,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.send,
+                            color: kcInfoColor,
+                          ),
+                          onPressed: liveChatCont.sendMessage,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget getPhoto(ConsultationModel model) {
-    if (doctorHomeController.getProfilePhoto(model) == '') {
+  Widget bubbleChat(ChatModel chat) {
+    if (chat.senderID == auth.currentUser!.uid) {
+      return rightBubbleChat(chat);
+    }
+    return leftBubbleChat(chat);
+  }
+
+  Widget leftBubbleChat(ChatModel chat) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Container(
+              constraints: BoxConstraints(maxWidth: Get.width * .7),
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                color: neutralBubbleColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Text(
+                chat.message!,
+                style: body16Medium.copyWith(height: 1.4),
+              )),
+        ),
+      ],
+    );
+  }
+
+  Widget rightBubbleChat(ChatModel chat) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Flexible(
+          child: Container(
+              constraints: BoxConstraints(maxWidth: Get.width * .7),
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: verySoftBlueColor[60],
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              child: Text(
+                chat.message!,
+                style: body16Medium.copyWith(color: Colors.white, height: 1.4),
+              )),
+        ),
+      ],
+    );
+  }
+
+  Widget getPhoto(LiveConsultationModel model) {
+    if (liveCont.getPatientProfile(model) == '') {
       return CircleAvatar(
         radius: 25,
         backgroundImage: AssetImage(blankProfile),
@@ -116,8 +224,7 @@ class LiveConsultationScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage:
-          NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: NetworkImage(liveCont.getPatientProfile(model)),
     );
   }
 }
