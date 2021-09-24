@@ -27,7 +27,8 @@ class LiveConsultationScreen extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               return liveConsScreen();
             }
-            return const Text('Loading..');
+            return const Scaffold(
+                body: Center(child: CircularProgressIndicator()));
           }),
     );
   }
@@ -87,6 +88,7 @@ class LiveConsultationScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.active) {
                         return ListView.builder(
+                          reverse: true,
                           padding: const EdgeInsets.all(25),
                           shrinkWrap: true,
                           itemCount: liveChatCont.liveChat.length,
@@ -123,6 +125,7 @@ class LiveConsultationScreen extends StatelessWidget {
                           child: SizedBox(
                             child: TextFormField(
                               keyboardType: TextInputType.multiline,
+                              maxLines: null,
                               controller: liveChatCont.chatController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(

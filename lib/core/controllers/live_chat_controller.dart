@@ -29,7 +29,7 @@ class LiveChatController extends GetxController {
         .collection('chat')
         .doc(model.consID)
         .collection('messages')
-        .orderBy('dateCreated', descending: false)
+        .orderBy('dateCreated', descending: true)
         .snapshots();
   }
 

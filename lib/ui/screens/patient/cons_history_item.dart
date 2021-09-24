@@ -36,9 +36,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
                   child: getPhoto(consData)),
               horizontalSpace15,
               SizedBox(
-                width: 144,
+                width: 190,
                 child: Text(
-                  consHController.getDoctorFullName(consData),
+                  'Dr. ${consHController.getDoctorFullName(consData)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: subtitle18Medium.copyWith(color: Colors.black),
@@ -71,7 +71,8 @@ class ConsHistoryItemScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return ListView.builder(
-                          padding: const EdgeInsets.all(25),
+                          reverse: true,
+                          padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
                           shrinkWrap: true,
                           itemCount: consHController.chatHistory.length,
                           itemBuilder: (context, index) {

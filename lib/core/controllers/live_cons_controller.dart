@@ -6,10 +6,12 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class LiveConsController extends GetxController {
   final log = getLogger('Live Consultation Controller');
 
+  static AuthController authController = Get.find();
   RxList<LiveConsultationModel> liveCons = RxList<LiveConsultationModel>([]);
 
   @override
@@ -20,9 +22,15 @@ class LiveConsController extends GetxController {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getLiveCons() {
     log.i('Get Live Cons | ${auth.currentUser!.uid}');
+    if (authController.userRole == 'doctor') {
+      return firestore
+          .collection('live_cons')
+          .where('docID', isEqualTo: auth.currentUser!.uid)
+          .snapshots();
+    }
     return firestore
         .collection('live_cons')
-        .where('docID', isEqualTo: auth.currentUser!.uid)
+        .where('patientID', isEqualTo: auth.currentUser!.uid)
         .snapshots();
   }
 
@@ -33,11 +41,6 @@ class LiveConsController extends GetxController {
           .map((item) => LiveConsultationModel.fromJson(item.data()))
           .toList(),
     );
-  }
-
-  Future<void> getAdditionalData(LiveConsultationModel model) async {
-    await getPatientData(model);
-    await getDoctorData(model);
   }
 
   Future<void> getPatientData(LiveConsultationModel model) async {

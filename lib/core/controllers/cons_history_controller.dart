@@ -17,7 +17,7 @@ class ConsHistoryController extends GetxController {
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
-        //.orderBy('dateRqstd', descending: false)
+        //.orderBy('dateRqstd', descending: true)
         .get()
         .then((value) {
       value.docs.forEach((result) {
@@ -98,7 +98,7 @@ class ConsHistoryController extends GetxController {
         .collection('chat')
         .doc(model.consID)
         .collection('messages')
-        .orderBy('dateCreated', descending: false)
+        .orderBy('dateCreated', descending: true)
         .get()
         .then((value) {
       value.docs.forEach((result) {
