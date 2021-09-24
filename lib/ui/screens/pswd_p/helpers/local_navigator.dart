@@ -18,7 +18,7 @@ Navigator localNavigator() => Navigator(
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.DASHBOARD:
-      return _getPageRoute(DashboardScreen());
+      return _getPageRoute(PswdPDashboardScreen());
     case Routes.ON_PROGRESS_REQ_LIST:
       return _getPageRoute(OnProgressReqListScreen());
     case Routes.RELEASING_AREA_LIST:

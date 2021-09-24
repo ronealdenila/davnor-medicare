@@ -26,7 +26,7 @@ class ActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          height: kIsWeb ? 123 : 107,
+          height: kIsWeb ? 150 : 107,
           //width: width,
           decoration: BoxDecoration(
             color: color,
@@ -41,14 +41,15 @@ class ActionCard extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 child: Text(
                   text,
-                  style: kIsWeb ? body14SemiBoldWhite : body14SemiBoldWhite,
+                  style: kIsWeb
+                      ? title24Bold.copyWith(color: Colors.white)
+                      : body14SemiBoldWhite,
                 ),
               ),
               Align(
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   height: kIsWeb ? 29 : 25,
-                  //wala ko kabalo asa na value ang basehan ani sa figma
                   width: kIsWeb ? 440 : 99,
                   decoration: BoxDecoration(
                       color: secondaryColor,

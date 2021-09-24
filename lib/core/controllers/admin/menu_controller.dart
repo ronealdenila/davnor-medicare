@@ -2,7 +2,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MenuController extends GetxController {
+class AdminMenuController extends GetxController {
   final RxString activeItem = 'Dashboard'.obs;
 
   RxString hoverItem = ''.obs;
@@ -27,24 +27,9 @@ class MenuController extends GetxController {
     switch (itemName) {
       case 'Dashboard':
         return _customIcon(Icons.dashboard, itemName);
-      case 'On Progress Request':
+      case 'List Of Doctors':
         return _customIcon(Icons.description, itemName);
-      case 'Releasing Area':
-        return _customIcon(Icons.description, itemName);
-      case 'Medical Assistance History':
-        return _customIcon(Icons.description, itemName);
-      default:
-        return _customIcon(Icons.exit_to_app, itemName);
-    }
-  }
-
-  Widget pswdHeadreturnIconFor(String itemName) {
-    switch (itemName) {
-      case 'Dashboard':
-        return _customIcon(Icons.dashboard, itemName);
-      case 'For Approval':
-        return _customIcon(Icons.description, itemName);
-      case 'Medical Assistance History':
+      case 'List of PSWD Personnel':
         return _customIcon(Icons.description, itemName);
       default:
         return _customIcon(Icons.exit_to_app, itemName);

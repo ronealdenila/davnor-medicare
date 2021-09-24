@@ -124,8 +124,14 @@ const String consForm3Description =
 const String cardSubtitle1 = 'in-charge of Medical Assistance (MA)';
 const String cardSubtitle2 =
     "Together let's provide healthcare, improve life, and help our community.";
-
+const String medicalStatusSubtitle1 =
+    'The number of people who filled medical assistance request are';
+const String medicalStatusSubtitle2 =
+    'The number medical assistance request in need for approval are';
 //Admin
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';
 const String pswdStaffRegister =
     'Please fill  in the information of the PSWD Personnel.';
+
+const String medicareDataSubtitle =
+    'The number of government doctors we have in the application';

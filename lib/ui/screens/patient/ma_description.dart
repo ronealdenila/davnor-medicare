@@ -11,7 +11,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  static MARequestController ma = Get.find();
+  MARequestController controller = Get.put(MARequestController());
 
   @override
   Widget build(BuildContext context) {
@@ -147,18 +147,29 @@ class MADescriptionScreen extends StatelessWidget {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Align(
                   child: CustomButton(
-                    onTap: () => showConfirmationDialog(
-                      dialogTitle: dialog2Title,
-                      dialogCaption: dialog2Caption,
-                      onYesTap: () {
-                        ma.isMAForYou.value = true;
-                        Get.to(() => MAFormScreen());
-                      },
-                      onNoTap: () {
-                        ma.isMAForYou.value = false;
-                        Get.to(() => MAFormScreen());
-                      },
-                    ),
+                    onTap: () {
+                      if (controller.hasAvailableSlot()) {
+                        //check activeQueue/slot/fund
+                        showConfirmationDialog(
+                          dialogTitle: dialog2Title,
+                          dialogCaption: dialog2Caption,
+                          onYesTap: () {
+                            controller.isMAForYou.value = true;
+                            Get.to(() => MAFormScreen());
+                          },
+                          onNoTap: () {
+                            controller.isMAForYou.value = false;
+                            Get.to(() => MAFormScreen());
+                          },
+                        );
+                      } else {
+                        showErrorDialog(
+                          errorTitle: 'No Slot Available',
+                          errorDescription:
+                              'No available slot at the moment. Please check..',
+                        );
+                      }
+                    },
                     text: 'Avail Medical Assistance',
                     buttonColor: verySoftBlueColor,
                     fontSize: 20,
@@ -169,6 +180,21 @@ class MADescriptionScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showDialog() {
+    return showConfirmationDialog(
+      dialogTitle: dialog2Title,
+      dialogCaption: dialog2Caption,
+      onYesTap: () {
+        controller.isMAForYou.value = true;
+        Get.to(() => MAFormScreen());
+      },
+      onNoTap: () {
+        controller.isMAForYou.value = false;
+        Get.to(() => MAFormScreen());
+      },
     );
   }
 }

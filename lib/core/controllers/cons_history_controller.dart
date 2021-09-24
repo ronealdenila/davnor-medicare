@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
@@ -10,12 +11,14 @@ class ConsHistoryController extends GetxController {
 
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
+  RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
 
   Future<void> getConsHistoryForPatient() async {
     log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
+        //.orderBy('dateRqstd', descending: false)
         .get()
         .then((value) {
       value.docs.forEach((result) {
@@ -88,5 +91,20 @@ class ConsHistoryController extends GetxController {
 
   String getDoctorFullName(ConsultationHistoryModel model) {
     return '${getDoctorFirstName(model)} ${getDoctorLastName(model)}';
+  }
+
+  Future<void> getChatHistory(ConsultationHistoryModel model) async {
+    log.i(model.consID);
+    await firestore
+        .collection('chat')
+        .doc(model.consID)
+        .collection('messages')
+        .orderBy('dateCreated', descending: false)
+        .get()
+        .then((value) {
+      value.docs.forEach((result) {
+        chatHistory.add(ChatModel.fromJson(result.data()));
+      });
+    });
   }
 }

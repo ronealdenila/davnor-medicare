@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
@@ -30,6 +31,7 @@ class AllControllerBinding implements Bindings {
 
     //admin
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());
+    Get.lazyPut<AdminMenuController>(() => AdminMenuController());
 
     //pswd
     Get.lazyPut<HomeController>(() => HomeController());

@@ -224,12 +224,11 @@ class AuthController extends GetxController {
           await navigateWithDelay(Get.offAllNamed(Routes.PSWD_PERSONNEL_HOME));
           break;
         case 'pswd-h':
-          await navigateWithDelay(Get.offAll(() => PSWDHeadHomeScreen()));
+          await navigateWithDelay(Get.offAllNamed(Routes.PSWD_HEAD_HOME));
           break;
         case 'admin':
-          //await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
-          await navigateWithDelay(
-              Get.offAll(() => VerificationReqListScreen()));
+          // await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
+          await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');

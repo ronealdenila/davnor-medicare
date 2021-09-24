@@ -175,12 +175,16 @@ class AppPages {
       page: () => PSWDHeadHomeScreen(),
     ),
     GetPage(
+      name: _Paths.DASHBOARD,
+      page: () => PswdHeadDashboardScreen(),
+    ),
+    GetPage(
       name: _Paths.PSWD_PERSONNEL_HOME,
       page: () => PSWDPersonnelHome(),
     ),
     GetPage(
       name: _Paths.DASHBOARD,
-      page: () => DashboardScreen(),
+      page: () => PswdPDashboardScreen(),
     ),
     GetPage(
       name: _Paths.ON_PROGRESS_REQ_ITEM,

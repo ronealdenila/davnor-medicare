@@ -5,13 +5,12 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
-import 'package:davnor_medicare/ui/screens/doctor/live_cons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 
-class ConsRequestItemScreen extends StatelessWidget {
+class LiveConsultationScreen extends StatelessWidget {
   static ConsultationsController doctorHomeController = Get.find();
   final ConsultationModel consData = Get.arguments as ConsultationModel;
 
@@ -43,6 +42,13 @@ class ConsRequestItemScreen extends StatelessWidget {
             ],
           ),
           actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.videocam_outlined,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
             IconButton(
               icon: const Icon(
                 Icons.info_outline,
@@ -94,35 +100,6 @@ class ConsRequestItemScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Container(
-                  color: customNeutralColor2,
-                  width: Get.width,
-                  height: 100,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(LiveConsultationScreen());
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: verySoftBlueColor[60],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: 255,
-                        height: 43,
-                        child: Center(
-                          child: Text(
-                            'Start Consultation',
-                            style: body16SemiBold.copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

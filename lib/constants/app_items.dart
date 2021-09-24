@@ -86,9 +86,22 @@ final List<Item> day = <Item>[
   const Item('31'),
 ];
 
-List<MenuItem> sideMenuItemRoutes = [
+List<MenuItem> pswdPSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
   MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
   MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
+  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
+];
+
+List<MenuItem> adminSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DASHBOARD),
+  //Change me to my appropriate route
+  MenuItem('List Of Doctors', Routes.VERIFICATION_REQ_LIST),
+  MenuItem('List of PSWD Personnel', Routes.DASHBOARD),
+];
+
+List<MenuItem> pswdHeadSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DASHBOARD),
+  MenuItem('For Approval', Routes.ON_PROGRESS_REQ_LIST),
   MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];
