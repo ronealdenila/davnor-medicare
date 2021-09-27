@@ -20,9 +20,9 @@ class ConsHistoryController extends GetxController {
         //.orderBy('dateRqstd', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -33,9 +33,9 @@ class ConsHistoryController extends GetxController {
         .where('docID', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -101,9 +101,9 @@ class ConsHistoryController extends GetxController {
         .orderBy('dateCreated', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         chatHistory.add(ChatModel.fromJson(result.data()));
-      });
+      }
     });
   }
 }

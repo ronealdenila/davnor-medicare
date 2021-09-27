@@ -18,9 +18,9 @@ class MAHistoryController extends GetxController {
         .where('requesterID', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         maList.add(MAHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -31,9 +31,9 @@ class MAHistoryController extends GetxController {
         .orderBy('dateRqstd', descending: false)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         maList.add(MAHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 

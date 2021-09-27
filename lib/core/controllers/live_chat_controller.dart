@@ -42,16 +42,21 @@ class LiveChatController extends GetxController {
   }
 
   Future<void> sendMessage() async {
-    await firestore
-        .collection('chat')
-        .doc(consData.consID)
-        .collection('messages')
-        .add({
-      'senderID': auth.currentUser!.uid,
-      'message': chatController.text,
-      'dateCreated': Timestamp.fromDate(DateTime.now()),
-    });
-    await clearControllers();
+    if (chatController.text.isEmpty) {
+      Get.snackbar('No message', 'Please write a message',
+          snackPosition: SnackPosition.BOTTOM);
+    } else {
+      await firestore
+          .collection('chat')
+          .doc(consData.consID)
+          .collection('messages')
+          .add({
+        'senderID': auth.currentUser!.uid,
+        'message': chatController.text,
+        'dateCreated': Timestamp.fromDate(DateTime.now()),
+      });
+      await clearControllers();
+    }
   }
 
   Future<void> clearControllers() async {

@@ -81,17 +81,17 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                             ),
                             const Text('Date Requested',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
-                            Text('Consultation Started',
+                            const Text('Consultation Started',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
-                            Text('Consultation Ended',
+                            const Text('Consultation Ended',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
                           ]),
