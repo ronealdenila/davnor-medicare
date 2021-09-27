@@ -1,12 +1,14 @@
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:get/get.dart';
 
 class MACard extends StatelessWidget {
-  const MACard({
+  MACard({
     Key? key,
     required this.maHistory,
     required this.onTap,
@@ -14,6 +16,7 @@ class MACard extends StatelessWidget {
 
   final MAHistoryModel? maHistory;
   final void Function()? onTap;
+  final MAHistoryController maHController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,8 @@ class MACard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${maHistory!.dateClaimed!}',
+                            maHController
+                                .convertTimeStamp(maHistory!.dateClaimed!),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: body16SemiBold,

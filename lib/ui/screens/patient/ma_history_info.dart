@@ -229,7 +229,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('${maHistoryItem.dateRqstd}',
+                                child: Text(
+                                    maHController.convertTimeStamp(
+                                        maHistoryItem.dateRqstd!),
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -250,7 +252,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('${maHistoryItem.dateClaimed}',
+                                child: Text(
+                                    maHController.convertTimeStamp(
+                                        maHistoryItem.dateClaimed!),
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,

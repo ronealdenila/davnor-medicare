@@ -79,7 +79,7 @@ class MAHistoryModel {
         type: json['type'] as String,
         prescriptions: json['prescriptions'] as String,
         validID: json['validID'] as String,
-        dateRqstd: json['date_rqstd'] as Timestamp,
+        dateRqstd: json['dateRqstd'] as Timestamp,
         receivedBy: json['receivedBy'] as String,
         medWorth: json['medWorth'] as String,
         pharmacy: json['pharmacy'] as String,

@@ -94,12 +94,6 @@ class MAHistoryScreen extends StatelessWidget {
                   child: FutureBuilder(
                       future: maHController.getMAHistoryForPatient(),
                       builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text(
-                            'Something went wrong',
-                            textAlign: TextAlign.center,
-                          );
-                        }
                         if (snapshot.connectionState == ConnectionState.done) {
                           return ListView.builder(
                               padding: const EdgeInsets.symmetric(

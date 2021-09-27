@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MAHistoryController extends GetxController {
   final log = getLogger('MA History Controller');
@@ -20,8 +22,6 @@ class MAHistoryController extends GetxController {
         maList.add(MAHistoryModel.fromJson(result.data()));
       });
     });
-    log.i('Done');
-    log.i(maList.length);
   }
 
   Future<void> getMAHistoryForPSWD() async {
@@ -35,6 +35,11 @@ class MAHistoryController extends GetxController {
         maList.add(MAHistoryModel.fromJson(result.data()));
       });
     });
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 
   Future<void> getRequesterData(MAHistoryModel model) async {
