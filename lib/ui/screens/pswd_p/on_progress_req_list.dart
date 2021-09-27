@@ -2,7 +2,6 @@ import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -116,7 +115,7 @@ class MARequestListTable extends GetView<HomeController> {
 //             height: Get.height,
 //             width: Get.width,
 //             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//                
 //               maReqList(),
 //             ]),
 //           )
@@ -130,7 +129,7 @@ class MARequestListTable extends GetView<HomeController> {
 //             height: Get.height,
 //             width: Get.width,
 //             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//                
 //               maReqList(),
 //             ]),
 //           )
@@ -144,7 +143,7 @@ class MARequestListTable extends GetView<HomeController> {
 //             height: Get.height,
 //             width: screen.width,
 //             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//                
 //               maReqList(),
 //             ]),
 //           ),

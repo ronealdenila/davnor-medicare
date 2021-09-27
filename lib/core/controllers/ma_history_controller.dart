@@ -1,0 +1,63 @@
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:get/get.dart';
+
+class MAHistoryController extends GetxController {
+  final log = getLogger('MA History Controller');
+
+  RxList<MAHistoryModel> maList = RxList<MAHistoryModel>([]);
+
+  Future<void> getMAHistoryForPatient() async {
+    log.i('Get MA History for Patient - ${auth.currentUser!.uid}');
+    await firestore
+        .collection('ma_history')
+        .where('requesterID', isEqualTo: auth.currentUser!.uid)
+        .get()
+        .then((value) {
+      value.docs.forEach((result) {
+        maList.add(MAHistoryModel.fromJson(result.data()));
+      });
+    });
+    log.i('Done');
+    log.i(maList.length);
+  }
+
+  Future<void> getMAHistoryForPSWD() async {
+    log.i('Get MA History for PSWD Personnel - ${auth.currentUser!.uid}');
+    await firestore
+        .collection('ma_history')
+        .orderBy('dateRqstd', descending: false)
+        .get()
+        .then((value) {
+      value.docs.forEach((result) {
+        maList.add(MAHistoryModel.fromJson(result.data()));
+      });
+    });
+  }
+
+  Future<void> getRequesterData(MAHistoryModel model) async {
+    model.patient.value = await firestore
+        .collection('patients')
+        .doc(model.requesterID)
+        .get()
+        .then((doc) => PatientModel.fromJson(doc.data()!));
+  }
+
+  String getPatientProfile(MAHistoryModel model) {
+    return model.patient.value!.profileImage!;
+  }
+
+  String getPatientFirstName(MAHistoryModel model) {
+    return model.patient.value!.firstName!;
+  }
+
+  String getPatientLastName(MAHistoryModel model) {
+    return model.patient.value!.lastName!;
+  }
+
+  String getPatientName(MAHistoryModel model) {
+    return '${getPatientFirstName(model)} ${getPatientLastName(model)}';
+  }
+}

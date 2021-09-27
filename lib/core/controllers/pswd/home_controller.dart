@@ -1,5 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/models/ma_req_model.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,8 +7,7 @@ import 'package:intl/intl.dart';
 class HomeController extends GetxController {
   final log = getLogger('Home Controller');
 
-  RxList<MedicalAssistanceModel> medicalAssistances =
-      RxList<MedicalAssistanceModel>([]);
+  RxList<MARequestModel> medicalAssistances = RxList<MARequestModel>([]);
 
   final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
 
@@ -20,7 +19,7 @@ class HomeController extends GetxController {
     medicalAssistances.bindStream(getMedicalAssistances());
   }
 
-  Stream<List<MedicalAssistanceModel>> getMedicalAssistances() {
+  Stream<List<MARequestModel>> getMedicalAssistances() {
     log.i('getMedicalAssistance | Streaming Medical Assistance Request');
     return firestore
         .collection('ma_request')
@@ -28,7 +27,7 @@ class HomeController extends GetxController {
         .snapshots()
         .map(
           (query) => query.docs
-              .map((item) => MedicalAssistanceModel.fromJson(item.data()))
+              .map((item) => MARequestModel.fromJson(item.data()))
               .toList(),
         );
   }

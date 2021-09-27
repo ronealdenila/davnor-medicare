@@ -31,7 +31,7 @@ import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
-import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
@@ -92,7 +92,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MA_REQUEST_INFO,
-      page: () => MARequestInfoScreen(),
+      page: () => MAHistoryInfoScreen(),
     ),
     GetPage(
       name: _Paths.CONS_FORM,

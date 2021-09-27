@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 
 class MACard extends StatelessWidget {
   const MACard({
     Key? key,
-    required this.amount,
-    required this.date,
+    required this.maHistory,
     required this.onTap,
   }) : super(key: key);
 
-  final int amount;
-  final String date;
-  final Function() onTap;
+  final MAHistoryModel? maHistory;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class MACard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            date,
+                            '${maHistory!.dateClaimed!}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: body16SemiBold,
@@ -68,7 +67,7 @@ class MACard extends StatelessWidget {
                           ),
                           verticalSpace5,
                           Text(
-                            'Php $amount.00',
+                            'Php ${maHistory!.medWorth}',
                             style: caption12Medium,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,

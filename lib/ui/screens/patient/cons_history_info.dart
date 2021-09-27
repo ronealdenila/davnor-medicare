@@ -59,26 +59,27 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                     children: [
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
+                          children: <Widget>[
                             Text(
                               'Consultation Info',
                               textAlign: TextAlign.left,
-                              style: title20Regular,
+                              style: title20Regular.copyWith(
+                                  color: const Color(0xFF727F8D)),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
-                            Text('Patient',
+                            const Text('Patient',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
-                            Text('Age of Patient',
+                            const Text('Age of Patient',
                                 textAlign: TextAlign.left, style: body16Bold),
-                            SizedBox(
+                            const SizedBox(
                               height: 22,
                             ),
-                            Text('Date Requested',
+                            const Text('Date Requested',
                                 textAlign: TextAlign.left, style: body16Bold),
                             SizedBox(
                               height: 22,

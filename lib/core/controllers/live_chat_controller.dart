@@ -49,8 +49,7 @@ class LiveChatController extends GetxController {
         .add({
       'senderID': auth.currentUser!.uid,
       'message': chatController.text,
-      'dateCreated':
-          Timestamp.fromDate(DateTime.now()), //to be changed -> epoch
+      'dateCreated': Timestamp.fromDate(DateTime.now()),
     });
     await clearControllers();
   }

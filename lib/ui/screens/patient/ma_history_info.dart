@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
@@ -6,7 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MARequestInfoScreen extends StatelessWidget {
+class MAHistoryInfoScreen extends StatelessWidget {
+  final MAHistoryController maHController = Get.find();
+  final MAHistoryModel maHistoryItem = Get.arguments as MAHistoryModel;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,8 +48,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text(
-                                    'Courtney Love Queen Yow Rosello Rivera Montefalco',
+                                child: Text(maHistoryItem.fullName!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -65,7 +69,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('32',
+                                child: Text(maHistoryItem.age!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -86,8 +90,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text(
-                                    'Villa Verde San Miguel, Tagum city Davao del Norte',
+                                child: Text(maHistoryItem.address!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -108,7 +111,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('Female',
+                                child: Text(maHistoryItem.gender!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -129,7 +132,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('Person with Disability (PWD)',
+                                child: Text(maHistoryItem.type!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -163,7 +166,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('Maam Grace Joy to the World',
+                                child: Text('Maam ${maHistoryItem.receivedBy}',
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -184,7 +187,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('Rose Pharmacy',
+                                child: Text(maHistoryItem.pharmacy!,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -205,7 +208,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('Php 800.00',
+                                child: Text('Php ${maHistoryItem.medWorth}',
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -226,7 +229,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('July 01, 2021 (9:00 am)',
+                                child: Text('${maHistoryItem.dateRqstd}',
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
@@ -247,7 +250,7 @@ class MARequestInfoScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: Get.width - 220,
-                                child: Text('July 01, 2021  (10:00 am)',
+                                child: Text('${maHistoryItem.dateClaimed}',
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
