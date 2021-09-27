@@ -1,8 +1,10 @@
+import 'package:davnor_medicare/ui/screens/patient/ma_request_info.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 //import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
@@ -98,7 +100,9 @@ class MAHistoryScreen extends StatelessWidget {
                         return MACard(
                             date: 'July 27, 2021 (9:10 am)',
                             amount: 500,
-                            onTap: () {});
+                            onTap: () {
+                              Get.to(MARequestInfoScreen());
+                            });
                       }),
                 ),
               ),

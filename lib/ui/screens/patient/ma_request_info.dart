@@ -1,10 +1,10 @@
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MARequestInfoScreen extends StatelessWidget {
   @override
@@ -14,74 +14,254 @@ class MARequestInfoScreen extends StatelessWidget {
         appBar: AppBar(),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
-                      Text(
-                        'Patient Information',
-                        style: title20Regular,
-                        textAlign: TextAlign.justify,
-                      ),
+                    children: <Widget>[
+                      Text("Patient's Information",
+                          textAlign: TextAlign.justify,
+                          style: subtitle20Medium.copyWith(
+                              color: const Color(0xFF64748B))),
                     ]),
                 verticalSpace20,
                 Row(
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
-                          Text('Patients Name',
-                              textAlign: TextAlign.left, style: body16Bold),
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Patient Name',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text(
+                                    'Courtney Love Queen Yow Rosello Rivera Montefalco',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Patients Age',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Patient Age',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('32',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Address',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Address',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text(
+                                    'Villa Verde San Miguel, Tagum city Davao del Norte',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Gender',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Gender',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('Female',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Patients Type',
-                              textAlign: TextAlign.left, style: body16Bold),
-                          verticalSpace20,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Patient Type',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('Person with Disability (PWD)',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                         ]),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  child: Text('MA Request Information',
-                      textAlign: TextAlign.justify, style: title20Regular),
-                ),
+                verticalSpace35,
+                Text('MA Request Information',
+                    textAlign: TextAlign.justify,
+                    style: subtitle20Medium.copyWith(
+                        color: const Color(0xFF64748B))),
+                verticalSpace20,
                 Row(
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
-                          Text('Received by',
-                              textAlign: TextAlign.left, style: body16Bold),
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Received by',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('Maam Grace Joy to the World',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Pharmacy',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Pharmacy',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('Rose Pharmacy',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Medecine Worth',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Medicine Worth',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('Php 800.00',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Date Requested',
-                              textAlign: TextAlign.left, style: body16Bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Date Requested',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('July 01, 2021 (9:00 am)',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                           verticalSpace20,
-                          Text('Date MA Claimed',
-                              textAlign: TextAlign.left, style: body16Bold),
-                          verticalSpace20,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 160,
+                                child: Text('Date MA Claimed',
+                                    textAlign: TextAlign.left,
+                                    style: body16SemiBold),
+                              ),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text('July 01, 2021  (10:00 am)',
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: body16Regular.copyWith(
+                                        color: const Color(0xFF64748B))),
+                              ),
+                            ],
+                          ),
                         ]),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.symmetric(vertical: 35)),
+                verticalSpace25,
                 Align(
-                  alignment: Alignment.bottomLeft,
+                  alignment: FractionalOffset.bottomLeft,
                   child: CustomButton(
                     onTap: () async {
                       //
