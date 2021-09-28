@@ -37,6 +37,7 @@ abstract class Routes {
   static const DOCTOR_PROFILE = _Paths.DOCTOR_PROFILE;
   static const DOCTOR_HISTORY_INFO = _Paths.DOCTOR_HISTORY_INFO;
   static const DOC_CONS_HISTORY = _Paths.DOC_CONS_HISTORY;
+    static const DOC_LIVE_CONS_INFO = _Paths.DOC_LIVE_CONS_INFO;
 
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
@@ -98,6 +99,7 @@ abstract class _Paths {
   static const DOCTOR_PROFILE = '/profile';
   static const DOCTOR_HISTORY_INFO = '/history-info';
   static const DOC_CONS_HISTORY = '/cons-history';
+  static const DOC_LIVE_CONS_INFO = '/live-cons-info';
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';
