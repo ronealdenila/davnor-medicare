@@ -2,18 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:get/get.dart';
 
+//Ako lang gibutangan og required para pagtawag sa model i set na niya daan ang
+//constructor (R)
 class MARequestModel {
   MARequestModel({
-    this.requesterID,
-    this.fullName,
-    this.age,
-    this.address,
-    this.gender,
-    this.type,
-    this.prescriptions,
-    this.validID,
-    this.dateRqstd,
-    this.isTurn,
+    required this.requesterID,
+    required this.fullName,
+    required this.age,
+    required this.address,
+    required this.gender,
+    required this.type,
+    required this.prescriptions,
+    required this.validID,
+    required this.dateRqstd,
+    required this.isTurn,
   });
 
   factory MARequestModel.fromJson(Map<String, dynamic> json) => MARequestModel(

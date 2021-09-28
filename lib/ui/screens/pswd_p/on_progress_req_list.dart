@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_table_2/paginated_data_table_2.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/models/ma_req_model.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -97,7 +97,7 @@ class DataSource extends DataTableSource {
     maRequests = [];
   }
   final BuildContext context;
-  late List<MedicalAssistanceModel> maRequests;
+  late List<MARequestModel> maRequests;
 
   final int _selectedCount = 0;
 
