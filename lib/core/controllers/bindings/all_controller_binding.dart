@@ -8,7 +8,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:get/get.dart';
@@ -34,7 +34,7 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<AdminMenuController>(() => AdminMenuController());
 
     //pswd
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<OnProgressReqController>(() => OnProgressReqController());
     Get.lazyPut<MenuController>(() => MenuController());
     Get.lazyPut<NavigationController>(() => NavigationController());
   }

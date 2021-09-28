@@ -3,7 +3,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -21,7 +21,8 @@ import 'package:get/get.dart';
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
 class PSWDPersonnelHome extends StatelessWidget {
-  final HomeController pswdController = Get.put(HomeController());
+  final OnProgressReqController pswdController =
+      Get.put(OnProgressReqController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
@@ -117,7 +118,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  final HomeController homeController = Get.find();
+  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override

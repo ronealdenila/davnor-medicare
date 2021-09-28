@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -114,7 +114,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdHeadDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  final HomeController homeController = Get.find();
+  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override

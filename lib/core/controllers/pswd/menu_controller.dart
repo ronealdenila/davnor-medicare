@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MenuController extends GetxController {
+  static MenuController get to => Get.find();
   final RxString activeItem = 'Dashboard'.obs;
 
   RxString hoverItem = ''.obs;

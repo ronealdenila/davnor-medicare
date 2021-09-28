@@ -1,5 +1,8 @@
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_table_2/paginated_data_table_2.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/core/models/ma_req_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -9,7 +12,7 @@ import 'package:get/get.dart';
 
 import 'package:data_table_2/data_table_2.dart';
 
-class OnProgressReqListScreen extends GetView<MenuController> {
+class OnProgressReqListScreen extends GetView<OnProgressReqController> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +23,7 @@ class OnProgressReqListScreen extends GetView<MenuController> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              controller.activeItem.value,
+              MenuController.to.activeItem.value,
               style: title32Regular,
             ),
           ),
@@ -28,386 +31,185 @@ class OnProgressReqListScreen extends GetView<MenuController> {
         verticalSpace20,
         Expanded(
           child: MARequestListTable(),
+          // ClipRRect(
+          //   borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+          //   child: PaginatedDataTable2(
+          //     columnSpacing: 12,
+          //     horizontalMargin: 12,
+          //     minWidth: 600,
+          //     columns: _columns,
+          //     source: controller.dataSource,
+          //   ),
+          // ),
         ),
       ],
     );
   }
 }
 
-class MARequestListTable extends GetView<HomeController> {
+class MARequestListTable extends StatefulWidget {
+  @override
+  State<MARequestListTable> createState() => _MARequestListTableState();
+}
+
+class _MARequestListTableState extends State<MARequestListTable> {
+  // final int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  late DataSource _dataSource;
+  bool _initialized = false;
+  // PaginatorController? _controller;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _dataSource = DataSource(context);
+      // _controller = PaginatorController();
+      _initialized = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    _dataSource.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-        child: DataTable2(
-          columnSpacing: 12,
-          horizontalMargin: 12,
-          minWidth: 600,
-          headingRowColor: MaterialStateColor.resolveWith(
-            (states) => Colors.blue.shade200,
-          ),
-          headingTextStyle: body16Bold.copyWith(color: neutralColor[10]),
-          columns: const [
-            DataColumn2(
-              label: Text('PATIENT NAME'),
-              size: ColumnSize.L,
-            ),
-            DataColumn(
-              label: Text('ADDRESS'),
-            ),
-            DataColumn(
-              label: Text('DATE'),
-            ),
-            DataColumn(
-              label: Text('PATIENT TYPE'),
-            ),
-            DataColumn(
-              label: Text('ACTION'),
-            ),
-          ],
-          rows: List<DataRow>.generate(
-            controller.medicalAssistances.length,
-            (index) => DataRow(
-              cells: [
-                DataCell(Text(controller.medicalAssistances[index].fullName!)),
-                DataCell(Text(controller.medicalAssistances[index].address!)),
-                //TODO(R): Fetched date must be on proper format
-                DataCell(Text(controller.medicalAssistances[index].dateRqstd!
-                    .toString())),
-                DataCell(Text(controller.medicalAssistances[index].type!)),
-                DataCell(TextButton(
-                  onPressed: () {},
-                  child: const Text('View'),
-                )),
-              ],
-            ),
-          ),
-        ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+      child: PaginatedDataTable2(
+        columnSpacing: 12,
+        horizontalMargin: 12,
+        minWidth: 600,
+        columns: _columns,
+        source: _dataSource,
+        // rowsPerPage: _rowsPerPage,
       ),
     );
   }
 }
 
-// import 'package:davnor_medicare/ui/shared/styles.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+class DataSource extends DataTableSource {
+  DataSource(this.context) {
+    maRequests = controller.medicalAssistances;
+  }
+  DataSource.empty(this.context) {
+    maRequests = [];
+  }
+  final BuildContext context;
+  late List<MedicalAssistanceModel> maRequests;
 
-// class MARequestListScreen extends StatelessWidget {
-//   const MARequestListScreen({Key? key}) : super(key: key);
+  final int _selectedCount = 0;
 
+  OnProgressReqController controller = Get.find();
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= maRequests.length) {
+      throw 'index > _medicalAssistanceData.length';
+    }
+    final maRequest = maRequests[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text(maRequest.fullName!)),
+        DataCell(Text(maRequest.address!)),
+        DataCell(Text(maRequest.dateRqstd!.toString())),
+        DataCell(Text(maRequest.type!)),
+        DataCell(
+          TextButton(
+            onPressed: () {},
+            child: const Text('View'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => maRequests.length;
+
+  @override
+  int get selectedRowCount => _selectedCount;
+}
+
+List<DataColumn> get _columns {
+  return const [
+    DataColumn2(
+      label: Text('PATIENT NAME'),
+      size: ColumnSize.L,
+    ),
+    DataColumn(
+      label: Text('ADDRESS'),
+    ),
+    DataColumn(
+      label: Text('DATE'),
+    ),
+    DataColumn(
+      label: Text('PATIENT TYPE'),
+    ),
+    DataColumn(
+      label: Text('ACTION'),
+    ),
+  ];
+}
+
+// class MARequestListTable extends GetView<HomeController> {
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Container(
-//           padding: const EdgeInsets.symmetric(horizontal: 30),
-//           child: SingleChildScrollView(child: ResponsiveView())),
-//     );
-//   }
-// }
-
-// class ResponsiveView extends GetResponsiveView {
-//   ResponsiveView() : super(alwaysUseBuilder: false);
-
-//   Widget phone() => Column(
-//         children: [
-//           SizedBox(
-//             height: Get.height,
-//             width: Get.width,
-//             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//               maReqList(),
-//             ]),
-//           )
-//         ],
-//       );
-
-//   @override
-//   Widget tablet() => Column(
-//         children: [
-//           SizedBox(
-//             height: Get.height,
-//             width: Get.width,
-//             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//               maReqList(),
-//             ]),
-//           )
-//         ],
-//       );
-
-//   @override
-//   Widget desktop() => Column(
-//         children: [
-//           SizedBox(
-//             height: Get.height,
-//             width: screen.width,
-//             child:
-//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//               maReqList(),
-//             ]),
+//     return Obx(
+//       () => ClipRRect(
+//         borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+//         child: DataTable2(
+//           columnSpacing: 12,
+//           horizontalMargin: 12,
+//           minWidth: 600,
+//           headingRowColor: MaterialStateColor.resolveWith(
+//             (states) => Colors.blue.shade200,
 //           ),
-//         ],
-//       );
-
-//   Widget maReqList() {
-//     return DataTable(
-//       headingTextStyle: const TextStyle(color: Colors.white),
-//       columnSpacing: 90,
-//       showBottomBorder: true,
-//       headingRowColor:
-//           MaterialStateColor.resolveWith((states) => Colors.blue.shade200),
-//       columns: const <DataColumn>[
-//         DataColumn(
-//           label: Text(
-//             'Patient Name',
-//             style: body16Bold,
+//           headingTextStyle: body16Bold.copyWith(color: neutralColor[10]),
+//           columns: const [
+//             DataColumn2(
+//               label: Text('PATIENT NAME'),
+//               size: ColumnSize.L,
+//             ),
+//             DataColumn(
+//               label: Text('ADDRESS'),
+//             ),
+//             DataColumn(
+//               label: Text('DATE'),
+//             ),
+//             DataColumn(
+//               label: Text('PATIENT TYPE'),
+//             ),
+//             DataColumn(
+//               label: Text('ACTION'),
+//             ),
+//           ],
+//           rows: List<DataRow>.generate(
+//             controller.medicalAssistances.length,
+//             (index) => DataRow(
+//               cells: [
+//                 DataCell(Text(controller.medicalAssistances[index].fullName!)),
+//                 DataCell(Text(controller.medicalAssistances[index].address!)),
+//                 //TODO(R): Fetched date must be on proper format
+//                 DataCell(Text(controller.medicalAssistances[index].dateRqstd!
+//                     .toString())),
+//                 DataCell(Text(controller.medicalAssistances[index].type!)),
+//                 DataCell(TextButton(
+//                   onPressed: () {},
+//                   child: const Text('View'),
+//                 )),
+//               ],
+//             ),
 //           ),
 //         ),
-//         DataColumn(
-//           label: Text(
-//             'Address',
-//             style: body16Bold,
-//           ),
-//         ),
-//         DataColumn(
-//           label: Text(
-//             'Date',
-//             style: body16Bold,
-//           ),
-//         ),
-//         DataColumn(
-//           label: Text(
-//             'Patient Type',
-//             style: body16Bold,
-//           ),
-//         ),
-//         DataColumn(
-//           label: Text(
-//             'Action',
-//             style: body16Bold,
-//           ),
-//         ),
-//       ],
-//       rows: const <DataRow>[
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Olivia Broken',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 10, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Arya Stark',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Daenerys Targaryen',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Pregnant Woman',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Olivia Broken',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 10, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Arya Stark',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Daenerys Targaryen',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Pregnant Woman',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Olivia Broken',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 10, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Arya Stark',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Senior',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//         DataRow(
-//           cells: <DataCell>[
-//             DataCell(Text(
-//               'Daenerys Targaryen',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Visayan, Tagum',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'July 23, 2021',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'Pregnant Woman',
-//               style: body14Medium,
-//             )),
-//             DataCell(Text(
-//               'View',
-//               style: body14MediumUnderline,
-//             )),
-//           ],
-//         ),
-//       ],
+//       ),
 //     );
 //   }
 // }

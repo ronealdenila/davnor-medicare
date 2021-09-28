@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -116,7 +116,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class AdminDashboardScreen extends GetView<AdminMenuController> {
   static AuthController authController = Get.find();
-  final HomeController homeController = Get.find();
+  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.adminModel.value;
 
   @override
