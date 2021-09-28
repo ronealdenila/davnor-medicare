@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:get/get.dart';
 
@@ -94,6 +95,49 @@ class ConsultationHistoryModel {
   String? dateRqstd;
   String? dateConsStart;
   String? dateConsEnd;
+  Rxn<PatientModel> patient = Rxn<PatientModel>(); //data of the requester
+  Rxn<DoctorModel> doc = Rxn<DoctorModel>(); //data of the doctor
+}
+
+class LiveConsultationModel {
+  LiveConsultationModel({
+    this.consID,
+    this.patientID,
+    this.docID,
+    this.fullName,
+    this.age,
+    this.dateRqstd,
+    this.dateConsStart,
+  });
+
+  factory LiveConsultationModel.fromJson(Map<String, dynamic> json) =>
+      LiveConsultationModel(
+        consID: json['consID'] as String,
+        patientID: json['patientID'] as String,
+        docID: json['docID'] as String,
+        fullName: json['fullName'] as String,
+        age: json['age'] as String,
+        dateRqstd: json['dateRqstd'] as Timestamp,
+        dateConsStart: json['dateConsStart'] as Timestamp,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'consID': consID,
+        'patientID': patientID,
+        'docID': docID,
+        'fullName': fullName,
+        'age': age,
+        'dateRqstd': dateRqstd,
+        'dateConsStart': dateConsStart,
+      };
+
+  String? consID;
+  String? patientID;
+  String? docID;
+  String? fullName;
+  String? age;
+  Timestamp? dateRqstd;
+  Timestamp? dateConsStart;
   Rxn<PatientModel> patient = Rxn<PatientModel>(); //data of the requester
   Rxn<DoctorModel> doc = Rxn<DoctorModel>(); //data of the doctor
 }

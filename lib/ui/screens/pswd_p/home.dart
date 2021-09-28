@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -173,11 +170,11 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
+                              onPressed: () {},
                               child: DmText.subtitle20Medium(
                                 'Ready to Accept Requests',
                                 color: neutralColor[60],
                               ),
-                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -196,11 +193,11 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
+                              onPressed: () {},
                               child: DmText.subtitle20Medium(
                                 'Available',
                                 color: neutralColor[60],
                               ),
-                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -486,7 +483,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                               maxLines: 2,
                                             ),
                                             // DmText.body16Regular(
-                                            //   'in-charge of Medical Assistance (MA)',
+                                            //'in-charge of Medical Assistance (MA)',
                                             // ),
                                           ],
                                         ),

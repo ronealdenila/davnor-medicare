@@ -1,15 +1,17 @@
+import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-//import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:get/get.dart';
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
 
 class MAHistoryScreen extends StatelessWidget {
-  //static AuthController authController = Get.find();
+  final MAHistoryController maHController = Get.put(MAHistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -89,16 +91,31 @@ class MAHistoryScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     top: 25,
                   ),
-                  child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 30),
-                      shrinkWrap: true,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return MACard(
-                            date: 'July 27, 2021 (9:10 am)',
-                            amount: 500,
-                            onTap: () {});
+                  child: FutureBuilder(
+                      future: maHController.getMAHistoryForPatient(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 30),
+                              shrinkWrap: true,
+                              itemCount: maHController.maList.length,
+                              itemBuilder: (context, index) {
+                                return MACard(
+                                    maHistory: maHController.maList[index],
+                                    onTap: () {
+                                      Get.to(() => MAHistoryInfoScreen(),
+                                          arguments:
+                                              maHController.maList[index]);
+                                    });
+                              });
+                        }
+                        return const Center(
+                          child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator()),
+                        );
                       }),
                 ),
               ),

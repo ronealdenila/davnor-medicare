@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
@@ -11,6 +12,8 @@ import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dar
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:get/get.dart';
 
 class AllControllerBinding implements Bindings {
@@ -25,9 +28,12 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MARequestController>(() => MARequestController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());
     Get.lazyPut<VerificationController>(() => VerificationController());
+    Get.lazyPut<MAHistoryController>(() => MAHistoryController());
 
     //doctor
     Get.lazyPut<ConsultationsController>(() => ConsultationsController());
+    Get.lazyPut<LiveChatController>(() => LiveChatController());
+    Get.lazyPut<LiveConsController>(() => LiveConsController());
 
     //admin
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());

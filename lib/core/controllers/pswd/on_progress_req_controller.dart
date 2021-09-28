@@ -1,6 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/models/ma_req_model.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,7 @@ import 'package:intl/intl.dart';
 class OnProgressReqController extends GetxController {
   final log = getLogger('On Progress Req Controller');
 
-  RxList<MedicalAssistanceModel> medicalAssistances =
-      RxList<MedicalAssistanceModel>([]);
+  RxList<MARequestModel> medicalAssistances = RxList<MARequestModel>([]);
 
   final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
 
@@ -27,7 +25,7 @@ class OnProgressReqController extends GetxController {
     medicalAssistances.bindStream(getMedicalAssistances());
   }
 
-  Stream<List<MedicalAssistanceModel>> getMedicalAssistances() {
+  Stream<List<MARequestModel>> getMedicalAssistances() {
     log.i('getMedicalAssistance | Streaming Medical Assistance Request');
     return firestore
         .collection('ma_request')
@@ -35,7 +33,7 @@ class OnProgressReqController extends GetxController {
         .snapshots()
         .map(
           (query) => query.docs
-              .map((item) => MedicalAssistanceModel.fromJson(item.data()))
+              .map((item) => MARequestModel.fromJson(item.data()))
               .toList(),
         );
   }

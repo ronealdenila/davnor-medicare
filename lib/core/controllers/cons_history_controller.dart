@@ -1,26 +1,28 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
 
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
+  RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
 
   Future<void> getConsHistoryForPatient() async {
     log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
+        //.orderBy('dateRqstd', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -31,9 +33,9 @@ class ConsHistoryController extends GetxController {
         .where('docID', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -88,5 +90,20 @@ class ConsHistoryController extends GetxController {
 
   String getDoctorFullName(ConsultationHistoryModel model) {
     return '${getDoctorFirstName(model)} ${getDoctorLastName(model)}';
+  }
+
+  Future<void> getChatHistory(ConsultationHistoryModel model) async {
+    log.i(model.consID);
+    await firestore
+        .collection('chat')
+        .doc(model.consID)
+        .collection('messages')
+        .orderBy('dateCreated', descending: true)
+        .get()
+        .then((value) {
+      for (final result in value.docs) {
+        chatHistory.add(ChatModel.fromJson(result.data()));
+      }
+    });
   }
 }

@@ -12,7 +12,7 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 
-class LiveChatScreen extends StatelessWidget {
+class LiveConsultationScreen extends StatelessWidget {
   static LiveConsController liveCont = Get.find();
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
@@ -21,7 +21,7 @@ class LiveChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: FutureBuilder(
-          future: liveCont.getDoctorData(consData),
+          future: liveCont.getPatientData(consData),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return liveConsScreen();
@@ -45,11 +45,11 @@ class LiveChatScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: getPhoto(consData)),
-            horizontalSpace10,
+            horizontalSpace15,
             SizedBox(
-              width: 190,
+              width: 144,
               child: Text(
-                'Dr. ${liveCont.getDoctorFullName(consData)}',
+                liveCont.getPatientName(consData),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: subtitle18Medium.copyWith(color: Colors.black),
@@ -58,6 +58,13 @@ class LiveChatScreen extends StatelessWidget {
           ],
         ),
         actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.videocam_outlined,
+              size: 30,
+            ),
+            onPressed: () {},
+          ),
           IconButton(
             icon: const Icon(
               Icons.info_outline,
@@ -81,7 +88,7 @@ class LiveChatScreen extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.active) {
                         return ListView.builder(
                           reverse: true,
-                          padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                          padding: const EdgeInsets.all(25),
                           shrinkWrap: true,
                           itemCount: liveChatCont.liveChat.length,
                           itemBuilder: (context, index) {
@@ -94,13 +101,13 @@ class LiveChatScreen extends StatelessWidget {
                           },
                         );
                       }
-                      return const Center(child: Text('Loading ..'));
+                      return const Text('Loading ..');
                     })),
             Align(
               alignment: FractionalOffset.bottomCenter,
               child: SizedBox(
                 width: Get.width,
-                height: 80,
+                height: 100,
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -117,8 +124,7 @@ class LiveChatScreen extends StatelessWidget {
                           child: SizedBox(
                             child: TextFormField(
                               keyboardType: TextInputType.multiline,
-                              minLines: 1,
-                              maxLines: 2,
+                              maxLines: null,
                               controller: liveChatCont.chatController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -212,7 +218,7 @@ class LiveChatScreen extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    if (liveCont.getDoctorProfile(model) == '') {
+    if (liveCont.getPatientProfile(model) == '') {
       return CircleAvatar(
         radius: 25,
         backgroundImage: AssetImage(blankProfile),
@@ -220,7 +226,7 @@ class LiveChatScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+      backgroundImage: NetworkImage(liveCont.getPatientProfile(model)),
     );
   }
 }
