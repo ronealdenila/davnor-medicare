@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -12,11 +12,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -116,7 +112,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class AdminDashboardScreen extends GetView<AdminMenuController> {
   static AuthController authController = Get.find();
-  final HomeController homeController = Get.find();
+  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.adminModel.value;
 
   @override
@@ -336,8 +332,8 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                                   0.5), //color of shadow
                                               spreadRadius: 3, //spread radius
                                               blurRadius: 4, // blur radius
-                                              offset: const Offset(4,
-                                                  8), // changes position of shadow
+                                              offset: const Offset(
+                                                  4, 8), // position of shadow
                                             ),
                                           ],
                                         ),
@@ -354,7 +350,7 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                               maxLines: 1,
                                             ),
                                             // DmText.title24Medium(
-                                            //     'ON PROGRESS REQUESTS TODAY'),
+                                            // 'ON PROGRESS REQUESTS TODAY'),
                                             // DmText.title150Bold('2'),
                                             AutoSizeText(
                                               '3',
@@ -529,96 +525,3 @@ class AdminSideMenuItem extends GetView<AdminMenuController> {
     );
   }
 }
-
-// class AdminHomeScreen extends StatelessWidget {
-//   static AuthController authController = Get.find();
-//   final fetchedData = authController.adminModel.value;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         appBar: AppBar(
-//           //APPBAR TOPNAV
-//           backgroundColor: Colors.red,
-//         ),
-//         body: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               Expanded(
-//                 child: Row(
-//                     //HI LOL
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: <Widget>[
-//                       Container(
-//                         width: screenWidth(context),
-//                         height:
-//                             screenHeightPercentage(context, percentage: .25),
-//                         decoration: BoxDecoration(
-//                             color: verySoftBlueColor[60],
-//                             borderRadius: BorderRadius.circular(50)),
-//                         child: const Text('Hi Hoder'),
-//                       ),
-//                     ]),
-//               ),
-//               Expanded(
-//                 //content
-//                 child: Row(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: <Widget>[
-//                     Expanded(
-//                       child: Container(
-//                         color: verySoftBlueColor,
-//                       ),
-//                     ),
-//                     Expanded(
-//                       flex: 6,
-//                       child: Row(
-//                         children: [
-//                           Expanded(
-//                               flex: 2,
-//                               child: Container(
-//                                 color: Colors.pink,
-//                               )), //left Colm
-//                           Expanded(
-//                             flex: 4,
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Row(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Container(
-//                                       width: Get.width * .2,
-//                                       height: 359,
-//                                       color: Colors.red,
-//                                     ), //left colm
-//                                     Expanded(
-//                                       child: Container(
-//                                         height: 359,
-//                                         color: Colors.blue,
-//                                       ),
-//                                     ) //right colm
-//                                   ],
-//                                 ),
-//                                 Expanded(
-//                                   child: Container(
-//                                     color: Colors.green,
-//                                   ),
-//                                 ) //bottom colm
-//                               ],
-//                             ),
-//                           ), //right Colm
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/home_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -21,7 +18,8 @@ import 'package:get/get.dart';
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
 class PSWDPersonnelHome extends StatelessWidget {
-  final HomeController pswdController = Get.put(HomeController());
+  final OnProgressReqController pswdController =
+      Get.put(OnProgressReqController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
@@ -117,7 +115,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  final HomeController homeController = Get.find();
+  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override
@@ -172,11 +170,11 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
+                              onPressed: () {},
                               child: DmText.subtitle20Medium(
                                 'Ready to Accept Requests',
                                 color: neutralColor[60],
                               ),
-                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -195,11 +193,11 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
+                              onPressed: () {},
                               child: DmText.subtitle20Medium(
                                 'Available',
                                 color: neutralColor[60],
                               ),
-                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -485,7 +483,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                               maxLines: 2,
                                             ),
                                             // DmText.body16Regular(
-                                            //   'in-charge of Medical Assistance (MA)',
+                                            //'in-charge of Medical Assistance (MA)',
                                             // ),
                                           ],
                                         ),

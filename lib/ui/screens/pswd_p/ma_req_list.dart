@@ -1,10 +1,9 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MARequestListScreen extends StatelessWidget {
-  const MARequestListScreen({ Key? key }) : super(key: key);
+  const MARequestListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +16,19 @@ class MARequestListScreen extends StatelessWidget {
     );
   }
 }
+
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
 
+  @override
   Widget phone() => Column(
         children: [
           SizedBox(
             height: Get.height,
             width: Get.width,
             child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                maReqList(),             
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              maReqList(),
             ]),
           )
         ],
@@ -40,8 +41,8 @@ class ResponsiveView extends GetResponsiveView {
             height: Get.height,
             width: Get.width,
             child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                maReqList(),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              maReqList(),
             ]),
           )
         ],
@@ -54,21 +55,20 @@ class ResponsiveView extends GetResponsiveView {
             height: Get.height,
             width: screen.width,
             child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                maReqList(),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              maReqList(),
             ]),
           ),
         ],
       );
 
-    Widget maReqList() {
-      return DataTable(
-      headingTextStyle: 
-      const TextStyle( color: Colors.white),
+  Widget maReqList() {
+    return DataTable(
+      headingTextStyle: const TextStyle(color: Colors.white),
       columnSpacing: 90,
       showBottomBorder: true,
-      headingRowColor: MaterialStateColor.resolveWith((states) =>
-       Colors.blue.shade200),
+      headingRowColor:
+          MaterialStateColor.resolveWith((states) => Colors.blue.shade200),
       columns: const <DataColumn>[
         DataColumn(
           label: Text(
@@ -104,90 +104,221 @@ class ResponsiveView extends GetResponsiveView {
       rows: const <DataRow>[
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Olivia Broken', style: body14Medium,)),
-            DataCell(Text('Tagum', style: body14Medium,)),
-            DataCell(Text('July 10, 2021', style: body14Medium,)),
-            DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View',style: body14MediumUnderline,)),
-
+            DataCell(Text(
+              'Olivia Broken',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 10, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Arya Stark', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Arya Stark',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Daenerys Targaryen', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Pregnant Woman', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Daenerys Targaryen',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Pregnant Woman',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Olivia Broken', style: body14Medium,)),
-            DataCell(Text('Tagum', style: body14Medium,)),
-            DataCell(Text('July 10, 2021', style: body14Medium,)),
-            DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View',style: body14MediumUnderline,)),
-
+            DataCell(Text(
+              'Olivia Broken',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 10, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Arya Stark', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-            DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Arya Stark',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Daenerys Targaryen', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Pregnant Woman', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Daenerys Targaryen',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Pregnant Woman',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Olivia Broken', style: body14Medium,)),
-            DataCell(Text('Tagum', style: body14Medium,)),
-            DataCell(Text('July 10, 2021', style: body14Medium,)),
-            DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View',style: body14MediumUnderline,)),
-
+            DataCell(Text(
+              'Olivia Broken',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 10, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Arya Stark', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Senior', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Arya Stark',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Senior',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
         DataRow(
           cells: <DataCell>[
-            DataCell(Text('Daenerys Targaryen', style: body14Medium,)),
-            DataCell(Text('Visayan, Tagum', style: body14Medium,)),
-            DataCell(Text('July 23, 2021', style: body14Medium,)),
-             DataCell(Text('Pregnant Woman', style: body14Medium,)),
-            DataCell(Text('View', style: body14MediumUnderline,)),
+            DataCell(Text(
+              'Daenerys Targaryen',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Visayan, Tagum',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'July 23, 2021',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'Pregnant Woman',
+              style: body14Medium,
+            )),
+            DataCell(Text(
+              'View',
+              style: body14MediumUnderline,
+            )),
           ],
         ),
       ],
     );
   }
-  
 }

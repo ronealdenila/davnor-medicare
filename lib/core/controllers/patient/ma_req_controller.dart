@@ -215,8 +215,8 @@ class MARequestController extends GetxController {
           'qLastNum': statusList[0].qLastNum! + 1,
           'maRequested': statusList[0].maRequested! + 1
         })
-        .then((value) => print("Status Updated"))
-        .catchError((error) => print("Failed to update status: $error"));
+        .then((value) => log.i('Status Updated'))
+        .catchError((error) => log.i('Failed to update status: $error'));
   }
 
   Future<void> showDialog() async {

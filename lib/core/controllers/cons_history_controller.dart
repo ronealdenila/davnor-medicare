@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
@@ -18,12 +17,12 @@ class ConsHistoryController extends GetxController {
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
-        //.orderBy('dateRqstd', descending: false)
+        //.orderBy('dateRqstd', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -34,9 +33,9 @@ class ConsHistoryController extends GetxController {
         .where('docID', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      });
+      }
     });
   }
 
@@ -99,12 +98,12 @@ class ConsHistoryController extends GetxController {
         .collection('chat')
         .doc(model.consID)
         .collection('messages')
-        .orderBy('dateCreated', descending: false)
+        .orderBy('dateCreated', descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((result) {
+      for (final result in value.docs) {
         chatHistory.add(ChatModel.fromJson(result.data()));
-      });
+      }
     });
   }
 }

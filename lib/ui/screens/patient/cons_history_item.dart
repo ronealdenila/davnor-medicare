@@ -1,11 +1,9 @@
 import 'dart:ui';
-import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -36,9 +34,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
                   child: getPhoto(consData)),
               horizontalSpace15,
               SizedBox(
-                width: 144,
+                width: 190,
                 child: Text(
-                  consHController.getDoctorFullName(consData),
+                  'Dr. ${consHController.getDoctorFullName(consData)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: subtitle18Medium.copyWith(color: Colors.black),
@@ -71,7 +69,8 @@ class ConsHistoryItemScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return ListView.builder(
-                          padding: const EdgeInsets.all(25),
+                          reverse: true,
+                          padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
                           shrinkWrap: true,
                           itemCount: consHController.chatHistory.length,
                           itemBuilder: (context, index) {
@@ -109,9 +108,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
 
   Widget bubbleChat(ChatModel chat) {
     if (chat.senderID == auth.currentUser!.uid) {
-      return leftBubbleChat(chat);
+      return rightBubbleChat(chat);
     }
-    return rightBubbleChat(chat);
+    return leftBubbleChat(chat);
   }
 
   Widget leftBubbleChat(ChatModel chat) {

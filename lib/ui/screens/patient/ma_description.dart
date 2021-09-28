@@ -11,7 +11,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  MARequestController controller = Get.put(MARequestController());
+  final MARequestController controller = Get.put(MARequestController());
 
   @override
   Widget build(BuildContext context) {
