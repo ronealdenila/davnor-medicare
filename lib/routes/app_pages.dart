@@ -2,6 +2,7 @@
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswdstaff.dart';
+import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:get/get.dart';
@@ -51,7 +52,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.DOC_LIVE_CONS_INFO;
 
   static final routes = [
     GetPage(
@@ -135,7 +136,7 @@ class AppPages {
       page: () => VerificationScreen(),
     ),
     GetPage(
-      name: _Paths.PATIENT_CONS_HISTORY_INFO,
+      name: _Paths.CONS_HISTORY,
       page: () => ConsHistoryScreen(),
     ),
     GetPage(
@@ -168,6 +169,11 @@ class AppPages {
       name: _Paths.DOC_CONS_HISTORY,
       page: () => DocConsHistoryScreen(),
     ),
+    GetPage(
+      name: _Paths.DOC_LIVE_CONS_INFO,
+      page: () => LiveConsInfoScreen(),
+    ),
+
 
     //PSWD
     GetPage(
