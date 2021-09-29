@@ -164,7 +164,7 @@ class ConsRequestController extends GetxController {
   void checkRequestConsultation() {
     if (fetchedData!.hasActiveQueue!) {
       showErrorDialog(
-          errorTitle: 'You have existing consultation mofo',
+          errorTitle: 'Sorry, you still have an on progress transaction',
           errorDescription: 'Please proceed to your existing consultation');
     } else {
       showConfirmationDialog(
