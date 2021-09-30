@@ -82,7 +82,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                   children: [
                     const SizedBox(
                       width: 170,
-                      child: Text('Patients Name',
+                      child: Text('Patient',
                           textAlign: TextAlign.left, style: body14SemiBold),
                     ),
                     SizedBox(

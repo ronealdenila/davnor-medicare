@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LiveChatInfoScreen extends StatelessWidget {
   const LiveChatInfoScreen({ Key? key }) : super(key: key);
@@ -24,84 +25,130 @@ class LiveChatInfoScreen extends StatelessWidget {
               ),
             ),
             child: Column(children: <Widget>[
-              verticalSpace20,
-              CircleAvatar(
-                backgroundImage: AssetImage(authHeader),
-                radius: 50,
+              verticalSpace15,
+              Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                //  child: getPhoto(consData)),
+             // verticalSpace20,
+             // Text(
+             //   'Dr. ${consHCont.getDoctorFullName(consData)}',
+             //   style: subtitle18Medium,
               ),
-              verticalSpace20,
-              const Text('Dr. Rona Wolski',
-                textAlign: TextAlign.center, 
-                style: subtitle18Medium),
-               Text('Cardiologist',
-                textAlign: TextAlign.center, 
-                style: body14Regular.copyWith(
-                       color: const Color(0xFF727F8D)),),
+              verticalSpace5,
+            //  Text(
+             //   consData.doc.value!.title!,
+            //    style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
+            //  ),
+              verticalSpace25
             ]),
           ),
+          
           Padding(
-              padding: const EdgeInsets.symmetric( horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  <Widget>[
-                            verticalSpace20,
-                            Text('Consultation Info',
-                                textAlign: TextAlign.left,
-                                style: body16Regular.copyWith(
-                                  color: const Color(0xFF727F8D)),),
-                            verticalSpace20,
-                            const Text('Patient',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
-                            const Text('Age of Patient',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
-                            const Text('Date Requested',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
-                            const Text('Consultation Started',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
-                          ]),
-
-                      Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            verticalSpace20,
-                            Text('Monica Manoban',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                             verticalSpace15,
-                            Text('28',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                              verticalSpace15,
-                            Text('July 27, 2021 (9:00 am)',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                             verticalSpace15,
-                            Text('July 27, 2021 (11:00 am)',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                          ]),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpace35,
+                Text('Consultation Info',
+                    textAlign: TextAlign.left,
+                    style:
+                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
+                verticalSpace20,
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
                     ),
-                    ],
-                  ),
-                ],
-              )),
+                    SizedBox(
+                      width: Get.width - 230,
+                      child: const Text('Jisso Wolski',
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Age of Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: Get.width - 230,
+                      child: const Text('28',
+                        //consData.age!,
+                          //maxLines: 5,
+                         // overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Date Requested',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: Get.width - 230,
+                      child: Text('July 27, 2021 (9:00 am)',
+                        //consHCont.convertDate(consData.dateRqstd!),
+                        //  maxLines: 5,
+                        //  overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Consultation Started',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: Get.width - 230,
+                      child: Text('July 27, 2021 (10:00 am)',
+                         // consHCont.convertDate(consData.dateConsStart!),
+                         // maxLines: 5,
+                         // overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                
+              ],
+            ),
+          ),
         ]),
       ),
     );
   }
+
+//  Widget getPhoto(ConsultationHistoryModel model) {
+//    if (consHCont.getDoctorProfile(model) == '') {
+//      return CircleAvatar(
+//        radius: 50,
+//        backgroundImage: AssetImage(blankProfile),
+//      );
+//    }
+//    return CircleAvatar(
+//      radius: 50,
+//      backgroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
+//    );
+//  }
 }
