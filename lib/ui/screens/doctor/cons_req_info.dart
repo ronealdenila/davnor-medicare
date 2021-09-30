@@ -1,14 +1,11 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/styles.dart';
-//import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
-class HistoryInfoScreen extends StatelessWidget {
-  // static AuthController authController = Get.find();
-
-  //final fetchedData = authController.doctorModel.value;
+class ConsReqInfoScreen extends StatelessWidget {
+  const ConsReqInfoScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +35,6 @@ class HistoryInfoScreen extends StatelessWidget {
                 textAlign: TextAlign.center, 
                 style: subtitle18Medium),
             ]),
-          
-
           ),
           Padding(
               padding: const EdgeInsets.symmetric( horizontal: 30),
@@ -56,7 +51,7 @@ class HistoryInfoScreen extends StatelessWidget {
                                 textAlign: TextAlign.left,
                                 style: body16Regular.copyWith(
                                   color: const Color(0xFF727F8D)),),
-                            verticalSpace15,
+                            verticalSpace20,
                             const Text('Patient',
                                 textAlign: TextAlign.left, 
                                 style: body14SemiBold),
@@ -69,18 +64,10 @@ class HistoryInfoScreen extends StatelessWidget {
                                 textAlign: TextAlign.left, 
                                 style: body14SemiBold),
                             verticalSpace15,
-                            const Text('Consultation Started',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
-                            const Text('Consultation Ended',
-                                textAlign: TextAlign.left, 
-                                style: body14SemiBold),
-                            verticalSpace15,
                           ]),
 
                       Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(30, 15, 0, 0),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const <Widget>[
@@ -94,14 +81,6 @@ class HistoryInfoScreen extends StatelessWidget {
                                 style: body14Regular),
                               verticalSpace15,
                             Text('July 27, 2021 (9:00 am)',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                              verticalSpace15,
-                            Text('July 27, 2021 (10:00 am)',
-                                textAlign: TextAlign.left,
-                                style: body14Regular),
-                              verticalSpace15,
-                            Text('July 27, 2021 (11:00 am)',
                                 textAlign: TextAlign.left,
                                 style: body14Regular),
                           ]),
