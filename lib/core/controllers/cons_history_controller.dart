@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
@@ -17,7 +19,7 @@ class ConsHistoryController extends GetxController {
     await firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
-        //.orderBy('dateRqstd', descending: true)
+        //.orderBy('dateConsEnd', descending: true)
         .get()
         .then((value) {
       for (final result in value.docs) {
@@ -90,6 +92,11 @@ class ConsHistoryController extends GetxController {
 
   String getDoctorFullName(ConsultationHistoryModel model) {
     return '${getDoctorFirstName(model)} ${getDoctorLastName(model)}';
+  }
+
+  String convertDate(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {

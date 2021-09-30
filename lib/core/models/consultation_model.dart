@@ -51,7 +51,6 @@ class ConsultationModel {
   Rxn<PatientModel> data = Rxn<PatientModel>();
 }
 
-//another model for cons history
 class ConsultationHistoryModel {
   ConsultationHistoryModel({
     this.consID,
@@ -71,9 +70,9 @@ class ConsultationHistoryModel {
         docID: json['docID'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
-        dateRqstd: json['dateRqstd'] as String,
-        dateConsStart: json['dateConsStart'] as String,
-        dateConsEnd: json['dateConsEnd'] as String,
+        dateRqstd: json['dateRqstd'] as Timestamp,
+        dateConsStart: json['dateConsStart'] as Timestamp,
+        dateConsEnd: json['dateConsEnd'] as Timestamp,
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,9 +91,9 @@ class ConsultationHistoryModel {
   String? docID;
   String? fullName;
   String? age;
-  String? dateRqstd;
-  String? dateConsStart;
-  String? dateConsEnd;
+  Timestamp? dateRqstd;
+  Timestamp? dateConsStart;
+  Timestamp? dateConsEnd;
   Rxn<PatientModel> patient = Rxn<PatientModel>(); //data of the requester
   Rxn<DoctorModel> doc = Rxn<DoctorModel>(); //data of the doctor
 }

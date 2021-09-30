@@ -2,8 +2,10 @@
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswdstaff.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
+import 'package:davnor_medicare/ui/screens/patient/live_chat_info.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
@@ -52,7 +54,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.DOC_LIVE_CONS_INFO;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -151,6 +153,10 @@ class AppPages {
       name: _Paths.QUEUE_MA_TABLE,
       page: () => QueueMATableScreen(),
     ),
+     GetPage(
+      name: _Paths.LIVE_CHAT_INFO,
+      page: () => LiveChatInfoScreen(),
+    ),
 
     //Doctor
     GetPage(
@@ -172,6 +178,10 @@ class AppPages {
     GetPage(
       name: _Paths.DOC_LIVE_CONS_INFO,
       page: () => LiveConsInfoScreen(),
+    ),
+    GetPage(
+      name: _Paths.DOC_CONS_REQ_INFO,
+      page: () => ConsReqInfoScreen(),
     ),
 
 

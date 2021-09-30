@@ -31,13 +31,15 @@ abstract class Routes {
   static const CONS_HISTORY = _Paths.CONS_HISTORY;
   static const MA_HISTORY = _Paths.MA_HISTORY;
   static const LIVE_CHAT = _Paths.LIVE_CHAT;
+  static const LIVE_CHAT_INFO = _Paths.LIVE_CHAT_INFO;
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
   static const DOCTOR_PROFILE = _Paths.DOCTOR_PROFILE;
   static const DOCTOR_HISTORY_INFO = _Paths.DOCTOR_HISTORY_INFO;
   static const DOC_CONS_HISTORY = _Paths.DOC_CONS_HISTORY;
-    static const DOC_LIVE_CONS_INFO = _Paths.DOC_LIVE_CONS_INFO;
+  static const DOC_LIVE_CONS_INFO = _Paths.DOC_LIVE_CONS_INFO;
+  static const DOC_CONS_REQ_INFO = _Paths.DOC_CONS_REQ_INFO;
 
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
@@ -93,6 +95,7 @@ abstract class _Paths {
   static const CONS_HISTORY = '/cons-history';
   static const MA_HISTORY = '/MA-history';
   static const LIVE_CHAT = '/live-chat';
+  static const LIVE_CHAT_INFO = '/live-chat-info';
 
   //Doctor
   static const DOCTOR_HOME = '/home';
@@ -100,6 +103,8 @@ abstract class _Paths {
   static const DOCTOR_HISTORY_INFO = '/history-info';
   static const DOC_CONS_HISTORY = '/cons-history';
   static const DOC_LIVE_CONS_INFO = '/live-cons-info';
+  static const DOC_CONS_REQ_INFO = '/cons-req-info';
+
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';

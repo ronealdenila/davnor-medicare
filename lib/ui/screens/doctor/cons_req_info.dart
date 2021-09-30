@@ -1,11 +1,13 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:get/get.dart';
 
-class HistoryInfoScreen extends StatelessWidget {
+class ConsReqInfoScreen extends StatelessWidget {
+  const ConsReqInfoScreen({ Key? key }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +25,7 @@ class HistoryInfoScreen extends StatelessWidget {
                 ),
               ),
             ),
-           child: Column(children: <Widget>[
+            child: Column(children: <Widget>[
               verticalSpace15,
               Card(
                   elevation: 3,
@@ -33,13 +35,13 @@ class HistoryInfoScreen extends StatelessWidget {
                 //  child: getPhoto(consData)),
               //verticalSpace20,
              // Text(
-             //   '${consHCont.getDoctorFullName(consData)}',
-             //   style: subtitle18Medium,
+             //   'Dr. ${consHCont.getDoctorFullName(consData)}',
+            //    style: subtitle18Medium,
               ),
-              verticalSpace25
+              verticalSpace25,
             ]),
-          ),
 
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
@@ -105,43 +107,6 @@ class HistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Started',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text('July 27, 2021 (10:00 am)',
-                         // consHCont.convertDate(consData.dateConsStart!),
-                         // maxLines: 5,
-                         // overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Ended',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text('July 27, 2021 (9:40 am)',
-                        //consHCont.convertDate(consData.dateConsEnd!),
-                        //  maxLines: 5,
-                        //  overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
