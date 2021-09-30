@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -70,7 +71,10 @@ class LiveConsultationScreen extends StatelessWidget {
               Icons.info_outline,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => LiveConsInfoScreen(),
+                  arguments: consData, transition: Transition.rightToLeft);
+            },
           ),
           horizontalSpace10,
         ],
@@ -88,7 +92,7 @@ class LiveConsultationScreen extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.active) {
                         return ListView.builder(
                           reverse: true,
-                          padding: const EdgeInsets.all(25),
+                          padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                           shrinkWrap: true,
                           itemCount: liveChatCont.liveChat.length,
                           itemBuilder: (context, index) {

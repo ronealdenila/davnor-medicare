@@ -74,7 +74,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                           ),
                           verticalSpace5,
                           Text(
-                            consHistory!.dateConsEnd!,
+                            consHCont.convertDate(consHistory!.dateConsEnd!),
                             style: caption12Medium,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,

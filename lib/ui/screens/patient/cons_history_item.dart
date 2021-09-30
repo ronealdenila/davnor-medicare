@@ -51,7 +51,8 @@ class ConsHistoryItemScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                Get.to(() => PatientConsHistoryInfoScreen());
+                Get.to(() => PatientConsHistoryInfoScreen(),
+                    arguments: consData, transition: Transition.rightToLeft);
               },
             ),
             horizontalSpace10,

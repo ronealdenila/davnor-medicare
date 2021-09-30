@@ -54,7 +54,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.LIVE_CHAT_INFO;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -183,7 +183,6 @@ class AppPages {
       name: _Paths.DOC_CONS_REQ_INFO,
       page: () => ConsReqInfoScreen(),
     ),
-
 
 
     //PSWD
