@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
+import 'package:davnor_medicare/ui/widgets/custom_drawer.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons.dart';
@@ -39,13 +40,20 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            drawer: Drawer(
-              child: TextButton(
-                onPressed: () {
-                  Get.to(() => DoctorProfileScreen());
-                },
-                child: const Text('Profile'),
-              ),
+            drawer: CustomDrawer(
+              forDoctorDrawer: true,
+              accountName: fetchedData!.firstName,
+              accountEmail: fetchedData!.email,
+              userProfile: fetchedData!.profileImage == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 56,
+                    )
+                  : Image.network(fetchedData!.profileImage!),
+              onProfileTap: () => Get.to(() => DoctorProfileScreen()),
+              onCurrentConsultTap: () {},
+              onConsultHisoryTap: () {},
+              onLogoutTap: authController.signOut,
             ),
             backgroundColor: verySoftBlueColor,
             body: SizedBox(
