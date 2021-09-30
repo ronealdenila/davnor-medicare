@@ -1,6 +1,8 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
+import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
@@ -19,8 +21,6 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
-import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
-import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
@@ -46,7 +46,7 @@ class PatientHomeScreen extends StatelessWidget {
               ],
             ),
             drawer: CustomDrawer(
-              accountName: fetchedData!.firstName,
+              accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
               userProfile: fetchedData!.profileImage == ''
                   ? const Icon(

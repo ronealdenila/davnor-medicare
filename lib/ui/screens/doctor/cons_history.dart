@@ -131,8 +131,7 @@ class DocConsHistoryScreen extends StatelessWidget {
             consHistory: model,
             onItemTap: () {
               Get.to(() => HistoryInfoScreen(),
-                  transition: Transition.rightToLeft);
-              //arguments: consData,
+                  arguments: model, transition: Transition.rightToLeft);
             },
           );
         }

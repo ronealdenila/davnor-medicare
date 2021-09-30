@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LiveChatInfoScreen extends StatelessWidget {
-  const LiveChatInfoScreen({ Key? key }) : super(key: key);
+  const LiveChatInfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +27,24 @@ class LiveChatInfoScreen extends StatelessWidget {
             child: Column(children: <Widget>[
               verticalSpace15,
               Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
                 //  child: getPhoto(consData)),
-             // verticalSpace20,
-             // Text(
-             //   'Dr. ${consHCont.getDoctorFullName(consData)}',
-             //   style: subtitle18Medium,
+                // verticalSpace20,
+                // Text(
+                //   'Dr. ${consHCont.getDoctorFullName(consData)}',
+                //   style: subtitle18Medium,
               ),
               verticalSpace5,
-            //  Text(
-             //   consData.doc.value!.title!,
-            //    style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
-            //  ),
+              //  Text(
+              //   consData.doc.value!.title!,
+              //    style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
+              //  ),
               verticalSpace25
             ]),
           ),
-          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
@@ -67,8 +66,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                     SizedBox(
                       width: Get.width - 230,
                       child: const Text('Jisso Wolski',
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
+                          textAlign: TextAlign.left, style: body14Regular),
                     ),
                   ],
                 ),
@@ -83,9 +81,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                     SizedBox(
                       width: Get.width - 230,
                       child: const Text('28',
-                        //consData.age!,
+                          //consData.age!,
                           //maxLines: 5,
-                         // overflow: TextOverflow.ellipsis,
+                          // overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
@@ -102,9 +100,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                     SizedBox(
                       width: Get.width - 230,
                       child: Text('July 27, 2021 (9:00 am)',
-                        //consHCont.convertDate(consData.dateRqstd!),
-                        //  maxLines: 5,
-                        //  overflow: TextOverflow.ellipsis,
+                          //consHCont.convertDate(consData.dateRqstd!),
+                          //  maxLines: 5,
+                          //  overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
@@ -121,16 +119,15 @@ class LiveChatInfoScreen extends StatelessWidget {
                     SizedBox(
                       width: Get.width - 230,
                       child: Text('July 27, 2021 (10:00 am)',
-                         // consHCont.convertDate(consData.dateConsStart!),
-                         // maxLines: 5,
-                         // overflow: TextOverflow.ellipsis,
+                          // consHCont.convertDate(consData.dateConsStart!),
+                          // maxLines: 5,
+                          // overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
                   ],
                 ),
                 verticalSpace15,
-                
               ],
             ),
           ),

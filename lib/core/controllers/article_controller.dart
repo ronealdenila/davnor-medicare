@@ -10,6 +10,7 @@ class ArticleController extends GetxController {
   List<ArticleModel> articlesList = [];
   late ArticleModel _initArticle;
   RxBool doneLoading = false.obs;
+  RxBool doneReturn = false.obs;
 
   String? title;
   String? content;

@@ -1,5 +1,8 @@
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
@@ -13,6 +16,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
+import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
   final ConsultationsController consRequests =
@@ -33,16 +37,10 @@ class DoctorHomeScreen extends StatelessWidget {
             appBar: AppBar(
               iconTheme: const IconThemeData(color: Colors.white),
               backgroundColor: verySoftBlueColor,
-              actions: [
-                IconButton(
-                  onPressed: authController.signOut,
-                  icon: const Icon(Icons.logout),
-                ),
-              ],
             ),
             drawer: CustomDrawer(
               forDoctorDrawer: true,
-              accountName: fetchedData!.firstName,
+              accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
               userProfile: fetchedData!.profileImage == ''
                   ? const Icon(
@@ -51,8 +49,17 @@ class DoctorHomeScreen extends StatelessWidget {
                     )
                   : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => DoctorProfileScreen()),
-              onCurrentConsultTap: () {},
-              onConsultHisoryTap: () {},
+              onCurrentConsultTap: () {
+                if (liveCont.liveCons.isNotEmpty) {
+                  Get.to(() => LiveConsultationScreen(),
+                      arguments: liveCont.liveCons[0]);
+                } else {
+                  showErrorDialog(
+                      errorTitle: 'No current consultation',
+                      errorDescription: 'Please accept consultation request');
+                }
+              },
+              onConsultHisoryTap: () => Get.to(() => DocConsHistoryScreen()),
               onLogoutTap: authController.signOut,
             ),
             backgroundColor: verySoftBlueColor,
@@ -176,7 +183,8 @@ class DoctorHomeScreen extends StatelessWidget {
                                         text: 'Read \nHealth Articles',
                                         color: verySoftRed[60],
                                         secondaryColor: verySoftRedCustomColor,
-                                        onTap: () {}),
+                                        onTap: () =>
+                                            Get.to(() => ArticleListScreen())),
                                   ),
                                 ],
                               ),
