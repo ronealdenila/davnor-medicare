@@ -1,11 +1,14 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LiveChatInfoScreen extends StatelessWidget {
-  const LiveChatInfoScreen({Key? key}) : super(key: key);
+  final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
+  static LiveConsController liveCont = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,6 @@ class LiveChatInfoScreen extends StatelessWidget {
         body: ListView(children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .3,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -27,21 +29,27 @@ class LiveChatInfoScreen extends StatelessWidget {
             child: Column(children: <Widget>[
               verticalSpace15,
               Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                //  child: getPhoto(consData)),
-                // verticalSpace20,
-                // Text(
-                //   'Dr. ${consHCont.getDoctorFullName(consData)}',
-                //   style: subtitle18Medium,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: getPhoto(consData)),
+              verticalSpace20,
+              Text(
+                'Dr. ${liveCont.getDoctorFullName(consData)}',
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: subtitle18Medium,
+                textAlign: TextAlign.center,
               ),
               verticalSpace5,
-              //  Text(
-              //   consData.doc.value!.title!,
-              //    style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
-              //  ),
+              Text(
+                consData.doc.value!.title!,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
+              ),
               verticalSpace25
             ]),
           ),
@@ -57,6 +65,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -65,13 +74,17 @@ class LiveChatInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width - 230,
-                      child: const Text('Jisso Wolski',
-                          textAlign: TextAlign.left, style: body14Regular),
+                      child: Text(consData.fullName!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
                     ),
                   ],
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -80,10 +93,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width - 230,
-                      child: const Text('28',
-                          //consData.age!,
-                          //maxLines: 5,
-                          // overflow: TextOverflow.ellipsis,
+                      child: Text(consData.age!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
@@ -91,6 +103,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -99,10 +112,10 @@ class LiveChatInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width - 230,
-                      child: Text('July 27, 2021 (9:00 am)',
-                          //consHCont.convertDate(consData.dateRqstd!),
-                          //  maxLines: 5,
-                          //  overflow: TextOverflow.ellipsis,
+                      child: Text(
+                          liveCont.convertTimeStamp(consData.dateRqstd!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
@@ -110,6 +123,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -118,10 +132,10 @@ class LiveChatInfoScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width - 230,
-                      child: Text('July 27, 2021 (10:00 am)',
-                          // consHCont.convertDate(consData.dateConsStart!),
-                          // maxLines: 5,
-                          // overflow: TextOverflow.ellipsis,
+                      child: Text(
+                          liveCont.convertTimeStamp(consData.dateConsStart!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: body14Regular),
                     ),
@@ -136,16 +150,16 @@ class LiveChatInfoScreen extends StatelessWidget {
     );
   }
 
-//  Widget getPhoto(ConsultationHistoryModel model) {
-//    if (consHCont.getDoctorProfile(model) == '') {
-//      return CircleAvatar(
-//        radius: 50,
-//        backgroundImage: AssetImage(blankProfile),
-//      );
-//    }
-//    return CircleAvatar(
-//      radius: 50,
-//      backgroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
-//    );
-//  }
+  Widget getPhoto(LiveConsultationModel model) {
+    if (liveCont.getDoctorProfile(model) == '') {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 50,
+      backgroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -46,7 +47,8 @@ class ConsRequestItemScreen extends StatelessWidget {
                 Icons.info_outline,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () => Get.to(() => ConsReqInfoScreen(),
+                  arguments: consData, transition: Transition.rightToLeft),
             ),
             horizontalSpace10,
           ],

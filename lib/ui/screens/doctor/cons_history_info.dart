@@ -21,7 +21,6 @@ class HistoryInfoScreen extends StatelessWidget {
         body: ListView(children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .3,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -40,7 +39,10 @@ class HistoryInfoScreen extends StatelessWidget {
               verticalSpace20,
               Text(
                 consHController.getPatientName(consData),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
                 style: subtitle18Medium,
+                textAlign: TextAlign.center,
               ),
               verticalSpace25
             ]),
@@ -57,6 +59,7 @@ class HistoryInfoScreen extends StatelessWidget {
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -72,6 +75,7 @@ class HistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -90,6 +94,7 @@ class HistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -109,6 +114,7 @@ class HistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -128,6 +134,7 @@ class HistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,

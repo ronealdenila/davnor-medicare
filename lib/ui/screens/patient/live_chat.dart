@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/patient/live_chat_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -63,7 +64,8 @@ class LiveChatScreen extends StatelessWidget {
               Icons.info_outline,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () => Get.to(() => LiveChatInfoScreen(),
+                arguments: consData, transition: Transition.rightToLeft),
           ),
           horizontalSpace10,
         ],

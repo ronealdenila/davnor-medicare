@@ -38,7 +38,10 @@ class LiveConsInfoScreen extends StatelessWidget {
               verticalSpace15,
               Text(
                 liveCont.getPatientName(consData),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
                 style: subtitle18Medium,
+                textAlign: TextAlign.center,
               ),
               verticalSpace25
             ]),
@@ -79,6 +82,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -97,6 +101,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -115,6 +120,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -134,6 +140,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,

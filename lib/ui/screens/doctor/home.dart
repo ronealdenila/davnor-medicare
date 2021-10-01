@@ -1,9 +1,8 @@
-import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
-import 'package:davnor_medicare/ui/screens/doctor/cons_request_item.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_req_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
 import 'package:davnor_medicare/ui/widgets/custom_drawer.dart';

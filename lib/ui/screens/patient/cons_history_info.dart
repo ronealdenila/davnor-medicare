@@ -39,11 +39,17 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
               verticalSpace20,
               Text(
                 'Dr. ${consHCont.getDoctorFullName(consData)}',
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
                 style: subtitle18Medium,
+                textAlign: TextAlign.center,
               ),
               verticalSpace5,
               Text(
                 consData.doc.value!.title!,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: body14Regular.copyWith(color: const Color(0xFF727F8D)),
               ),
               verticalSpace25
@@ -61,6 +67,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -79,6 +86,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -97,6 +105,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -115,6 +124,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -134,6 +144,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 170,

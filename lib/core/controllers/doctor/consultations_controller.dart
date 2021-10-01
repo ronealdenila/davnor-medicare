@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class ConsultationsController extends GetxController {
   final log = getLogger('Doctor Home Consultations Controller');
@@ -58,6 +59,11 @@ class ConsultationsController extends GetxController {
 
   String getFullName(ConsultationModel model) {
     return '${getFirstName(model)} ${getLastName(model)}';
+  }
+
+  String convertEpoch(String date) {
+    final dt = DateTime.fromMillisecondsSinceEpoch(1631271365106617 ~/ 1000);
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 
   // Stream<List<ConsultationModel>> getConsultations() {
