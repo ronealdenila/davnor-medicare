@@ -142,7 +142,7 @@ class LiveChatScreen extends StatelessWidget {
                             Icons.send,
                             color: kcInfoColor,
                           ),
-                          onPressed: liveChatCont.sendMessage,
+                          onPressed: liveChatCont.sendButton,
                         ),
                       ],
                     ),

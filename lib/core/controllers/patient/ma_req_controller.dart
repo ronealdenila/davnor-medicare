@@ -142,7 +142,7 @@ class MARequestController extends GetxController {
   Future<void> uploadImage() async {
     final img = imgOfValidID.value;
     final v4 = uuid.v4();
-    log.i('UNQ? -> $v4');
+    log.i('Using UID for making sure of the uniqueness -> $v4');
     fileName.value = img.split('/').last;
     final ref = storageRef.child('MA/ID-$v4$fileName');
     final uploadTask = ref.putFile(File(img));

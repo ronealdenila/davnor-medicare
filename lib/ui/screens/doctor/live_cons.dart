@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
@@ -17,6 +18,8 @@ class LiveConsultationScreen extends StatelessWidget {
   static LiveConsController liveCont = Get.find();
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
+  //DISPLAY CONTROL: if starts with this
+  //https://firebasestorage.googleapis.com/
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +74,8 @@ class LiveConsultationScreen extends StatelessWidget {
               Icons.info_outline,
               size: 30,
             ),
-            onPressed: () {
-              Get.to(() => LiveConsInfoScreen(),
-                  arguments: consData, transition: Transition.rightToLeft);
-            },
+            onPressed: () => Get.to(() => LiveConsInfoScreen(),
+                arguments: consData, transition: Transition.rightToLeft),
           ),
           horizontalSpace10,
         ],
@@ -111,10 +112,11 @@ class LiveConsultationScreen extends StatelessWidget {
               alignment: FractionalOffset.bottomCenter,
               child: SizedBox(
                 width: Get.width,
-                height: 100,
+                height: 120,
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Row(
                       children: [
                         IconButton(
@@ -124,33 +126,22 @@ class LiveConsultationScreen extends StatelessWidget {
                           ),
                           onPressed: () {},
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            child: TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              controller: liveChatCont.chatController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                              ),
-                              onChanged: (value) {
-                                return;
-                              },
-                              onSaved: (value) =>
-                                  liveChatCont.chatController.text = value!,
-                            ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.add_a_photo,
+                            color: kcInfoColor,
                           ),
+                          onPressed: liveChatCont.pickImageFromCamera,
+                        ),
+                        Expanded(
+                          child: Obx(showImage),
                         ),
                         IconButton(
                           icon: const Icon(
                             Icons.send,
                             color: kcInfoColor,
                           ),
-                          onPressed: liveChatCont.sendMessage,
+                          onPressed: liveChatCont.sendButton,
                         ),
                       ],
                     ),
@@ -231,6 +222,71 @@ class LiveConsultationScreen extends StatelessWidget {
     return CircleAvatar(
       radius: 25,
       backgroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+    );
+  }
+
+  Widget showImage() {
+    if (liveChatCont.image.value.isNotEmpty) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color(0xFFA9A9A9),
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: SizedBox(
+          width: 80,
+          height: 80,
+          child: Wrap(children: [
+            Stack(
+              children: [
+                Image.file(
+                  File(liveChatCont.image.value),
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.fitWidth,
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: InkWell(
+                    onTap: liveChatCont.clearImage,
+                    child: const Icon(
+                      Icons.remove_circle,
+                      size: 25,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ]),
+        ),
+      );
+    }
+    /*else if (liveChatCont.image.value.isNotEmpty) {
+      show images in grid
+      scrollable
+    }
+    */
+    return TextFormField(
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
+      controller: liveChatCont.chatController,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+      ),
+      onChanged: (value) {
+        return;
+      },
+      onSaved: (value) => liveChatCont.chatController.text = value!,
     );
   }
 }
