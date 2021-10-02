@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -30,9 +31,7 @@ class DoctorProfileScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    verticalSpace5,
                     Align(
                       alignment: Alignment.centerLeft,
                       child: IconButton(
@@ -44,34 +43,17 @@ class DoctorProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //Please use our global helper (R)
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CircleAvatar(
-                      backgroundImage: AssetImage(authHeader),
-                      radius: 50,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
+                    verticalSpace10,
+                    displayProfile(),
+                    verticalSpace20,
+                    DmText.title24Bold(
                       'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
+                      color: Colors.white,
                     ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      authController.doctorModel.value!.email!,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                          color: Colors.white),
+                    verticalSpace5,
+                    DmText.subtitle18Regular(
+                      fetchedData!.email,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -104,24 +86,15 @@ class DoctorProfileScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
+                            children: <Widget>[
+                              const Text(
                                 'SPECIALTY',
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                //'${to.userModel.value.email}'
-                                'Cardiologist  - x',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ),
-                              ),
+                              verticalSpace5,
+                              DmText.subtitle18Medium(fetchedData!.title),
                             ],
                           ),
                         ),
@@ -158,21 +131,15 @@ class DoctorProfileScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
+                            children: <Widget>[
+                              const Text(
                                 //'${to.userModel.value.department}'
                                 'DEPARTMENT',
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
-                              Text(
-                                'Internal Medicine  - x',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ),
-                              ),
+                              DmText.subtitle18Medium(fetchedData!.department),
                             ],
                           ),
                         ),
@@ -209,20 +176,14 @@ class DoctorProfileScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
+                            children: <Widget>[
+                              const Text(
                                 'CLINIC HOURS',
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
-                              Text(
-                                '1pm - 6pm (Weekends) - x',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ),
-                              ),
+                              DmText.subtitle18Medium(fetchedData!.clinicHours),
                             ],
                           ),
                         ),
@@ -258,6 +219,19 @@ class DoctorProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget displayProfile() {
+    if (fetchedData!.profileImage == '') {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 50,
+      backgroundImage: NetworkImage(fetchedData!.profileImage!),
     );
   }
 }

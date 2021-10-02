@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -22,13 +23,28 @@ class ArticleItemScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                  width: screenWidth(context),
-                  height: 220,
-                  child: Hero(
-                    tag: articleList[index].title!,
-                    child: Image.network(articleList[index].photoURL!,
-                        fit: BoxFit.cover),
-                  )),
+                width: screenWidth(context),
+                height: 220,
+                child: Hero(
+                  tag: articleList[index].title!,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        articleList[index].photoURL!,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 0,
+                        child: CupertinoNavigationBarBackButton(
+                          onPressed: Get.back,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Container(
                 transform: Matrix4.translationValues(0, -20, 0),
                 width: screenWidth(context),

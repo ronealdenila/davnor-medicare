@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -31,9 +32,7 @@ class PatientProfileScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    verticalSpace5,
                     Align(
                       alignment: Alignment.centerLeft,
                       child: IconButton(
@@ -45,34 +44,17 @@ class PatientProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //Please use our global helper (R)
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CircleAvatar(
-                      backgroundImage: AssetImage(authHeader),
-                      radius: 50,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
+                    verticalSpace10,
+                    displayProfile(),
+                    verticalSpace20,
+                    DmText.title24Bold(
                       '${fetchedData!.firstName} ${fetchedData!.lastName}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
+                      color: Colors.white,
                     ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Text(
+                    verticalSpace5,
+                    DmText.subtitle18Medium(
                       '${fetchedData!.email} ',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                          color: Colors.white),
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -107,9 +89,7 @@ class PatientProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const <Widget>[
                               Text('AGE', style: body14Regular),
-                              SizedBox(
-                                height: 5,
-                              ),
+                              verticalSpace5,
                               Text(
                                   //'${to.userModel.value.email}'
                                   '24 years old  - x',
@@ -239,6 +219,19 @@ class PatientProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget displayProfile() {
+    if (fetchedData!.profileImage == '') {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 50,
+      backgroundImage: NetworkImage(fetchedData!.profileImage!),
     );
   }
 }
