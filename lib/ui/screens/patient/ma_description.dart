@@ -152,7 +152,18 @@ class MADescriptionScreen extends StatelessWidget {
                     onTap: () {
                       if (controller.hasAvailableSlot()) {
                         //check activeQueue/slot/fund
-                        showDialog();
+                        return showConfirmationDialog(
+                          dialogTitle: dialog2Title,
+                          dialogCaption: dialog2Caption,
+                          onYesTap: () {
+                            controller.isMAForYou.value = true;
+                            Get.to(() => MAFormScreen());
+                          },
+                          onNoTap: () {
+                            controller.isMAForYou.value = false;
+                            Get.to(() => MAFormScreen());
+                          },
+                        );
                       } else {
                         showErrorDialog(
                           errorTitle: 'No Slot Available',

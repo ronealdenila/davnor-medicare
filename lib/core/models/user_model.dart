@@ -7,7 +7,7 @@ class PatientModel {
     required this.lastName,
     required this.profileImage,
     required this.pStatus,
-    required this.validId,
+    required this.validID,
     required this.validSelfie,
     required this.hasActiveQueue,
   });
@@ -18,7 +18,7 @@ class PatientModel {
         lastName: json['lastName'] as String,
         profileImage: json['profileImage'] as String,
         pStatus: json['pStatus'] as bool,
-        validId: json['validID'] as String,
+        validID: json['validID'] as String,
         validSelfie: json['validSelfie'] as String,
         hasActiveQueue: json['hasActiveQueue'] as bool,
       );
@@ -29,7 +29,7 @@ class PatientModel {
         'lastName': lastName,
         'profileImage': profileImage,
         'pStatus': pStatus,
-        'validID': validId,
+        'validID': validID,
         'validSelfie': validSelfie,
         'hasActiveQueue': hasActiveQueue,
       };
@@ -39,7 +39,7 @@ class PatientModel {
   final String? lastName;
   final String? profileImage;
   final bool? pStatus;
-  final String? validId;
+  final String? validID;
   final String? validSelfie;
   bool? hasActiveQueue;
 }
