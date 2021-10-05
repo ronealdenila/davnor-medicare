@@ -18,8 +18,6 @@ class LiveConsultationScreen extends StatelessWidget {
   static LiveConsController liveCont = Get.find();
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
-  //DISPLAY CONTROL: if starts with this
-  //https://firebasestorage.googleapis.com/
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +48,14 @@ class LiveConsultationScreen extends StatelessWidget {
                 ),
                 child: getPhoto(consData)),
             horizontalSpace15,
-            SizedBox(
-              width: 144,
-              child: Text(
-                liveCont.getPatientName(consData),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: subtitle18Medium.copyWith(color: Colors.black),
+            Expanded(
+              child: SizedBox(
+                child: Text(
+                  liveCont.getPatientName(consData),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: subtitle18Medium.copyWith(color: Colors.black),
+                ),
               ),
             ),
           ],
@@ -112,7 +111,6 @@ class LiveConsultationScreen extends StatelessWidget {
               alignment: FractionalOffset.bottomCenter,
               child: SizedBox(
                 width: Get.width,
-                height: 120,
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -134,7 +132,7 @@ class LiveConsultationScreen extends StatelessWidget {
                           onPressed: liveChatCont.pickImageFromCamera,
                         ),
                         Expanded(
-                          child: Obx(showImage),
+                          child: Obx(showMessage),
                         ),
                         IconButton(
                           icon: const Icon(
@@ -163,6 +161,29 @@ class LiveConsultationScreen extends StatelessWidget {
   }
 
   Widget leftBubbleChat(ChatModel chat) {
+    if (chat.message!.startsWith('https://firebasestorage.googleapis.com/')) {
+      return Row(
+        children: [
+          Flexible(
+            child: Container(
+                constraints: BoxConstraints(maxWidth: Get.width * .7),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: verySoftBlueColor[60],
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: Image.network(
+                  chat.message!,
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ],
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -188,6 +209,30 @@ class LiveConsultationScreen extends StatelessWidget {
   }
 
   Widget rightBubbleChat(ChatModel chat) {
+    if (chat.message!.startsWith('https://firebasestorage.googleapis.com/')) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Flexible(
+            child: Container(
+                constraints: BoxConstraints(maxWidth: Get.width * .7),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: verySoftBlueColor[60],
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: Image.network(
+                  chat.message!,
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ],
+      );
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -225,9 +270,10 @@ class LiveConsultationScreen extends StatelessWidget {
     );
   }
 
-  Widget showImage() {
+  Widget showMessage() {
     if (liveChatCont.image.value.isNotEmpty) {
       return Container(
+        height: 100,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           border: Border.all(
@@ -272,21 +318,24 @@ class LiveConsultationScreen extends StatelessWidget {
       scrollable
     }
     */
-    return TextFormField(
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      controller: liveChatCont.chatController,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(30),
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 100),
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        controller: liveChatCont.chatController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
           ),
         ),
+        onChanged: (value) {
+          return;
+        },
+        onSaved: (value) => liveChatCont.chatController.text = value!,
       ),
-      onChanged: (value) {
-        return;
-      },
-      onSaved: (value) => liveChatCont.chatController.text = value!,
     );
   }
 }

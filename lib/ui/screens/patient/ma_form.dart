@@ -22,12 +22,8 @@ class MAFormScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: CupertinoNavigationBarBackButton(
+        leading: const CupertinoNavigationBarBackButton(
           color: Colors.black,
-          onPressed: () => Get.to(
-            () => MADescriptionScreen(),
-            transition: Transition.cupertino,
-          ),
         ),
       ),
       body: Padding(

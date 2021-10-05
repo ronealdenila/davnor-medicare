@@ -30,13 +30,14 @@ class ConsRequestItemScreen extends StatelessWidget {
                   ),
                   child: getPhoto(consData)),
               horizontalSpace15,
-              SizedBox(
-                width: 144,
-                child: Text(
-                  doctorHomeController.getFullName(consData),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: subtitle18Medium.copyWith(color: Colors.black),
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    doctorHomeController.getFullName(consData),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: subtitle18Medium.copyWith(color: Colors.black),
+                  ),
                 ),
               ),
             ],
@@ -71,20 +72,24 @@ class ConsRequestItemScreen extends StatelessWidget {
                             //Bubble chat
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: const BoxDecoration(
-                                    color: neutralBubbleColor,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
+                              Flexible(
+                                child: Container(
+                                    constraints: BoxConstraints(
+                                        maxWidth: Get.width * .7),
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: const BoxDecoration(
+                                      color: neutralBubbleColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    consData.description!,
-                                    style: body16Medium,
-                                  )),
+                                    child: Text(
+                                      consData.description!,
+                                      style: body16Medium.copyWith(height: 1.4),
+                                    )),
+                              ),
                             ],
                           ),
                           verticalSpace15,

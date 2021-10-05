@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,9 @@ class MADescriptionScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: const CupertinoNavigationBarBackButton(
+          leading: CupertinoNavigationBarBackButton(
             color: Colors.black,
+            onPressed: () => Get.offAll(() => PatientHomeScreen()),
           ),
         ),
         backgroundColor: Colors.white,
@@ -150,18 +152,7 @@ class MADescriptionScreen extends StatelessWidget {
                     onTap: () {
                       if (controller.hasAvailableSlot()) {
                         //check activeQueue/slot/fund
-                        showConfirmationDialog(
-                          dialogTitle: dialog2Title,
-                          dialogCaption: dialog2Caption,
-                          onYesTap: () {
-                            controller.isMAForYou.value = true;
-                            Get.to(() => MAFormScreen());
-                          },
-                          onNoTap: () {
-                            controller.isMAForYou.value = false;
-                            Get.to(() => MAFormScreen());
-                          },
-                        );
+                        showDialog();
                       } else {
                         showErrorDialog(
                           errorTitle: 'No Slot Available',

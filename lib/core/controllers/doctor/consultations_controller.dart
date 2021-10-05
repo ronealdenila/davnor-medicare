@@ -21,12 +21,12 @@ class ConsultationsController extends GetxController {
     log.i('Doctor Consultations Controller | get Collection');
     return firestore
         .collection('cons_request')
-        .orderBy('dateRqstd', descending: false)
-        //category is hard coded for now. must be initialized based on title of
-        //logged in doctor
+        .orderBy('dateRqstd')
         .where('category', isEqualTo: 'Heart')
         .snapshots();
   }
+  //category is hard coded for now. must be initialized based on title of
+  //logged in doctor
 
   Stream<List<ConsultationModel>> assignListStream() {
     log.i('Doctor Consultations Controller | assign');
