@@ -155,6 +155,7 @@ class LiveChatScreen extends StatelessWidget {
 
   Widget leftBubbleChat(ChatModel chat) {
     if (chat.message!.startsWith('https://firebasestorage.googleapis.com/')) {
+      //split >>> then if more than 1 ang length, -1 then display as grid
       return Row(
         children: [
           Flexible(

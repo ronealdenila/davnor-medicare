@@ -98,12 +98,20 @@ class LiveChatController extends GetxController {
 
   void pickImageFromCamera() {
     isPhotoCameraClicked.value = true;
+    isPhotoAttachClicked.value = false;
     _imagePicker.pickFromCamera(image);
+    if (image.isNotEmpty) {
+      clearImages();
+    }
   }
 
   void pickMultiImage() {
     isPhotoAttachClicked.value = true;
+    isPhotoCameraClicked.value = false;
     _imagePicker.pickMultiImage(images);
+    if (images.isNotEmpty) {
+      clearImage();
+    }
   }
 
   Future<void> uploadImage() async {
