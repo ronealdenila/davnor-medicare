@@ -21,8 +21,8 @@ class ConsultationsController extends GetxController {
     log.i('Doctor Consultations Controller | get Collection');
     return firestore
         .collection('cons_request')
-        .orderBy('dateRqstd')
         .where('category', isEqualTo: 'Heart')
+        .orderBy('dateRqstd')
         .snapshots();
   }
   //category is hard coded for now. must be initialized based on title of
