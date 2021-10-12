@@ -12,6 +12,7 @@ abstract class Routes {
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const TERMS_AND_POLICY = _Paths.TERMS_AND_POLICY;
   static const DOCTOR_APPLICATION_GUIDE = _Paths.DOCTOR_APPLICATION_GUIDE;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 
   //Patient
   static const PATIENT_HOME = _Paths.PATIENT_HOME;
@@ -76,6 +77,7 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const TERMS_AND_POLICY = '/terms-and-policy';
   static const DOCTOR_APPLICATION_GUIDE = '/doctor-application-guide';
+  static const CHANGE_PASSWORD = '/change-password';
 
   //Patient
   static const PATIENT_HOME = '/home';
@@ -104,7 +106,6 @@ abstract class _Paths {
   static const DOC_CONS_HISTORY = '/cons-history';
   static const DOC_LIVE_CONS_INFO = '/live-cons-info';
   static const DOC_CONS_REQ_INFO = '/cons-req-info';
-
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';

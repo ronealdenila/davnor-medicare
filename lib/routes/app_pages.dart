@@ -2,6 +2,7 @@
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswdstaff.dart';
+import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
@@ -83,6 +84,10 @@ class AppPages {
       name: _Paths.DOCTOR_APPLICATION_GUIDE,
       page: () => DoctorApplicationGuideScreen(),
     ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => ChangePasswordScreen(),
+    ),
 
     //Patient
     GetPage(
@@ -153,7 +158,7 @@ class AppPages {
       name: _Paths.QUEUE_MA_TABLE,
       page: () => QueueMATableScreen(),
     ),
-     GetPage(
+    GetPage(
       name: _Paths.LIVE_CHAT_INFO,
       page: () => LiveChatInfoScreen(),
     ),
@@ -183,7 +188,6 @@ class AppPages {
       name: _Paths.DOC_CONS_REQ_INFO,
       page: () => ConsReqInfoScreen(),
     ),
-
 
     //PSWD
     GetPage(

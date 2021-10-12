@@ -26,6 +26,8 @@ class AuthController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
 
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
@@ -37,6 +39,8 @@ class AuthController extends GetxController {
   String? userRole;
   bool? userSignedOut = false;
   RxBool? isObscureText = true.obs;
+  RxBool? isObscureCurrentPW = false.obs;
+  RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
 
   //Doctor Application Guide
@@ -130,6 +134,34 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> changePassword(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: user!.email!, password: currentPasswordController.text);
+    showLoading();
+    await user.reauthenticateWithCredential(cred).then((value) {
+      user.updatePassword(newPasswordController.text).then((_) {
+        dismissDialog();
+        FocusScope.of(context).unfocus();
+        _changePasswordSuccess();
+        Get.snackbar('Password Changed Successfully',
+            'You may now use your new password.',
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+            colorText: Get.theme.snackBarTheme.actionTextColor);
+      });
+    }).catchError((err) {
+      dismissDialog();
+      Get.snackbar('Password Change Failed',
+          'Your current password you have entered is not correct',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+          colorText: Get.theme.snackBarTheme.actionTextColor);
+    });
+  }
+
   Future<void> _createPatientUser(String _userID) async {
     await firestore.collection('users').doc(_userID).set(<String, dynamic>{
       'userType': 'patient',
@@ -180,6 +212,14 @@ class AuthController extends GetxController {
     passwordController.clear();
     firstNameController.clear();
     lastNameController.clear();
+  }
+
+  Future<void> _changePasswordSuccess() async {
+    log.i('_clearControllers | Change Password Success');
+    currentPasswordController.clear();
+    newPasswordController.clear();
+    isObscureCurrentPW!.value = true;
+    isObscureNewPW!.value = true;
   }
 
   Future<void> checkUserPlatform() async {
@@ -282,6 +322,14 @@ class AuthController extends GetxController {
 
   void togglePasswordVisibility() {
     _appController.toggleTextVisibility(isObscureText!);
+  }
+
+  void toggleCurrentPasswordVisibility() {
+    _appController.toggleTextVisibility(isObscureCurrentPW!);
+  }
+
+  void toggleNewPasswordVisibility() {
+    _appController.toggleTextVisibility(isObscureNewPW!);
   }
 
   void launchDoctorApplicationForm() {

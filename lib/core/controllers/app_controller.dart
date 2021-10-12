@@ -6,6 +6,7 @@ class AppController {
 
   bool toggleTextVisibility(RxBool isObscureText) {
     log.i('toggleTextVisibility | Toggle Text Visibility');
+    log.i(isObscureText);
     return isObscureText.value = !isObscureText.value;
   }
 }

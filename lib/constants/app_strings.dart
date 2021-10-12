@@ -3,6 +3,9 @@
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 
+const String changePasswordDescription =
+    'Please provide your current password and your new password.';
+
 //Global
 //Term and Policy Screen
 const String termsAndPolicyParagraph1 =

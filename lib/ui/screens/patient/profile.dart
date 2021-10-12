@@ -1,4 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
+import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -10,6 +12,8 @@ import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
+  static VerificationController verificationController =
+      Get.put(VerificationController());
 
   final fetchedData = authController.patientModel.value;
 
@@ -194,7 +198,7 @@ class PatientProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => Get.to(() => ChangePasswordScreen()),
                 icon: const Icon(
                   Icons.lock,
                   color: Colors.white,
