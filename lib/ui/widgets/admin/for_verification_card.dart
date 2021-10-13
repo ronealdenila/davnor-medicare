@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
+import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -81,27 +82,7 @@ class ForVerificationCard extends StatelessWidget {
               ),
             ],
           ),
-          InkWell(
-            onTap: onItemTap,
-            child: Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: const Color(0xFF063373),
-                ),
-                child: const Text(
-                  'View Details',
-                  style: subtitle18BoldWhite,
-                ),
-              ),
-            ),
-          )
+          AdminButton(onItemTap: onItemTap, buttonText: 'View Details'),
         ],
       ),
     );

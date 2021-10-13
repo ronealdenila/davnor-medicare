@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +13,8 @@ class ForVerificationController extends GetxController {
   final log = getLogger('Admin Verification Request Controller');
 
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();
+  TextEditingController reason = TextEditingController();
+  RxBool accepted = false.obs;
 
   @override
   void onReady() {
@@ -77,30 +82,60 @@ class ForVerificationController extends GetxController {
   }
 
   Future<void> acceptUserVerification(String uid) async {
+    accepted.value = true;
     await firestore
         .collection('patients')
         .doc(uid)
-        .update({'pStatus': true}).then((value) {
+        .update({'pStatus': true, 'pendingStatus': false}).then((value) {
       removeVerificationReq(uid);
-      //notify user - success and verified
+      addNotification(uid);
     }).catchError((error) {
       log.i('Failed to update user: $error');
     });
   }
 
   Future<void> desclineUserVerification(String uid) async {
+    accepted.value = false;
+    if (reason.text.isEmpty) {
+      log.i('ERROR DIALOG: Please input reason');
+      return;
+    }
     await firestore
         .collection('patients')
         .doc(uid)
         .update({'pendingStatus': false}).then((value) {
       removeVerificationReq(uid);
-      //notify user - failed w/ message
+      dismissDialog();
+      Get.to(() => VerificationReqListScreen());
+      addNotification(uid);
+      clearController();
     }).catchError((error) {
       log.i('Failed to update user: $error');
     });
   }
 
+  Future<void> addNotification(String uid) async {
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+      'title': accepted.value
+          ? 'Verification Request Accepted'
+          : 'Verification Declined',
+      'message': accepted.value ? 'You account now is verified' : reason.text,
+      'from': 'admin',
+      'createdAt': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
   Future<void> removeVerificationReq(String uid) async {
     await firestore.collection('to_verify').doc(uid).delete();
+  }
+
+  void clearController() {
+    log.i('_clearController | Reason Declined');
+    reason.clear();
+    accepted.value = false;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -19,15 +21,18 @@ class VerificationReqItemScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-          child: SingleChildScrollView(child: ResponsiveView())),
+          child: SingleChildScrollView(child: ResponsiveView(context))),
     );
   }
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView() : super(alwaysUseBuilder: false);
+  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
+  final BuildContext context;
   final VerificationReqModel vfModel = Get.arguments as VerificationReqModel;
   final ForVerificationController vf = Get.find();
+  final String userID = auth.currentUser!.uid;
+
   @override
   Widget phone() => Column(
         children: [
@@ -45,7 +50,7 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context)
             ]),
           )
         ],
@@ -68,7 +73,7 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context)
             ]),
           )
         ],
@@ -92,29 +97,92 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context)
             ]),
           ),
         ],
       );
 
-  Widget screenButtons() {
+  Widget screenButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         CustomButton(
-          onTap: () async {},
+          onTap: () {
+            vf.acceptUserVerification(userID);
+          },
           text: 'Verify',
           buttonColor: Colors.blue[900],
           fontSize: 15,
         ),
         horizontalSpace40,
         CustomButton(
-          onTap: () async {},
+          onTap: () {
+            showDialog(context: context, builder: (context) => declineDialog());
+          },
           text: 'Decline',
           buttonColor: Colors.blue[900],
           fontSize: 15,
         ),
+      ],
+    );
+  }
+
+  Widget declineDialog() {
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+          width: Get.width * .45,
+          child: Column(
+            children: [
+              const Text(
+                'To inform the patient',
+                style: title32Regular,
+              ),
+              verticalSpace10,
+              const Text(
+                'Please specify the reason',
+                style: title20Regular,
+              ),
+              verticalSpace50,
+              TextFormField(
+                  controller: vf.reason,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'This is a required field';
+                    }
+                    //! if we want to validate na dapat taas ang words
+                    // if (value.length < 10) {
+                    //   return 'Description must be at least 10 words';
+                    // }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Enter the reason here',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (value) {
+                    return;
+                  },
+                  onSaved: (value) {
+                    vf.reason.text = value!;
+                  }),
+              verticalSpace25,
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: AdminButton(
+                      onItemTap: () => vf.desclineUserVerification(userID),
+                      buttonText: 'Submit')),
+            ],
+          ),
+        )
       ],
     );
   }

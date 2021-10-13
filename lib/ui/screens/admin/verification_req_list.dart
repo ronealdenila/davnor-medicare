@@ -12,7 +12,6 @@ class VerificationReqListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(
