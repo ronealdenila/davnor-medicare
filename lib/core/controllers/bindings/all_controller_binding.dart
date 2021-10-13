@@ -1,4 +1,6 @@
+import 'package:davnor_medicare/core/controllers/admin/doctor_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
@@ -38,6 +40,9 @@ class AllControllerBinding implements Bindings {
     //admin
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());
     Get.lazyPut<AdminMenuController>(() => AdminMenuController());
+    Get.lazyPut<DoctorRegistrationController>(
+        () => DoctorRegistrationController());
+    Get.lazyPut<PSWDRegistrationController>(() => PSWDRegistrationController());
 
     //pswd
     Get.lazyPut<OnProgressReqController>(() => OnProgressReqController());
