@@ -25,6 +25,12 @@ class VerificationController extends GetxController {
   final RxString imgURLselfie = ''.obs;
   final RxString file = ''.obs;
 
+  Stream<DocumentSnapshot> getStatus() {
+    final Stream<DocumentSnapshot> doc =
+        firestore.collection('patients').doc(userID).snapshots();
+    return doc;
+  }
+
   Future<void> uploadID(String filePathID) async {
     file.value = filePathID.split('/').last;
     final ref = storageRef.child('verification/$userID/Valid-ID-$file');
@@ -53,7 +59,7 @@ class VerificationController extends GetxController {
   Future<void> addVerificationRequest() async {
     await uploadID(imgOfValidID.value);
     await uploadIDS(imgOfValidIDWithSelfie.value);
-    await firestore.collection('to_verify').add({
+    await firestore.collection('to_verify').doc(userID).set({
       'patientID': userID,
       'firstName': fetchedData!.firstName,
       'lastName': fetchedData!.lastName,
@@ -61,8 +67,15 @@ class VerificationController extends GetxController {
       'validSelfie': imgURLselfie.value,
       'dateRqstd': Timestamp.fromDate(DateTime.now()),
     });
-    //update user hasPendingStatus
+    await setPendingVerification();
     await showDialog();
+  }
+
+  Future<void> setPendingVerification() async {
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .update({'pendingVerification': true});
   }
 
   void submitVerification() {

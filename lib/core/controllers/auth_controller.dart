@@ -39,7 +39,7 @@ class AuthController extends GetxController {
   String? userRole;
   bool? userSignedOut = false;
   RxBool? isObscureText = true.obs;
-  RxBool? isObscureCurrentPW = false.obs;
+  RxBool? isObscureCurrentPW = true.obs;
   RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
 

@@ -111,7 +111,7 @@ class ResponsiveView extends GetResponsiveView {
         horizontalSpace40,
         CustomButton(
           onTap: () async {},
-          text: 'Cancel',
+          text: 'Decline',
           buttonColor: Colors.blue[900],
           fontSize: 15,
         ),

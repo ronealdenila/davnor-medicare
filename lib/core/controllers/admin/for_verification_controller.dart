@@ -75,4 +75,32 @@ class ForVerificationController extends GetxController {
     final temp = model.dateRqstd;
     return convertTimeStamp(temp!);
   }
+
+  Future<void> acceptUserVerification(String uid) async {
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .update({'pStatus': true}).then((value) {
+      removeVerificationReq(uid);
+      //notify user - success and verified
+    }).catchError((error) {
+      log.i('Failed to update user: $error');
+    });
+  }
+
+  Future<void> desclineUserVerification(String uid) async {
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .update({'pendingStatus': false}).then((value) {
+      removeVerificationReq(uid);
+      //notify user - failed w/ message
+    }).catchError((error) {
+      log.i('Failed to update user: $error');
+    });
+  }
+
+  Future<void> removeVerificationReq(String uid) async {
+    await firestore.collection('to_verify').doc(uid).delete();
+  }
 }

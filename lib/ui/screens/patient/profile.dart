@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
@@ -179,15 +180,7 @@ class PatientProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               const Text('STATUS', style: body14Regular),
-                              TextButton(
-                                onPressed: () {
-                                  Get.to(() => VerificationScreen());
-                                },
-                                child: Text(
-                                  'Click here to get verified',
-                                  style: body16RegularUnderlineBlue,
-                                ),
-                              ),
+                              displayStatus()
                             ],
                           ),
                         ),
@@ -236,6 +229,44 @@ class PatientProfileScreen extends StatelessWidget {
     return CircleAvatar(
       radius: 50,
       backgroundImage: NetworkImage(fetchedData!.profileImage!),
+    );
+  }
+
+  Widget displayStatus() {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: verificationController.getStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Loading');
+        }
+
+        // ignore: cast_nullable_to_non_nullable
+        final data = snapshot.data!.data() as Map<String, dynamic>;
+        if (data['pStatus'] as bool) {
+          return const Text(
+            'Verified',
+            style: body16Regular,
+          );
+        } else if (data['pendingVerification'] as bool) {
+          return Text(
+            'Pending',
+            style: body14Regular.copyWith(
+                color: verySoftBlueColor[80], fontStyle: FontStyle.italic),
+          );
+        }
+        return TextButton(
+            onPressed: () {
+              Get.to(() => VerificationScreen());
+            },
+            child: Text(
+              'Click here to get verified',
+              style: body16RegularUnderlineBlue,
+            ));
+      },
     );
   }
 }
