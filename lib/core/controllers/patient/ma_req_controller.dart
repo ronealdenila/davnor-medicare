@@ -202,8 +202,7 @@ class MARequestController extends GetxController {
       'requesterID': auth.currentUser!.uid,
       'maID': documentID.value,
       'queueNum': generatedCode.value,
-      'dateCreated':
-          Timestamp.fromDate(DateTime.now()), //to be changed -> epoch
+      'dateCreated': Timestamp.fromDate(DateTime.now()),
     });
   }
 

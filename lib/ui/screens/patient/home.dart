@@ -55,7 +55,8 @@ class PatientHomeScreen extends StatelessWidget {
                     )
                   : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
-              onCurrentConsultTap: () => Get.to(() => LiveChatScreen()),
+              onCurrentConsultTap: () => Get.to(() => LiveChatScreen(),
+                  arguments: liveCont.liveCons[0]),
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
               onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
               onSettingsTap: () => Get.to(() => MAHistoryScreen()),

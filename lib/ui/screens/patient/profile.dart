@@ -247,9 +247,10 @@ class PatientProfileScreen extends StatelessWidget {
         // ignore: cast_nullable_to_non_nullable
         final data = snapshot.data!.data() as Map<String, dynamic>;
         if (data['pStatus'] as bool) {
-          return const Text(
+          return Text(
             'Verified',
-            style: body16Regular,
+            style: body16Regular.copyWith(
+                color: verySoftBlueColor[80], fontWeight: FontWeight.bold),
           );
         } else if (data['pendingVerification'] as bool) {
           return Text(

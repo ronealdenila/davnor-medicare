@@ -7,13 +7,11 @@ import 'package:davnor_medicare/core/controllers/admin/pswd_registration_control
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/admin/side_menu.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
-import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

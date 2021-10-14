@@ -10,6 +10,7 @@ import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       showLoading();
       await auth.signInWithEmailAndPassword(
@@ -84,13 +86,14 @@ class AuthController extends GetxController {
       dismissDialog();
       Get.snackbar(
         'Error logging in',
-        e.toString(),
+        'Please check your email and password',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
   }
 
   Future<void> registerPatient(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       showLoading();
       await auth
@@ -116,6 +119,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> sendPasswordResetEmail(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       await auth.sendPasswordResetEmail(email: emailController.text);
       log.i('Password link sent to: ${emailController.text}');
@@ -135,6 +139,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> changePassword(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     final user = FirebaseAuth.instance.currentUser;
     final cred = EmailAuthProvider.credential(
         email: user!.email!, password: currentPasswordController.text);
@@ -142,8 +147,8 @@ class AuthController extends GetxController {
     await user.reauthenticateWithCredential(cred).then((value) {
       user.updatePassword(newPasswordController.text).then((_) {
         dismissDialog();
-        FocusScope.of(context).unfocus();
         _changePasswordSuccess();
+        Get.back();
         Get.snackbar('Password Changed Successfully',
             'You may now use your new password.',
             snackPosition: SnackPosition.BOTTOM,

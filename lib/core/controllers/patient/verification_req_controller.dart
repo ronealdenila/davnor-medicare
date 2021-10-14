@@ -57,6 +57,7 @@ class VerificationController extends GetxController {
   }
 
   Future<void> addVerificationRequest() async {
+    showLoading();
     await uploadID(imgOfValidID.value);
     await uploadIDS(imgOfValidIDWithSelfie.value);
     await firestore.collection('to_verify').doc(userID).set({
@@ -68,6 +69,7 @@ class VerificationController extends GetxController {
       'dateRqstd': Timestamp.fromDate(DateTime.now()),
     });
     await setPendingVerification();
+    await clearData();
     await showDialog();
   }
 
@@ -82,7 +84,11 @@ class VerificationController extends GetxController {
     if (hasImagesSelected()) {
       addVerificationRequest();
     } else {
-      //TODO: Add error Dialog
+      Get.snackbar(
+        'Submit Failed',
+        'Please select your valid ID and w/ Selfie',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -98,7 +104,16 @@ class VerificationController extends GetxController {
     showDefaultDialog(
       dialogTitle: dialog6Title,
       dialogCaption: dialog6Caption,
-      onConfirmTap: () => Get.to(() => PatientHomeScreen()),
+      onConfirmTap: Get.back,
     );
+  }
+
+  Future<void> clearData() async {
+    dismissDialog();
+    imgOfValidID.value = '';
+    imgOfValidIDWithSelfie.value = '';
+    imgURL.value = '';
+    imgURLselfie.value = '';
+    file.value = '';
   }
 }

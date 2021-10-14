@@ -82,35 +82,53 @@ class ForVerificationController extends GetxController {
   }
 
   Future<void> acceptUserVerification(String uid) async {
+    showLoading();
     accepted.value = true;
     await firestore
         .collection('patients')
         .doc(uid)
-        .update({'pStatus': true, 'pendingStatus': false}).then((value) {
+        .update({'pStatus': true, 'pendingVerification': false}).then((value) {
       removeVerificationReq(uid);
+      Get.off(() => VerificationReqListScreen());
       addNotification(uid);
+      clearController();
     }).catchError((error) {
-      log.i('Failed to update user: $error');
+      dismissDialog();
+      Get.snackbar(
+        'Failed to verified user',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     });
   }
 
   Future<void> desclineUserVerification(String uid) async {
     accepted.value = false;
     if (reason.text.isEmpty) {
-      log.i('ERROR DIALOG: Please input reason');
+      Get.snackbar(
+        'Submit Failed',
+        'Please make sure to add a reason',
+        snackPosition: SnackPosition.BOTTOM,
+      );
       return;
     }
+    showLoading();
     await firestore
         .collection('patients')
         .doc(uid)
-        .update({'pendingStatus': false}).then((value) {
+        .update({'pendingVerification': false}).then((value) {
       removeVerificationReq(uid);
       dismissDialog();
-      Get.to(() => VerificationReqListScreen());
+      Get.off(() => VerificationReqListScreen());
       addNotification(uid);
       clearController();
     }).catchError((error) {
-      log.i('Failed to update user: $error');
+      dismissDialog();
+      Get.snackbar(
+        'Failed to decline user',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     });
   }
 
@@ -123,7 +141,7 @@ class ForVerificationController extends GetxController {
       'title': accepted.value
           ? 'Verification Request Accepted'
           : 'Verification Declined',
-      'message': accepted.value ? 'You account now is verified' : reason.text,
+      'message': accepted.value ? 'Your account now is verified' : reason.text,
       'from': 'admin',
       'createdAt': Timestamp.fromDate(DateTime.now()),
     });

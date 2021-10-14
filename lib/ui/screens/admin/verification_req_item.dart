@@ -1,9 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,7 @@ class VerificationReqItemScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
           child: SingleChildScrollView(child: ResponsiveView(context))),
     );
   }
@@ -31,13 +29,11 @@ class ResponsiveView extends GetResponsiveView {
   final BuildContext context;
   final VerificationReqModel vfModel = Get.arguments as VerificationReqModel;
   final ForVerificationController vf = Get.find();
-  final String userID = auth.currentUser!.uid;
 
   @override
   Widget phone() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -60,7 +56,6 @@ class ResponsiveView extends GetResponsiveView {
   Widget tablet() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -73,7 +68,8 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons(context)
+              screenButtons(context),
+              verticalSpace15
             ]),
           )
         ],
@@ -83,7 +79,6 @@ class ResponsiveView extends GetResponsiveView {
   Widget desktop() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: screen.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -97,7 +92,8 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons(context)
+              screenButtons(context),
+              verticalSpace15
             ]),
           ),
         ],
@@ -107,23 +103,14 @@ class ResponsiveView extends GetResponsiveView {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        CustomButton(
-          onTap: () {
-            vf.acceptUserVerification(userID);
-          },
-          text: 'Verify',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
+        AdminButton(
+            onItemTap: () => vf.acceptUserVerification(vfModel.patientID!),
+            buttonText: 'Verify'),
         horizontalSpace40,
-        CustomButton(
-          onTap: () {
-            showDialog(context: context, builder: (context) => declineDialog());
-          },
-          text: 'Decline',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
+        AdminButton(
+            onItemTap: () => showDialog(
+                context: context, builder: (context) => declineDialog()),
+            buttonText: 'Decline'),
       ],
     );
   }
@@ -178,7 +165,8 @@ class ResponsiveView extends GetResponsiveView {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: AdminButton(
-                      onItemTap: () => vf.desclineUserVerification(userID),
+                      onItemTap: () =>
+                          vf.desclineUserVerification(vfModel.patientID!),
                       buttonText: 'Submit')),
             ],
           ),
