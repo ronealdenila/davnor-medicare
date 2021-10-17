@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -11,7 +12,8 @@ import 'package:intl/intl.dart';
 
 class ForVerificationController extends GetxController {
   final log = getLogger('Admin Verification Request Controller');
-
+  static AuthController authController = Get.find();
+  final fetchedData = authController.adminModel.value;
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();
   TextEditingController reason = TextEditingController();
   RxBool accepted = false.obs;
@@ -138,13 +140,15 @@ class ForVerificationController extends GetxController {
         .doc(uid)
         .collection('notifications')
         .add({
-      'title': accepted.value
-          ? 'Verification Request Accepted'
-          : 'Verification Declined',
-      'message': accepted.value ? 'Your account now is verified' : reason.text,
-      'from': 'admin',
+      'photo': '',
+      'from': 'The admin',
+      'action': accepted.value ? ' has accepted your ' : ' has denied your ',
+      'subject': 'Verification Request',
+      'message':
+          accepted.value ? 'Your account now is verified' : '"${reason.text}"',
       'createdAt': Timestamp.fromDate(DateTime.now()),
     });
+    //SEND NOTIF TO DEVICE ALSO
   }
 
   Future<void> removeVerificationReq(String uid) async {
