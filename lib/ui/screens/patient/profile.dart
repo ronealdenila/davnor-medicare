@@ -65,92 +65,6 @@ class PatientProfileScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: infoColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Icon(
-                            Icons.perm_contact_calendar,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text('AGE', style: body14Regular),
-                              verticalSpace5,
-                              Text(
-                                  //'${to.userModel.value.email}'
-                                  '24 years old  - x',
-                                  style: subtitle18Medium),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: infoColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Icon(
-                            Icons.perm_contact_calendar,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
-                                  //'${to.userModel.value.department}'
-                                  'ADDRESS',
-                                  style: body14Regular),
-                              Text('Central Perk, NYC  - x',
-                                  style: subtitle18Medium),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -212,6 +126,7 @@ class PatientProfileScreen extends StatelessWidget {
                 label: const Text('Change Password'),
               ),
               const SizedBox(height: 20),
+              displayAttachedPhotos()
             ],
           ),
         ),
@@ -268,6 +183,44 @@ class PatientProfileScreen extends StatelessWidget {
               style: body16RegularUnderlineBlue,
             ));
       },
+    );
+  }
+
+  Widget displayAttachedPhotos() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Text('YOUR ATTACHED PHOTOS', style: body14Regular),
+        ),
+        SizedBox(
+          width: Get.width,
+          child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Image.asset(
+                      blankProfile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  horizontalSpace10,
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Image.asset(
+                      blankProfile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      ],
     );
   }
 }

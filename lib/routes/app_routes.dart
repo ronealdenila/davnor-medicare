@@ -33,6 +33,7 @@ abstract class Routes {
   static const MA_HISTORY = _Paths.MA_HISTORY;
   static const LIVE_CHAT = _Paths.LIVE_CHAT;
   static const LIVE_CHAT_INFO = _Paths.LIVE_CHAT_INFO;
+  static const NOTIFICATION_FEED = _Paths.NOTIFICATION_FEED;
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
@@ -98,6 +99,7 @@ abstract class _Paths {
   static const MA_HISTORY = '/MA-history';
   static const LIVE_CHAT = '/live-chat';
   static const LIVE_CHAT_INFO = '/live-chat-info';
+  static const NOTIFICATION_FEED = '/notification-feed';
 
   //Doctor
   static const DOCTOR_HOME = '/home';

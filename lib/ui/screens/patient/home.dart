@@ -7,6 +7,7 @@ import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
+import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -38,7 +39,7 @@ class PatientHomeScreen extends StatelessWidget {
             appBar: AppBar(
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => NotificationFeedScreen()),
                   icon: const Icon(
                     Icons.notifications_outlined,
                   ),
