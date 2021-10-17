@@ -1,27 +1,22 @@
 //User Model
 
 class PatientModel {
-  PatientModel(
-      {required this.email,
-      required this.firstName,
-      required this.lastName,
-      required this.profileImage,
-      required this.pStatus,
-      required this.validID,
-      required this.validSelfie,
-      required this.hasActiveQueue,
-      required this.pendingVerification});
+  PatientModel({
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.profileImage,
+    required this.validID,
+    required this.validSelfie,
+  });
 
   factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         profileImage: json['profileImage'] as String,
-        pStatus: json['pStatus'] as bool,
         validID: json['validID'] as String,
         validSelfie: json['validSelfie'] as String,
-        hasActiveQueue: json['hasActiveQueue'] as bool,
-        pendingVerification: json['pendingVerification'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,22 +24,16 @@ class PatientModel {
         'firstName': firstName,
         'lastName': lastName,
         'profileImage': profileImage,
-        'pStatus': pStatus,
         'validID': validID,
         'validSelfie': validSelfie,
-        'hasActiveQueue': hasActiveQueue,
-        'pendingVerification': pendingVerification,
       };
 
   final String? email;
   final String? firstName;
   final String? lastName;
   final String? profileImage;
-  final bool? pStatus;
   final String? validID;
   final String? validSelfie;
-  bool? hasActiveQueue;
-  bool? pendingVerification;
 }
 
 class DoctorModel {

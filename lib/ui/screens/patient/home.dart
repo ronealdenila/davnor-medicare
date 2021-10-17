@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
@@ -22,6 +25,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
+import 'package:badges/badges.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
@@ -31,6 +35,7 @@ class PatientHomeScreen extends StatelessWidget {
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont = Get.put(LiveConsController());
   final List<ArticleModel> articleList = articleService.articlesList;
+  static StatusController stats = Get.put(StatusController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +43,48 @@ class PatientHomeScreen extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               actions: [
-                IconButton(
-                  onPressed: () => Get.to(() => NotificationFeedScreen()),
-                  icon: const Icon(
-                    Icons.notifications_outlined,
-                  ),
-                ),
+                StreamBuilder<DocumentSnapshot>(
+                    stream: stats.getPatientStatus(auth.currentUser!.uid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return IconButton(
+                          onPressed: () =>
+                              Get.to(() => NotificationFeedScreen()),
+                          icon: const Icon(
+                            Icons.notifications_outlined,
+                            size: 29,
+                          ),
+                        );
+                      }
+                      final data =
+                          // ignore: cast_nullable_to_non_nullable
+                          snapshot.data!.data() as Map<String, dynamic>;
+                      return data['notifBadge'] as String == '0'
+                          ? IconButton(
+                              onPressed: () =>
+                                  Get.to(() => NotificationFeedScreen()),
+                              icon: const Icon(
+                                Icons.notifications_outlined,
+                                size: 29,
+                              ),
+                            )
+                          : Badge(
+                              position: BadgePosition.topEnd(top: 1, end: 3),
+                              badgeContent: Text(
+                                data['notifBadge'] as String,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              child: IconButton(
+                                onPressed: () =>
+                                    Get.to(() => NotificationFeedScreen()),
+                                icon: const Icon(
+                                  Icons.notifications_outlined,
+                                  size: 29,
+                                ),
+                              ),
+                            );
+                    }),
+                horizontalSpace10
               ],
             ),
             drawer: CustomDrawer(

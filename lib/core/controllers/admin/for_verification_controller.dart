@@ -89,6 +89,8 @@ class ForVerificationController extends GetxController {
     await firestore
         .collection('patients')
         .doc(uid)
+        .collection('notifications')
+        .doc('value')
         .update({'pStatus': true, 'pendingVerification': false}).then((value) {
       removeVerificationReq(uid);
       Get.off(() => VerificationReqListScreen());
@@ -118,6 +120,8 @@ class ForVerificationController extends GetxController {
     await firestore
         .collection('patients')
         .doc(uid)
+        .collection('notifications')
+        .doc('value')
         .update({'pendingVerification': false}).then((value) {
       removeVerificationReq(uid);
       dismissDialog();

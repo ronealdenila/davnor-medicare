@@ -5,7 +5,6 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -26,8 +25,12 @@ class VerificationController extends GetxController {
   final RxString file = ''.obs;
 
   Stream<DocumentSnapshot> getStatus() {
-    final Stream<DocumentSnapshot> doc =
-        firestore.collection('patients').doc(userID).snapshots();
+    final Stream<DocumentSnapshot> doc = firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .snapshots();
     return doc;
   }
 

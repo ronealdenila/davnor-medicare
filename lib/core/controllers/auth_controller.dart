@@ -175,11 +175,25 @@ class AuthController extends GetxController {
       'email': emailController.text.trim(),
       'firstName': firstNameController.text.trim(),
       'lastName': lastNameController.text.trim(),
-      'hasActiveQueue': false,
-      'pStatus': false,
       'profileImage': '',
       'validID': '',
       'validSelfie': '',
+    });
+    await _addPatientStatus(_userID);
+  }
+
+  Future<void> _addPatientStatus(String _userID) async {
+    await firestore
+        .collection('patients')
+        .doc(_userID)
+        .collection('status')
+        .doc('value')
+        .set({
+      'hasActiveQueue': false,
+      'pStatus': false,
+      'pendingVerification': false,
+      'deviceToken': '',
+      'notifBadge': '0',
       'queueNum': '',
     });
   }

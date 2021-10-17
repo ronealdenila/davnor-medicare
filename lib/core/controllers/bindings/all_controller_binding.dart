@@ -16,6 +16,7 @@ import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:get/get.dart';
 
 class AllControllerBinding implements Bindings {
@@ -26,6 +27,7 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<AppController>(() => AppController());
 
     //patient
+    Get.lazyPut<StatusController>(() => StatusController());
     Get.lazyPut<ConsRequestController>(() => ConsRequestController());
     Get.lazyPut<MARequestController>(() => MARequestController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());
