@@ -112,7 +112,7 @@ class VerificationController extends GetxController {
       dialogCaption: dialog6Caption,
       onConfirmTap: () {
         dismissDialog();
-        Get.off(() => PatientProfileScreen());
+        Get.back();
       },
     );
   }

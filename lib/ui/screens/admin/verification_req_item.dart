@@ -1,4 +1,3 @@
-import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -203,14 +202,20 @@ class ResponsiveView extends GetResponsiveView {
           dashPattern: const [7, 7, 7, 7],
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              width: 250,
-              height: 150,
-              color: neutralColor[10],
-              child: Image.network(
-                vf.getValidID(vfModel),
-                height: 106,
-                fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) =>
+                      attachedPhotosDialog(vf.getValidID(vfModel))),
+              child: Container(
+                width: 250,
+                height: 150,
+                color: neutralColor[10],
+                child: Image.network(
+                  vf.getValidID(vfModel),
+                  height: 106,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -236,14 +241,20 @@ class ResponsiveView extends GetResponsiveView {
           dashPattern: const [7, 7, 7, 7],
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              width: 250,
-              height: 150,
-              color: neutralColor[10],
-              child: Image.network(
-                vf.getValidIDWithSelfie(vfModel),
-                height: 106,
-                fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) =>
+                      attachedPhotosDialog(vf.getValidIDWithSelfie(vfModel))),
+              child: Container(
+                width: 250,
+                height: 150,
+                color: neutralColor[10],
+                child: Image.network(
+                  vf.getValidIDWithSelfie(vfModel),
+                  height: 106,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -328,4 +339,44 @@ class ResponsiveView extends GetResponsiveView {
       ],
     );
   }
+
+  Widget attachedPhotosDialog(String imgURL) {
+    return SimpleDialog(
+      contentPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.zero,
+      children: [
+        // IconButton(
+        //   onPressed: () {
+        //     //downloadFile(imgURL);
+        //   },
+        //   icon: const Icon(
+        //     Icons.file_download_rounded,
+        //   ),
+        // ),
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(40),
+              )),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          height: Get.height * .8,
+          child: Container(
+            color: Colors.white,
+            child: Image.network(
+              imgURL,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Future downloadFile(Reference ref) async {
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final file = File('${dir.path}/${ref.name}');
+
+  //   await ref.writeToFile(file);
+  // }
 }
