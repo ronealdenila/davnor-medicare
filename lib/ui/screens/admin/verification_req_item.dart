@@ -1,4 +1,6 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
@@ -103,15 +105,25 @@ class ResponsiveView extends GetResponsiveView {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        AdminButton(
-            onItemTap: () => vf.acceptUserVerification(vfModel.patientID!),
-            buttonText: 'Verify'),
+        AdminButton(onItemTap: confirmationDialog, buttonText: 'Verify'),
         horizontalSpace40,
         AdminButton(
             onItemTap: () => showDialog(
                 context: context, builder: (context) => declineDialog()),
             buttonText: 'Decline'),
       ],
+    );
+  }
+
+  void confirmationDialog() {
+    return showConfirmationDialog(
+      dialogTitle: 'Are you sure?',
+      dialogCaption:
+          'Select YES if you want to verify this user. Otherwise, select NO',
+      onYesTap: () => vf.acceptUserVerification(vfModel),
+      onNoTap: () {
+        dismissDialog();
+      },
     );
   }
 
@@ -165,8 +177,7 @@ class ResponsiveView extends GetResponsiveView {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: AdminButton(
-                      onItemTap: () =>
-                          vf.desclineUserVerification(vfModel.patientID!),
+                      onItemTap: () => vf.desclineUserVerification(vfModel),
                       buttonText: 'Submit')),
             ],
           ),

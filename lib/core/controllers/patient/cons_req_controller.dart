@@ -167,7 +167,7 @@ class ConsRequestController extends GetxController {
   }
 
   void checkRequestConsultation() {
-    if (isConsultForYou.value) {
+    if (!isConsultForYou.value) {
       //TO DO getDocSnapshot
       //if (fetchedData!.hasActiveQueue!) {
       showErrorDialog(

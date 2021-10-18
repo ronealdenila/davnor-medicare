@@ -94,6 +94,12 @@ class MAHistoryScreen extends StatelessWidget {
                   child: FutureBuilder(
                       future: maHController.getMAHistoryForPatient(),
                       builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text(
+                            'You have no Medical Assistance (MA) record',
+                            textAlign: TextAlign.center,
+                          );
+                        }
                         if (snapshot.connectionState == ConnectionState.done) {
                           return ListView.builder(
                               padding: const EdgeInsets.symmetric(

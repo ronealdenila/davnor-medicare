@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
@@ -80,6 +81,8 @@ class VerificationController extends GetxController {
     await firestore
         .collection('patients')
         .doc(userID)
+        .collection('status')
+        .doc('value')
         .update({'pendingVerification': true});
   }
 
@@ -107,7 +110,10 @@ class VerificationController extends GetxController {
     showDefaultDialog(
       dialogTitle: dialog6Title,
       dialogCaption: dialog6Caption,
-      onConfirmTap: Get.back,
+      onConfirmTap: () {
+        dismissDialog();
+        Get.off(() => PatientProfileScreen());
+      },
     );
   }
 

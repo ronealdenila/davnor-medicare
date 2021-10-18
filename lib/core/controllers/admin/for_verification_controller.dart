@@ -83,18 +83,31 @@ class ForVerificationController extends GetxController {
     return convertTimeStamp(temp!);
   }
 
-  Future<void> acceptUserVerification(String uid) async {
+  Future<void> transferPhotos(VerificationReqModel model) async {
+    await firestore.collection('patients').doc(model.patientID).update({
+      'validID': model.validID,
+      'validSelfie': model.validSelfie,
+    });
+  }
+
+  Future<void> deletePhotos(VerificationReqModel model) async {
+    await storage.refFromURL(model.validID!).delete();
+    await storage.refFromURL(model.validSelfie!).delete();
+  }
+
+  Future<void> acceptUserVerification(VerificationReqModel model) async {
     showLoading();
     accepted.value = true;
     await firestore
         .collection('patients')
-        .doc(uid)
-        .collection('notifications')
+        .doc(model.patientID)
+        .collection('status')
         .doc('value')
         .update({'pStatus': true, 'pendingVerification': false}).then((value) {
-      removeVerificationReq(uid);
+      transferPhotos(model);
+      addNotification(model.patientID!);
+      removeVerificationReq(model.patientID!);
       Get.off(() => VerificationReqListScreen());
-      addNotification(uid);
       clearController();
     }).catchError((error) {
       dismissDialog();
@@ -106,7 +119,7 @@ class ForVerificationController extends GetxController {
     });
   }
 
-  Future<void> desclineUserVerification(String uid) async {
+  Future<void> desclineUserVerification(VerificationReqModel model) async {
     accepted.value = false;
     if (reason.text.isEmpty) {
       Get.snackbar(
@@ -119,14 +132,15 @@ class ForVerificationController extends GetxController {
     showLoading();
     await firestore
         .collection('patients')
-        .doc(uid)
-        .collection('notifications')
+        .doc(model.patientID)
+        .collection('status')
         .doc('value')
         .update({'pendingVerification': false}).then((value) {
-      removeVerificationReq(uid);
+      addNotification(model.patientID!);
+      deletePhotos(model);
+      removeVerificationReq(model.patientID!);
       dismissDialog();
       Get.off(() => VerificationReqListScreen());
-      addNotification(uid);
       clearController();
     }).catchError((error) {
       dismissDialog();
@@ -152,6 +166,25 @@ class ForVerificationController extends GetxController {
           accepted.value ? 'Your account now is verified' : '"${reason.text}"',
       'createdAt': Timestamp.fromDate(DateTime.now()),
     });
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('status')
+        .doc('value')
+        .get()
+        .then((doc) async {
+      final count = int.parse(doc['notifBadge'] as String) + 1;
+      await firestore
+          .collection('patients')
+          .doc(uid)
+          .collection('status')
+          .doc('value')
+          .update({
+        'notifBadge': '$count',
+      });
+    });
+
     //SEND NOTIF TO DEVICE ALSO
   }
 
