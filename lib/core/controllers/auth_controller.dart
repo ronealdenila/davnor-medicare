@@ -10,7 +10,6 @@ import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
-import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
 
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
-  final AppController _appController = AppController();
+  AppController appController = Get.find();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -43,6 +42,7 @@ class AuthController extends GetxController {
   RxBool? isObscureCurrentPW = true.obs;
   RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
+  RxString tokenID = ''.obs;
 
   //Doctor Application Guide
   static const emailScheme = doctorapplicationinstructionParagraph0;
@@ -183,6 +183,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> _addPatientStatus(String _userID) async {
+    await getDeviceToken();
     await firestore
         .collection('patients')
         .doc(_userID)
@@ -192,7 +193,7 @@ class AuthController extends GetxController {
       'hasActiveQueue': false,
       'pStatus': false,
       'pendingVerification': false,
-      'deviceToken': '',
+      'deviceToken': tokenID,
       'notifBadge': '0',
       'queueNum': '',
     });
@@ -212,6 +213,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
+    await setDeviceToken(false);
     try {
       userSignedOut = true;
       await auth.signOut();
@@ -282,7 +284,6 @@ class AuthController extends GetxController {
           await navigateWithDelay(Get.offAllNamed(Routes.PSWD_HEAD_HOME));
           break;
         case 'admin':
-          // await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
           await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
           break;
         default:
@@ -309,7 +310,25 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+    if (!kIsWeb) {
+      await setDeviceToken(true);
+    }
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
+  }
+
+  Future<void> setDeviceToken(bool loggedIn) async {
+    await getDeviceToken();
+    await firestore
+        .collection('patients')
+        .doc(firebaseUser.value!.uid)
+        .collection('status')
+        .doc('value')
+        .update({'deviceToken': loggedIn ? tokenID.value : ''});
+  }
+
+  Future<void> getDeviceToken() async {
+    tokenID.value = (await messaging.getToken())!;
+    log.i('TOKEN $tokenID');
   }
 
   Future<void> _initializeDoctorModel() async {
@@ -340,15 +359,15 @@ class AuthController extends GetxController {
   }
 
   void togglePasswordVisibility() {
-    _appController.toggleTextVisibility(isObscureText!);
+    appController.toggleTextVisibility(isObscureText!);
   }
 
   void toggleCurrentPasswordVisibility() {
-    _appController.toggleTextVisibility(isObscureCurrentPW!);
+    appController.toggleTextVisibility(isObscureCurrentPW!);
   }
 
   void toggleNewPasswordVisibility() {
-    _appController.toggleTextVisibility(isObscureNewPW!);
+    appController.toggleTextVisibility(isObscureNewPW!);
   }
 
   void launchDoctorApplicationForm() {

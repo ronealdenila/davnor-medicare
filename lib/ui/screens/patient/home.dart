@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
@@ -29,6 +30,7 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:badges/badges.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  static AppController appController = Get.find();
   static AuthController authController = Get.find();
   static ArticleController articleService = Get.put(ArticleController());
   static ConsRequestController consController =
@@ -40,6 +42,7 @@ class PatientHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    appController.initLocalNotif(context);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
