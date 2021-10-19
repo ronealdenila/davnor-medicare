@@ -1,5 +1,7 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,17 +20,31 @@ class DoctorRegistrationController extends GetxController {
 
   Future<void> registerDoctor() async {
     if (formKey.currentState!.validate()) {
-      await auth
+      final app = await Firebase.initializeApp(
+          name: 'secondary', options: Firebase.app().options);
+      await FirebaseAuth.instanceFor(app: app)
           .createUserWithEmailAndPassword(
         email: emailController.text,
         password: '123456',
       )
-          .then(
-        (result) async {
-          final _userID = result.user!.uid;
-          await _createDoctorUser(_userID);
-        },
-      );
+          .then((result) async {
+        final _userId = result.user!.uid;
+        await _createDoctorUser(_userId);
+      });
+
+      await app.delete();
+
+      // await auth
+      //     .createUserWithEmailAndPassword(
+      //   email: emailController.text,
+      //   password: '123456',
+      // )
+      //     .then(
+      //   (result) async {
+      //     final _userID = result.user!.uid;
+      //     await _createDoctorUser(_userID);
+      //   },
+      // );
     }
   }
 

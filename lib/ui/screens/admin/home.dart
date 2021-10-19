@@ -7,6 +7,11 @@ import 'package:davnor_medicare/core/controllers/admin/pswd_registration_control
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
+>>>>>>> Stashed changes
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -23,6 +28,8 @@ import 'package:flutter/cupertino.dart';
 class AdminHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static AuthController authController = Get.find();
+  final NavigationController navigationController =
+      Get.put(NavigationController());
 
   final fetchedData = authController.adminModel.value;
 
@@ -31,13 +38,64 @@ class AdminHomeScreen extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: topNavigationBar(
-        context,
-        scaffoldKey,
-        fetchedData!.firstName,
+      appBar: topNavigationBar(),
+      drawer: Drawer(
+        child: AdminSideMenu(),
       ),
-      drawer: Drawer(child: AdminSideMenu()),
       body: ResponsiveBody(),
+    );
+  }
+
+  AppBar topNavigationBar() {
+    return AppBar(
+      leading: ResponsiveLeading(scaffoldKey),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      title: Row(
+        children: [
+          Expanded(child: Container()),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          ),
+          Text(fetchedData!.firstName!,
+              style: const TextStyle(color: Colors.black)),
+          // IconButton(
+          //   onPressed: () {
+          //     print('clicked');
+          //   },
+          //   icon: const Icon(Icons.arrow_drop_down),
+          // ),
+          DropdownButton(
+            icon: const Icon(Icons.keyboard_arrow_down),
+            iconSize: 40,
+            underline: Container(),
+            items: [
+              DropdownMenuItem(
+                value: 1,
+                child: TextButton.icon(
+                  label: const Text('Profile'),
+                  onPressed: () {
+                    navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                  },
+                  icon: const Icon(Icons.account_circle),
+                  style: TextButton.styleFrom(primary: Colors.black),
+                ),
+              ),
+              DropdownMenuItem(
+                value: 2,
+                child: TextButton.icon(
+                  label: const Text('Logout'),
+                  onPressed: authController.signOut,
+                  icon: const Icon(Icons.account_circle),
+                  style: TextButton.styleFrom(primary: Colors.black),
+                ),
+              )
+            ],
+            onChanged: (int? newValue) {},
+          ),
+        ],
+      ),
     );
   }
 }
@@ -72,29 +130,6 @@ class DesktopScreen extends StatelessWidget {
       ],
     );
   }
-}
-
-AppBar topNavigationBar(
-  BuildContext context,
-  GlobalKey<ScaffoldState> key,
-  String? name,
-) {
-  return AppBar(
-    leading: ResponsiveLeading(key),
-    elevation: 0,
-    backgroundColor: Colors.transparent,
-    title: Row(
-      children: [
-        Expanded(child: Container()),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications),
-        ),
-        Text(name!, style: const TextStyle(color: Colors.black)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_drop_down)),
-      ],
-    ),
-  );
 }
 
 //Refactor
