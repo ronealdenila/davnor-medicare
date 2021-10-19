@@ -10,9 +10,6 @@ import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:get/get.dart';
 
-//TODO: clickable attached photos also
-//Use Image.network -> for profile of user who requested here, else blank pic
-
 class VerificationReqItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -272,12 +269,7 @@ class ResponsiveView extends GetResponsiveView {
         verticalSpace35,
         Row(
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                authHeader,
-              ),
-              radius: 40,
-            ),
+            getPhoto(vfModel),
             horizontalSpace15,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,6 +362,19 @@ class ResponsiveView extends GetResponsiveView {
           ),
         ),
       ],
+    );
+  }
+
+  Widget getPhoto(VerificationReqModel model) {
+    if (vf.getProfilePhoto(model) == '') {
+      return CircleAvatar(
+        radius: 40,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 40,
+      backgroundImage: NetworkImage(vf.getProfilePhoto(model)),
     );
   }
 

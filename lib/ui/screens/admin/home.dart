@@ -7,11 +7,7 @@ import 'package:davnor_medicare/core/controllers/admin/pswd_registration_control
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-<<<<<<< Updated upstream
-=======
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
->>>>>>> Stashed changes
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';

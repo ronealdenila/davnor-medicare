@@ -51,10 +51,7 @@ class ForVerificationCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(authHeader),
-                    radius: 35,
-                  ),
+                  getPhoto(verifiReq!),
                   horizontalSpace20,
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +98,19 @@ class ForVerificationCard extends StatelessWidget {
         width: Get.width,
         height: 105,
       ),
+    );
+  }
+
+  Widget getPhoto(VerificationReqModel model) {
+    if (vf.getProfilePhoto(model) == '') {
+      return CircleAvatar(
+        radius: 35,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 35,
+      backgroundImage: NetworkImage(vf.getProfilePhoto(model)),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/core/controllers/patient/notif_controller.dart';
+import 'package:davnor_medicare/core/models/notification_model.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -5,12 +7,14 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:get/get.dart';
 
 class NotificationCard extends StatelessWidget {
-  const NotificationCard({
-    Key? key,
-    //required this.onTap,
-  }) : super(key: key);
+  const NotificationCard({Key? key, required this.notif
+      //required this.onTap,
+      })
+      : super(key: key);
 
   //final void Function()? onTap;
+  final NotificationModel notif;
+  static NotifController notifController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,31 +40,30 @@ class NotificationCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text.rich(
+                        Text.rich(
                           TextSpan(
                             style: body14Regular,
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'The admin ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              TextSpan(text: 'has accepted your '),
+                                  text: notif.from,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(text: notif.action),
                               TextSpan(
-                                  text: 'verification request',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
+                                  text: notif.subject,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
                         verticalSpace5,
                         Text(
-                          // ignore: lines_longer_than_80_chars
-                          '"Dili klaro ang valid ID na giprovice nimo maam. Palg ko ang ko pasend usab"',
+                          notif.message!,
                           style: body14Regular.copyWith(color: Colors.black87),
                         ),
                         verticalSpace10,
-                        const Text(
-                          '3 mins ago',
+                        Text(
+                          notifController.convert(notif.createdAt!),
                           style: caption12RegularNeutral,
                         ),
                         verticalSpace10,
@@ -78,15 +81,15 @@ class NotificationCard extends StatelessWidget {
   }
 
   Widget getPhoto() {
-    //if (liveCont.getDoctorProfile(model) == '') {
+    if (notif.photo == '') {
+      return CircleAvatar(
+        radius: 20,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
     return CircleAvatar(
-      radius: 20,
-      backgroundImage: AssetImage(blankProfile),
+      radius: 25,
+      backgroundImage: NetworkImage(notif.photo!),
     );
-    //}
-    // return CircleAvatar(
-    //   radius: 25,
-    //   backgroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-    // );
   }
 }

@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
@@ -42,50 +43,7 @@ class PatientHomeScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              actions: [
-                StreamBuilder<DocumentSnapshot>(
-                    stream: stats.getPatientStatus(auth.currentUser!.uid),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return IconButton(
-                          onPressed: () =>
-                              Get.to(() => NotificationFeedScreen()),
-                          icon: const Icon(
-                            Icons.notifications_outlined,
-                            size: 29,
-                          ),
-                        );
-                      }
-                      final data =
-                          // ignore: cast_nullable_to_non_nullable
-                          snapshot.data!.data() as Map<String, dynamic>;
-                      return data['notifBadge'] as String == '0'
-                          ? IconButton(
-                              onPressed: () =>
-                                  Get.to(() => NotificationFeedScreen()),
-                              icon: const Icon(
-                                Icons.notifications_outlined,
-                                size: 29,
-                              ),
-                            )
-                          : Badge(
-                              position: BadgePosition.topEnd(top: 1, end: 3),
-                              badgeContent: Text(
-                                data['notifBadge'] as String,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              child: IconButton(
-                                onPressed: () =>
-                                    Get.to(() => NotificationFeedScreen()),
-                                icon: const Icon(
-                                  Icons.notifications_outlined,
-                                  size: 29,
-                                ),
-                              ),
-                            );
-                    }),
-                horizontalSpace10
-              ],
+              actions: [notificationIcon(), horizontalSpace10],
             ),
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -97,8 +55,7 @@ class PatientHomeScreen extends StatelessWidget {
                     )
                   : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
-              onCurrentConsultTap: () => Get.to(() => LiveChatScreen(),
-                  arguments: liveCont.liveCons[0]),
+              onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
               onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
               onSettingsTap: () => Get.to(() => MAHistoryScreen()),
@@ -207,6 +164,52 @@ class PatientHomeScreen extends StatelessWidget {
             floatingActionButton: Obx(getFloatingButton)));
   }
 
+  Widget notificationIcon() {
+    return StreamBuilder<DocumentSnapshot>(
+        stream: stats.getPatientStatus(auth.currentUser!.uid),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return notifIconNormal();
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return notifIconNormal();
+          }
+          final data =
+              // ignore: cast_nullable_to_non_nullable
+              snapshot.data!.data() as Map<String, dynamic>;
+          return data['notifBadge'] as String == '0'
+              ? notifIconNormal()
+              : notifIconWithBadge(data['notifBadge'] as String);
+        });
+  }
+
+  Widget notifIconNormal() {
+    return IconButton(
+      onPressed: () => Get.to(() => NotificationFeedScreen()),
+      icon: const Icon(
+        Icons.notifications_outlined,
+        size: 29,
+      ),
+    );
+  }
+
+  Widget notifIconWithBadge(String count) {
+    return Badge(
+      position: BadgePosition.topEnd(top: 1, end: 3),
+      badgeContent: Text(
+        count,
+        style: const TextStyle(color: Colors.white),
+      ),
+      child: IconButton(
+        onPressed: () => Get.to(() => NotificationFeedScreen()),
+        icon: const Icon(
+          Icons.notifications_outlined,
+          size: 29,
+        ),
+      ),
+    );
+  }
+
   Widget getFloatingButton() {
     if (liveCont.liveCons.isNotEmpty) {
       return FloatingActionButton(
@@ -252,5 +255,14 @@ class PatientHomeScreen extends StatelessWidget {
 
   void seeAllArticles() {
     Get.to(() => ArticleListScreen());
+  }
+
+  void currentConsultation() {
+    if (liveCont.liveCons.isNotEmpty) {
+      Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
+    }
+    showErrorDialog(
+        errorTitle: 'You have no current consultation',
+        errorDescription: 'Please request consultation first');
   }
 }
