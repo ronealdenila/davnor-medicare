@@ -59,7 +59,7 @@ class DoctorRegistrationController extends GetxController {
         'department': department.value,
         'clinicHours': clinicHours.text,
         'numToAccomodate': 0,
-        'profileImage': null,
+        'profileImage': '',
         'dStatus': false,
         'hasOngoingCons': false,
       },

@@ -54,7 +54,7 @@ class PSWDRegistrationController extends GetxController {
         'firstName': firstNameController.text,
         'lastName': lastNameController.text,
         'position': position.value,
-        'profileImage': null,
+        'profileImage': '',
       },
     );
     _clearControllers();
