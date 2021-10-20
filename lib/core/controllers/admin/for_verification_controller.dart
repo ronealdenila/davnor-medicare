@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 class ForVerificationController extends GetxController {
   final log = getLogger('Admin Verification Request Controller');
   static AuthController authController = Get.find();
+  static AppController appController = Get.find();
   final fetchedData = authController.adminModel.value;
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();
   TextEditingController reason = TextEditingController();
@@ -153,6 +155,11 @@ class ForVerificationController extends GetxController {
   }
 
   Future<void> addNotification(String uid) async {
+    final action = accepted.value ? ' has accepted your ' : ' has denied your ';
+    final title = 'The admin${action}Verification Request';
+    final message =
+        accepted.value ? 'Your account now is verified' : '"${reason.text}"';
+
     await firestore
         .collection('patients')
         .doc(uid)
@@ -160,12 +167,13 @@ class ForVerificationController extends GetxController {
         .add({
       'photo': '',
       'from': 'The admin',
-      'action': accepted.value ? ' has accepted your ' : ' has denied your ',
+      'action': action,
       'subject': 'Verification Request',
-      'message':
-          accepted.value ? 'Your account now is verified' : '"${reason.text}"',
+      'message': message,
       'createdAt': Timestamp.fromDate(DateTime.now()),
     });
+
+    await appController.sendNotificationViaFCM(title, message, uid);
 
     await firestore
         .collection('patients')
