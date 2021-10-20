@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class AppController {
   final log = getLogger('App Controller');
@@ -28,4 +29,38 @@ class AppController {
       LocalNotificationService.display(message);
     });
   }
+
+//   Future<void> sendNotificationViaFCM() async {
+//     const postUrl = 'https://fcm.googleapis.com/fcm/send';
+//     final data = {
+//       "notification": {"body": subject, "title": title},
+//       "priority": "high",
+//       "data": {
+//         "click_action": "FLUTTER_NOTIFICATION_CLICK",
+//         "id": "1",
+//         "status": "done",
+//         "sound": 'default',
+//         "screen": "yourTopicName",
+//       },
+//       "to": "${toParams}"
+//     };
+
+//     final headers = {
+//       'content-type': 'application/json',
+//       'Authorization': 'key=key'
+//     };
+
+//     final response = await http.post(postUrl,
+//         body: json.encode(data),
+//         encoding: Encoding.getByName('utf-8'),
+//         headers: headers);
+
+//     if (response.statusCode == 200) {
+// // on success do
+//       print("true");
+//     } else {
+// // on failure do
+//       print("false");
+//     }
+//   }
 }

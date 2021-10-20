@@ -17,9 +17,8 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
-
+  final AppController appController = Get.put(AppController());
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
-  AppController appController = Get.find();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

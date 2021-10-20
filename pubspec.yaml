@@ -29,6 +29,9 @@ dependencies:
   firebase_messaging: ^10.0.8
   firebase_analytics: "^7.0.1"
 
+  #http
+  http: ^0.13.4
+
   #local notification
   flutter_local_notifications: ^9.0.0
 
