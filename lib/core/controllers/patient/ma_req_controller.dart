@@ -207,7 +207,7 @@ class MARequestController extends GetxController {
   }
 
   Future<void> updateStatus() async {
-    return firestore
+    await firestore
         .collection('pswd_status')
         .doc('status')
         .update({
@@ -216,6 +216,13 @@ class MARequestController extends GetxController {
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));
+
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .update({'hasActiveQueueMA': true, 'queueMA': generatedCode});
   }
 
   Future<void> showDialog() async {
