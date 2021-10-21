@@ -8,6 +8,7 @@ import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dar
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
@@ -33,6 +34,7 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MAQueueController>(() => MAQueueController());
     Get.lazyPut<VerificationController>(() => VerificationController());
     Get.lazyPut<MAHistoryController>(() => MAHistoryController());
+    Get.lazyPut<ProfileController>(() => ProfileController());
 
     //doctor
     Get.lazyPut<ConsultationsController>(() => ConsultationsController());

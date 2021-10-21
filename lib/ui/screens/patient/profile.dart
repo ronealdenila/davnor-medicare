@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/patient/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
+  static ProfileController profileController = Get.put(ProfileController());
   static VerificationController verificationController =
       Get.put(VerificationController());
 
@@ -126,7 +128,9 @@ class PatientProfileScreen extends StatelessWidget {
                 label: const Text('Change Password'),
               ),
               const SizedBox(height: 20),
-              displayAttachedPhotos()
+              Visibility(
+                  visible: profileController.hasValidIDandValidSelfie(),
+                  child: displayAttachedPhotos())
             ],
           ),
         ),
@@ -143,7 +147,8 @@ class PatientProfileScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(fetchedData!.profileImage!),
+      // backgroundImage: NetworkImage(fetchedData!.profileImage!),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
