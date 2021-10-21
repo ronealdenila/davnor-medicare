@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
+import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -10,6 +13,8 @@ import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
+  static VerificationController verificationController =
+      Get.put(VerificationController());
 
   final fetchedData = authController.patientModel.value;
 
@@ -60,92 +65,6 @@ class PatientProfileScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: infoColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Icon(
-                            Icons.perm_contact_calendar,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text('AGE', style: body14Regular),
-                              verticalSpace5,
-                              Text(
-                                  //'${to.userModel.value.email}'
-                                  '24 years old  - x',
-                                  style: subtitle18Medium),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: infoColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Icon(
-                            Icons.perm_contact_calendar,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
-                                  //'${to.userModel.value.department}'
-                                  'ADDRESS',
-                                  style: body14Regular),
-                              Text('Central Perk, NYC  - x',
-                                  style: subtitle18Medium),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -175,15 +94,7 @@ class PatientProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               const Text('STATUS', style: body14Regular),
-                              TextButton(
-                                onPressed: () {
-                                  Get.to(() => VerificationScreen());
-                                },
-                                child: Text(
-                                  'Click here to get verified',
-                                  style: body16RegularUnderlineBlue,
-                                ),
-                              ),
+                              displayStatus()
                             ],
                           ),
                         ),
@@ -194,7 +105,7 @@ class PatientProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => Get.to(() => ChangePasswordScreen()),
                 icon: const Icon(
                   Icons.lock,
                   color: Colors.white,
@@ -215,6 +126,7 @@ class PatientProfileScreen extends StatelessWidget {
                 label: const Text('Change Password'),
               ),
               const SizedBox(height: 20),
+              displayAttachedPhotos()
             ],
           ),
         ),
@@ -232,6 +144,83 @@ class PatientProfileScreen extends StatelessWidget {
     return CircleAvatar(
       radius: 50,
       backgroundImage: NetworkImage(fetchedData!.profileImage!),
+    );
+  }
+
+  Widget displayStatus() {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: verificationController.getStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Loading');
+        }
+
+        // ignore: cast_nullable_to_non_nullable
+        final data = snapshot.data!.data() as Map<String, dynamic>;
+        if (data['pStatus'] as bool) {
+          return Text(
+            'Verified',
+            style: body16Regular.copyWith(
+                color: verySoftBlueColor[80], fontWeight: FontWeight.bold),
+          );
+        } else if (data['pendingVerification'] as bool) {
+          return Text(
+            'Pending',
+            style: body14Regular.copyWith(
+                color: verySoftBlueColor[80], fontStyle: FontStyle.italic),
+          );
+        }
+        return TextButton(
+            onPressed: () {
+              Get.to(() => VerificationScreen());
+            },
+            child: Text(
+              'Click here to get verified',
+              style: body16RegularUnderlineBlue,
+            ));
+      },
+    );
+  }
+
+  Widget displayAttachedPhotos() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Text('YOUR ATTACHED PHOTOS', style: body14Regular),
+        ),
+        SizedBox(
+          width: Get.width,
+          child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Image.asset(
+                      blankProfile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  horizontalSpace10,
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Image.asset(
+                      blankProfile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      ],
     );
   }
 }

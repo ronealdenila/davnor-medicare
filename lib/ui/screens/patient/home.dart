@@ -1,28 +1,36 @@
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
+import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/core/models/article_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
+import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/widgets/action_card.dart';
+import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/custom_drawer.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/ui/widgets/action_card.dart';
-import 'package:davnor_medicare/ui/widgets/article_card.dart';
-import 'package:davnor_medicare/core/models/article_model.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  static AppController appController = Get.find();
   static AuthController authController = Get.find();
   static ArticleController articleService = Get.put(ArticleController());
   static ConsRequestController consController =
@@ -30,20 +38,15 @@ class PatientHomeScreen extends StatelessWidget {
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont = Get.put(LiveConsController());
   final List<ArticleModel> articleList = articleService.articlesList;
+  static StatusController stats = Get.put(StatusController());
 
   @override
   Widget build(BuildContext context) {
+    appController.initLocalNotif(context);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications_outlined,
-                  ),
-                ),
-              ],
+              actions: [notificationIcon(), horizontalSpace10],
             ),
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -55,7 +58,7 @@ class PatientHomeScreen extends StatelessWidget {
                     )
                   : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
-              onCurrentConsultTap: () => Get.to(() => LiveChatScreen()),
+              onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
               onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
               onSettingsTap: () => Get.to(() => MAHistoryScreen()),
@@ -164,6 +167,52 @@ class PatientHomeScreen extends StatelessWidget {
             floatingActionButton: Obx(getFloatingButton)));
   }
 
+  Widget notificationIcon() {
+    return StreamBuilder<DocumentSnapshot>(
+        stream: stats.getPatientStatus(auth.currentUser!.uid),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return notifIconNormal();
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return notifIconNormal();
+          }
+          final data =
+              // ignore: cast_nullable_to_non_nullable
+              snapshot.data!.data() as Map<String, dynamic>;
+          return data['notifBadge'] as String == '0'
+              ? notifIconNormal()
+              : notifIconWithBadge(data['notifBadge'] as String);
+        });
+  }
+
+  Widget notifIconNormal() {
+    return IconButton(
+      onPressed: () => Get.to(() => NotificationFeedScreen()),
+      icon: const Icon(
+        Icons.notifications_outlined,
+        size: 29,
+      ),
+    );
+  }
+
+  Widget notifIconWithBadge(String count) {
+    return Badge(
+      position: BadgePosition.topEnd(top: 1, end: 3),
+      badgeContent: Text(
+        count,
+        style: const TextStyle(color: Colors.white),
+      ),
+      child: IconButton(
+        onPressed: () => Get.to(() => NotificationFeedScreen()),
+        icon: const Icon(
+          Icons.notifications_outlined,
+          size: 29,
+        ),
+      ),
+    );
+  }
+
   Widget getFloatingButton() {
     if (liveCont.liveCons.isNotEmpty) {
       return FloatingActionButton(
@@ -209,5 +258,14 @@ class PatientHomeScreen extends StatelessWidget {
 
   void seeAllArticles() {
     Get.to(() => ArticleListScreen());
+  }
+
+  void currentConsultation() {
+    if (liveCont.liveCons.isNotEmpty) {
+      Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
+    }
+    showErrorDialog(
+        errorTitle: 'You have no current consultation',
+        errorDescription: 'Please request consultation first');
   }
 }

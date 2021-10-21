@@ -105,7 +105,7 @@ class ConsRequestController extends GetxController {
           Get.to(() => PatientHomeScreen());
         });
     clearControllers();
-    fetchedData!.hasActiveQueue = true;
+    //fetchedData!.hasActiveQueue = true;
     await updateActiveQueue();
 
     log.i('submitConsultRequest | Consultation Submit Succesfully');
@@ -122,8 +122,13 @@ class ConsRequestController extends GetxController {
 
   Future<void> updateActiveQueue() async {
     log.i('updateActiveQueue | Setting active queue to true');
-    await firestore.collection('patients').doc(userID).update(
-      {'hasActiveQueue': fetchedData!.hasActiveQueue},
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .update(
+      {'hasActiveQueue': false},
     );
   }
 
@@ -162,7 +167,9 @@ class ConsRequestController extends GetxController {
   }
 
   void checkRequestConsultation() {
-    if (fetchedData!.hasActiveQueue!) {
+    if (!isConsultForYou.value) {
+      //TO DO getDocSnapshot
+      //if (fetchedData!.hasActiveQueue!) {
       showErrorDialog(
           errorTitle: 'Sorry, you still have an on progress transaction',
           errorDescription: 'Please proceed to your existing consultation');

@@ -1,7 +1,8 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -9,30 +10,28 @@ import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:get/get.dart';
 
-//TODO: clickable attached photos also
-//Use Image.network -> for profile of user who requested here, else blank pic
-
 class VerificationReqItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-          child: SingleChildScrollView(child: ResponsiveView())),
+          padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
+          child: SingleChildScrollView(child: ResponsiveView(context))),
     );
   }
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView() : super(alwaysUseBuilder: false);
+  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
+  final BuildContext context;
   final VerificationReqModel vfModel = Get.arguments as VerificationReqModel;
   final ForVerificationController vf = Get.find();
+
   @override
   Widget phone() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -45,7 +44,7 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context)
             ]),
           )
         ],
@@ -55,7 +54,6 @@ class ResponsiveView extends GetResponsiveView {
   Widget tablet() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -68,7 +66,8 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context),
+              verticalSpace15
             ]),
           )
         ],
@@ -78,7 +77,6 @@ class ResponsiveView extends GetResponsiveView {
   Widget desktop() => Column(
         children: [
           SizedBox(
-            height: Get.height,
             width: screen.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -92,29 +90,94 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
               verticalSpace35,
-              screenButtons()
+              screenButtons(context),
+              verticalSpace15
             ]),
           ),
         ],
       );
 
-  Widget screenButtons() {
+  Widget screenButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        CustomButton(
-          onTap: () async {},
-          text: 'Verify',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
+        AdminButton(onItemTap: confirmationDialog, buttonText: 'Verify'),
         horizontalSpace40,
-        CustomButton(
-          onTap: () async {},
-          text: 'Cancel',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
+        AdminButton(
+            onItemTap: () => showDialog(
+                context: context, builder: (context) => declineDialog()),
+            buttonText: 'Decline'),
+      ],
+    );
+  }
+
+  void confirmationDialog() {
+    return showConfirmationDialog(
+      dialogTitle: 'Are you sure?',
+      dialogCaption:
+          'Select YES if you want to verify this user. Otherwise, select NO',
+      onYesTap: () => vf.acceptUserVerification(vfModel),
+      onNoTap: () {
+        dismissDialog();
+      },
+    );
+  }
+
+  Widget declineDialog() {
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+          width: Get.width * .45,
+          child: Column(
+            children: [
+              const Text(
+                'To inform the patient',
+                style: title32Regular,
+              ),
+              verticalSpace10,
+              const Text(
+                'Please specify the reason',
+                style: title20Regular,
+              ),
+              verticalSpace50,
+              TextFormField(
+                  controller: vf.reason,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'This is a required field';
+                    }
+                    //! if we want to validate na dapat taas ang words
+                    // if (value.length < 10) {
+                    //   return 'Description must be at least 10 words';
+                    // }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Enter the reason here',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (value) {
+                    return;
+                  },
+                  onSaved: (value) {
+                    vf.reason.text = value!;
+                  }),
+              verticalSpace25,
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: AdminButton(
+                      onItemTap: () => vf.desclineUserVerification(vfModel),
+                      buttonText: 'Submit')),
+            ],
+          ),
+        )
       ],
     );
   }
@@ -136,14 +199,20 @@ class ResponsiveView extends GetResponsiveView {
           dashPattern: const [7, 7, 7, 7],
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              width: 250,
-              height: 150,
-              color: neutralColor[10],
-              child: Image.network(
-                vf.getValidID(vfModel),
-                height: 106,
-                fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) =>
+                      attachedPhotosDialog(vf.getValidID(vfModel))),
+              child: Container(
+                width: 250,
+                height: 150,
+                color: neutralColor[10],
+                child: Image.network(
+                  vf.getValidID(vfModel),
+                  height: 106,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -169,14 +238,20 @@ class ResponsiveView extends GetResponsiveView {
           dashPattern: const [7, 7, 7, 7],
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              width: 250,
-              height: 150,
-              color: neutralColor[10],
-              child: Image.network(
-                vf.getValidIDWithSelfie(vfModel),
-                height: 106,
-                fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) =>
+                      attachedPhotosDialog(vf.getValidIDWithSelfie(vfModel))),
+              child: Container(
+                width: 250,
+                height: 150,
+                color: neutralColor[10],
+                child: Image.network(
+                  vf.getValidIDWithSelfie(vfModel),
+                  height: 106,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -194,12 +269,7 @@ class ResponsiveView extends GetResponsiveView {
         verticalSpace35,
         Row(
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(
-                authHeader,
-              ),
-              radius: 40,
-            ),
+            getPhoto(vfModel),
             horizontalSpace15,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,4 +331,57 @@ class ResponsiveView extends GetResponsiveView {
       ],
     );
   }
+
+  Widget attachedPhotosDialog(String imgURL) {
+    return SimpleDialog(
+      contentPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.zero,
+      children: [
+        // IconButton(
+        //   onPressed: () {
+        //     //downloadFile(imgURL);
+        //   },
+        //   icon: const Icon(
+        //     Icons.file_download_rounded,
+        //   ),
+        // ),
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(40),
+              )),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          height: Get.height * .8,
+          child: Container(
+            color: Colors.white,
+            child: Image.network(
+              imgURL,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getPhoto(VerificationReqModel model) {
+    if (vf.getProfilePhoto(model) == '') {
+      return CircleAvatar(
+        radius: 40,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 40,
+      backgroundImage: NetworkImage(vf.getProfilePhoto(model)),
+    );
+  }
+
+  // Future downloadFile(Reference ref) async {
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final file = File('${dir.path}/${ref.name}');
+
+  //   await ref.writeToFile(file);
+  // }
 }

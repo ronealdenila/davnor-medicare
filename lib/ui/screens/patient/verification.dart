@@ -11,16 +11,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class VerificationScreen extends GetView<VerificationController> {
+class VerificationScreen extends StatelessWidget {
+  static VerificationController verificationController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
-          onPressed: () {
-            //back to...
-          },
+          onPressed: Get.back,
         ),
       ),
       body: SingleChildScrollView(
@@ -86,7 +86,7 @@ class VerificationScreen extends GetView<VerificationController> {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: controller.submitVerification,
+                    onTap: verificationController.submitVerification,
                     text: 'Submit',
                     buttonColor: verySoftBlueColor,
                   ),
@@ -100,9 +100,9 @@ class VerificationScreen extends GetView<VerificationController> {
   }
 
   Widget getValidID() {
-    if (controller.imgOfValidID.value == '') {
+    if (verificationController.imgOfValidID.value == '') {
       return InkWell(
-        onTap: controller.pickValidID,
+        onTap: verificationController.pickValidID,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -121,11 +121,11 @@ class VerificationScreen extends GetView<VerificationController> {
       );
     }
     return InkWell(
-      onTap: controller.pickValidID,
+      onTap: verificationController.pickValidID,
       child: Stack(
         children: [
           Image.file(
-            File(controller.imgOfValidID.value),
+            File(verificationController.imgOfValidID.value),
             width: Get.width,
             height: Get.height,
             fit: BoxFit.fill,
@@ -135,7 +135,7 @@ class VerificationScreen extends GetView<VerificationController> {
             top: 5,
             child: InkWell(
               onTap: () {
-                controller.imgOfValidID.value = '';
+                verificationController.imgOfValidID.value = '';
               },
               child: const Icon(
                 Icons.remove_circle,
@@ -150,9 +150,9 @@ class VerificationScreen extends GetView<VerificationController> {
   }
 
   Widget getValidIDWithSelfie() {
-    if (controller.imgOfValidIDWithSelfie.value == '') {
+    if (verificationController.imgOfValidIDWithSelfie.value == '') {
       return InkWell(
-        onTap: controller.pickValidIDWithSelfie,
+        onTap: verificationController.pickValidIDWithSelfie,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -171,11 +171,11 @@ class VerificationScreen extends GetView<VerificationController> {
       );
     }
     return InkWell(
-      onTap: controller.pickValidIDWithSelfie,
+      onTap: verificationController.pickValidIDWithSelfie,
       child: Stack(
         children: [
           Image.file(
-            File(controller.imgOfValidIDWithSelfie.value),
+            File(verificationController.imgOfValidIDWithSelfie.value),
             width: Get.width,
             height: Get.height,
             fit: BoxFit.fill,
@@ -185,7 +185,7 @@ class VerificationScreen extends GetView<VerificationController> {
             top: 5,
             child: InkWell(
               onTap: () {
-                controller.imgOfValidIDWithSelfie.value = '';
+                verificationController.imgOfValidIDWithSelfie.value = '';
               },
               child: const Icon(
                 Icons.remove_circle,

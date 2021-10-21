@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ class AdminProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -19,6 +20,9 @@ class AdminProfileScreen extends StatelessWidget {
 
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView() : super(alwaysUseBuilder: false);
+
+  static AuthController authController = Get.find();
+  final fetchedData = authController.adminModel.value;
 
   @override
   Widget phone() => Column(
@@ -67,33 +71,46 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget admProfile() {
     return Center(
-        child: Column(children: [
-      horizontalSpace200,
-      CircleAvatar(
-        backgroundImage: AssetImage(authHeader),
-        radius: 50,
-      ),
-      verticalSpace18,
-      const Text(
-        'Sarsa Stark',
-        style: body16Bold,
-      ),
-      verticalSpace10,
-      const Text(
-        'admin@gmail.com',
-        style: body14Regular,
-      ),
-      verticalSpace50,
-      Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        const Icon(Icons.lock_outline),
-        InkWell(
-          onTap: () {},
-          child: const Text(
-            'Change Password',
+      child: Column(
+        children: [
+          verticalSpace50,
+          displayProfile(),
+          verticalSpace18,
+          Text(
+            fetchedData!.firstName!,
+            style: body16Bold,
+          ),
+          verticalSpace10,
+          Text(
+            fetchedData!.email!,
             style: body14Regular,
           ),
-        ),
-      ])
-    ]));
+          verticalSpace50,
+          Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            const Icon(Icons.lock_outline),
+            InkWell(
+              onTap: () {},
+              child: const Text(
+                'Change Password',
+                style: body14Regular,
+              ),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  Widget displayProfile() {
+    if (fetchedData!.profileImage == '') {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: 50,
+      backgroundImage: NetworkImage(fetchedData!.profileImage!),
+    );
   }
 }

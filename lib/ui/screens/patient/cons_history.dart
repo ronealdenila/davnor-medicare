@@ -94,6 +94,12 @@ class ConsHistoryScreen extends StatelessWidget {
                   child: FutureBuilder(
                       future: consHController.getConsHistoryForPatient(),
                       builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text(
+                            'You have no consultation record',
+                            textAlign: TextAlign.center,
+                          );
+                        }
                         if (snapshot.connectionState == ConnectionState.done) {
                           return ListView.builder(
                             padding: const EdgeInsets.symmetric(

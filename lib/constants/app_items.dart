@@ -29,6 +29,28 @@ final List<Item> gender = <Item>[
   const Item('Male'),
 ];
 
+final List<Item> department = <Item>[
+  const Item('Pediatrics Department'),
+  const Item('Family Department'),
+  const Item('Internal Medicine Department'),
+];
+final List<Item> title = <Item>[
+  const Item('Orthopedist'),
+  const Item('Ophthalmologist'),
+  const Item('Diabetologist'),
+  const Item('Otolaryngologist(ENT)'),
+  const Item('Gastreonterologist'),
+  const Item('Dermatologist'),
+  const Item('Pulmonologist'),
+  const Item('Nephrologist'),
+  const Item('Immunologists'),
+  const Item('General Medicine'),
+];
+final List<Item> position = <Item>[
+  const Item('Personnel'),
+  const Item('Head'),
+];
+
 final List<Item> type = <Item>[
   const Item('None'),
   const Item('Senior'),

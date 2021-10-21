@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -194,7 +195,7 @@ class DoctorProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => Get.to(() => ChangePasswordScreen()),
                 icon: const Icon(
                   Icons.lock,
                   color: Colors.white,

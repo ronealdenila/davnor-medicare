@@ -3,6 +3,9 @@
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 
+const String changePasswordDescription =
+    'Please provide your current password and your new password.';
+
 //Global
 //Term and Policy Screen
 const String termsAndPolicyParagraph1 =
@@ -135,3 +138,7 @@ const String pswdStaffRegister =
 
 const String medicareDataSubtitle =
     'The number of government doctors we have in the application';
+
+//FCM server key
+const serverkey =
+    'key=AAAANu44_XE:APA91bFYjezxDsWdRJM30XQMbJXpqFhHUcFiOccx6AUNSTdRdnC5LFnS5HMcg6slswcY6ZKo-mSs8MphAIYcrUvJw3lnvASLiutN2Q3HAu1exVbos5TSPwC_1enzay_tL14j4Yd-lmKm';

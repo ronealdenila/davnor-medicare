@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(AdminDashboardScreen());
     case Routes.VERIFICATION_REQ_LIST:
       return _getPageRoute(VerificationReqListScreen());
+    case Routes.ADMIN_PROFILE:
+      return _getPageRoute(AdminProfileScreen());
     // case Routes.RELEASING_AREA_LIST:
     //   return _getPageRoute(ReleasingAreaListScreen());
     // case Routes.MA_HISTORY_LIST:

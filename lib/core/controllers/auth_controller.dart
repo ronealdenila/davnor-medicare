@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/ui/screens/auth/login.dart';
-import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +17,16 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
-
+  final AppController appController = Get.put(AppController());
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
-  final AppController _appController = AppController();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
 
   Rxn<PatientModel> patientModel = Rxn<PatientModel>();
   Rxn<DoctorModel> doctorModel = Rxn<DoctorModel>();
@@ -37,7 +38,10 @@ class AuthController extends GetxController {
   String? userRole;
   bool? userSignedOut = false;
   RxBool? isObscureText = true.obs;
+  RxBool? isObscureCurrentPW = true.obs;
+  RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
+  RxString tokenID = ''.obs;
 
   //Doctor Application Guide
   static const emailScheme = doctorapplicationinstructionParagraph0;
@@ -69,6 +73,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       showLoading();
       await auth.signInWithEmailAndPassword(
@@ -80,13 +85,14 @@ class AuthController extends GetxController {
       dismissDialog();
       Get.snackbar(
         'Error logging in',
-        e.toString(),
+        'Please check your email and password',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
   }
 
   Future<void> registerPatient(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       showLoading();
       await auth
@@ -112,6 +118,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> sendPasswordResetEmail(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     try {
       await auth.sendPasswordResetEmail(email: emailController.text);
       log.i('Password link sent to: ${emailController.text}');
@@ -130,6 +137,35 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> changePassword(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    final user = FirebaseAuth.instance.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: user!.email!, password: currentPasswordController.text);
+    showLoading();
+    await user.reauthenticateWithCredential(cred).then((value) {
+      user.updatePassword(newPasswordController.text).then((_) {
+        dismissDialog();
+        _changePasswordSuccess();
+        Get.back();
+        Get.snackbar('Password Changed Successfully',
+            'You may now use your new password.',
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+            colorText: Get.theme.snackBarTheme.actionTextColor);
+      });
+    }).catchError((err) {
+      dismissDialog();
+      Get.snackbar('Password Change Failed',
+          'Your current password you have entered is not correct',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+          colorText: Get.theme.snackBarTheme.actionTextColor);
+    });
+  }
+
   Future<void> _createPatientUser(String _userID) async {
     await firestore.collection('users').doc(_userID).set(<String, dynamic>{
       'userType': 'patient',
@@ -138,11 +174,26 @@ class AuthController extends GetxController {
       'email': emailController.text.trim(),
       'firstName': firstNameController.text.trim(),
       'lastName': lastNameController.text.trim(),
-      'hasActiveQueue': false,
-      'pStatus': false,
       'profileImage': '',
       'validID': '',
       'validSelfie': '',
+    });
+    await _addPatientStatus(_userID);
+  }
+
+  Future<void> _addPatientStatus(String _userID) async {
+    await getDeviceToken();
+    await firestore
+        .collection('patients')
+        .doc(_userID)
+        .collection('status')
+        .doc('value')
+        .set({
+      'hasActiveQueue': false,
+      'pStatus': false,
+      'pendingVerification': false,
+      'deviceToken': tokenID,
+      'notifBadge': '0',
       'queueNum': '',
     });
   }
@@ -161,6 +212,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
+    await setDeviceToken(false);
     try {
       userSignedOut = true;
       await auth.signOut();
@@ -180,6 +232,14 @@ class AuthController extends GetxController {
     passwordController.clear();
     firstNameController.clear();
     lastNameController.clear();
+  }
+
+  Future<void> _changePasswordSuccess() async {
+    log.i('_clearControllers | Change Password Success');
+    currentPasswordController.clear();
+    newPasswordController.clear();
+    isObscureCurrentPW!.value = true;
+    isObscureNewPW!.value = true;
   }
 
   Future<void> checkUserPlatform() async {
@@ -223,7 +283,6 @@ class AuthController extends GetxController {
           await navigateWithDelay(Get.offAllNamed(Routes.PSWD_HEAD_HOME));
           break;
         case 'admin':
-          // await navigateWithDelay(Get.offAll(() => AdminHomeScreen()));
           await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
           break;
         default:
@@ -250,7 +309,25 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+    if (!kIsWeb) {
+      await setDeviceToken(true);
+    }
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
+  }
+
+  Future<void> setDeviceToken(bool loggedIn) async {
+    await getDeviceToken();
+    await firestore
+        .collection('patients')
+        .doc(firebaseUser.value!.uid)
+        .collection('status')
+        .doc('value')
+        .update({'deviceToken': loggedIn ? tokenID.value : ''});
+  }
+
+  Future<void> getDeviceToken() async {
+    tokenID.value = (await messaging.getToken())!;
+    log.i('TOKEN $tokenID');
   }
 
   Future<void> _initializeDoctorModel() async {
@@ -281,7 +358,15 @@ class AuthController extends GetxController {
   }
 
   void togglePasswordVisibility() {
-    _appController.toggleTextVisibility(isObscureText!);
+    appController.toggleTextVisibility(isObscureText!);
+  }
+
+  void toggleCurrentPasswordVisibility() {
+    appController.toggleTextVisibility(isObscureCurrentPW!);
+  }
+
+  void toggleNewPasswordVisibility() {
+    appController.toggleTextVisibility(isObscureNewPW!);
   }
 
   void launchDoctorApplicationForm() {

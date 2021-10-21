@@ -5,8 +5,8 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/ui/screens/patient/profile.dart';
 import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
@@ -24,6 +24,16 @@ class VerificationController extends GetxController {
   final RxString imgURL = ''.obs;
   final RxString imgURLselfie = ''.obs;
   final RxString file = ''.obs;
+
+  Stream<DocumentSnapshot> getStatus() {
+    final Stream<DocumentSnapshot> doc = firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .snapshots();
+    return doc;
+  }
 
   Future<void> uploadID(String filePathID) async {
     file.value = filePathID.split('/').last;
@@ -51,9 +61,10 @@ class VerificationController extends GetxController {
   }
 
   Future<void> addVerificationRequest() async {
+    showLoading();
     await uploadID(imgOfValidID.value);
     await uploadIDS(imgOfValidIDWithSelfie.value);
-    await firestore.collection('to_verify').add({
+    await firestore.collection('to_verify').doc(userID).set({
       'patientID': userID,
       'firstName': fetchedData!.firstName,
       'lastName': fetchedData!.lastName,
@@ -61,15 +72,29 @@ class VerificationController extends GetxController {
       'validSelfie': imgURLselfie.value,
       'dateRqstd': Timestamp.fromDate(DateTime.now()),
     });
-    //update user hasPendingStatus
+    await setPendingVerification();
+    await clearData();
     await showDialog();
+  }
+
+  Future<void> setPendingVerification() async {
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .update({'pendingVerification': true});
   }
 
   void submitVerification() {
     if (hasImagesSelected()) {
       addVerificationRequest();
     } else {
-      //TODO: Add error Dialog
+      Get.snackbar(
+        'Submit Failed',
+        'Please select your valid ID and w/ Selfie',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -85,7 +110,19 @@ class VerificationController extends GetxController {
     showDefaultDialog(
       dialogTitle: dialog6Title,
       dialogCaption: dialog6Caption,
-      onConfirmTap: () => Get.to(() => PatientHomeScreen()),
+      onConfirmTap: () {
+        dismissDialog();
+        Get.back();
+      },
     );
+  }
+
+  Future<void> clearData() async {
+    dismissDialog();
+    imgOfValidID.value = '';
+    imgOfValidIDWithSelfie.value = '';
+    imgURL.value = '';
+    imgURLselfie.value = '';
+    file.value = '';
   }
 }
