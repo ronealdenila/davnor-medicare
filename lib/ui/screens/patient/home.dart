@@ -51,12 +51,15 @@ class PatientHomeScreen extends StatelessWidget {
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
-              userProfile: fetchedData!.profileImage == ''
-                  ? const Icon(
-                      Icons.person,
-                      size: 56,
-                    )
-                  : Image.network(fetchedData!.profileImage!),
+              userProfile:
+                  // fetchedData!.profileImage == ''
+                  //     ?
+                  const Icon(
+                Icons.person,
+                size: 56,
+              )
+              // : Image.network(fetchedData!.profileImage!),
+              ,
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
