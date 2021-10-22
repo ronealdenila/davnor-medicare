@@ -1,7 +1,9 @@
 // ignore_for_file: constant_identifier_names
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
+import 'package:davnor_medicare/ui/screens/admin/doctor_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
-import 'package:davnor_medicare/ui/screens/admin/edit_pswdstaff.dart';
+import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
+import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
@@ -272,6 +274,14 @@ class AppPages {
     GetPage(
       name: _Paths.EDIT_PSWD_STAFF,
       page: () => EditPSWDStaffScrenn(),
+    ),
+    GetPage(
+      name: _Paths.DOCTOR_LIST,
+      page: () => DoctorListScreen(),
+    ),
+    GetPage(
+      name: _Paths.PSWD_STAFF_LIST,
+      page: () => PSWDStaffListScreen(),
     ),
   ];
 }

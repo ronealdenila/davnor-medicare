@@ -66,6 +66,8 @@ abstract class Routes {
   static const ADMIN_PROFILE = _Paths.ADMIN_PROFILE;
   static const EDIT_DOCTOR = _Paths.EDIT_DOCTOR;
   static const EDIT_PSWD_STAFF = _Paths.EDIT_PSWD_STAFF;
+  static const DOCTOR_LIST = _Paths.DOCTOR_LIST;
+  static const PSWD_STAFF_LIST = _Paths.PSWD_STAFF_LIST;
 }
 
 abstract class _Paths {
@@ -132,4 +134,6 @@ abstract class _Paths {
   static const ADMIN_PROFILE = '/admin-profile';
   static const EDIT_DOCTOR = '/edit-doctor';
   static const EDIT_PSWD_STAFF = '/edit-pswd-staff';
+  static const DOCTOR_LIST = '/doctor-list';
+  static const PSWD_STAFF_LIST = '/pswd-staff-list';
 }

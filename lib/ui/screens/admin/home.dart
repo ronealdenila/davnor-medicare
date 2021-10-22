@@ -9,6 +9,7 @@ import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/admin/side_menu.dart';
@@ -284,7 +285,8 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                 ),
                                 ActionCard(
                                   text: 'Verify User',
-                                  onTap: () {},
+                                  onTap: () => navigationController
+                                      .navigateTo('/adm-verification-req-list'),
                                   color: verySoftRed[60],
                                   secondaryColor: verySoftRedCustomColor,
                                 ),
