@@ -10,11 +10,17 @@ class PSWDStaffListController extends GetxController {
   final RxList<PswdModel> pswdList = RxList<PswdModel>();
   final RxList<PswdModel> filteredPswdList = RxList<PswdModel>();
   final TextEditingController pswdFilter = TextEditingController();
+  final RxBool isLoading = true.obs;
+  final RxString position = ''.obs;
 
   @override
   void onReady() {
     super.onReady();
-    getPSWDStaffs().then((value) => pswdList.value = value);
+    log.i('onReady | DoctorListController');
+    getPSWDStaffs().then((value) {
+      pswdList.value = value;
+      isLoading.value = false;
+    });
   }
 
   Future<List<PswdModel>> getPSWDStaffs() async {

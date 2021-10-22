@@ -23,8 +23,7 @@ class ConsRequestController extends GetxController {
   final fetchedData = authController.patientModel.value;
 
   final uuid = const Uuid();
-  final RxString fileName = ''.obs;
-
+  //final RxString fileName = ''.obs;
   final String userID = auth.currentUser!.uid;
   Rxn<ConsultationModel> consultation = Rxn<ConsultationModel>();
 
@@ -35,7 +34,6 @@ class ConsRequestController extends GetxController {
 
   late String fullName =
       '${firstNameController.text} ${lastNameController.text}';
-
   RxBool isConsultForYou = true.obs;
   RxInt selectedIndex = 0.obs;
 
@@ -46,8 +44,8 @@ class ConsRequestController extends GetxController {
   //Cons Form 3
   RxList<XFile> images = RxList<XFile>();
   String imageUrls = '';
-
-  final String generatedCode = 'C025';
+  final RxString generatedCode = 'C025'.obs; //MA24 -> mock code
+  late String documentId;
 
   final consultRef =
       firestore.collection('cons_request').withConverter<ConsultationModel>(
@@ -63,13 +61,11 @@ class ConsRequestController extends GetxController {
     return false;
   }
 
-  late String documentId;
-
-  Future<void> uploadPrescription() async {
+  Future<void> uploadLabResults() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
-      fileName.value = images[i].path.split('/').last;
-      final ref = storageRef.child('PrescriptionImages/$i-Pr-$v4$fileName');
+      //fileName.value = images[i].path.split('/').last;
+      final ref = storageRef.child('Cons_Request/$userID/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           imageUrls += '$value>>>';
@@ -81,7 +77,7 @@ class ConsRequestController extends GetxController {
 
   Future<void> submitConsultRequest() async {
     showLoading();
-    await uploadPrescription();
+    await uploadLabResults();
     assignValues();
     final consultation = ConsultationModel(
       consID: 'null',
@@ -94,20 +90,21 @@ class ConsRequestController extends GetxController {
       isFollowUp: isFollowUp.value,
       imgs: imageUrls,
     );
+
     final docRef = await consultRef.add(consultation);
     documentId = docRef.id;
     await updateId();
-    await initializePrescriptionModel(docRef.id);
+    await initializeConsultationModel(docRef.id);
+    await updateActiveQueue();
+
+    final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     showDefaultDialog(
         dialogTitle: dialog4Title,
-        dialogCaption: dialog4Caption,
+        dialogCaption: caption,
         onConfirmTap: () {
           Get.to(() => PatientHomeScreen());
         });
     clearControllers();
-    //fetchedData!.hasActiveQueue = true;
-    await updateActiveQueue();
-
     log.i('submitConsultRequest | Consultation Submit Succesfully');
   }
 
@@ -121,6 +118,14 @@ class ConsRequestController extends GetxController {
       .catchError((error) => log.w('Failed to update cons Id'));
 
   Future<void> updateActiveQueue() async {
+    //Generate MA Queue - Fetch FROM SELECTED dept+title queue status
+    // final lastNum = statusList[0].qLastNum! + 1;
+    // if (lastNum < 10) {
+    //   generatedCode.value = 'C0$lastNum';
+    // } else {
+    //   generatedCode.value = 'C$lastNum';
+    // }
+
     log.i('updateActiveQueue | Setting active queue to true');
     await firestore
         .collection('patients')
@@ -128,11 +133,11 @@ class ConsRequestController extends GetxController {
         .collection('status')
         .doc('value')
         .update(
-      {'hasActiveQueue': false},
+      {'hasActiveQueuecons': true, 'queueCons': generatedCode},
     );
   }
 
-  Future<void> initializePrescriptionModel(String docRef) async {
+  Future<void> initializeConsultationModel(String docRef) async {
     consultation.value =
         await consultRef.doc(docRef).get().then((snapshot) => snapshot.data()!);
   }
@@ -169,7 +174,7 @@ class ConsRequestController extends GetxController {
   void checkRequestConsultation() {
     if (!isConsultForYou.value) {
       //TO DO getDocSnapshot
-      //if (fetchedData!.hasActiveQueue!) {
+      //if (fetchedData!.hasActiveQueue!) { //should be stream
       showErrorDialog(
           errorTitle: 'Sorry, you still have an on progress transaction',
           errorDescription: 'Please proceed to your existing consultation');

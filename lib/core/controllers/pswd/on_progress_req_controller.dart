@@ -26,7 +26,7 @@ class OnProgressReqController extends GetxController {
   }
 
   Stream<List<MARequestModel>> getMedicalAssistances() {
-    log.i('getMedicalAssistance | Streaming Medical Assistance Request');
+    //log.i('getMedicalAssistance | Streaming Medical Assistance Request');
     return firestore
         .collection('ma_request')
         .orderBy('date_rqstd', descending: true)

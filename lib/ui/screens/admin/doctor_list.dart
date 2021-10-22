@@ -26,8 +26,9 @@ class DoctorListScreen extends StatelessWidget {
             Text('Doctors List',
                 textAlign: TextAlign.left, style: title24BoldNeutral80),
             verticalSpace50,
-            Row(
-              children: [
+            Wrap(
+              runSpacing: 10,
+              children: <Widget>[
                 SizedBox(
                   width: 450,
                   child: CustomTextFormField(
@@ -55,97 +56,154 @@ class DoctorListScreen extends StatelessWidget {
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
+            verticalSpace25,
             header(),
-            Obx(requestList)
+            Obx(() => requestList(context))
           ],
         ),
       ),
     );
   }
 
-  Widget requestList() {
+  Widget requestList(BuildContext context) {
     if (dListController.isLoading.value) {
       return const SizedBox(
           height: 24, width: 24, child: CircularProgressIndicator());
     }
-    if (dListController.doctorList.isEmpty) {
+    if (dListController.doctorList.isEmpty && dListController.isLoading.value) {
       return const Text('No doctors');
     }
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: dListController.doctorList.length,
-        itemBuilder: (context, index) {
-          return customTableRow(dListController.doctorList[index]);
-        });
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: dListController.doctorList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(dListController.doctorList[index]);
+          }),
+    );
   }
 
   Widget header() {
     return Container(
       width: Get.width,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: const Color(0xFF063373),
       ),
-      child: Row(children: const [
-        Text('FULLNAME', style: subtitle18BoldWhite),
-        Text('TITLE', style: subtitle18BoldWhite),
-        Text('DEPARTMENT', style: subtitle18BoldWhite),
-        Text('ACTION', style: subtitle18BoldWhite)
-      ]),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('FULLNAME',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('TITLE',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('DEPARTMENT',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              child: Text('ACTION',
+                  style: body16Bold.copyWith(color: Colors.white)),
+            )
+          ]),
     );
   }
 
   Widget customTableRow(DoctorModel model) {
-    return Row(
-      children: [
-        //Text('${model.lastName!}, ${model.firstName!}'),
-        //Text(model.department!),
-        Expanded(
-          child: Text(
-            'Rosello, Courtney Love Queen',
-            style: body16Medium,
-          ),
+    return SizedBox(
+      width: Get.width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  '${model.lastName!}, ${model.firstName!}',
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  model.title!,
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  model.department!,
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Wrap(
+                  runSpacing: 8,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        'View',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                    horizontalSpace15,
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        'Edit',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                    horizontalSpace15,
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        'Delete',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        Expanded(
-          child: Text(
-            'Internal Medicine Department',
-            style: body16Medium,
-          ),
-        ),
-        Expanded(
-          child: Text(
-            'Otolaryngologist (ENT)',
-            style: body16Medium,
-          ),
-        ),
-        //Text(model.title!),
-        SizedBox(
-          width: 200,
-          child: Row(
-            children: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'View',
-                    style: body16RegularUnderlineBlue,
-                  )),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Edit',
-                    style: body16RegularUnderlineBlue,
-                  )),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Delete',
-                    style: body16RegularUnderlineBlue,
-                  )),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
