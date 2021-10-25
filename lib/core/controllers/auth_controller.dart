@@ -7,6 +7,7 @@ import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/mobile_home.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
@@ -289,12 +290,16 @@ class AuthController extends GetxController {
           await Get.defaultDialog(title: 'Error Occured');
       }
     } else {
-      await Get.defaultDialog(
-        title: 'Sign In failed. Try Again',
-        middleText: checkAppRestrictionErrorMiddleText,
-        textConfirm: 'Okay',
-        onConfirm: signOut,
-      );
+      if (userRole == 'admin') {
+        await navigateWithDelay(Get.offAllNamed(Routes.MOBILE_ADMIN_HOME));
+      } else {
+        await Get.defaultDialog(
+          title: 'Sign In failed. Try Again',
+          middleText: checkAppRestrictionErrorMiddleText,
+          textConfirm: 'Okay',
+          onConfirm: signOut,
+        );
+      }
     }
   }
 

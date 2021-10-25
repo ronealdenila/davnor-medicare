@@ -1,32 +1,28 @@
 // ignore_for_file: constant_identifier_names
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_list.dart';
+import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
-import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
-import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
-import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
-import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
-import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
-import 'package:davnor_medicare/ui/screens/patient/live_chat_info.dart';
-import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
-import 'package:get/get.dart';
-import 'package:davnor_medicare/ui/screens/splash.dart';
-import 'package:davnor_medicare/ui/screens/auth/login.dart';
-import 'package:davnor_medicare/ui/screens/auth/signup.dart';
-import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
-import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
-import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
-import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
+import 'package:davnor_medicare/ui/screens/admin/mobile_doctor_list.dart';
+import 'package:davnor_medicare/ui/screens/admin/mobile_home.dart';
+import 'package:davnor_medicare/ui/screens/admin/mobile_pswd_list.dart';
+import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
+import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
+import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
+import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
+import 'package:davnor_medicare/ui/screens/auth/login.dart';
+import 'package:davnor_medicare/ui/screens/auth/signup.dart';
+import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
+import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
@@ -34,23 +30,30 @@ import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form3.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history_info.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
+import 'package:davnor_medicare/ui/screens/patient/live_chat_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
+import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
-import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/ui/screens/splash.dart';
+import 'package:get/get.dart';
 
 part 'app_routes.dart';
 
@@ -243,6 +246,18 @@ class AppPages {
     ),
 
     //Admin
+    GetPage(
+      name: _Paths.MOBILE_ADMIN_HOME,
+      page: () => MobileAdminHomeScreen(),
+    ),
+    GetPage(
+      name: _Paths.MOBILE_DOCTOR_LIST,
+      page: () => MobileDoctorListScreen(),
+    ),
+    GetPage(
+      name: _Paths.MOBILE_PSWD_STAFF_LIST,
+      page: () => MobilePSWDStaffListScreen(),
+    ),
     GetPage(
       name: _Paths.ADMIN_HOME,
       page: () => AdminHomeScreen(),
