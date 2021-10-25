@@ -37,7 +37,7 @@ class VerificationController extends GetxController {
 
   Future<void> uploadID(String filePathID) async {
     file.value = filePathID.split('/').last;
-    final ref = storageRef.child('verification/$userID/Valid-ID-$file');
+    final ref = storageRef.child('user/$userID/Valid-ID-$file');
     final uploadTask = ref.putFile(File(filePathID));
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -46,7 +46,7 @@ class VerificationController extends GetxController {
 
   Future<void> uploadIDS(String filePathIDS) async {
     file.value = filePathIDS.split('/').last;
-    final ref = storageRef.child('verification/$userID/Valid-ID-Selfie-$file');
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$file');
     final uploadTask = ref.putFile(File(filePathIDS));
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();
