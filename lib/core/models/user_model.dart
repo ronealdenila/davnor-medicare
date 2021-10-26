@@ -48,6 +48,7 @@ class DoctorModel {
     required this.numToAccomodate,
     required this.dStatus,
     required this.hasOngoingCons,
+    required this.disabled,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
@@ -61,6 +62,7 @@ class DoctorModel {
         numToAccomodate: json['numToAccomodate'] as int,
         dStatus: json['dStatus'] as bool,
         hasOngoingCons: json['hasOngoingCons'] as bool,
+        disabled: json['disabled'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,6 +76,7 @@ class DoctorModel {
         'numToAccomodate': numToAccomodate,
         'dStatus': dStatus,
         'hasOngoingCons': hasOngoingCons,
+        'disabled': disabled,
       };
   String? email;
   String? firstName;
@@ -85,6 +88,7 @@ class DoctorModel {
   int? numToAccomodate;
   bool? dStatus;
   bool? hasOngoingCons;
+  bool? disabled;
 }
 
 class AdminModel {
@@ -121,6 +125,7 @@ class PswdModel {
     required this.lastName,
     required this.position,
     required this.profileImage,
+    required this.disabled,
   });
 
   factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
@@ -129,6 +134,7 @@ class PswdModel {
         lastName: json['lastName'] as String,
         position: json['position'] as String,
         profileImage: json['profileImage'] as String,
+        disabled: json['disabled'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
@@ -137,11 +143,13 @@ class PswdModel {
         'lastName': lastName,
         'position': position,
         'profileImage': profileImage,
+        'disabled': disabled,
       };
 
   String? email;
   String? firstName;
   String? lastName;
   String? position;
-  String? profileImage; //data that will change
+  bool? disabled;
+  String? profileImage;
 }

@@ -24,10 +24,27 @@ class PSWDStaffListController extends GetxController {
   }
 
   Future<List<PswdModel>> getPSWDStaffs() async {
-    return firestore.collection('pswd_personnel').get().then(
+    return firestore
+        .collection('pswd_personnel')
+        .where('disabled', isEqualTo: false)
+        .get()
+        .then(
           (query) => query.docs
               .map((item) => PswdModel.fromJson(item.data()))
               .toList(),
         );
+  }
+
+  Future<void> disablePSWDStaff(String uid) async {
+    await firestore
+        .collection('pswd_personnel')
+        .doc(uid)
+        .update({'disabled': true})
+        .then((value) => {
+              //Dialog success
+            })
+        .catchError((error) => {
+              //Dialog error
+            });
   }
 }

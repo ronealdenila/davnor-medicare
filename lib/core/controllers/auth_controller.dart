@@ -7,7 +7,6 @@ import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/mobile_home.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
@@ -248,11 +247,13 @@ class AuthController extends GetxController {
     if (userSignedOut == false) {
       switch (userRole) {
         case 'pswd-p':
-          await _initializePSWDModel();
-          await checkAppRestriction(userRole);
-          break;
         case 'pswd-h':
           await _initializePSWDModel();
+          if (pswdModel.value!.disabled! == false) {
+            await checkAppRestriction(userRole);
+          } else {
+            //Error dialog, your account has been disabled. Please contact..
+          }
           await checkAppRestriction(userRole);
           break;
         case 'admin':
@@ -261,7 +262,11 @@ class AuthController extends GetxController {
           break;
         case 'doctor':
           await _initializeDoctorModel();
-          await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
+          if (doctorModel.value!.disabled! == false) {
+            await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
+          } else {
+            //Error dialog, your account has been disabled. Please contact..
+          }
           break;
         case 'patient':
           await _initializePatientModel();
@@ -290,16 +295,12 @@ class AuthController extends GetxController {
           await Get.defaultDialog(title: 'Error Occured');
       }
     } else {
-      if (userRole == 'admin') {
-        await navigateWithDelay(Get.offAllNamed(Routes.MOBILE_ADMIN_HOME));
-      } else {
-        await Get.defaultDialog(
-          title: 'Sign In failed. Try Again',
-          middleText: checkAppRestrictionErrorMiddleText,
-          textConfirm: 'Okay',
-          onConfirm: signOut,
-        );
-      }
+      await Get.defaultDialog(
+        title: 'Sign In failed. Try Again',
+        middleText: checkAppRestrictionErrorMiddleText,
+        textConfirm: 'Okay',
+        onConfirm: signOut,
+      );
     }
   }
 

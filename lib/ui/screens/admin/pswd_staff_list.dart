@@ -1,5 +1,4 @@
 import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -172,9 +171,12 @@ class PSWDStaffListScreen extends StatelessWidget {
                     ),
                     horizontalSpace15,
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        pListController.disablePSWDStaff(model.email!);
+                        //Change to userID instead of email
+                      },
                       child: Text(
-                        'Delete',
+                        'Disable',
                         style: body16RegularUnderlineBlue,
                       ),
                     ),

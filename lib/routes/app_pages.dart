@@ -5,9 +5,6 @@ import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
-import 'package:davnor_medicare/ui/screens/admin/mobile_doctor_list.dart';
-import 'package:davnor_medicare/ui/screens/admin/mobile_home.dart';
-import 'package:davnor_medicare/ui/screens/admin/mobile_pswd_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
@@ -49,6 +46,7 @@ import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
@@ -217,6 +215,15 @@ class AppPages {
       page: () => PswdPDashboardScreen(),
     ),
     GetPage(
+      name: _Paths.MA_REQ_LIST,
+      page: () => MARequestListScreen(),
+    ),
+    GetPage(
+      name: _Paths.MA_REQ_ITEM,
+      page: () => MARequestItemScreen(),
+    ),
+
+    GetPage(
       name: _Paths.ON_PROGRESS_REQ_ITEM,
       page: () => MARequestItemScreen(),
     ),
@@ -246,18 +253,6 @@ class AppPages {
     ),
 
     //Admin
-    GetPage(
-      name: _Paths.MOBILE_ADMIN_HOME,
-      page: () => MobileAdminHomeScreen(),
-    ),
-    GetPage(
-      name: _Paths.MOBILE_DOCTOR_LIST,
-      page: () => MobileDoctorListScreen(),
-    ),
-    GetPage(
-      name: _Paths.MOBILE_PSWD_STAFF_LIST,
-      page: () => MobilePSWDStaffListScreen(),
-    ),
     GetPage(
       name: _Paths.ADMIN_HOME,
       page: () => AdminHomeScreen(),

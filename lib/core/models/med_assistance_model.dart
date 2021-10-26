@@ -14,8 +14,8 @@ class MARequestModel {
     required this.type,
     required this.prescriptions,
     required this.validID,
-    required this.dateRqstd,
-    required this.isTurn,
+    // ignore: non_constant_identifier_names
+    required this.date_rqstd,
   });
 
   factory MARequestModel.fromJson(Map<String, dynamic> json) => MARequestModel(
@@ -27,8 +27,7 @@ class MARequestModel {
         type: json['type'] as String,
         prescriptions: json['prescriptions'] as String,
         validID: json['validID'] as String,
-        dateRqstd: json['date_rqstd'] as Timestamp,
-        isTurn: json['isTurn'] as bool,
+        date_rqstd: json['date_rqstd'] as Timestamp,
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,8 +39,7 @@ class MARequestModel {
         'type': type,
         'prescriptions': prescriptions,
         'validID': validID,
-        'dateRqstd': dateRqstd,
-        'isTurn': isTurn,
+        'date_rqstd': date_rqstd,
       };
 
   String? requesterID;
@@ -52,8 +50,82 @@ class MARequestModel {
   String? type;
   String? prescriptions;
   String? validID;
+  Timestamp? date_rqstd;
+  Rxn<PatientModel> requester = Rxn<PatientModel>(); //data of the requester
+}
+
+class OnProgressMAModel {
+  OnProgressMAModel({
+    this.requesterID,
+    this.fullName,
+    this.age,
+    this.address,
+    this.gender,
+    this.type,
+    this.prescriptions,
+    this.dateRqstd,
+    this.validID,
+    this.isTransferred,
+    this.receivedBy,
+    this.isApproved,
+    this.isMedReady,
+    this.medWorth,
+    this.pharmacy,
+  });
+
+  factory OnProgressMAModel.fromJson(Map<String, dynamic> json) =>
+      OnProgressMAModel(
+        requesterID: json['requesterID'] as String,
+        fullName: json['fullName'] as String,
+        age: json['age'] as String,
+        address: json['address'] as String,
+        gender: json['gender'] as String,
+        type: json['type'] as String,
+        prescriptions: json['prescriptions'] as String,
+        validID: json['validID'] as String,
+        isTransferred: json['isTransferred'] as bool,
+        receivedBy: json['receivedBy'] as String,
+        isApproved: json['isApproved'] as bool,
+        isMedReady: json['isMedReady'] as bool,
+        medWorth: json['medWorth'] as String,
+        pharmacy: json['pharmacy'] as String,
+        dateRqstd: json['dateRqstd'] as Timestamp,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'requesterID': requesterID,
+        'fullName': fullName,
+        'age': age,
+        'address': address,
+        'gender': gender,
+        'type': type,
+        'prescriptions': prescriptions,
+        'validID': validID,
+        'dateRqstd': dateRqstd,
+        'isTransferred': isTransferred,
+        'receivedBy': receivedBy,
+        'isApproved': isApproved,
+        'isMedReady': isMedReady,
+        'medWorth': medWorth,
+        'pharmacy': pharmacy,
+      };
+
+  String? requesterID;
+  String? fullName;
+  String? age;
+  String? address;
+  String? gender;
+  String? type;
+  String? prescriptions;
+  String? validID;
+  bool? isTransferred;
+  String? receivedBy;
+  bool? isApproved;
+  bool? isMedReady;
+  String? medWorth;
+  String? pharmacy;
   Timestamp? dateRqstd;
-  bool? isTurn;
+  Rxn<PatientModel> requester = Rxn<PatientModel>(); //data of the requester
 }
 
 class MAHistoryModel {

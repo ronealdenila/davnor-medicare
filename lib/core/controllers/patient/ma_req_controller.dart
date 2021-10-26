@@ -176,7 +176,6 @@ class MARequestController extends GetxController {
       'prescriptions': listPhotoURL.value,
       'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
       'date_rqstd': Timestamp.fromDate(DateTime.now()),
-      'isTurn': false, //should be true if mao ang first request
     });
 
     documentID.value = docRef.id; //save id bcs it will be save w/ the queueNum

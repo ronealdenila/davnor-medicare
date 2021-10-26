@@ -110,6 +110,7 @@ final List<Item> day = <Item>[
 
 List<MenuItem> pswdPSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
+  MenuItem('MA Request', Routes.MA_REQ_LIST),
   MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
   MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
   MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),

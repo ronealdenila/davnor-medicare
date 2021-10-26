@@ -24,10 +24,27 @@ class DoctorListController extends GetxController {
   }
 
   Future<List<DoctorModel>> getDoctors() async {
-    return firestore.collection('doctors').get().then(
+    return firestore
+        .collection('doctors')
+        .where('disabled', isEqualTo: false)
+        .get()
+        .then(
           (query) => query.docs
               .map((item) => DoctorModel.fromJson(item.data()))
               .toList(),
         );
+  }
+
+  Future<void> disableDoctor(String uid) async {
+    await firestore
+        .collection('doctors')
+        .doc(uid)
+        .update({'disabled': true})
+        .then((value) => {
+              //Dialog success
+            })
+        .catchError((error) => {
+              //Dialog error
+            });
   }
 }

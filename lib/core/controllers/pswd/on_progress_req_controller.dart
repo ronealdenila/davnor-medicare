@@ -13,10 +13,6 @@ class OnProgressReqController extends GetxController {
 
   final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
 
-  // late DataSource _dataSource;
-
-  // DataSource get dataSource => _dataSource;
-
   String get dateNow => _dateNow;
 
   @override
@@ -29,7 +25,8 @@ class OnProgressReqController extends GetxController {
     //log.i('getMedicalAssistance | Streaming Medical Assistance Request');
     return firestore
         .collection('ma_request')
-        .orderBy('date_rqstd', descending: true)
+        .orderBy('date_rqstd')
+        .where('isApproved', isEqualTo: true)
         .snapshots()
         .map(
           (query) => query.docs

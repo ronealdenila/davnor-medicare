@@ -102,7 +102,7 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text(maRequest.fullName!)),
         DataCell(Text(maRequest.address!)),
-        DataCell(Text(maRequest.dateRqstd!.toString())),
+        DataCell(Text(maRequest.date_rqstd!.toString())),
         DataCell(Text(maRequest.type!)),
         DataCell(
           Row(
