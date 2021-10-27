@@ -1,15 +1,22 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
+import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/local_notification_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class AppController {
   final log = getLogger('App Controller');
+  final AttachedPhotosController controller =
+      Get.put(AttachedPhotosController());
 
   bool toggleTextVisibility(RxBool isObscureText) {
     log.i('toggleTextVisibility | Toggle Text Visibility');
@@ -55,5 +62,36 @@ class AppController {
     } else {
       log.i('Send via POST failed');
     }
+  }
+
+  //Global Function FOR DYNAMIC PSWD ITEM VIEW - PSWD Side
+  Future<void> getPatientData(GeneralMARequestModel model) async {
+    await controller.splitFetchedImage(model.prescriptions!);
+    model.requester.value = await firestore
+        .collection('patients')
+        .doc(model.requesterID)
+        .get()
+        .then((doc) => PatientModel.fromJson(doc.data()!));
+  }
+
+  String getProfilePhoto(GeneralMARequestModel model) {
+    return model.requester.value!.profileImage!;
+  }
+
+  String getFirstName(GeneralMARequestModel model) {
+    return model.requester.value!.firstName!;
+  }
+
+  String getLastName(GeneralMARequestModel model) {
+    return model.requester.value!.lastName!;
+  }
+
+  String getFullName(GeneralMARequestModel model) {
+    return '${getFirstName(model)} ${getLastName(model)}';
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 }

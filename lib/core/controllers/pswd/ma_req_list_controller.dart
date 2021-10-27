@@ -33,28 +33,4 @@ class MAReqListController extends GetxController {
           .toList(),
     );
   }
-
-  Future<void> getPatientData(MARequestModel model) async {
-    model.requester.value = await firestore
-        .collection('patients')
-        .doc(model.requesterID)
-        .get()
-        .then((doc) => PatientModel.fromJson(doc.data()!));
-  }
-
-  String getProfilePhoto(MARequestModel model) {
-    return model.requester.value!.profileImage!;
-  }
-
-  String getFirstName(MARequestModel model) {
-    return model.requester.value!.firstName!;
-  }
-
-  String getLastName(MARequestModel model) {
-    return model.requester.value!.lastName!;
-  }
-
-  String getFullName(MARequestModel model) {
-    return '${getFirstName(model)} ${getLastName(model)}';
-  }
 }

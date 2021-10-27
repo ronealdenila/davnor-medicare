@@ -33,28 +33,4 @@ class ForApprovalController extends GetxController {
           .toList(),
     );
   }
-
-  Future<void> getPatientData(OnProgressMAModel model) async {
-    model.requester.value = await firestore
-        .collection('patients')
-        .doc(model.requesterID)
-        .get()
-        .then((doc) => PatientModel.fromJson(doc.data()!));
-  }
-
-  String getProfilePhoto(OnProgressMAModel model) {
-    return model.requester.value!.profileImage!;
-  }
-
-  String getFirstName(OnProgressMAModel model) {
-    return model.requester.value!.firstName!;
-  }
-
-  String getLastName(OnProgressMAModel model) {
-    return model.requester.value!.lastName!;
-  }
-
-  String getFullName(OnProgressMAModel model) {
-    return '${getFirstName(model)} ${getLastName(model)}';
-  }
 }

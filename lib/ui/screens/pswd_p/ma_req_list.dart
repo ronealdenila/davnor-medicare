@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dar
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -201,7 +202,12 @@ class MARequestListScreen extends StatelessWidget {
             ),
             Expanded(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(
+                    () => MARequestItemScreen(),
+                    arguments: model,
+                  );
+                },
                 child: Text(
                   'View',
                   style: body16RegularUnderlineBlue,
