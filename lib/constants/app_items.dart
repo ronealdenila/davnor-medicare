@@ -39,7 +39,7 @@ final List<Item> title = <Item>[
   const Item('Ophthalmologist'),
   const Item('Diabetologist'),
   const Item('Otolaryngologist (ENT)'),
-  const Item('Gastreonterologist'),
+  const Item('Gastroenterologist'),
   const Item('Dermatologist'),
   const Item('Pulmonologist'),
   const Item('Nephrologist'),
