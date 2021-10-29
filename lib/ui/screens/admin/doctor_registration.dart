@@ -30,7 +30,7 @@ class ResponsiveView extends GetResponsiveView {
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              pswdInfo(),
+              docInfo(),
               verticalSpace25,
               Column(
                 children: <Widget>[
@@ -54,7 +54,7 @@ class ResponsiveView extends GetResponsiveView {
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              pswdInfo(),
+              docInfo(),
               verticalSpace25,
               Column(
                 children: <Widget>[
@@ -78,7 +78,7 @@ class ResponsiveView extends GetResponsiveView {
             width: screen.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              pswdInfo(),
+              docInfo(),
               verticalSpace25,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +216,7 @@ class ResponsiveView extends GetResponsiveView {
     ]);
   }
 
-  Widget pswdInfo() {
+  Widget docInfo() {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [

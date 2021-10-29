@@ -278,10 +278,6 @@ class AppPages {
       page: () => AdminProfileScreen(),
     ),
     GetPage(
-      name: _Paths.EDIT_DOCTOR,
-      page: () => EditDoctorScreen(),
-    ),
-    GetPage(
       name: _Paths.EDIT_PSWD_STAFF,
       page: () => EditPSWDStaffScrenn(),
     ),

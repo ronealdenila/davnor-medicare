@@ -102,7 +102,8 @@ class AuthController extends GetxController {
       )
           .then(
         (result) async {
-          final _userID = result.user!.uid;
+          final _userID = auth.currentUser!.uid;
+          print(_userID);
           await _createPatientUser(_userID);
         },
       );
@@ -177,24 +178,28 @@ class AuthController extends GetxController {
       'profileImage': '',
       'validID': '',
       'validSelfie': '',
+    }).then((value) async {
+      await addPatientStatus(_userID);
+      dismissDialog();
     });
-    await _addPatientStatus(_userID);
   }
 
-  Future<void> _addPatientStatus(String _userID) async {
+  Future<void> addPatientStatus(String userID) async {
     await getDeviceToken();
     await firestore
         .collection('patients')
-        .doc(_userID)
+        .doc(userID)
         .collection('status')
         .doc('value')
         .set({
-      'hasActiveQueue': false,
+      'hasActiveQueuecons': false,
+      'hasActiveQueueMA': false,
       'pStatus': false,
       'pendingVerification': false,
-      'deviceToken': tokenID,
+      'deviceToken': tokenID.value,
       'notifBadge': '0',
-      'queueNum': '',
+      'queueCons': '',
+      'queueMA': '',
     });
   }
 

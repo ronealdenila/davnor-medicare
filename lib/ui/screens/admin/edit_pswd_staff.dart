@@ -211,7 +211,7 @@ class ResponsiveView extends GetResponsiveView {
       IconButton(
           onPressed: () {},
           icon: const Icon(
-            Icons.remove_circle_outline_outlined,
+            Icons.edit_outlined
           ))
     ]);
   }
