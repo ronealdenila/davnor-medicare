@@ -10,11 +10,10 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final MAHistoryController hController = Get.put(MAHistoryController());
-
 class MAHistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final MAHistoryController hController = Get.put(MAHistoryController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,64 +33,94 @@ class MAHistoryList extends StatelessWidget {
               width: 450,
               child: CustomTextFormField(
                 controller: hController.maFilter,
-                labelText: 'Search here...',
+                labelText: 'Search here..ss.',
                 validator: Validator().notEmpty,
                 onChanged: (value) {
-                  return;
+                  if (hController.maFilter.text.isEmpty) {
+                    hController.maList.assignAll(hController.maListmaster);
+                  }
                 },
                 onSaved: (value) => hController.maFilter.text = value!,
               ),
             ),
             horizontalSpace18,
+            Obx(
+              () => Checkbox(
+                value: hController.enabledPastDays.value,
+                checkColor: Colors.blue,
+                onChanged: (value) {
+                  if (hController.enabledPastDays.value == true) {
+                    hController.enabledPastDays.value = false;
+                  } else {
+                    hController.enabledPastDays.value = true;
+                  }
+                  hController.filterPastDays();
+                  print(hController.enabledPastDays.value);
+                },
+              ),
+            ),
+            horizontalSpace18,
+            Container(
+              child: Text("Enable 30 days past"),
+            ),
+            horizontalSpace18,
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.10,
+                width: 350,
+                child: ElevatedButton(
+                  child: Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    print(hController.maList[0].dateClaimed?.seconds);
+                    hController.filter(name: hController.maFilter.text);
+                    // var date = new DateTime.fromMillisecondsSinceEpoch();
+                    // hController.readTimestamp(
+                    //     hController.maList[0].dateClaimed?.seconds);
+                    // hController.ago(t: hController.maList[0].dateClaimed?.seconds);
+                  },
+                )),
+
             //IconButton(onPressed: (){}, icon: Ico)
           ],
         ),
         verticalSpace25,
         header(),
-        requestList(context)
+        requestList(context, hController)
       ],
     );
   }
 }
 
-Widget requestList(BuildContext context) {
-  return FutureBuilder(
-      future: hController.getMAHistoryForPSWD(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          return const Center(
-              child: SizedBox(
-                  width: 24, height: 24, child: CircularProgressIndicator()));
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (hController.maList.isNotEmpty) {
-            return MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: Expanded(
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: hController.maList.length,
-                      itemBuilder: (context, index) {
-                        return customTableRow(hController.maList[index]);
-                      }),
-                ),
+Widget requestList(BuildContext context, hController) {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    height: MediaQuery.of(context).size.height * .40,
+    child: Obx(
+      () => ListView.builder(
+        itemCount: hController.maList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: Expanded(
+              child: SingleChildScrollView(
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: hController.maList.length,
+                    itemBuilder: (context, index) {
+                      return customTableRow(
+                          hController.maList[index], hController);
+                    }),
               ),
-            );
-          } else {
-            return const Center(
-                child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('No MA request for releasing at the moment'),
-            ));
-          }
-        }
-        return const Center(
-            child: SizedBox(
-                width: 24, height: 24, child: CircularProgressIndicator()));
-      });
+            ),
+          );
+        },
+      ),
+    ),
+  );
 }
 
 Widget header() {
@@ -146,7 +175,7 @@ Widget header() {
   );
 }
 
-Widget customTableRow(MAHistoryModel model) {
+Widget customTableRow(MAHistoryModel model, hController) {
   return SizedBox(
     width: Get.width,
     child: Padding(
