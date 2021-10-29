@@ -140,6 +140,12 @@ const TextStyle subtitle18BoldWhite = TextStyle(
     fontFamily: 'Inter',
     color: Colors.white);
 
+const TextStyle subtitle18BoldBlack = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Inter',
+    color: Colors.black);
+
 const TextStyle subtitle18Bold = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w700,

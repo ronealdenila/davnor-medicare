@@ -131,6 +131,12 @@ const String medicalStatusSubtitle1 =
     'The number of people who filled medical assistance request are';
 const String medicalStatusSubtitle2 =
     'The number medical assistance request in need for approval are';
+    
+//Dialogue PSWD
+const String dialogpswdTitle = 'Are you sure?';
+const String dialogpswdCaption =
+    'Please confirm if the medicine is claimed';
+
 //Admin
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';
 const String pswdStaffRegister =

@@ -3,10 +3,13 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
+import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -234,19 +237,32 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                 children: [
                                   ActionCard(
                                     text: 'Change MA Status',
-                                    onTap: () {},
+                                    onTap: () {
+                                      showDialog(context: context, 
+                                      builder: (context) => declineDialogMA());
+                                    },
                                     color: verySoftMagenta[60],
                                     secondaryColor: verySoftMagentaCustomColor,
                                   ),
                                   ActionCard(
                                     text: 'Change PSWD Fund Status',
-                                    onTap: () {},
+                                    onTap: () {
+                                      showDialog(context: context, 
+                                      builder: (context) => detailsDialogMA());
+                                    },
                                     color: verySoftOrange[60],
                                     secondaryColor: verySoftOrangeCustomColor,
                                   ),
                                   ActionCard(
                                     text: 'View MA History',
-                                    onTap: () {},
+                                    onTap: () {
+                                      showConfirmationDialog(
+                                        dialogTitle: dialogpswdTitle,
+                                        dialogCaption: dialogpswdCaption,
+                                        onYesTap: () {},
+                                        onNoTap: () {},
+                                      );
+                                    },
                                     color: verySoftRed[60],
                                     secondaryColor: verySoftRedCustomColor,
                                   ),
@@ -538,6 +554,126 @@ class PswdPDashboardScreen extends GetView<MenuController> {
       ),
     );
   }
+
+  Widget declineDialogMA() {
+    TextEditingController _textFieldController = TextEditingController();
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(
+      vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+          width: 950,
+          child: Column(
+            children: [
+              const  Text(
+                'To inform the patient',
+                style: title32Regular,
+              ),
+              verticalSpace10,
+              const Text(
+                'Please specify the reason',
+                style: title20Regular,
+              ),
+              verticalSpace50,
+              TextFormField(
+                controller: _textFieldController,
+                 decoration: const InputDecoration(
+                    labelText: 'Enter the reason here',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+              ),
+              verticalSpace25,
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PSWDButton(
+                      onItemTap: () {
+                        print(_textFieldController.text);
+                      },
+                      buttonText: 'Submit')),
+            ],
+          )
+        )
+    ]);
+  }
+
+  Widget detailsDialogMA() {
+    final _pharmacyController = TextEditingController();
+    final _worthController = TextEditingController();
+    return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(
+      vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+          width: 590,
+          child: Column(
+            children: [
+              const Text(
+                'To Complete the Details for the Medical Assistance',
+                textAlign: TextAlign.center,
+                style: title32Regular,
+              ),
+              verticalSpace50,
+              SizedBox(
+                width: 360,
+                height: 60,
+                child: TextFormField(
+                controller: _pharmacyController,
+                 decoration: const InputDecoration(
+                    labelText: 'Name of Pharmacy',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+              ),
+              ),
+              verticalSpace25,
+              SizedBox(
+                width: 360,
+                height: 60,
+                child: TextFormField(
+                controller: _worthController,
+                 decoration: const InputDecoration(
+                    labelText: 'Worth of Medicine',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+              ),
+              ),
+
+              verticalSpace25,
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PSWDButton(
+                      onItemTap: () {
+                        print(_pharmacyController.text);
+                        print(_worthController.text);
+                      },
+                      buttonText: 'Submit')),
+            ],
+          )
+        )
+    ]);
+  }
+
+
 }
 
 class PswdPSideMenuItem extends GetView<MenuController> {
