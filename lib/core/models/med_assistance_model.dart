@@ -65,12 +65,12 @@ class OnProgressMAModel {
     this.prescriptions,
     this.dateRqstd,
     this.validID,
-    this.isTransferred,
-    this.receivedBy,
-    this.isApproved,
-    this.isMedReady,
-    this.medWorth,
-    this.pharmacy,
+    this.isTransferred = false,
+    this.receivedBy = '',
+    this.isApproved = false,
+    this.isMedReady = false,
+    this.medWorth = '',
+    this.pharmacy = '',
   });
 
   factory OnProgressMAModel.fromJson(Map<String, dynamic> json) =>

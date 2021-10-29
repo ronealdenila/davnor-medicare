@@ -3,12 +3,15 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class ReleasingMAController extends GetxController {
   final log = getLogger('Releasing MA Controller');
 
   RxList<OnProgressMAModel> toRelease = RxList<OnProgressMAModel>([]);
+  final RxList<MARequestModel> filteredList = RxList<MARequestModel>();
+  final TextEditingController rlsFilter = TextEditingController();
 
   @override
   void onReady() {
@@ -21,7 +24,7 @@ class ReleasingMAController extends GetxController {
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
-        .where('isMedReady', isEqualTo: false)
+        .where('isMedReady', isEqualTo: true)
         .snapshots();
   }
 
@@ -32,29 +35,5 @@ class ReleasingMAController extends GetxController {
           .map((item) => OnProgressMAModel.fromJson(item.data()))
           .toList(),
     );
-  }
-
-  Future<void> getPatientData(OnProgressMAModel model) async {
-    model.requester.value = await firestore
-        .collection('patients')
-        .doc(model.requesterID)
-        .get()
-        .then((doc) => PatientModel.fromJson(doc.data()!));
-  }
-
-  String getProfilePhoto(OnProgressMAModel model) {
-    return model.requester.value!.profileImage!;
-  }
-
-  String getFirstName(OnProgressMAModel model) {
-    return model.requester.value!.firstName!;
-  }
-
-  String getLastName(OnProgressMAModel model) {
-    return model.requester.value!.lastName!;
-  }
-
-  String getFullName(OnProgressMAModel model) {
-    return '${getFirstName(model)} ${getLastName(model)}';
   }
 }
