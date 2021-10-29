@@ -50,11 +50,13 @@ class PSWDRegistrationController extends GetxController {
     log.i('Saving doctor data on id: $userID');
     await firestore.collection('pswd_personnel').doc(userID).set(
       <String, dynamic>{
+        'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,
         'lastName': lastNameController.text,
         'position': position.value,
         'profileImage': '',
+        'disabled': false
       },
     );
     _clearControllers();
