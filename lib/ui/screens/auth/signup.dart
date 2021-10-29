@@ -1,8 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/auth/doctor_application_instruction.dart';
+import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -10,17 +9,13 @@ import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/checkbox_form_field.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignupScreen extends StatelessWidget {
-  final AuthController authController = AuthController.to;
-  final AppController appController = AppController.to;
-
+class SignupScreen extends GetView<AuthController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final TextEditingController _confirmPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,8 @@ class SignupScreen extends StatelessWidget {
                     children: [
                       Card(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         margin: const EdgeInsets.all(20),
                         child: Form(
                           key: _formKey,
@@ -59,7 +55,7 @@ class SignupScreen extends StatelessWidget {
                                     verticalSpace10,
                                     FormInputFieldWithIcon(
                                       controller:
-                                          authController.firstNameController,
+                                          controller.firstNameController,
                                       iconPrefix: Icons.person,
                                       labelText: 'First Name',
                                       validator: Validator().notEmpty,
@@ -67,13 +63,12 @@ class SignupScreen extends StatelessWidget {
                                       onChanged: (value) {
                                         return;
                                       },
-                                      onSaved: (value) => authController
+                                      onSaved: (value) => controller
                                           .firstNameController.text = value!,
                                     ),
                                     verticalSpace10,
                                     FormInputFieldWithIcon(
-                                      controller:
-                                          authController.lastNameController,
+                                      controller: controller.lastNameController,
                                       iconPrefix: Icons.person,
                                       labelText: 'Last Name',
                                       validator: Validator().notEmpty,
@@ -81,13 +76,12 @@ class SignupScreen extends StatelessWidget {
                                       onChanged: (value) {
                                         return;
                                       },
-                                      onSaved: (value) => authController
+                                      onSaved: (value) => controller
                                           .lastNameController.text = value!,
                                     ),
                                     verticalSpace10,
                                     FormInputFieldWithIcon(
-                                      controller:
-                                          authController.emailController,
+                                      controller: controller.emailController,
                                       iconPrefix: Icons.email,
                                       labelText: 'Email',
                                       validator: Validator().email,
@@ -95,19 +89,18 @@ class SignupScreen extends StatelessWidget {
                                       onChanged: (value) {
                                         return;
                                       },
-                                      onSaved: (value) => authController
+                                      onSaved: (value) => controller
                                           .emailController.text = value!,
                                     ),
                                     verticalSpace10,
                                     FormInputFieldWithIcon(
-                                      controller:
-                                          authController.passwordController,
+                                      controller: controller.passwordController,
                                       iconPrefix: Icons.lock,
                                       suffixIcon: IconButton(
                                         onPressed:
-                                            appController.toggleTextVisibility,
+                                            controller.togglePasswordVisibility,
                                         icon: Icon(
-                                          appController.isObscureText.value
+                                          controller.isObscureText!.value
                                               ? Icons.visibility
                                               : Icons.visibility_off,
                                         ),
@@ -115,17 +108,18 @@ class SignupScreen extends StatelessWidget {
                                       labelText: 'Password',
                                       validator: Validator().password,
                                       obscureText:
-                                          appController.isObscureText.value,
+                                          controller.isObscureText!.value,
                                       onChanged: (value) {
                                         return;
                                       },
-                                      onSaved: (value) => authController
+                                      onSaved: (value) => controller
                                           .passwordController.text = value!,
                                       maxLines: 1,
                                     ),
                                     verticalSpace10,
                                     FormInputFieldWithIcon(
-                                      controller: _confirmPassController,
+                                      controller:
+                                          controller.confirmPassController,
                                       iconPrefix: Icons.lock,
                                       labelText: 'Confirm Password',
                                       validator: (value) {
@@ -133,7 +127,7 @@ class SignupScreen extends StatelessWidget {
                                           return 'This is a required field';
                                         }
                                         if (value !=
-                                            authController
+                                            controller
                                                 .passwordController.text) {
                                           return 'Password does not match';
                                         } else {
@@ -141,20 +135,20 @@ class SignupScreen extends StatelessWidget {
                                         }
                                       },
                                       obscureText:
-                                          appController.isObscureText.value,
+                                          controller.isObscureText!.value,
                                       onChanged: (value) {
                                         return;
                                       },
-                                      onSaved: (value) =>
-                                          _confirmPassController.text = value!,
+                                      onSaved: (value) => controller
+                                          .confirmPassController.text = value!,
                                       maxLines: 1,
                                       textInputAction: TextInputAction.done,
                                     ),
                                     CheckboxFormField(
                                       title: BottomTextWidget(
                                           onTap: () {
-                                            Get.to(() =>
-                                                const TermsAndPolicyScreen());
+                                            Get.to(
+                                                () => TermsAndPolicyScreen());
                                           },
                                           text1: 'I agree to',
                                           text2: 'Terms & Condition'),
@@ -168,19 +162,19 @@ class SignupScreen extends StatelessWidget {
                                     CustomButton(
                                       onTap: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          await authController
+                                          await controller
                                               .registerPatient(context);
                                         }
                                       },
                                       text: 'Sign Up Now',
-                                      colors: verySoftBlueColor,
+                                      buttonColor: verySoftBlueColor,
                                       fontSize: 20,
                                     ),
                                     verticalSpace18,
                                     Align(
                                       child: BottomTextWidget(
                                         onTap: () => Get.to(
-                                          DoctorApplicationInstructionScreen(),
+                                          () => DoctorApplicationGuideScreen(),
                                         ),
                                         text1: 'Are you a doctor?',
                                         text2: 'Join us now!',

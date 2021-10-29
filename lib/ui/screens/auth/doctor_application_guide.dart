@@ -1,15 +1,13 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DoctorApplicationInstructionScreen extends StatelessWidget {
-  final AppController appController = AppController.to;
-
-  static const emailScheme = doctorapplicationinstructionParagraph0;
-  static const formUrl = 'https://forms.gle/WKWnBsG9EuivmY1dA';
+class DoctorApplicationGuideScreen extends StatelessWidget {
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +65,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: GestureDetector(
-              onTap: () => appController.launchURL(formUrl),
+              onTap: authController.launchDoctorApplicationForm,
               child: Text(
                 'Join us here',
                 textAlign: TextAlign.left,
@@ -89,7 +87,7 @@ class DoctorApplicationInstructionScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: GestureDetector(
-              onTap: () => appController.launchURL(emailScheme),
+              onTap: authController.launchDoctorApplicationEmail,
               child: Text(
                 'davnor.medicare@gmail.com',
                 textAlign: TextAlign.left,

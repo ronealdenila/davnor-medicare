@@ -3,6 +3,9 @@
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 
+const String changePasswordDescription =
+    'Please provide your current password and your new password.';
+
 //Global
 //Term and Policy Screen
 const String termsAndPolicyParagraph1 =
@@ -50,7 +53,29 @@ const String dialogQueue2 =
     'You need to request consultation or medical assistance to be in a queue'; //label text sa dialogqueue1
 
 //Dialog1
-const String dialogConsultationScreen = 'Is the consultation for you?';
+const String dialog1Title = 'Is the consultation for you?';
+const String dialog1Caption =
+    'Please select yes if the consultation is for you';
+
+//Dialog2
+const String dialog2Title = 'Is the medical assistance request for you?';
+const String dialog2Caption =
+    'Please select yes if the medical assistance is for you';
+
+//Dialog4
+const String dialog4Title = 'You have successfully requested a consultation!';
+const String dialog4Caption =
+    'Please check the queue and wait for your turn. Thank you';
+
+//Dialog5
+const String dialog5Title = 'You have successfully requested MA!';
+const String dialog5Caption =
+    'Please check the queue and wait for your turn. Thank you';
+
+//Dialog5
+const String dialog6Title = 'Verification request sent';
+const String dialog6Caption = 'We will verify your account 24hrs. Thank you';
+
 //Consultation Menu
 const String consultationMenuScreen = 'Where are you experiencing discomfort?';
 const String consultationMenuScreen1 = 'Tell us more about the discomfort';
@@ -78,6 +103,42 @@ const String dialogMedicalAssistanceScreen1 =
 const String dialogMedicalAssistanceScreen2 =
     'Your priority number is MA24. Please check the queue and wait for your turn. Thank you'; //label text sa dialogmdicalassistancescreen1
 
+//MAForm
+const String maFormScreen =
+    'Upload a valid ID or barangay \ncertificate of the patient';
+
+//MAForm2
+const String maForm2Screen =
+    'Please upload a valid prescription issued not more than a month';
+
 //Auth Controller
 const String checkAppRestrictionErrorMiddleText =
     'You are not allowed to login on the mobile app. Please login to Web Application';
+
+//Verification
+const String verificationDescription =
+    'For those who do not own any valid ID, please provide barangay certificate as an alternative.';
+
+//Consultation Form 3
+const String consForm3Description =
+    'Select and upload images to support your follow-up consultation';
+
+//PSWD
+const String cardSubtitle1 = 'in-charge of Medical Assistance (MA)';
+const String cardSubtitle2 =
+    "Together let's provide healthcare, improve life, and help our community.";
+const String medicalStatusSubtitle1 =
+    'The number of people who filled medical assistance request are';
+const String medicalStatusSubtitle2 =
+    'The number medical assistance request in need for approval are';
+//Admin
+const String doctorRegister = 'Please fill  in the information of the  Doctor.';
+const String pswdStaffRegister =
+    'Please fill  in the information of the PSWD Personnel.';
+
+const String medicareDataSubtitle =
+    'The number of government doctors we have in the application';
+
+//FCM server key
+const serverkey =
+    'key=AAAANu44_XE:APA91bFYjezxDsWdRJM30XQMbJXpqFhHUcFiOccx6AUNSTdRdnC5LFnS5HMcg6slswcY6ZKo-mSs8MphAIYcrUvJw3lnvASLiutN2Q3HAu1exVbos5TSPwC_1enzay_tL14j4Yd-lmKm';

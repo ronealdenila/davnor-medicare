@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 
 class TermsAndPolicyScreen extends StatelessWidget {
-  const TermsAndPolicyScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +76,7 @@ class TermsAndPolicyScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
             child: Text(
-              termsAndPolicyParagraph3 
-,
+              termsAndPolicyParagraph3,
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.normal,

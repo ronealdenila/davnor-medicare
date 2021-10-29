@@ -1,5 +1,4 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
@@ -10,15 +9,13 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  //TODO: Register them into one file. kay if daghan nag controller sa widget
-  //mutaas na ang variable declaration dria
-  final AuthController authController = AuthController.to;
-  final AppController appController = AppController.to;
+  final AuthController authController = Get.find();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -69,16 +66,17 @@ class LoginScreen extends StatelessWidget {
                               controller: authController.passwordController,
                               iconPrefix: Icons.lock,
                               suffixIcon: IconButton(
-                                onPressed: appController.toggleTextVisibility,
+                                onPressed:
+                                    authController.togglePasswordVisibility,
                                 icon: Icon(
-                                  appController.isObscureText.value
+                                  authController.isObscureText!.value
                                       ? Icons.visibility
                                       : Icons.visibility_off,
                                 ),
                               ),
                               labelText: 'Password',
                               validator: Validator().password,
-                              obscureText: appController.isObscureText.value,
+                              obscureText: authController.isObscureText!.value,
                               onChanged: (value) {
                                 return;
                               },
@@ -109,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                                 }
                               },
                               text: 'Sign In',
-                              colors: verySoftBlueColor,
+                              buttonColor: verySoftBlueColor,
                               fontSize: 20,
                             ),
                             verticalSpace25,

@@ -1,22 +1,33 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
+import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  const MADescriptionScreen({Key? key}) : super(key: key);
+  final MARequestController controller = Get.put(MARequestController());
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          leading: CupertinoNavigationBarBackButton(
+            color: Colors.black,
+            onPressed: () => Get.offAll(() => PatientHomeScreen()),
+          ),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -138,11 +149,31 @@ class MADescriptionScreen extends StatelessWidget {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Align(
                   child: CustomButton(
-                    onTap: () async {
-                      //Go to MADetailsFill
+                    onTap: () {
+                      if (controller.hasAvailableSlot()) {
+                        //check activeQueue/slot/fund
+                        return showConfirmationDialog(
+                          dialogTitle: dialog2Title,
+                          dialogCaption: dialog2Caption,
+                          onYesTap: () {
+                            controller.isMAForYou.value = true;
+                            Get.to(() => MAFormScreen());
+                          },
+                          onNoTap: () {
+                            controller.isMAForYou.value = false;
+                            Get.to(() => MAFormScreen());
+                          },
+                        );
+                      } else {
+                        showErrorDialog(
+                          errorTitle: 'No Slot Available',
+                          errorDescription:
+                              'No available slot at the moment. Please check..',
+                        );
+                      }
                     },
                     text: 'Avail Medical Assistance',
-                    colors: verySoftBlueColor,
+                    buttonColor: verySoftBlueColor,
                     fontSize: 20,
                   ),
                 ),
@@ -151,6 +182,21 @@ class MADescriptionScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showDialog() {
+    return showConfirmationDialog(
+      dialogTitle: dialog2Title,
+      dialogCaption: dialog2Caption,
+      onYesTap: () {
+        controller.isMAForYou.value = true;
+        Get.to(() => MAFormScreen());
+      },
+      onNoTap: () {
+        controller.isMAForYou.value = false;
+        Get.to(() => MAFormScreen());
+      },
     );
   }
 }

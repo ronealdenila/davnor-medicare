@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 const Color infoColor = Color(0xFF4D82F3);
 
+const Color dialogButtonColor = Color(0xFF0280FD);
+
 //Sorry sa naming hihi wala koy lain mahunahunaan na dali
 //dali ra unta nato maindentify huehue (R)
 const Color verySoftMagentaCustomColor = Color(0xFFDB96DF);
@@ -12,8 +14,10 @@ const Color verySoftOrangeCustomColor = Color(0xFFE8C370);
 const Color verySoftRedCustomColor = Color(0xFFDE928F);
 
 const Color neutralWhiteColor = Color(0xFF64748B);
-const Color neutralBubbleColor = Color(0xFF64748B);
+const Color neutralBubbleColor = Color(0xFFE3E6E8);
 const Color sidePanelColor = Color(0xFFF5F5F5);
+const Color customNeutralColor = Color(0xFF27364B);
+const Color customNeutralColor2 = Color(0xFFF6F6F6);
 
 // Neutral Color Palette
 const MaterialColor neutralColor = MaterialColor(
