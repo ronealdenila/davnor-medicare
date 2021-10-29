@@ -19,6 +19,7 @@ class PSWDStaffListController extends GetxController {
     log.i('onReady | DoctorListController');
     getPSWDStaffs().then((value) {
       pswdList.value = value;
+      filteredPswdList.assignAll(pswdList);
       isLoading.value = false;
     });
   }
@@ -46,5 +47,36 @@ class PSWDStaffListController extends GetxController {
         .catchError((error) => {
               //Dialog error
             });
+  }
+
+  filter({required String name, required String title}) {
+    pswdList.clear();
+    for (var i = 0; i < pswdList.length; i++) {
+      if (filteredPswdList[i]
+              .lastName!
+              .toLowerCase()
+              .contains(name.toLowerCase()) ||
+          filteredPswdList[i]
+              .firstName!
+              .toLowerCase()
+              .contains(name.toLowerCase())) {
+        pswdList.add(filteredPswdList[i]);
+      }
+    }
+    for (var i = 0; i < filteredPswdList.length; i++) {
+      if (filteredPswdList[i]
+          .position!
+          .toLowerCase()
+          .contains(title.toLowerCase())) {
+        pswdList.add(filteredPswdList[i]);
+      }
+    }
+
+    for (var i = 0; i < pswdList.length; i++) {
+      print(pswdList[i].firstName);
+    }
+
+    final stores = pswdList.map((e) => e.email).toSet();
+    pswdList.retainWhere((x) => stores.remove(x.email));
   }
 }

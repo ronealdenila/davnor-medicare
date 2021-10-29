@@ -53,20 +53,6 @@ class DoctorListController extends GetxController {
         );
   }
 
-  filterName({required String string}) {
-    doctorList.assignAll(filteredDoctorList
-        .where((u) =>
-            (u.firstName!.toLowerCase().contains(string.toLowerCase()) ||
-                u.lastName!.toLowerCase().contains(string.toLowerCase())))
-        .toList());
-  }
-
-  filterTitle({required String string}) {
-    doctorList.assignAll(filteredDoctorList
-        .where((u) => (u.title!.toLowerCase().contains(string.toLowerCase())))
-        .toList());
-  }
-
   filter({required String name, required String title}) {
     print(name + " " + title);
     doctorList.clear();

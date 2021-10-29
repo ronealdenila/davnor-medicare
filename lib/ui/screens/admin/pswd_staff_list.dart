@@ -37,7 +37,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                     labelText: 'Search name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
-                      return;
+                      if (pListController.pswdFilter.text.isEmpty) {
+                        pListController.pswdList
+                            .assignAll(pListController.filteredPswdList);
+                      }
                     },
                     onSaved: (value) =>
                         pListController.pswdFilter.text = value!,
@@ -55,6 +58,25 @@ class PSWDStaffListScreen extends StatelessWidget {
                         pListController.position.value = item!.name,
                   ),
                 ),
+                horizontalSpace18,
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                    width: 100,
+                    child: ElevatedButton(
+                      child: Text('Search'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue[900],
+                      ),
+                      onPressed: () {
+                        if (pListController.pswdFilter.text.isEmpty &&
+                            pListController.position.value == '') {
+                        } else {
+                          pListController.filter(
+                              name: pListController.pswdFilter.text,
+                              title: pListController.position.value);
+                        }
+                      },
+                    ))
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
