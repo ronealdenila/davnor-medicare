@@ -38,8 +38,8 @@ final List<Item> title = <Item>[
   const Item('Orthopedist'),
   const Item('Ophthalmologist'),
   const Item('Diabetologist'),
-  const Item('Otolaryngologist(ENT)'),
-  const Item('Gastreonterologist'),
+  const Item('Otolaryngologist (ENT)'),
+  const Item('Gastroenterologist'),
   const Item('Dermatologist'),
   const Item('Pulmonologist'),
   const Item('Nephrologist'),
@@ -68,7 +68,7 @@ final List<Item> month = <Item>[
   const Item('June'),
   const Item('July'),
   const Item('Aug'),
-  const Item('sept'),
+  const Item('Sept'),
   const Item('Oct'),
   const Item('Nov'),
   const Item('Dec'),
@@ -110,6 +110,7 @@ final List<Item> day = <Item>[
 
 List<MenuItem> pswdPSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
+  MenuItem('MA Request', Routes.MA_REQ_LIST),
   MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
   MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
   MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
@@ -118,8 +119,9 @@ List<MenuItem> pswdPSideMenuItemRoutes = [
 List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
   //Change me to my appropriate route
-  MenuItem('List Of Doctors', Routes.VERIFICATION_REQ_LIST),
-  MenuItem('List of PSWD Personnel', Routes.DASHBOARD),
+  MenuItem('List Of Doctors', Routes.DOCTOR_LIST),
+  MenuItem('List of PSWD Personnel', Routes.PSWD_STAFF_LIST),
+  MenuItem('Verification Requests', Routes.VERIFICATION_REQ_LIST),
 ];
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [

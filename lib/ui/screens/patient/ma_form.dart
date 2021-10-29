@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/app_strings.dart';
 //import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
+// import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';

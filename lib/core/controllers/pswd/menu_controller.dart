@@ -28,6 +28,8 @@ class MenuController extends GetxController {
     switch (itemName) {
       case 'Dashboard':
         return _customIcon(Icons.dashboard, itemName);
+      case 'MA Request':
+        return _customIcon(Icons.description, itemName);
       case 'On Progress Request':
         return _customIcon(Icons.description, itemName);
       case 'Releasing Area':

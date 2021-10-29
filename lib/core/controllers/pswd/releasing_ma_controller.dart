@@ -2,24 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class OnProgressReqController extends GetxController {
-  final log = getLogger('On Progress Req Controller');
+class ReleasingMAController extends GetxController {
+  final log = getLogger('Releasing MA Controller');
 
-  RxList<OnProgressMAModel> onProgressList = RxList<OnProgressMAModel>([]);
+  RxList<OnProgressMAModel> toRelease = RxList<OnProgressMAModel>([]);
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
-  final RxString type = ''.obs;
-
-  final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
-
-  String get dateNow => _dateNow;
+  final TextEditingController rlsFilter = TextEditingController();
 
   @override
   void onReady() {
     super.onReady();
-    onProgressList.bindStream(assignListStream());
+    toRelease.bindStream(assignListStream());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {

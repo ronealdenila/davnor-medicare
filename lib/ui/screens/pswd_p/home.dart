@@ -20,6 +20,8 @@ import 'package:get/get.dart';
 //*https://youtu.be/udsysUj-X4w
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
+//ADD STREAM FOR PSWD ACCEPTED and PASS IN ON ACCEPTED
+
 class PSWDPersonnelHome extends StatelessWidget {
   final OnProgressReqController pswdController =
       Get.put(OnProgressReqController());
@@ -232,7 +234,6 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                             flex: 6,
                             child: Container(
                               alignment: Alignment.centerLeft,
-                              // color: Colors.cyanAccent,
                               child: Column(
                                 children: [
                                   ActionCard(

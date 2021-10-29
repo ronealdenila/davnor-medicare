@@ -47,7 +47,8 @@ abstract class Routes {
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
   static const PSWD_PERSONNEL_HOME = _Paths.PSWD_PERSONNEL_HOME;
   static const DASHBOARD = _Paths.DASHBOARD;
-
+  static const MA_REQ_LIST = _Paths.MA_REQ_LIST;
+  static const MA_REQ_ITEM = _Paths.MA_REQ_ITEM;
   static const ON_PROGRESS_REQ_LIST = _Paths.ON_PROGRESS_REQ_LIST;
   static const ON_PROGRESS_REQ_ITEM = _Paths.ON_PROGRESS_REQ_ITEM;
   static const PSWD_ACCEPTED_MA_REQ = _Paths.PSWD_ACCEPTED_MA_REQ;
@@ -58,6 +59,9 @@ abstract class Routes {
   static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
 
   //Admin
+  static const MOBILE_ADMIN_HOME = _Paths.MOBILE_ADMIN_HOME;
+  static const MOBILE_DOCTOR_LIST = _Paths.MOBILE_DOCTOR_LIST;
+  static const MOBILE_PSWD_STAFF_LIST = _Paths.MOBILE_PSWD_STAFF_LIST;
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
   static const DOCTOR_REGISTRATION = _Paths.DOCTOR_REGISTRATION;
   static const PSWD_STAFF_REGISTRATION = _Paths.PSWD_STAFF_REGISTRATION;
@@ -66,6 +70,8 @@ abstract class Routes {
   static const ADMIN_PROFILE = _Paths.ADMIN_PROFILE;
   static const EDIT_DOCTOR = _Paths.EDIT_DOCTOR;
   static const EDIT_PSWD_STAFF = _Paths.EDIT_PSWD_STAFF;
+  static const DOCTOR_LIST = _Paths.DOCTOR_LIST;
+  static const PSWD_STAFF_LIST = _Paths.PSWD_STAFF_LIST;
 }
 
 abstract class _Paths {
@@ -114,6 +120,8 @@ abstract class _Paths {
   static const PSWD_PERSONNEL_HOME = '/pswd-home';
   static const DASHBOARD = '/dashboard';
 
+  static const MA_REQ_LIST = '/MAReqListScreen';
+  static const MA_REQ_ITEM = '/MAReqItemScreen';
   static const ON_PROGRESS_REQ_ITEM = '/OnProgressReqItemScreen';
   static const ON_PROGRESS_REQ_LIST = '/OnProgressReqListScreen';
   static const PSWD_ACCEPTED_MA_REQ = '/AcceptedMARequestScreen';
@@ -124,6 +132,9 @@ abstract class _Paths {
   static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
 
   //Admin
+  static const MOBILE_ADMIN_HOME = '/mobile-admin-home';
+  static const MOBILE_DOCTOR_LIST = '/mobile-doctor-list';
+  static const MOBILE_PSWD_STAFF_LIST = '/mobile-pswd-staff-list';
   static const ADMIN_HOME = '/admin-home';
   static const DOCTOR_REGISTRATION = '/adm-doctor-registration';
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';
@@ -132,4 +143,6 @@ abstract class _Paths {
   static const ADMIN_PROFILE = '/admin-profile';
   static const EDIT_DOCTOR = '/edit-doctor';
   static const EDIT_PSWD_STAFF = '/edit-pswd-staff';
+  static const DOCTOR_LIST = '/doctor-list';
+  static const PSWD_STAFF_LIST = '/pswd-staff-list';
 }

@@ -1,18 +1,18 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/core/services/image_picker_service.dart';
-import 'package:davnor_medicare/core/services/logger_service.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:flutter/material.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:uuid/uuid.dart';
 import 'package:davnor_medicare/core/models/pswd_stats_model.dart';
+import 'package:davnor_medicare/core/services/image_picker_service.dart';
+import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
@@ -39,7 +39,7 @@ class MARequestController extends GetxController {
 
   //Saving Data
   final RxString documentID = ''.obs;
-  final RxString fileName = ''.obs;
+  //final RxString fileName = ''.obs;
   final RxString listPhotoURL = ''.obs;
   final RxString photoURL = ''.obs;
   final RxString generatedCode = 'MA24'.obs; //MA24 -> mock code
@@ -116,8 +116,7 @@ class MARequestController extends GetxController {
   }
 
   Future<void> requestMAButton() async {
-    //should have loading progress
-    //showLoading();
+    showLoading();
     if (hasPrescriptionSelected()) {
       if (hasAvailableSlot()) {
         //check slot again
@@ -126,8 +125,9 @@ class MARequestController extends GetxController {
       } else {
         //sorry naunhan naka, naay mas paspas mu fill up
       }
-      //remove loading progress
+      dismissDialog();
     } else {
+      dismissDialog();
       log.i('ERROR: please provide prescriptions');
     }
   }
@@ -142,9 +142,9 @@ class MARequestController extends GetxController {
   Future<void> uploadImage() async {
     final img = imgOfValidID.value;
     final v4 = uuid.v4();
-    log.i('Using UID for making sure of the uniqueness -> $v4');
-    fileName.value = img.split('/').last;
-    final ref = storageRef.child('MA/ID-$v4$fileName');
+    //log.i('Using UID for making sure of the uniqueness -> $v4');
+    //fileName.value = img.split('/').last;
+    final ref = storageRef.child('MA_Request/$userID/ID-$v4$v4');
     final uploadTask = ref.putFile(File(img));
     await uploadTask.then((res) async {
       photoURL.value = await res.ref.getDownloadURL();
@@ -154,14 +154,14 @@ class MARequestController extends GetxController {
   Future<void> uploadImages() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
-      fileName.value = images[i].path.split('/').last;
-      final ref = storageRef.child('MA/$i-Pr-$v4$fileName');
+      //fileName.value = images[i].path.split('/').last;
+      final ref = storageRef.child('MA_Request/$userID/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
         });
       });
-      log.i('$i -> fileName: $i-Presc$fileName');
+      //log.i('$i -> fileName: $i-Presc$fileName');
     }
   }
 
@@ -176,7 +176,6 @@ class MARequestController extends GetxController {
       'prescriptions': listPhotoURL.value,
       'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
       'date_rqstd': Timestamp.fromDate(DateTime.now()),
-      'isTurn': false, //should be true if mao ang first request
     });
 
     documentID.value = docRef.id; //save id bcs it will be save w/ the queueNum
@@ -207,7 +206,7 @@ class MARequestController extends GetxController {
   }
 
   Future<void> updateStatus() async {
-    return firestore
+    await firestore
         .collection('pswd_status')
         .doc('status')
         .update({
@@ -216,6 +215,13 @@ class MARequestController extends GetxController {
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));
+
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .update({'hasActiveQueueMA': true, 'queueMA': generatedCode});
   }
 
   Future<void> showDialog() async {

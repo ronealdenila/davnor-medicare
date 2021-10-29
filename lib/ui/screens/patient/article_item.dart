@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 
 class ArticleItemScreen extends StatelessWidget {
   static ArticleController articleService = Get.find();
+  final UrlLauncherService urlLauncherService = UrlLauncherService();
   final List<ArticleModel> articleList = articleService.articlesList;
   final int index = Get.arguments as int;
 
@@ -89,14 +91,18 @@ class ArticleItemScreen extends StatelessWidget {
                       //TODO: URL Launcher for this Source
                       Align(
                         alignment: Alignment.bottomLeft,
-                        child: Text(
-                          '${articleList[index].source} ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              fontFamily: 'Inter',
-                              color: verySoftBlueColor[100]),
+                        child: GestureDetector(
+                          onTap: () => urlLauncherService
+                              .launchURL('${articleList[index].source}'),
+                          child: Text(
+                            '${articleList[index].source} ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Inter',
+                                color: verySoftBlueColor[100]),
+                          ),
                         ),
                       ),
                       verticalSpace15,

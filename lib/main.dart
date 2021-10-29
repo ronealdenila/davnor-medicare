@@ -1,10 +1,9 @@
+import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding.dart';
 
 ///Receive message when app is in background solution for on message
 Future<void> backgroundHandler(RemoteMessage message) async {

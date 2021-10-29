@@ -1,25 +1,33 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 
+//CHANGE BUTTON, SEARCH BUTTON
 final AttachedPhotosController controller = Get.find();
+final AppController appController = Get.find();
 
 class PSWDItemView extends GetResponsiveView {
-  PSWDItemView(this.context, this.status) : super(alwaysUseBuilder: false);
+  PSWDItemView(this.context, this.status, this.model)
+      : super(alwaysUseBuilder: false);
+  final GeneralMARequestModel model;
   final String status;
   final BuildContext context;
+
+  final RxBool doneLoad = false.obs;
 
   @override
   Widget phone() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpace35,
-          patientInfo(),
+          displayPatientInfo(),
           verticalSpace35,
           attachedPhotos(),
           verticalSpace35,
@@ -31,7 +39,7 @@ class PSWDItemView extends GetResponsiveView {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpace35,
-          patientInfo(),
+          displayPatientInfo(),
           verticalSpace35,
           attachedPhotos(),
           verticalSpace35,
@@ -45,7 +53,7 @@ class PSWDItemView extends GetResponsiveView {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              patientInfo(),
+              displayPatientInfo(),
               attachedPhotos(),
             ],
           ),
@@ -53,22 +61,37 @@ class PSWDItemView extends GetResponsiveView {
         ],
       );
 
+  Widget displayPatientInfo() {
+    if (!doneLoad.value) {
+      return FutureBuilder(
+        future: appController.getPatientData(model),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            doneLoad.value = true;
+            return patientInfo();
+          }
+          return const Center(
+              child: SizedBox(
+                  width: 24, height: 24, child: CircularProgressIndicator()));
+        },
+      );
+    }
+    return patientInfo();
+  }
+
   Widget patientInfo() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(authHeader),
-            radius: 29,
-          ),
+          getPhoto(model),
           horizontalSpace20,
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              'Olivia Broken ',
+              appController.getFullName(model),
               style: subtitle18Bold,
             ),
             verticalSpace5,
-            Text(
+            const Text(
               'Request Person ',
               style: caption12Medium,
             ),
@@ -95,54 +118,54 @@ class PSWDItemView extends GetResponsiveView {
       ),
       verticalSpace15,
       Row(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             width: 120,
             child: Text('Patient Name',
                 textAlign: TextAlign.left, style: caption12Medium),
           ),
-          Text('Arya Stark', style: caption12RegularNeutral),
+          Text(model.fullName!, style: caption12RegularNeutral),
         ],
       ),
       verticalSpace15,
       Row(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
               width: 120,
               child: Text('Patient Age',
                   textAlign: TextAlign.left, style: caption12Medium)),
-          Text('22', style: caption12RegularNeutral),
+          Text(model.age!, style: caption12RegularNeutral),
         ],
       ),
       verticalSpace15,
       Row(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
               width: 120,
               child: Text('Address',
                   textAlign: TextAlign.left, style: caption12Medium)),
-          Text('San Miguel Tagum City', style: caption12RegularNeutral),
+          Text(model.address!, style: caption12RegularNeutral),
         ],
       ),
       verticalSpace15,
       Row(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
               width: 120,
               child: Text('Gender',
                   textAlign: TextAlign.left, style: caption12Medium)),
-          Text('Female', style: caption12RegularNeutral),
+          Text(model.gender!, style: caption12RegularNeutral),
         ],
       ),
       verticalSpace15,
       Row(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             width: 120,
             child: Text('Patient Type',
                 textAlign: TextAlign.left, style: caption12Medium),
           ),
-          Text('Pregnant Women', style: caption12RegularNeutral),
+          Text(model.type!, style: caption12RegularNeutral),
         ],
       ),
       Visibility(visible: status != 'request', child: medicalAssistanceInfo())
@@ -160,13 +183,13 @@ class PSWDItemView extends GetResponsiveView {
         ),
         verticalSpace15,
         Row(
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               width: 120,
               child: Text('Received by',
                   textAlign: TextAlign.left, style: caption12Medium),
             ),
-            Text('Maam Grace', style: caption12RegularNeutral),
+            Text(model.receivedBy!, style: caption12RegularNeutral),
           ],
         ),
         Visibility(
@@ -176,22 +199,22 @@ class PSWDItemView extends GetResponsiveView {
             children: [
               verticalSpace15,
               Row(
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                       width: 120,
                       child: Text('Pharmacy',
                           textAlign: TextAlign.left, style: caption12Medium)),
-                  Text('Rose Pharmacy', style: caption12RegularNeutral),
+                  Text(model.pharmacy!, style: caption12RegularNeutral),
                 ],
               ),
               verticalSpace15,
               Row(
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                       width: 120,
                       child: Text('Medicine Worth',
                           textAlign: TextAlign.left, style: caption12Medium)),
-                  Text('Php 800.00', style: caption12RegularNeutral),
+                  Text('Php ${model.medWorth}', style: caption12RegularNeutral),
                 ],
               ),
             ],
@@ -242,8 +265,8 @@ class PSWDItemView extends GetResponsiveView {
         ),
       ),
       verticalSpace20,
-      Row(children: const [
-        SizedBox(
+      Row(children: [
+        const SizedBox(
           width: 120,
           child: Text(
             'Date Requested',
@@ -252,15 +275,15 @@ class PSWDItemView extends GetResponsiveView {
         ),
         horizontalSpace15,
         Text(
-          'July 01, 2021 (9:00 am)',
+          appController.convertTimeStamp(model.dateRqstd!),
           style: caption12RegularNeutral,
         ),
       ]),
       verticalSpace10,
       Visibility(
         visible: status == 'completed',
-        child: Row(children: const [
-          SizedBox(
+        child: Row(children: [
+          const SizedBox(
             width: 120,
             child: Text(
               'Date MA Claimed',
@@ -268,13 +291,23 @@ class PSWDItemView extends GetResponsiveView {
             ),
           ),
           horizontalSpace15,
-          Text(
-            'July 01, 2021 (9:00 am)',
-            style: caption12RegularNeutral,
-          ),
+          displayDateClaimed(model),
         ]),
       ),
     ]);
+  }
+
+  Widget displayDateClaimed(GeneralMARequestModel model) {
+    if (status == 'completed') {
+      return Text(
+        appController.convertTimeStamp(model.dateClaimed!),
+        style: caption12RegularNeutral,
+      );
+    }
+    return const SizedBox(
+      width: 0,
+      height: 0,
+    );
   }
 }
 
@@ -382,5 +415,18 @@ Widget buildImage(int index) {
       controller.fetchedImages[index],
       fit: BoxFit.cover,
     ),
+  );
+}
+
+Widget getPhoto(GeneralMARequestModel model) {
+  if (appController.getProfilePhoto(model) == '') {
+    return CircleAvatar(
+      radius: 29,
+      backgroundImage: AssetImage(blankProfile),
+    );
+  }
+  return CircleAvatar(
+    radius: 29,
+    backgroundImage: NetworkImage(appController.getProfilePhoto(model)),
   );
 }

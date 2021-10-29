@@ -52,6 +52,7 @@ class DoctorRegistrationController extends GetxController {
     log.i('Saving doctor data on id: $userID');
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
+        'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,
         'lastName': lastNameController.text,
@@ -62,6 +63,7 @@ class DoctorRegistrationController extends GetxController {
         'profileImage': '',
         'dStatus': false,
         'hasOngoingCons': false,
+        'disabled': false
       },
     );
     _clearControllers();

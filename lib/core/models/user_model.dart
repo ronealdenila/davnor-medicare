@@ -38,6 +38,7 @@ class PatientModel {
 
 class DoctorModel {
   DoctorModel({
+    required this.userID,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -48,9 +49,11 @@ class DoctorModel {
     required this.numToAccomodate,
     required this.dStatus,
     required this.hasOngoingCons,
+    required this.disabled,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+        userID: json['userID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
@@ -61,9 +64,11 @@ class DoctorModel {
         numToAccomodate: json['numToAccomodate'] as int,
         dStatus: json['dStatus'] as bool,
         hasOngoingCons: json['hasOngoingCons'] as bool,
+        disabled: json['disabled'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
+        'userID': userID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -74,7 +79,10 @@ class DoctorModel {
         'numToAccomodate': numToAccomodate,
         'dStatus': dStatus,
         'hasOngoingCons': hasOngoingCons,
+        'disabled': disabled,
       };
+
+  String? userID;
   String? email;
   String? firstName;
   String? lastName;
@@ -85,6 +93,7 @@ class DoctorModel {
   int? numToAccomodate;
   bool? dStatus;
   bool? hasOngoingCons;
+  bool? disabled;
 }
 
 class AdminModel {
@@ -116,32 +125,40 @@ class AdminModel {
 
 class PswdModel {
   PswdModel({
+    required this.userID,
     required this.email,
     required this.firstName,
     required this.lastName,
     required this.position,
     required this.profileImage,
+    required this.disabled,
   });
 
   factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
+        userID: json['userID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
         position: json['position'] as String,
         profileImage: json['profileImage'] as String,
+        disabled: json['disabled'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
+        'userID': userID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
         'position': position,
         'profileImage': profileImage,
+        'disabled': disabled,
       };
 
+  String? userID;
   String? email;
   String? firstName;
   String? lastName;
   String? position;
-  String? profileImage; //data that will change
+  bool? disabled;
+  String? profileImage;
 }

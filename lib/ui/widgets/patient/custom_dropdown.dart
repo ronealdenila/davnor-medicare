@@ -24,12 +24,12 @@ class CustomDropdownState extends State<CustomDropdown> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         child: DropdownButtonFormField<Item>(
           decoration: const InputDecoration(enabledBorder: InputBorder.none),
