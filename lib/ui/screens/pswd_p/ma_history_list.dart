@@ -9,6 +9,7 @@ import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class MAHistoryList extends StatelessWidget {
   @override
@@ -33,7 +34,7 @@ class MAHistoryList extends StatelessWidget {
               width: 450,
               child: CustomTextFormField(
                 controller: hController.maFilter,
-                labelText: 'Search here..ss.',
+                labelText: 'Search here...',
                 validator: Validator().notEmpty,
                 onChanged: (value) {
                   if (hController.maFilter.text.isEmpty) {
@@ -73,7 +74,7 @@ class MAHistoryList extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
-                    print(hController.maList[0].dateClaimed?.seconds);
+                    // print(hController.maList[0].dateClaimed?.seconds);
                     hController.filter(name: hController.maFilter.text);
                     // var date = new DateTime.fromMillisecondsSinceEpoch();
                     // hController.readTimestamp(
@@ -81,6 +82,16 @@ class MAHistoryList extends StatelessWidget {
                     // hController.ago(t: hController.maList[0].dateClaimed?.seconds);
                   },
                 )),
+            horizontalSpace18,
+            Container(
+              child: IconButton(
+                icon: Icon(Icons.calendar_today),
+                iconSize: 48,
+                onPressed: () {
+                  hController.showDialog(context);
+                },
+              ),
+            )
 
             //IconButton(onPressed: (){}, icon: Ico)
           ],

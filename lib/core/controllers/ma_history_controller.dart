@@ -3,9 +3,11 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class MAHistoryController extends GetxController {
   final log = getLogger('MA History Controller');
@@ -161,5 +163,56 @@ class MAHistoryController extends GetxController {
 
     // final stores = maList.map((e) => e.fullName).toSet();
     // maList.retainWhere((x) => stores.remove(x.fullName));
+  }
+
+  filterSpecificDay() {
+    maList.clear();
+
+    for (var i = 0; i < maListmaster.length; i++) {
+      if (readTimestamp(maListmaster[i].dateClaimed!.seconds) > 30) {
+      } else {
+        maList.add(maListmaster[i]);
+      }
+    }
+  }
+
+  showDialog(context) {
+    Get.dialog(AlertDialog(
+      content: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height * 0.30,
+        width: MediaQuery.of(context).size.width * 0.20,
+        child: SfDateRangePicker(
+          onSelectionChanged: onSelectionChanged,
+          selectionMode: DateRangePickerSelectionMode.single,
+        ),
+      ),
+    ));
+  }
+
+  void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    maList.clear();
+    print(args.value);
+    Timestamp myTimeStamp = Timestamp.fromDate(args.value);
+    print(myTimeStamp.toDate().month.toString() +
+        " - " +
+        myTimeStamp.toDate().day.toString());
+    print(maListmaster[0].dateClaimed!.toDate().month.toString() +
+        " - " +
+        maListmaster[0].dateClaimed!.toDate().day.toString());
+    for (var i = 0; i < maListmaster.length; i++) {
+      String dateConstant =
+          maListmaster[0].dateClaimed!.toDate().month.toString() +
+              " - " +
+              maListmaster[0].dateClaimed!.toDate().day.toString();
+      String dateSelected = myTimeStamp.toDate().month.toString() +
+          " - " +
+          myTimeStamp.toDate().day.toString();
+
+      if (dateConstant == dateSelected) {
+        maList.add(maListmaster[i]);
+      } else {}
+    }
+    Get.back();
   }
 }

@@ -28,6 +28,7 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_messaging: ^10.0.8
   firebase_analytics: ^8.3.4
+  syncfusion_flutter_datepicker: ^19.3.47
 
   #http
   http: ^0.13.4
