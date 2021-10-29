@@ -15,7 +15,7 @@ class ImagePickerService {
   }
 
   Future<void> pickMultiImage(RxList<XFile> images) async {
-    log.i('pickMultiImage called');
+    log.i('pickMultiImage called here');
     final pickedFileList = await ImagePicker().pickMultiImage();
     if (pickedFileList != null) {
       images.value = pickedFileList;
