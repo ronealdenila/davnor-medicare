@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MAReqListController extends GetxController {
   final log = getLogger('MA Requests List Controller');
@@ -22,7 +23,7 @@ class MAReqListController extends GetxController {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
     log.i('MA Requests List Controller | get Collection');
-    return firestore.collection('ma_request').snapshots();
+    return firestore.collection('ma_request').orderBy('date_rqstd').snapshots();
   }
 
   Stream<List<MARequestModel>> assignListStream() {
@@ -32,5 +33,10 @@ class MAReqListController extends GetxController {
           .map((item) => MARequestModel.fromJson(item.data()))
           .toList(),
     );
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 }

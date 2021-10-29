@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
@@ -23,7 +24,7 @@ class OnProgressReqController extends GetxController {
     //log.i('getMedicalAssistance | Streaming Medical Assistance Request');
     return firestore
         .collection('ma_request')
-        .orderBy('date_rqstd')
+        .orderBy('dateRqstd')
         .where('isApproved', isEqualTo: true)
         .snapshots()
         .map(
@@ -31,5 +32,10 @@ class OnProgressReqController extends GetxController {
               .map((item) => OnProgressMAModel.fromJson(item.data()))
               .toList(),
         );
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 }

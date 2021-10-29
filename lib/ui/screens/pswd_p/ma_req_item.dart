@@ -26,17 +26,20 @@ class MARequestItemScreen extends StatelessWidget {
         validID: passedData.validID,
         dateRqstd: passedData.date_rqstd);
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              PSWDItemView(context, 'request', model),
-              screenButtons(),
-              verticalSpace35,
-            ],
+    return WillPopScope(
+      onWillPop: () async => true,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                PSWDItemView(context, 'request', model),
+                screenButtons(),
+                verticalSpace35,
+              ],
+            ),
           ),
         ),
       ),

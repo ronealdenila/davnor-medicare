@@ -29,27 +29,30 @@ class ReleasingAreaItemScreen extends StatelessWidget {
       pharmacy: passedData.pharmacy,
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              PSWDItemView(context, 'medReady', model),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: CustomButton(
-                  onTap: () async {
-                    //open dialog
-                  },
-                  text: 'Claimed',
-                  buttonColor: verySoftOrange[60],
-                  fontSize: 15,
+    return WillPopScope(
+      onWillPop: () async => true,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                PSWDItemView(context, 'medReady', model),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: CustomButton(
+                    onTap: () async {
+                      //open dialog
+                    },
+                    text: 'Claimed',
+                    buttonColor: verySoftOrange[60],
+                    fontSize: 15,
+                  ),
                 ),
-              ),
-              verticalSpace35,
-            ],
+                verticalSpace35,
+              ],
+            ),
           ),
         ),
       ),

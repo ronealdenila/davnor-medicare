@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ForApprovalController extends GetxController {
   final log = getLogger('For Approval MA Controller');
@@ -32,5 +33,10 @@ class ForApprovalController extends GetxController {
           .map((item) => OnProgressMAModel.fromJson(item.data()))
           .toList(),
     );
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
   }
 }

@@ -1,7 +1,4 @@
-import 'package:data_table_2/data_table_2.dart';
-import 'package:data_table_2/paginated_data_table_2.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -62,7 +59,6 @@ Widget requestList(BuildContext context) {
       stream: rlsController.getCollection(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
-          print(rlsController.toRelease.length);
           if (rlsController.toRelease.isNotEmpty) {
             return MediaQuery.removePadding(
               context: context,
@@ -169,7 +165,7 @@ Widget customTableRow(OnProgressMAModel model) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                '${model.dateRqstd}',
+                rlsController.convertTimeStamp(model.dateRqstd!),
                 style: body16Medium,
               ),
             ),

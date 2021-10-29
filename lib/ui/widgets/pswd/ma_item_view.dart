@@ -9,7 +9,7 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-//CHANGE BUTTON, REBUILD EVERYTIME THE SCREEN RESIZE
+//CHANGE BUTTON, SEARCH BUTTON
 final AttachedPhotosController controller = Get.find();
 final AppController appController = Get.find();
 
@@ -19,6 +19,8 @@ class PSWDItemView extends GetResponsiveView {
   final GeneralMARequestModel model;
   final String status;
   final BuildContext context;
+
+  final RxBool doneLoad = false.obs;
 
   @override
   Widget phone() => Column(
@@ -60,17 +62,21 @@ class PSWDItemView extends GetResponsiveView {
       );
 
   Widget displayPatientInfo() {
-    return FutureBuilder(
-      future: appController.getPatientData(model),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return patientInfo();
-        }
-        return const Center(
-            child: SizedBox(
-                width: 24, height: 24, child: CircularProgressIndicator()));
-      },
-    );
+    if (!doneLoad.value) {
+      return FutureBuilder(
+        future: appController.getPatientData(model),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            doneLoad.value = true;
+            return patientInfo();
+          }
+          return const Center(
+              child: SizedBox(
+                  width: 24, height: 24, child: CircularProgressIndicator()));
+        },
+      );
+    }
+    return patientInfo();
   }
 
   Widget patientInfo() {

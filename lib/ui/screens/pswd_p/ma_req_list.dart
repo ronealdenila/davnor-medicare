@@ -185,7 +185,7 @@ class MARequestListScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  '${model.date_rqstd}',
+                  maController.convertTimeStamp(model.date_rqstd!),
                   style: body16Medium,
                 ),
               ),
