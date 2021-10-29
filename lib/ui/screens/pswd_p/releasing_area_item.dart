@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
+import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class ReleasingAreaItemScreen extends StatelessWidget {
       dateRqstd: passedData.dateRqstd,
       receivedBy: passedData.receivedBy,
       pharmacy: passedData.pharmacy,
+      medWorth: passedData.medWorth,
     );
 
     return WillPopScope(
@@ -41,13 +43,11 @@ class ReleasingAreaItemScreen extends StatelessWidget {
                 PSWDItemView(context, 'medReady', model),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: CustomButton(
-                    onTap: () async {
+                  child: PSWDButton(
+                    onItemTap: () {
                       //open dialog
                     },
-                    text: 'Claimed',
-                    buttonColor: verySoftOrange[60],
-                    fontSize: 15,
+                    buttonText: 'Claimed',
                   ),
                 ),
                 verticalSpace35,
