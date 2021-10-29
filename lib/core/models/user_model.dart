@@ -38,6 +38,7 @@ class PatientModel {
 
 class DoctorModel {
   DoctorModel({
+    required this.userID,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -52,6 +53,7 @@ class DoctorModel {
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+        userID: json['userID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
@@ -66,6 +68,7 @@ class DoctorModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'userID': userID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -78,6 +81,8 @@ class DoctorModel {
         'hasOngoingCons': hasOngoingCons,
         'disabled': disabled,
       };
+
+  String? userID;
   String? email;
   String? firstName;
   String? lastName;
@@ -120,6 +125,7 @@ class AdminModel {
 
 class PswdModel {
   PswdModel({
+    required this.userID,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -129,6 +135,7 @@ class PswdModel {
   });
 
   factory PswdModel.fromJson(Map<String, dynamic> json) => PswdModel(
+        userID: json['userID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
@@ -138,6 +145,7 @@ class PswdModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'userID': userID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -146,6 +154,7 @@ class PswdModel {
         'disabled': disabled,
       };
 
+  String? userID;
   String? email;
   String? firstName;
   String? lastName;

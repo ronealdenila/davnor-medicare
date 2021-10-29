@@ -8,7 +8,9 @@ import 'package:intl/intl.dart';
 class OnProgressReqController extends GetxController {
   final log = getLogger('On Progress Req Controller');
 
-  RxList<OnProgressMAModel> medicalAssistances = RxList<OnProgressMAModel>([]);
+  RxList<OnProgressMAModel> onProgressList = RxList<OnProgressMAModel>([]);
+  final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
+  final RxString type = ''.obs;
 
   final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
 
@@ -17,21 +19,25 @@ class OnProgressReqController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    medicalAssistances.bindStream(getMedicalAssistances());
+    onProgressList.bindStream(assignListStream());
   }
 
-  Stream<List<OnProgressMAModel>> getMedicalAssistances() {
-    //log.i('getMedicalAssistance | Streaming Medical Assistance Request');
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
+    log.i('Releasing MA Controller | get Collection');
     return firestore
-        .collection('ma_request')
+        .collection('on_progress_ma')
         .orderBy('dateRqstd')
-        .where('isApproved', isEqualTo: true)
-        .snapshots()
-        .map(
-          (query) => query.docs
-              .map((item) => OnProgressMAModel.fromJson(item.data()))
-              .toList(),
-        );
+        .where('isMedReady', isEqualTo: true)
+        .snapshots();
+  }
+
+  Stream<List<OnProgressMAModel>> assignListStream() {
+    log.i('Releasing MA Controller | assign');
+    return getCollection().map(
+      (query) => query.docs
+          .map((item) => OnProgressMAModel.fromJson(item.data()))
+          .toList(),
+    );
   }
 
   String convertTimeStamp(Timestamp recordTime) {
