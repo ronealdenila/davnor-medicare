@@ -16,6 +16,7 @@ class AcceptedMARequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     model = GeneralMARequestModel(
+        maID: passedData.maID,
         requesterID: passedData.requesterID,
         fullName: passedData.fullName,
         age: passedData.age,
@@ -38,7 +39,9 @@ class AcceptedMARequestScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: CustomButton(
-                  onTap: () async {},
+                  onTap: () async {
+                    //update the isTransferred = true;
+                  },
                   text: 'Transfer for Head Approval',
                   buttonColor: verySoftOrange[60],
                   fontSize: 15,

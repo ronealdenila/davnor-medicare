@@ -18,6 +18,7 @@ class ReleasingAreaItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     model = GeneralMARequestModel(
+      maID: passedData.maID,
       requesterID: passedData.requesterID,
       fullName: passedData.fullName,
       age: passedData.age,
@@ -49,8 +50,15 @@ class ReleasingAreaItemScreen extends StatelessWidget {
                       showConfirmationDialog(
                         dialogTitle: dialogpswdTitle,
                         dialogCaption: dialogpswdCaption,
-                        onYesTap: () {},
-                        onNoTap: () {},
+                        onYesTap: () {
+                          showLoading();
+                          //save data to ma history
+                          //delete doc on on_progress_ma
+                          dismissDialog();
+                        },
+                        onNoTap: () {
+                          dismissDialog();
+                        },
                       );
                     },
                     buttonText: 'Claimed',

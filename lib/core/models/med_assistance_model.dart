@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 //constructor (R)
 class MARequestModel {
   MARequestModel({
+    required this.maID,
     required this.requesterID,
     required this.fullName,
     required this.age,
@@ -21,6 +22,7 @@ class MARequestModel {
   });
 
   factory MARequestModel.fromJson(Map<String, dynamic> json) => MARequestModel(
+        maID: json['maID'] as String,
         requesterID: json['requesterID'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
@@ -33,6 +35,7 @@ class MARequestModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'maID': maID,
         'patientId': requesterID,
         'fullName': fullName,
         'age': age,
@@ -44,6 +47,7 @@ class MARequestModel {
         'date_rqstd': date_rqstd,
       };
 
+  String? maID;
   String? requesterID;
   String? fullName;
   String? age;
@@ -58,6 +62,7 @@ class MARequestModel {
 
 class OnProgressMAModel {
   OnProgressMAModel({
+    this.maID,
     this.requesterID,
     this.fullName,
     this.age,
@@ -77,6 +82,7 @@ class OnProgressMAModel {
 
   factory OnProgressMAModel.fromJson(Map<String, dynamic> json) =>
       OnProgressMAModel(
+        maID: json['maID'] as String,
         requesterID: json['requesterID'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
@@ -95,6 +101,7 @@ class OnProgressMAModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'maID': maID,
         'requesterID': requesterID,
         'fullName': fullName,
         'age': age,
@@ -112,6 +119,7 @@ class OnProgressMAModel {
         'pharmacy': pharmacy,
       };
 
+  String? maID;
   String? requesterID;
   String? fullName;
   String? age;
@@ -132,7 +140,8 @@ class OnProgressMAModel {
 
 class MAHistoryModel {
   MAHistoryModel(
-      {this.requesterID,
+      {this.maID,
+      this.requesterID,
       this.fullName,
       this.age,
       this.address,
@@ -147,6 +156,7 @@ class MAHistoryModel {
       this.dateClaimed});
 
   factory MAHistoryModel.fromJson(Map<String, dynamic> json) => MAHistoryModel(
+        maID: json['maID'] as String,
         requesterID: json['requesterID'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
@@ -163,6 +173,7 @@ class MAHistoryModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'maID': maID,
         'patientId': requesterID,
         'fullName': fullName,
         'age': age,
@@ -178,6 +189,7 @@ class MAHistoryModel {
         'dateClaimed': dateClaimed,
       };
 
+  String? maID;
   String? requesterID;
   String? fullName;
   String? age;

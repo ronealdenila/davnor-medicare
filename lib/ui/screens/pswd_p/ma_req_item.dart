@@ -18,6 +18,7 @@ class MARequestItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     model = GeneralMARequestModel(
+        maID: passedData.maID,
         requesterID: passedData.requesterID,
         fullName: passedData.fullName,
         age: passedData.age,
@@ -57,7 +58,10 @@ class MARequestItemScreen extends StatelessWidget {
             dialogCaption:
                 'Please select yes if you want to accept the request',
             onYesTap: () {
-              //pass this MA to onprgoress as transferred ACCEPTED
+              showLoading();
+              //save to this MA to on_progress_ma, all bool false
+              //delete in ma_request
+              dismissDialog();
             },
             onNoTap: () {
               dismissDialog();
