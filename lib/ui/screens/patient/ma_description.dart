@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
@@ -13,6 +16,7 @@ import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
   final MARequestController controller = Get.put(MARequestController());
+  final StatusController stats = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -147,42 +151,65 @@ class MADescriptionScreen extends StatelessWidget {
                   ],
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                Align(
-                  child: CustomButton(
-                    onTap: () {
-                      if (controller.hasAvailableSlot()) {
-                        //check activeQueue/slot/fund
-                        return showConfirmationDialog(
-                          dialogTitle: dialog2Title,
-                          dialogCaption: dialog2Caption,
-                          onYesTap: () {
-                            controller.isMAForYou.value = true;
-                            Get.to(() => MAFormScreen());
-                          },
-                          onNoTap: () {
-                            controller.isMAForYou.value = false;
-                            Get.to(() => MAFormScreen());
-                          },
-                        );
-                      } else {
-                        showErrorDialog(
-                          errorTitle: 'No Slot Available',
-                          errorDescription:
-                              'No available slot at the moment. Please check..',
-                        );
-                      }
-                    },
-                    text: 'Avail Medical Assistance',
-                    buttonColor: verySoftBlueColor,
-                    fontSize: 20,
-                  ),
-                ),
+                Align(child: availMAButton()),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget availMAButton() {
+    return StreamBuilder<DocumentSnapshot>(
+        stream: stats.getPatientStatus(auth.currentUser!.uid),
+        builder: (context, snapshot) {
+          final data = snapshot.data!.data() as Map<String, dynamic>;
+          return CustomButton(
+            onTap: () {
+              if (data['pStatus'] as bool) {
+                if (data['hasActiveQueueMA'] as bool) {
+                  if (controller.hasAvailableSlot()) {
+                    //check activeQueue/slot/fund
+                    return showConfirmationDialog(
+                      dialogTitle: dialog2Title,
+                      dialogCaption: dialog2Caption,
+                      onYesTap: () {
+                        controller.isMAForYou.value = true;
+                        Get.to(() => MAFormScreen());
+                      },
+                      onNoTap: () {
+                        controller.isMAForYou.value = false;
+                        Get.to(() => MAFormScreen());
+                      },
+                    );
+                  } else {
+                    showErrorDialog(
+                      errorTitle: 'No Slot Available',
+                      errorDescription:
+                          'Sorry, there are no available slots at the moment. Please try again next time',
+                    );
+                  }
+                } else {
+                  showErrorDialog(
+                      errorTitle:
+                          'Sorry, you still have an on progress MA request transaction',
+                      errorDescription:
+                          'Please proceed to your existing consultation');
+                }
+              } else {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, only verified users can use this feature',
+                    errorDescription:
+                        'Please verify your account first in your profile');
+              }
+            },
+            text: 'Avail Medical Assistance',
+            buttonColor: verySoftBlueColor,
+            fontSize: 20,
+          );
+        });
   }
 
   void showDialog() {

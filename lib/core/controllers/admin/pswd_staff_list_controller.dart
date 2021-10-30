@@ -84,10 +84,6 @@ class PSWDStaffListController extends GetxController {
       }
     }
 
-    for (var i = 0; i < pswdList.length; i++) {
-      print(pswdList[i].firstName);
-    }
-
     final stores = pswdList.map((e) => e.userID).toSet();
     pswdList.retainWhere((x) => stores.remove(x.userID));
   }

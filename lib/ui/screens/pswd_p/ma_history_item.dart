@@ -14,6 +14,7 @@ class MAHistoryItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     model = GeneralMARequestModel(
+        maID: passedData.maID,
         requesterID: passedData.requesterID,
         fullName: passedData.fullName,
         age: passedData.age,

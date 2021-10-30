@@ -37,10 +37,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                     labelText: 'Search name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
-                      if (pListController.pswdFilter.text.isEmpty) {
-                        pListController.pswdList
-                            .assignAll(pListController.filteredPswdList);
-                      }
+                      return;
                     },
                     onSaved: (value) =>
                         pListController.pswdFilter.text = value!,
@@ -74,15 +71,27 @@ class PSWDStaffListScreen extends StatelessWidget {
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
-                        if (pListController.pswdFilter.text.isEmpty &&
-                            pListController.position.value == '') {
-                        } else {
-                          pListController.filter(
-                              name: pListController.pswdFilter.text,
-                              title: pListController.position.value);
-                        }
+                        pListController.filter(
+                            name: pListController.pswdFilter.text,
+                            title: pListController.position.value);
                       },
-                    ))
+                    )),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                    width: 100,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue[900],
+                      ),
+                      onPressed: () {
+                        pListController.pswdFilter.clear();
+                        pListController.position.value = '';
+                        pListController.pswdList
+                            .assignAll(pListController.filteredPswdList);
+                      },
+                    )),
+
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),

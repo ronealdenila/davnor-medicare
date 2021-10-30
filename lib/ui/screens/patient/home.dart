@@ -51,15 +51,12 @@ class PatientHomeScreen extends StatelessWidget {
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
-              userProfile:
-                  // fetchedData!.profileImage == ''
-                  //     ?
-                  const Icon(
-                Icons.person,
-                size: 56,
-              )
-              // : Image.network(fetchedData!.profileImage!),
-              ,
+              userProfile: fetchedData!.profileImage == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 56,
+                    )
+                  : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
@@ -99,49 +96,13 @@ class PatientHomeScreen extends StatelessWidget {
                     verticalSpace10,
                     SizedBox(
                       width: screenWidth(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ActionCard(
-                              text: 'Request Consultation',
-                              color: verySoftMagenta[60],
-                              secondaryColor: verySoftMagentaCustomColor,
-                              onTap: consController.checkRequestConsultation,
-                            ),
-                          ),
-                          Expanded(
-                            child: ActionCard(
-                              text: 'Request Medical Assistance',
-                              color: verySoftOrange[60],
-                              secondaryColor: verySoftOrangeCustomColor,
-                              //Note: Has weird transition
-                              onTap: () => Get.to(
-                                () => MADescriptionScreen(),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ActionCard(
-                              text: 'View\nQueue',
-                              color: verySoftRed[60],
-                              secondaryColor: verySoftRedCustomColor,
-                              onTap: () {
-                                Get.to(() => QueueMAScreen());
-                                //sa business logic na ata ta magdecide kung
-                                //kani nga dialog mag appear for now dria nako
-                                //ibutang (R)
-                                // showDefaultDialog(
-                                //   dialogTitle: dialogQueue1,
-                                //   dialogCaption: dialogQueue2,
-                                //   textConfirm: 'Okay',
-                                //   onConfirmTap: Get.back,
-                                // );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: StreamBuilder<DocumentSnapshot>(
+                          stream: stats.getPatientStatus(auth.currentUser!.uid),
+                          builder: (context, snapshot) {
+                            final data =
+                                snapshot.data!.data() as Map<String, dynamic>;
+                            return ActionButtons(data);
+                          }),
                     ),
                     verticalSpace25,
                     Row(
@@ -168,6 +129,92 @@ class PatientHomeScreen extends StatelessWidget {
               ),
             ),
             floatingActionButton: Obx(getFloatingButton)));
+  }
+
+  Widget ActionButtons(Map<String, dynamic> data) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: ActionCard(
+            text: 'Request Consultation',
+            color: verySoftMagenta[60],
+            secondaryColor: verySoftMagentaCustomColor,
+            onTap: () {
+              if (data['pStatus'] as bool) {
+                if (data['hasActiveQueueCons'] as bool) {
+                  showErrorDialog(
+                      errorTitle:
+                          'Sorry, you still have an on progress consultation transaction',
+                      errorDescription:
+                          'Please proceed to your existing consultation');
+                } else {
+                  consController.checkRequestConsultation;
+                }
+              } else {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, only verified users can use this feature',
+                    errorDescription:
+                        'Please verify your account first in your profile');
+              }
+            },
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'Request Medical Assistance',
+            color: verySoftOrange[60],
+            secondaryColor: verySoftOrangeCustomColor,
+            //Note: Has weird transition
+            onTap: () => Get.to(
+              () => MADescriptionScreen(),
+            ),
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'View\nQueue',
+            color: verySoftRed[60],
+            secondaryColor: verySoftRedCustomColor,
+            onTap: () {
+              if (data['pStatus'] as bool) {
+                if (data['hasActiveQueueCons'] as bool &&
+                    data['hasActiveQueueMA'] as bool) {
+                  //Get.to(() => QueueMAScreen()); CHOICE SCREEN
+                }
+                if (data['hasActiveQueueCons'] as bool) {
+                  //Get.to(() => QueueMAScreen()); CONS SCREEN
+                }
+                if (data['hasActiveQueueMA'] as bool) {
+                  Get.to(() => QueueMAScreen());
+                }
+                showErrorDialog(
+                    errorTitle: 'Sorry, you have no queue number',
+                    errorDescription:
+                        'You need to request consultation or medical assistance to be in a queue.');
+              } else {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, only verified users can use this feature',
+                    errorDescription:
+                        'Please verify your account first in your profile');
+              }
+
+              //sa business logic na ata ta magdecide kung
+              //kani nga dialog mag appear for now dria nako
+              //ibutang (R)
+              // showDefaultDialog(
+              //   dialogTitle: dialogQueue1,
+              //   dialogCaption: dialogQueue2,
+              //   textConfirm: 'Okay',
+              //   onConfirmTap: Get.back,
+              // );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget notificationIcon() {

@@ -9,12 +9,13 @@ import 'package:intl/intl.dart';
 class AcceptedMAController extends GetxController {
   final log = getLogger('Accepted MA Controller');
 
-  RxList<OnProgressMAModel> acceptedMA = RxList<OnProgressMAModel>([]);
+  RxList<OnProgressMAModel> accMA = RxList<OnProgressMAModel>([]);
+  RxInt index = (-1).obs;
 
   @override
   void onReady() {
     super.onReady();
-    acceptedMA.bindStream(assignListStream());
+    accMA.bindStream(assignListStream());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {

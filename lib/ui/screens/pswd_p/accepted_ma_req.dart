@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
@@ -9,20 +10,23 @@ import 'package:get/get.dart';
 
 class AcceptedMARequestScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
+  final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
 
   @override
   Widget build(BuildContext context) {
-    // model = GeneralMARequestModel(
-    //     requesterID: passedData.requesterID,
-    //     fullName: passedData.fullName,
-    //     age: passedData.age,
-    //     address: passedData.address,
-    //     gender: passedData.gender,
-    //     type: passedData.type,
-    //     prescriptions: passedData.prescriptions,
-    //     validID: passedData.validID,
-    //     dateRqstd: passedData.date_rqstd);
+    model = GeneralMARequestModel(
+        maID: passedData.maID,
+        requesterID: passedData.requesterID,
+        fullName: passedData.fullName,
+        age: passedData.age,
+        address: passedData.address,
+        gender: passedData.gender,
+        type: passedData.type,
+        prescriptions: passedData.prescriptions,
+        validID: passedData.validID,
+        dateRqstd: passedData.dateRqstd,
+        receivedBy: passedData.receivedBy);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,7 +39,9 @@ class AcceptedMARequestScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: CustomButton(
-                  onTap: () async {},
+                  onTap: () async {
+                    //update the isTransferred = true;
+                  },
                   text: 'Transfer for Head Approval',
                   buttonColor: verySoftOrange[60],
                   fontSize: 15,

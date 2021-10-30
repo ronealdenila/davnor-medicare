@@ -1,15 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
-import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ import 'package:get/get.dart';
 //*https://youtu.be/udsysUj-X4w
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
-//ADD STREAM FOR PSWD ACCEPTED and PASS IN ON ACCEPTED
+final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
 
 class PSWDPersonnelHome extends StatelessWidget {
   final OnProgressReqController pswdController =
@@ -127,554 +126,456 @@ class PswdPDashboardScreen extends GetView<MenuController> {
   Widget build(BuildContext context) {
     //Note: Breakpoint is for desktop lang
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        title: DmText.title42Bold(
-          'Dashboard',
-          color: kcNeutralColor[80],
+        appBar: AppBar(
+          leading: Container(),
+          title: DmText.title42Bold(
+            'Dashboard',
+            color: kcNeutralColor[80],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(25),
-              padding: const EdgeInsets.all(25),
-              width: context.width,
-              height: context.height * .2,
-              decoration: const BoxDecoration(
-                color: kcVerySoftBlueColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: DmText.title42Bold(
-                      'Hello, ${fetchedData!.firstName}',
-                      color: Colors.white,
-                    ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
+                width: context.width,
+                height: context.height * .2,
+                decoration: const BoxDecoration(
+                  color: kcVerySoftBlueColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50),
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DmText.title24Bold(
-                              'MA STATUS',
-                              color: Colors.white,
-                            ),
-                            verticalSpace15,
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                padding: const EdgeInsets.all(20),
-                              ),
-                              onPressed: () {},
-                              child: DmText.subtitle20Medium(
-                                'Ready to Accept Requests',
-                                color: neutralColor[60],
-                              ),
-                            ),
-                          ],
-                        ),
-                        horizontalSpace35,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DmText.title24Bold(
-                              'PSWD FUND STATUS',
-                              color: Colors.white,
-                            ),
-                            verticalSpace15,
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                padding: const EdgeInsets.all(20),
-                              ),
-                              onPressed: () {},
-                              child: DmText.subtitle20Medium(
-                                'Available',
-                                color: neutralColor[60],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                ),
+                child: Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: DmText.title42Bold(
+                        'Hello, ${fetchedData!.firstName}',
+                        color: Colors.white,
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      // color: Colors.amber,
-                      margin: const EdgeInsets.all(25),
-                      child: Column(
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            // color: Colors.blue,
-                            child: DmText.title24Medium(
-                              'Actions',
-                              color: neutralColor,
-                            ),
-                          ),
-                          verticalSpace15,
-                          Expanded(
-                            flex: 6,
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Column(
-                                children: [
-                                  ActionCard(
-                                    text: 'Change MA Status',
-                                    onTap: () {
-                                      showDialog(context: context, 
-                                      builder: (context) => declineDialogMA());
-                                    },
-                                    color: verySoftMagenta[60],
-                                    secondaryColor: verySoftMagentaCustomColor,
-                                  ),
-                                  ActionCard(
-                                    text: 'Change PSWD Fund Status',
-                                    onTap: () {
-                                      showDialog(context: context, 
-                                      builder: (context) => detailsDialogMA());
-                                    },
-                                    color: verySoftOrange[60],
-                                    secondaryColor: verySoftOrangeCustomColor,
-                                  ),
-                                  ActionCard(
-                                    text: 'View MA History',
-                                    onTap: () {
-                                      showConfirmationDialog(
-                                        dialogTitle: dialogpswdTitle,
-                                        dialogCaption: dialogpswdCaption,
-                                        onYesTap: () {},
-                                        onNoTap: () {},
-                                      );
-                                    },
-                                    color: verySoftRed[60],
-                                    secondaryColor: verySoftRedCustomColor,
-                                  ),
-                                ],
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DmText.title24Bold(
+                                'MA STATUS',
+                                color: Colors.white,
                               ),
-                            ),
+                              verticalSpace15,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  padding: const EdgeInsets.all(20),
+                                ),
+                                onPressed: () {},
+                                child: DmText.subtitle20Medium(
+                                  'Ready to Accept Requests',
+                                  color: neutralColor[60],
+                                ),
+                              ),
+                            ],
+                          ),
+                          horizontalSpace35,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DmText.title24Bold(
+                                'PSWD FUND STATUS',
+                                color: Colors.white,
+                              ),
+                              verticalSpace15,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  padding: const EdgeInsets.all(20),
+                                ),
+                                onPressed: () {},
+                                child: DmText.subtitle20Medium(
+                                  'Available',
+                                  color: neutralColor[60],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      // color: Colors.cyan,
-                      margin: const EdgeInsets.all(25),
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            // color: Colors.yellowAccent,
-                            child: DmText.title24Medium(
-                              'Medical Assistance Status',
-                              color: kcNeutralColor,
-                            ),
-                          ),
-                          verticalSpace15,
-                          Expanded(
-                            flex: 6,
-                            child: Container(
-                              padding: const EdgeInsets.all(25),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.5), //color of shadow
-                                    spreadRadius: 5, //spread radius
-                                    blurRadius: 7, // blur radius
-                                    offset: const Offset(
-                                        4, 8), //  changes position of shadow
-                                  ),
-                                ],
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        // color: Colors.amber,
+                        margin: const EdgeInsets.all(25),
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              // color: Colors.blue,
+                              child: DmText.title24Medium(
+                                'Actions',
+                                color: neutralColor,
                               ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: RichText(
-                                      text: TextSpan(
+                            ),
+                            verticalSpace15,
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: Column(
+                                  children: [
+                                    ActionCard(
+                                      text: 'Change MA Status',
+                                      onTap: () {
+                                        //change PSWD status
+                                      },
+                                      color: verySoftMagenta[60],
+                                      secondaryColor:
+                                          verySoftMagentaCustomColor,
+                                    ),
+                                    ActionCard(
+                                      text: 'Change PSWD Fund Status',
+                                      onTap: () {
+                                        //change fund status
+                                      },
+                                      color: verySoftOrange[60],
+                                      secondaryColor: verySoftOrangeCustomColor,
+                                    ),
+                                    ActionCard(
+                                      text: 'View MA History',
+                                      onTap: () {
+                                        //go to MA history list
+                                      },
+                                      color: verySoftRed[60],
+                                      secondaryColor: verySoftRedCustomColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        // color: Colors.cyan,
+                        margin: const EdgeInsets.all(25),
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              // color: Colors.yellowAccent,
+                              child: DmText.title24Medium(
+                                'Medical Assistance Status',
+                                color: kcNeutralColor,
+                              ),
+                            ),
+                            verticalSpace15,
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                padding: const EdgeInsets.all(25),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey
+                                          .withOpacity(0.5), //color of shadow
+                                      spreadRadius: 5, //spread radius
+                                      blurRadius: 7, // blur radius
+                                      offset: const Offset(
+                                          4, 8), //  changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'As Of Today ',
+                                              style: title32Bold.copyWith(
+                                                  color: kcNeutralColor),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '(${homeController.dateNow})',
+                                              style: subtitle18Regular,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    // verticalSpace15,
+
+                                    DmText.subtitle18Regular(
+                                      medicalStatusSubtitle1,
+                                    ),
+                                    // verticalSpace20,
+                                    Align(
+                                      child: AutoSizeText(
+                                        '40',
+                                        style: title150Bold.copyWith(
+                                            color: kcVerySoftBlueColor),
+                                        maxLines: 1,
+                                      ),
+                                      // DmText.title150Bold(
+                                      //   '40',
+                                      //   color: kcVerySoftBlueColor,
+                                      // ),
+                                    ),
+                                    Align(
+                                      child: DmText.title32Bold('People'),
+                                    ),
+                                    // verticalSpace50,
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          TextSpan(
-                                            text: 'As Of Today ',
-                                            style: title32Bold.copyWith(
-                                                color: kcNeutralColor),
-                                          ),
-                                          TextSpan(
-                                            text: '(${homeController.dateNow})',
-                                            style: subtitle18Regular,
-                                          ),
+                                          DmText.subtitle18Regular(
+                                              'View MA Request'),
+                                          const Icon(Icons.chevron_right),
                                         ],
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        // color: Colors.lime,
+                        margin: const EdgeInsets.all(25),
+                        child: Column(
+                          children: [
+                            DmText.title24Medium(
+                              '',
+                            ),
+                            verticalSpace15,
+                            Expanded(
+                              flex: 6,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          height: context.height * .3,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(
+                                                    0.5), //color of shadow
+                                                spreadRadius: 3, //spread radius
+                                                blurRadius: 4, // blur radius
+                                                offset: const Offset(4,
+                                                    8), // changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              AutoSizeText(
+                                                'ON PROGRESS REQUEST TODAY',
+                                                style: title24Medium.copyWith(
+                                                  color: kcNeutralColor,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              // DmText.title24Medium(
+                                              //     'ON PROGRESS REQUESTS TODAY'),
+                                              // DmText.title150Bold('2'),
+                                              AutoSizeText(
+                                                '2',
+                                                style: title150Bold.copyWith(
+                                                    color: kcVerySoftBlueColor),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              TextButton(
+                                                onPressed: () {},
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    DmText.subtitle18Regular(
+                                                        'View MA Request'),
+                                                    const Icon(
+                                                        Icons.chevron_right),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      horizontalSpace25,
+                                      Expanded(
+                                        child: Container(
+                                          height: context.height * .3,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(
+                                                    0.5), //color of shadow
+                                                spreadRadius: 5, //spread radius
+                                                blurRadius: 7, // blur radius
+                                                offset: const Offset(4,
+                                                    8), // / changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          // padding: const EdgeInsets.all(25),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              AutoSizeText(
+                                                'The application has',
+                                                style: body16Regular.copyWith(
+                                                    color: neutralColor),
+                                                maxLines: 1,
+                                              ),
+                                              // DmText.body16Regular(
+                                              //     'The application has'),
+                                              DmText.title150Bold(
+                                                '3',
+                                                color: kcVerySoftBlueColor,
+                                              ),
+                                              const AutoSizeText(
+                                                'PSWD Personnel',
+                                                style: subtitle20Medium,
+                                                maxLines: 1,
+                                              ),
+                                              // DmText.subtitle20Medium(
+                                              //     'PSWD Personnel'),
+                                              const AutoSizeText(
+                                                cardSubtitle1,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                              ),
+                                              // DmText.body16Regular(
+                                              //'in-charge of Medical Assistance (MA)',
+                                              // ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  // verticalSpace15,
-
-                                  DmText.subtitle18Regular(
-                                    medicalStatusSubtitle1,
-                                  ),
-                                  // verticalSpace20,
-                                  Align(
-                                    child: AutoSizeText(
-                                      '40',
-                                      style: title150Bold.copyWith(
-                                          color: kcVerySoftBlueColor),
-                                      maxLines: 1,
+                                  verticalSpace50,
+                                  Container(
+                                    // color: Colors.green,
+                                    padding: const EdgeInsets.all(25),
+                                    width: context.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(
+                                              0.5), //color of shadow
+                                          spreadRadius: 5, //spread radius
+                                          blurRadius: 7, // blur radius
+                                          offset: const Offset(4,
+                                              8), //  changes position of shadow
+                                        ),
+                                      ],
                                     ),
-                                    // DmText.title150Bold(
-                                    //   '40',
-                                    //   color: kcVerySoftBlueColor,
-                                    // ),
-                                  ),
-                                  Align(
-                                    child: DmText.title32Bold('People'),
-                                  ),
-                                  // verticalSpace50,
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                    child: Column(
                                       children: [
-                                        DmText.subtitle18Regular(
-                                            'View MA Request'),
-                                        const Icon(Icons.chevron_right),
+                                        DmText.title32Bold(
+                                          'DavNor Medicare',
+                                          color: kcNeutralColor,
+                                        ),
+                                        DmText.body16Regular(
+                                          cardSubtitle2,
+                                          color: kcNeutralColor,
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      // color: Colors.lime,
-                      margin: const EdgeInsets.all(25),
-                      child: Column(
-                        children: [
-                          DmText.title24Medium(
-                            '',
-                          ),
-                          verticalSpace15,
-                          Expanded(
-                            flex: 6,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        height: context.height * .3,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), //color of shadow
-                                              spreadRadius: 3, //spread radius
-                                              blurRadius: 4, // blur radius
-                                              offset: const Offset(4,
-                                                  8), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            AutoSizeText(
-                                              'ON PROGRESS REQUEST TODAY',
-                                              style: title24Medium.copyWith(
-                                                color: kcNeutralColor,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                            ),
-                                            // DmText.title24Medium(
-                                            //     'ON PROGRESS REQUESTS TODAY'),
-                                            // DmText.title150Bold('2'),
-                                            AutoSizeText(
-                                              '2',
-                                              style: title150Bold.copyWith(
-                                                  color: kcVerySoftBlueColor),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                            ),
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  DmText.subtitle18Regular(
-                                                      'View MA Request'),
-                                                  const Icon(
-                                                      Icons.chevron_right),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    horizontalSpace25,
-                                    Expanded(
-                                      child: Container(
-                                        height: context.height * .3,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), //color of shadow
-                                              spreadRadius: 5, //spread radius
-                                              blurRadius: 7, // blur radius
-                                              offset: const Offset(4,
-                                                  8), // / changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        // padding: const EdgeInsets.all(25),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            AutoSizeText(
-                                              'The application has',
-                                              style: body16Regular.copyWith(
-                                                  color: neutralColor),
-                                              maxLines: 1,
-                                            ),
-                                            // DmText.body16Regular(
-                                            //     'The application has'),
-                                            DmText.title150Bold(
-                                              '3',
-                                              color: kcVerySoftBlueColor,
-                                            ),
-                                            const AutoSizeText(
-                                              'PSWD Personnel',
-                                              style: subtitle20Medium,
-                                              maxLines: 1,
-                                            ),
-                                            // DmText.subtitle20Medium(
-                                            //     'PSWD Personnel'),
-                                            const AutoSizeText(
-                                              cardSubtitle1,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                            ),
-                                            // DmText.body16Regular(
-                                            //'in-charge of Medical Assistance (MA)',
-                                            // ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                verticalSpace50,
-                                Container(
-                                  // color: Colors.green,
-                                  padding: const EdgeInsets.all(25),
-                                  width: context.width,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey
-                                            .withOpacity(0.5), //color of shadow
-                                        spreadRadius: 5, //spread radius
-                                        blurRadius: 7, // blur radius
-                                        offset: const Offset(4,
-                                            8), //  changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      DmText.title32Bold(
-                                        'DavNor Medicare',
-                                        color: kcNeutralColor,
-                                      ),
-                                      DmText.body16Regular(
-                                        cardSubtitle2,
-                                        color: kcNeutralColor,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        floatingActionButton: Obx(getFloatingButton));
+  }
+
+  Widget getFloatingButton() {
+    for (int i = 0; i < acceptedMA.accMA.length; i++) {
+      if (acceptedMA.accMA[i].isTransferred == false) {
+        acceptedMA.index.value = i;
+      }
+    }
+
+    if (acceptedMA.index.value != -1) {
+      return FloatingActionButton(
+        backgroundColor: verySoftBlueColor[30],
+        elevation: 2,
+        onPressed: () {
+          Get.to(() => AcceptedMARequestScreen(),
+              arguments: acceptedMA.accMA[acceptedMA.index.value]);
+        },
+        child: const Icon(
+          Icons.chat_rounded,
+        ),
+      );
+    }
+    return const SizedBox(
+      width: 0,
+      height: 0,
     );
   }
-
-  Widget declineDialogMA() {
-    TextEditingController _textFieldController = TextEditingController();
-    return SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-      vertical: 30, horizontal: 50),
-      children: [
-        SizedBox(
-          width: 950,
-          child: Column(
-            children: [
-              const  Text(
-                'To inform the patient',
-                style: title32Regular,
-              ),
-              verticalSpace10,
-              const Text(
-                'Please specify the reason',
-                style: title20Regular,
-              ),
-              verticalSpace50,
-              TextFormField(
-                controller: _textFieldController,
-                 decoration: const InputDecoration(
-                    labelText: 'Enter the reason here',
-                    alignLabelWithHint: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
-                  ),
-                  maxLines: 10,
-                  keyboardType: TextInputType.multiline,
-              ),
-              verticalSpace25,
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: PSWDButton(
-                      onItemTap: () {
-                        print(_textFieldController.text);
-                      },
-                      buttonText: 'Submit')),
-            ],
-          )
-        )
-    ]);
-  }
-
-  Widget detailsDialogMA() {
-    final _pharmacyController = TextEditingController();
-    final _worthController = TextEditingController();
-    return SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-      vertical: 30, horizontal: 50),
-      children: [
-        SizedBox(
-          width: 590,
-          child: Column(
-            children: [
-              const Text(
-                'To Complete the Details for the Medical Assistance',
-                textAlign: TextAlign.center,
-                style: title32Regular,
-              ),
-              verticalSpace50,
-              SizedBox(
-                width: 360,
-                height: 60,
-                child: TextFormField(
-                controller: _pharmacyController,
-                 decoration: const InputDecoration(
-                    labelText: 'Name of Pharmacy',
-                    alignLabelWithHint: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
-                  ),
-                  maxLines: 10,
-                  keyboardType: TextInputType.multiline,
-              ),
-              ),
-              verticalSpace25,
-              SizedBox(
-                width: 360,
-                height: 60,
-                child: TextFormField(
-                controller: _worthController,
-                 decoration: const InputDecoration(
-                    labelText: 'Worth of Medicine',
-                    alignLabelWithHint: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
-                  ),
-                  maxLines: 10,
-                  keyboardType: TextInputType.multiline,
-              ),
-              ),
-
-              verticalSpace25,
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: PSWDButton(
-                      onItemTap: () {
-                        print(_pharmacyController.text);
-                        print(_worthController.text);
-                      },
-                      buttonText: 'Submit')),
-            ],
-          )
-        )
-    ]);
-  }
-
-
 }
 
 class PswdPSideMenuItem extends GetView<MenuController> {

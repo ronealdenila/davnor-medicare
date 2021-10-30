@@ -184,6 +184,7 @@ class MARequestController extends GetxController {
 
   Future<void> saveRequestforMA() async {
     final docRef = await firestore.collection('ma_request').add({
+      'maID': '',
       'requesterID': auth.currentUser!.uid,
       'fullName': '${firstNameController.text} ${lastNameController.text}',
       'age': ageController.text,
@@ -196,6 +197,7 @@ class MARequestController extends GetxController {
     });
 
     documentID.value = docRef.id; //save id bcs it will be save w/ the queueNum
+    await updateMAId(documentID.value);
 
     //Generate MA Queue
     final lastNum = statusList[0].qLastNum! + 1;
@@ -221,6 +223,15 @@ class MARequestController extends GetxController {
       'dateCreated': Timestamp.fromDate(DateTime.now()),
     });
   }
+
+  Future<void> updateMAId(String id) async => firestore
+      .collection('cons_request')
+      .doc(id)
+      .update({
+        'maID': id,
+      })
+      .then((value) => log.i('MA ID Field added'))
+      .catchError((error) => log.w('Failed to update ma Id'));
 
   Future<void> updateStatus() async {
     await firestore
