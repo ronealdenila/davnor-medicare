@@ -195,6 +195,7 @@ class AuthController extends GetxController {
       'hasActiveQueueCons': false,
       'hasActiveQueueMA': false,
       'pStatus': false,
+      'categoryID': '',
       'pendingVerification': false,
       'deviceToken': tokenID.value,
       'notifBadge': '0',

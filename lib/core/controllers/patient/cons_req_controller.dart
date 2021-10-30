@@ -84,10 +84,11 @@ class ConsRequestController extends GetxController {
     await uploadLabResults();
     assignValues();
     final consultation = ConsultationModel(
-      consID: 'null',
+      consID: '',
       patientId: auth.currentUser!.uid,
       fullName: fullName,
       age: ageController.text,
+      //TO DO should be the code of category, update status also
       category: selectedDiscomfort,
       dateRqstd: Timestamp.now().microsecondsSinceEpoch.toString(),
       description: descriptionController.text,
@@ -98,6 +99,7 @@ class ConsRequestController extends GetxController {
     final docRef = await consultRef.add(consultation);
     documentId = docRef.id;
     await updateId();
+
     await initializeConsultationModel(docRef.id);
     await updateActiveQueue();
 
@@ -122,6 +124,7 @@ class ConsRequestController extends GetxController {
       .catchError((error) => log.w('Failed to update cons Id'));
 
   Future<void> updateActiveQueue() async {
+    //get category that satisfy
     //Generate MA Queue - Fetch FROM SELECTED dept+title queue status
     // final lastNum = statusList[0].qLastNum! + 1;
     // if (lastNum < 10) {
@@ -137,7 +140,11 @@ class ConsRequestController extends GetxController {
         .collection('status')
         .doc('value')
         .update(
-      {'hasActiveQueueCons': true, 'queueCons': generatedCode},
+      {
+        'hasActiveQueueCons': true,
+        'queueCons': generatedCode,
+        'categoryID': selectedDiscomfort //SHOULD BE CATEGORY CODE
+      },
     );
   }
 

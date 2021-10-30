@@ -33,25 +33,17 @@ class DoctorRegistrationController extends GetxController {
       });
 
       await app.delete();
-
-      // await auth
-      //     .createUserWithEmailAndPassword(
-      //   email: emailController.text,
-      //   password: '123456',
-      // )
-      //     .then(
-      //   (result) async {
-      //     final _userID = result.user!.uid;
-      //     await _createDoctorUser(_userID);
-      //   },
-      // );
     }
   }
 
   Future<void> _createDoctorUser(String userID) async {
     log.i('Saving doctor data on id: $userID');
+    await firestore.collection('users').doc(userID).set(<String, dynamic>{
+      'userType': 'doctor',
+    });
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
+        'categoryID': 'to be added yet', //TO DO: fetch categoryID
         'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,
@@ -59,14 +51,24 @@ class DoctorRegistrationController extends GetxController {
         'title': title.value,
         'department': department.value,
         'clinicHours': clinicHours.text,
-        'numToAccomodate': 0,
         'profileImage': '',
-        'dStatus': false,
-        'hasOngoingCons': false,
         'disabled': false
       },
-    );
+    ).then((value) => addDoctorStatus(userID));
     _clearControllers();
+  }
+
+  Future<void> addDoctorStatus(String userID) async {
+    await firestore
+        .collection('doctors')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .set({
+      'numToAccomodate': 0,
+      'dStatus': false,
+      'hasOngoingCons': false,
+    });
   }
 
   void _clearControllers() {

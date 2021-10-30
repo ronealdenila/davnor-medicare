@@ -31,23 +31,15 @@ class PSWDRegistrationController extends GetxController {
       });
 
       await app.delete();
-
-      // await auth
-      //     .createUserWithEmailAndPassword(
-      //   email: emailController.text,
-      //   password: '123456',
-      // )
-      //     .then(
-      //   (result) async {
-      //     final _userID = result.user!.uid;
-      //     await _createPSWDUser(_userID);
-      //   },
-      // );
     }
   }
 
   Future<void> _createPSWDUser(String userID) async {
-    log.i('Saving doctor data on id: $userID');
+    log.i('Saving pswd data on id: $userID');
+    await firestore.collection('users').doc(userID).set(<String, dynamic>{
+      'userType': position.value == 'Head' ? 'pswd-h' : 'pswd-p',
+    });
+
     await firestore.collection('pswd_personnel').doc(userID).set(
       <String, dynamic>{
         'userID': userID,
