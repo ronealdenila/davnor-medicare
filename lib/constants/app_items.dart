@@ -14,14 +14,14 @@ class ItemNum {
 }
 
 final discomfortData = [
-  Category(iconPath: earIconPath, title: 'Ear'),
-  Category(iconPath: heartIconPath, title: 'Heart'),
-  Category(iconPath: kidneyIconPath, title: 'Kidney'),
-  Category(iconPath: liverIconPath, title: 'Liver'),
-  Category(iconPath: lungsIconPath, title: 'Lungs'),
-  Category(iconPath: skinIconPath, title: 'Skin'),
-  Category(iconPath: stomachIconPath, title: 'Stomach'),
-  Category(iconPath: throatIconPath, title: 'Throat'),
+  Category(iconPath: earIconPath, title: 'Ear', specialist: ''),
+  Category(iconPath: heartIconPath, title: 'Heart', specialist: ''),
+  Category(iconPath: kidneyIconPath, title: 'Kidney', specialist: ''),
+  Category(iconPath: liverIconPath, title: 'Liver', specialist: ''),
+  Category(iconPath: lungsIconPath, title: 'Lungs', specialist: ''),
+  Category(iconPath: skinIconPath, title: 'Skin', specialist: ''),
+  Category(iconPath: stomachIconPath, title: 'Stomach', specialist: ''),
+  Category(iconPath: throatIconPath, title: 'Throat', specialist: ''),
 ];
 
 final List<Item> gender = <Item>[
@@ -44,7 +44,7 @@ final List<Item> title = <Item>[
   const Item('Dermatologist'),
   const Item('Pulmonologist'),
   const Item('Nephrologist'),
-  const Item('Immunologists'),
+  const Item('Immunologist'),
   const Item('General Medicine'),
 ];
 
