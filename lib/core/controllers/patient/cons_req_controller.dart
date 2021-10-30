@@ -137,7 +137,7 @@ class ConsRequestController extends GetxController {
         .collection('status')
         .doc('value')
         .update(
-      {'hasActiveQueuecons': true, 'queueCons': generatedCode},
+      {'hasActiveQueueCons': true, 'queueCons': generatedCode},
     );
   }
 
@@ -176,26 +176,18 @@ class ConsRequestController extends GetxController {
   }
 
   void checkRequestConsultation() {
-    if (!isConsultForYou.value) {
-      //TO DO getDocSnapshot
-      //if (fetchedData!.hasActiveQueue!) { //should be stream
-      showErrorDialog(
-          errorTitle: 'Sorry, you still have an on progress transaction',
-          errorDescription: 'Please proceed to your existing consultation');
-    } else {
-      showConfirmationDialog(
-        dialogTitle: dialog1Title,
-        dialogCaption: dialog1Caption,
-        onYesTap: () {
-          isConsultForYou.value = true;
-          Get.to(() => ConsFormScreen());
-        },
-        onNoTap: () {
-          isConsultForYou.value = false;
-          Get.to(() => ConsFormScreen());
-        },
-      );
-    }
+    showConfirmationDialog(
+      dialogTitle: dialog1Title,
+      dialogCaption: dialog1Caption,
+      onYesTap: () {
+        isConsultForYou.value = true;
+        Get.to(() => ConsFormScreen());
+      },
+      onNoTap: () {
+        isConsultForYou.value = false;
+        Get.to(() => ConsFormScreen());
+      },
+    );
   }
 
   void pickForFollowUpImagess() {

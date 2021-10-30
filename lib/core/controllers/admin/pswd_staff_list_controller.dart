@@ -51,29 +51,53 @@ class PSWDStaffListController extends GetxController {
 
   filter({required String name, required String title}) {
     pswdList.clear();
-    for (var i = 0; i < pswdList.length; i++) {
-      if (filteredPswdList[i]
-              .lastName!
-              .toLowerCase()
-              .contains(name.toLowerCase()) ||
-          filteredPswdList[i]
-              .firstName!
-              .toLowerCase()
-              .contains(name.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
-      }
-    }
-    for (var i = 0; i < filteredPswdList.length; i++) {
-      if (filteredPswdList[i]
-          .position!
-          .toLowerCase()
-          .contains(title.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
+
+    //filter for name only
+    if (name != '' && title == '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if (filteredPswdList[i]
+                .lastName!
+                .toLowerCase()
+                .contains(name.toLowerCase()) ||
+            filteredPswdList[i]
+                .firstName!
+                .toLowerCase()
+                .contains(name.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
       }
     }
 
-    for (var i = 0; i < pswdList.length; i++) {
-      print(pswdList[i].firstName);
+    //filter for position only
+    else if (name == '' && title != '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if (filteredPswdList[i]
+            .position!
+            .toLowerCase()
+            .contains(title.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
+      }
+    }
+
+    //filter for both
+    else if (name != '' && title != '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if ((filteredPswdList[i]
+                    .lastName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase()) ||
+                filteredPswdList[i]
+                    .firstName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) &&
+            filteredPswdList[i]
+                .position!
+                .toLowerCase()
+                .contains(title.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
+      }
     }
 
     final stores = pswdList.map((e) => e.email).toSet();

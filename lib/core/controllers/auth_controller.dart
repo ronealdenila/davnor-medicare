@@ -192,7 +192,7 @@ class AuthController extends GetxController {
         .collection('status')
         .doc('value')
         .set({
-      'hasActiveQueuecons': false,
+      'hasActiveQueueCons': false,
       'hasActiveQueueMA': false,
       'pStatus': false,
       'pendingVerification': false,
