@@ -56,24 +56,32 @@ class DoctorListController extends GetxController {
   filter({required String name, required String title}) {
     print(name + " " + title);
     doctorList.clear();
-    for (var i = 0; i < filteredDoctorList.length; i++) {
-      if (filteredDoctorList[i]
-              .lastName!
-              .toLowerCase()
-              .contains(name.toLowerCase()) ||
-          filteredDoctorList[i]
-              .firstName!
-              .toLowerCase()
-              .contains(name.toLowerCase())) {
-        doctorList.add(filteredDoctorList[i]);
+    if (name.isEmpty) {
+      print("Empty name");
+    } else {
+      for (var i = 0; i < filteredDoctorList.length; i++) {
+        if (filteredDoctorList[i]
+                .lastName!
+                .toLowerCase()
+                .contains(name.toLowerCase()) ||
+            filteredDoctorList[i]
+                .firstName!
+                .toLowerCase()
+                .contains(name.toLowerCase())) {
+          doctorList.add(filteredDoctorList[i]);
+        }
       }
     }
-    for (var i = 0; i < filteredDoctorList.length; i++) {
-      if (filteredDoctorList[i]
-          .title!
-          .toLowerCase()
-          .contains(title.toLowerCase())) {
-        doctorList.add(filteredDoctorList[i]);
+    if (title.isEmpty) {
+      print("Empty title");
+    } else {
+      for (var i = 0; i < filteredDoctorList.length; i++) {
+        if (filteredDoctorList[i]
+            .title!
+            .toLowerCase()
+            .contains(title.toLowerCase())) {
+          doctorList.add(filteredDoctorList[i]);
+        }
       }
     }
 
@@ -81,7 +89,7 @@ class DoctorListController extends GetxController {
       print(doctorList[i].firstName);
     }
 
-    final stores = doctorList.map((e) => e.email).toSet();
-    doctorList.retainWhere((x) => stores.remove(x.email));
+    final stores = doctorList.map((e) => e.userID).toSet();
+    doctorList.retainWhere((x) => stores.remove(x.userID));
   }
 }

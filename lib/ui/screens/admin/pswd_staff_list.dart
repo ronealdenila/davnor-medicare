@@ -49,8 +49,14 @@ class PSWDStaffListScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select position',
                     dropdownItems: position,
-                    onChanged: (Item? item) =>
-                        pListController.position.value = item!.name,
+                    onChanged: (item) {
+                      pListController.position.value = item!.name;
+                      if (pListController.position.value == '') {
+                        pListController.pswdList
+                            .assignAll(pListController.filteredPswdList);
+                        pListController.pswdFilter.clear();
+                      }
+                    },
                     onSaved: (Item? item) =>
                         pListController.position.value = item!.name,
                   ),

@@ -50,26 +50,30 @@ class PSWDStaffListController extends GetxController {
   }
 
   filter({required String name, required String title}) {
+    print(name + " " + title);
     pswdList.clear();
-
-    //filter for name only
-    if (name != '' && title == '') {
+    if (name.isEmpty) {
+      print("Empty name");
+    } else {
       for (var i = 0; i < filteredPswdList.length; i++) {
+        print(filteredPswdList[i].firstName.toString() + " " + i.toString());
         if (filteredPswdList[i]
-                .lastName!
+                .firstName!
+                .trim()
                 .toLowerCase()
                 .contains(name.toLowerCase()) ||
             filteredPswdList[i]
-                .firstName!
+                .lastName!
+                .trim()
                 .toLowerCase()
                 .contains(name.toLowerCase())) {
           pswdList.add(filteredPswdList[i]);
         }
       }
     }
-
-    //filter for position only
-    else if (name == '' && title != '') {
+    if (title.isEmpty) {
+      print("Empty title");
+    } else {
       for (var i = 0; i < filteredPswdList.length; i++) {
         if (filteredPswdList[i]
             .position!
@@ -80,27 +84,7 @@ class PSWDStaffListController extends GetxController {
       }
     }
 
-    //filter for both
-    else if (name != '' && title != '') {
-      for (var i = 0; i < filteredPswdList.length; i++) {
-        if ((filteredPswdList[i]
-                    .lastName!
-                    .toLowerCase()
-                    .contains(name.toLowerCase()) ||
-                filteredPswdList[i]
-                    .firstName!
-                    .toLowerCase()
-                    .contains(name.toLowerCase())) &&
-            filteredPswdList[i]
-                .position!
-                .toLowerCase()
-                .contains(title.toLowerCase())) {
-          pswdList.add(filteredPswdList[i]);
-        }
-      }
-    }
-
-    final stores = pswdList.map((e) => e.email).toSet();
-    pswdList.retainWhere((x) => stores.remove(x.email));
+    final stores = pswdList.map((e) => e.userID).toSet();
+    pswdList.retainWhere((x) => stores.remove(x.userID));
   }
 }
