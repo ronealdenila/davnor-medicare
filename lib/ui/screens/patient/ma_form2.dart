@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -50,6 +51,7 @@ class MAForm2Screen extends GetView<MARequestController> {
                       width: screenWidth(context),
                       color: neutralColor[10],
                       child: Obx(getPrescription),
+                      // child: Image.memory(Uint8List.fromList(file.bytes!)),
                     );
                   }),
                 ),
@@ -73,8 +75,14 @@ class MAForm2Screen extends GetView<MARequestController> {
     );
   }
 
+//   Widget getImages() {
+// return Container(
+//   child: Image.memory(Uint8List.fromList(controller.)),
+// );
+//   }
+
   Widget getPrescription() {
-    if (controller.images.isEmpty) {
+    if (controller.imagesListNew.isEmpty) {
       return InkWell(
         onTap: controller.pickMultiImage,
         child: Padding(
@@ -99,49 +107,57 @@ class MAForm2Screen extends GetView<MARequestController> {
     }
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: GridView.count(
-        shrinkWrap: true,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        crossAxisCount: 3,
-        children: List.generate(controller.images.length + 1, (index) {
-          if (index == controller.images.length) {
-            return Center(
-              child: IconButton(
-                icon: const Icon(
-                  Icons.add_circle_outline_rounded,
+      child: Obx(
+        () => GridView.count(
+          shrinkWrap: true,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          crossAxisCount: 3,
+          children: List.generate(controller.imagesListNew.length + 1, (index) {
+            if (index == controller.imagesListNew.length) {
+              return Center(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.add_circle_outline_rounded,
+                  ),
+                  color: verySoftBlueColor[100],
+                  iconSize: 45,
+                  onPressed: controller.pickMultiImage,
                 ),
-                color: verySoftBlueColor[100],
-                iconSize: 45,
-                onPressed: controller.pickMultiImage,
-              ),
-            );
-          }
-          return Stack(
-            children: [
-              Image.file(
-                File(controller.images[index].path),
-                width: 140,
-                height: 140,
-                fit: BoxFit.fill,
-              ),
-              Positioned(
-                right: 5,
-                top: 5,
-                child: InkWell(
-                  onTap: () {
-                    controller.images.remove(controller.images[index]);
-                  },
-                  child: const Icon(
-                    Icons.remove_circle,
-                    size: 25,
-                    color: Colors.red,
+              );
+            }
+            return Stack(
+              children: [
+                // Image.file(
+                //   File(controller.images[index].path),
+                //   width: 140,
+                //   height: 140,
+                //   fit: BoxFit.fill,
+                // ),
+                Image.memory(
+                  Uint8List.fromList(controller.imagesListNew[index].bytes),
+                  width: 140,
+                  height: 140,
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: InkWell(
+                    onTap: () {
+                      // controller.imagesListNew.remove(controller.images[index]);
+                      controller.imagesListNew.removeAt(index);
+                    },
+                    child: const Icon(
+                      Icons.remove_circle,
+                      size: 25,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }

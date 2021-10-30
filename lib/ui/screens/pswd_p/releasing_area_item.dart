@@ -41,15 +41,15 @@ class ReleasingAreaItemScreen extends StatelessWidget {
             child: Column(
               children: [
                 PSWDItemView(context, 'medReady', model),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: PSWDButton(
-                    onItemTap: () {
-                      //open dialog
-                    },
-                    buttonText: 'Claimed',
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: PSWDButton(
+                //     onItemTap: () {
+                //       //open dialog
+                //     },
+                //     buttonText: 'Claimed',
+                //   ),
+                // ),
                 verticalSpace35,
               ],
             ),

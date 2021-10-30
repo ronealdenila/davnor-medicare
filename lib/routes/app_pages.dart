@@ -59,8 +59,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.PSWD_PERSONNEL_HOME;
-                                
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(

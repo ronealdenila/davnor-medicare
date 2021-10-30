@@ -17,6 +17,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ConsRequestController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

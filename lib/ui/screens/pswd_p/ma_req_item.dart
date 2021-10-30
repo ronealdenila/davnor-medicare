@@ -50,17 +50,17 @@ class MARequestItemScreen extends StatelessWidget {
 
 Widget screenButtons() {
   return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-    PSWDButton(
-      onItemTap: () {
-        //accept func
-      },
-      buttonText: 'Accept',
-    ),
-    PSWDButton(
-      onItemTap: () {
-        //decline func
-      },
-      buttonText: 'Decline',
-    ),
+    // PSWDButton(
+    //   onItemTap: () {
+    //     //accept func
+    //   },
+    //   buttonText: 'Accept',
+    // ),
+    // PSWDButton(
+    //   onItemTap: () {
+    //     //decline func
+    //   },
+    //   buttonText: 'Decline',
+    // ),
   ]);
 }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -71,7 +72,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
   }
 
   Widget getPrescriptionAndLabResults() {
-    final images = controller.images;
+    final images = controller.imagesListNew;
     if (images.isEmpty) {
       return InkWell(
         onTap: controller.pickForFollowUpImages,
@@ -117,11 +118,16 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
           }
           return Stack(
             children: [
-              Image.file(
-                File(images[index].path),
+              // Image.file(
+              //   File(images[index].path),
+              //   width: 140,
+              //   height: 140,
+              //   fit: BoxFit.fill,
+              // ),
+              Image.memory(
+                Uint8List.fromList(images[index].bytes),
                 width: 140,
                 height: 140,
-                fit: BoxFit.fill,
               ),
               Positioned(
                 right: 5,

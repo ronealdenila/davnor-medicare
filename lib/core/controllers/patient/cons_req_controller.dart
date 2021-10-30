@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
@@ -5,11 +6,13 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/core/models/imageBytes.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -43,6 +46,7 @@ class ConsRequestController extends GetxController {
 
   //Cons Form 3
   RxList<XFile> images = RxList<XFile>();
+  RxList<ImagesBytes> imagesListNew = <ImagesBytes>[].obs;
   String imageUrls = '';
   final RxString generatedCode = 'C025'.obs; //MA24 -> mock code
   late String documentId;
@@ -194,7 +198,26 @@ class ConsRequestController extends GetxController {
     }
   }
 
-  void pickForFollowUpImages() {
+  void pickForFollowUpImagess() {
     _imagePickerService.pickMultiImage(images);
+  }
+
+  void pickForFollowUpImages() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+    );
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      var list = [];
+      Map map = {"bytes": file.bytes};
+      list.add(map);
+      var res = imagesBytesFromJson(jsonEncode(list));
+      imagesListNew.addAll(res);
+      print(imagesListNew.length);
+    } else {
+      // User canceled the picker
+    }
   }
 }
