@@ -6,6 +6,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,10 +73,11 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
   }
 
   Widget getPrescriptionAndLabResults() {
-    final images = controller.imagesListNew;
+    final images = controller.images;
+    //final images = controller.imagesListNew;
     if (images.isEmpty) {
       return InkWell(
-        onTap: controller.pickForFollowUpImages,
+        onTap: controller.pickForFollowUpImagess,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: Column(
@@ -104,7 +106,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
         crossAxisSpacing: 10,
         crossAxisCount: 3,
         children: List.generate(images.length + 1, (index) {
-          if (index == images.length) {
+          if (index == controller.images.length) {
             return Center(
               child: IconButton(
                 icon: const Icon(
@@ -118,23 +120,25 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
           }
           return Stack(
             children: [
-              // Image.file(
-              //   File(images[index].path),
+              kIsWeb
+                  ? Image.network(images[index].path)
+                  : Image.file(
+                      File(images[index].path),
+                      width: 140,
+                      height: 140,
+                      fit: BoxFit.fill,
+                    ),
+              // Image.memory(
+              //   Uint8List.fromList(images[index].bytes),
               //   width: 140,
               //   height: 140,
-              //   fit: BoxFit.fill,
               // ),
-              Image.memory(
-                Uint8List.fromList(images[index].bytes),
-                width: 140,
-                height: 140,
-              ),
               Positioned(
                 right: 5,
                 top: 5,
                 child: InkWell(
                   onTap: () {
-                    images.remove(images[index]);
+                    controller.images.remove(images[index]);
                   },
                   child: const Icon(
                     Icons.remove_circle,

@@ -183,6 +183,7 @@ class ConsRequestController extends GetxController {
   }
 
   void checkRequestConsultation() {
+    print('checkRequestConsultation');
     showConfirmationDialog(
       dialogTitle: dialog1Title,
       dialogCaption: dialog1Caption,

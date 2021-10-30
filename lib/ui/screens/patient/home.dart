@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
@@ -12,6 +13,7 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
+import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
@@ -141,6 +143,7 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
+              print('button clicked');
               if (data['pStatus'] as bool) {
                 if (data['hasActiveQueueCons'] as bool) {
                   showErrorDialog(
@@ -149,7 +152,18 @@ class PatientHomeScreen extends StatelessWidget {
                       errorDescription:
                           'Please proceed to your existing consultation');
                 } else {
-                  consController.checkRequestConsultation;
+                  showConfirmationDialog(
+                    dialogTitle: dialog1Title,
+                    dialogCaption: dialog1Caption,
+                    onYesTap: () {
+                      consController.isConsultForYou.value = true;
+                      Get.to(() => ConsFormScreen());
+                    },
+                    onNoTap: () {
+                      consController.isConsultForYou.value = false;
+                      Get.to(() => ConsFormScreen());
+                    },
+                  );
                 }
               } else {
                 showErrorDialog(

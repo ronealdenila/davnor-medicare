@@ -63,7 +63,9 @@ class LiveConsultationScreen extends StatelessWidget {
               Icons.videocam_outlined,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              //implement agora video calls userID
+            },
           ),
           IconButton(
             icon: const Icon(

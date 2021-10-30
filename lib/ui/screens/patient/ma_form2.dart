@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -113,8 +114,8 @@ class MAForm2Screen extends GetView<MARequestController> {
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           crossAxisCount: 3,
-          children: List.generate(controller.imagesListNew.length + 1, (index) {
-            if (index == controller.imagesListNew.length) {
+          children: List.generate(controller.images.length + 1, (index) {
+            if (index == controller.images.length) {
               return Center(
                 child: IconButton(
                   icon: const Icon(
@@ -122,30 +123,33 @@ class MAForm2Screen extends GetView<MARequestController> {
                   ),
                   color: verySoftBlueColor[100],
                   iconSize: 45,
-                  onPressed: controller.pickMultiImage,
+                  onPressed: controller.pickMultiImageS,
+                  //onPressed: controller.pickMultiImage,
                 ),
               );
             }
             return Stack(
               children: [
-                // Image.file(
-                //   File(controller.images[index].path),
+                kIsWeb
+                    ? Image.network(controller.images[index].path)
+                    : Image.file(
+                        File(controller.images[index].path),
+                        width: 140,
+                        height: 140,
+                        fit: BoxFit.fill,
+                      ),
+                // Image.memory(
+                //   Uint8List.fromList(controller.imagesListNew[index].bytes),
                 //   width: 140,
                 //   height: 140,
-                //   fit: BoxFit.fill,
                 // ),
-                Image.memory(
-                  Uint8List.fromList(controller.imagesListNew[index].bytes),
-                  width: 140,
-                  height: 140,
-                ),
                 Positioned(
                   right: 5,
                   top: 5,
                   child: InkWell(
                     onTap: () {
-                      // controller.imagesListNew.remove(controller.images[index]);
-                      controller.imagesListNew.removeAt(index);
+                      controller.imagesListNew.remove(controller.images[index]);
+                      //controller.imagesListNew.removeAt(index);
                     },
                     child: const Icon(
                       Icons.remove_circle,

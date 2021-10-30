@@ -29,12 +29,7 @@ class ArticleItemScreen extends StatelessWidget {
                 height: 220,
                 child: Hero(
                   tag: articleList[index].title!,
-                  child:
-                      // Image.network(
-                      //   articleList[index].photoURL!,
-                      //   fit: BoxFit.cover,
-                      // ),
-                      Stack(
+                  child: Stack(
                     fit: StackFit.expand,
                     children: [
                       Image.network(
@@ -45,8 +40,6 @@ class ArticleItemScreen extends StatelessWidget {
                         top: 0,
                         child: CupertinoNavigationBarBackButton(
                           onPressed: Get.back,
-                          /*Wala koy makita sample item sa figma so wala ko
-                            kabalo unsa na color dria (R)*/
                           color: Colors.black,
                         ),
                       ),

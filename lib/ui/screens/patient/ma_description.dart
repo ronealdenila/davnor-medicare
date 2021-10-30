@@ -168,7 +168,7 @@ class MADescriptionScreen extends StatelessWidget {
           return CustomButton(
             onTap: () {
               if (data['pStatus'] as bool) {
-                if (data['hasActiveQueueMA'] as bool) {
+                if (!data['hasActiveQueueMA']) {
                   if (controller.hasAvailableSlot()) {
                     //check activeQueue/slot/fund
                     return showConfirmationDialog(

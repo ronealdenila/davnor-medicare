@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
@@ -57,7 +58,10 @@ class LiveConsInfoScreen extends StatelessWidget {
                 verticalSpace20,
                 InkWell(
                   onTap: () {
+                    showLoading();
                     //TODO: Move cons request to cons history
+                    //then delete consID sa live_cons
+                    dismissDialog();
                   },
                   child: const Text('End Consultation',
                       textAlign: TextAlign.left, style: subtitle18Medium),
@@ -65,7 +69,8 @@ class LiveConsInfoScreen extends StatelessWidget {
                 verticalSpace15,
                 InkWell(
                   onTap: () {
-                    //TODO: Remove cons request
+                    //TODO: Remove cons request and specify the reason why
+                    //ADD DIALOG TUNG SAME NAWNG SA maghatag ug reason
                   },
                   child: SizedBox(
                     width: Get.width,
