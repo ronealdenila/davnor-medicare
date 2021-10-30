@@ -12,8 +12,11 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class MAHistoryController extends GetxController {
   final log = getLogger('MA History Controller');
 
-  RxList<MAHistoryModel> maList = RxList<MAHistoryModel>([]);
-  RxList<MAHistoryModel> maListmaster = RxList<MAHistoryModel>([]);
+  RxList<MAHistoryModel> maListPatient = RxList<MAHistoryModel>([]);
+  RxList<MAHistoryModel> maListmasterPatient = RxList<MAHistoryModel>([]);
+
+  RxList<MAHistoryModel> maListPSWD = RxList<MAHistoryModel>([]);
+  RxList<MAHistoryModel> maListmasterPSWD = RxList<MAHistoryModel>([]);
   //FOR PSWD SIDE
   final RxList<MAHistoryModel> mafilteredList = RxList<MAHistoryModel>();
   final TextEditingController maFilter = TextEditingController();
@@ -21,10 +24,16 @@ class MAHistoryController extends GetxController {
   RxBool enabledPastDays = false.obs;
 
   @override
+  void onInit() async {
+    super.onInit;
+    await getMAHistoryForPSWD();
+    print(maListPatient.length.toString() + "length");
+  }
+
+  @override
   void onReady() {
     super.onReady();
     log.i('onReady | DoctorListController');
-    getMAHistoryForPSWD();
   }
 
   Future<void> getMAHistoryForPatient() async {
@@ -35,22 +44,24 @@ class MAHistoryController extends GetxController {
         .get()
         .then((value) {
       for (final result in value.docs) {
-        maList.add(MAHistoryModel.fromJson(result.data()));
-        maListmaster.add(MAHistoryModel.fromJson(result.data()));
+        // list.add(MAHistoryModel.fromJson(result.data()));
+        maListPatient.add(MAHistoryModel.fromJson(result.data()));
+        maListmasterPatient.add(MAHistoryModel.fromJson(result.data()));
       }
     });
   }
 
   Future<void> getMAHistoryForPSWD() async {
     log.i('Get MA History for PSWD Personnel - ${auth.currentUser!.uid}');
+    // var list = [];
     await firestore
         .collection('ma_history')
         .orderBy('dateRqstd')
         .get()
         .then((value) {
       for (final result in value.docs) {
-        maList.add(MAHistoryModel.fromJson(result.data()));
-        maListmaster.add(MAHistoryModel.fromJson(result.data()));
+        maListPSWD.add(MAHistoryModel.fromJson(result.data()));
+        maListmasterPSWD.add(MAHistoryModel.fromJson(result.data()));
       }
     });
   }
@@ -117,48 +128,48 @@ class MAHistoryController extends GetxController {
   filter({
     required String name,
   }) {
-    maList.clear();
-    for (var i = 0; i < maListmaster.length; i++) {
-      if (maListmaster[i]
+    maListPSWD.clear();
+    for (var i = 0; i < maListmasterPSWD.length; i++) {
+      if (maListmasterPSWD[i]
           .fullName!
           .toLowerCase()
           .contains(name.toLowerCase())) {
-        maList.add(maListmaster[i]);
+        maListPSWD.add(maListmasterPSWD[i]);
       }
     }
     if (enabledPastDays.value == true) {
-      for (var i = 0; i < maListmaster.length; i++) {
-        if (readTimestamp(maListmaster[i].dateClaimed!.seconds) > 30) {
+      for (var i = 0; i < maListmasterPSWD.length; i++) {
+        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
         } else {
-          maList.add(maListmaster[i]);
+          maListPSWD.add(maListmasterPSWD[i]);
         }
       }
     }
 
-    for (var i = 0; i < maList.length; i++) {
-      print(maList[i].fullName);
+    for (var i = 0; i < maListPSWD.length; i++) {
+      print(maListPSWD[i].fullName);
     }
 
-    final stores = maList.map((e) => e.fullName).toSet();
-    maList.retainWhere((x) => stores.remove(x.fullName));
+    // final stores = maList.map((e) => e.fullName).toSet();
+    // maList.retainWhere((x) => stores.remove(x.fullName));
   }
 
   filterPastDays() {
-    maList.clear();
+    maListPSWD.clear();
 
     if (enabledPastDays.value == true) {
-      for (var i = 0; i < maListmaster.length; i++) {
-        if (readTimestamp(maListmaster[i].dateClaimed!.seconds) > 30) {
+      for (var i = 0; i < maListmasterPSWD.length; i++) {
+        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
         } else {
-          maList.add(maListmaster[i]);
+          maListPSWD.add(maListmasterPSWD[i]);
         }
       }
     } else {
-      maList.assignAll(maListmaster);
+      maListPSWD.assignAll(maListmasterPSWD);
     }
 
-    for (var i = 0; i < maList.length; i++) {
-      print(maList[i].fullName);
+    for (var i = 0; i < maListPSWD.length; i++) {
+      print(maListPSWD[i].fullName);
     }
 
     // final stores = maList.map((e) => e.fullName).toSet();
@@ -166,12 +177,12 @@ class MAHistoryController extends GetxController {
   }
 
   filterSpecificDay() {
-    maList.clear();
+    maListPSWD.clear();
 
-    for (var i = 0; i < maListmaster.length; i++) {
-      if (readTimestamp(maListmaster[i].dateClaimed!.seconds) > 30) {
+    for (var i = 0; i < maListmasterPSWD.length; i++) {
+      if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
       } else {
-        maList.add(maListmaster[i]);
+        maListPSWD.add(maListmasterPSWD[i]);
       }
     }
   }
@@ -191,26 +202,31 @@ class MAHistoryController extends GetxController {
   }
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    maList.clear();
-    print(args.value);
+    maListPSWD.clear();
+    // print(args.value);
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    print(myTimeStamp.toDate().month.toString() +
-        " - " +
-        myTimeStamp.toDate().day.toString());
-    print(maListmaster[0].dateClaimed!.toDate().month.toString() +
-        " - " +
-        maListmaster[0].dateClaimed!.toDate().day.toString());
-    for (var i = 0; i < maListmaster.length; i++) {
+    // print(myTimeStamp.toDate().month.toString() +
+    //     " - " +
+    //     myTimeStamp.toDate().day.toString());
+    // print(maListmaster[0].dateRqstd!.toDate().month.toString() +
+    //     " - " +
+    //     maListmaster[0].dateRqstd!.toDate().day.toString());
+    for (var i = 0; i < maListmasterPSWD.length; i++) {
       String dateConstant =
-          maListmaster[0].dateClaimed!.toDate().month.toString() +
+          maListmasterPSWD[i].dateRqstd!.toDate().month.toString() +
               " - " +
-              maListmaster[0].dateClaimed!.toDate().day.toString();
+              maListmasterPSWD[i].dateRqstd!.toDate().day.toString();
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
           myTimeStamp.toDate().day.toString();
+      print(i.toString() +
+          "  " +
+          dateConstant +
+          " dateSelected  " +
+          dateSelected);
 
       if (dateConstant == dateSelected) {
-        maList.add(maListmaster[i]);
+        maListPSWD.add(maListmasterPSWD[i]);
       } else {}
     }
     Get.back();

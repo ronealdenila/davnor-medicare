@@ -9,7 +9,7 @@ import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class MAHistoryList extends StatelessWidget {
   @override
@@ -38,7 +38,8 @@ class MAHistoryList extends StatelessWidget {
                 validator: Validator().notEmpty,
                 onChanged: (value) {
                   if (hController.maFilter.text.isEmpty) {
-                    hController.maList.assignAll(hController.maListmaster);
+                    hController.maListPSWD
+                        .assignAll(hController.maListmasterPSWD);
                   }
                 },
                 onSaved: (value) => hController.maFilter.text = value!,
@@ -110,7 +111,7 @@ Widget requestList(BuildContext context, hController) {
     height: MediaQuery.of(context).size.height * .40,
     child: Obx(
       () => ListView.builder(
-        itemCount: hController.maList.length,
+        itemCount: hController.maListPSWD.length,
         itemBuilder: (BuildContext context, int index) {
           return MediaQuery.removePadding(
             context: context,
@@ -120,10 +121,10 @@ Widget requestList(BuildContext context, hController) {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: hController.maList.length,
+                    itemCount: hController.maListPSWD.length,
                     itemBuilder: (context, index) {
                       return customTableRow(
-                          hController.maList[index], hController);
+                          hController.maListPSWD[index], hController);
                     }),
               ),
             ),

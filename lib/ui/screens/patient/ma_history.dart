@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
+
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -105,14 +106,15 @@ class MAHistoryScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),
                               shrinkWrap: true,
-                              itemCount: maHController.maList.length,
+                              itemCount: maHController.maListPatient.length,
                               itemBuilder: (context, index) {
                                 return MACard(
-                                    maHistory: maHController.maList[index],
+                                    maHistory:
+                                        maHController.maListPatient[index],
                                     onTap: () {
                                       Get.to(() => MAHistoryInfoScreen(),
-                                          arguments:
-                                              maHController.maList[index]);
+                                          arguments: maHController
+                                              .maListPatient[index]);
                                     });
                               });
                         }
