@@ -50,8 +50,13 @@ class DoctorListScreen extends StatelessWidget {
                   child: CustomDropdown(
                     hintText: 'Select doctor title',
                     dropdownItems: title,
-                    onChanged: (Item? item) =>
-                        dListController.title.value = item!.name,
+                    onChanged: (Item? item) {
+                      dListController.title.value = item!.name;
+                      if (dListController.title.value == '') {
+                        dListController.doctorList
+                            .assignAll(dListController.filteredDoctorList);
+                      }
+                    },
                     onSaved: (Item? item) =>
                         dListController.title.value = item!.name,
                   ),

@@ -50,25 +50,37 @@ class PSWDStaffListController extends GetxController {
   }
 
   filter({required String name, required String title}) {
+    print(name + " " + title);
     pswdList.clear();
-    for (var i = 0; i < pswdList.length; i++) {
-      if (filteredPswdList[i]
-              .lastName!
-              .toLowerCase()
-              .contains(name.toLowerCase()) ||
-          filteredPswdList[i]
-              .firstName!
-              .toLowerCase()
-              .contains(name.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
+    if (name.isEmpty) {
+      print("Empty name");
+    } else {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        print(filteredPswdList[i].firstName.toString() + " " + i.toString());
+        if (filteredPswdList[i]
+                .firstName!
+                .trim()
+                .toLowerCase()
+                .contains(name.toLowerCase()) ||
+            filteredPswdList[i]
+                .lastName!
+                .trim()
+                .toLowerCase()
+                .contains(name.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
       }
     }
-    for (var i = 0; i < filteredPswdList.length; i++) {
-      if (filteredPswdList[i]
-          .position!
-          .toLowerCase()
-          .contains(title.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
+    if (title.isEmpty) {
+      print("Empty title");
+    } else {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if (filteredPswdList[i]
+            .position!
+            .toLowerCase()
+            .contains(title.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
       }
     }
 
@@ -76,7 +88,7 @@ class PSWDStaffListController extends GetxController {
       print(pswdList[i].firstName);
     }
 
-    final stores = pswdList.map((e) => e.email).toSet();
-    pswdList.retainWhere((x) => stores.remove(x.email));
+    final stores = pswdList.map((e) => e.userID).toSet();
+    pswdList.retainWhere((x) => stores.remove(x.userID));
   }
 }
