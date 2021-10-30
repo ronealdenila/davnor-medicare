@@ -20,8 +20,6 @@ import 'package:get/get.dart';
 //*https://youtu.be/udsysUj-X4w
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
-//ADD STREAM FOR PSWD ACCEPTED and PASS IN ON ACCEPTED
-
 class PSWDPersonnelHome extends StatelessWidget {
   final OnProgressReqController pswdController =
       Get.put(OnProgressReqController());
@@ -234,6 +232,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                             flex: 6,
                             child: Container(
                               alignment: Alignment.centerLeft,
+                              // color: Colors.cyanAccent,
                               child: Column(
                                 children: [
                                   ActionCard(
@@ -592,12 +591,12 @@ class PswdPDashboardScreen extends GetView<MenuController> {
               ),
               verticalSpace25,
               Align(
-                  alignment: Alignment.bottomCenter,
-                  child: PSWDButton(
-                      onItemTap: () {
-                        print(_textFieldController.text);
-                      },
-                      buttonText: 'Submit')),
+              alignment: Alignment.bottomCenter,
+              child: PSWDButton(
+                onItemTap: () {
+                  print(_textFieldController.text);
+                },
+                buttonText: 'Submit')),
             ],
           )
         )
@@ -658,23 +657,20 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                   keyboardType: TextInputType.multiline,
               ),
               ),
-
               verticalSpace25,
               Align(
-                  alignment: Alignment.bottomCenter,
-                  child: PSWDButton(
-                      onItemTap: () {
-                        print(_pharmacyController.text);
-                        print(_worthController.text);
-                      },
-                      buttonText: 'Submit')),
+                alignment: Alignment.bottomCenter,
+                child: PSWDButton(
+                  onItemTap: () {
+                    print(_pharmacyController.text);
+                    print(_worthController.text);
+                  },
+                  buttonText: 'Submit')),
             ],
           )
         )
     ]);
   }
-
-
 }
 
 class PswdPSideMenuItem extends GetView<MenuController> {
