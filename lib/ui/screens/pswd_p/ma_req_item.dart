@@ -1,10 +1,11 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
-import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class MARequestItemScreen extends StatelessWidget {
             child: Column(
               children: [
                 PSWDItemView(context, 'request', model),
-                screenButtons(),
+                screenButtons(context),
                 verticalSpace35,
               ],
             ),
@@ -46,21 +47,77 @@ class MARequestItemScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget screenButtons(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+      PSWDButton(
+        onItemTap: () {
+          showConfirmationDialog(
+            dialogTitle: dialogpswdTitle,
+            dialogCaption:
+                'Please select yes if you want to accept the request',
+            onYesTap: () {
+              //pass this MA to onprgoress as transferred ACCEPTED
+            },
+            onNoTap: () {
+              dismissDialog();
+            },
+          );
+        },
+        buttonText: 'Accept',
+      ),
+      PSWDButton(
+        onItemTap: () {
+          showDialog(context: context, builder: (context) => declineDialogMA());
+        },
+        buttonText: 'Decline',
+      ),
+    ]);
+  }
 }
 
-Widget screenButtons() {
-  return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-    // PSWDButton(
-    //   onItemTap: () {
-    //     //accept func
-    //   },
-    //   buttonText: 'Accept',
-    // ),
-    // PSWDButton(
-    //   onItemTap: () {
-    //     //decline func
-    //   },
-    //   buttonText: 'Decline',
-    // ),
-  ]);
+Widget declineDialogMA() {
+  TextEditingController _textFieldController = TextEditingController();
+  return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+            width: 950,
+            child: Column(
+              children: [
+                const Text(
+                  'To inform the patient',
+                  style: title32Regular,
+                ),
+                verticalSpace10,
+                const Text(
+                  'Please specify the reason',
+                  style: title20Regular,
+                ),
+                verticalSpace50,
+                TextFormField(
+                  controller: _textFieldController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter the reason here',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+                ),
+                verticalSpace25,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: PSWDButton(
+                        onItemTap: () {
+                          print(_textFieldController.text);
+                        },
+                        buttonText: 'Submit')),
+              ],
+            ))
+      ]);
 }

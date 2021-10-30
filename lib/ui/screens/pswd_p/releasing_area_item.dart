@@ -1,8 +1,9 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -41,15 +42,20 @@ class ReleasingAreaItemScreen extends StatelessWidget {
             child: Column(
               children: [
                 PSWDItemView(context, 'medReady', model),
-                // Align(
-                //   alignment: Alignment.bottomRight,
-                //   child: PSWDButton(
-                //     onItemTap: () {
-                //       //open dialog
-                //     },
-                //     buttonText: 'Claimed',
-                //   ),
-                // ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: PSWDButton(
+                    onItemTap: () {
+                      showConfirmationDialog(
+                        dialogTitle: dialogpswdTitle,
+                        dialogCaption: dialogpswdCaption,
+                        onYesTap: () {},
+                        onNoTap: () {},
+                      );
+                    },
+                    buttonText: 'Claimed',
+                  ),
+                ),
                 verticalSpace35,
               ],
             ),
