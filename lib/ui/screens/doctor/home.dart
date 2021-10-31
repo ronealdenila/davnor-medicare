@@ -170,7 +170,9 @@ class DoctorHomeScreen extends StatelessWidget {
                       secondaryColor: verySoftMagentaCustomColor,
                       onTap: () {
                         if (data['dStatus']) {
-                          print('for para maka offline');
+                          showDialog(
+                              context: context,
+                              builder: (context) => offlineDialog());
                         } else {
                           showDialog(
                               context: context,
@@ -249,7 +251,7 @@ class DoctorHomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  data['dStatus']
+                  data['numToAccomodate'] != 0
                       ? '${data['accomodated']} out of ${data['numToAccomodate']} patients'
                       : '',
                   style: const TextStyle(
@@ -307,6 +309,83 @@ class DoctorHomeScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget offlineDialog() {
+    return SimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 30, horizontal: kIsWeb ? 50 : 20),
+        children: [
+          SizedBox(
+              width: Get.width * .7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Change Status',
+                    textAlign: TextAlign.center,
+                    style: kIsWeb ? title32Regular : subtitle20Bold,
+                  ),
+                  verticalSpace15,
+                  const Text(
+                    'It looks like you still have some patients waiting',
+                    textAlign: TextAlign.center,
+                    style: kIsWeb ? title32Regular : body16Regular,
+                  ),
+                  verticalSpace25,
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: TextButton(
+                          onPressed: () async {
+                            await firestore
+                                .collection('doctors')
+                                .doc(fetchedData!.userID!)
+                                .collection('status')
+                                .doc('value')
+                                .update({'dStatus': false}).then((value) {
+                              dismissDialog();
+                              print('Changed status');
+                              count.value = 1;
+                            }).catchError((error) {
+                              //snack bar for ERROR DIALOG
+                              print("Something went wrong");
+                            });
+                          },
+                          child: Text('ACCOMMODATE MY PATIENTS FIRST'))),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: TextButton(
+                          onPressed: () async {
+                            //final num = data['numToAccomodate'];
+                            await firestore
+                                .collection('doctors')
+                                .doc(fetchedData!.userID!)
+                                .collection('status')
+                                .doc('value')
+                                .update({
+                              'accomodated': 0,
+                              'numToAccomodate': 0,
+                              'dStatus': false
+                            }).then((value) {
+                              //TODO consSlot - num in category
+                              dismissDialog();
+                              print('Changed status');
+                              count.value = 1;
+                            }).catchError((error) {
+                              //snack bar for ERROR DIALOG
+                              print("Something went wrong");
+                            });
+                          },
+                          child: Text('GO OFFLINE NOW'))),
+                  verticalSpace15,
+                  Text(
+                    'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
+                    textAlign: TextAlign.center,
+                    style: kIsWeb ? title32Regular : body14RegularNeutral,
+                  ),
+                ],
+              ))
+        ]);
   }
 
   Widget detailsDialogCons1() {
