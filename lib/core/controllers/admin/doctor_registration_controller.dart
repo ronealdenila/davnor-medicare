@@ -65,6 +65,7 @@ class DoctorRegistrationController extends GetxController {
         .collection('status')
         .doc('value')
         .set({
+      'accomodated': 0,
       'numToAccomodate': 0,
       'dStatus': false,
       'hasOngoingCons': false,

@@ -218,16 +218,6 @@ class PatientHomeScreen extends StatelessWidget {
                     errorDescription:
                         'Please verify your account first in your profile');
               }
-
-              //sa business logic na ata ta magdecide kung
-              //kani nga dialog mag appear for now dria nako
-              //ibutang (R)
-              // showDefaultDialog(
-              //   dialogTitle: dialogQueue1,
-              //   dialogCaption: dialogQueue2,
-              //   textConfirm: 'Okay',
-              //   onConfirmTap: Get.back,
-              // );
             },
           ),
         ),
@@ -332,7 +322,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
       );
     }
-    return const SizedBox();
+    return const SizedBox(height: 0, width: 0);
   }
 
   Widget showArticles() {

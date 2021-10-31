@@ -49,6 +49,7 @@ class PatientStatusModel {
 class DoctorStatusModel {
   DoctorStatusModel({
     required this.numToAccomodate,
+    required this.accomodated,
     required this.dStatus,
     required this.hasOngoingCons,
   });
@@ -56,17 +57,20 @@ class DoctorStatusModel {
   factory DoctorStatusModel.fromJson(Map<String, dynamic> json) =>
       DoctorStatusModel(
         numToAccomodate: json['numToAccomodate'] as int,
+        accomodated: json['accomodated'] as int,
         dStatus: json['dStatus'] as bool,
         hasOngoingCons: json['hasOngoingCons'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
         'numToAccomodate': numToAccomodate,
+        'accomodated': accomodated,
         'dStatus': dStatus,
         'hasOngoingCons': hasOngoingCons,
       };
 
   int? numToAccomodate;
+  int? accomodated;
   bool? dStatus;
   bool? hasOngoingCons;
 }

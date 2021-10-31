@@ -10,7 +10,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 
 class DocConsHistoryScreen extends StatelessWidget {
-  final TextEditingController searchKeyword = TextEditingController();
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController());
 
@@ -38,7 +37,7 @@ class DocConsHistoryScreen extends StatelessWidget {
                         height: 50,
                         width: screenWidthPercentage(context, percentage: .5),
                         child: TextFormField(
-                          controller: searchKeyword,
+                          controller: consHController.searchKeyword,
                           decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 10),
@@ -53,7 +52,8 @@ class DocConsHistoryScreen extends StatelessWidget {
                           onChanged: (value) {
                             return;
                           },
-                          onSaved: (value) => searchKeyword.text = value!,
+                          onSaved: (value) =>
+                              consHController.searchKeyword.text = value!,
                         ),
                       ),
                       horizontalSpace10,

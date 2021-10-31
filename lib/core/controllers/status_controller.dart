@@ -15,4 +15,14 @@ class StatusController extends GetxController {
         .snapshots();
     return doc;
   }
+
+  Stream<DocumentSnapshot> getDoctorStatus(String userID) {
+    final Stream<DocumentSnapshot> doc = firestore
+        .collection('doctors')
+        .doc(userID)
+        .collection('status')
+        .doc('value')
+        .snapshots();
+    return doc;
+  }
 }

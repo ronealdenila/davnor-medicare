@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +14,11 @@ class ConsHistoryController extends GetxController {
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
   RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
+
+  //searching consultation history in doctor side...
+  RxList<ConsultationHistoryModel> filteredList =
+      RxList<ConsultationHistoryModel>([]);
+  final TextEditingController searchKeyword = TextEditingController();
 
   Future<void> getConsHistoryForPatient() async {
     log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
