@@ -2,7 +2,9 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -36,10 +38,7 @@ class DoctorListScreen extends StatelessWidget {
                     labelText: 'Search doctor name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
-                      if (dListController.docFilter.text.isEmpty) {
-                        dListController.doctorList
-                            .assignAll(dListController.filteredDoctorList);
-                      }
+                      return;
                     },
                     onSaved: (value) => dListController.docFilter.text = value!,
                   ),
@@ -49,13 +48,9 @@ class DoctorListScreen extends StatelessWidget {
                   width: 250,
                   child: CustomDropdown(
                     hintText: 'Select doctor title',
-                    dropdownItems: title,
+                    dropdownItems: titleDropdown,
                     onChanged: (Item? item) {
                       dListController.title.value = item!.name;
-                      if (dListController.title.value == '') {
-                        dListController.doctorList
-                            .assignAll(dListController.filteredDoctorList);
-                      }
                     },
                     onSaved: (Item? item) =>
                         dListController.title.value = item!.name,
@@ -79,7 +74,22 @@ class DoctorListScreen extends StatelessWidget {
                               title: dListController.title.value);
                         }
                       },
-                    ))
+                    )),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                    width: 100,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue[900],
+                      ),
+                      onPressed: () {
+                        dListController.docFilter.clear();
+                        dListController.title.value = 'All';
+                        dListController.doctorList
+                            .assignAll(dListController.filteredDoctorList);
+                      },
+                    )),
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
@@ -202,7 +212,9 @@ class DoctorListScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                      },
                       child: Text(
                         'View',
                         style: body16RegularUnderlineBlue,
@@ -210,7 +222,10 @@ class DoctorListScreen extends StatelessWidget {
                     ),
                     horizontalSpace15,
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        dListController.enableEditing.value = true;
+                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                      },
                       child: Text(
                         'Edit',
                         style: body16RegularUnderlineBlue,

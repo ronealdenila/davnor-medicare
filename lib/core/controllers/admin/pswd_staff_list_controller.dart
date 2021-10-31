@@ -12,6 +12,8 @@ class PSWDStaffListController extends GetxController {
   final TextEditingController pswdFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString position = ''.obs;
+  final RxString editPosition = ''.obs;
+  final RxBool enableEditing = false.obs;
 
   @override
   void onReady() {
@@ -49,31 +51,31 @@ class PSWDStaffListController extends GetxController {
             });
   }
 
+  String getProfilePhoto(PswdModel model) {
+    return model.profileImage!;
+  }
+
   filter({required String name, required String title}) {
-    print(name + " " + title);
     pswdList.clear();
-    if (name.isEmpty) {
-      print("Empty name");
-    } else {
+
+    //filter for name only
+    if (name != '' && title == '') {
       for (var i = 0; i < filteredPswdList.length; i++) {
-        print(filteredPswdList[i].firstName.toString() + " " + i.toString());
         if (filteredPswdList[i]
-                .firstName!
-                .trim()
+                .lastName!
                 .toLowerCase()
                 .contains(name.toLowerCase()) ||
             filteredPswdList[i]
-                .lastName!
-                .trim()
+                .firstName!
                 .toLowerCase()
                 .contains(name.toLowerCase())) {
           pswdList.add(filteredPswdList[i]);
         }
       }
     }
-    if (title.isEmpty) {
-      print("Empty title");
-    } else {
+
+    //filter for position only
+    else if (name == '' && title != '') {
       for (var i = 0; i < filteredPswdList.length; i++) {
         if (filteredPswdList[i]
             .position!
@@ -84,7 +86,29 @@ class PSWDStaffListController extends GetxController {
       }
     }
 
-    final stores = pswdList.map((e) => e.userID).toSet();
-    pswdList.retainWhere((x) => stores.remove(x.userID));
+    //filter for both
+    else if (name != '' && title != '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if ((filteredPswdList[i]
+                    .lastName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase()) ||
+                filteredPswdList[i]
+                    .firstName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) &&
+            filteredPswdList[i]
+                .position!
+                .toLowerCase()
+                .contains(title.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
+      }
+    }
+
+    //show all
+    else if (name == '' && title == 'All') {
+      pswdList.assignAll(filteredPswdList);
+    }
   }
 }

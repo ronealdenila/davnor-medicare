@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -48,14 +49,9 @@ class PSWDStaffListScreen extends StatelessWidget {
                   width: 250,
                   child: CustomDropdown(
                     hintText: 'Select position',
-                    dropdownItems: position,
+                    dropdownItems: positionDropdown,
                     onChanged: (item) {
                       pListController.position.value = item!.name;
-                      if (pListController.position.value == '') {
-                        pListController.pswdList
-                            .assignAll(pListController.filteredPswdList);
-                        pListController.pswdFilter.clear();
-                      }
                     },
                     onSaved: (Item? item) =>
                         pListController.position.value = item!.name,
@@ -86,7 +82,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         pListController.pswdFilter.clear();
-                        pListController.position.value = '';
+                        pListController.position.value = 'All';
                         pListController.pswdList
                             .assignAll(pListController.filteredPswdList);
                       },
@@ -192,7 +188,9 @@ class PSWDStaffListScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                      },
                       child: Text(
                         'View',
                         style: body16RegularUnderlineBlue,
@@ -200,7 +198,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                     ),
                     horizontalSpace15,
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        pListController.enableEditing.value = true;
+                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                      },
                       child: Text(
                         'Edit',
                         style: body16RegularUnderlineBlue,

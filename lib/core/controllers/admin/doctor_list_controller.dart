@@ -12,6 +12,9 @@ class DoctorListController extends GetxController {
   final TextEditingController docFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString title = ''.obs;
+  final RxString editTitle = ''.obs;
+  final RxString editDepartment = ''.obs;
+  final RxBool enableEditing = false.obs;
 
   @override
   void onReady() {
@@ -53,12 +56,16 @@ class DoctorListController extends GetxController {
         );
   }
 
+  String getProfilePhoto(DoctorModel model) {
+    return model.profileImage!;
+  }
+
   filter({required String name, required String title}) {
     print(name + " " + title);
     doctorList.clear();
-    if (name.isEmpty) {
-      print("Empty name");
-    } else {
+
+    //filter for name only
+    if (name != '' && title == '') {
       for (var i = 0; i < filteredDoctorList.length; i++) {
         if (filteredDoctorList[i]
                 .lastName!
@@ -72,9 +79,9 @@ class DoctorListController extends GetxController {
         }
       }
     }
-    if (title.isEmpty) {
-      print("Empty title");
-    } else {
+
+    //filter for title only
+    else if (name == '' && title != '') {
       for (var i = 0; i < filteredDoctorList.length; i++) {
         if (filteredDoctorList[i]
             .title!
@@ -85,11 +92,29 @@ class DoctorListController extends GetxController {
       }
     }
 
-    for (var i = 0; i < doctorList.length; i++) {
-      print(doctorList[i].firstName);
+    //filter for both
+    else if (name != '' && title != '') {
+      for (var i = 0; i < filteredDoctorList.length; i++) {
+        if ((filteredDoctorList[i]
+                    .lastName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase()) ||
+                filteredDoctorList[i]
+                    .firstName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) &&
+            filteredDoctorList[i]
+                .title!
+                .toLowerCase()
+                .contains(title.toLowerCase())) {
+          doctorList.add(filteredDoctorList[i]);
+        }
+      }
     }
 
-    final stores = doctorList.map((e) => e.userID).toSet();
-    doctorList.retainWhere((x) => stores.remove(x.userID));
+    //show all
+    else if (name == '' && title == 'All') {
+      doctorList.assignAll(filteredDoctorList);
+    }
   }
 }
