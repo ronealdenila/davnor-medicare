@@ -101,9 +101,13 @@ class PatientHomeScreen extends StatelessWidget {
                       child: StreamBuilder<DocumentSnapshot>(
                           stream: stats.getPatientStatus(auth.currentUser!.uid),
                           builder: (context, snapshot) {
-                            final data =
-                                snapshot.data!.data() as Map<String, dynamic>;
-                            return ActionButtons(data);
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              final data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return ActionButtons(data);
+                            }
+                            return ActionButtonsNormal();
                           }),
                     ),
                     verticalSpace25,
@@ -224,6 +228,44 @@ class PatientHomeScreen extends StatelessWidget {
               //   textConfirm: 'Okay',
               //   onConfirmTap: Get.back,
               // );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget ActionButtonsNormal() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: ActionCard(
+            text: 'Request Consultation',
+            color: verySoftMagenta[60],
+            secondaryColor: verySoftMagentaCustomColor,
+            onTap: () {
+              //Snackbar: Please wait while we are currently connect to the server
+            },
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+              text: 'Request Medical Assistance',
+              color: verySoftOrange[60],
+              secondaryColor: verySoftOrangeCustomColor,
+              //Note: Has weird transition
+              onTap: () {
+                //Snackbar: Please wait while we are currently connect to the server}
+              }),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'View\nQueue',
+            color: verySoftRed[60],
+            secondaryColor: verySoftRedCustomColor,
+            onTap: () {
+              //Snackbar: Please wait while we are currently connect to the server
             },
           ),
         ),

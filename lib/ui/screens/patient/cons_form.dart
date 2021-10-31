@@ -41,7 +41,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Where are you experiencing discomfort?',
+                      'What kind of discomfort are you experiencing?',
                       style: title32Regular,
                     ),
                     verticalSpace18,
@@ -58,7 +58,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           child: RadioListTile<bool>(
                             contentPadding: EdgeInsets.zero,
                             title: const Text(
-                              'Follow-Up',
+                              'New Consultation',
                               style: body16Regular,
                             ),
                             value: true,
@@ -71,7 +71,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           child: RadioListTile<bool>(
                             contentPadding: EdgeInsets.zero,
                             title: const Text(
-                              'New Consultation',
+                              'Follow-Up',
                               style: body16Regular,
                             ),
                             value: false,
@@ -141,7 +141,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           child: CustomButton(
                             onTap: () async {
                               if (_formKey.currentState!.validate()) {
-                                await Get.to(() => ConsForm2Screen());
+                                await controller.nextButton();
                               }
                             },
                             text: 'Next',

@@ -66,6 +66,11 @@ class ConsultationsController extends GetxController {
     return DateFormat.yMMMd().add_jm().format(dt);
   }
 
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
+    return DateFormat.yMMMd().add_jm().format(dt);
+  }
+
   // Stream<List<ConsultationModel>> getConsultations() {
   //   log.i('getConsultations | Streaming Consultation Request');
   //   return firestore

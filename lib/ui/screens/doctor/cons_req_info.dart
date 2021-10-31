@@ -107,7 +107,7 @@ class ConsReqInfoScreen extends StatelessWidget {
                       width: Get.width - 230,
                       child: Text(
                           doctorHomeController
-                              .convertEpoch(consData.dateRqstd!),
+                              .convertTimeStamp(consData.dateRqstd!),
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,

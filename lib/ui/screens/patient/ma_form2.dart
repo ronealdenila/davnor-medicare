@@ -124,7 +124,6 @@ class MAForm2Screen extends GetView<MARequestController> {
                   color: verySoftBlueColor[100],
                   iconSize: 45,
                   onPressed: controller.pickMultiImageS,
-                  //onPressed: controller.pickMultiImage,
                 ),
               );
             }
@@ -138,11 +137,6 @@ class MAForm2Screen extends GetView<MARequestController> {
                         height: 140,
                         fit: BoxFit.fill,
                       ),
-                // Image.memory(
-                //   Uint8List.fromList(controller.imagesListNew[index].bytes),
-                //   width: 140,
-                //   height: 140,
-                // ),
                 Positioned(
                   right: 5,
                   top: 5,

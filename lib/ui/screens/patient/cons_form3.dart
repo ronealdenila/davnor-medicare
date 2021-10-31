@@ -114,7 +114,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                 ),
                 color: verySoftBlueColor[100],
                 iconSize: 45,
-                onPressed: controller.pickForFollowUpImages,
+                onPressed: controller.pickForFollowUpImagess,
               ),
             );
           }
@@ -128,11 +128,6 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                       height: 140,
                       fit: BoxFit.fill,
                     ),
-              // Image.memory(
-              //   Uint8List.fromList(images[index].bytes),
-              //   width: 140,
-              //   height: 140,
-              // ),
               Positioned(
                 right: 5,
                 top: 5,

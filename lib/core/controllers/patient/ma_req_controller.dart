@@ -69,16 +69,6 @@ class MARequestController extends GetxController {
         );
   }
 
-  // getImage() async {
-  //   Image? fromPicker = await ImagePickerWeb.getImage(outputType: ImageType.widget);
-
-  //   if (fromPicker != null) {
-
-  //       pickedImage = fromPicker;
-
-  //   }
-  // }
-
   bool hasAvailableSlot() {
     final slot = statusList[0].maSlot!;
     final rqstd = statusList[0].maRequested!;
