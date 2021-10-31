@@ -12,8 +12,12 @@ class PSWDStaffListController extends GetxController {
   final TextEditingController pswdFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString position = ''.obs;
-  final RxString editPosition = ''.obs;
   final RxBool enableEditing = false.obs;
+
+  //Edit
+  final TextEditingController editFirstName = TextEditingController();
+  final TextEditingController editLastName = TextEditingController();
+  final RxString editPosition = ''.obs;
 
   @override
   void onReady() {
@@ -49,6 +53,30 @@ class PSWDStaffListController extends GetxController {
         .catchError((error) => {
               //Dialog error
             });
+  }
+
+  Future<void> updatePSWD(PswdModel model) async {
+    await firestore
+        .collection('pswd_personnel')
+        .doc(model.userID)
+        .update({
+          'firstName':
+              editFirstName.text == '' ? model.firstName : editFirstName.text,
+          'lastName':
+              editLastName.text == '' ? model.lastName : editLastName.text,
+          'position':
+              editPosition.value == '' ? model.position : editPosition.value,
+        })
+        .then(
+          (value) => {
+            //Dialog success
+          },
+        )
+        .catchError(
+          (error) => {
+            //Dialog error
+          },
+        );
   }
 
   String getProfilePhoto(PswdModel model) {

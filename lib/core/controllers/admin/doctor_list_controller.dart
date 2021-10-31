@@ -12,6 +12,11 @@ class DoctorListController extends GetxController {
   final TextEditingController docFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString title = ''.obs;
+
+  //Edit
+  final TextEditingController editFirstName = TextEditingController();
+  final TextEditingController editLastName = TextEditingController();
+  final TextEditingController editClinicHours = TextEditingController();
   final RxString editTitle = ''.obs;
   final RxString editDepartment = ''.obs;
   final RxBool enableEditing = false.obs;
@@ -44,6 +49,35 @@ class DoctorListController extends GetxController {
         .collection('doctors')
         .doc(uid)
         .update({'disabled': true})
+        .then(
+          (value) => {
+            //Dialog success
+          },
+        )
+        .catchError(
+          (error) => {
+            //Dialog error
+          },
+        );
+  }
+
+  Future<void> updateDoctor(DoctorModel model) async {
+    await firestore
+        .collection('doctors')
+        .doc(model.userID)
+        .update({
+          'firstName':
+              editFirstName.text == '' ? model.firstName : editFirstName.text,
+          'lastName':
+              editLastName.text == '' ? model.lastName : editLastName.text,
+          'title': editTitle.value == '' ? model.title : editTitle.value,
+          'department': editDepartment.value == ''
+              ? model.department
+              : editDepartment.value,
+          'clinicHours': editClinicHours.value == ''
+              ? model.clinicHours
+              : editClinicHours.value,
+        })
         .then(
           (value) => {
             //Dialog success

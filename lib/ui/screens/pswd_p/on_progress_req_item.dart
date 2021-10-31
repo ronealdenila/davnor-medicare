@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -116,7 +117,15 @@ class OnProgressReqItemScreen extends StatelessWidget {
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: PSWDButton(
-                          onItemTap: () {
+                          onItemTap: () async {
+                            await firestore
+                                .collection('on_progress_ma')
+                                .doc(model.maID)
+                                .update({
+                              'isMedReady': true,
+                              'medWorth': _worthController.text,
+                              'pharmacy': _pharmacyController.text
+                            });
                             print(_pharmacyController.text);
                             print(_worthController.text);
                           },

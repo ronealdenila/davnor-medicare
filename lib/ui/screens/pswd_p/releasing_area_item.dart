@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -52,8 +54,7 @@ class ReleasingAreaItemScreen extends StatelessWidget {
                         dialogCaption: dialogpswdCaption,
                         onYesTap: () {
                           showLoading();
-                          //save data to ma history
-                          //delete doc on on_progress_ma
+                          transfferToHistpry(model);
                           dismissDialog();
                         },
                         onNoTap: () {
@@ -71,5 +72,43 @@ class ReleasingAreaItemScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> transfferToHistpry(GeneralMARequestModel model) async {
+    showLoading();
+    await firestore
+        .collection('ma_history')
+        .doc(model.maID)
+        .set(<String, dynamic>{
+      'maID': model.maID,
+      'patientId': model.requesterID,
+      'fullName': model.fullName,
+      'age': model.age,
+      'address': model.address,
+      'gender': model.gender,
+      'type': model.type,
+      'prescriptions': model.prescriptions,
+      'dateRqstd': model.dateRqstd,
+      'validID': model.validID,
+      'receivedBy': model.receivedBy,
+      'medWorth': model.medWorth,
+      'pharmacy': model.pharmacy,
+      'dateClaimed': Timestamp.fromDate(DateTime.now()),
+    }).then((value) async {
+      //NOTIF USER: CLAIMED
+      await deleteMA(model.maID!);
+      dismissDialog(); //dismissLoading
+      dismissDialog(); //then dismiss dialog for are your sure? yes/no
+      Get.back();
+    });
+  }
+
+  Future<void> deleteMA(String maID) async {
+    await firestore
+        .collection('on_progress_ma')
+        .doc(maID)
+        .delete()
+        .then((value) => print("MA Request Deleted"))
+        .catchError((error) => print("Failed to delete MA Request"));
   }
 }

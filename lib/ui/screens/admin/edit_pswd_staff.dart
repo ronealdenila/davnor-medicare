@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -15,14 +16,11 @@ final PSWDStaffListController controller = Get.find();
 class EditPSWDStaffScrenn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: SingleChildScrollView(child: ResponsiveView())),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: SingleChildScrollView(child: ResponsiveView())),
     );
   }
 }
@@ -108,7 +106,7 @@ class ResponsiveView extends GetResponsiveView {
       children: [
         AdminButton(
           onItemTap: () async {
-            //update data of PSWD
+            await controller.updatePSWD(model);
           },
           buttonText: 'Save',
         ),
@@ -137,6 +135,9 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget editInfoofPSWDStaff() {
+    controller.editLastName.text = model.lastName!;
+    controller.editFirstName.text = model.firstName!;
+    controller.editPosition.value = model.position!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       verticalSpace15,
       const Text(
@@ -149,8 +150,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
+            controller: controller.editLastName,
             enabled: controller.enableEditing.value,
-            initialValue: model.lastName,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -158,6 +159,11 @@ class ResponsiveView extends GetResponsiveView {
                 ),
               ),
             ),
+            validator: Validator().notEmpty,
+            onChanged: (value) {
+              return;
+            },
+            onSaved: (value) => controller.editLastName.text = value!,
           ),
         ),
       ),
@@ -171,8 +177,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
+            controller: controller.editFirstName,
             enabled: controller.enableEditing.value,
-            initialValue: model.firstName,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -180,6 +186,11 @@ class ResponsiveView extends GetResponsiveView {
                 ),
               ),
             ),
+            validator: Validator().notEmpty,
+            onChanged: (value) {
+              return;
+            },
+            onSaved: (value) => controller.editFirstName.text = value!,
           ),
         ),
       ),
@@ -195,8 +206,8 @@ class ResponsiveView extends GetResponsiveView {
           child: Visibility(
             visible: !controller.enableEditing.value,
             child: TextFormField(
-              enabled: false,
               initialValue: model.position,
+              enabled: false,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(

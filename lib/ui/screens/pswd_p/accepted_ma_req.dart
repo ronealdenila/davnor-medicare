@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -40,7 +41,17 @@ class AcceptedMARequestScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: CustomButton(
                   onTap: () async {
-                    //update the isTransferred = true;
+                    await firestore
+                        .collection('on_progress_ma')
+                        .doc(model.maID)
+                        .update({
+                      'isTransferred': true,
+                    }).then((value) {
+                      //notif user
+                      Get.back();
+                    }).catchError((onError) {
+                      //dialog, "something went wrong"
+                    });
                   },
                   text: 'Transfer for Head Approval',
                   buttonColor: verySoftOrange[60],
