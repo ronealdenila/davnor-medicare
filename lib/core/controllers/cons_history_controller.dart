@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
@@ -10,41 +11,69 @@ import 'package:intl/intl.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
+  static AuthController authController = Get.find();
+  final RxBool isLoading = true.obs;
 
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
   RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
+  RxBool doneFetching = false.obs;
 
   //searching consultation history in doctor side...
-  RxList<ConsultationHistoryModel> filteredList =
+  RxList<ConsultationHistoryModel> filteredListforDoc =
       RxList<ConsultationHistoryModel>([]);
   final TextEditingController searchKeyword = TextEditingController();
 
-  Future<void> getConsHistoryForPatient() async {
-    log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
-    await firestore
-        .collection('cons_history')
-        .where('patientId', isEqualTo: auth.currentUser!.uid)
-        //.orderBy('dateConsEnd', descending: true)
-        .get()
-        .then((value) {
-      for (final result in value.docs) {
-        consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      }
-    });
+  //searching consultation history in patient side...
+  RxList<ConsultationHistoryModel> filteredListforP =
+      RxList<ConsultationHistoryModel>([]);
+  final TextEditingController searchKeywordP = TextEditingController();
+
+  @override
+  void onReady() {
+    super.onReady();
+    log.i('onReady | Cons History');
+    if (authController.userRole == 'doctor') {
+      getConsHistoryForDoctor().then((value) {
+        consHistory.value = value;
+        filteredListforDoc.assignAll(consHistory);
+        isLoading.value = false;
+      });
+    } else if (authController.userRole == 'patient') {
+      getConsHistoryForPatient().then((value) {
+        consHistory.value = value;
+        filteredListforP.assignAll(consHistory);
+        isLoading.value = false;
+      });
+    }
   }
 
-  Future<void> getConsHistoryForDoctor() async {
+  Future<List<ConsultationHistoryModel>> getConsHistoryForPatient() async {
+    log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
+    return firestore
+        .collection('cons_history')
+        .where('patientId', isEqualTo: auth.currentUser!.uid)
+        .orderBy('dateConsEnd')
+        .get()
+        .then(
+          (query) => query.docs
+              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
+              .toList(),
+        );
+  }
+
+  Future<List<ConsultationHistoryModel>> getConsHistoryForDoctor() async {
     log.i('Get Cons History for Doctor - ${auth.currentUser!.uid}');
-    await firestore
+    return firestore
         .collection('cons_history')
         .where('docID', isEqualTo: auth.currentUser!.uid)
+        .orderBy('dateConsEnd')
         .get()
-        .then((value) {
-      for (final result in value.docs) {
-        consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      }
-    });
+        .then(
+          (query) => query.docs
+              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
+              .toList(),
+        );
   }
 
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
@@ -118,5 +147,22 @@ class ConsHistoryController extends GetxController {
         chatHistory.add(ChatModel.fromJson(result.data()));
       }
     });
+  }
+
+  filterForDoctor({required String name}) {
+    filteredListforDoc.assignAll(consHistory);
+    consHistory.clear();
+
+    //filter for name of patient only
+    if (name != '') {
+      for (var i = 0; i < filteredListforDoc.length; i++) {
+        if (filteredListforDoc[i]
+            .fullName!
+            .toLowerCase()
+            .contains(name.toLowerCase())) {
+          consHistory.add(filteredListforDoc[i]);
+        }
+      }
+    }
   }
 }

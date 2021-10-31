@@ -125,7 +125,8 @@ class ConsHistoryScreen extends StatelessWidget {
 
   Widget displayConsHistory(ConsultationHistoryModel model) {
     return FutureBuilder(
-      future: consHController.getAdditionalData(model),
+      //future: consHController.getAdditionalData(model),
+      future: consHController.getDoctorData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ConsultationHistoryCard(

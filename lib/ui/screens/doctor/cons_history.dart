@@ -50,6 +50,10 @@ class DocConsHistoryScreen extends StatelessWidget {
                               fillColor: Colors.white,
                               hintText: 'Search here...'),
                           onChanged: (value) {
+                            if (consHController.searchKeyword.text == '') {
+                              consHController.consHistory.assignAll(
+                                  consHController.filteredListforDoc);
+                            }
                             return;
                           },
                           onSaved: (value) =>
@@ -58,7 +62,11 @@ class DocConsHistoryScreen extends StatelessWidget {
                       ),
                       horizontalSpace10,
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          print(consHController.searchKeyword.text);
+                          consHController.filterForDoctor(
+                              name: consHController.searchKeyword.text);
+                        },
                         child: Card(
                           elevation: 6,
                           shape: RoundedRectangleBorder(
@@ -93,27 +101,11 @@ class DocConsHistoryScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                  ),
-                  child: FutureBuilder(
-                      future: consHController.getConsHistoryForDoctor(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
-                            shrinkWrap: true,
-                            itemCount: consHController.consHistory.length,
-                            itemBuilder: (context, index) {
-                              return displayConsHistory(
-                                  consHController.consHistory[index]);
-                            },
-                          );
-                        }
-                        return loadingCardIndicator();
-                      }),
-                ),
+                    padding: const EdgeInsets.only(
+                      top: 25,
+                    ),
+                    child: Obx(() => listBuilder()) //historyList
+                    ),
               ),
             ),
           ],
@@ -122,9 +114,29 @@ class DocConsHistoryScreen extends StatelessWidget {
     );
   }
 
+  Widget listBuilder() {
+    if (consHController.isLoading.value) {
+      return const SizedBox(
+          height: 24, width: 24, child: CircularProgressIndicator());
+    }
+    if (consHController.consHistory.isEmpty &&
+        consHController.isLoading.value) {
+      return const Text('No Consultation History');
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      shrinkWrap: true,
+      itemCount: consHController.consHistory.length,
+      itemBuilder: (context, index) {
+        return displayConsHistory(consHController.consHistory[index]);
+      },
+    );
+  }
+
   Widget displayConsHistory(ConsultationHistoryModel model) {
     return FutureBuilder(
-      future: consHController.getAdditionalData(model),
+      //future: consHController.getAdditionalData(model),
+      future: consHController.getPatientData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ConsultationHistoryCard(
