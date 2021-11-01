@@ -30,7 +30,6 @@ class ConsHistoryController extends GetxController {
   //searching consultation history in patient side...
   RxList<ConsultationHistoryModel> filteredListforP =
       RxList<ConsultationHistoryModel>([]);
-  final TextEditingController searchKeywordP = TextEditingController();
 
   @override
   void onReady() {
