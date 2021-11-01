@@ -109,8 +109,14 @@ class MAHistoryScreen extends StatelessWidget {
 
   Widget listBuilder() {
     if (maHController.isLoading.value) {
-      return const SizedBox(
-          height: 24, width: 24, child: CircularProgressIndicator());
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
     }
     if (maHController.maHistoryList.isEmpty && !maHController.isLoading.value) {
       return const Text(
