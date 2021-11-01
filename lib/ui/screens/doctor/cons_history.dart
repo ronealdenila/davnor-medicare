@@ -54,7 +54,6 @@ class DocConsHistoryScreen extends StatelessWidget {
                               consHController.consHistory.assignAll(
                                   consHController.filteredListforDoc);
                             }
-                            return;
                           },
                           onSaved: (value) =>
                               consHController.searchKeyword.text = value!,
@@ -120,8 +119,12 @@ class DocConsHistoryScreen extends StatelessWidget {
           height: 24, width: 24, child: CircularProgressIndicator());
     }
     if (consHController.consHistory.isEmpty &&
-        consHController.isLoading.value) {
-      return const Text('No Consultation History');
+        !consHController.isLoading.value) {
+      return const Text(
+        'No Consultation History',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -135,7 +138,6 @@ class DocConsHistoryScreen extends StatelessWidget {
 
   Widget displayConsHistory(ConsultationHistoryModel model) {
     return FutureBuilder(
-      //future: consHController.getAdditionalData(model),
       future: consHController.getPatientData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -144,6 +146,7 @@ class DocConsHistoryScreen extends StatelessWidget {
             onItemTap: () {
               Get.to(() => HistoryInfoScreen(),
                   arguments: model, transition: Transition.rightToLeft);
+              //TO DO SHOULD GO TO HISTORY ITEM
             },
           );
         }

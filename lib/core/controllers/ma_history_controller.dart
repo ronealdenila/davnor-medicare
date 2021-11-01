@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -155,13 +156,19 @@ class MAHistoryController extends GetxController {
 
   showDialog(context) {
     Get.dialog(AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         color: Colors.white,
-        height: MediaQuery.of(context).size.height * 0.30,
-        width: MediaQuery.of(context).size.width * 0.20,
-        child: SfDateRangePicker(
-          onSelectionChanged: onSelectionChanged,
-          selectionMode: DateRangePickerSelectionMode.single,
+        height: kIsWeb ? Get.height * 0.30 : Get.height * .45,
+        width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SfDateRangePicker(
+              onSelectionChanged: onSelectionChanged,
+              selectionMode: DateRangePickerSelectionMode.single,
+            ),
+          ],
         ),
       ),
     ));
@@ -182,12 +189,12 @@ class MAHistoryController extends GetxController {
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     maHistoryList.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    for (var i = 0; i < filteredListforPSWD.length; i++) {
-      String dateConstant = getMonth(filteredListforPSWD[i].dateClaimed!) +
+    for (var i = 0; i < filteredListforP.length; i++) {
+      String dateConstant = getMonth(filteredListforP[i].dateClaimed!) +
           " - " +
-          getDate(filteredListforPSWD[i].dateClaimed!) +
+          getDate(filteredListforP[i].dateClaimed!) +
           " - " +
-          getYear(filteredListforPSWD[i].dateClaimed!);
+          getYear(filteredListforP[i].dateClaimed!);
       ;
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
@@ -200,7 +207,7 @@ class MAHistoryController extends GetxController {
           " dateSelected  " +
           dateSelected);
       if (dateConstant == dateSelected) {
-        maHistoryList.add(filteredListforPSWD[i]);
+        maHistoryList.add(filteredListforP[i]);
       }
     }
     Get.back();

@@ -58,26 +58,35 @@ class DoctorListScreen extends StatelessWidget {
                 ),
                 horizontalSpace18,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                  width: 300,
+                  child: CustomDropdown(
+                    hintText: 'Select doctor department',
+                    dropdownItems: deptDropdown,
+                    onChanged: (Item? item) {
+                      dListController.department.value = item!.name;
+                    },
+                    onSaved: (Item? item) =>
+                        dListController.department.value = item!.name,
+                  ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Search'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
-                        if (dListController.docFilter.text.isEmpty &&
-                            dListController.title.value == '') {
-                        } else {
-                          dListController.filter(
-                              name: dListController.docFilter.text,
-                              title: dListController.title.value);
-                        }
+                        dListController.filter(
+                            name: dListController.docFilter.text,
+                            title: dListController.title.value,
+                            dept: dListController.department.value);
                       },
                     )),
+                horizontalSpace10,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Remove Filter'),
                       style: ElevatedButton.styleFrom(
@@ -85,7 +94,8 @@ class DoctorListScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         dListController.docFilter.clear();
-                        dListController.title.value = 'All';
+                        dListController.title.value = '';
+                        dListController.department.value = '';
                         dListController.doctorList
                             .assignAll(dListController.filteredDoctorList);
                       },

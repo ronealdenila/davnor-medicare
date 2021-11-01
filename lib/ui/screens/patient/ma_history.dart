@@ -1,10 +1,13 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
+import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -20,6 +23,9 @@ class MAHistoryScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: verySoftBlueColor,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: verySoftBlueColor,
         body: Column(
@@ -33,52 +39,51 @@ class MAHistoryScreen extends StatelessWidget {
                     verticalSpace20,
                     const Text('Medical Assistance History',
                         style: title24BoldWhite),
-                    verticalSpace20,
-                    Row(children: [
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: CustomDropdown2(
-                          hintText: 'Jan',
-                          dropdownItems: month,
+                    verticalSpace15,
+                    InkWell(
+                      onTap: () {
+                        if (maHController.isLoading.value) {
+                          print('Dialog for: please wait, fetching record...');
+                        } else if (maHController.maHistoryList.isEmpty) {
+                          print('Dialog for: you have no MA history');
+                        } else {
+                          maHController.showDialog(context);
+                        }
+                      },
+                      child: Card(
+                        elevation: 6,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
-                      horizontalSpace15,
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: CustomDropdown2(
-                          hintText: '01',
-                          dropdownItems: day,
-                        ),
-                      ),
-                      horizontalSpace10,
-                      InkWell(
-                        onTap: () {},
-                        child: Card(
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          width: 170,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: verySoftBlueColor[100],
                           ),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: verySoftBlueColor[100],
-                            ),
-                            child: const Icon(
-                              Icons.search_rounded,
-                              color: Colors.white,
-                              size: 35,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Search by date',
+                                style:
+                                    body14Medium.copyWith(color: Colors.white),
+                              ),
+                              horizontalSpace5,
+                              const Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ]),
+                    ),
                   ]),
             ),
-            verticalSpace35,
+            verticalSpace25,
             Expanded(
               child: Container(
                 width: screenWidth(context),
@@ -89,48 +94,61 @@ class MAHistoryScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                  ),
-                  child: FutureBuilder(
-                      future: maHController.getMAHistoryForPatient(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Text(
-                            'You have no Medical Assistance (MA) record',
-                            textAlign: TextAlign.center,
-                          );
-                        }
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return ListView.builder(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 30),
-                              shrinkWrap: true,
-                              itemCount: maHController.maHistoryList.length,
-                              itemBuilder: (context, index) {
-                                return MACard(
-                                    maHistory:
-                                        maHController.maHistoryList[index],
-                                    onTap: () {
-                                      Get.to(() => MAHistoryInfoScreen(),
-                                          arguments: maHController
-                                              .maHistoryList[index]);
-                                    });
-                              });
-                        }
-                        return const Center(
-                          child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator()),
-                        );
-                      }),
-                ),
+                    padding: const EdgeInsets.only(
+                      top: 25,
+                    ),
+                    child: Obx(() => listBuilder()) //historyList
+                    ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget listBuilder() {
+    if (maHController.isLoading.value) {
+      return const SizedBox(
+          height: 24, width: 24, child: CircularProgressIndicator());
+    }
+    if (maHController.maHistoryList.isEmpty && !maHController.isLoading.value) {
+      return const Text(
+        'You have no Medical Assistance (MA) record',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      shrinkWrap: true,
+      itemCount: maHController.maHistoryList.length,
+      itemBuilder: (context, index) {
+        return displayMAHistory(maHController.maHistoryList[index]);
+      },
+    );
+  }
+
+  Widget displayMAHistory(MAHistoryModel model) {
+    return FutureBuilder(
+        future: maHController.getMAHistoryForPatient(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                shrinkWrap: true,
+                itemCount: maHController.maHistoryList.length,
+                itemBuilder: (context, index) {
+                  return MACard(
+                      maHistory: maHController.maHistoryList[index],
+                      onTap: () {
+                        Get.to(() => MAHistoryInfoScreen(),
+                            arguments: maHController.maHistoryList[index]);
+                      });
+                });
+          }
+          return loadingCardIndicator();
+        });
   }
 }

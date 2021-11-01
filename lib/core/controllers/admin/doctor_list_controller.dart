@@ -12,6 +12,7 @@ class DoctorListController extends GetxController {
   final TextEditingController docFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString title = ''.obs;
+  final RxString department = ''.obs;
 
   //Edit
   final TextEditingController editFirstName = TextEditingController();
@@ -94,13 +95,15 @@ class DoctorListController extends GetxController {
     return model.profileImage!;
   }
 
-  filter({required String name, required String title}) {
-    print(name + " " + title);
+  filter({required String name, required String title, required String dept}) {
+    print(name + " " + title + " " + dept);
+    final RxBool madeChanges = false.obs;
     doctorList.clear();
 
-    //filter for name only
-    if (name != '' && title == '') {
+    //filter for name
+    if (name != '') {
       for (var i = 0; i < filteredDoctorList.length; i++) {
+        madeChanges.value = true;
         if (filteredDoctorList[i]
                 .lastName!
                 .toLowerCase()
@@ -114,40 +117,44 @@ class DoctorListController extends GetxController {
       }
     }
 
-    //filter for title only
-    else if (name == '' && title != '') {
-      for (var i = 0; i < filteredDoctorList.length; i++) {
-        if (filteredDoctorList[i]
-            .title!
-            .toLowerCase()
-            .contains(title.toLowerCase())) {
-          doctorList.add(filteredDoctorList[i]);
+    //filter for title
+    if (title != '' && title != 'All') {
+      if (doctorList.isEmpty) {
+        for (var i = 0; i < filteredDoctorList.length; i++) {
+          madeChanges.value = true;
+          if (filteredDoctorList[i].title == title) {
+            doctorList.add(filteredDoctorList[i]);
+          }
+        }
+      } else {
+        for (var i = 0; i < doctorList.length; i++) {
+          if (doctorList[i].title != title) {
+            doctorList.removeAt(i);
+          }
         }
       }
     }
 
-    //filter for both
-    else if (name != '' && title != '') {
-      for (var i = 0; i < filteredDoctorList.length; i++) {
-        if ((filteredDoctorList[i]
-                    .lastName!
-                    .toLowerCase()
-                    .contains(name.toLowerCase()) ||
-                filteredDoctorList[i]
-                    .firstName!
-                    .toLowerCase()
-                    .contains(name.toLowerCase())) &&
-            filteredDoctorList[i]
-                .title!
-                .toLowerCase()
-                .contains(title.toLowerCase())) {
-          doctorList.add(filteredDoctorList[i]);
+    //filter for dept
+    if (dept != '' && dept != 'All') {
+      if (doctorList.isEmpty) {
+        for (var i = 0; i < filteredDoctorList.length; i++) {
+          madeChanges.value = true;
+          if (filteredDoctorList[i].department == dept) {
+            doctorList.add(filteredDoctorList[i]);
+          }
+        }
+      } else {
+        for (var i = 0; i < doctorList.length; i++) {
+          if (doctorList[i].department != dept) {
+            doctorList.removeAt(i);
+          }
         }
       }
     }
 
     //show all
-    else if (name == '' && title == 'All') {
+    if (!madeChanges.value && doctorList.isEmpty) {
       doctorList.assignAll(filteredDoctorList);
     }
   }

@@ -105,10 +105,7 @@ class PSWDStaffListController extends GetxController {
     //filter for position only
     else if (name == '' && title != '') {
       for (var i = 0; i < filteredPswdList.length; i++) {
-        if (filteredPswdList[i]
-            .position!
-            .toLowerCase()
-            .contains(title.toLowerCase())) {
+        if (filteredPswdList[i].position == title) {
           pswdList.add(filteredPswdList[i]);
         }
       }
@@ -125,10 +122,7 @@ class PSWDStaffListController extends GetxController {
                     .firstName!
                     .toLowerCase()
                     .contains(name.toLowerCase())) &&
-            filteredPswdList[i]
-                .position!
-                .toLowerCase()
-                .contains(title.toLowerCase())) {
+            filteredPswdList[i].position == title.toLowerCase()) {
           pswdList.add(filteredPswdList[i]);
         }
       }

@@ -59,8 +59,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                 ),
                 horizontalSpace18,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Search'),
                       style: ElevatedButton.styleFrom(
@@ -72,9 +71,9 @@ class PSWDStaffListScreen extends StatelessWidget {
                             title: pListController.position.value);
                       },
                     )),
+                horizontalSpace10,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Remove Filter'),
                       style: ElevatedButton.styleFrom(
