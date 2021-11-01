@@ -16,11 +16,6 @@ class DoctorProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: const CupertinoNavigationBarBackButton(
-          color: Colors.white,
-         ),
-        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(

@@ -109,11 +109,11 @@ class ConsRequestItemScreen extends StatelessWidget {
                   child: Center(
                     child: InkWell(
                       onTap: () {
-                        showLoading();
-                        //TODO: Move cons_request data to live_cons
+                        //showLoading();
+                        //TO DO: Move cons_request data to live_cons
                         //user uid of the current user
                         //then delete consID sa cons_request
-                        dismissDialog();
+                        //dismissDialog();
                       },
                       child: Container(
                         decoration: BoxDecoration(

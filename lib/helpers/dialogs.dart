@@ -67,11 +67,8 @@ void showConfirmationDialog({
       child: Stack(
         children: <Widget>[
           Container(
-            height: 284,
-            width: 343,
-            padding: const EdgeInsets.only(
-              top: 18,
-            ),
+            width: Get.width * .8,
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
             margin: const EdgeInsets.only(top: 13, right: 8),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -86,16 +83,10 @@ void showConfirmationDialog({
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 30,
-                    //Note: If magbutang kog horizontal padding kay mag 3 lines
-                  ),
-                  child: Text(
-                    dialogTitle!,
-                    style: title24Bold,
-                    textAlign: TextAlign.center,
-                  ),
+                Text(
+                  dialogTitle!,
+                  style: title24Bold,
+                  textAlign: TextAlign.center,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
