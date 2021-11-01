@@ -452,10 +452,15 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                           DmText.subtitle20Medium(
                                             'PSWD Personnel',
                                           ),
-                                          //Won't get centered
-                                          DmText.body16Regular(
-                                            'in-charge of Medical Assistance (MA)',
-                                          ),
+                                          const AutoSizeText(
+                                              cardSubtitle1,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                            ),
                                         ],
                                       ),
                                     ),

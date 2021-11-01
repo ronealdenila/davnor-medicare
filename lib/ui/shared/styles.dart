@@ -185,6 +185,13 @@ TextStyle subtitle18RegularNeutral = TextStyle(
   color: neutralColor[60],
 );
 
+TextStyle subtitle18RegularOrange = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: verySoftOrange[100],
+);
+
 // Body
 const TextStyle body16Bold = TextStyle(
   fontSize: 16,

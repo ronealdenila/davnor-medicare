@@ -68,6 +68,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
+                        //print(pListController.position.value);
                         if (pListController.pswdFilter.text.isEmpty &&
                             pListController.position.value == '') {
                         } else {
