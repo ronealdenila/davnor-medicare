@@ -139,7 +139,7 @@ class MAHistoryController extends GetxController {
     }
     if (enabledPastDays.value == true) {
       for (var i = 0; i < maListmasterPSWD.length; i++) {
-        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
+        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) <= 30) {
         } else {
           maListPSWD.add(maListmasterPSWD[i]);
         }

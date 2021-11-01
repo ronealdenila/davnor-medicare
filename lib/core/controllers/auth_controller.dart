@@ -218,7 +218,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await setDeviceToken(false);
+    if (userRole == 'patient') {
+      await setDeviceToken(false);
+    }
     try {
       userSignedOut = true;
       await auth.signOut();

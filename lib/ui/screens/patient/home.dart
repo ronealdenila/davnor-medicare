@@ -91,8 +91,8 @@ class PatientHomeScreen extends StatelessWidget {
                       ),
                     ),
                     verticalSpace25,
-                    const Text(
-                      'How can we help you?',
+                    Text(
+                      'homepage'.tr,
                       style: body16SemiBold,
                     ),
                     verticalSpace10,
