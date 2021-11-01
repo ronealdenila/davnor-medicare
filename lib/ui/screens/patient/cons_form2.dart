@@ -67,7 +67,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
                   }),
               verticalSpace18,
               Visibility(
-                visible: !controller.isFollowUp.value,
+                visible: controller.isFollowUp.value,
                 child: Align(
                   child: SizedBox(
                     width: 211,
@@ -85,7 +85,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
               ),
               verticalSpace25,
               Visibility(
-                visible: controller.isFollowUp.value,
+                visible: !controller.isFollowUp.value,
                 child: Expanded(
                   child: Align(
                     alignment: FractionalOffset.bottomRight,

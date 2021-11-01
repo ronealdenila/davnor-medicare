@@ -10,7 +10,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 
 class DocConsHistoryScreen extends StatelessWidget {
-  final TextEditingController searchKeyword = TextEditingController();
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController());
 
@@ -38,7 +37,7 @@ class DocConsHistoryScreen extends StatelessWidget {
                         height: 50,
                         width: screenWidthPercentage(context, percentage: .5),
                         child: TextFormField(
-                          controller: searchKeyword,
+                          controller: consHController.searchKeyword,
                           decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 10),
@@ -51,14 +50,22 @@ class DocConsHistoryScreen extends StatelessWidget {
                               fillColor: Colors.white,
                               hintText: 'Search here...'),
                           onChanged: (value) {
-                            return;
+                            if (consHController.searchKeyword.text == '') {
+                              consHController.consHistory.assignAll(
+                                  consHController.filteredListforDoc);
+                            }
                           },
-                          onSaved: (value) => searchKeyword.text = value!,
+                          onSaved: (value) =>
+                              consHController.searchKeyword.text = value!,
                         ),
                       ),
                       horizontalSpace10,
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          print(consHController.searchKeyword.text);
+                          consHController.filterForDoctor(
+                              name: consHController.searchKeyword.text);
+                        },
                         child: Card(
                           elevation: 6,
                           shape: RoundedRectangleBorder(
@@ -93,27 +100,11 @@ class DocConsHistoryScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                  ),
-                  child: FutureBuilder(
-                      future: consHController.getConsHistoryForDoctor(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
-                            shrinkWrap: true,
-                            itemCount: consHController.consHistory.length,
-                            itemBuilder: (context, index) {
-                              return displayConsHistory(
-                                  consHController.consHistory[index]);
-                            },
-                          );
-                        }
-                        return loadingCardIndicator();
-                      }),
-                ),
+                    padding: const EdgeInsets.only(
+                      top: 25,
+                    ),
+                    child: Obx(() => listBuilder()) //historyList
+                    ),
               ),
             ),
           ],
@@ -122,9 +113,32 @@ class DocConsHistoryScreen extends StatelessWidget {
     );
   }
 
+  Widget listBuilder() {
+    if (consHController.isLoading.value) {
+      return const SizedBox(
+          height: 24, width: 24, child: CircularProgressIndicator());
+    }
+    if (consHController.consHistory.isEmpty &&
+        !consHController.isLoading.value) {
+      return const Text(
+        'No Consultation History',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      shrinkWrap: true,
+      itemCount: consHController.consHistory.length,
+      itemBuilder: (context, index) {
+        return displayConsHistory(consHController.consHistory[index]);
+      },
+    );
+  }
+
   Widget displayConsHistory(ConsultationHistoryModel model) {
     return FutureBuilder(
-      future: consHController.getAdditionalData(model),
+      future: consHController.getPatientData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ConsultationHistoryCard(
@@ -132,6 +146,7 @@ class DocConsHistoryScreen extends StatelessWidget {
             onItemTap: () {
               Get.to(() => HistoryInfoScreen(),
                   arguments: model, transition: Transition.rightToLeft);
+              //TO DO SHOULD GO TO HISTORY ITEM
             },
           );
         }

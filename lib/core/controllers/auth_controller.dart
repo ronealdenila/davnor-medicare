@@ -192,9 +192,10 @@ class AuthController extends GetxController {
         .collection('status')
         .doc('value')
         .set({
-      'hasActiveQueuecons': false,
+      'hasActiveQueueCons': false,
       'hasActiveQueueMA': false,
       'pStatus': false,
+      'categoryID': '',
       'pendingVerification': false,
       'deviceToken': tokenID.value,
       'notifBadge': '0',
@@ -217,7 +218,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await setDeviceToken(false);
+    if (userRole == 'patient') {
+      await setDeviceToken(false);
+    }
     try {
       userSignedOut = true;
       await auth.signOut();

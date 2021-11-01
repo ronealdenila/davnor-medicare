@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/translation.dart';
 import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: AllControllerBinding(),
+      translations: LocalString(),
+      locale: Locale('english', 'US'),
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -5,12 +5,14 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/models/cons_stats_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/imageBytes.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
+import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,7 @@ class ConsRequestController extends GetxController {
       '${firstNameController.text} ${lastNameController.text}';
   RxBool isConsultForYou = true.obs;
   RxInt selectedIndex = 0.obs;
+  RxString categoryID = ''.obs;
 
   //Cons Form 2
   RxBool isFollowUp = true.obs;
@@ -50,6 +53,27 @@ class ConsRequestController extends GetxController {
   String imageUrls = '';
   final RxString generatedCode = 'C025'.obs; //MA24 -> mock code
   late String documentId;
+
+  RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>();
+  RxInt statusIndex = 0.obs;
+  RxString categoryHolder = ''.obs;
+  RxString specialistD = 'Otolaryngologist (ENT)'.obs;
+
+  @override
+  void onReady() {
+    super.onReady();
+    log.i('ONREADY');
+    statusList.bindStream(getStatus());
+  }
+
+  Stream<List<ConsStatusModel>> getStatus() {
+    log.i('Cons Queue Controller | Get PSWD Status');
+    return firestore.collection('cons_status').snapshots().map(
+          (query) => query.docs
+              .map((item) => ConsStatusModel.fromJson(item.data()))
+              .toList(),
+        );
+  }
 
   final consultRef =
       firestore.collection('cons_request').withConverter<ConsultationModel>(
@@ -79,28 +103,72 @@ class ConsRequestController extends GetxController {
     log.i('uploadPrescription| $imageUrls image/s save to storage');
   }
 
+  bool hasAvailableSlot() {
+    //TO DO: if zero mean no doctor is online
+    final slot = statusList[statusIndex.value].consSlot!;
+    final rqstd = statusList[statusIndex.value].consRqstd!;
+    if (slot > rqstd) {
+      return true;
+    }
+    return false;
+  }
+
   Future<void> submitConsultRequest() async {
-    showLoading();
-    await uploadLabResults();
-    assignValues();
-    final consultation = ConsultationModel(
-      consID: 'null',
-      patientId: auth.currentUser!.uid,
-      fullName: fullName,
-      age: ageController.text,
-      category: selectedDiscomfort,
-      dateRqstd: Timestamp.now().microsecondsSinceEpoch.toString(),
-      description: descriptionController.text,
-      isFollowUp: isFollowUp.value,
-      imgs: imageUrls,
-    );
+    if (hasAvailableSlot()) {
+      showLoading();
+      await uploadLabResults();
+      assignValues();
+      final consultation = ConsultationModel(
+        consID: '',
+        patientId: auth.currentUser!.uid,
+        fullName: fullName,
+        age: ageController.text,
+        category: categoryID.value,
+        dateRqstd: Timestamp.fromDate(DateTime.now()),
+        description: descriptionController.text,
+        isFollowUp: isFollowUp.value ? false : true,
+        imgs: imageUrls,
+      );
 
-    final docRef = await consultRef.add(consultation);
-    documentId = docRef.id;
-    await updateId();
-    await initializeConsultationModel(docRef.id);
-    await updateActiveQueue();
+      final docRef = await consultRef.add(consultation);
+      documentId = docRef.id; //save id bcs it will be save w/ the queueNum
+      await updateId();
 
+      await initializeConsultationModel(docRef.id);
+
+      //Generate Cons Queue
+      final lastNum = statusList[statusIndex.value].qLastNum! + 1;
+      if (lastNum < 10) {
+        generatedCode.value = 'C0$lastNum';
+      } else {
+        generatedCode.value = 'C$lastNum';
+      }
+
+      await addToConsQueueCollection();
+      await updateStatus(); //update patient status and cons status
+
+      dismissDialog();
+      await clearControllers();
+      await showDialog();
+      log.i('submitConsultRequest | Consultation Submit Succesfully');
+    } else {
+      showErrorDialog(
+          errorTitle: 'Sorry, there are no slot available for now',
+          errorDescription: 'Please try again next time');
+      log.i('submitConsultRequest | Consultation Submit Failed');
+    }
+  }
+
+  Future<void> addToConsQueueCollection() async {
+    await firestore.collection('cons_queue').doc(documentId).set({
+      'requesterID': auth.currentUser!.uid,
+      'consID': documentId,
+      'queueNum': generatedCode.value,
+      'dateCreated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  Future<void> showDialog() async {
     final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
     showDefaultDialog(
         dialogTitle: dialog4Title,
@@ -108,8 +176,6 @@ class ConsRequestController extends GetxController {
         onConfirmTap: () {
           Get.to(() => PatientHomeScreen());
         });
-    clearControllers();
-    log.i('submitConsultRequest | Consultation Submit Succesfully');
   }
 
   Future<void> updateId() async => firestore
@@ -121,14 +187,16 @@ class ConsRequestController extends GetxController {
       .then((value) => log.i('Consultation ID initialized'))
       .catchError((error) => log.w('Failed to update cons Id'));
 
-  Future<void> updateActiveQueue() async {
-    //Generate MA Queue - Fetch FROM SELECTED dept+title queue status
-    // final lastNum = statusList[0].qLastNum! + 1;
-    // if (lastNum < 10) {
-    //   generatedCode.value = 'C0$lastNum';
-    // } else {
-    //   generatedCode.value = 'C$lastNum';
-    // }
+  Future<void> updateStatus() async {
+    await firestore
+        .collection('cons_status')
+        .doc(categoryID.value)
+        .update({
+          'qLastNum': statusList[statusIndex.value].qLastNum! + 1,
+          'consRqstd': statusList[statusIndex.value].consRqstd! + 1
+        })
+        .then((value) => log.i('Status Updated'))
+        .catchError((error) => log.i('Failed to update status: $error'));
 
     log.i('updateActiveQueue | Setting active queue to true');
     await firestore
@@ -137,7 +205,11 @@ class ConsRequestController extends GetxController {
         .collection('status')
         .doc('value')
         .update(
-      {'hasActiveQueuecons': true, 'queueCons': generatedCode},
+      {
+        'hasActiveQueueCons': true,
+        'queueCons': generatedCode.value,
+        'categoryID': categoryID.value
+      },
     );
   }
 
@@ -157,17 +229,46 @@ class ConsRequestController extends GetxController {
     log.v('patient name: $fullName');
   }
 
-  void toggleSingleCardSelection(int index) {
+  Future<void> toggleSingleCardSelection(int index) async {
     for (var indexBtn = 0; indexBtn < discomfortData.length; indexBtn++) {
       if (indexBtn == index) {
         selectedIndex.value = index;
-        selectedDiscomfort = discomfortData[indexBtn].title;
-        log.wtf('$selectedDiscomfort is selected');
+        categoryHolder.value = discomfortData[indexBtn].categoryID!;
+        specialistD.value = discomfortData[indexBtn].specialist!;
+        log.i('Temporary: ${categoryHolder.value} is selected');
       } else {}
     }
   }
 
-  void clearControllers() {
+  Future<void> nextButton() async {
+    if (categoryHolder == '') {
+      await getconsultationCategory(specialistD.value);
+    } else {
+      categoryID.value = categoryHolder.value;
+    }
+    log.wtf('Final: ${categoryID.value} is selected');
+    await Get.to(() => ConsForm2Screen());
+  }
+
+  Future<void> getconsultationCategory(String specialistD) async {
+    final ageInput = ageController.text == '' ? '0' : ageController.text;
+    final parseAge = int.parse(ageInput);
+    assert(parseAge is int);
+    final dept = parseAge >= 18 ? 'Family Department' : 'Pediatrics Department';
+    for (var i = 0; i < statusList.length; i++) {
+      if (statusList[i].deptName == dept &&
+          statusList[i].title == specialistD) {
+        statusIndex.value = i;
+        categoryID.value = statusList[i].categoryID!;
+        return;
+      }
+    }
+    if (categoryID.value == '') {
+      print('CATEGORY NOT FOUND');
+    }
+  }
+
+  Future<void> clearControllers() async {
     log.i('_clearControllers | User Input on cons form is cleared');
     firstNameController.clear();
     lastNameController.clear();
@@ -175,49 +276,7 @@ class ConsRequestController extends GetxController {
     ageController.clear();
   }
 
-  void checkRequestConsultation() {
-    if (!isConsultForYou.value) {
-      //TO DO getDocSnapshot
-      //if (fetchedData!.hasActiveQueue!) { //should be stream
-      showErrorDialog(
-          errorTitle: 'Sorry, you still have an on progress transaction',
-          errorDescription: 'Please proceed to your existing consultation');
-    } else {
-      showConfirmationDialog(
-        dialogTitle: dialog1Title,
-        dialogCaption: dialog1Caption,
-        onYesTap: () {
-          isConsultForYou.value = true;
-          Get.to(() => ConsFormScreen());
-        },
-        onNoTap: () {
-          isConsultForYou.value = false;
-          Get.to(() => ConsFormScreen());
-        },
-      );
-    }
-  }
-
   void pickForFollowUpImagess() {
     _imagePickerService.pickMultiImage(images);
-  }
-
-  void pickForFollowUpImages() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg'],
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      var list = [];
-      Map map = {"bytes": file.bytes};
-      list.add(map);
-      var res = imagesBytesFromJson(jsonEncode(list));
-      imagesListNew.addAll(res);
-      print(imagesListNew.length);
-    } else {
-      // User canceled the picker
-    }
   }
 }

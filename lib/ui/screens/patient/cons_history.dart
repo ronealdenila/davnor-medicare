@@ -19,6 +19,9 @@ class ConsHistoryScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           backgroundColor: verySoftBlueColor,
         ),
         backgroundColor: verySoftBlueColor,
@@ -32,52 +35,51 @@ class ConsHistoryScreen extends StatelessWidget {
                   children: <Widget>[
                     verticalSpace20,
                     const Text('Consultation History', style: title24BoldWhite),
-                    verticalSpace20,
-                    Row(children: [
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: CustomDropdown2(
-                          hintText: 'Jan',
-                          dropdownItems: month,
+                    verticalSpace15,
+                    InkWell(
+                      onTap: () {
+                        if (consHController.isLoading.value) {
+                          print('Dialog for: please wait, fetching record...');
+                        } else if (consHController.consHistory.isEmpty) {
+                          print('Dialog for: you have no consultation history');
+                        } else {
+                          consHController.showDialog(context);
+                        }
+                      },
+                      child: Card(
+                        elevation: 6,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
-                      horizontalSpace15,
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: CustomDropdown2(
-                          hintText: '01',
-                          dropdownItems: day,
-                        ),
-                      ),
-                      horizontalSpace10,
-                      InkWell(
-                        onTap: () {},
-                        child: Card(
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          width: 170,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: verySoftBlueColor[100],
                           ),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: verySoftBlueColor[100],
-                            ),
-                            child: const Icon(
-                              Icons.search_rounded,
-                              color: Colors.white,
-                              size: 35,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Search by date',
+                                style:
+                                    body14Medium.copyWith(color: Colors.white),
+                              ),
+                              horizontalSpace5,
+                              const Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ]),
+                    ),
                   ]),
             ),
-            verticalSpace35,
+            verticalSpace25,
             Expanded(
               child: Container(
                 width: screenWidth(context),
@@ -88,33 +90,11 @@ class ConsHistoryScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                  ),
-                  child: FutureBuilder(
-                      future: consHController.getConsHistoryForPatient(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Text(
-                            'You have no consultation record',
-                            textAlign: TextAlign.center,
-                          );
-                        }
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
-                            shrinkWrap: true,
-                            itemCount: consHController.consHistory.length,
-                            itemBuilder: (context, index) {
-                              return displayConsHistory(
-                                  consHController.consHistory[index]);
-                            },
-                          );
-                        }
-                        return loadingCardIndicator();
-                      }),
-                ),
+                    padding: const EdgeInsets.only(
+                      top: 25,
+                    ),
+                    child: Obx(() => listBuilder()) //historyList
+                    ),
               ),
             ),
           ],
@@ -123,15 +103,39 @@ class ConsHistoryScreen extends StatelessWidget {
     );
   }
 
+  Widget listBuilder() {
+    if (consHController.isLoading.value) {
+      return const SizedBox(
+          height: 24, width: 24, child: CircularProgressIndicator());
+    }
+    if (consHController.consHistory.isEmpty &&
+        !consHController.isLoading.value) {
+      return const Text(
+        'No Consultation History',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      shrinkWrap: true,
+      itemCount: consHController.consHistory.length,
+      itemBuilder: (context, index) {
+        return displayConsHistory(consHController.consHistory[index]);
+      },
+    );
+  }
+
   Widget displayConsHistory(ConsultationHistoryModel model) {
     return FutureBuilder(
-      future: consHController.getAdditionalData(model),
+      future: consHController.getDoctorData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ConsultationHistoryCard(
             consHistory: model,
             onItemTap: () {
-              Get.to(() => ConsHistoryItemScreen(), arguments: model);
+              Get.to(() => ConsHistoryItemScreen(),
+                  arguments: model, transition: Transition.rightToLeft);
             },
           );
         }

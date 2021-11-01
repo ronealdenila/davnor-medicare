@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -5,16 +6,18 @@ import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+final MAHistoryController hController = Get.put(MAHistoryController());
 
 class MAHistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final MAHistoryController hController = Get.put(MAHistoryController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,55 +34,61 @@ class MAHistoryList extends StatelessWidget {
           runSpacing: 10,
           children: <Widget>[
             SizedBox(
-              width: 450,
+              width: 400,
               child: CustomTextFormField(
-                controller: hController.maFilter,
+                controller: hController.searchKeyword,
                 labelText: 'Search here...',
                 validator: Validator().notEmpty,
                 onChanged: (value) {
-                  if (hController.maFilter.text.isEmpty) {
-                    hController.maList.assignAll(hController.maListmaster);
-                  }
+                  return;
                 },
-                onSaved: (value) => hController.maFilter.text = value!,
+                onSaved: (value) => hController.searchKeyword.text = value!,
               ),
-            ),
-            horizontalSpace18,
-            Obx(
-              () => Checkbox(
-                value: hController.enabledPastDays.value,
-                checkColor: Colors.blue,
-                onChanged: (value) {
-                  if (hController.enabledPastDays.value == true) {
-                    hController.enabledPastDays.value = false;
-                  } else {
-                    hController.enabledPastDays.value = true;
-                  }
-                  hController.filterPastDays();
-                  print(hController.enabledPastDays.value);
-                },
-              ),
-            ),
-            horizontalSpace18,
-            Container(
-              child: Text("Enable 30 days past"),
             ),
             horizontalSpace18,
             SizedBox(
-                height: MediaQuery.of(context).size.height * 0.10,
-                width: 350,
+              width: 150,
+              child: CustomDropdown(
+                hintText: 'All',
+                dropdownItems: pswdfilterDropdown,
+                onChanged: (Item? item) {
+                  hController.last30DaysDropDown.value = item!.name;
+                },
+                onSaved: (Item? item) =>
+                    hController.last30DaysDropDown.value = item!.name,
+              ),
+            ),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
-                    // print(hController.maList[0].dateClaimed?.seconds);
-                    hController.filter(name: hController.maFilter.text);
-                    // var date = new DateTime.fromMillisecondsSinceEpoch();
-                    // hController.readTimestamp(
-                    //     hController.maList[0].dateClaimed?.seconds);
-                    // hController.ago(t: hController.maList[0].dateClaimed?.seconds);
+                    hController.filter(
+                        name: hController.searchKeyword.text,
+                        last30days:
+                            hController.last30DaysDropDown.value == 'All' ||
+                                    hController.last30DaysDropDown.value == ''
+                                ? false
+                                : true);
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Remove Filter'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    hController.searchKeyword.clear();
+                    hController.last30DaysDropDown.value = 'All';
+                    hController.maHistoryList
+                        .assignAll(hController.filteredListforPSWD);
                   },
                 )),
             horizontalSpace18,
@@ -98,39 +107,29 @@ class MAHistoryList extends StatelessWidget {
         ),
         verticalSpace25,
         header(),
-        requestList(context, hController)
+        Obx(() => requestList(context))
       ],
     );
   }
 }
 
-Widget requestList(BuildContext context, hController) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height * .40,
-    child: Obx(
-      () => ListView.builder(
-        itemCount: hController.maList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: hController.maList.length,
-                    itemBuilder: (context, index) {
-                      return customTableRow(
-                          hController.maList[index], hController);
-                    }),
-              ),
-            ),
-          );
-        },
-      ),
-    ),
+Widget requestList(BuildContext context) {
+  if (hController.isLoading.value) {
+    return const SizedBox(
+        height: 24, width: 24, child: CircularProgressIndicator());
+  }
+  if (hController.maHistoryList.isEmpty && hController.isLoading.value) {
+    return const Text('No MA history');
+  }
+  return MediaQuery.removePadding(
+    context: context,
+    removeTop: true,
+    child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: hController.maHistoryList.length,
+        itemBuilder: (context, index) {
+          return customTableRow(hController.maHistoryList[index]);
+        }),
   );
 }
 
@@ -158,16 +157,16 @@ Widget header() {
             flex: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Text('DATE', style: body16Bold.copyWith(color: Colors.white)),
+              child: Text('DATE CLAIMED',
+                  style: body16Bold.copyWith(color: Colors.white)),
             ),
           ),
           Expanded(
             flex: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('PHARMACY',
-                  style: body16Bold.copyWith(color: Colors.white)),
+              child:
+                  Text('TYPE', style: body16Bold.copyWith(color: Colors.white)),
             ),
           ),
           Expanded(
@@ -186,7 +185,7 @@ Widget header() {
   );
 }
 
-Widget customTableRow(MAHistoryModel model, hController) {
+Widget customTableRow(MAHistoryModel model) {
   return SizedBox(
     width: Get.width,
     child: Padding(
@@ -210,7 +209,7 @@ Widget customTableRow(MAHistoryModel model, hController) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                hController.convertTimeStamp(model.dateRqstd!),
+                hController.convertTimeStamp(model.dateClaimed!),
                 style: body16Medium,
               ),
             ),
@@ -220,7 +219,7 @@ Widget customTableRow(MAHistoryModel model, hController) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                '${model.pharmacy}',
+                '${model.type}',
                 style: body16Medium,
               ),
             ),

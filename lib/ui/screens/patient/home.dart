@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
@@ -12,6 +13,7 @@ import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
+import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
@@ -51,15 +53,12 @@ class PatientHomeScreen extends StatelessWidget {
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
-              userProfile:
-                  // fetchedData!.profileImage == ''
-                  //     ?
-                  const Icon(
-                Icons.person,
-                size: 56,
-              )
-              // : Image.network(fetchedData!.profileImage!),
-              ,
+              userProfile: fetchedData!.profileImage == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 56,
+                    )
+                  : Image.network(fetchedData!.profileImage!),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
@@ -92,56 +91,24 @@ class PatientHomeScreen extends StatelessWidget {
                       ),
                     ),
                     verticalSpace25,
-                    const Text(
-                      'How can we help you?',
+                    Text(
+                      'homepage'.tr,
                       style: body16SemiBold,
                     ),
                     verticalSpace10,
                     SizedBox(
                       width: screenWidth(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ActionCard(
-                              text: 'Request Consultation',
-                              color: verySoftMagenta[60],
-                              secondaryColor: verySoftMagentaCustomColor,
-                              onTap: consController.checkRequestConsultation,
-                            ),
-                          ),
-                          Expanded(
-                            child: ActionCard(
-                              text: 'Request Medical Assistance',
-                              color: verySoftOrange[60],
-                              secondaryColor: verySoftOrangeCustomColor,
-                              //Note: Has weird transition
-                              onTap: () => Get.to(
-                                () => MADescriptionScreen(),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ActionCard(
-                              text: 'View\nQueue',
-                              color: verySoftRed[60],
-                              secondaryColor: verySoftRedCustomColor,
-                              onTap: () {
-                                Get.to(() => QueueMAScreen());
-                                //sa business logic na ata ta magdecide kung
-                                //kani nga dialog mag appear for now dria nako
-                                //ibutang (R)
-                                // showDefaultDialog(
-                                //   dialogTitle: dialogQueue1,
-                                //   dialogCaption: dialogQueue2,
-                                //   textConfirm: 'Okay',
-                                //   onConfirmTap: Get.back,
-                                // );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: StreamBuilder<DocumentSnapshot>(
+                          stream: stats.getPatientStatus(auth.currentUser!.uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              final data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return ActionButtons(data);
+                            }
+                            return ActionButtonsNormal();
+                          }),
                     ),
                     verticalSpace25,
                     Row(
@@ -168,6 +135,132 @@ class PatientHomeScreen extends StatelessWidget {
               ),
             ),
             floatingActionButton: Obx(getFloatingButton)));
+  }
+
+  Widget ActionButtons(Map<String, dynamic> data) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: ActionCard(
+            text: 'Request Consultation',
+            color: verySoftMagenta[60],
+            secondaryColor: verySoftMagentaCustomColor,
+            onTap: () {
+              print('button clicked');
+              if (data['pStatus'] as bool) {
+                if (data['hasActiveQueueCons'] as bool) {
+                  showErrorDialog(
+                      errorTitle:
+                          'Sorry, you still have an on progress consultation transaction',
+                      errorDescription:
+                          'Please proceed to your existing consultation');
+                } else {
+                  showConfirmationDialog(
+                    dialogTitle: dialog1Title,
+                    dialogCaption: dialog1Caption,
+                    onYesTap: () {
+                      consController.isConsultForYou.value = true;
+                      Get.to(() => ConsFormScreen());
+                    },
+                    onNoTap: () {
+                      consController.isConsultForYou.value = false;
+                      Get.to(() => ConsFormScreen());
+                    },
+                  );
+                }
+              } else {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, only verified users can use this feature',
+                    errorDescription:
+                        'Please verify your account first in your profile');
+              }
+            },
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'Request Medical Assistance',
+            color: verySoftOrange[60],
+            secondaryColor: verySoftOrangeCustomColor,
+            //Note: Has weird transition
+            onTap: () => Get.to(
+              () => MADescriptionScreen(),
+            ),
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'View\nQueue',
+            color: verySoftRed[60],
+            secondaryColor: verySoftRedCustomColor,
+            onTap: () {
+              if (data['pStatus'] as bool) {
+                if (data['hasActiveQueueCons'] as bool &&
+                    data['hasActiveQueueMA'] as bool) {
+                  //Get.to(() => QueueMAScreen()); CHOICE SCREEN
+                }
+                if (data['hasActiveQueueCons'] as bool) {
+                  //Get.to(() => QueueMAScreen()); CONS SCREEN
+                }
+                if (data['hasActiveQueueMA'] as bool) {
+                  Get.to(() => QueueMAScreen());
+                }
+                showErrorDialog(
+                    errorTitle: 'Sorry, you have no queue number',
+                    errorDescription:
+                        'You need to request consultation or medical assistance to be in a queue.');
+              } else {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, only verified users can use this feature',
+                    errorDescription:
+                        'Please verify your account first in your profile');
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget ActionButtonsNormal() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: ActionCard(
+            text: 'Request Consultation',
+            color: verySoftMagenta[60],
+            secondaryColor: verySoftMagentaCustomColor,
+            onTap: () {
+              //Snackbar: Please wait while we are currently connecting to the server
+            },
+          ),
+        ),
+        Expanded(
+          child: ActionCard(
+              text: 'Request Medical Assistance',
+              color: verySoftOrange[60],
+              secondaryColor: verySoftOrangeCustomColor,
+              //Note: Has weird transition
+              onTap: () {
+                //Snackbar: Please wait while we are currently connecting to the server}
+              }),
+        ),
+        Expanded(
+          child: ActionCard(
+            text: 'View\nQueue',
+            color: verySoftRed[60],
+            secondaryColor: verySoftRedCustomColor,
+            onTap: () {
+              //Snackbar: Please wait while we are currently connecting to the server
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget notificationIcon() {
@@ -229,7 +322,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
       );
     }
-    return const SizedBox();
+    return const SizedBox(height: 0, width: 0);
   }
 
   Widget showArticles() {

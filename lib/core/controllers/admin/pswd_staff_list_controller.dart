@@ -12,6 +12,12 @@ class PSWDStaffListController extends GetxController {
   final TextEditingController pswdFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString position = ''.obs;
+  final RxBool enableEditing = false.obs;
+
+  //Edit
+  final TextEditingController editFirstName = TextEditingController();
+  final TextEditingController editLastName = TextEditingController();
+  final RxString editPosition = ''.obs;
 
   @override
   void onReady() {
@@ -49,34 +55,82 @@ class PSWDStaffListController extends GetxController {
             });
   }
 
+  Future<void> updatePSWD(PswdModel model) async {
+    await firestore
+        .collection('pswd_personnel')
+        .doc(model.userID)
+        .update({
+          'firstName':
+              editFirstName.text == '' ? model.firstName : editFirstName.text,
+          'lastName':
+              editLastName.text == '' ? model.lastName : editLastName.text,
+          'position':
+              editPosition.value == '' ? model.position : editPosition.value,
+        })
+        .then(
+          (value) => {
+            //Dialog success
+          },
+        )
+        .catchError(
+          (error) => {
+            //Dialog error
+          },
+        );
+  }
+
+  String getProfilePhoto(PswdModel model) {
+    return model.profileImage!;
+  }
+
   filter({required String name, required String title}) {
     pswdList.clear();
-    for (var i = 0; i < pswdList.length; i++) {
-      if (filteredPswdList[i]
-              .lastName!
-              .toLowerCase()
-              .contains(name.toLowerCase()) ||
-          filteredPswdList[i]
-              .firstName!
-              .toLowerCase()
-              .contains(name.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
-      }
-    }
-    for (var i = 0; i < filteredPswdList.length; i++) {
-      if (filteredPswdList[i]
-          .position!
-          .toLowerCase()
-          .contains(title.toLowerCase())) {
-        pswdList.add(filteredPswdList[i]);
+
+    //filter for name only
+    if (name != '' && title == '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if (filteredPswdList[i]
+                .lastName!
+                .toLowerCase()
+                .contains(name.toLowerCase()) ||
+            filteredPswdList[i]
+                .firstName!
+                .toLowerCase()
+                .contains(name.toLowerCase())) {
+          pswdList.add(filteredPswdList[i]);
+        }
       }
     }
 
-    for (var i = 0; i < pswdList.length; i++) {
-      print(pswdList[i].firstName);
+    //filter for position only
+    else if (name == '' && title != '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if (filteredPswdList[i].position == title) {
+          pswdList.add(filteredPswdList[i]);
+        }
+      }
     }
 
-    final stores = pswdList.map((e) => e.email).toSet();
-    pswdList.retainWhere((x) => stores.remove(x.email));
+    //filter for both
+    else if (name != '' && title != '') {
+      for (var i = 0; i < filteredPswdList.length; i++) {
+        if ((filteredPswdList[i]
+                    .lastName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase()) ||
+                filteredPswdList[i]
+                    .firstName!
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) &&
+            filteredPswdList[i].position == title.toLowerCase()) {
+          pswdList.add(filteredPswdList[i]);
+        }
+      }
+    }
+
+    //show all
+    else if (name == '' && title == 'All') {
+      pswdList.assignAll(filteredPswdList);
+    }
   }
 }

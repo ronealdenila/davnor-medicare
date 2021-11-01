@@ -1,6 +1,10 @@
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +61,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                 verticalSpace20,
                 InkWell(
                   onTap: () {
-                    //TODO: Move cons request to cons history
+                    confirmationDialog();
                   },
                   child: const Text('End Consultation',
                       textAlign: TextAlign.left, style: subtitle18Medium),
@@ -65,7 +69,11 @@ class LiveConsInfoScreen extends StatelessWidget {
                 verticalSpace15,
                 InkWell(
                   onTap: () {
-                    //TODO: Remove cons request
+                    print('clicked');
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            skipDialog(consData.consID!, consData.patientID!));
                   },
                   child: SizedBox(
                     width: Get.width,
@@ -163,6 +171,81 @@ class LiveConsInfoScreen extends StatelessWidget {
           ),
         ]),
       ),
+    );
+  }
+
+  void confirmationDialog() {
+    return showConfirmationDialog(
+      dialogTitle: 'Is the consultation done?',
+      dialogCaption:
+          'Select YES if you want to end the consultation. Otherwise, select NO',
+      onYesTap: () {
+        liveCont.endConsultation(consData);
+      },
+      onNoTap: () => dismissDialog(),
+    );
+  }
+
+  Widget skipDialog(String consID, String patientID) {
+    return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      clipBehavior: Clip.antiAlias,
+      contentPadding: const EdgeInsets.symmetric(
+          vertical: kIsWeb ? 30 : 20, horizontal: kIsWeb ? 50 : 25),
+      children: [
+        SizedBox(
+          width: kIsWeb ? Get.width * .45 : Get.width * .7,
+          child: Column(
+            children: [
+              Text(
+                'To inform the patient',
+                style: kIsWeb ? title32Regular : title20Regular,
+              ),
+              verticalSpace10,
+              const Text(
+                'Please specify the reason',
+                style: body14Regular,
+              ),
+              kIsWeb ? verticalSpace50 : verticalSpace25,
+              TextFormField(
+                  controller: liveCont.reason,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'This is a required field';
+                    }
+                    //! if we want to validate na dapat taas ang words
+                    // if (value.length < 10) {
+                    //   return 'Description must be at least 10 words';
+                    // }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Enter the reason here',
+                    alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (value) {
+                    return;
+                  },
+                  onSaved: (value) {
+                    liveCont.reason.text = value!;
+                  }),
+              kIsWeb ? verticalSpace25 : verticalSpace15,
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomButton(
+                      buttonColor: verySoftBlueColor,
+                      onTap: () => liveCont.skipConsultation(consID, patientID),
+                      text: 'Submit')),
+            ],
+          ),
+        )
+      ],
     );
   }
 

@@ -14,6 +14,7 @@ class MAHistoryItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     model = GeneralMARequestModel(
+        maID: passedData.maID,
         requesterID: passedData.requesterID,
         fullName: passedData.fullName,
         age: passedData.age,
@@ -28,19 +29,16 @@ class MAHistoryItemScreen extends StatelessWidget {
         medWorth: passedData.medWorth,
         dateClaimed: passedData.dateClaimed);
 
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              children: [
-                PSWDItemView(context, 'completed', model),
-                verticalSpace35,
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
+              PSWDItemView(context, 'completed', model),
+              verticalSpace35,
+            ],
           ),
         ),
       ),

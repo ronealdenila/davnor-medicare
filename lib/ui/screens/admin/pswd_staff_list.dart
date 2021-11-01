@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -37,10 +38,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                     labelText: 'Search name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
-                      if (pListController.pswdFilter.text.isEmpty) {
-                        pListController.pswdList
-                            .assignAll(pListController.filteredPswdList);
-                      }
+                      return;
                     },
                     onSaved: (value) =>
                         pListController.pswdFilter.text = value!,
@@ -51,33 +49,44 @@ class PSWDStaffListScreen extends StatelessWidget {
                   width: 250,
                   child: CustomDropdown(
                     hintText: 'Select position',
-                    dropdownItems: position,
-                    onChanged: (Item? item) =>
-                        pListController.position.value = item!.name,
+                    dropdownItems: positionDropdown,
+                    onChanged: (item) {
+                      pListController.position.value = item!.name;
+                    },
                     onSaved: (Item? item) =>
                         pListController.position.value = item!.name,
                   ),
                 ),
                 horizontalSpace18,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Search'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
-                        //print(pListController.position.value);
-                        if (pListController.pswdFilter.text.isEmpty &&
-                            pListController.position.value == '') {
-                        } else {
-                          pListController.filter(
-                              name: pListController.pswdFilter.text,
-                              title: pListController.position.value);
-                        }
+                        pListController.filter(
+                            name: pListController.pswdFilter.text,
+                            title: pListController.position.value);
                       },
-                    ))
+                    )),
+                horizontalSpace10,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue[900],
+                      ),
+                      onPressed: () {
+                        pListController.pswdFilter.clear();
+                        pListController.position.value = 'All';
+                        pListController.pswdList
+                            .assignAll(pListController.filteredPswdList);
+                      },
+                    )),
+
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
@@ -178,7 +187,9 @@ class PSWDStaffListScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                      },
                       child: Text(
                         'View',
                         style: body16RegularUnderlineBlue,
@@ -186,7 +197,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                     ),
                     horizontalSpace15,
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        pListController.enableEditing.value = true;
+                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                      },
                       child: Text(
                         'Edit',
                         style: body16RegularUnderlineBlue,

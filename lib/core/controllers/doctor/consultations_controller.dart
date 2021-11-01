@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
@@ -10,6 +11,8 @@ class ConsultationsController extends GetxController {
   final log = getLogger('Doctor Home Consultations Controller');
 
   RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);
+  static AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value;
 
   @override
   void onReady() {
@@ -21,12 +24,10 @@ class ConsultationsController extends GetxController {
     log.i('Doctor Consultations Controller | get Collection');
     return firestore
         .collection('cons_request')
-        .where('category', isEqualTo: 'Heart')
+        .where('category', isEqualTo: fetchedData!.categoryID)
         .orderBy('dateRqstd')
         .snapshots();
   }
-  //category is hard coded for now. must be initialized based on title of
-  //logged in doctor
 
   Stream<List<ConsultationModel>> assignListStream() {
     log.i('Doctor Consultations Controller | assign');
@@ -63,6 +64,11 @@ class ConsultationsController extends GetxController {
 
   String convertEpoch(String date) {
     final dt = DateTime.fromMillisecondsSinceEpoch(1631271365106617 ~/ 1000);
+    return DateFormat.yMMMd().add_jm().format(dt);
+  }
+
+  String convertTimeStamp(Timestamp recordTime) {
+    final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
   }
 

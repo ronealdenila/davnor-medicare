@@ -39,6 +39,7 @@ class PatientModel {
 class DoctorModel {
   DoctorModel({
     required this.userID,
+    required this.categoryID,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -46,14 +47,12 @@ class DoctorModel {
     required this.department,
     required this.clinicHours,
     required this.profileImage,
-    required this.numToAccomodate,
-    required this.dStatus,
-    required this.hasOngoingCons,
     required this.disabled,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
         userID: json['userID'] as String,
+        categoryID: json['categoryID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
@@ -61,14 +60,12 @@ class DoctorModel {
         department: json['department'] as String,
         clinicHours: json['clinicHours'] as String,
         profileImage: json['profileImage'] as String,
-        numToAccomodate: json['numToAccomodate'] as int,
-        dStatus: json['dStatus'] as bool,
-        hasOngoingCons: json['hasOngoingCons'] as bool,
         disabled: json['disabled'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
         'userID': userID,
+        'categoryID': categoryID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -76,12 +73,10 @@ class DoctorModel {
         'department': department,
         'clinicHours': clinicHours,
         'profileImage': profileImage,
-        'numToAccomodate': numToAccomodate,
-        'dStatus': dStatus,
-        'hasOngoingCons': hasOngoingCons,
         'disabled': disabled,
       };
 
+  String? categoryID;
   String? userID;
   String? email;
   String? firstName;
@@ -90,9 +85,6 @@ class DoctorModel {
   String? department;
   String? clinicHours;
   String? profileImage;
-  int? numToAccomodate;
-  bool? dStatus;
-  bool? hasOngoingCons;
   bool? disabled;
 }
 

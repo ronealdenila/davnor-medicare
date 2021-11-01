@@ -12,6 +12,15 @@ class DoctorListController extends GetxController {
   final TextEditingController docFilter = TextEditingController();
   final RxBool isLoading = true.obs;
   final RxString title = ''.obs;
+  final RxString department = ''.obs;
+
+  //Edit
+  final TextEditingController editFirstName = TextEditingController();
+  final TextEditingController editLastName = TextEditingController();
+  final TextEditingController editClinicHours = TextEditingController();
+  final RxString editTitle = ''.obs;
+  final RxString editDepartment = ''.obs;
+  final RxBool enableEditing = false.obs;
 
   @override
   void onReady() {
@@ -53,35 +62,100 @@ class DoctorListController extends GetxController {
         );
   }
 
-  filter({required String name, required String title}) {
-    print(name + " " + title);
+  Future<void> updateDoctor(DoctorModel model) async {
+    await firestore
+        .collection('doctors')
+        .doc(model.userID)
+        .update({
+          'firstName':
+              editFirstName.text == '' ? model.firstName : editFirstName.text,
+          'lastName':
+              editLastName.text == '' ? model.lastName : editLastName.text,
+          'title': editTitle.value == '' ? model.title : editTitle.value,
+          'department': editDepartment.value == ''
+              ? model.department
+              : editDepartment.value,
+          'clinicHours': editClinicHours.value == ''
+              ? model.clinicHours
+              : editClinicHours.value,
+        })
+        .then(
+          (value) => {
+            //Dialog success
+          },
+        )
+        .catchError(
+          (error) => {
+            //Dialog error
+          },
+        );
+  }
+
+  String getProfilePhoto(DoctorModel model) {
+    return model.profileImage!;
+  }
+
+  filter({required String name, required String title, required String dept}) {
+    print(name + " " + title + " " + dept);
+    final RxBool madeChanges = false.obs;
     doctorList.clear();
-    for (var i = 0; i < filteredDoctorList.length; i++) {
-      if (filteredDoctorList[i]
-              .lastName!
-              .toLowerCase()
-              .contains(name.toLowerCase()) ||
-          filteredDoctorList[i]
-              .firstName!
-              .toLowerCase()
-              .contains(name.toLowerCase())) {
-        doctorList.add(filteredDoctorList[i]);
-      }
-    }
-    for (var i = 0; i < filteredDoctorList.length; i++) {
-      if (filteredDoctorList[i]
-          .title!
-          .toLowerCase()
-          .contains(title.toLowerCase())) {
-        doctorList.add(filteredDoctorList[i]);
+
+    //filter for name
+    if (name != '') {
+      for (var i = 0; i < filteredDoctorList.length; i++) {
+        madeChanges.value = true;
+        if (filteredDoctorList[i]
+                .lastName!
+                .toLowerCase()
+                .contains(name.toLowerCase()) ||
+            filteredDoctorList[i]
+                .firstName!
+                .toLowerCase()
+                .contains(name.toLowerCase())) {
+          doctorList.add(filteredDoctorList[i]);
+        }
       }
     }
 
-    for (var i = 0; i < doctorList.length; i++) {
-      print(doctorList[i].firstName);
+    //filter for title
+    if (title != '' && title != 'All') {
+      if (doctorList.isEmpty) {
+        for (var i = 0; i < filteredDoctorList.length; i++) {
+          madeChanges.value = true;
+          if (filteredDoctorList[i].title == title) {
+            doctorList.add(filteredDoctorList[i]);
+          }
+        }
+      } else {
+        for (var i = 0; i < doctorList.length; i++) {
+          if (doctorList[i].title != title) {
+            doctorList.removeAt(i);
+          }
+        }
+      }
     }
 
-    final stores = doctorList.map((e) => e.email).toSet();
-    doctorList.retainWhere((x) => stores.remove(x.email));
+    //filter for dept
+    if (dept != '' && dept != 'All') {
+      if (doctorList.isEmpty) {
+        for (var i = 0; i < filteredDoctorList.length; i++) {
+          madeChanges.value = true;
+          if (filteredDoctorList[i].department == dept) {
+            doctorList.add(filteredDoctorList[i]);
+          }
+        }
+      } else {
+        for (var i = 0; i < doctorList.length; i++) {
+          if (doctorList[i].department != dept) {
+            doctorList.removeAt(i);
+          }
+        }
+      }
+    }
+
+    //show all
+    if (!madeChanges.value && doctorList.isEmpty) {
+      doctorList.assignAll(filteredDoctorList);
+    }
   }
 }

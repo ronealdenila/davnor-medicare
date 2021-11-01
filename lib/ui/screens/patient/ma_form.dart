@@ -8,6 +8,7 @@ import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -235,12 +236,14 @@ class MAFormScreen extends StatelessWidget {
       onTap: ma.pickSingleImage,
       child: Stack(
         children: [
-          Image.file(
-            File(ma.imgOfValidID.value),
-            width: Get.width,
-            height: Get.height,
-            fit: BoxFit.fill,
-          ),
+          kIsWeb
+              ? Image.network(ma.imgOfValidID.value)
+              : Image.file(
+                  File(ma.imgOfValidID.value),
+                  width: Get.width,
+                  height: Get.height,
+                  fit: BoxFit.fill,
+                ),
           Positioned(
             right: 5,
             top: 5,

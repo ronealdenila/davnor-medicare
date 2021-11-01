@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Widget chatInput(LiveChatController liveChatCont) {
@@ -23,12 +24,14 @@ Widget chatInput(LiveChatController liveChatCont) {
         child: Wrap(children: [
           Stack(
             children: [
-              Image.file(
-                File(liveChatCont.image.value),
-                width: 80,
-                height: 80,
-                fit: BoxFit.fitWidth,
-              ),
+              kIsWeb
+                  ? Image.network(liveChatCont.image.value)
+                  : Image.file(
+                      File(liveChatCont.image.value),
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.fitWidth,
+                    ),
               Positioned(
                 right: 5,
                 top: 5,

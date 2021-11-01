@@ -2,7 +2,9 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -36,10 +38,7 @@ class DoctorListScreen extends StatelessWidget {
                     labelText: 'Search doctor name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
-                      if (dListController.docFilter.text.isEmpty) {
-                        dListController.doctorList
-                            .assignAll(dListController.filteredDoctorList);
-                      }
+                      return;
                     },
                     onSaved: (value) => dListController.docFilter.text = value!,
                   ),
@@ -49,32 +48,58 @@ class DoctorListScreen extends StatelessWidget {
                   width: 250,
                   child: CustomDropdown(
                     hintText: 'Select doctor title',
-                    dropdownItems: title,
-                    onChanged: (Item? item) =>
-                        dListController.title.value = item!.name,
+                    dropdownItems: titleDropdown,
+                    onChanged: (Item? item) {
+                      dListController.title.value = item!.name;
+                    },
                     onSaved: (Item? item) =>
                         dListController.title.value = item!.name,
                   ),
                 ),
                 horizontalSpace18,
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    width: 100,
+                  width: 300,
+                  child: CustomDropdown(
+                    hintText: 'Select doctor department',
+                    dropdownItems: deptDropdown,
+                    onChanged: (Item? item) {
+                      dListController.department.value = item!.name;
+                    },
+                    onSaved: (Item? item) =>
+                        dListController.department.value = item!.name,
+                  ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                    height: 52,
                     child: ElevatedButton(
                       child: Text('Search'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
-                        if (dListController.docFilter.text.isEmpty &&
-                            dListController.title.value == '') {
-                        } else {
-                          dListController.filter(
-                              name: dListController.docFilter.text,
-                              title: dListController.title.value);
-                        }
+                        dListController.filter(
+                            name: dListController.docFilter.text,
+                            title: dListController.title.value,
+                            dept: dListController.department.value);
                       },
-                    ))
+                    )),
+                horizontalSpace10,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue[900],
+                      ),
+                      onPressed: () {
+                        dListController.docFilter.clear();
+                        dListController.title.value = '';
+                        dListController.department.value = '';
+                        dListController.doctorList
+                            .assignAll(dListController.filteredDoctorList);
+                      },
+                    )),
                 //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
@@ -197,7 +222,9 @@ class DoctorListScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                      },
                       child: Text(
                         'View',
                         style: body16RegularUnderlineBlue,
@@ -205,7 +232,10 @@ class DoctorListScreen extends StatelessWidget {
                     ),
                     horizontalSpace15,
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        dListController.enableEditing.value = true;
+                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                      },
                       child: Text(
                         'Edit',
                         style: body16RegularUnderlineBlue,

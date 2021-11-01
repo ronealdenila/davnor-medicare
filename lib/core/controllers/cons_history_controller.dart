@@ -1,43 +1,87 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
+  static AuthController authController = Get.find();
+  final RxBool isLoading = true.obs;
 
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
   RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
+  RxBool doneFetching = false.obs;
 
-  Future<void> getConsHistoryForPatient() async {
+  //searching consultation history in doctor side...
+  RxList<ConsultationHistoryModel> filteredListforDoc =
+      RxList<ConsultationHistoryModel>([]);
+  final TextEditingController searchKeyword = TextEditingController();
+
+  //searching consultation history in patient side...
+  RxList<ConsultationHistoryModel> filteredListforP =
+      RxList<ConsultationHistoryModel>([]);
+  final TextEditingController searchKeywordP = TextEditingController();
+
+  @override
+  void onReady() {
+    super.onReady();
+    log.i('onReady | Cons History');
+    if (authController.userRole == 'doctor') {
+      getConsHistoryForDoctor().then((value) {
+        consHistory.value = value;
+        filteredListforDoc.assignAll(consHistory);
+        isLoading.value = false;
+      });
+    } else if (authController.userRole == 'patient') {
+      getConsHistoryForPatient().then((value) {
+        consHistory.value = value;
+        filteredListforP.assignAll(consHistory);
+        isLoading.value = false;
+      });
+    }
+  }
+
+  Future<List<ConsultationHistoryModel>> getConsHistoryForPatient() async {
     log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
-    await firestore
+    return firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
-        //.orderBy('dateConsEnd', descending: true)
+        .orderBy('dateConsEnd')
         .get()
-        .then((value) {
-      for (final result in value.docs) {
-        consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      }
+        .then(
+          (query) => query.docs
+              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
+              .toList(),
+        )
+        .catchError((onError) {
+      isLoading.value = false;
     });
   }
 
-  Future<void> getConsHistoryForDoctor() async {
+  Future<List<ConsultationHistoryModel>> getConsHistoryForDoctor() async {
     log.i('Get Cons History for Doctor - ${auth.currentUser!.uid}');
-    await firestore
+    return firestore
         .collection('cons_history')
         .where('docID', isEqualTo: auth.currentUser!.uid)
+        .orderBy('dateConsEnd')
         .get()
-        .then((value) {
-      for (final result in value.docs) {
-        consHistory.add(ConsultationHistoryModel.fromJson(result.data()));
-      }
+        .then(
+          (query) => query.docs
+              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
+              .toList(),
+        )
+        .catchError((onError) {
+      isLoading.value = false;
     });
   }
 
@@ -112,5 +156,81 @@ class ConsHistoryController extends GetxController {
         chatHistory.add(ChatModel.fromJson(result.data()));
       }
     });
+  }
+
+  filterForDoctor({required String name}) {
+    filteredListforDoc.assignAll(consHistory);
+    consHistory.clear();
+
+    //filter for name of patient only
+    if (name != '') {
+      for (var i = 0; i < filteredListforDoc.length; i++) {
+        if (filteredListforDoc[i]
+            .fullName!
+            .toLowerCase()
+            .contains(name.toLowerCase())) {
+          consHistory.add(filteredListforDoc[i]);
+        }
+      }
+    }
+  }
+
+  showDialog(context) {
+    Get.dialog(AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      content: Container(
+        color: Colors.white,
+        height: kIsWeb ? Get.height * 0.30 : Get.height * .45,
+        width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SfDateRangePicker(
+              onSelectionChanged: onSelectionChanged,
+              selectionMode: DateRangePickerSelectionMode.single,
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
+  String getMonth(Timestamp time) {
+    return time.toDate().month.toString();
+  }
+
+  String getDate(Timestamp time) {
+    return time.toDate().day.toString();
+  }
+
+  String getYear(Timestamp time) {
+    return time.toDate().year.toString();
+  }
+
+  void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    consHistory.clear();
+    Timestamp myTimeStamp = Timestamp.fromDate(args.value);
+    for (var i = 0; i < filteredListforP.length; i++) {
+      String dateConstant = getMonth(filteredListforP[i].dateConsEnd!) +
+          " - " +
+          getDate(filteredListforP[i].dateConsEnd!) +
+          " - " +
+          getYear(filteredListforP[i].dateConsEnd!);
+      ;
+      String dateSelected = myTimeStamp.toDate().month.toString() +
+          " - " +
+          myTimeStamp.toDate().day.toString() +
+          " - " +
+          myTimeStamp.toDate().year.toString();
+      print(i.toString() +
+          "  " +
+          dateConstant +
+          " dateSelected  " +
+          dateSelected);
+      if (dateConstant == dateSelected) {
+        consHistory.add(filteredListforP[i]);
+      }
+    }
+    Get.back();
   }
 }

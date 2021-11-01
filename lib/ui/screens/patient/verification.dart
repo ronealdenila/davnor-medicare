@@ -6,6 +6,7 @@ import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -124,12 +125,14 @@ class VerificationScreen extends StatelessWidget {
       onTap: verificationController.pickValidID,
       child: Stack(
         children: [
-          Image.file(
-            File(verificationController.imgOfValidID.value),
-            width: Get.width,
-            height: Get.height,
-            fit: BoxFit.fill,
-          ),
+          kIsWeb
+              ? Image.network(verificationController.imgOfValidID.value)
+              : Image.file(
+                  File(verificationController.imgOfValidID.value),
+                  width: Get.width,
+                  height: Get.height,
+                  fit: BoxFit.fill,
+                ),
           Positioned(
             right: 5,
             top: 5,
@@ -174,12 +177,15 @@ class VerificationScreen extends StatelessWidget {
       onTap: verificationController.pickValidIDWithSelfie,
       child: Stack(
         children: [
-          Image.file(
-            File(verificationController.imgOfValidIDWithSelfie.value),
-            width: Get.width,
-            height: Get.height,
-            fit: BoxFit.fill,
-          ),
+          kIsWeb
+              ? Image.network(
+                  verificationController.imgOfValidIDWithSelfie.value)
+              : Image.file(
+                  File(verificationController.imgOfValidIDWithSelfie.value),
+                  width: Get.width,
+                  height: Get.height,
+                  fit: BoxFit.fill,
+                ),
           Positioned(
             right: 5,
             top: 5,

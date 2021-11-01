@@ -7,10 +7,12 @@ class PatientStatusModel {
       required this.pStatus,
       required this.hasActiveQueueCons,
       required this.hasActiveQueueMA,
+      required this.categoryID,
       required this.pendingVerification});
 
   factory PatientStatusModel.fromJson(Map<String, dynamic> json) =>
       PatientStatusModel(
+        categoryID: json['categoryID'] as String,
         queueMA: json['queueMA'] as String,
         queueCons: json['queueCons'] as String,
         deviceToken: json['deviceToken'] as String,
@@ -22,6 +24,7 @@ class PatientStatusModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'categoryID': categoryID,
         'queueMA': queueMA,
         'queueCons': queueCons,
         'pStatus': pStatus,
@@ -32,6 +35,7 @@ class PatientStatusModel {
         'notifBadge': notifBadge,
       };
 
+  final String? categoryID;
   final String? queueMA;
   final String? queueCons;
   final bool? hasActiveQueueCons;
@@ -40,4 +44,33 @@ class PatientStatusModel {
   final bool? pStatus;
   final String? deviceToken;
   final String? notifBadge;
+}
+
+class DoctorStatusModel {
+  DoctorStatusModel({
+    required this.numToAccomodate,
+    required this.accomodated,
+    required this.dStatus,
+    required this.hasOngoingCons,
+  });
+
+  factory DoctorStatusModel.fromJson(Map<String, dynamic> json) =>
+      DoctorStatusModel(
+        numToAccomodate: json['numToAccomodate'] as int,
+        accomodated: json['accomodated'] as int,
+        dStatus: json['dStatus'] as bool,
+        hasOngoingCons: json['hasOngoingCons'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'numToAccomodate': numToAccomodate,
+        'accomodated': accomodated,
+        'dStatus': dStatus,
+        'hasOngoingCons': hasOngoingCons,
+      };
+
+  int? numToAccomodate;
+  int? accomodated;
+  bool? dStatus;
+  bool? hasOngoingCons;
 }
