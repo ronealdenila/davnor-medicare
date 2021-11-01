@@ -76,7 +76,9 @@ class QueueConsScreen extends StatelessWidget {
                     ),
                     verticalSpace10,
                     InkWell(
-                      onTap: () {}, //See More Screen
+                      onTap: () {
+                        //TO DO: queue cons table
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

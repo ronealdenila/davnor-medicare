@@ -273,13 +273,7 @@ class MARequestController extends GetxController {
     _imagePickerService.pickImage(imgOfValidID);
   }
 
-  void pickMultiImageS() async {
+  void pickMultiImageS() {
     _imagePickerService.pickMultiImage(images);
   }
 }
-
-// To parse this JSON data, do
-//
-//     final imagesBytes = imagesBytesFromJson(jsonString);
-
-

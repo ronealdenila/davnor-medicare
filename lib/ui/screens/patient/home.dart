@@ -20,7 +20,10 @@ import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
+import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
+import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -63,7 +66,7 @@ class PatientHomeScreen extends StatelessWidget {
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
               onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
-              onSettingsTap: () => Get.to(() => MAHistoryScreen()),
+              onSettingsTap: () => Get.to(() => SettingScreen()),
               onLogoutTap: authController.signOut,
             ),
             backgroundColor: Colors.white,
@@ -199,18 +202,17 @@ class PatientHomeScreen extends StatelessWidget {
               if (data['pStatus'] as bool) {
                 if (data['hasActiveQueueCons'] as bool &&
                     data['hasActiveQueueMA'] as bool) {
-                  //Get.to(() => QueueMAScreen()); CHOICE SCREEN
-                }
-                if (data['hasActiveQueueCons'] as bool) {
-                  //Get.to(() => QueueMAScreen()); CONS SCREEN
-                }
-                if (data['hasActiveQueueMA'] as bool) {
+                  Get.to(() => SelectQueueScreen());
+                } else if (data['hasActiveQueueCons'] as bool) {
+                  Get.to(() => QueueConsScreen());
+                } else if (data['hasActiveQueueMA'] as bool) {
                   Get.to(() => QueueMAScreen());
+                } else {
+                  showErrorDialog(
+                      errorTitle: 'Sorry, you have no queue number',
+                      errorDescription:
+                          'You need to request consultation or medical assistance to be in a queue.');
                 }
-                showErrorDialog(
-                    errorTitle: 'Sorry, you have no queue number',
-                    errorDescription:
-                        'You need to request consultation or medical assistance to be in a queue.');
               } else {
                 showErrorDialog(
                     errorTitle:

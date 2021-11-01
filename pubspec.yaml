@@ -28,6 +28,8 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_messaging: ^10.0.8
   firebase_analytics: ^8.3.4
+
+  #date picker
   syncfusion_flutter_datepicker: ^19.3.47
 
   #http
@@ -72,9 +74,6 @@ dependencies:
 
   #notification badges
   badges: ^2.0.1
-
-  #data table 2
-  data_table_2: ^2.1.1
 
   #Auto Size Text
   auto_size_text: ^3.0.0-nullsafety.0
