@@ -106,15 +106,15 @@ class MAHistoryScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),
                               shrinkWrap: true,
-                              itemCount: maHController.maListPatient.length,
+                              itemCount: maHController.maHistoryList.length,
                               itemBuilder: (context, index) {
                                 return MACard(
                                     maHistory:
-                                        maHController.maListPatient[index],
+                                        maHController.maHistoryList[index],
                                     onTap: () {
                                       Get.to(() => MAHistoryInfoScreen(),
                                           arguments: maHController
-                                              .maListPatient[index]);
+                                              .maHistoryList[index]);
                                     });
                               });
                         }

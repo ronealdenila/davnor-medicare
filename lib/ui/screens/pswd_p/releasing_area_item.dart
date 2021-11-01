@@ -35,39 +35,36 @@ class ReleasingAreaItemScreen extends StatelessWidget {
       medWorth: passedData.medWorth,
     );
 
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              children: [
-                PSWDItemView(context, 'medReady', model),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: PSWDButton(
-                    onItemTap: () {
-                      showConfirmationDialog(
-                        dialogTitle: dialogpswdTitle,
-                        dialogCaption: dialogpswdCaption,
-                        onYesTap: () {
-                          showLoading();
-                          transfferToHistpry(model);
-                          dismissDialog();
-                        },
-                        onNoTap: () {
-                          dismissDialog();
-                        },
-                      );
-                    },
-                    buttonText: 'Claimed',
-                  ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
+              PSWDItemView(context, 'medReady', model),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: PSWDButton(
+                  onItemTap: () {
+                    showConfirmationDialog(
+                      dialogTitle: dialogpswdTitle,
+                      dialogCaption: dialogpswdCaption,
+                      onYesTap: () {
+                        showLoading();
+                        transfferToHistpry(model);
+                        dismissDialog();
+                      },
+                      onNoTap: () {
+                        dismissDialog();
+                      },
+                    );
+                  },
+                  buttonText: 'Claimed',
                 ),
-                verticalSpace35,
-              ],
-            ),
+              ),
+              verticalSpace35,
+            ],
           ),
         ),
       ),

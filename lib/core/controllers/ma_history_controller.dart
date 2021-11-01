@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
@@ -12,58 +13,59 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class MAHistoryController extends GetxController {
   final log = getLogger('MA History Controller');
 
-  RxList<MAHistoryModel> maListPatient = RxList<MAHistoryModel>([]);
-  RxList<MAHistoryModel> maListmasterPatient = RxList<MAHistoryModel>([]);
+  static AuthController authController = Get.find();
+  RxList<MAHistoryModel> maHistoryList = RxList<MAHistoryModel>([]);
+  final RxBool isLoading = true.obs;
 
-  RxList<MAHistoryModel> maListPSWD = RxList<MAHistoryModel>([]);
-  RxList<MAHistoryModel> maListmasterPSWD = RxList<MAHistoryModel>([]);
-  //FOR PSWD SIDE
-  final RxList<MAHistoryModel> mafilteredList = RxList<MAHistoryModel>();
-  final TextEditingController maFilter = TextEditingController();
+  //searching MA history in PSWD side...
+  RxList<MAHistoryModel> filteredListforPSWD = RxList<MAHistoryModel>([]);
+  final TextEditingController searchKeyword = TextEditingController();
+  RxString last30DaysDropDown = ''.obs;
 
-  RxBool enabledPastDays = false.obs;
-
-  @override
-  void onInit() async {
-    super.onInit;
-    await getMAHistoryForPSWD();
-    print(maListPatient.length.toString() + "length");
-  }
+  //searching MA history in patient side...
+  RxList<MAHistoryModel> filteredListforP = RxList<MAHistoryModel>([]);
+  final TextEditingController searchKeywordP = TextEditingController();
 
   @override
   void onReady() {
     super.onReady();
-    log.i('onReady | DoctorListController');
+    log.i('onReady | MA History Controller');
+    if (authController.userRole == 'pswd-h' ||
+        authController.userRole == 'pswd-p') {
+      getMAHistoryForPSWD().then((value) {
+        maHistoryList.value = value;
+        filteredListforPSWD.assignAll(maHistoryList);
+        isLoading.value = false;
+      });
+    } else if (authController.userRole == 'patient') {
+      getMAHistoryForPatient().then((value) {
+        maHistoryList.value = value;
+        filteredListforP.assignAll(maHistoryList);
+        isLoading.value = false;
+      });
+    }
   }
 
-  Future<void> getMAHistoryForPatient() async {
+  Future<List<MAHistoryModel>> getMAHistoryForPatient() async {
     log.i('Get MA History for Patient - ${auth.currentUser!.uid}');
-    await firestore
+    return firestore
         .collection('ma_history')
         .where('requesterID', isEqualTo: auth.currentUser!.uid)
         .get()
-        .then((value) {
-      for (final result in value.docs) {
-        // list.add(MAHistoryModel.fromJson(result.data()));
-        maListPatient.add(MAHistoryModel.fromJson(result.data()));
-        maListmasterPatient.add(MAHistoryModel.fromJson(result.data()));
-      }
-    });
+        .then(
+          (query) => query.docs
+              .map((item) => MAHistoryModel.fromJson(item.data()))
+              .toList(),
+        );
   }
 
-  Future<void> getMAHistoryForPSWD() async {
+  Future<List<MAHistoryModel>> getMAHistoryForPSWD() async {
     log.i('Get MA History for PSWD Personnel - ${auth.currentUser!.uid}');
-    // var list = [];
-    await firestore
-        .collection('ma_history')
-        .orderBy('dateRqstd')
-        .get()
-        .then((value) {
-      for (final result in value.docs) {
-        maListPSWD.add(MAHistoryModel.fromJson(result.data()));
-        maListmasterPSWD.add(MAHistoryModel.fromJson(result.data()));
-      }
-    });
+    return firestore.collection('ma_history').orderBy('dateRqstd').get().then(
+          (query) => query.docs
+              .map((item) => MAHistoryModel.fromJson(item.data()))
+              .toList(),
+        );
   }
 
   String convertTimeStamp(Timestamp recordTime) {
@@ -97,92 +99,56 @@ class MAHistoryController extends GetxController {
 
   int readTimestamp(int? timestamp) {
     var now = DateTime.now();
-    var format = DateFormat('HH:mm a');
     var date = DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
     var diff = now.difference(date);
-    var time = '';
-
-    if (diff.inSeconds <= 0 ||
-        diff.inSeconds > 0 && diff.inMinutes == 0 ||
-        diff.inMinutes > 0 && diff.inHours == 0 ||
-        diff.inHours > 0 && diff.inDays == 0) {
-      time = format.format(date);
-    } else if (diff.inDays > 0 && diff.inDays < 7) {
-      if (diff.inDays == 1) {
-        time = diff.inDays.toString() + ' DAY AGO';
-      } else {
-        time = diff.inDays.toString() + ' DAYS AGO';
-      }
-    } else {
-      if (diff.inDays == 7) {
-        time = (diff.inDays / 7).floor().toString() + ' WEEK AGO';
-      } else {
-        time = (diff.inDays / 7).floor().toString() + ' WEEKS AGO';
-      }
-    }
     print("diff in days : ${diff.inDays}");
-    print(time);
     return diff.inDays;
   }
 
-  filter({
-    required String name,
-  }) {
-    maListPSWD.clear();
-    for (var i = 0; i < maListmasterPSWD.length; i++) {
-      if (maListmasterPSWD[i]
-          .fullName!
-          .toLowerCase()
-          .contains(name.toLowerCase())) {
-        maListPSWD.add(maListmasterPSWD[i]);
-      }
-    }
-    if (enabledPastDays.value == true) {
-      for (var i = 0; i < maListmasterPSWD.length; i++) {
-        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) <= 30) {
-        } else {
-          maListPSWD.add(maListmasterPSWD[i]);
+  filter({required String name, required bool last30days}) {
+    maHistoryList.clear();
+
+    //filter for name only
+    if (name != '' && !last30days) {
+      for (var i = 0; i < filteredListforPSWD.length; i++) {
+        if (filteredListforPSWD[i]
+            .fullName!
+            .toLowerCase()
+            .contains(name.toLowerCase())) {
+          maHistoryList.add(filteredListforPSWD[i]);
         }
       }
     }
 
-    for (var i = 0; i < maListPSWD.length; i++) {
-      print(maListPSWD[i].fullName);
+    //filter for last 30 days only
+    else if (name == '' && last30days) {
+      filterLast30Days();
     }
 
-    // final stores = maList.map((e) => e.fullName).toSet();
-    // maList.retainWhere((x) => stores.remove(x.fullName));
-  }
-
-  filterPastDays() {
-    maListPSWD.clear();
-
-    if (enabledPastDays.value == true) {
-      for (var i = 0; i < maListmasterPSWD.length; i++) {
-        if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
-        } else {
-          maListPSWD.add(maListmasterPSWD[i]);
+    //filter for both
+    else if (name != '' && last30days) {
+      print('BOTH');
+      for (var i = 0; i < filteredListforPSWD.length; i++) {
+        if ((filteredListforPSWD[i]
+                .fullName!
+                .toLowerCase()
+                .contains(name.toLowerCase())) &&
+            readTimestamp(filteredListforPSWD[i].dateClaimed!.seconds) <= 30) {
+          maHistoryList.add(filteredListforPSWD[i]);
         }
       }
-    } else {
-      maListPSWD.assignAll(maListmasterPSWD);
     }
 
-    for (var i = 0; i < maListPSWD.length; i++) {
-      print(maListPSWD[i].fullName);
+    //show all
+    else if (name == '' && !last30days) {
+      maHistoryList.assignAll(filteredListforPSWD);
     }
-
-    // final stores = maList.map((e) => e.fullName).toSet();
-    // maList.retainWhere((x) => stores.remove(x.fullName));
   }
 
-  filterSpecificDay() {
-    maListPSWD.clear();
-
-    for (var i = 0; i < maListmasterPSWD.length; i++) {
-      if (readTimestamp(maListmasterPSWD[i].dateClaimed!.seconds) > 30) {
-      } else {
-        maListPSWD.add(maListmasterPSWD[i]);
+  filterLast30Days() {
+    for (var i = 0; i < filteredListforPSWD.length; i++) {
+      if (readTimestamp(filteredListforPSWD[i].dateClaimed!.seconds) <= 30) {
+        maHistoryList.add(filteredListforPSWD[i]);
       }
     }
   }
@@ -201,33 +167,41 @@ class MAHistoryController extends GetxController {
     ));
   }
 
+  String getMonth(Timestamp time) {
+    return time.toDate().month.toString();
+  }
+
+  String getDate(Timestamp time) {
+    return time.toDate().day.toString();
+  }
+
+  String getYear(Timestamp time) {
+    return time.toDate().year.toString();
+  }
+
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    maListPSWD.clear();
-    // print(args.value);
+    maHistoryList.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    // print(myTimeStamp.toDate().month.toString() +
-    //     " - " +
-    //     myTimeStamp.toDate().day.toString());
-    // print(maListmaster[0].dateRqstd!.toDate().month.toString() +
-    //     " - " +
-    //     maListmaster[0].dateRqstd!.toDate().day.toString());
-    for (var i = 0; i < maListmasterPSWD.length; i++) {
-      String dateConstant =
-          maListmasterPSWD[i].dateRqstd!.toDate().month.toString() +
-              " - " +
-              maListmasterPSWD[i].dateRqstd!.toDate().day.toString();
+    for (var i = 0; i < filteredListforPSWD.length; i++) {
+      String dateConstant = getMonth(filteredListforPSWD[i].dateClaimed!) +
+          " - " +
+          getDate(filteredListforPSWD[i].dateClaimed!) +
+          " - " +
+          getYear(filteredListforPSWD[i].dateClaimed!);
+      ;
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
-          myTimeStamp.toDate().day.toString();
+          myTimeStamp.toDate().day.toString() +
+          " - " +
+          myTimeStamp.toDate().year.toString();
       print(i.toString() +
           "  " +
           dateConstant +
           " dateSelected  " +
           dateSelected);
-
       if (dateConstant == dateSelected) {
-        maListPSWD.add(maListmasterPSWD[i]);
-      } else {}
+        maHistoryList.add(filteredListforPSWD[i]);
+      }
     }
     Get.back();
   }

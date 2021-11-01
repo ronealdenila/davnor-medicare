@@ -61,9 +61,6 @@ class LiveConsInfoScreen extends StatelessWidget {
                 verticalSpace20,
                 InkWell(
                   onTap: () {
-                    //DIALOG FOR ARE YOU SURE
-                    //yes - go end
-                    //no dismissDialog
                     confirmationDialog();
                   },
                   child: const Text('End Consultation',
@@ -179,13 +176,13 @@ class LiveConsInfoScreen extends StatelessWidget {
 
   void confirmationDialog() {
     return showConfirmationDialog(
-      dialogTitle: 'Are you sure?',
+      dialogTitle: 'Is the consultation done?',
       dialogCaption:
-          'Select YES if you want to verify this user. Otherwise, select NO',
-      onYesTap: () => liveCont.endConsultation(consData),
-      onNoTap: () {
-        dismissDialog();
+          'Select YES if you want to end the consultation. Otherwise, select NO',
+      onYesTap: () {
+        liveCont.endConsultation(consData);
       },
+      onNoTap: () => dismissDialog(),
     );
   }
 

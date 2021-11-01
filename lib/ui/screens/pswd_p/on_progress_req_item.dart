@@ -29,30 +29,27 @@ class OnProgressReqItemScreen extends StatelessWidget {
         validID: passedData.validID,
         dateRqstd: passedData.dateRqstd);
 
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              children: [
-                PSWDItemView(context, 'approved', model),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: PSWDButton(
-                    onItemTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => detailsDialogMA());
-                    },
-                    buttonText: 'Medicine is Ready',
-                  ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
+              PSWDItemView(context, 'approved', model),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: PSWDButton(
+                  onItemTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => detailsDialogMA());
+                  },
+                  buttonText: 'Medicine is Ready',
                 ),
-                verticalSpace35,
-              ],
-            ),
+              ),
+              verticalSpace35,
+            ],
           ),
         ),
       ),
