@@ -1,25 +1,18 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/imageBytes.dart';
 import 'package:davnor_medicare/core/models/pswd_stats_model.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:uuid/uuid.dart';
-// import 'dart:html' as html;
 
 class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
@@ -43,7 +36,7 @@ class MARequestController extends GetxController {
   TextEditingController ageController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   final RxList<XFile> images = RxList<XFile>();
-  final RxList<ImagesBytes> imagesListNew = <ImagesBytes>[].obs;
+
   //Saving Data
   final RxString documentID = ''.obs;
   //final RxString fileName = ''.obs;
@@ -282,25 +275,6 @@ class MARequestController extends GetxController {
 
   void pickMultiImageS() async {
     _imagePickerService.pickMultiImage(images);
-  }
-
-  void pickMultiImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg'],
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      var list = [];
-      Map map = {"bytes": file.bytes};
-      list.add(map);
-      var res = imagesBytesFromJson(jsonEncode(list));
-      imagesListNew.addAll(res);
-      print(imagesListNew.length);
-    } else {
-      // User canceled the picker
-    }
   }
 }
 

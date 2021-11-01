@@ -25,7 +25,6 @@ class MAHistoryController extends GetxController {
 
   //searching MA history in patient side...
   RxList<MAHistoryModel> filteredListforP = RxList<MAHistoryModel>([]);
-  final TextEditingController searchKeywordP = TextEditingController();
 
   @override
   void onReady() {
