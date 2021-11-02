@@ -47,12 +47,14 @@ class ConsRequestController extends GetxController {
   RxList<XFile> images = RxList<XFile>();
   String imageUrls = '';
   final RxString generatedCode = 'C025'.obs; //MA24 -> mock code
-  late String documentId;
 
   RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>();
   RxInt statusIndex = 0.obs;
   RxString categoryHolder = ''.obs;
   RxString specialistD = 'Otolaryngologist (ENT)'.obs;
+
+  //Generate unique MA ID
+  final RxString generatedConsID = ''.obs;
 
   @override
   void onReady() {
@@ -62,20 +64,13 @@ class ConsRequestController extends GetxController {
   }
 
   Stream<List<ConsStatusModel>> getStatus() {
-    log.i('Cons Queue Controller | Get PSWD Status');
+    log.i('Cons Queue Controller | Get Cons Queue Status');
     return firestore.collection('cons_status').snapshots().map(
           (query) => query.docs
               .map((item) => ConsStatusModel.fromJson(item.data()))
               .toList(),
         );
   }
-
-  final consultRef =
-      firestore.collection('cons_request').withConverter<ConsultationModel>(
-            fromFirestore: (snapshot, _) =>
-                ConsultationModel.fromJson(snapshot.data()!),
-            toFirestore: (snapshot, _) => snapshot.toJson(),
-          );
 
   bool hasImagesSelected() {
     if (images.isNotEmpty) {
@@ -88,7 +83,8 @@ class ConsRequestController extends GetxController {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
       //fileName.value = images[i].path.split('/').last;
-      final ref = storageRef.child('Cons_Request/$userID/Pr-$v4$v4');
+      final ref = storageRef.child(
+          'Cons_Request/$userID/cons_req/${generatedConsID.value}/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           imageUrls += '$value>>>';
@@ -111,25 +107,23 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequest() async {
     if (hasAvailableSlot()) {
       showLoading();
+      generatedConsID.value = uuid.v4();
       await uploadLabResults();
-      assignValues();
-      final consultation = ConsultationModel(
-        consID: '',
-        patientId: auth.currentUser!.uid,
-        fullName: fullName,
-        age: ageController.text,
-        category: categoryID.value,
-        dateRqstd: Timestamp.fromDate(DateTime.now()),
-        description: descriptionController.text,
-        isFollowUp: isFollowUp.value ? false : true,
-        imgs: imageUrls,
-      );
-
-      final docRef = await consultRef.add(consultation);
-      documentId = docRef.id; //save id bcs it will be save w/ the queueNum
-      await updateId();
-
-      await initializeConsultationModel(docRef.id);
+      await assignValues();
+      await firestore
+          .collection('cons_request')
+          .doc(generatedConsID.value)
+          .set({
+        'consID': generatedConsID.value,
+        'patientId': auth.currentUser!.uid,
+        'fullName': fullName,
+        'age': ageController.text,
+        'category': categoryID.value,
+        'dateRqstd': Timestamp.fromDate(DateTime.now()),
+        'description': descriptionController.text,
+        'isFollowUp': isFollowUp.value ? true : false,
+        'imgs': imageUrls,
+      });
 
       //Generate Cons Queue
       final lastNum = statusList[statusIndex.value].qLastNum! + 1;
@@ -155,10 +149,10 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> addToConsQueueCollection() async {
-    await firestore.collection('cons_queue').doc(documentId).set({
+    await firestore.collection('cons_queue').doc(generatedConsID.value).set({
       'categoryID': categoryID.value,
       'requesterID': auth.currentUser!.uid,
-      'consID': documentId,
+      'consID': generatedConsID.value,
       'queueNum': generatedCode.value,
       'dateCreated': Timestamp.fromDate(DateTime.now()),
     });
@@ -173,15 +167,6 @@ class ConsRequestController extends GetxController {
           Get.to(() => PatientHomeScreen());
         });
   }
-
-  Future<void> updateId() async => firestore
-      .collection('cons_request')
-      .doc(documentId)
-      .update({
-        'consID': documentId,
-      })
-      .then((value) => log.i('Consultation ID initialized'))
-      .catchError((error) => log.w('Failed to update cons Id'));
 
   Future<void> updateStatus() async {
     await firestore
@@ -209,12 +194,7 @@ class ConsRequestController extends GetxController {
     );
   }
 
-  Future<void> initializeConsultationModel(String docRef) async {
-    consultation.value =
-        await consultRef.doc(docRef).get().then((snapshot) => snapshot.data()!);
-  }
-
-  void assignValues() {
+  Future<void> assignValues() async {
     if (isConsultForYou.value) {
       log.w('Self consult. Assigning values from fetched data');
       firstNameController.text = fetchedData!.firstName!;

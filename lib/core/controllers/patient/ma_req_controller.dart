@@ -37,12 +37,13 @@ class MARequestController extends GetxController {
   TextEditingController addressController = TextEditingController();
   final RxList<XFile> images = RxList<XFile>();
 
-  //Saving Data
-  final RxString documentID = ''.obs;
   //final RxString fileName = ''.obs;
   final RxString listPhotoURL = ''.obs;
   final RxString photoURL = ''.obs;
   final RxString generatedCode = 'MA24'.obs; //MA24 -> mock code
+
+  //Generate unique MA ID
+  final RxString generatedMAID = ''.obs;
 
   RxList<PSWDStatusModel> statusList = RxList<PSWDStatusModel>();
 
@@ -119,7 +120,7 @@ class MARequestController extends GetxController {
     showLoading();
     if (hasPrescriptionSelected()) {
       if (hasAvailableSlot()) {
-        //check slot again
+        generatedMAID.value = uuid.v4();
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
@@ -144,7 +145,8 @@ class MARequestController extends GetxController {
     final v4 = uuid.v4();
     //log.i('Using UID for making sure of the uniqueness -> $v4');
     //fileName.value = img.split('/').last;
-    final ref = storageRef.child('MA_Request/$userID/ID-$v4$v4');
+    final ref = storageRef
+        .child('MA_Request/$userID/ma_req/${generatedMAID.value}/ID-$v4$v4');
     final uploadTask = ref.putFile(File(img));
     await uploadTask.then((res) async {
       photoURL.value = await res.ref.getDownloadURL();
@@ -155,7 +157,8 @@ class MARequestController extends GetxController {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
       //fileName.value = images[i].path.split('/').last;
-      final ref = storageRef.child('MA_Request/$userID/Pr-$v4$v4');
+      final ref = storageRef
+          .child('MA_Request/$userID/ma_req/${generatedMAID.value}/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
@@ -166,8 +169,8 @@ class MARequestController extends GetxController {
   }
 
   Future<void> saveRequestforMA() async {
-    final docRef = await firestore.collection('ma_request').add({
-      'maID': '',
+    await firestore.collection('ma_request').doc(generatedMAID.value).set({
+      'maID': generatedMAID.value,
       'requesterID': auth.currentUser!.uid,
       'fullName': '${firstNameController.text} ${lastNameController.text}',
       'age': ageController.text,
@@ -178,9 +181,6 @@ class MARequestController extends GetxController {
       'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
       'date_rqstd': Timestamp.fromDate(DateTime.now()),
     });
-
-    documentID.value = docRef.id; //save id bcs it will be save w/ the queueNum
-    await updateMAId(documentID.value);
 
     //Generate MA Queue
     final lastNum = statusList[0].qLastNum! + 1;
@@ -199,22 +199,13 @@ class MARequestController extends GetxController {
   }
 
   Future<void> addToMAQueueCollection() async {
-    await firestore.collection('ma_queue').doc(documentID.value).set({
+    await firestore.collection('ma_queue').doc(generatedMAID.value).set({
       'requesterID': auth.currentUser!.uid,
-      'maID': documentID.value,
+      'maID': generatedMAID.value,
       'queueNum': generatedCode.value,
       'dateCreated': Timestamp.fromDate(DateTime.now()),
     });
   }
-
-  Future<void> updateMAId(String id) async => firestore
-      .collection('cons_request')
-      .doc(id)
-      .update({
-        'maID': id,
-      })
-      .then((value) => log.i('MA ID Field added'))
-      .catchError((error) => log.w('Failed to update ma Id'));
 
   Future<void> updateStatus() async {
     await firestore
@@ -251,7 +242,7 @@ class MARequestController extends GetxController {
     log.i('Full Name: ${firstNameController.text} ${lastNameController.text}');
     log.i('Age: ${ageController.text}, Address: ${addressController.text}');
     log.i('Gender: ${gender.value}, Patient Type: ${type.value}');
-    log.i('Document ID: ${documentID.value}');
+    log.i('Document ID: ${generatedMAID.value}');
     log.i('Generated Queue Number: ${generatedCode.value}');
   }
 
@@ -267,6 +258,7 @@ class MARequestController extends GetxController {
     type.value = '';
     listPhotoURL.value = '';
     photoURL.value = '';
+    generatedMAID.value = '';
   }
 
   void pickSingleImage() {
