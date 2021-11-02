@@ -137,14 +137,7 @@ class ConsRequestItemScreen extends StatelessWidget {
                             errorDescription:
                                 'Please make sure to end your accepted consultation first before starting new one');
                       } else {
-                        //showLoading();
-                        //TO DO: Move cons_request data to live_cons
-                        //chat senderID of patient for description + imgs if not null
-                        //user uid of the current user
-                        //then delete consID sa cons_request
-                        doctorHomeController
-                            .updateDocStatus(fetchedData!.userID!);
-                        //dismissDialog();
+                        doctorHomeController.startConsultation(consData);
                       }
                     },
                     child: Container(

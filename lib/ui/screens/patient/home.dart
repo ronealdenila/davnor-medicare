@@ -150,7 +150,6 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
-              print('button clicked');
               if (data['pStatus'] as bool) {
                 if (data['hasActiveQueueCons'] as bool) {
                   showErrorDialog(
@@ -286,7 +285,9 @@ class PatientHomeScreen extends StatelessWidget {
 
   Widget notifIconNormal() {
     return IconButton(
-      onPressed: () => Get.to(() => NotificationFeedScreen()),
+      onPressed: () {
+        Get.to(() => NotificationFeedScreen());
+      },
       icon: const Icon(
         Icons.notifications_outlined,
         size: 29,
@@ -302,7 +303,10 @@ class PatientHomeScreen extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
       ),
       child: IconButton(
-        onPressed: () => Get.to(() => NotificationFeedScreen()),
+        onPressed: () {
+          Get.to(() => NotificationFeedScreen());
+          resetBadge();
+        },
         icon: const Icon(
           Icons.notifications_outlined,
           size: 29,
@@ -365,5 +369,16 @@ class PatientHomeScreen extends StatelessWidget {
     showErrorDialog(
         errorTitle: 'You have no current consultation',
         errorDescription: 'Please request consultation first');
+  }
+
+  Future<void> resetBadge() async {
+    await firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .collection('status')
+        .doc('value')
+        .update({
+      'notifBadge': '0',
+    });
   }
 }

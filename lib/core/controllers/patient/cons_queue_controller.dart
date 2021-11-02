@@ -1,51 +1,50 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/core/models/cons_queue_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/core/models/ma_queue_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 
-class MAQueueController extends GetxController {
-  final log = getLogger('MA Queue Controller');
-
-  RxList<MAQueueModel> queueMAList = RxList<MAQueueModel>();
+class ConsQueueController extends GetxController {
+  final log = getLogger('Cons Queue Controller');
   static StatusController stats = Get.find();
+  RxList<ConsQueueModel> queueConsList = RxList<ConsQueueModel>();
   RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    queueMAList.bindStream(getMAQueue());
+    queueConsList.bindStream(getConsQueue());
   }
 
-  Stream<List<MAQueueModel>> getMAQueue() {
-    log.i('MA Queue Controller | assign MA Queue List');
+  Stream<List<ConsQueueModel>> getConsQueue() {
+    log.i('get Cons Queue | Streaming Consultation Queue');
     return firestore
-        .collection('ma_queue')
+        .collection('cons_queue')
+        .where('categoryID', isEqualTo: stats.patientStatus[0].categoryID)
         .orderBy('dateCreated')
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
-        return MAQueueModel.fromJson(item.data());
+        return ConsQueueModel.fromJson(item.data());
       }).toList();
     });
   }
 }
 
 class QueueDataSource extends DataTableSource {
-  QueueDataSource({required this.queueMAList});
+  QueueDataSource({required this.queueConsList});
 
-  final List<MAQueueModel> queueMAList;
+  final List<ConsQueueModel> queueConsList;
   int selectedRow = 0;
 
   @override
   DataRow getRow(int index) {
     return DataRow.byIndex(index: index, cells: <DataCell>[
       DataCell(Text('${index + 1}', style: subtitle20Medium)),
-      DataCell(Text(queueMAList[index].queueNum!, style: subtitle20Medium)),
+      DataCell(Text(queueConsList[index].queueNum!, style: subtitle20Medium)),
     ]);
   }
 
@@ -53,7 +52,7 @@ class QueueDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => queueMAList.length;
+  int get rowCount => queueConsList.length;
 
   @override
   int get selectedRowCount => selectedRow;

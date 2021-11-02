@@ -1,10 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_cons_table.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class QueueConsScreen extends StatelessWidget {
+  final ConsQueueController cQController = Get.put(ConsQueueController());
+  static StatusController stats = Get.find();
+  final RxString title = ''.obs;
+  final RxString department = ''.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +32,7 @@ class QueueConsScreen extends StatelessWidget {
             verticalSpace15,
             Center(
               child: Text(
-                'C00',
+                stats.patientStatus[0].queueCons!,
                 style: title90BoldBlue,
               ),
             ),
@@ -41,14 +52,10 @@ class QueueConsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     verticalSpace18,
-                    Text('General Pediatrics'.toUpperCase(),
-                        style: subtitle20BoldWhite), //Department
-                    verticalSpace5,
-                    const Text('Online Cardiologist',
-                        style: subtitle18RegularWhite),
+                    returnTitleDept(),
                     verticalSpace10,
                     Container(
-                      width: screenWidth(context),
+                      width: Get.width,
                       height: 137,
                       decoration: const BoxDecoration(
                         color: Colors.white,
@@ -65,9 +72,13 @@ class QueueConsScreen extends StatelessWidget {
                             ),
                             verticalSpace10,
                             Center(
-                              child: Text(
-                                'C00',
-                                style: title42BoldNeutral100,
+                              child: Obx(
+                                () => Text(
+                                  cQController.isLoading.value
+                                      ? ''
+                                      : cQController.queueConsList[0].queueNum!,
+                                  style: title42BoldNeutral100,
+                                ),
                               ),
                             ),
                           ],
@@ -77,7 +88,7 @@ class QueueConsScreen extends StatelessWidget {
                     verticalSpace10,
                     InkWell(
                       onTap: () {
-                        //TO DO: queue cons table
+                        Get.to(() => QueueConsTableScreen());
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -114,15 +125,52 @@ class QueueConsScreen extends StatelessWidget {
               ),
             ),
             verticalSpace25,
-            const Center(
-              child: Text(
-                '0 PEOPLE WAITING',
-                style: subtitle20Medium,
+            Center(
+              child: Obx(
+                () => Text(
+                  cQController.isLoading.value
+                      ? ''
+                      : '${cQController.queueConsList.length} PEOPLE WAITING',
+                  style: subtitle20Medium,
+                ),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget returnTitleDept() {
+    return FutureBuilder(
+        future: fetchCategoryData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Column(children: [
+              Text(department.value.toUpperCase(),
+                  style: subtitle20BoldWhite), //Department
+              verticalSpace5,
+              Text(title.value, style: subtitle18RegularWhite),
+            ]);
+          }
+          return Column(children: [
+            Text('Loading...', style: subtitle20BoldWhite), //Department
+            verticalSpace5,
+            Text('', style: subtitle18RegularWhite),
+          ]);
+        });
+  }
+
+  Future<void> fetchCategoryData() async {
+    await firestore
+        .collection('cons_status')
+        .doc(stats.patientStatus[0].categoryID)
+        .get()
+        .then((DocumentSnapshot snap) {
+      if (snap.exists) {
+        title.value = snap['title'];
+        department.value = snap['deptName'];
+      }
+    });
   }
 }

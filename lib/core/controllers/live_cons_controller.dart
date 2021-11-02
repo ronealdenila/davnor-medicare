@@ -32,11 +32,12 @@ class LiveConsController extends GetxController {
           .collection('live_cons')
           .where('docID', isEqualTo: auth.currentUser!.uid)
           .snapshots();
+    } else {
+      return firestore
+          .collection('live_cons')
+          .where('patientID', isEqualTo: auth.currentUser!.uid)
+          .snapshots();
     }
-    return firestore
-        .collection('live_cons')
-        .where('patientID', isEqualTo: auth.currentUser!.uid)
-        .snapshots();
   }
 
   Stream<List<LiveConsultationModel>> assignLiveCons() {

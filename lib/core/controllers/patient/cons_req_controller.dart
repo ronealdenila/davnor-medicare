@@ -156,6 +156,7 @@ class ConsRequestController extends GetxController {
 
   Future<void> addToConsQueueCollection() async {
     await firestore.collection('cons_queue').doc(documentId).set({
+      'categoryID': categoryID.value,
       'requesterID': auth.currentUser!.uid,
       'consID': documentId,
       'queueNum': generatedCode.value,

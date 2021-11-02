@@ -1,10 +1,10 @@
-import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class QueueMATableScreen extends StatelessWidget {
-  final MAQueueController maQueueController = Get.find();
+class QueueConsTableScreen extends StatelessWidget {
+  final ConsQueueController cQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,10 @@ class QueueMATableScreen extends StatelessWidget {
   }
 
   Widget returnTable(context) {
-    if (maQueueController.isLoading.value) {
+    if (cQController.isLoading.value) {
       return loadingIndicator();
     }
-    if (maQueueController.queueMAList.isEmpty &&
-        maQueueController.isLoading.value) {
+    if (cQController.queueConsList.isEmpty && cQController.isLoading.value) {
       return noData();
     }
     return Padding(
@@ -50,7 +49,7 @@ class QueueMATableScreen extends StatelessWidget {
         width: Get.width,
         child: PaginatedDataTable(
           rowsPerPage: 8,
-          source: QueueDataSource(queueMAList: maQueueController.queueMAList),
+          source: QueueDataSource(queueConsList: cQController.queueConsList),
           columns: const [
             DataColumn(label: Text('No.', style: subtitle18BoldWhite)),
             DataColumn(label: Text('Queue No.', style: subtitle18BoldWhite)),
@@ -62,10 +61,13 @@ class QueueMATableScreen extends StatelessWidget {
 
   Widget loadingIndicator() {
     return const Center(
-      child: SizedBox(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(),
+      child: Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
