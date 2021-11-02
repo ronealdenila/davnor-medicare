@@ -1,41 +1,104 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ConsultationsController extends GetxController {
   final log = getLogger('Doctor Home Consultations Controller');
 
+  static AppController appController = Get.find();
   RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
+  RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    consultations.bindStream(assignListStream());
+    consultations.bindStream(getConsultations());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-    log.i('Doctor Consultations Controller | get Collection');
+  //TO DO: ALL STREAM LIST MUST BE REFACTORED LIKE THIS
+  Stream<List<ConsultationModel>> getConsultations() {
+    log.i('getConsultations | Streaming Consultation Request');
     return firestore
         .collection('cons_request')
         .where('category', isEqualTo: fetchedData!.categoryID)
         .orderBy('dateRqstd')
-        .snapshots();
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return ConsultationModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
-  Stream<List<ConsultationModel>> assignListStream() {
-    log.i('Doctor Consultations Controller | assign');
-    return getCollection().map(
-      (query) => query.docs
-          .map((item) => ConsultationModel.fromJson(item.data()))
-          .toList(),
-    );
+  Future<void> startConsultation(ConsultationModel consData) async {
+    showLoading();
+    await addChatCollection(consData);
+    await moveToLive(consData);
+    await sendNotification(consData.patientId!);
+    await updateDocStatus();
+    dismissDialog();
+    Get.back();
+  }
+
+  Future<void> addChatCollection(ConsultationModel consData) async {
+    await sendMessage(
+        consData.consID!, consData.patientId!, consData.description!);
+    if (consData.imgs != '') {
+      await sendMessage(consData.consID!, consData.patientId!, consData.imgs!);
+    }
+  }
+
+  Future<void> sendMessage(String consID, String patientID, String msg) async {
+    await firestore.collection('chat').doc(consID).collection('messages').add({
+      'senderID': patientID,
+      'message': msg,
+      'dateCreated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  Future<void> moveToLive(ConsultationModel consData) async {
+    await firestore
+        .collection('live_cons')
+        .doc(consData.consID)
+        .set(<String, dynamic>{
+      'consID': consData.consID,
+      'patientID': consData.patientId,
+      'docID': fetchedData!.userID!,
+      'fullName': consData.fullName,
+      'age': consData.age,
+      'dateRqstd': consData.dateRqstd,
+      'dateConsStart': Timestamp.fromDate(DateTime.now()),
+    }).then((value) async {
+      await deleteConsFromReq(consData.consID!);
+    });
+  }
+
+  Future<void> deleteConsFromReq(String consID) async {
+    await firestore
+        .collection('cons_request')
+        .doc(consID)
+        .delete()
+        .then((value) => print("Consultation Deleted"))
+        .catchError((error) => print("Failed to delete consultation"));
+  }
+
+  Future<void> updateDocStatus() async {
+    await firestore
+        .collection('doctors')
+        .doc(fetchedData!.userID!)
+        .collection('status')
+        .doc('value')
+        .update({'hasOngoingCons': true});
   }
 
   Future<void> getPatientData(ConsultationModel model) async {
@@ -72,19 +135,63 @@ class ConsultationsController extends GetxController {
     return DateFormat.yMMMd().add_jm().format(dt);
   }
 
-  // Stream<List<ConsultationModel>> getConsultations() {
-  //   log.i('getConsultations | Streaming Consultation Request');
+  Future<void> sendNotification(String uid) async {
+    final docName = fetchedData!.lastName;
+    final action = ' has accepted your ';
+    final title = 'Dr. ${docName}${action}Consultation Request';
+    final message =
+        'Please standby and get ready for the consultation through video call';
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+      'photo': fetchedData!.profileImage,
+      'from': 'Dr. ${docName}',
+      'action': action,
+      'subject': 'Consultation Request Accepted',
+      'message': message,
+      'createdAt': Timestamp.fromDate(DateTime.now()),
+    });
+
+    await appController.sendNotificationViaFCM(title, message, uid);
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('status')
+        .doc('value')
+        .get()
+        .then((doc) async {
+      final count = int.parse(doc['notifBadge'] as String) + 1;
+      await firestore
+          .collection('patients')
+          .doc(uid)
+          .collection('status')
+          .doc('value')
+          .update({
+        'notifBadge': '$count',
+      });
+    });
+  }
+}
+
+
+  // Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
+  //   log.i('Doctor Consultations Controller | get Collection');
   //   return firestore
   //       .collection('cons_request')
-  //       .orderBy('dateRqstd', descending: false)
-  //       //category is hard coded for now. must be initialized based on title of
-  //       //logged in doctor
-  //       .where('category', isEqualTo: 'Heart')
-  //       .snapshots()
-  //       .map(
-  //         (query) => query.docs
-  //             .map((item) => ConsultationModel.fromJson(item.data()))
-  //             .toList(),
-  //       );
+  //       .where('category', isEqualTo: fetchedData!.categoryID)
+  //       .orderBy('dateRqstd')
+  //       .snapshots();
   // }
-}
+
+  // Stream<List<ConsultationModel>> assignListStream() {
+  //   log.i('Doctor Consultations Controller | assign');
+  //   return getCollection().map(
+  //     (query) => query.docs
+  //         .map((item) => ConsultationModel.fromJson(item.data()))
+  //         .toList(),
+  //   );
+  // }

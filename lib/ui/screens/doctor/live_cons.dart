@@ -26,7 +26,11 @@ class LiveConsultationScreen extends StatelessWidget {
               return liveConsScreen();
             }
             return const Scaffold(
-                body: Center(child: CircularProgressIndicator()));
+                body: Center(
+                    child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator())));
           }),
     );
   }

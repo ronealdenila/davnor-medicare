@@ -118,10 +118,11 @@ class LiveConsController extends GetxController {
     }).then((value) async {
       //NOTIF TO SUCCESS/DONE CONSULTATION??
       await removeFromLive(model.consID!);
+      await updateDocStatus(fetchedData!.userID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       Get.back(); //back to Live Screen Info
-      Get.back(); //back to Patient Home
+      Get.back(); //
     });
   }
 
@@ -134,14 +135,54 @@ class LiveConsController extends GetxController {
         .catchError((error) => print("Failed to end consultation"));
   }
 
+  Future<void> removeFromChat(String consID) async {
+    await firestore
+        .collection('chat')
+        .doc(consID)
+        .collection('messages')
+        .doc(consID)
+        .delete()
+        .then((value) => print("Consultation Ended"))
+        .catchError((error) => print("Failed to end consultation"));
+  }
+
+  Future<void> updateDocStatus(String docID) async {
+    await firestore
+        .collection('doctors')
+        .doc(docID)
+        .collection('status')
+        .doc('value')
+        .get()
+        .then((DocumentSnapshot snap) async {
+      final addedCount = snap['accomodated'] + 1;
+      await firestore
+          .collection('doctors')
+          .doc(docID)
+          .collection('status')
+          .doc('value')
+          .update({'hasOngoingCons': false, 'accomodated': addedCount});
+    });
+  }
+
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
     await removeFromLive(consID);
+    await removeFromChat(consID);
     await sendNotification(patientID);
+    await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
     Get.back(); //back to Live Screen Info
     Get.back(); //back to Patient Home
+  }
+
+  Future<void> updateDocStatusSkip(String docID) async {
+    await firestore
+        .collection('doctors')
+        .doc(docID)
+        .collection('status')
+        .doc('value')
+        .update({'hasOngoingCons': false});
   }
 
   Future<void> sendNotification(String uid) async {

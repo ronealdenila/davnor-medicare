@@ -110,7 +110,7 @@ class MAHistoryScreen extends StatelessWidget {
   Widget listBuilder() {
     if (maHController.isLoading.value) {
       return Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: const SizedBox(

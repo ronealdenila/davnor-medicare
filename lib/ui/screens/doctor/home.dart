@@ -143,7 +143,7 @@ class DoctorHomeScreen extends StatelessWidget {
                             ),
                           ),
                           verticalSpace18,
-                          Expanded(child: requestList()),
+                          Expanded(child: Obx(() => requestList())),
                         ],
                       ),
                     ),
@@ -512,29 +512,27 @@ class DoctorHomeScreen extends StatelessWidget {
   }
 
   Widget requestList() {
-    return StreamBuilder(
-        stream: consRequests.getCollection(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (consRequests.consultations.isNotEmpty) {
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                shrinkWrap: true,
-                itemCount: consRequests.consultations.length,
-                itemBuilder: (context, index) {
-                  return displayConsultations(
-                      consRequests.consultations[index]);
-                },
-              );
-            } else {
-              return const Center(
-                  child: Text('No consultation request at the moment'));
-            }
-          }
-          return const Center(
-              child: SizedBox(
-                  width: 24, height: 24, child: CircularProgressIndicator()));
-        });
+    if (consRequests.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    if (consRequests.consultations.isEmpty && !consRequests.isLoading.value) {
+      return const Center(child: Text('No consultation request at the moment'));
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      shrinkWrap: true,
+      itemCount: consRequests.consultations.length,
+      itemBuilder: (context, index) {
+        return displayConsultations(consRequests.consultations[index]);
+      },
+    );
   }
 
   Widget displayConsultations(ConsultationModel model) {
