@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
@@ -22,21 +22,20 @@ import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
+  final StatusController stats = Get.put(StatusController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController());
-  final LiveConsController liveCont = Get.put(LiveConsController());
+  final LiveConsController liveCont =
+      Get.put(LiveConsController(), permanent: true);
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
-  static StatusController stats = Get.put(StatusController());
 
-  //data needed for consultation process: Fetch the stream
-  final int slot = 10;
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
-  final bool isAvailable = true;
 
   @override
   Widget build(BuildContext context) {
+    print('SERROLE' + authController.userRole!);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -112,7 +111,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          doctorStatus(),
+                          Obx(() => doctorStatus()),
                           verticalSpace10,
                         ]),
                   ),
@@ -132,7 +131,8 @@ class DoctorHomeScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 25),
                             child: SizedBox(
-                                width: Get.width, child: actionCards(context)),
+                                width: Get.width,
+                                child: Obx(() => actionCards(context))),
                           ),
                           verticalSpace35,
                           const Padding(
@@ -155,135 +155,130 @@ class DoctorHomeScreen extends StatelessWidget {
   }
 
   Widget actionCards(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getDoctorStatus(fetchedData!.userID!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final data = snapshot.data!.data() as Map<String, dynamic>;
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: ActionCard(
-                      text: 'Change Status',
-                      color: verySoftMagenta[60],
-                      secondaryColor: verySoftMagentaCustomColor,
-                      onTap: () {
-                        if (data['dStatus']) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => offlineDialog());
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => detailsDialogCons1());
-                        }
-                      }),
-                ),
-                Expanded(
-                  child: ActionCard(
-                      text: 'Add More Patients to Examine',
-                      color: verySoftOrange[60],
-                      secondaryColor: verySoftOrangeCustomColor,
-                      onTap: () {
-                        if (data['dStatus']) {
-                          showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  detailsDialogCons2(data['numToAccomodate']));
-                        } else {
-                          print(
-                              'Cant add when offline. Please change your status to be available');
-                        }
-                      }),
-                ),
-                Expanded(
-                  child: ActionCard(
-                      text: 'Read \nHealth Articles',
-                      color: verySoftRed[60],
-                      secondaryColor: verySoftRedCustomColor,
-                      onTap: () => Get.to(() => ArticleListScreen())),
-                ),
-              ],
-            );
-          }
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ActionCard(
-                    text: 'Change Status',
-                    color: verySoftMagenta[60],
-                    secondaryColor: verySoftMagentaCustomColor,
-                    onTap: () {
-                      //Snackbar: Please wait while we are currently connecting to the server},
-                    }),
-              ),
-              Expanded(
-                child: ActionCard(
-                    text: 'Add More Patients to Examine',
-                    color: verySoftOrange[60],
-                    secondaryColor: verySoftOrangeCustomColor,
-                    onTap: () {
-                      //Snackbar: Please wait while we are currently connecting to the server},
-                    }),
-              ),
-              Expanded(
-                  child: ActionCard(
-                      text: 'Read \nHealth Articles',
-                      color: verySoftRed[60],
-                      secondaryColor: verySoftRedCustomColor,
-                      onTap: () {
-                        //Snackbar: Please wait while we are currently connecting to the server},
-                      })),
-            ],
-          );
-        });
+    if (!stats.isLoading.value) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ActionCard(
+                text: 'Change Status',
+                color: verySoftMagenta[60],
+                secondaryColor: verySoftMagentaCustomColor,
+                onTap: () {
+                  if (stats.doctorStatus[0].dStatus!) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => offlineDialog());
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (context) => detailsDialogCons1());
+                  }
+                }),
+          ),
+          Expanded(
+            child: ActionCard(
+                text: 'Add More Patients to Examine',
+                color: verySoftOrange[60],
+                secondaryColor: verySoftOrangeCustomColor,
+                onTap: () {
+                  if (stats.doctorStatus[0].dStatus!) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => detailsDialogCons2(
+                            stats.doctorStatus[0].numToAccomodate!));
+                  } else {
+                    showErrorDialog(
+                        errorTitle: "Could not process your request",
+                        errorDescription:
+                            "You can't make an additional when status is unavailable. Please make sure your status is available");
+                  }
+                }),
+          ),
+          Expanded(
+            child: ActionCard(
+                text: 'Read \nHealth Articles',
+                color: verySoftRed[60],
+                secondaryColor: verySoftRedCustomColor,
+                onTap: () => Get.to(() => ArticleListScreen())),
+          ),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ActionCard(
+                text: 'Change Status',
+                color: verySoftMagenta[60],
+                secondaryColor: verySoftMagentaCustomColor,
+                onTap: () {
+                  print(stats.isLoading.value);
+                  //Snackbar: Please wait while we are currently connecting to the server},
+                }),
+          ),
+          Expanded(
+            child: ActionCard(
+                text: 'Add More Patients to Examine',
+                color: verySoftOrange[60],
+                secondaryColor: verySoftOrangeCustomColor,
+                onTap: () {
+                  //Snackbar: Please wait while we are currently connecting to the server},
+                }),
+          ),
+          Expanded(
+              child: ActionCard(
+                  text: 'Read \nHealth Articles',
+                  color: verySoftRed[60],
+                  secondaryColor: verySoftRedCustomColor,
+                  onTap: () {
+                    //Snackbar: Please wait while we are currently connecting to the server},
+                  })),
+        ],
+      );
+    }
   }
 
   Widget doctorStatus() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getDoctorStatus(fetchedData!.userID!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final data = snapshot.data!.data() as Map<String, dynamic>;
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  data['numToAccomodate'] != 0
-                      ? '${data['accomodated']} out of ${data['numToAccomodate']} patients'
-                      : '',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+    if (!stats.isLoading.value) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            stats.doctorStatus[0].numToAccomodate != 0
+                ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
+                : '',
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                stats.doctorStatus[0].dStatus!
+                    ? 'Available for Consultation'
+                    : 'Unavailable',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: verySoftBlueColor,
                 ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  elevation: 5,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      data['dStatus']
-                          ? 'Available for Consultation'
-                          : 'Unavailable',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: verySoftBlueColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-          return loadingDoctorStats();
-        });
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return loadingDoctorStats();
+    }
   }
 
   Widget loadingDoctorStats() {

@@ -118,8 +118,10 @@ class LiveConsController extends GetxController {
       'dateConsEnd': Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       //NOTIF TO SUCCESS/DONE CONSULTATION??
+      await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
       await updateDocStatus(fetchedData!.userID!);
+      await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       Get.back(); //back to Live Screen Info
@@ -165,10 +167,31 @@ class LiveConsController extends GetxController {
     });
   }
 
+  Future<void> updatePatientStatus(String patientID) async {
+    await firestore
+        .collection('patients')
+        .doc(patientID)
+        .collection('status')
+        .doc('value')
+        .update(
+            {'hasActiveQueueCons': false, 'categoryID': '', 'queueCons': ''});
+  }
+
+  Future<void> deleteConsFromQueue(String consID) async {
+    await firestore
+        .collection('cons_queue')
+        .doc(consID)
+        .delete()
+        .then((value) => print("Consultation  Deleted in Queue"))
+        .catchError((error) => print("Failed to delete consultation in queue"));
+  }
+
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
+    await deleteConsFromQueue(consID);
     await removeFromLive(consID);
     await removeFromChat(consID);
+    await updatePatientStatus(patientID);
     await sendNotification(patientID);
     await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading

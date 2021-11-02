@@ -38,12 +38,13 @@ class PatientHomeScreen extends StatelessWidget {
   static AppController appController = Get.find();
   static AuthController authController = Get.find();
   static ArticleController articleService = Get.find();
+  final List<ArticleModel> articleList = articleService.articlesList;
   static ConsRequestController consController =
       Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
-  final LiveConsController liveCont = Get.find();
-  final List<ArticleModel> articleList = articleService.articlesList;
-  static StatusController stats = Get.find();
+  final LiveConsController liveCont =
+      Get.put(LiveConsController(), permanent: true);
+  final StatusController stats = Get.put(StatusController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
