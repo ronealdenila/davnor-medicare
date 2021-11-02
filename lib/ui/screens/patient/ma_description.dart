@@ -161,55 +161,49 @@ class MADescriptionScreen extends StatelessWidget {
   }
 
   Widget availMAButton() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getPatientStatus(auth.currentUser!.uid),
-        builder: (context, snapshot) {
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          return CustomButton(
-            onTap: () {
-              if (data['pStatus'] as bool) {
-                if (!data['hasActiveQueueMA']) {
-                  if (controller.hasAvailableSlot()) {
-                    //check activeQueue/slot/fund
-                    return showConfirmationDialog(
-                      dialogTitle: dialog2Title,
-                      dialogCaption: dialog2Caption,
-                      onYesTap: () {
-                        controller.isMAForYou.value = true;
-                        Get.to(() => MAFormScreen());
-                      },
-                      onNoTap: () {
-                        controller.isMAForYou.value = false;
-                        Get.to(() => MAFormScreen());
-                      },
-                    );
-                  } else {
-                    showErrorDialog(
-                      errorTitle: 'No Slot Available',
-                      errorDescription:
-                          'Sorry, there are no available slots at the moment. Please try again next time',
-                    );
-                  }
-                } else {
-                  showErrorDialog(
-                      errorTitle:
-                          'Sorry, you still have an on progress MA request transaction',
-                      errorDescription:
-                          'Please proceed to your existing consultation');
-                }
-              } else {
-                showErrorDialog(
-                    errorTitle:
-                        'Sorry, only verified users can use this feature',
-                    errorDescription:
-                        'Please verify your account first in your profile');
-              }
-            },
-            text: 'Avail Medical Assistance',
-            buttonColor: verySoftBlueColor,
-            fontSize: 20,
-          );
-        });
+    return CustomButton(
+      onTap: () {
+        if (stats.patientStatus[0].pStatus!) {
+          if (!stats.patientStatus[0].hasActiveQueueMA!) {
+            if (controller.hasAvailableSlot()) {
+              //check activeQueue/slot/fund
+              return showConfirmationDialog(
+                dialogTitle: dialog2Title,
+                dialogCaption: dialog2Caption,
+                onYesTap: () {
+                  controller.isMAForYou.value = true;
+                  Get.to(() => MAFormScreen());
+                },
+                onNoTap: () {
+                  controller.isMAForYou.value = false;
+                  Get.to(() => MAFormScreen());
+                },
+              );
+            } else {
+              showErrorDialog(
+                errorTitle: 'No Slot Available',
+                errorDescription:
+                    'Sorry, there are no available slots at the moment. Please try again next time',
+              );
+            }
+          } else {
+            showErrorDialog(
+                errorTitle:
+                    'Sorry, you still have an on progress MA request transaction',
+                errorDescription:
+                    'Please proceed to your existing consultation');
+          }
+        } else {
+          showErrorDialog(
+              errorTitle: 'Sorry, only verified users can use this feature',
+              errorDescription:
+                  'Please verify your account first in your profile');
+        }
+      },
+      text: 'Avail Medical Assistance',
+      buttonColor: verySoftBlueColor,
+      fontSize: 20,
+    );
   }
 
   void showDialog() {

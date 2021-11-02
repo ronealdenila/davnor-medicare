@@ -46,8 +46,10 @@ class AcceptedMARequestScreen extends StatelessWidget {
                         .doc(model.maID)
                         .update({
                       'isTransferred': true,
-                    }).then((value) {
-                      //notif user
+                    }).then((value) async {
+                      await deleteMAFromQueue(model.maID!);
+                      await updatePatientStatus(model.requesterID!);
+                      //notify patient
                       Get.back();
                     }).catchError((onError) {
                       //dialog, "something went wrong"
@@ -65,4 +67,22 @@ class AcceptedMARequestScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> deleteMAFromQueue(String maID) async {
+  await firestore
+      .collection('ma_queue')
+      .doc(maID)
+      .delete()
+      .then((value) => print("MA Req Deleted in Queue"))
+      .catchError((error) => print("Failed to delete ma req in queue"));
+}
+
+Future<void> updatePatientStatus(String patientID) async {
+  await firestore
+      .collection('patients')
+      .doc(patientID)
+      .collection('status')
+      .doc('value')
+      .update({'hasActiveQueueMA': false, 'queueMA': ''});
 }

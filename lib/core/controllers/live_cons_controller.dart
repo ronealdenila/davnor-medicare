@@ -32,11 +32,12 @@ class LiveConsController extends GetxController {
           .collection('live_cons')
           .where('docID', isEqualTo: auth.currentUser!.uid)
           .snapshots();
+    } else {
+      return firestore
+          .collection('live_cons')
+          .where('patientID', isEqualTo: auth.currentUser!.uid)
+          .snapshots();
     }
-    return firestore
-        .collection('live_cons')
-        .where('patientID', isEqualTo: auth.currentUser!.uid)
-        .snapshots();
   }
 
   Stream<List<LiveConsultationModel>> assignLiveCons() {
@@ -117,11 +118,14 @@ class LiveConsController extends GetxController {
       'dateConsEnd': Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       //NOTIF TO SUCCESS/DONE CONSULTATION??
+      await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
+      await updateDocStatus(fetchedData!.userID!);
+      await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       Get.back(); //back to Live Screen Info
-      Get.back(); //back to Patient Home
+      Get.back(); //
     });
   }
 
@@ -134,14 +138,75 @@ class LiveConsController extends GetxController {
         .catchError((error) => print("Failed to end consultation"));
   }
 
+  Future<void> removeFromChat(String consID) async {
+    await firestore
+        .collection('chat')
+        .doc(consID)
+        .collection('messages')
+        .doc(consID)
+        .delete()
+        .then((value) => print("Consultation Ended"))
+        .catchError((error) => print("Failed to end consultation"));
+  }
+
+  Future<void> updateDocStatus(String docID) async {
+    await firestore
+        .collection('doctors')
+        .doc(docID)
+        .collection('status')
+        .doc('value')
+        .get()
+        .then((DocumentSnapshot snap) async {
+      final addedCount = snap['accomodated'] + 1;
+      await firestore
+          .collection('doctors')
+          .doc(docID)
+          .collection('status')
+          .doc('value')
+          .update({'hasOngoingCons': false, 'accomodated': addedCount});
+    });
+  }
+
+  Future<void> updatePatientStatus(String patientID) async {
+    await firestore
+        .collection('patients')
+        .doc(patientID)
+        .collection('status')
+        .doc('value')
+        .update(
+            {'hasActiveQueueCons': false, 'categoryID': '', 'queueCons': ''});
+  }
+
+  Future<void> deleteConsFromQueue(String consID) async {
+    await firestore
+        .collection('cons_queue')
+        .doc(consID)
+        .delete()
+        .then((value) => print("Consultation  Deleted in Queue"))
+        .catchError((error) => print("Failed to delete consultation in queue"));
+  }
+
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
+    await deleteConsFromQueue(consID);
     await removeFromLive(consID);
+    await removeFromChat(consID);
+    await updatePatientStatus(patientID);
     await sendNotification(patientID);
+    await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
     Get.back(); //back to Live Screen Info
     Get.back(); //back to Patient Home
+  }
+
+  Future<void> updateDocStatusSkip(String docID) async {
+    await firestore
+        .collection('doctors')
+        .doc(docID)
+        .collection('status')
+        .doc('value')
+        .update({'hasOngoingCons': false});
   }
 
   Future<void> sendNotification(String uid) async {

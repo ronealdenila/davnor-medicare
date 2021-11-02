@@ -24,11 +24,11 @@ class AllControllerBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.lazyPut<ArticleController>(() => ArticleController());
+    Get.put<ArticleController>(ArticleController(), permanent: true);
     Get.lazyPut<AppController>(() => AppController());
+    Get.lazyPut<StatusController>(() => StatusController());
 
     //patient
-    Get.lazyPut<StatusController>(() => StatusController());
     Get.lazyPut<ConsRequestController>(() => ConsRequestController());
     Get.lazyPut<MARequestController>(() => MARequestController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());

@@ -1,3 +1,5 @@
+import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -7,6 +9,9 @@ import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
 import 'package:get/get.dart';
 
 class QueueMAScreen extends StatelessWidget {
+  final MAQueueController maQueueController = Get.put(MAQueueController());
+  static StatusController stats = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +31,7 @@ class QueueMAScreen extends StatelessWidget {
             verticalSpace15,
             Center(
               child: Text(
-                'MA00',
+                stats.patientStatus[0].queueMA!,
                 style: title90BoldBlue,
               ),
             ),
@@ -46,8 +51,7 @@ class QueueMAScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     verticalSpace18,
-                    const Text('PSWD OFFICE',
-                        style: subtitle20BoldWhite), //Department
+                    const Text('PSWD OFFICE', style: subtitle20BoldWhite),
                     verticalSpace5,
                     const Text('Medical Assistance (MA)',
                         style: subtitle18RegularWhite),
@@ -70,9 +74,14 @@ class QueueMAScreen extends StatelessWidget {
                             ),
                             verticalSpace10,
                             Center(
-                              child: Text(
-                                'MA00',
-                                style: title42BoldNeutral100,
+                              child: Obx(
+                                () => Text(
+                                  maQueueController.isLoading.value
+                                      ? ''
+                                      : maQueueController
+                                          .queueMAList[0].queueNum!,
+                                  style: title42BoldNeutral100,
+                                ),
                               ),
                             ),
                           ],
@@ -119,10 +128,14 @@ class QueueMAScreen extends StatelessWidget {
               ),
             ),
             verticalSpace25,
-            const Center(
-              child: Text(
-                '0 PEOPLE WAITING',
-                style: subtitle20Medium,
+            Center(
+              child: Obx(
+                () => Text(
+                  maQueueController.isLoading.value
+                      ? ''
+                      : '${maQueueController.queueMAList.length} PEOPLE WAITING',
+                  style: subtitle20Medium,
+                ),
               ),
             )
           ],

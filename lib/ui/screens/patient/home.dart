@@ -20,7 +20,10 @@ import 'package:davnor_medicare/ui/screens/patient/ma_description.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
+import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
+import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -34,13 +37,14 @@ import 'package:get/get.dart';
 class PatientHomeScreen extends StatelessWidget {
   static AppController appController = Get.find();
   static AuthController authController = Get.find();
-  static ArticleController articleService = Get.put(ArticleController());
+  static ArticleController articleService = Get.find();
+  final List<ArticleModel> articleList = articleService.articlesList;
   static ConsRequestController consController =
       Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
-  final LiveConsController liveCont = Get.put(LiveConsController());
-  final List<ArticleModel> articleList = articleService.articlesList;
-  static StatusController stats = Get.put(StatusController());
+  final LiveConsController liveCont =
+      Get.put(LiveConsController(), permanent: true);
+  final StatusController stats = Get.put(StatusController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class PatientHomeScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              actions: [notificationIcon(), horizontalSpace10],
+              actions: [Obx(() => notificationIcon()), horizontalSpace10],
             ),
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -63,7 +67,7 @@ class PatientHomeScreen extends StatelessWidget {
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
               onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
-              onSettingsTap: () => Get.to(() => MAHistoryScreen()),
+              onSettingsTap: () => Get.to(() => SettingScreen()),
               onLogoutTap: authController.signOut,
             ),
             backgroundColor: Colors.white,
@@ -97,19 +101,12 @@ class PatientHomeScreen extends StatelessWidget {
                     ),
                     verticalSpace10,
                     SizedBox(
-                      width: screenWidth(context),
-                      child: StreamBuilder<DocumentSnapshot>(
-                          stream: stats.getPatientStatus(auth.currentUser!.uid),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              final data =
-                                  snapshot.data!.data() as Map<String, dynamic>;
-                              return ActionButtons(data);
-                            }
-                            return ActionButtonsNormal();
-                          }),
-                    ),
+                        width: screenWidth(context),
+                        child: Obx(
+                          () => !stats.isLoading.value
+                              ? ActionButtons()
+                              : ActionButtonsNormal(),
+                        )),
                     verticalSpace25,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -137,7 +134,7 @@ class PatientHomeScreen extends StatelessWidget {
             floatingActionButton: Obx(getFloatingButton)));
   }
 
-  Widget ActionButtons(Map<String, dynamic> data) {
+  Widget ActionButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -147,9 +144,8 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
-              print('button clicked');
-              if (data['pStatus'] as bool) {
-                if (data['hasActiveQueueCons'] as bool) {
+              if (stats.patientStatus[0].pStatus!) {
+                if (stats.patientStatus[0].hasActiveQueueCons!) {
                   showErrorDialog(
                       errorTitle:
                           'Sorry, you still have an on progress consultation transaction',
@@ -196,21 +192,20 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftRed[60],
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
-              if (data['pStatus'] as bool) {
-                if (data['hasActiveQueueCons'] as bool &&
-                    data['hasActiveQueueMA'] as bool) {
-                  //Get.to(() => QueueMAScreen()); CHOICE SCREEN
-                }
-                if (data['hasActiveQueueCons'] as bool) {
-                  //Get.to(() => QueueMAScreen()); CONS SCREEN
-                }
-                if (data['hasActiveQueueMA'] as bool) {
+              if (stats.patientStatus[0].pStatus!) {
+                if (stats.patientStatus[0].hasActiveQueueCons! &&
+                    stats.patientStatus[0].hasActiveQueueMA!) {
+                  Get.to(() => SelectQueueScreen());
+                } else if (stats.patientStatus[0].hasActiveQueueCons!) {
+                  Get.to(() => QueueConsScreen());
+                } else if (stats.patientStatus[0].hasActiveQueueMA!) {
                   Get.to(() => QueueMAScreen());
+                } else {
+                  showErrorDialog(
+                      errorTitle: 'Sorry, you have no queue number',
+                      errorDescription:
+                          'You need to request consultation or medical assistance to be in a queue.');
                 }
-                showErrorDialog(
-                    errorTitle: 'Sorry, you have no queue number',
-                    errorDescription:
-                        'You need to request consultation or medical assistance to be in a queue.');
               } else {
                 showErrorDialog(
                     errorTitle:
@@ -264,27 +259,19 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget notificationIcon() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getPatientStatus(auth.currentUser!.uid),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return notifIconNormal();
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return notifIconNormal();
-          }
-          final data =
-              // ignore: cast_nullable_to_non_nullable
-              snapshot.data!.data() as Map<String, dynamic>;
-          return data['notifBadge'] as String == '0'
-              ? notifIconNormal()
-              : notifIconWithBadge(data['notifBadge'] as String);
-        });
+    if (stats.isLoading.value) {
+      return notifIconNormal();
+    }
+    return stats.patientStatus[0].notifBadge == '0'
+        ? notifIconNormal()
+        : notifIconWithBadge(stats.patientStatus[0].notifBadge!);
   }
 
   Widget notifIconNormal() {
     return IconButton(
-      onPressed: () => Get.to(() => NotificationFeedScreen()),
+      onPressed: () {
+        Get.to(() => NotificationFeedScreen());
+      },
       icon: const Icon(
         Icons.notifications_outlined,
         size: 29,
@@ -300,7 +287,10 @@ class PatientHomeScreen extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
       ),
       child: IconButton(
-        onPressed: () => Get.to(() => NotificationFeedScreen()),
+        onPressed: () {
+          Get.to(() => NotificationFeedScreen());
+          resetBadge();
+        },
         icon: const Icon(
           Icons.notifications_outlined,
           size: 29,
@@ -363,5 +353,16 @@ class PatientHomeScreen extends StatelessWidget {
     showErrorDialog(
         errorTitle: 'You have no current consultation',
         errorDescription: 'Please request consultation first');
+  }
+
+  Future<void> resetBadge() async {
+    await firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .collection('status')
+        .doc('value')
+        .update({
+      'notifBadge': '0',
+    });
   }
 }

@@ -76,16 +76,10 @@ class MAForm2Screen extends GetView<MARequestController> {
     );
   }
 
-//   Widget getImages() {
-// return Container(
-//   child: Image.memory(Uint8List.fromList(controller.)),
-// );
-//   }
-
   Widget getPrescription() {
-    if (controller.imagesListNew.isEmpty) {
+    if (controller.images.isEmpty) {
       return InkWell(
-        onTap: controller.pickMultiImage,
+        onTap: controller.pickMultiImageS,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
@@ -142,8 +136,8 @@ class MAForm2Screen extends GetView<MARequestController> {
                   top: 5,
                   child: InkWell(
                     onTap: () {
-                      controller.imagesListNew.remove(controller.images[index]);
-                      //controller.imagesListNew.removeAt(index);
+                      //controller.imagesListNew.remove(controller.images[index]);
+                      controller.images.removeAt(index);
                     },
                     child: const Icon(
                       Icons.remove_circle,
@@ -160,3 +154,11 @@ class MAForm2Screen extends GetView<MARequestController> {
     );
   }
 }
+
+//   Widget getImages() {
+// return Container(
+//   child: Image.memory(Uint8List.fromList(controller.)),
+// );
+//   }
+
+  
