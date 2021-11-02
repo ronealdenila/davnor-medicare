@@ -20,6 +20,9 @@ class ForVerificationController extends GetxController {
   TextEditingController reason = TextEditingController();
   RxBool accepted = false.obs;
 
+  final appLogoURL =
+      'https://firebasestorage.googleapis.com/v0/b/davnor-medicare-15c1d.appspot.com/o/app%2FappLogo.jpeg?alt=media&token=cd13494f-51c7-4051-a548-f157ecd025f6';
+
   @override
   void onReady() {
     super.onReady();
@@ -165,7 +168,7 @@ class ForVerificationController extends GetxController {
         .doc(uid)
         .collection('notifications')
         .add({
-      'photo': '',
+      'photo': appLogoURL,
       'from': 'The admin',
       'action': action,
       'subject': 'Verification Request',

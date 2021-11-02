@@ -122,9 +122,9 @@ class OnProgressReqItemScreen extends StatelessWidget {
                               'isMedReady': true,
                               'medWorth': _worthController.text,
                               'pharmacy': _pharmacyController.text
+                            }).then((value) {
+                              //TO DO: notify patient na pwede na ma claime
                             });
-                            print(_pharmacyController.text);
-                            print(_worthController.text);
                           },
                           buttonText: 'Submit')),
                 ],

@@ -199,8 +199,9 @@ Widget declineDialogMA(GeneralMARequestModel model) {
                         onItemTap: () async {
                           hasAccepted.value = true;
                           showLoading();
-                          addNotification(model.requesterID!);
-                          print(reason.text);
+                          await updatePatientStatus(model.requesterID!);
+                          await addNotification(model.requesterID!);
+                          await deleteMAFromQueue(model.maID!);
                           await deleteMA(model.maID!);
                           dismissDialog(); //dismiss Loading
                           dismissDialog(); //dismiss Popup Dialog
@@ -210,4 +211,22 @@ Widget declineDialogMA(GeneralMARequestModel model) {
               ],
             ))
       ]);
+}
+
+Future<void> deleteMAFromQueue(String maID) async {
+  await firestore
+      .collection('ma_queue')
+      .doc(maID)
+      .delete()
+      .then((value) => print("MA Req Deleted in Queue"))
+      .catchError((error) => print("Failed to delete ma req in queue"));
+}
+
+Future<void> updatePatientStatus(String patientID) async {
+  await firestore
+      .collection('patients')
+      .doc(patientID)
+      .collection('status')
+      .doc('value')
+      .update({'hasActiveQueueMA': false, 'queueMA': ''});
 }
