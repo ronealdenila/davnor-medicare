@@ -24,11 +24,12 @@ class AllControllerBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.lazyPut<ArticleController>(() => ArticleController());
+    Get.put<ArticleController>(ArticleController(), permanent: true);
     Get.lazyPut<AppController>(() => AppController());
 
     //patient
-    Get.lazyPut<StatusController>(() => StatusController());
+    //static StatusController stats = Get.put(StatusController(), permanent: true);
+    Get.put<StatusController>(StatusController(), permanent: true);
     Get.lazyPut<ConsRequestController>(() => ConsRequestController());
     Get.lazyPut<MARequestController>(() => MARequestController());
     Get.lazyPut<MAQueueController>(() => MAQueueController());
@@ -39,7 +40,7 @@ class AllControllerBinding implements Bindings {
     //doctor
     Get.lazyPut<ConsultationsController>(() => ConsultationsController());
     Get.lazyPut<LiveChatController>(() => LiveChatController());
-    Get.lazyPut<LiveConsController>(() => LiveConsController());
+    Get.put<LiveConsController>(LiveConsController(), permanent: true);
 
     //admin
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());

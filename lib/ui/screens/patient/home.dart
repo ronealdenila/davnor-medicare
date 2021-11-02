@@ -37,13 +37,13 @@ import 'package:get/get.dart';
 class PatientHomeScreen extends StatelessWidget {
   static AppController appController = Get.find();
   static AuthController authController = Get.find();
-  static ArticleController articleService = Get.put(ArticleController());
+  static ArticleController articleService = Get.find();
   static ConsRequestController consController =
       Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
-  final LiveConsController liveCont = Get.put(LiveConsController());
+  final LiveConsController liveCont = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
-  static StatusController stats = Get.put(StatusController());
+  static StatusController stats = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class PatientHomeScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              actions: [notificationIcon(), horizontalSpace10],
+              actions: [Obx(() => notificationIcon()), horizontalSpace10],
             ),
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
@@ -100,19 +100,12 @@ class PatientHomeScreen extends StatelessWidget {
                     ),
                     verticalSpace10,
                     SizedBox(
-                      width: screenWidth(context),
-                      child: StreamBuilder<DocumentSnapshot>(
-                          stream: stats.getPatientStatus(auth.currentUser!.uid),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              final data =
-                                  snapshot.data!.data() as Map<String, dynamic>;
-                              return ActionButtons(data);
-                            }
-                            return ActionButtonsNormal();
-                          }),
-                    ),
+                        width: screenWidth(context),
+                        child: Obx(
+                          () => !stats.isLoading.value
+                              ? ActionButtons()
+                              : ActionButtonsNormal(),
+                        )),
                     verticalSpace25,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -140,7 +133,7 @@ class PatientHomeScreen extends StatelessWidget {
             floatingActionButton: Obx(getFloatingButton)));
   }
 
-  Widget ActionButtons(Map<String, dynamic> data) {
+  Widget ActionButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -150,8 +143,8 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
-              if (data['pStatus'] as bool) {
-                if (data['hasActiveQueueCons'] as bool) {
+              if (stats.patientStatus[0].pStatus!) {
+                if (stats.patientStatus[0].hasActiveQueueCons!) {
                   showErrorDialog(
                       errorTitle:
                           'Sorry, you still have an on progress consultation transaction',
@@ -198,13 +191,13 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftRed[60],
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
-              if (data['pStatus'] as bool) {
-                if (data['hasActiveQueueCons'] as bool &&
-                    data['hasActiveQueueMA'] as bool) {
+              if (stats.patientStatus[0].pStatus!) {
+                if (stats.patientStatus[0].hasActiveQueueCons! &&
+                    stats.patientStatus[0].hasActiveQueueMA!) {
                   Get.to(() => SelectQueueScreen());
-                } else if (data['hasActiveQueueCons'] as bool) {
+                } else if (stats.patientStatus[0].hasActiveQueueCons!) {
                   Get.to(() => QueueConsScreen());
-                } else if (data['hasActiveQueueMA'] as bool) {
+                } else if (stats.patientStatus[0].hasActiveQueueMA!) {
                   Get.to(() => QueueMAScreen());
                 } else {
                   showErrorDialog(
@@ -265,22 +258,12 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget notificationIcon() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getPatientStatus(auth.currentUser!.uid),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return notifIconNormal();
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return notifIconNormal();
-          }
-          final data =
-              // ignore: cast_nullable_to_non_nullable
-              snapshot.data!.data() as Map<String, dynamic>;
-          return data['notifBadge'] as String == '0'
-              ? notifIconNormal()
-              : notifIconWithBadge(data['notifBadge'] as String);
-        });
+    if (stats.isLoading.value) {
+      return notifIconNormal();
+    }
+    return stats.patientStatus[0].notifBadge == '0'
+        ? notifIconNormal()
+        : notifIconWithBadge(stats.patientStatus[0].notifBadge!);
   }
 
   Widget notifIconNormal() {
