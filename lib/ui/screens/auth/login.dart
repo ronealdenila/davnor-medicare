@@ -4,6 +4,7 @@ import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/shared/responsive.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
@@ -21,18 +22,24 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ((defaultTargetPlatform == TargetPlatform.iOS) ||
-              (defaultTargetPlatform == TargetPlatform.android))
-          ? SingleChildScrollView(
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(right: !isMobile(context) ? 40:0),
               child: Column(
-                children: [
-                  SizedBox(
-                    width: screenWidth(context),
-                    height: screenHeightPercentage(context, percentage: .3),
-                    child: Image.asset(authHeader, fit: BoxFit.fill),
-                  ),
-                  Card(
+                mainAxisAlignment: !isMobile(context) ? MainAxisAlignment.start:MainAxisAlignment.center,
+                crossAxisAlignment: !isMobile(context) ? CrossAxisAlignment.start:CrossAxisAlignment.center,
+                children: <Widget>[
+                  if (isMobile(context))
+                    Image.asset(
+                      authHeader,
+                      height: size.height * 0.3,
+                    ),
+                    Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     margin: const EdgeInsets.all(20),
@@ -127,120 +134,20 @@ class LoginScreen extends StatelessWidget {
                     },
                     text1: "Don't have an account?",
                     text2: 'Signup here',
-                  )
+                  ),
+
+                  if (isDesktop(context) || isTab(context))
+                  Expanded(
+                    child: Image.asset(
+                      authHeader,
+                      height: size.height * 0.7,
+                    )
+                   )
                 ],
               ),
             )
-          : Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .60,
-                    height: MediaQuery.of(context).size.height,
-                    child: Image.asset(authHeader, fit: BoxFit.fill),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .40,
-                    height: MediaQuery.of(context).size.height,
-                    child: Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              verticalSpace18,
-                              Container(
-                                  alignment: Alignment.center,
-                                  child: const Text('Welcome Back!',
-                                      style: title32Bold)),
-                              verticalSpace50,
-                              FormInputFieldWithIcon(
-                                controller: authController.emailController,
-                                iconPrefix: Icons.email,
-                                labelText: 'Email',
-                                validator: Validator().email,
-                                keyboardType: TextInputType.emailAddress,
-                                onChanged: (value) {
-                                  return;
-                                },
-                                onSaved: (value) => authController
-                                    .emailController.text = value!,
-                              ),
-                              verticalSpace25,
-                              FormInputFieldWithIcon(
-                                controller: authController.passwordController,
-                                iconPrefix: Icons.lock,
-                                suffixIcon: IconButton(
-                                  onPressed:
-                                      authController.togglePasswordVisibility,
-                                  icon: Icon(
-                                    authController.isObscureText!.value
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                ),
-                                labelText: 'Password',
-                                validator: Validator().password,
-                                obscureText:
-                                    authController.isObscureText!.value,
-                                onChanged: (value) {
-                                  return;
-                                },
-                                onSaved: (value) => authController
-                                    .passwordController.text = value!,
-                                maxLines: 1,
-                                textInputAction: TextInputAction.done,
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Get.to(() => ForgotPasswordScreen());
-                                  },
-                                  style:
-                                      TextButton.styleFrom(primary: infoColor),
-                                  child: const Text(
-                                    'Forgot Password',
-                                    style: body14SemiBold,
-                                  ),
-                                ),
-                              ),
-                              verticalSpace25,
-                              CustomButton(
-                                onTap: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    await authController
-                                        .signInWithEmailAndPassword(context);
-                                  }
-                                },
-                                text: 'Sign In',
-                                buttonColor: verySoftBlueColor,
-                                fontSize: 20,
-                              ),
-                              verticalSpace25,
-                              Container(
-                                alignment: Alignment.center,
-                                child: BottomTextWidget(
-                                  onTap: () {
-                                    Get.to(() => SignupScreen());
-                                  },
-                                  text1: "Don't have an account?",
-                                  text2: 'Signup here',
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          )]
+      )
     );
   }
 }
