@@ -11,6 +11,7 @@ import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -368,7 +369,9 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                     ),
                                     // verticalSpace50,
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        //Get.to MA req list
+                                      },
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -446,7 +449,10 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                                 maxLines: 1,
                                               ),
                                               TextButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Get.to(() =>
+                                                      MARequestListScreen());
+                                                },
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,

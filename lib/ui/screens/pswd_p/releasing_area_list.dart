@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
@@ -16,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final ReleasingMAController rlsController = Get.put(ReleasingMAController());
+final AuthController authController = Get.find();
+final RxBool firedOnce = false.obs;
 
 class ReleasingAreaListScreen extends StatelessWidget {
   @override
@@ -48,6 +51,46 @@ class ReleasingAreaListScreen extends StatelessWidget {
               ),
             ),
             horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    rlsController.filter(
+                      name: rlsController.rlsFilter.text,
+                    );
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Remove Filter'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    rlsController.filteredList
+                        .assignAll(rlsController.toRelease);
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Icon(
+                    Icons.refresh,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    rlsController.refresh();
+                  },
+                )),
             //IconButton(onPressed: (){}, icon: Ico)
           ],
         ),
@@ -77,6 +120,11 @@ Widget requestList(BuildContext context) {
       style: body14Medium,
     );
   }
+
+  firedOnce.value
+      ? null
+      : rlsController.filteredList.assignAll(rlsController.toRelease);
+  firedOnce.value = true;
   return MediaQuery.removePadding(
     context: context,
     removeTop: true,
@@ -85,9 +133,9 @@ Widget requestList(BuildContext context) {
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: rlsController.toRelease.length,
+            itemCount: rlsController.filteredList.length,
             itemBuilder: (context, index) {
-              return customTableRow(rlsController.toRelease[index]);
+              return customTableRow(rlsController.filteredList[index]);
             }),
       ),
     ),
@@ -212,24 +260,27 @@ Widget customTableRow(OnProgressMAModel model) {
                   ),
                 ),
                 horizontalSpace15,
-                InkWell(
-                  onTap: () {
-                    showConfirmationDialog(
-                      dialogTitle: dialogpswdTitle,
-                      dialogCaption: dialogpswdCaption,
-                      onYesTap: () {
-                        showLoading();
-                        transfferToHistpry(model);
-                        dismissDialog();
-                      },
-                      onNoTap: () {
-                        dismissDialog();
-                      },
-                    );
-                  },
-                  child: Text(
-                    'Claimed',
-                    style: body16RegularUnderlineBlue,
+                Visibility(
+                  visible: authController.userRole == 'pswd-p',
+                  child: InkWell(
+                    onTap: () {
+                      showConfirmationDialog(
+                        dialogTitle: dialogpswdTitle,
+                        dialogCaption: dialogpswdCaption,
+                        onYesTap: () {
+                          showLoading();
+                          transfferToHistpry(model);
+                          dismissDialog();
+                        },
+                        onNoTap: () {
+                          dismissDialog();
+                        },
+                      );
+                    },
+                    child: Text(
+                      'Claimed',
+                      style: body16RegularUnderlineBlue,
+                    ),
                   ),
                 ),
               ],

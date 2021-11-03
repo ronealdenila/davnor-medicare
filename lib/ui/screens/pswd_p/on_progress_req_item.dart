@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OnProgressReqItemScreen extends StatelessWidget {
+  final AuthController authController = Get.find();
   final AttachedPhotosController controller = Get.find();
   final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
@@ -37,17 +39,22 @@ class OnProgressReqItemScreen extends StatelessWidget {
           child: Column(
             children: [
               PSWDItemView(context, 'approved', model),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: PSWDButton(
-                  onItemTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => detailsDialogMA());
-                  },
-                  buttonText: 'Medicine is Ready',
-                ),
-              ),
+              authController.userRole == 'pswd-h'
+                  ? SizedBox(
+                      width: 0,
+                      height: 0,
+                    )
+                  : Align(
+                      alignment: Alignment.bottomRight,
+                      child: PSWDButton(
+                        onItemTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => detailsDialogMA());
+                        },
+                        buttonText: 'Medicine is Ready',
+                      ),
+                    ),
               verticalSpace35,
             ],
           ),
@@ -111,22 +118,27 @@ class OnProgressReqItemScreen extends StatelessWidget {
                     ),
                   ),
                   verticalSpace25,
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: PSWDButton(
-                          onItemTap: () async {
-                            await firestore
-                                .collection('on_progress_ma')
-                                .doc(model.maID)
-                                .update({
-                              'isMedReady': true,
-                              'medWorth': _worthController.text,
-                              'pharmacy': _pharmacyController.text
-                            }).then((value) {
-                              //TO DO: notify patient na pwede na ma claime
-                            });
-                          },
-                          buttonText: 'Submit')),
+                  authController.userRole == 'pswd-h'
+                      ? SizedBox(
+                          width: 0,
+                          height: 0,
+                        )
+                      : Align(
+                          alignment: Alignment.bottomCenter,
+                          child: PSWDButton(
+                              onItemTap: () async {
+                                await firestore
+                                    .collection('on_progress_ma')
+                                    .doc(model.maID)
+                                    .update({
+                                  'isMedReady': true,
+                                  'medWorth': _worthController.text,
+                                  'pharmacy': _pharmacyController.text
+                                }).then((value) {
+                                  //TO DO: notify patient na pwede na ma claime
+                                });
+                              },
+                              buttonText: 'Submit')),
                 ],
               ))
         ]);

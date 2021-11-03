@@ -57,4 +57,25 @@ class ReleasingMAController extends GetxController {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
   }
+
+  void refresh() {
+    filteredList.clear();
+    filteredList.assignAll(toRelease);
+  }
+
+  void filter({required String name}) {
+    filteredList.clear();
+
+    //filter for name only
+    if (name != '') {
+      print('NAME');
+      for (var i = 0; i < toRelease.length; i++) {
+        if (toRelease[i].fullName!.toLowerCase().contains(name.toLowerCase())) {
+          filteredList.add(toRelease[i]);
+        }
+      }
+    } else {
+      filteredList.assignAll(toRelease);
+    }
+  }
 }

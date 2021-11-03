@@ -1,7 +1,9 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForApprovalItemScreen extends StatelessWidget {
+  final ForApprovalController opController = Get.find();
   final AttachedPhotosController controller = Get.find();
   final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
@@ -49,10 +52,8 @@ class ForApprovalItemScreen extends StatelessWidget {
   Widget screenButtons() {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       PSWDButton(
-        onItemTap: () async {
-          await firestore.collection('on_progress_ma').doc(model.maID).update({
-            'isApproved': true,
-          });
+        onItemTap: () {
+          confirmationDialog(model.maID!);
         },
         buttonText: 'Approve',
       ),
@@ -66,5 +67,24 @@ class ForApprovalItemScreen extends StatelessWidget {
         buttonText: 'Decline',
       ),
     ]);
+  }
+
+  void confirmationDialog(String maID) {
+    return showConfirmationDialog(
+      dialogTitle: 'Are you sure?',
+      dialogCaption:
+          'Select YES if you want to approve this MA Request. Otherwise, select NO',
+      onYesTap: () async {
+        await firestore
+            .collection('on_progress_ma')
+            .doc(maID)
+            .update({'isApproved': true, 'isTransferred': false}).then((value) {
+          opController.refresh();
+        });
+      },
+      onNoTap: () {
+        dismissDialog();
+      },
+    );
   }
 }

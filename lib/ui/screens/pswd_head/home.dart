@@ -1,11 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -15,13 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final AppController appController = Get.find();
+final StatusController stats = Get.put(StatusController(), permanent: true);
 
 class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  final AttachedPhotosController pswdController =
-      Get.put(AttachedPhotosController());
+  //final AttachedPhotosController pswdController =
+  //    Get.put(AttachedPhotosController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,6 @@ class PSWDHeadHomeScreen extends StatelessWidget {
         fetchedData!.firstName,
       ),
       drawer: Drawer(
-        // Container(color: Colors.amberAccent),
         child: PswdHeadSideMenu(),
       ),
       body: ResponsiveBody(),
@@ -117,7 +122,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdHeadDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  final OnProgressReqController homeController = Get.find();
+  //final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override
@@ -172,10 +177,18 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
-                              onPressed: () {},
-                              child: DmText.subtitle20Medium(
-                                'Ready to Accept Requests',
-                                color: kcNeutralColor[60],
+                              onPressed: () async {
+                                await changeIsCutOff();
+                              },
+                              child: Obx(
+                                () => stats.isPSLoading.value
+                                    ? Text('Loading..')
+                                    : DmText.subtitle20Medium(
+                                        stats.pswdPStatus[0].isCutOff!
+                                            ? 'Ready to Accept Request'
+                                            : 'Cut Off',
+                                        color: neutralColor[60],
+                                      ),
                               ),
                             ),
                           ],
@@ -195,10 +208,18 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                 primary: Colors.white,
                                 padding: const EdgeInsets.all(20),
                               ),
-                              onPressed: () {},
-                              child: DmText.subtitle20Medium(
-                                'Available',
-                                color: kcNeutralColor[60],
+                              onPressed: () async {
+                                await changeHasFunds();
+                              },
+                              child: Obx(
+                                () => stats.isPSLoading.value
+                                    ? Text('Loading..')
+                                    : DmText.subtitle20Medium(
+                                        stats.pswdPStatus[0].hasFunds!
+                                            ? 'Available'
+                                            : 'Unavailable',
+                                        color: neutralColor[60],
+                                      ),
                               ),
                             ),
                           ],
@@ -236,20 +257,26 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                 children: [
                                   ActionCard(
                                     text: 'View For Approval Requests',
-                                    onTap: () {},
+                                    onTap: () {
+                                      //Get.to
+                                    },
                                     color: kcVerySoftMagenta[60],
                                     secondaryColor:
                                         kcVerySoftMagentaCustomColor,
                                   ),
                                   ActionCard(
                                     text: 'View On Progress Requests',
-                                    onTap: () {},
+                                    onTap: () {
+                                      //Get.to
+                                    },
                                     color: kcVerySoftOrange[60],
                                     secondaryColor: kcVerySoftOrangeCustomColor,
                                   ),
                                   ActionCard(
                                     text: 'View MA History',
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.to(() => MAHistoryList());
+                                    },
                                     color: kcVerySoftRed[60],
                                     secondaryColor: kcVerySoftRedCustomColor,
                                   ),
@@ -340,7 +367,9 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                   ),
                                   // verticalSpace50,
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.to(() => ForApprovalListScreen());
+                                    },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -417,7 +446,10 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                               maxLines: 1,
                                             ),
                                             TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Get.to(() =>
+                                                    MARequestListScreen());
+                                              },
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
@@ -584,4 +616,18 @@ class PswdHeadSideMenuItem extends GetView<MenuController> {
       ),
     );
   }
+}
+
+Future<void> changeHasFunds() async {
+  await firestore
+      .collection('pswd_status')
+      .doc('status')
+      .update({'hasFunds': !(stats.pswdPStatus[0].hasFunds!)});
+}
+
+Future<void> changeIsCutOff() async {
+  await firestore
+      .collection('pswd_status')
+      .doc('status')
+      .update({'isCutOff': !(stats.pswdPStatus[0].isCutOff!)});
 }

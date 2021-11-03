@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final OnProgressReqController opController = Get.put(OnProgressReqController());
+final AuthController authController = Get.find();
 final RxBool firedOnce = false.obs;
 
 class OnProgressReqListScreen extends GetView<OnProgressReqController> {
@@ -250,15 +252,18 @@ Widget customTableRow(OnProgressMAModel model, BuildContext context) {
                   ),
                 ),
                 horizontalSpace15,
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => detailsDialogMA(model));
-                  },
-                  child: Text(
-                    'Medicine Ready',
-                    style: body16RegularUnderlineBlue,
+                Visibility(
+                  visible: authController.userRole == 'pswd-p',
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => detailsDialogMA(model));
+                    },
+                    child: Text(
+                      'Medicine Ready',
+                      style: body16RegularUnderlineBlue,
+                    ),
                   ),
                 ),
               ],

@@ -40,4 +40,24 @@ class ForApprovalController extends GetxController {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
   }
+
+  void refresh() {
+    filteredList.clear();
+    filteredList.assignAll(forApprovalList);
+  }
+
+  void filter({required String type}) {
+    filteredList.clear();
+
+    //filter for type only
+    if (type != '' && type != 'All') {
+      for (var i = 0; i < forApprovalList.length; i++) {
+        if (forApprovalList[i].type == type) {
+          filteredList.add(forApprovalList[i]);
+        }
+      }
+    } else {
+      filteredList.assignAll(forApprovalList);
+    }
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final ForApprovalController opController = Get.put(ForApprovalController());
+final RxBool firedOnce = false.obs;
 
 class ForApprovalListScreen extends GetView<ForApprovalController> {
   @override
@@ -27,14 +30,60 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
           ),
         ),
         verticalSpace50,
-        SizedBox(
-          width: 250,
-          child: CustomDropdown(
-            hintText: 'Filter patient type',
-            dropdownItems: type,
-            onChanged: (Item? item) => opController.type.value = item!.name,
-            onSaved: (Item? item) => opController.type.value = item!.name,
-          ),
+        Wrap(
+          runSpacing: 10,
+          children: [
+            SizedBox(
+              width: 280,
+              child: CustomDropdown(
+                hintText: 'Filter patient type',
+                dropdownItems: typeDropdown,
+                onChanged: (Item? item) => opController.type.value = item!.name,
+                onSaved: (Item? item) => opController.type.value = item!.name,
+              ),
+            ),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.filter(
+                      type: opController.type.value,
+                    );
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Remove Filter'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.filteredList
+                        .assignAll(opController.forApprovalList);
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Icon(
+                    Icons.refresh,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.refresh();
+                  },
+                )),
+          ],
         ),
         //IconButton(onPressed: (){}, icon: Ico)
         verticalSpace25,
@@ -63,6 +112,10 @@ Widget requestList(BuildContext context) {
       style: body14Medium,
     );
   }
+  firedOnce.value
+      ? null
+      : opController.filteredList.assignAll(opController.forApprovalList);
+  firedOnce.value = true;
   return MediaQuery.removePadding(
     context: context,
     removeTop: true,
@@ -71,9 +124,9 @@ Widget requestList(BuildContext context) {
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: opController.forApprovalList.length,
+            itemCount: opController.filteredList.length,
             itemBuilder: (context, index) {
-              return customTableRow(opController.forApprovalList[index]);
+              return customTableRow(opController.filteredList[index]);
             }),
       ),
     ),
@@ -200,7 +253,7 @@ Widget customTableRow(OnProgressMAModel model) {
                 horizontalSpace15,
                 InkWell(
                   onTap: () {
-                    //TO DO: open confirmation dialog
+                    confirmationDialog(model.maID!);
                   },
                   child: Text(
                     'Approve',
@@ -213,5 +266,24 @@ Widget customTableRow(OnProgressMAModel model) {
         ],
       ),
     ),
+  );
+}
+
+void confirmationDialog(String maID) {
+  return showConfirmationDialog(
+    dialogTitle: 'Are you sure?',
+    dialogCaption:
+        'Select YES if you want to approve this MA Request. Otherwise, select NO',
+    onYesTap: () async {
+      await firestore
+          .collection('on_progress_ma')
+          .doc(maID)
+          .update({'isApproved': true, 'isTransferred': false}).then((value) {
+        opController.refresh();
+      });
+    },
+    onNoTap: () {
+      dismissDialog();
+    },
   );
 }
