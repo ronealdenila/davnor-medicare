@@ -39,8 +39,8 @@ class AcceptedMARequestScreen extends StatelessWidget {
               PSWDItemView(context, 'accepted', model),
               Align(
                 alignment: Alignment.bottomRight,
-                child: CustomButton(
-                  onTap: () async {
+                child: PSWDButton(
+                  onItemTap: () async {
                     await firestore
                         .collection('on_progress_ma')
                         .doc(model.maID)
@@ -55,9 +55,7 @@ class AcceptedMARequestScreen extends StatelessWidget {
                       //dialog, "something went wrong"
                     });
                   },
-                  text: 'Transfer for Head Approval',
-                  buttonColor: verySoftOrange[60],
-                  fontSize: 15,
+                  buttonText: 'Transfer for Head Approval',
                 ),
               ),
               verticalSpace35,

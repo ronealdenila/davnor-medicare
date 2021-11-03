@@ -490,18 +490,21 @@ class DoctorHomeScreen extends StatelessWidget {
   }
 
   Widget getFloatingButton() {
-    if (liveCont.liveCons.isNotEmpty) {
-      return FloatingActionButton(
-        backgroundColor: verySoftBlueColor[30],
-        elevation: 2,
-        onPressed: () {
-          Get.to(() => LiveConsultationScreen(),
-              arguments: liveCont.liveCons[0]);
-        },
-        child: const Icon(
-          Icons.chat_rounded,
-        ),
-      );
+    if (!liveCont.isLoading.value) {
+      if (liveCont.liveCons.isNotEmpty) {
+        return FloatingActionButton(
+          backgroundColor: verySoftBlueColor[30],
+          elevation: 2,
+          onPressed: () {
+            Get.to(() => LiveConsultationScreen(),
+                arguments: liveCont.liveCons[0]);
+          },
+          child: const Icon(
+            Icons.chat_rounded,
+          ),
+        );
+      }
+      return const SizedBox(height: 0, width: 0);
     }
     return const SizedBox(height: 0, width: 0);
   }

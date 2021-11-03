@@ -13,10 +13,6 @@ class OnProgressReqController extends GetxController {
   final RxString type = ''.obs;
   RxBool isLoading = true.obs;
 
-  final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
-
-  String get dateNow => _dateNow;
-
   @override
   void onReady() {
     super.onReady();

@@ -48,26 +48,22 @@ class ForApprovalItemScreen extends StatelessWidget {
 
   Widget screenButtons() {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      CustomButton(
-        onTap: () async {
+      PSWDButton(
+        onItemTap: () async {
           await firestore.collection('on_progress_ma').doc(model.maID).update({
             'isApproved': true,
           });
         },
-        text: 'Approve',
-        buttonColor: verySoftOrange[60],
-        fontSize: 15,
+        buttonText: 'Approve',
       ),
       horizontalSpace25,
-      CustomButton(
-        onTap: () async {
+      PSWDButton(
+        onItemTap: () async {
           //maybe delete in on_progress_ma
           //delete folder in storage
           //and notify user, add reason
         },
-        text: 'Decline',
-        buttonColor: verySoftOrange[60],
-        fontSize: 15,
+        buttonText: 'Decline',
       ),
     ]);
   }

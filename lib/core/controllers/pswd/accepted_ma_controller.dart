@@ -20,7 +20,7 @@ class AcceptedMAController extends GetxController {
   }
 
   Stream<List<OnProgressMAModel>> getAcceptedMA() {
-    log.i('Accepted MA Controller | get Collection');
+    log.i('Accepted MA Controller | get Accepted MA');
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')

@@ -6,7 +6,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,35 +17,39 @@ class LiveConsController extends GetxController {
   final fetchedData = authController.doctorModel.value;
   RxList<LiveConsultationModel> liveCons = RxList<LiveConsultationModel>([]);
   TextEditingController reason = TextEditingController();
+  final RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    liveCons.bindStream(assignLiveCons());
+    liveCons.bindStream(getLiveCons());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getLiveCons() {
+  Stream<List<LiveConsultationModel>> getLiveCons() {
     log.i('Get Live Cons | ${auth.currentUser!.uid}');
     if (authController.userRole == 'doctor') {
       return firestore
           .collection('live_cons')
           .where('docID', isEqualTo: auth.currentUser!.uid)
-          .snapshots();
+          .snapshots()
+          .map((query) {
+        return query.docs.map((item) {
+          isLoading.value = false;
+          return LiveConsultationModel.fromJson(item.data());
+        }).toList();
+      });
     } else {
       return firestore
           .collection('live_cons')
           .where('patientID', isEqualTo: auth.currentUser!.uid)
-          .snapshots();
+          .snapshots()
+          .map((query) {
+        return query.docs.map((item) {
+          isLoading.value = false;
+          return LiveConsultationModel.fromJson(item.data());
+        }).toList();
+      });
     }
-  }
-
-  Stream<List<LiveConsultationModel>> assignLiveCons() {
-    log.i('Assign Live Cons');
-    return getLiveCons().map(
-      (query) => query.docs
-          .map((item) => LiveConsultationModel.fromJson(item.data()))
-          .toList(),
-    );
   }
 
   Future<void> getPatientData(LiveConsultationModel model) async {

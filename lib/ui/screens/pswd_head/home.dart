@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
@@ -12,6 +13,8 @@ import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+final AppController appController = Get.find();
 
 class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
@@ -307,7 +310,7 @@ class PswdHeadDashboardScreen extends GetView<MenuController> {
                                                 color: kcNeutralColor),
                                           ),
                                           TextSpan(
-                                            text: '(${homeController.dateNow})',
+                                            text: '(${appController.dateNow})',
                                             style: subtitle18Regular,
                                           ),
                                         ],

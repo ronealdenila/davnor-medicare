@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
@@ -22,8 +23,6 @@ import 'package:get/get.dart';
 final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
 
 class PSWDPersonnelHome extends StatelessWidget {
-  final OnProgressReqController pswdController =
-      Get.put(OnProgressReqController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
@@ -119,8 +118,9 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
+
+  static AppController appController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +318,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                             ),
                                             TextSpan(
                                               text:
-                                                  '(${homeController.dateNow})',
+                                                  '(${appController.dateNow})',
                                               style: subtitle18Regular,
                                             ),
                                           ],
@@ -552,29 +552,23 @@ class PswdPDashboardScreen extends GetView<MenuController> {
   }
 
   Widget getFloatingButton() {
-    for (int i = 0; i < acceptedMA.accMA.length; i++) {
-      if (acceptedMA.accMA[i].isTransferred == false) {
-        acceptedMA.index.value = i;
+    if (!acceptedMA.isLoading.value) {
+      if (acceptedMA.accMA.isNotEmpty) {
+        return FloatingActionButton(
+          backgroundColor: verySoftBlueColor[30],
+          elevation: 2,
+          onPressed: () {
+            Get.to(() => AcceptedMARequestScreen(),
+                arguments: acceptedMA.accMA[0]);
+          },
+          child: const Icon(
+            Icons.chat_rounded,
+          ),
+        );
       }
+      return const SizedBox(height: 0, width: 0);
     }
-
-    if (acceptedMA.index.value != -1) {
-      return FloatingActionButton(
-        backgroundColor: verySoftBlueColor[30],
-        elevation: 2,
-        onPressed: () {
-          Get.to(() => AcceptedMARequestScreen(),
-              arguments: acceptedMA.accMA[acceptedMA.index.value]);
-        },
-        child: const Icon(
-          Icons.chat_rounded,
-        ),
-      );
-    }
-    return const SizedBox(
-      width: 0,
-      height: 0,
-    );
+    return const SizedBox(height: 0, width: 0);
   }
 }
 
