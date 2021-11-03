@@ -9,30 +9,31 @@ import 'package:intl/intl.dart';
 class ForApprovalController extends GetxController {
   final log = getLogger('For Approval MA Controller');
 
-  RxList<OnProgressMAModel> forApproval = RxList<OnProgressMAModel>([]);
+  RxList<OnProgressMAModel> forApprovalList = RxList<OnProgressMAModel>([]);
+  final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
+  final RxString reason = ''.obs;
+  final RxString type = ''.obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    forApproval.bindStream(assignListStream());
+    forApprovalList.bindStream(getForApproval());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-    log.i('For Approval MA Controller | get Collection');
+  Stream<List<OnProgressMAModel>> getForApproval() {
+    log.i('Accepted MA Controller | get Collection');
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
         .where('isTransferred', isEqualTo: true)
-        .snapshots();
-  }
-
-  Stream<List<OnProgressMAModel>> assignListStream() {
-    log.i('For Approval MA Controller | assign');
-    return getCollection().map(
-      (query) => query.docs
-          .map((item) => OnProgressMAModel.fromJson(item.data()))
-          .toList(),
-    );
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return OnProgressMAModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
   String convertTimeStamp(Timestamp recordTime) {

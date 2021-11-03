@@ -116,79 +116,43 @@ class ConsRequestItemScreen extends StatelessWidget {
   }
 
   Widget startConsultationButton() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: stats.getDoctorStatus(fetchedData!.userID!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final data = snapshot.data!.data() as Map<String, dynamic>;
-            return Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Container(
-                color: customNeutralColor2,
-                width: Get.width,
-                height: 100,
-                child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      if (data['hasOngoingCons']) {
-                        showErrorDialog(
-                            errorTitle:
-                                'Sorry, you still have an on progress consultation',
-                            errorDescription:
-                                'Please make sure to end your accepted consultation first before starting new one');
-                      } else {
-                        doctorHomeController.startConsultation(consData);
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: verySoftBlueColor[60],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      width: 255,
-                      height: 43,
-                      child: Center(
-                        child: Text(
-                          'Start Consultation',
-                          style: body16SemiBold.copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
-          return Align(
-            alignment: FractionalOffset.bottomCenter,
+    return Align(
+      alignment: FractionalOffset.bottomCenter,
+      child: Container(
+        color: customNeutralColor2,
+        width: Get.width,
+        height: 100,
+        child: Center(
+          child: InkWell(
+            onTap: () {
+              if (stats.doctorStatus[0].hasOngoingCons!) {
+                showErrorDialog(
+                    errorTitle:
+                        'Sorry, you still have an on progress consultation',
+                    errorDescription:
+                        'Please make sure to end your accepted consultation first before starting new one');
+              } else {
+                doctorHomeController.startConsultation(consData);
+              }
+            },
             child: Container(
-              color: customNeutralColor2,
-              width: Get.width,
-              height: 100,
+              decoration: BoxDecoration(
+                color: verySoftBlueColor[60],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              width: 255,
+              height: 43,
               child: Center(
-                child: InkWell(
-                  onTap: () {
-                    //please wait, we are still fetching.. try again;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: verySoftBlueColor[60],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    width: 255,
-                    height: 43,
-                    child: Center(
-                      child: Text(
-                        'Start Consultation',
-                        style: body16SemiBold.copyWith(color: Colors.white),
-                      ),
-                    ),
-                  ),
+                child: Text(
+                  'Start Consultation',
+                  style: body16SemiBold.copyWith(color: Colors.white),
                 ),
               ),
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 
   Widget getPhoto(ConsultationModel model) {

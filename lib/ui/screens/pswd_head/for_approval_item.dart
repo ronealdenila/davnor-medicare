@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class ForApprovalItemScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
-  final MARequestModel passedData = Get.arguments as MARequestModel;
+  final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
 
   @override
@@ -25,8 +25,9 @@ class ForApprovalItemScreen extends StatelessWidget {
         gender: passedData.gender,
         type: passedData.type,
         prescriptions: passedData.prescriptions,
+        receivedBy: passedData.receivedBy,
         validID: passedData.validID,
-        dateRqstd: passedData.date_rqstd);
+        dateRqstd: passedData.dateRqstd);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -60,7 +61,9 @@ class ForApprovalItemScreen extends StatelessWidget {
       horizontalSpace25,
       CustomButton(
         onTap: () async {
-          //maybe delete in on_progress_ma and notify user
+          //maybe delete in on_progress_ma
+          //delete folder in storage
+          //and notify user, add reason
         },
         text: 'Decline',
         buttonColor: verySoftOrange[60],

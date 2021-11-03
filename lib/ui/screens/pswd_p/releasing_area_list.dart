@@ -48,45 +48,45 @@ class ReleasingAreaListScreen extends StatelessWidget {
         ),
         verticalSpace25,
         header(),
-        requestList(context)
+        Obx(() => requestList(context))
       ],
     );
   }
 }
 
 Widget requestList(BuildContext context) {
-  return StreamBuilder(
-      stream: rlsController.getCollection(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          if (rlsController.toRelease.isNotEmpty) {
-            return MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: Expanded(
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: rlsController.toRelease.length,
-                      itemBuilder: (context, index) {
-                        return customTableRow(rlsController.toRelease[index]);
-                      }),
-                ),
-              ),
-            );
-          } else {
-            return const Center(
-                child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('No MA request for releasing at the moment'),
-            ));
-          }
-        }
-        return const Center(
-            child: SizedBox(
-                width: 24, height: 24, child: CircularProgressIndicator()));
-      });
+  if (rlsController.isLoading.value) {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      ),
+    );
+  }
+  if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
+    return const Text(
+      'No MA request for releasing at the moment',
+      textAlign: TextAlign.center,
+      style: body14Medium,
+    );
+  }
+  return MediaQuery.removePadding(
+    context: context,
+    removeTop: true,
+    child: Expanded(
+      child: SingleChildScrollView(
+        child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: rlsController.toRelease.length,
+            itemBuilder: (context, index) {
+              return customTableRow(rlsController.toRelease[index]);
+            }),
+      ),
+    ),
+  );
 }
 
 Widget header() {

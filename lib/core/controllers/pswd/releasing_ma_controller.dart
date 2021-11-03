@@ -12,30 +12,46 @@ class ReleasingMAController extends GetxController {
   RxList<OnProgressMAModel> toRelease = RxList<OnProgressMAModel>([]);
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
   final TextEditingController rlsFilter = TextEditingController();
+  RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    toRelease.bindStream(assignListStream());
+    toRelease.bindStream(getToReleaseList());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-    log.i('Releasing MA Controller | get Collection');
+  Stream<List<OnProgressMAModel>> getToReleaseList() {
+    log.i('To Release MA Controller | get Collection');
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
         .where('isMedReady', isEqualTo: true)
-        .snapshots();
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return OnProgressMAModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
-  Stream<List<OnProgressMAModel>> assignListStream() {
-    log.i('Releasing MA Controller | assign');
-    return getCollection().map(
-      (query) => query.docs
-          .map((item) => OnProgressMAModel.fromJson(item.data()))
-          .toList(),
-    );
-  }
+  // Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
+  //   log.i('Releasing MA Controller | get Collection');
+  //   return firestore
+  //       .collection('on_progress_ma')
+  //       .orderBy('dateRqstd')
+  //       .where('isMedReady', isEqualTo: true)
+  //       .snapshots();
+  // }
+
+  // Stream<List<OnProgressMAModel>> assignListStream() {
+  //   log.i('Releasing MA Controller | assign');
+  //   return getCollection().map(
+  //     (query) => query.docs
+  //         .map((item) => OnProgressMAModel.fromJson(item.data()))
+  //         .toList(),
+  //   );
+  // }
 
   String convertTimeStamp(Timestamp recordTime) {
     final dt = recordTime.toDate();

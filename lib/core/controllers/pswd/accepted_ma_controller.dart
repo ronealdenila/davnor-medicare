@@ -11,29 +11,27 @@ class AcceptedMAController extends GetxController {
 
   RxList<OnProgressMAModel> accMA = RxList<OnProgressMAModel>([]);
   RxInt index = (-1).obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    accMA.bindStream(assignListStream());
+    accMA.bindStream(getAcceptedMA());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
+  Stream<List<OnProgressMAModel>> getAcceptedMA() {
     log.i('Accepted MA Controller | get Collection');
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
         .where('isTransferred', isEqualTo: false)
-        .snapshots();
-  }
-
-  Stream<List<OnProgressMAModel>> assignListStream() {
-    log.i('Accepted MA Controller | assign');
-    return getCollection().map(
-      (query) => query.docs
-          .map((item) => OnProgressMAModel.fromJson(item.data()))
-          .toList(),
-    );
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return OnProgressMAModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
   String convertTimeStamp(Timestamp recordTime) {

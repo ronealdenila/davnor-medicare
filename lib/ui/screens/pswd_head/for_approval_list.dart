@@ -1,8 +1,8 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -10,9 +10,9 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final OnProgressReqController opController = Get.put(OnProgressReqController());
+final ForApprovalController opController = Get.put(ForApprovalController());
 
-class OnProgressReqListScreen extends GetView<OnProgressReqController> {
+class ForApprovalListScreen extends GetView<ForApprovalController> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,9 +56,9 @@ Widget requestList(BuildContext context) {
       ),
     );
   }
-  if (opController.onProgressList.isEmpty && !opController.isLoading.value) {
+  if (opController.forApprovalList.isEmpty && !opController.isLoading.value) {
     return const Text(
-      'No on progress MA request at the moment',
+      'No MA request for approval at the moment',
       textAlign: TextAlign.center,
       style: body14Medium,
     );
@@ -71,9 +71,9 @@ Widget requestList(BuildContext context) {
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: opController.onProgressList.length,
+            itemCount: opController.forApprovalList.length,
             itemBuilder: (context, index) {
-              return customTableRow(opController.onProgressList[index]);
+              return customTableRow(opController.forApprovalList[index]);
             }),
       ),
     ),
@@ -188,7 +188,7 @@ Widget customTableRow(OnProgressMAModel model) {
                 InkWell(
                   onTap: () {
                     Get.to(
-                      () => OnProgressReqItemScreen(),
+                      () => ForApprovalItemScreen(),
                       arguments: model,
                     );
                   },
@@ -200,10 +200,10 @@ Widget customTableRow(OnProgressMAModel model) {
                 horizontalSpace15,
                 InkWell(
                   onTap: () {
-                    //open dialog
+                    //TO DO: open confirmation dialog
                   },
                   child: Text(
-                    'Medicine Ready',
+                    'Approve',
                     style: body16RegularUnderlineBlue,
                   ),
                 ),
