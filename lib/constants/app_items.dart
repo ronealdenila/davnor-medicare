@@ -147,7 +147,16 @@ final List<Item> type = <Item>[
   const Item('None'),
   const Item('Senior'),
   const Item('Pregnant Women'),
-  const Item('Person with Disabiity (PWD)'),
+  const Item('Person with Disability (PWD)'),
+  const Item('Indigenous People (IP)'),
+];
+
+final List<Item> typeDropdown = <Item>[
+  const Item('All'),
+  const Item('None'),
+  const Item('Senior'),
+  const Item('Pregnant Women'),
+  const Item('Person with Disability (PWD)'),
   const Item('Indigenous People (IP)'),
 ];
 

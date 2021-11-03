@@ -638,4 +638,11 @@ class DoctorHomeScreen extends StatelessWidget {
       )
     ]);
   }
+
+  // Future<void> minusCategorySlot() async {
+  //   await firestore
+  //       .collection('cons_status')
+  //       .doc(fetchedData!.categoryID!)
+  //       .update({'consSlot': currentCount + countAdd.value});
+  // }
 }

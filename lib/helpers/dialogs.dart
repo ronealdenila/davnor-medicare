@@ -2,6 +2,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,7 +68,7 @@ void showConfirmationDialog({
       child: Stack(
         children: <Widget>[
           Container(
-            width: Get.width * .8,
+            width: kIsWeb ? Get.width * .18 : Get.width * .8,
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
             margin: const EdgeInsets.only(top: 13, right: 8),
             decoration: BoxDecoration(

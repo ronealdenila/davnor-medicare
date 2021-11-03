@@ -54,4 +54,55 @@ class MAReqListController extends GetxController {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
   }
+
+  void refresh() {
+    filteredList.clear();
+    filteredList.assignAll(maRequests);
+  }
+
+  void filter({required String name, required String type}) {
+    final RxList<MARequestModel> temp = RxList<MARequestModel>();
+    filteredList.clear();
+    final RxBool madeChanges = false.obs;
+
+    //filter for name only
+    if (name != '') {
+      print('NAME');
+      for (var i = 0; i < maRequests.length; i++) {
+        madeChanges.value = true;
+        if (maRequests[i]
+            .fullName!
+            .toLowerCase()
+            .contains(name.toLowerCase())) {
+          filteredList.add(maRequests[i]);
+        }
+      }
+    }
+
+    //filter for type only
+    if (type != '' && type != 'All') {
+      if (filteredList.isEmpty) {
+        for (var i = 0; i < maRequests.length; i++) {
+          madeChanges.value = true;
+          if (maRequests[i].type == type) {
+            filteredList.add(maRequests[i]);
+          }
+        }
+      } else {
+        for (var i = 0; i < filteredList.length; i++) {
+          if (filteredList[i].type == type) {
+            temp.add(filteredList[i]);
+          }
+        }
+        filteredList.clear();
+        filteredList.assignAll(temp);
+      }
+    }
+
+    //show all
+    if (!madeChanges.value && filteredList.isEmpty) {
+      print('ALL');
+      filteredList.assignAll(maRequests);
+    }
+  }
 }

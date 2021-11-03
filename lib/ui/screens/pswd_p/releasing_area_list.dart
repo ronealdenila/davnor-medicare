@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
+import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -209,7 +214,18 @@ Widget customTableRow(OnProgressMAModel model) {
                 horizontalSpace15,
                 InkWell(
                   onTap: () {
-                    //open dialog
+                    showConfirmationDialog(
+                      dialogTitle: dialogpswdTitle,
+                      dialogCaption: dialogpswdCaption,
+                      onYesTap: () {
+                        showLoading();
+                        transfferToHistpry(model);
+                        dismissDialog();
+                      },
+                      onNoTap: () {
+                        dismissDialog();
+                      },
+                    );
                   },
                   child: Text(
                     'Claimed',
@@ -223,4 +239,42 @@ Widget customTableRow(OnProgressMAModel model) {
       ),
     ),
   );
+}
+
+Future<void> transfferToHistpry(OnProgressMAModel model) async {
+  showLoading();
+  await firestore
+      .collection('ma_history')
+      .doc(model.maID)
+      .set(<String, dynamic>{
+    'maID': model.maID,
+    'patientId': model.requesterID,
+    'fullName': model.fullName,
+    'age': model.age,
+    'address': model.address,
+    'gender': model.gender,
+    'type': model.type,
+    'prescriptions': model.prescriptions,
+    'dateRqstd': model.dateRqstd,
+    'validID': model.validID,
+    'receivedBy': model.receivedBy,
+    'medWorth': model.medWorth,
+    'pharmacy': model.pharmacy,
+    'dateClaimed': Timestamp.fromDate(DateTime.now()),
+  }).then((value) async {
+    //NOTIF USER: CLAIMED
+    await deleteMA(model.maID!);
+    dismissDialog(); //dismissLoading
+    dismissDialog(); //then dismiss dialog for are your sure? yes/no
+    Get.back();
+  });
+}
+
+Future<void> deleteMA(String maID) async {
+  await firestore
+      .collection('on_progress_ma')
+      .doc(maID)
+      .delete()
+      .then((value) => print("MA Request Deleted"))
+      .catchError((error) => print("Failed to delete MA Request"));
 }

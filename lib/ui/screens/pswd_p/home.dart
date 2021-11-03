@@ -1,12 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -21,6 +25,7 @@ import 'package:get/get.dart';
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
 final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
+final StatusController stats = Get.put(StatusController(), permanent: true);
 
 class PSWDPersonnelHome extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -174,10 +179,18 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                   primary: Colors.white,
                                   padding: const EdgeInsets.all(20),
                                 ),
-                                onPressed: () {},
-                                child: DmText.subtitle20Medium(
-                                  'Ready to Accept Requests',
-                                  color: neutralColor[60],
+                                onPressed: () async {
+                                  await changeIsCutOff();
+                                },
+                                child: Obx(
+                                  () => stats.isPSLoading.value
+                                      ? Text('Loading..')
+                                      : DmText.subtitle20Medium(
+                                          stats.pswdPStatus[0].isCutOff!
+                                              ? 'Ready to Accept Request'
+                                              : 'Cut Off',
+                                          color: neutralColor[60],
+                                        ),
                                 ),
                               ),
                             ],
@@ -197,10 +210,18 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                   primary: Colors.white,
                                   padding: const EdgeInsets.all(20),
                                 ),
-                                onPressed: () {},
-                                child: DmText.subtitle20Medium(
-                                  'Available',
-                                  color: neutralColor[60],
+                                onPressed: () async {
+                                  await changeHasFunds();
+                                },
+                                child: Obx(
+                                  () => stats.isPSLoading.value
+                                      ? Text('Loading..')
+                                      : DmText.subtitle20Medium(
+                                          stats.pswdPStatus[0].hasFunds!
+                                              ? 'Available'
+                                              : 'Unavailable',
+                                          color: neutralColor[60],
+                                        ),
                                 ),
                               ),
                             ],
@@ -237,8 +258,8 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                   children: [
                                     ActionCard(
                                       text: 'Change MA Status',
-                                      onTap: () {
-                                        //change PSWD status
+                                      onTap: () async {
+                                        await changeIsCutOff();
                                       },
                                       color: verySoftMagenta[60],
                                       secondaryColor:
@@ -246,8 +267,8 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                     ),
                                     ActionCard(
                                       text: 'Change PSWD Fund Status',
-                                      onTap: () {
-                                        //change fund status
+                                      onTap: () async {
+                                        await changeHasFunds();
                                       },
                                       color: verySoftOrange[60],
                                       secondaryColor: verySoftOrangeCustomColor,
@@ -255,7 +276,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                     ActionCard(
                                       text: 'View MA History',
                                       onTap: () {
-                                        //go to MA history list
+                                        Get.to(() => MAHistoryList());
                                       },
                                       color: verySoftRed[60],
                                       secondaryColor: verySoftRedCustomColor,
@@ -326,7 +347,6 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                       ),
                                     ),
                                     // verticalSpace15,
-
                                     DmText.subtitle18Regular(
                                       medicalStatusSubtitle1,
                                     ),
@@ -613,4 +633,18 @@ class PswdPSideMenuItem extends GetView<MenuController> {
       ),
     );
   }
+}
+
+Future<void> changeHasFunds() async {
+  await firestore
+      .collection('pswd_status')
+      .doc('status')
+      .update({'hasFunds': !(stats.pswdPStatus[0].hasFunds!)});
+}
+
+Future<void> changeIsCutOff() async {
+  await firestore
+      .collection('pswd_status')
+      .doc('status')
+      .update({'isCutOff': !(stats.pswdPStatus[0].isCutOff!)});
 }

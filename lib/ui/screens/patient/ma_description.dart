@@ -165,26 +165,34 @@ class MADescriptionScreen extends StatelessWidget {
       onTap: () {
         if (stats.patientStatus[0].pStatus!) {
           if (!stats.patientStatus[0].hasActiveQueueMA!) {
-            if (controller.hasAvailableSlot()) {
-              //check activeQueue/slot/fund
-              return showConfirmationDialog(
-                dialogTitle: dialog2Title,
-                dialogCaption: dialog2Caption,
-                onYesTap: () {
-                  controller.isMAForYou.value = true;
-                  Get.to(() => MAFormScreen());
-                },
-                onNoTap: () {
-                  controller.isMAForYou.value = false;
-                  Get.to(() => MAFormScreen());
-                },
-              );
+            if (stats.pswdPStatus[0].hasFunds!) {
+              if (stats.pswdPStatus[0].isCutOff!) {
+                if (controller.hasAvailableSlot()) {
+                  //check activeQueue/slot/fund
+                  return showConfirmationDialog(
+                    dialogTitle: dialog2Title,
+                    dialogCaption: dialog2Caption,
+                    onYesTap: () {
+                      controller.isMAForYou.value = true;
+                      Get.to(() => MAFormScreen());
+                    },
+                    onNoTap: () {
+                      controller.isMAForYou.value = false;
+                      Get.to(() => MAFormScreen());
+                    },
+                  );
+                } else {
+                  showErrorDialog(
+                    errorTitle: 'No Slot Available',
+                    errorDescription:
+                        'Sorry, there are no available slots at the moment. Please try again next time',
+                  );
+                }
+              } else {
+                //error dialog - Sorry cut off na
+              }
             } else {
-              showErrorDialog(
-                errorTitle: 'No Slot Available',
-                errorDescription:
-                    'Sorry, there are no available slots at the moment. Please try again next time',
-              );
+              //error dialog - Sorry MA has no fund for now. Please try again next time
             }
           } else {
             showErrorDialog(

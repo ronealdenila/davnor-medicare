@@ -34,26 +34,28 @@ class OnProgressReqController extends GetxController {
     });
   }
 
-  // Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-  //   log.i('Releasing MA Controller | get Collection');
-  //   return firestore
-  //       .collection('on_progress_ma')
-  //       .orderBy('dateRqstd')
-  //       .where('isMedReady', isEqualTo: true)
-  //       .snapshots();
-  // }
-
-  // Stream<List<OnProgressMAModel>> assignListStream() {
-  //   log.i('Releasing MA Controller | assign');
-  //   return getCollection().map(
-  //     (query) => query.docs
-  //         .map((item) => OnProgressMAModel.fromJson(item.data()))
-  //         .toList(),
-  //   );
-  // }
-
   String convertTimeStamp(Timestamp recordTime) {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
+  }
+
+  void refresh() {
+    filteredList.clear();
+    filteredList.assignAll(onProgressList);
+  }
+
+  void filter({required String type}) {
+    filteredList.clear();
+
+    //filter for type only
+    if (type != '' && type != 'All') {
+      for (var i = 0; i < onProgressList.length; i++) {
+        if (onProgressList[i].type == type) {
+          filteredList.add(onProgressList[i]);
+        }
+      }
+    } else {
+      filteredList.assignAll(onProgressList);
+    }
   }
 }

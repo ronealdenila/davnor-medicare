@@ -11,22 +11,23 @@ class StatusController extends GetxController {
   static AuthController authController = Get.find();
   RxList<PatientStatusModel> patientStatus = RxList<PatientStatusModel>([]);
   RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
-  // RxList<PatientStatusModel> pswdPStatus = RxList<PatientStatusModel>([]);
+  RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
   // RxList<PatientStatusModel> pswdHStatus = RxList<PatientStatusModel>([]);
   // RxList<PatientStatusModel> maStatus = RxList<PatientStatusModel>([]);
   RxBool isLoading = true.obs;
+  RxBool isPSLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
     if (authController.userRole == 'patient') {
       patientStatus.bindStream(getPStatus());
+      pswdPStatus.bindStream(getPSWDPStatus());
     } else if (authController.userRole == 'doctor') {
       doctorStatus.bindStream(getDStatus());
-    } else if (authController.userRole == 'pswd-p') {
-      //pswd-p
-    } else if (authController.userRole == 'pswd-h') {
-      //pswd-h
+    } else if (authController.userRole == 'pswd-p' ||
+        authController.userRole == 'pswd-h') {
+      pswdPStatus.bindStream(getPSWDPStatus());
     }
   }
 
@@ -55,6 +56,16 @@ class StatusController extends GetxController {
       return query.docs.map((item) {
         isLoading.value = false;
         return DoctorStatusModel.fromJson(item.data());
+      }).toList();
+    });
+  }
+
+  Stream<List<PSWDStatusModel>> getPSWDPStatus() {
+    log.i('MA Queue Controller | Get PSWD Status');
+    return firestore.collection('pswd_status').snapshots().map((query) {
+      return query.docs.map((item) {
+        isPSLoading.value = false;
+        return PSWDStatusModel.fromJson(item.data());
       }).toList();
     });
   }
