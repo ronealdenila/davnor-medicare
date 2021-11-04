@@ -107,3 +107,40 @@ class PSWDStatusModel {
   int? maSlot;
   int? qLastNum;
 }
+
+// class CategoryStatusModel {
+//   CategoryStatusModel({
+//     this.categoryID,
+//     this.consRqstd,
+//     this.consSlot,
+//     this.deptName,
+//     this.qLastNum,
+//     this.title,
+//   });
+
+//   factory CategoryStatusModel.fromJson(Map<String, dynamic> json) =>
+//       CategoryStatusModel(
+//         categoryID: json['categoryID'] as String,
+//         consRqstd: json['consRqstd'] as int,
+//         consSlot: json['consSlot'] as int,
+//         deptName: json['deptName'] as String,
+//         qLastNum: json['qLastNum'] as int,
+//         title: json['title'] as String,
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         'categoryID': categoryID,
+//         'consRqstd': consRqstd,
+//         'consSlot': consSlot,
+//         'deptName': deptName,
+//         'qLastNum': qLastNum,
+//         'title': title,
+//       };
+
+//   String? categoryID;
+//   int? consRqstd;
+//   int? consSlot;
+//   String? deptName;
+//   int? qLastNum;
+//   String? title;
+// }

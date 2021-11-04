@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/patient_doc_status_model.dart';
+import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,6 @@ class StatusController extends GetxController {
   RxList<PatientStatusModel> patientStatus = RxList<PatientStatusModel>([]);
   RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
   RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
-  // RxList<PatientStatusModel> pswdHStatus = RxList<PatientStatusModel>([]);
   // RxList<PatientStatusModel> maStatus = RxList<PatientStatusModel>([]);
   RxBool isLoading = true.obs;
   RxBool isPSLoading = true.obs;
@@ -22,16 +21,17 @@ class StatusController extends GetxController {
     super.onReady();
     if (authController.userRole == 'patient') {
       patientStatus.bindStream(getPStatus());
-      pswdPStatus.bindStream(getPSWDPStatus());
+      pswdPStatus.bindStream(getMAStatus());
     } else if (authController.userRole == 'doctor') {
       doctorStatus.bindStream(getDStatus());
     } else if (authController.userRole == 'pswd-p' ||
         authController.userRole == 'pswd-h') {
-      pswdPStatus.bindStream(getPSWDPStatus());
+      pswdPStatus.bindStream(getMAStatus());
     }
   }
 
   Stream<List<PatientStatusModel>> getPStatus() {
+    log.i('GETTING PATIENT STATS');
     return firestore
         .collection('patients')
         .doc(auth.currentUser!.uid)
@@ -49,7 +49,7 @@ class StatusController extends GetxController {
     log.i('GETTING DOC STATS');
     return firestore
         .collection('doctors')
-        .doc('OY4Xkw6mmjUo7TwYX4X1Xlw4nUp2')
+        .doc(auth.currentUser!.uid)
         .collection('status')
         .snapshots()
         .map((query) {
@@ -60,8 +60,8 @@ class StatusController extends GetxController {
     });
   }
 
-  Stream<List<PSWDStatusModel>> getPSWDPStatus() {
-    log.i('MA Queue Controller | Get PSWD Status');
+  Stream<List<PSWDStatusModel>> getMAStatus() {
+    log.i('GETTING PSWD MA STATS');
     return firestore.collection('pswd_status').snapshots().map((query) {
       return query.docs.map((item) {
         isPSLoading.value = false;

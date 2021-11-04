@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -12,8 +13,9 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final RxBool hasAccepted = false.obs;
+//final RxBool hasAccepted = false.obs;
 final TextEditingController reason = TextEditingController();
+final StatusController stats = Get.find();
 
 class MARequestItemScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
@@ -60,8 +62,15 @@ class MARequestItemScreen extends StatelessWidget {
             dialogCaption:
                 'Please select yes if you want to accept the request',
             onYesTap: () async {
-              hasAccepted.value = true;
-              await acceptMA(model);
+              //hasAccepted.value = true;
+              if (stats.pswdPStatus.isEmpty && !stats.isPSLoading.value) {
+                await acceptMA(model);
+              } else {
+                showErrorDialog(
+                    errorTitle: 'It looks like you already accepted a request',
+                    errorDescription:
+                        'Please finish the accepted request first before accepting another');
+              }
             },
             onNoTap: () {
               dismissDialog();
@@ -197,7 +206,7 @@ Widget declineDialogMA(GeneralMARequestModel model) {
                     alignment: Alignment.bottomCenter,
                     child: PSWDButton(
                         onItemTap: () async {
-                          hasAccepted.value = true;
+                          //hasAccepted.value = true;
                           showLoading();
                           await updatePatientStatus(model.requesterID!);
                           await addNotification(model.requesterID!);

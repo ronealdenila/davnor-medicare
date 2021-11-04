@@ -192,6 +192,7 @@ class LiveConsController extends GetxController {
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
     await deleteConsFromQueue(consID);
+    //del storage folder
     await removeFromLive(consID);
     await removeFromChat(consID);
     await updatePatientStatus(patientID);
@@ -250,5 +251,25 @@ class LiveConsController extends GetxController {
         'notifBadge': '$count',
       });
     });
+  }
+
+  void deleteDirectory(String path) {
+    final ref = storage.ref(path);
+    ref.listAll().then((dir) {
+      dir.items.forEach((fileRef) {
+        this.deleteFile(ref.fullPath, fileRef.name);
+      });
+      dir.prefixes.forEach((folderRef) {
+        this.deleteDirectory(folderRef.fullPath);
+      });
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
+  deleteFile(pathToFile, fileName) {
+    final ref = storage.ref(pathToFile);
+    final childRef = ref.child(fileName);
+    childRef.delete();
   }
 }
