@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -11,10 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OnProgressReqItemScreen extends StatelessWidget {
+  OnProgressReqItemScreen({Key? key, required this.passedData})
+      : super(key: key);
+  final OnProgressMAModel passedData;
   final AuthController authController = Get.find();
   final AttachedPhotosController controller = Get.find();
-  final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -142,5 +146,12 @@ class OnProgressReqItemScreen extends StatelessWidget {
                 ],
               ))
         ]);
+  }
+
+  Future<void> goBack() {
+    print('clicked');
+    return navigationController.navigatorKey.currentState!
+        .pushNamedAndRemoveUntil(
+            '/MAHistoryListScreen', (Route<dynamic> route) => true);
   }
 }

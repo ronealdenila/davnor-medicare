@@ -4,11 +4,11 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
-import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -249,10 +249,13 @@ Widget customTableRow(OnProgressMAModel model) {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    Get.to(
-                      () => ReleasingAreaItemScreen(),
-                      arguments: model,
-                    );
+                    navigationController.navigateToWithArgs(
+                        Routes.RELEASING_AREA_ITEM,
+                        arguments: model);
+                    // Get.to(
+                    //   () => ReleasingAreaItemScreen(),
+                    //   arguments: model,
+                    // );
                   },
                   child: Text(
                     'View',

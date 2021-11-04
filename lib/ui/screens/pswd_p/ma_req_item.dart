@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -14,12 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 //final RxBool hasAccepted = false.obs;
+NavigationController navigationController = Get.find();
 final TextEditingController reason = TextEditingController();
 final StatusController stats = Get.find();
 
 class MARequestItemScreen extends StatelessWidget {
+  MARequestItemScreen({Key? key, required this.passedData}) : super(key: key);
+  final MARequestModel passedData;
   final AttachedPhotosController controller = Get.find();
-  final MARequestModel passedData = Get.arguments as MARequestModel;
   late final GeneralMARequestModel model;
 
   @override
@@ -238,4 +241,11 @@ Future<void> updatePatientStatus(String patientID) async {
       .collection('status')
       .doc('value')
       .update({'hasActiveQueueMA': false, 'queueMA': ''});
+}
+
+Future<void> goBack() {
+  print('clicked');
+  return navigationController.navigatorKey.currentState!
+      .pushNamedAndRemoveUntil(
+          '/MAHistoryListScreen', (Route<dynamic> route) => true);
 }

@@ -229,15 +229,15 @@ class AppPages {
       name: _Paths.MA_REQ_LIST,
       page: () => MARequestListScreen(),
     ),
-    GetPage(
-      name: _Paths.MA_REQ_ITEM,
-      page: () => MARequestItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.MA_REQ_ITEM,
+    //   page: () => MARequestItemScreen(),
+    // ),
 
-    GetPage(
-      name: _Paths.ON_PROGRESS_REQ_ITEM,
-      page: () => MARequestItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.ON_PROGRESS_REQ_ITEM,
+    //   page: () => MARequestItemScreen(),
+    // ),
     GetPage(
       name: _Paths.ON_PROGRESS_REQ_LIST,
       page: () => OnProgressReqListScreen(),
@@ -250,14 +250,14 @@ class AppPages {
     //   name: _Paths.MA_HISTORY_ITEM,
     //   page: () => MAHistoryItemScreen(passedData: null),
     // ),
-    GetPage(
-      name: _Paths.RELEASING_AREA_ITEM,
-      page: () => ReleasingAreaItemScreen(),
-    ),
-    GetPage(
-      name: _Paths.ON_PROGRESS_REQ_ITEM,
-      page: () => OnProgressReqItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.RELEASING_AREA_ITEM,
+    //   page: () => ReleasingAreaItemScreen(),
+    // ),
+    // GetPage(
+    //   name: _Paths.ON_PROGRESS_REQ_ITEM,
+    //   page: () => OnProgressReqItemScreen(),
+    // ),
     GetPage(
       name: _Paths.FOR_APPROVAL_ITEM,
       page: () => ForApprovalItemScreen(),

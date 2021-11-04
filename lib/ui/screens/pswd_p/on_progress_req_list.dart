@@ -4,7 +4,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -12,6 +12,7 @@ import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 
 final OnProgressReqController opController = Get.put(OnProgressReqController());
 final AuthController authController = Get.find();
@@ -241,10 +242,13 @@ Widget customTableRow(OnProgressMAModel model, BuildContext context) {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    Get.to(
-                      () => OnProgressReqItemScreen(),
-                      arguments: model,
-                    );
+                    navigationController.navigateToWithArgs(
+                        Routes.ON_PROGRESS_REQ_ITEM,
+                        arguments: model);
+                    // Get.to(
+                    //   () => OnProgressReqItemScreen(),
+                    //   arguments: model,
+                    // );
                   },
                   child: Text(
                     'View',
