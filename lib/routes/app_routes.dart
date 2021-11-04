@@ -34,6 +34,8 @@ abstract class Routes {
   static const LIVE_CHAT = _Paths.LIVE_CHAT;
   static const LIVE_CHAT_INFO = _Paths.LIVE_CHAT_INFO;
   static const NOTIFICATION_FEED = _Paths.NOTIFICATION_FEED;
+  static const SELECT_QUEUE = _Paths.SELECT_QUEUE; 
+  static const SETTINGS = _Paths.SETTINGS; 
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
@@ -107,6 +109,8 @@ abstract class _Paths {
   static const LIVE_CHAT = '/live-chat';
   static const LIVE_CHAT_INFO = '/live-chat-info';
   static const NOTIFICATION_FEED = '/notification-feed';
+  static const SELECT_QUEUE = '/select-queue';
+  static const SETTINGS ='/settings';
 
   //Doctor
   static const DOCTOR_HOME = '/home';
