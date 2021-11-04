@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 class MARequestListScreen extends StatelessWidget {
   static MAReqListController maController = Get.put(MAReqListController());
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -46,57 +47,103 @@ class MARequestListScreen extends StatelessWidget {
             ),
             horizontalSpace18,
             SizedBox(
-              width: 250,
+              width: 280,
               child: CustomDropdown(
                 hintText: 'Filter patient type',
-                dropdownItems: type,
+                dropdownItems: typeDropdown,
                 onChanged: (Item? item) => maController.type.value = item!.name,
                 onSaved: (Item? item) => maController.type.value = item!.name,
               ),
             ),
-            //IconButton(onPressed: (){}, icon: Ico)
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    maController.filter(
+                      name: maController.maFilter.text,
+                      type: maController.type.value,
+                    );
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Remove Filter'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    maController.filteredList
+                        .assignAll(maController.maRequests);
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Icon(
+                    Icons.refresh,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    maController.refresh();
+                  },
+                )),
           ],
         ),
         verticalSpace25,
         header(),
-        requestList(context)
+        Obx(() => requestList(context))
       ],
     );
   }
 
   Widget requestList(BuildContext context) {
-    return StreamBuilder(
-        stream: maController.getCollection(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (maController.maRequests.isNotEmpty) {
-              return MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: Expanded(
-                  child: SingleChildScrollView(
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: maController.maRequests.length,
-                        itemBuilder: (context, index) {
-                          return customTableRow(maController.maRequests[index]);
-                        }),
-                  ),
-                ),
-              );
-            } else {
-              return const Center(
-                  child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Text('No MA request at the moment'),
-              ));
-            }
-          }
-          return const Center(
-              child: SizedBox(
-                  width: 24, height: 24, child: CircularProgressIndicator()));
-        });
+    if (maController.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    if (maController.maRequests.isEmpty && !maController.isLoading.value) {
+      return const Text(
+        'No MA request at the moment',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+
+    firedOnce.value
+        ? null
+        : maController.filteredList.assignAll(maController.maRequests);
+    firedOnce.value = true;
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: Expanded(
+        child: SingleChildScrollView(
+          child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: maController.filteredList.length,
+              itemBuilder: (context, index) {
+                return customTableRow(maController.filteredList[index]);
+              }),
+        ),
+      ),
+    );
   }
 
   Widget header() {

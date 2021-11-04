@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReleasingAreaItemScreen extends StatelessWidget {
+  final AuthController authController = Get.find();
   final AttachedPhotosController controller = Get.find();
   final OnProgressMAModel passedData = Get.arguments as OnProgressMAModel;
   late final GeneralMARequestModel model;
@@ -43,26 +45,31 @@ class ReleasingAreaItemScreen extends StatelessWidget {
           child: Column(
             children: [
               PSWDItemView(context, 'medReady', model),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: PSWDButton(
-                  onItemTap: () {
-                    showConfirmationDialog(
-                      dialogTitle: dialogpswdTitle,
-                      dialogCaption: dialogpswdCaption,
-                      onYesTap: () {
-                        showLoading();
-                        transfferToHistpry(model);
-                        dismissDialog();
-                      },
-                      onNoTap: () {
-                        dismissDialog();
-                      },
-                    );
-                  },
-                  buttonText: 'Claimed',
-                ),
-              ),
+              authController.userRole == 'pswd-h'
+                  ? SizedBox(
+                      width: 0,
+                      height: 0,
+                    )
+                  : Align(
+                      alignment: Alignment.bottomRight,
+                      child: PSWDButton(
+                        onItemTap: () {
+                          showConfirmationDialog(
+                            dialogTitle: dialogpswdTitle,
+                            dialogCaption: dialogpswdCaption,
+                            onYesTap: () {
+                              showLoading();
+                              transfferToHistpry(model);
+                              dismissDialog();
+                            },
+                            onNoTap: () {
+                              dismissDialog();
+                            },
+                          );
+                        },
+                        buttonText: 'Claimed',
+                      ),
+                    ),
               verticalSpace35,
             ],
           ),

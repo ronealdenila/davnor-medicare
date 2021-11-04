@@ -74,3 +74,73 @@ class DoctorStatusModel {
   bool? dStatus;
   bool? hasOngoingCons;
 }
+
+class PSWDStatusModel {
+  PSWDStatusModel({
+    this.hasFunds,
+    this.isCutOff,
+    this.maRequested,
+    this.maSlot,
+    this.qLastNum,
+  });
+
+  factory PSWDStatusModel.fromJson(Map<String, dynamic> json) =>
+      PSWDStatusModel(
+        hasFunds: json['hasFunds'] as bool,
+        isCutOff: json['isCutOff'] as bool,
+        maRequested: json['maRequested'] as int,
+        maSlot: json['maSlot'] as int,
+        qLastNum: json['qLastNum'] as int,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'hasFunds': hasFunds,
+        'isCutOff': isCutOff,
+        'maRequested': maRequested,
+        'maSlot': maSlot,
+        'qLastNum': qLastNum,
+      };
+
+  bool? hasFunds;
+  bool? isCutOff;
+  int? maRequested;
+  int? maSlot;
+  int? qLastNum;
+}
+
+// class CategoryStatusModel {
+//   CategoryStatusModel({
+//     this.categoryID,
+//     this.consRqstd,
+//     this.consSlot,
+//     this.deptName,
+//     this.qLastNum,
+//     this.title,
+//   });
+
+//   factory CategoryStatusModel.fromJson(Map<String, dynamic> json) =>
+//       CategoryStatusModel(
+//         categoryID: json['categoryID'] as String,
+//         consRqstd: json['consRqstd'] as int,
+//         consSlot: json['consSlot'] as int,
+//         deptName: json['deptName'] as String,
+//         qLastNum: json['qLastNum'] as int,
+//         title: json['title'] as String,
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         'categoryID': categoryID,
+//         'consRqstd': consRqstd,
+//         'consSlot': consSlot,
+//         'deptName': deptName,
+//         'qLastNum': qLastNum,
+//         'title': title,
+//       };
+
+//   String? categoryID;
+//   int? consRqstd;
+//   int? consSlot;
+//   String? deptName;
+//   int? qLastNum;
+//   String? title;
+// }

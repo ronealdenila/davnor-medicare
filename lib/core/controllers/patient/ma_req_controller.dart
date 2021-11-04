@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/pswd_stats_model.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -18,6 +18,7 @@ class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
   static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
+  static StatusController stats = Get.find();
 
   final uuid = const Uuid();
 
@@ -45,27 +46,9 @@ class MARequestController extends GetxController {
   //Generate unique MA ID
   final RxString generatedMAID = ''.obs;
 
-  RxList<PSWDStatusModel> statusList = RxList<PSWDStatusModel>();
-
-  @override
-  void onReady() {
-    super.onReady();
-    log.i('ONREADY');
-    statusList.bindStream(getStatus());
-  }
-
-  Stream<List<PSWDStatusModel>> getStatus() {
-    log.i('MA Queue Controller | Get PSWD Status');
-    return firestore.collection('pswd_status').snapshots().map(
-          (query) => query.docs
-              .map((item) => PSWDStatusModel.fromJson(item.data()))
-              .toList(),
-        );
-  }
-
   bool hasAvailableSlot() {
-    final slot = statusList[0].maSlot!;
-    final rqstd = statusList[0].maRequested!;
+    final slot = stats.pswdPStatus[0].maSlot!;
+    final rqstd = stats.pswdPStatus[0].maRequested!;
     if (slot > rqstd) {
       return true;
     }
@@ -183,7 +166,7 @@ class MARequestController extends GetxController {
     });
 
     //Generate MA Queue
-    final lastNum = statusList[0].qLastNum! + 1;
+    final lastNum = stats.pswdPStatus[0].qLastNum! + 1;
     if (lastNum < 10) {
       generatedCode.value = 'MA0$lastNum';
     } else {
@@ -212,8 +195,8 @@ class MARequestController extends GetxController {
         .collection('pswd_status')
         .doc('status')
         .update({
-          'qLastNum': statusList[0].qLastNum! + 1,
-          'maRequested': statusList[0].maRequested! + 1
+          'qLastNum': stats.pswdPStatus[0].qLastNum! + 1,
+          'maRequested': stats.pswdPStatus[0].maRequested! + 1
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));

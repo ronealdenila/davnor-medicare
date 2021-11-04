@@ -1,26 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
-import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final ReleasingMAController rlsController = Get.put(ReleasingMAController());
-final AuthController authController = Get.find();
+final ForApprovalController opController = Get.put(ForApprovalController());
 final RxBool firedOnce = false.obs;
 
-class ReleasingAreaListScreen extends StatelessWidget {
+class ForApprovalListScreen extends GetView<ForApprovalController> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,17 +32,14 @@ class ReleasingAreaListScreen extends StatelessWidget {
         verticalSpace50,
         Wrap(
           runSpacing: 10,
-          children: <Widget>[
+          children: [
             SizedBox(
-              width: 450,
-              child: CustomTextFormField(
-                controller: rlsController.rlsFilter,
-                labelText: 'Search here...',
-                validator: Validator().notEmpty,
-                onChanged: (value) {
-                  return;
-                },
-                onSaved: (value) => rlsController.rlsFilter.text = value!,
+              width: 280,
+              child: CustomDropdown(
+                hintText: 'Filter patient type',
+                dropdownItems: typeDropdown,
+                onChanged: (Item? item) => opController.type.value = item!.name,
+                onSaved: (Item? item) => opController.type.value = item!.name,
               ),
             ),
             horizontalSpace18,
@@ -59,8 +51,8 @@ class ReleasingAreaListScreen extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
-                    rlsController.filter(
-                      name: rlsController.rlsFilter.text,
+                    opController.filter(
+                      type: opController.type.value,
                     );
                   },
                 )),
@@ -73,8 +65,8 @@ class ReleasingAreaListScreen extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
-                    rlsController.filteredList
-                        .assignAll(rlsController.toRelease);
+                    opController.filteredList
+                        .assignAll(opController.forApprovalList);
                   },
                 )),
             horizontalSpace18,
@@ -88,12 +80,12 @@ class ReleasingAreaListScreen extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
-                    rlsController.refresh();
+                    opController.refresh();
                   },
                 )),
-            //IconButton(onPressed: (){}, icon: Ico)
           ],
         ),
+        //IconButton(onPressed: (){}, icon: Ico)
         verticalSpace25,
         header(),
         Obx(() => requestList(context))
@@ -103,7 +95,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
 }
 
 Widget requestList(BuildContext context) {
-  if (rlsController.isLoading.value) {
+  if (opController.isLoading.value) {
     return Align(
       alignment: Alignment.center,
       child: Padding(
@@ -113,17 +105,16 @@ Widget requestList(BuildContext context) {
       ),
     );
   }
-  if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
+  if (opController.forApprovalList.isEmpty && !opController.isLoading.value) {
     return const Text(
-      'No MA request for releasing at the moment',
+      'No MA request for approval at the moment',
       textAlign: TextAlign.center,
       style: body14Medium,
     );
   }
-
   firedOnce.value
       ? null
-      : rlsController.filteredList.assignAll(rlsController.toRelease);
+      : opController.filteredList.assignAll(opController.forApprovalList);
   firedOnce.value = true;
   return MediaQuery.removePadding(
     context: context,
@@ -133,9 +124,9 @@ Widget requestList(BuildContext context) {
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: rlsController.filteredList.length,
+            itemCount: opController.filteredList.length,
             itemBuilder: (context, index) {
-              return customTableRow(rlsController.filteredList[index]);
+              return customTableRow(opController.filteredList[index]);
             }),
       ),
     ),
@@ -166,15 +157,7 @@ Widget header() {
             flex: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Text('DATE', style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('PHARMACY',
+              child: Text('ADDRESS',
                   style: body16Bold.copyWith(color: Colors.white)),
             ),
           ),
@@ -182,7 +165,15 @@ Widget header() {
             flex: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('MEDICINE WORTH',
+              child: Text('PATIENT TYPE',
+                  style: body16Bold.copyWith(color: Colors.white)),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('RECEIVED BY',
                   style: body16Bold.copyWith(color: Colors.white)),
             ),
           ),
@@ -218,7 +209,7 @@ Widget customTableRow(OnProgressMAModel model) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                rlsController.convertTimeStamp(model.dateRqstd!),
+                model.address!,
                 style: body16Medium,
               ),
             ),
@@ -228,7 +219,7 @@ Widget customTableRow(OnProgressMAModel model) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                '${model.pharmacy}',
+                model.type!,
                 style: body16Medium,
               ),
             ),
@@ -238,7 +229,7 @@ Widget customTableRow(OnProgressMAModel model) {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                'Php ${model.medWorth}',
+                model.receivedBy!,
                 style: body16Medium,
               ),
             ),
@@ -250,7 +241,7 @@ Widget customTableRow(OnProgressMAModel model) {
                 InkWell(
                   onTap: () {
                     Get.to(
-                      () => ReleasingAreaItemScreen(),
+                      () => ForApprovalItemScreen(),
                       arguments: model,
                     );
                   },
@@ -260,27 +251,13 @@ Widget customTableRow(OnProgressMAModel model) {
                   ),
                 ),
                 horizontalSpace15,
-                Visibility(
-                  visible: authController.userRole == 'pswd-p',
-                  child: InkWell(
-                    onTap: () {
-                      showConfirmationDialog(
-                        dialogTitle: dialogpswdTitle,
-                        dialogCaption: dialogpswdCaption,
-                        onYesTap: () {
-                          showLoading();
-                          transfferToHistpry(model);
-                          dismissDialog();
-                        },
-                        onNoTap: () {
-                          dismissDialog();
-                        },
-                      );
-                    },
-                    child: Text(
-                      'Claimed',
-                      style: body16RegularUnderlineBlue,
-                    ),
+                InkWell(
+                  onTap: () {
+                    confirmationDialog(model.maID!);
+                  },
+                  child: Text(
+                    'Approve',
+                    style: body16RegularUnderlineBlue,
                   ),
                 ),
               ],
@@ -292,40 +269,21 @@ Widget customTableRow(OnProgressMAModel model) {
   );
 }
 
-Future<void> transfferToHistpry(OnProgressMAModel model) async {
-  showLoading();
-  await firestore
-      .collection('ma_history')
-      .doc(model.maID)
-      .set(<String, dynamic>{
-    'maID': model.maID,
-    'patientId': model.requesterID,
-    'fullName': model.fullName,
-    'age': model.age,
-    'address': model.address,
-    'gender': model.gender,
-    'type': model.type,
-    'prescriptions': model.prescriptions,
-    'dateRqstd': model.dateRqstd,
-    'validID': model.validID,
-    'receivedBy': model.receivedBy,
-    'medWorth': model.medWorth,
-    'pharmacy': model.pharmacy,
-    'dateClaimed': Timestamp.fromDate(DateTime.now()),
-  }).then((value) async {
-    //NOTIF USER: CLAIMED
-    await deleteMA(model.maID!);
-    dismissDialog(); //dismissLoading
-    dismissDialog(); //then dismiss dialog for are your sure? yes/no
-    Get.back();
-  });
-}
-
-Future<void> deleteMA(String maID) async {
-  await firestore
-      .collection('on_progress_ma')
-      .doc(maID)
-      .delete()
-      .then((value) => print("MA Request Deleted"))
-      .catchError((error) => print("Failed to delete MA Request"));
+void confirmationDialog(String maID) {
+  return showConfirmationDialog(
+    dialogTitle: 'Are you sure?',
+    dialogCaption:
+        'Select YES if you want to approve this MA Request. Otherwise, select NO',
+    onYesTap: () async {
+      await firestore
+          .collection('on_progress_ma')
+          .doc(maID)
+          .update({'isApproved': true, 'isTransferred': false}).then((value) {
+        opController.refresh();
+      });
+    },
+    onNoTap: () {
+      dismissDialog();
+    },
+  );
 }

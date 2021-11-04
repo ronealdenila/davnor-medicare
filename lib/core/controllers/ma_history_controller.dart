@@ -158,7 +158,7 @@ class MAHistoryController extends GetxController {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         color: Colors.white,
-        height: kIsWeb ? Get.height * 0.30 : Get.height * .45,
+        height: kIsWeb ? Get.height * 0.32 : Get.height * .45,
         width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

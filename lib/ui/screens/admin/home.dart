@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -150,7 +151,7 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class AdminDashboardScreen extends GetView<AdminMenuController> {
   static AuthController authController = Get.find();
-  final OnProgressReqController homeController = Get.find();
+  static AppController appController = Get.find();
   final NavigationController navigationController = Get.find();
   final DoctorRegistrationController doctorRegistrationController = Get.find();
   final PSWDRegistrationController pswdRegistrationController = Get.find();
@@ -346,7 +347,7 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                               color: kcNeutralColor),
                                         ),
                                         TextSpan(
-                                          text: '(${homeController.dateNow})',
+                                          text: '(${appController.dateNow})',
                                           style: subtitle18Regular,
                                         ),
                                       ],
@@ -453,14 +454,14 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                             'PSWD Personnel',
                                           ),
                                           const AutoSizeText(
-                                              cardSubtitle1,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
+                                            cardSubtitle1,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
                                             ),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                          ),
                                         ],
                                       ),
                                     ),

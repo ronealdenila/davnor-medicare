@@ -59,6 +59,7 @@ abstract class Routes {
   static const RELEASING_AREA_LIST = _Paths.RELEASING_AREA_LIST;
   static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
   static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
+  static const FOR_APPROVAL_LIST = _Paths.FOR_APPROVAL_LIST;
 
   //Admin
   static const MOBILE_ADMIN_HOME = _Paths.MOBILE_ADMIN_HOME;
@@ -134,6 +135,7 @@ abstract class _Paths {
   static const RELEASING_AREA_ITEM = '/ReleasingAreaItemScreen';
   static const RELEASING_AREA_LIST = '/ReleasingAreaListScreen';
   static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
+  static const FOR_APPROVAL_LIST = '/ForApprovalListScreen';
 
   //Admin
   static const MOBILE_ADMIN_HOME = '/mobile-admin-home';

@@ -18,6 +18,10 @@ class AppController {
   final AttachedPhotosController controller =
       Get.put(AttachedPhotosController());
 
+  final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
+
+  String get dateNow => _dateNow;
+
   bool toggleTextVisibility(RxBool isObscureText) {
     log.i('toggleTextVisibility | Toggle Text Visibility');
     log.i(isObscureText);

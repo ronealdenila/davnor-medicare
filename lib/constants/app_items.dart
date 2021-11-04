@@ -147,7 +147,16 @@ final List<Item> type = <Item>[
   const Item('None'),
   const Item('Senior'),
   const Item('Pregnant Women'),
-  const Item('Person with Disabiity (PWD)'),
+  const Item('Person with Disability (PWD)'),
+  const Item('Indigenous People (IP)'),
+];
+
+final List<Item> typeDropdown = <Item>[
+  const Item('All'),
+  const Item('None'),
+  const Item('Senior'),
+  const Item('Pregnant Women'),
+  const Item('Person with Disability (PWD)'),
   const Item('Indigenous People (IP)'),
 ];
 
@@ -169,6 +178,8 @@ List<MenuItem> adminSideMenuItemRoutes = [
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
-  MenuItem('For Approval', Routes.ON_PROGRESS_REQ_LIST),
+  MenuItem('For Approval', Routes.FOR_APPROVAL_LIST),
+  MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
+  MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
   MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];

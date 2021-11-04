@@ -1,4 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -6,11 +8,14 @@ import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
+import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final OnProgressReqController opController = Get.put(OnProgressReqController());
+final AuthController authController = Get.find();
+final RxBool firedOnce = false.obs;
 
 class OnProgressReqListScreen extends GetView<OnProgressReqController> {
   @override
@@ -27,58 +32,106 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
           ),
         ),
         verticalSpace50,
-        SizedBox(
-          width: 250,
-          child: CustomDropdown(
-            hintText: 'Filter patient type',
-            dropdownItems: type,
-            onChanged: (Item? item) => opController.type.value = item!.name,
-            onSaved: (Item? item) => opController.type.value = item!.name,
-          ),
+        Wrap(
+          runSpacing: 10,
+          children: [
+            SizedBox(
+              width: 280,
+              child: CustomDropdown(
+                hintText: 'Filter patient type',
+                dropdownItems: typeDropdown,
+                onChanged: (Item? item) => opController.type.value = item!.name,
+                onSaved: (Item? item) => opController.type.value = item!.name,
+              ),
+            ),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.filter(
+                      type: opController.type.value,
+                    );
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('Remove Filter'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.filteredList
+                        .assignAll(opController.onProgressList);
+                  },
+                )),
+            horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Icon(
+                    Icons.refresh,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[900],
+                  ),
+                  onPressed: () {
+                    opController.refresh();
+                  },
+                )),
+          ],
         ),
-        //IconButton(onPressed: (){}, icon: Ico)
         verticalSpace25,
         header(),
-        requestList(context)
+        Obx(() => requestList(context))
       ],
     );
   }
 }
 
 Widget requestList(BuildContext context) {
-  return StreamBuilder(
-      stream: opController.getCollection(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          if (opController.onProgressList.isNotEmpty) {
-            return MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: Expanded(
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: opController.onProgressList.length,
-                      itemBuilder: (context, index) {
-                        return customTableRow(
-                            opController.onProgressList[index]);
-                      }),
-                ),
-              ),
-            );
-          } else {
-            return const Center(
-                child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('No on progress MA request at the moment'),
-            ));
-          }
-        }
-        return const Center(
-            child: SizedBox(
-                width: 24, height: 24, child: CircularProgressIndicator()));
-      });
+  if (opController.isLoading.value) {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      ),
+    );
+  }
+  if (opController.onProgressList.isEmpty && !opController.isLoading.value) {
+    return const Text(
+      'No on progress MA request at the moment',
+      textAlign: TextAlign.center,
+      style: body14Medium,
+    );
+  }
+  firedOnce.value
+      ? null
+      : opController.filteredList.assignAll(opController.onProgressList);
+  firedOnce.value = true;
+  return MediaQuery.removePadding(
+    context: context,
+    removeTop: true,
+    child: Expanded(
+      child: SingleChildScrollView(
+        child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: opController.filteredList.length,
+            itemBuilder: (context, index) {
+              return customTableRow(opController.filteredList[index], context);
+            }),
+      ),
+    ),
+  );
 }
 
 Widget header() {
@@ -133,7 +186,7 @@ Widget header() {
   );
 }
 
-Widget customTableRow(OnProgressMAModel model) {
+Widget customTableRow(OnProgressMAModel model, BuildContext context) {
   return SizedBox(
     width: Get.width,
     child: Padding(
@@ -199,13 +252,18 @@ Widget customTableRow(OnProgressMAModel model) {
                   ),
                 ),
                 horizontalSpace15,
-                InkWell(
-                  onTap: () {
-                    //open dialog
-                  },
-                  child: Text(
-                    'Medicine Ready',
-                    style: body16RegularUnderlineBlue,
+                Visibility(
+                  visible: authController.userRole == 'pswd-p',
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => detailsDialogMA(model));
+                    },
+                    child: Text(
+                      'Medicine Ready',
+                      style: body16RegularUnderlineBlue,
+                    ),
                   ),
                 ),
               ],
@@ -215,4 +273,79 @@ Widget customTableRow(OnProgressMAModel model) {
       ),
     ),
   );
+}
+
+Widget detailsDialogMA(OnProgressMAModel model) {
+  final _pharmacyController = TextEditingController();
+  final _worthController = TextEditingController();
+  return SimpleDialog(
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
+      children: [
+        SizedBox(
+            width: 590,
+            child: Column(
+              children: [
+                const Text(
+                  'To Complete the Details for the Medical Assistance',
+                  textAlign: TextAlign.center,
+                  style: title32Regular,
+                ),
+                verticalSpace50,
+                SizedBox(
+                  width: 360,
+                  height: 60,
+                  child: TextFormField(
+                    controller: _pharmacyController,
+                    decoration: const InputDecoration(
+                      labelText: 'Name of Pharmacy',
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                    maxLines: 10,
+                    keyboardType: TextInputType.multiline,
+                  ),
+                ),
+                verticalSpace25,
+                SizedBox(
+                  width: 360,
+                  height: 60,
+                  child: TextFormField(
+                    controller: _worthController,
+                    decoration: const InputDecoration(
+                      labelText: 'Worth of Medicine',
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                    maxLines: 10,
+                    keyboardType: TextInputType.multiline,
+                  ),
+                ),
+                verticalSpace25,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: PSWDButton(
+                        onItemTap: () async {
+                          await firestore
+                              .collection('on_progress_ma')
+                              .doc(model.maID)
+                              .update({
+                            'isMedReady': true,
+                            'medWorth': _worthController.text,
+                            'pharmacy': _pharmacyController.text
+                          }).then((value) {
+                            //TO DO: notify patient na pwede na ma claime
+                          });
+                        },
+                        buttonText: 'Submit')),
+              ],
+            ))
+      ]);
 }

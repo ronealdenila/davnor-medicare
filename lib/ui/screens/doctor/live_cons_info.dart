@@ -72,8 +72,7 @@ class LiveConsInfoScreen extends StatelessWidget {
                     print('clicked');
                     showDialog(
                         context: context,
-                        builder: (context) =>
-                            skipDialog(consData.consID!, consData.patientID!));
+                        builder: (context) => skipDialog(consData));
                   },
                   child: SizedBox(
                     width: Get.width,
@@ -186,7 +185,7 @@ class LiveConsInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget skipDialog(String consID, String patientID) {
+  Widget skipDialog(LiveConsultationModel consData) {
     return SimpleDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       clipBehavior: Clip.antiAlias,
@@ -240,7 +239,11 @@ class LiveConsInfoScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: CustomButton(
                       buttonColor: verySoftBlueColor,
-                      onTap: () => liveCont.skipConsultation(consID, patientID),
+                      onTap: () => liveCont.skipConsultation(
+                            consData.consID!,
+                            consData.patientID!,
+                          ),
+                      //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
                       text: 'Submit')),
             ],
           ),

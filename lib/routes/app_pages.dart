@@ -43,6 +43,7 @@ import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
 import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
@@ -260,6 +261,10 @@ class AppPages {
     GetPage(
       name: _Paths.FOR_APPROVAL_ITEM,
       page: () => ForApprovalItemScreen(),
+    ),
+    GetPage(
+      name: _Paths.FOR_APPROVAL_LIST,
+      page: () => ForApprovalListScreen(),
     ),
 
     //Admin
