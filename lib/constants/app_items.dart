@@ -16,69 +16,69 @@ class ItemNum {
 //TO DO: change images
 final discomfortData = [
   Category(
-      iconPath: earIconPath,
-      title: 'Earache',
+      iconPath: earacheIcon,
+      title: 'Earache',//
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
-      iconPath: heartIconPath,
+      iconPath: heartburnIcon,
       title: 'Heartburn or GERD',
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
-      iconPath: heartIconPath,
-      title: 'Nausea or Vomiting',
+      iconPath: vomitingIcon,
+      title: 'Nausea or Vomiting',//
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
-      iconPath: heartIconPath,
-      title: 'Diarrhea or Constipation',
+      iconPath: diarrheaIcon,
+      title: 'Diarrhea or Constipation',//
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
-      iconPath: heartIconPath,
-      title: 'Ulcer or Abdonimal Pain',
+      iconPath: abdominalpainIcon,
+      title: 'Ulcer or Abdonimal Pain',//
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
-      iconPath: kidneyIconPath,
-      title: 'Sinusitis',
+      iconPath: sinusitisIcon,
+      title: 'Sinusitis',//
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
-      iconPath: liverIconPath,
-      title: 'Cold or Cough',
+      iconPath: coughIcon,
+      title: 'Cold or Cough',//
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
-      iconPath: lungsIconPath,
-      title: 'Hypertension',
+      iconPath: hypertensionIcon,
+      title: 'Hypertension',//
       specialist: 'Nephrologist'), //pedia or family department
   Category(
-      iconPath: skinIconPath,
-      title: 'Back Pain',
+      iconPath: backpainIcon,
+      title: 'Back Pain',//
       specialist: 'Orthopedist'), //pedia or family department
   Category(
-      iconPath: skinIconPath,
-      title: 'Conjunctivitis',
+      iconPath: conjunctivitisIcon,
+      title: 'Conjunctivitis',//
       specialist: 'Ophthalmologist'), //pedia or family department
   Category(
-      iconPath: skinIconPath,
-      title: 'Diabetes',
+      iconPath: diabetesIcon,
+      title: 'Diabetes',//
       specialist: 'Diabetologist',
       categoryID: 'category23'),
   Category(
-      iconPath: stomachIconPath,
-      title: 'Asthma',
+      iconPath: asthma,
+      title: 'Asthma',//
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
-      iconPath: stomachIconPath,
-      title: 'Food Allergy',
+      iconPath: foodallergyIcon,
+      title: 'Food Allergy',//
       specialist: 'Immunologist'), //pedia or family department
   Category(
-      iconPath: throatIconPath,
-      title: 'Sore Throat',
+      iconPath: sorethroatIcon,
+      title: 'Sore Throat',//
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
-      iconPath: throatIconPath,
-      title: 'Pneumonia',
+      iconPath: pneomoniaIcon,
+      title: 'Pneumonia',//
       specialist: 'Pulmonologist'), //pedia or family department
 ];
 
