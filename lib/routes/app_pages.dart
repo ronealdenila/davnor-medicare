@@ -236,10 +236,10 @@ class AppPages {
       name: _Paths.PSWD_ACCEPTED_MA_REQ,
       page: () => AcceptedMARequestScreen(),
     ),
-    GetPage(
-      name: _Paths.MA_HISTORY_ITEM,
-      page: () => MAHistoryItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.MA_HISTORY_ITEM,
+    //   page: () => MAHistoryItemScreen(passedData: null),
+    // ),
     GetPage(
       name: _Paths.RELEASING_AREA_ITEM,
       page: () => ReleasingAreaItemScreen(),

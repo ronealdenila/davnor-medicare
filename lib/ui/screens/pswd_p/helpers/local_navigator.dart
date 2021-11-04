@@ -1,6 +1,8 @@
+import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
@@ -28,6 +30,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ReleasingAreaListScreen());
     case Routes.MA_HISTORY_LIST:
       return _getPageRoute(MAHistoryList());
+    case Routes.MA_HISTORY_ITEM:
+      final MAHistoryModel passedData = settings.arguments as MAHistoryModel;
+      return _getPageRoute(MAHistoryItemScreen(passedData: passedData));
     default:
       return _getPageRoute(const SizedBox());
   }
