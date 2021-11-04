@@ -6,13 +6,11 @@ import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/responsive.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,26 +20,32 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+    return Scaffold(
+      body: SingleChildScrollView(
       child: Row(
         children: <Widget>[
+          if (isDesktop(context) || isTab(context))
+            Expanded(
+              flex: 1,
+              child: 
+                 SizedBox(
+                    width: MediaQuery.of(context).size.width * .2,
+                    height: MediaQuery.of(context).size.height,
+                    child: Image.asset(authHeader, fit: BoxFit.fill),
+                  ),
+              ), 
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(right: !isMobile(context) ? 40:0),
               child: Column(
-                mainAxisAlignment: !isMobile(context) ? MainAxisAlignment.start:MainAxisAlignment.center,
-                crossAxisAlignment: !isMobile(context) ? CrossAxisAlignment.start:CrossAxisAlignment.center,
+                crossAxisAlignment: !isMobile(context) ? CrossAxisAlignment.center:CrossAxisAlignment.center,
                 children: <Widget>[
                   if (isMobile(context))
                     Image.asset(
                       authHeader,
-                      height: size.height * 0.3,
+                      fit: BoxFit.fill
                     ),
                     Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20)),
                     margin: const EdgeInsets.all(20),
                     elevation: 3,
                     child: Form(
@@ -51,12 +55,12 @@ class LoginScreen extends StatelessWidget {
                         child: Center(
                           child: SingleChildScrollView(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
-                                verticalSpace18,
+                                verticalSpace15,
                                 const Text('Welcome Back!', style: title32Bold),
-                                verticalSpace50,
+                                verticalSpace35,
                                 FormInputFieldWithIcon(
                                   controller: authController.emailController,
                                   iconPrefix: Icons.email,
@@ -69,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                                   onSaved: (value) => authController
                                       .emailController.text = value!,
                                 ),
-                                verticalSpace25,
+                                verticalSpace20,
                                 FormInputFieldWithIcon(
                                   controller: authController.passwordController,
                                   iconPrefix: Icons.lock,
@@ -103,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                                     style: TextButton.styleFrom(
                                         primary: infoColor),
                                     child: const Text(
-                                      'Forgot Password',
+                                      'Forgot Password?',
                                       style: body14SemiBold,
                                     ),
                                   ),
@@ -135,18 +139,10 @@ class LoginScreen extends StatelessWidget {
                     text1: "Don't have an account?",
                     text2: 'Signup here',
                   ),
-
-                  if (isDesktop(context) || isTab(context))
-                  Expanded(
-                    child: Image.asset(
-                      authHeader,
-                      height: size.height * 0.7,
-                    )
-                   )
                 ],
               ),
-            )
-          )]
+            ), 
+        ])
       )
     );
   }

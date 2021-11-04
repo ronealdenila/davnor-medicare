@@ -1,8 +1,8 @@
 // ignore_for_file: constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
-import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
@@ -39,6 +39,8 @@ import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
 import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
+import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
+import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
@@ -59,7 +61,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.DOCTOR_PROFILE;
 
   static final routes = [
     GetPage(
@@ -169,6 +171,14 @@ class AppPages {
     GetPage(
       name: _Paths.NOTIFICATION_FEED,
       page: () => NotificationFeedScreen(),
+    ),
+    GetPage(
+      name: _Paths.SELECT_QUEUE,
+      page: () => SelectQueueScreen(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => SettingScreen(),
     ),
 
     //Doctor
