@@ -24,7 +24,7 @@ class OnProgressReqController extends GetxController {
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
-        .where('isMedReady', isEqualTo: true)
+        .where('isApproved', isEqualTo: true)
         .snapshots()
         .map((query) {
       return query.docs.map((item) {

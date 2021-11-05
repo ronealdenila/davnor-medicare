@@ -26,8 +26,8 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  //final AttachedPhotosController pswdController =
-  //    Get.put(AttachedPhotosController());
+  final AttachedPhotosController pswdController =
+      Get.put(AttachedPhotosController());
 
   @override
   Widget build(BuildContext context) {

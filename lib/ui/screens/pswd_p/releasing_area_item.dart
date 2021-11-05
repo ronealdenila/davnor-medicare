@@ -7,21 +7,21 @@ import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+final NavigationController navigationController = Get.find();
+
 class ReleasingAreaItemScreen extends StatelessWidget {
   ReleasingAreaItemScreen({Key? key, required this.passedData})
       : super(key: key);
   final OnProgressMAModel passedData;
   final AuthController authController = Get.find();
-  final AttachedPhotosController controller = Get.find();
+  final AttachedPhotosController pcontroller = Get.find();
   late final GeneralMARequestModel model;
-  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -41,43 +41,44 @@ class ReleasingAreaItemScreen extends StatelessWidget {
       medWorth: passedData.medWorth,
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              PSWDItemView(context, 'medReady', model),
-              authController.userRole == 'pswd-h'
-                  ? SizedBox(
-                      width: 0,
-                      height: 0,
-                    )
-                  : Align(
-                      alignment: Alignment.bottomRight,
-                      child: PSWDButton(
-                        onItemTap: () {
-                          showConfirmationDialog(
-                            dialogTitle: dialogpswdTitle,
-                            dialogCaption: dialogpswdCaption,
-                            onYesTap: () {
-                              showLoading();
-                              transfferToHistpry(model);
-                              dismissDialog();
-                            },
-                            onNoTap: () {
-                              dismissDialog();
-                            },
-                          );
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          verticalSpace50,
+          TextButton(
+              onPressed: () {
+                goBack();
+              },
+              child: Text('Back to Releasing List Table')),
+          PSWDItemView(context, 'medReady', model),
+          authController.userRole == 'pswd-h'
+              ? SizedBox(
+                  width: 0,
+                  height: 0,
+                )
+              : Align(
+                  alignment: Alignment.bottomRight,
+                  child: PSWDButton(
+                    onItemTap: () {
+                      showConfirmationDialog(
+                        dialogTitle: dialogpswdTitle,
+                        dialogCaption: dialogpswdCaption,
+                        onYesTap: () {
+                          showLoading();
+                          transfferToHistpry(model);
+                          dismissDialog();
                         },
-                        buttonText: 'Claimed',
-                      ),
-                    ),
-              verticalSpace35,
-            ],
-          ),
-        ),
+                        onNoTap: () {
+                          dismissDialog();
+                        },
+                      );
+                    },
+                    buttonText: 'Claimed',
+                  ),
+                ),
+          verticalSpace35,
+        ],
       ),
     );
   }
@@ -121,9 +122,8 @@ class ReleasingAreaItemScreen extends StatelessWidget {
   }
 
   Future<void> goBack() {
-    print('clicked');
     return navigationController.navigatorKey.currentState!
         .pushNamedAndRemoveUntil(
-            '/MAHistoryListScreen', (Route<dynamic> route) => true);
+            '/ReleasingAreaListScreen', (Route<dynamic> route) => true);
   }
 }

@@ -13,7 +13,7 @@ NavigationController navigationController = Get.find();
 class MAHistoryItemScreen extends StatelessWidget {
   MAHistoryItemScreen({Key? key, required this.passedData}) : super(key: key);
   final MAHistoryModel passedData;
-  final AttachedPhotosController controller = Get.find();
+  final AttachedPhotosController pcontroller = Get.find();
 
   final MAHistoryController hController = Get.find();
 

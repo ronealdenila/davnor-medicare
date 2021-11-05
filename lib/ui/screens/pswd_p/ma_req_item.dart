@@ -18,11 +18,13 @@ import 'package:get/get.dart';
 NavigationController navigationController = Get.find();
 final TextEditingController reason = TextEditingController();
 final StatusController stats = Get.find();
+final AttachedPhotosController pcontroller = Get.find();
 
 class MARequestItemScreen extends StatelessWidget {
   MARequestItemScreen({Key? key, required this.passedData}) : super(key: key);
   final MARequestModel passedData;
-  final AttachedPhotosController controller = Get.find();
+
+  //final AttachedPhotosController  = Get.find();
   late final GeneralMARequestModel model;
 
   @override
@@ -45,7 +47,14 @@ class MARequestItemScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              verticalSpace50,
+              TextButton(
+                  onPressed: () {
+                    goBack();
+                  },
+                  child: Text('Back to MA Requests Table')),
               PSWDItemView(context, 'request', model),
               screenButtons(context, model),
               verticalSpace35,
@@ -244,8 +253,7 @@ Future<void> updatePatientStatus(String patientID) async {
 }
 
 Future<void> goBack() {
-  print('clicked');
   return navigationController.navigatorKey.currentState!
       .pushNamedAndRemoveUntil(
-          '/MAHistoryListScreen', (Route<dynamic> route) => true);
+          '/MAReqListScreen', (Route<dynamic> route) => true);
 }
