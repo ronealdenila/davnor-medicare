@@ -28,7 +28,10 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_messaging: ^10.0.8
   firebase_analytics: ^8.3.4
-  firebase_app_check: ^0.0.2+3
+  #firebase_app_check: ^0.0.2+3
+
+  #agora
+  agora_rtc_engine: ^4.1.0-alpha.2
 
   #date picker
   syncfusion_flutter_datepicker: ^19.3.47

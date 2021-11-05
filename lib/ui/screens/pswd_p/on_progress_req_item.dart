@@ -16,7 +16,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
       : super(key: key);
   final OnProgressMAModel passedData;
   final AuthController authController = Get.find();
-  final AttachedPhotosController controller = Get.find();
+  final AttachedPhotosController pcontroller = Get.find();
   late final GeneralMARequestModel model;
   final NavigationController navigationController = Get.find();
 
@@ -41,7 +41,14 @@ class OnProgressReqItemScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              verticalSpace50,
+              TextButton(
+                  onPressed: () {
+                    goBack();
+                  },
+                  child: Text('Back to on progressed Table')),
               PSWDItemView(context, 'approved', model),
               authController.userRole == 'pswd-h'
                   ? SizedBox(
@@ -149,9 +156,8 @@ class OnProgressReqItemScreen extends StatelessWidget {
   }
 
   Future<void> goBack() {
-    print('clicked');
     return navigationController.navigatorKey.currentState!
         .pushNamedAndRemoveUntil(
-            '/MAHistoryListScreen', (Route<dynamic> route) => true);
+            '/OnProgressReqListScreen', (Route<dynamic> route) => true);
   }
 }

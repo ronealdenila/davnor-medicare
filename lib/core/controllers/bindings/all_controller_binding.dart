@@ -14,9 +14,12 @@ import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dar
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +30,7 @@ class AllControllerBinding implements Bindings {
     Get.put<ArticleController>(ArticleController(), permanent: true);
     Get.lazyPut<AppController>(() => AppController());
     Get.lazyPut<StatusController>(() => StatusController());
+    Get.lazyPut<AttachedPhotosController>(() => AttachedPhotosController());
 
     //patient
     Get.lazyPut<ConsRequestController>(() => ConsRequestController());
@@ -52,6 +56,11 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<OnProgressReqController>(() => OnProgressReqController());
     Get.lazyPut<MenuController>(() => MenuController());
     Get.lazyPut<NavigationController>(() => NavigationController());
+    Get.lazyPut<MARequestController>(() => MARequestController());
+    Get.lazyPut<ForApprovalController>(() => ForApprovalController());
+    Get.lazyPut<OnProgressReqController>(() => OnProgressReqController());
+    Get.lazyPut<ReleasingMAController>(() => ReleasingMAController());
+    Get.lazyPut<MAHistoryController>(() => MAHistoryController());
   }
 }
 
