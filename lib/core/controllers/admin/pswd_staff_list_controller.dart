@@ -48,11 +48,15 @@ class PSWDStaffListController extends GetxController {
         .doc(uid)
         .update({'disabled': true})
         .then((value) => {
-              //Dialog success
-            })
+            //Dialog success
+            Get.defaultDialog(title: 
+            'Successfuly disabled PSWDStaff')
+          })
         .catchError((error) => {
-              //Dialog error
-            });
+            //Dialog error
+            Get.defaultDialog(title: 
+            'Error Occured! PSWD Staff not disabled')
+          });
   }
 
   Future<void> updatePSWD(PswdModel model) async {
@@ -70,11 +74,15 @@ class PSWDStaffListController extends GetxController {
         .then(
           (value) => {
             //Dialog success
+            Get.defaultDialog(title: 
+            'Successfuly updated PSWD')
           },
         )
         .catchError(
           (error) => {
             //Dialog error
+            Get.defaultDialog(title: 
+            'Error Occured! Unable to update PSWD')
           },
         );
   }

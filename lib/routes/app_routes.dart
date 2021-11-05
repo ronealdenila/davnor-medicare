@@ -36,6 +36,7 @@ abstract class Routes {
   static const NOTIFICATION_FEED = _Paths.NOTIFICATION_FEED;
   static const SELECT_QUEUE = _Paths.SELECT_QUEUE; 
   static const SETTINGS = _Paths.SETTINGS; 
+  static const APPINFO = _Paths.APPINFO;
 
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
@@ -111,6 +112,7 @@ abstract class _Paths {
   static const NOTIFICATION_FEED = '/notification-feed';
   static const SELECT_QUEUE = '/select-queue';
   static const SETTINGS ='/settings';
+  static const APPINFO ='/appinfo';
 
   //Doctor
   static const DOCTOR_HOME = '/home';

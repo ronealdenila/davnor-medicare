@@ -21,6 +21,7 @@ import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient/app_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
@@ -62,7 +63,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.DOCTOR_PROFILE;
+  static const INITIAL = Routes.APPINFO;
 
   static final routes = [
     GetPage(
@@ -181,6 +182,11 @@ class AppPages {
       name: _Paths.SETTINGS,
       page: () => SettingScreen(),
     ),
+    GetPage(
+      name: _Paths.APPINFO,
+      page: () => AppInfoScreen(),
+    ),
+
 
     //Doctor
     GetPage(

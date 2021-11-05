@@ -53,11 +53,15 @@ class DoctorListController extends GetxController {
         .then(
           (value) => {
             //Dialog success
+             Get.defaultDialog(title: 
+            'Successfuly disabled Doctor')
           },
         )
         .catchError(
           (error) => {
             //Dialog error
+             Get.defaultDialog(title: 
+            'Error Occured! Doctor not disabled')
           },
         );
   }
@@ -82,11 +86,15 @@ class DoctorListController extends GetxController {
         .then(
           (value) => {
             //Dialog success
+             Get.defaultDialog(title: 
+            'Successfuly updated Doctor')
           },
         )
         .catchError(
           (error) => {
             //Dialog error
+             Get.defaultDialog(title: 
+            'Error Occured! Unable to update doctor')
           },
         );
   }
