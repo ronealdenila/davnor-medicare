@@ -19,7 +19,7 @@ final String throatIconPath = _getImagePath('throat.png');
 
 //new Set
 final String earacheIcon = _getImagePath('earache.png');
-final String heartburnIcon = _getImagePath('heartburn.png');
+final String heartburnIcon = _getImagePath('heartburn.jpg');
 final String vomitingIcon = _getImagePath('vomiting.png');
 final String diarrheaIcon = _getImagePath('diarrhea.png');
 final String abdominalpainIcon = _getImagePath('abdominal_pain.png');
