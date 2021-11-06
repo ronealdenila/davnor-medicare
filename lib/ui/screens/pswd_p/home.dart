@@ -5,9 +5,11 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
@@ -128,7 +130,7 @@ class ResponsiveLeading extends GetResponsiveView {
 class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-
+  final NavigationController navigationController = Get.find();
   static AppController appController = Get.find();
 
   @override
@@ -280,7 +282,9 @@ class PswdPDashboardScreen extends GetView<MenuController> {
                                     ActionCard(
                                       text: 'View MA History',
                                       onTap: () {
-                                        Get.to(() => MAHistoryList());
+                                        navigationController
+                                            .navigateTo(Routes.MA_HISTORY_LIST);
+                                        //Get.to(() => MAHistoryList());
                                       },
                                       color: verySoftRed[60],
                                       secondaryColor: verySoftRedCustomColor,

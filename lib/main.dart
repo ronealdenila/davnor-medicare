@@ -1,8 +1,6 @@
 import 'package:davnor_medicare/constants/translation.dart';
 import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-// Import the firebase_app_check plugin
-//import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
