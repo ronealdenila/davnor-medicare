@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/ui/screens/patient/incoming_call.dart';
 import 'package:get/get.dart';
 
 class StatusController extends GetxController {
@@ -12,8 +12,9 @@ class StatusController extends GetxController {
   RxList<PatientStatusModel> patientStatus = RxList<PatientStatusModel>([]);
   RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
   RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
-  // RxList<PatientStatusModel> maStatus = RxList<PatientStatusModel>([]);
+  RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
   RxBool isLoading = true.obs;
+  RxBool isCallStatsLoading = true.obs;
   RxBool isPSLoading = true.obs;
 
   @override
@@ -22,12 +23,25 @@ class StatusController extends GetxController {
     if (authController.userRole == 'patient') {
       patientStatus.bindStream(getPStatus());
       pswdPStatus.bindStream(getMAStatus());
+      incCall.bindStream(getCallStatus());
     } else if (authController.userRole == 'doctor') {
       doctorStatus.bindStream(getDStatus());
     } else if (authController.userRole == 'pswd-p' ||
         authController.userRole == 'pswd-h') {
       pswdPStatus.bindStream(getMAStatus());
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever(incCall, (value) {
+      if (incCall[0].isCalling!) {
+        Get.to(() => IncomingCallScreen());
+      } else {
+        Get.back();
+      }
+    });
   }
 
   Stream<List<PatientStatusModel>> getPStatus() {
@@ -41,6 +55,21 @@ class StatusController extends GetxController {
       return query.docs.map((item) {
         isLoading.value = false;
         return PatientStatusModel.fromJson(item.data());
+      }).toList();
+    });
+  }
+
+  Stream<List<IncomingCallModel>> getCallStatus() {
+    log.i('GETTING PATIENT InCOMING cALL STATS');
+    return firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .collection('incomingCall')
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isCallStatsLoading.value = false;
+        return IncomingCallModel.fromJson(item.data());
       }).toList();
     });
   }

@@ -63,7 +63,7 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
-  static const INITIAL = Routes.APPINFO;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -186,7 +186,6 @@ class AppPages {
       name: _Paths.APPINFO,
       page: () => AppInfoScreen(),
     ),
-
 
     //Doctor
     GetPage(

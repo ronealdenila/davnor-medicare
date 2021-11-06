@@ -108,39 +108,35 @@ class PSWDStatusModel {
   int? qLastNum;
 }
 
-// class CategoryStatusModel {
-//   CategoryStatusModel({
-//     this.categoryID,
-//     this.consRqstd,
-//     this.consSlot,
-//     this.deptName,
-//     this.qLastNum,
-//     this.title,
-//   });
+class IncomingCallModel {
+  IncomingCallModel({
+    this.channelId,
+    this.callerName,
+    this.isCalling,
+    this.patientJoined,
+    this.otherJoined,
+  });
 
-//   factory CategoryStatusModel.fromJson(Map<String, dynamic> json) =>
-//       CategoryStatusModel(
-//         categoryID: json['categoryID'] as String,
-//         consRqstd: json['consRqstd'] as int,
-//         consSlot: json['consSlot'] as int,
-//         deptName: json['deptName'] as String,
-//         qLastNum: json['qLastNum'] as int,
-//         title: json['title'] as String,
-//       );
+  factory IncomingCallModel.fromJson(Map<String, dynamic> json) =>
+      IncomingCallModel(
+        channelId: json['channelId'] as String,
+        callerName: json['callerName'] as String,
+        isCalling: json['isCalling'] as bool,
+        patientJoined: json['patientJoined'] as bool,
+        otherJoined: json['otherJoined'] as bool,
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         'categoryID': categoryID,
-//         'consRqstd': consRqstd,
-//         'consSlot': consSlot,
-//         'deptName': deptName,
-//         'qLastNum': qLastNum,
-//         'title': title,
-//       };
+  Map<String, dynamic> toJson() => {
+        'channelId': channelId,
+        'callerName': callerName,
+        'isCalling': isCalling,
+        'patientJoined': patientJoined,
+        'otherJoined': otherJoined,
+      };
 
-//   String? categoryID;
-//   int? consRqstd;
-//   int? consSlot;
-//   String? deptName;
-//   int? qLastNum;
-//   String? title;
-// }
+  String? channelId;
+  String? callerName;
+  bool? isCalling;
+  bool? patientJoined;
+  bool? otherJoined;
+}

@@ -14,7 +14,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   //await FirebaseAppCheck.instance
   //.activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
