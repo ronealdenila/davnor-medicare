@@ -317,3 +317,11 @@ const TextStyle caption18Regular = TextStyle(
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
 );
+
+ TextStyle caption18RegularNeutral = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+   color: neutralColor[60],
+  height: 1,
+);

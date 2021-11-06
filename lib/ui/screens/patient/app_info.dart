@@ -23,6 +23,7 @@ class AppInfoScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
                 alignment: Alignment.center,
@@ -36,16 +37,41 @@ class AppInfoScreen extends StatelessWidget {
               verticalSpace10,
               Align(
                 alignment: Alignment.center,
-                child: Text('Davnor Medicare', style: subtitle18RegularOrange),
+                child: Text('DavNor Medicare', style: subtitle18RegularOrange),
               ),
               verticalSpace20,
-
               //sample app info
              const Text(
-                'DavNor Medicare offers public services, such as free medical consultation, and PSWD’s medical assistance program to the people. ',
+                'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people efficiently to connect to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
                 textAlign: TextAlign.justify,
-                style: subtitle18Regular,
+                style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18,
               ),
+              ),
+               verticalSpace20,
+              const Text('Developers:',
+              textAlign: TextAlign.left,
+                style: subtitle18Bold
+                ),
+                Text('Emmalyn Nabiamos',
+              style: caption18RegularNeutral
+              ),
+                Text('Roneal John Denila ',
+              style: caption18RegularNeutral
+              ),
+                Text('Hanna Alondra Demegillo',
+              style: caption18RegularNeutral
+              ),
+              verticalSpace18,
+              const Text('Credits:',
+                textAlign: TextAlign.left,
+                  style: subtitle18Bold,
+                ),
+                Text('https://icons8.com',
+              style: caption18RegularNeutral
+              ),
+              verticalSpace10,    
             ]),
           )
         )
