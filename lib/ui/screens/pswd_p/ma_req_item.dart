@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
@@ -18,13 +17,11 @@ import 'package:get/get.dart';
 NavigationController navigationController = Get.find();
 final TextEditingController reason = TextEditingController();
 final StatusController stats = Get.find();
-final AttachedPhotosController pcontroller = Get.find();
+//final AttachedPhotosController pcontroller = Get.find();
 
 class MARequestItemScreen extends StatelessWidget {
   MARequestItemScreen({Key? key, required this.passedData}) : super(key: key);
   final MARequestModel passedData;
-
-  //final AttachedPhotosController  = Get.find();
   late final GeneralMARequestModel model;
 
   @override
@@ -252,8 +249,6 @@ Future<void> updatePatientStatus(String patientID) async {
       .update({'hasActiveQueueMA': false, 'queueMA': ''});
 }
 
-Future<void> goBack() {
-  return navigationController.navigatorKey.currentState!
-      .pushNamedAndRemoveUntil(
-          '/MAReqListScreen', (Route<dynamic> route) => true);
+void goBack() {
+  return navigationController.navigatorKey.currentState!.pop();
 }
