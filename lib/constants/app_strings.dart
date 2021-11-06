@@ -1,5 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+//agora Video Call
+const appId = '';
+
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 
@@ -131,11 +134,10 @@ const String medicalStatusSubtitle1 =
     'The number of people who filled medical assistance request are';
 const String medicalStatusSubtitle2 =
     'The number medical assistance request in need for approval are';
-    
+
 //Dialogue PSWD
 const String dialogpswdTitle = 'Are you sure?';
-const String dialogpswdCaption =
-    'Please confirm if the medicine is claimed';
+const String dialogpswdCaption = 'Please confirm if the medicine is claimed';
 
 //Admin
 const String doctorRegister = 'Please fill  in the information of the  Doctor.';

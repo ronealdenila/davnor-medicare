@@ -32,6 +32,7 @@ dependencies:
 
   #agora
   agora_rtc_engine: ^4.1.0-alpha.2
+  permission_handler: ^6.0.2
 
   #date picker
   syncfusion_flutter_datepicker: ^19.3.47
@@ -81,8 +82,6 @@ dependencies:
 
   #Auto Size Text
   auto_size_text: ^3.0.0-nullsafety.0
-
-  file_picker: ^4.1.6
 
 dev_dependencies:
   flutter_test:
