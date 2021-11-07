@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 //agora Video Call
-const appId = '';
+const appId = '369277470acc4438b3622bf48f4b0b7d';
 
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';

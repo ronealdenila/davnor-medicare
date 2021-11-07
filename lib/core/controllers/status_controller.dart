@@ -38,7 +38,7 @@ class StatusController extends GetxController {
     ever(incCall, (value) {
       if (incCall[0].isCalling!) {
         Get.to(() => IncomingCallScreen());
-      } else {
+      } else if (!incCall[0].isCalling!) {
         Get.back();
       }
     });

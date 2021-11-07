@@ -115,6 +115,7 @@ class IncomingCallModel {
     this.isCalling,
     this.patientJoined,
     this.otherJoined,
+    this.didReject,
   });
 
   factory IncomingCallModel.fromJson(Map<String, dynamic> json) =>
@@ -124,6 +125,7 @@ class IncomingCallModel {
         isCalling: json['isCalling'] as bool,
         patientJoined: json['patientJoined'] as bool,
         otherJoined: json['otherJoined'] as bool,
+        didReject: json['didReject'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
@@ -132,6 +134,7 @@ class IncomingCallModel {
         'isCalling': isCalling,
         'patientJoined': patientJoined,
         'otherJoined': otherJoined,
+        'didReject': didReject,
       };
 
   String? channelId;
@@ -139,4 +142,5 @@ class IncomingCallModel {
   bool? isCalling;
   bool? patientJoined;
   bool? otherJoined;
+  bool? didReject;
 }

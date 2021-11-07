@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
@@ -119,7 +118,7 @@ class PatientHomeScreen extends StatelessWidget {
                         InkWell(
                           onTap: seeAllArticles,
                           child: Text(
-                            'See all',
+                            'action4'.tr,
                             style: body14RegularNeutral,
                           ),
                         ),
@@ -140,7 +139,7 @@ class PatientHomeScreen extends StatelessWidget {
       children: [
         Expanded(
           child: ActionCard(
-            text: 'Request Consultation',
+            text: 'action1'.tr,
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
@@ -153,8 +152,8 @@ class PatientHomeScreen extends StatelessWidget {
                           'Please proceed to your existing consultation');
                 } else {
                   showConfirmationDialog(
-                    dialogTitle: dialog1Title,
-                    dialogCaption: dialog1Caption,
+                    dialogTitle: 'dialog1'.tr,
+                    dialogCaption: 'dialogsub1'.tr,
                     onYesTap: () {
                       consController.isConsultForYou.value = true;
                       Get.to(() => ConsFormScreen());
@@ -177,7 +176,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: ActionCard(
-            text: 'Request Medical Assistance',
+            text: 'action2'.tr,
             color: verySoftOrange[60],
             secondaryColor: verySoftOrangeCustomColor,
             //Note: Has weird transition
@@ -188,7 +187,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: ActionCard(
-            text: 'View\nQueue',
+            text: 'action3'.tr,
             color: verySoftRed[60],
             secondaryColor: verySoftRedCustomColor,
             onTap: () {

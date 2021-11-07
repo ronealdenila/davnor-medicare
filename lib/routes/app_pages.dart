@@ -15,6 +15,7 @@ import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
@@ -63,12 +64,17 @@ class AppPages {
   AppPages._();
 
   //Note(R): diria nata mag set sa initial screen na atong gusto itest
+  //static const INITIAL = Routes.CALL_SESSION; for test
   static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: _Paths.CALL_SESSION,
+      page: () => CallSessionScreen(),
     ),
 
     //Auth

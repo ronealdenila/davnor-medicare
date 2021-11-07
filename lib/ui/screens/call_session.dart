@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,17 +15,18 @@ class CallSessionScreen extends StatefulWidget {
 }
 
 class _CallSessionScreenState extends State<CallSessionScreen> {
-  late final RtcEngine _engine;
+  late RtcEngine _engine;
   late String tokenId;
   bool isJoined = false,
       switchCamera = true,
       switchRender = true,
       isLoading = true;
   List<int> remoteUid = [];
+  String channelId = 'theconsIDhere';
 
   @override
   void initState() {
-    getToken();
+    //getToken();
 
     _initEngine();
     super.initState();
@@ -39,8 +39,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   Future<void> getToken() async {
-    const url =
-        'https://davnor-medicare.herokuapp.com/access_token?channel=tester';
+    final url =
+        'https://davnor-medicare.herokuapp.com/access_token?channel=${channelId}';
     // const link =
     //     "https://AgoraTokenServer.emmalynnabiamos.repl.co/access_token?channelName=tester";
     final response = await http.get(Uri.parse(url));
@@ -49,8 +49,10 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     setState(() {
       tokenId = data["token"];
     });
-    Future.delayed(const Duration(seconds: 1))
-        .then((value) => setState(() => isLoading = false));
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
+          _joinChannel();
+          isLoading = false;
+        }));
   }
 
   _initEngine() async {
@@ -58,7 +60,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
       await [Permission.microphone, Permission.camera].request();
     }
 
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
+    _engine = await RtcEngine.createWithContext(
+        RtcEngineContext('369277470acc4438b3622bf48f4b0b7d'));
     this._addListeners();
 
     await _engine.enableVideo();
@@ -66,7 +69,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await _engine.setClientRole(ClientRole.Broadcaster);
 
-    _joinChannel();
+    await getToken();
   }
 
   _addListeners() {
@@ -99,11 +102,11 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     ));
   }
 
-  void _joinChannel() async {
-    await _engine.joinChannel(tokenId, "tester", null, 0);
+  Future<void> _joinChannel() async {
+    await _engine.joinChannel(tokenId, channelId, null, 0);
   }
 
-  void _leaveChannel() async {
+  Future<void> _leaveChannel() async {
     await _engine.leaveChannel();
   }
 
@@ -129,6 +132,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
+            backgroundColor: Colors.white,
             body: SafeArea(
                 child: isLoading
                     ? CircularProgressIndicator()
@@ -205,33 +209,28 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   _renderVideo() {
-    return Expanded(
-      child: Stack(
-        children: [
-          RtcLocalView.SurfaceView(),
-          Align(
-            alignment: Alignment.topLeft,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.of(remoteUid.map(
-                  (e) => GestureDetector(
-                    onTap: this._switchRender,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      child: RtcRemoteView.SurfaceView(
-                        uid: e,
-                        channelId: "tester",
-                      ),
-                    ),
+    return Stack(
+      children: [
+        RtcLocalView.SurfaceView(),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Row(
+            children: List.of(remoteUid.map(
+              (e) => GestureDetector(
+                onTap: this._switchRender,
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  child: RtcRemoteView.SurfaceView(
+                    uid: e,
+                    channelId: channelId,
                   ),
-                )),
+                ),
               ),
-            ),
-          )
-        ],
-      ),
+            )),
+          ),
+        )
+      ],
     );
   }
 

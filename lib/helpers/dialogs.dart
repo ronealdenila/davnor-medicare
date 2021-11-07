@@ -102,11 +102,11 @@ void showConfirmationDialog({
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     DialogButton(
-                      buttonText: 'Yes',
+                      buttonText: 'dialogbtn1'.tr,
                       onTap: onYesTap,
                     ),
                     DialogButton(
-                      buttonText: 'No',
+                      buttonText: 'dialogbtn01'.tr,
                       onTap: onNoTap,
                     ),
                   ],

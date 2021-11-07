@@ -8,7 +8,7 @@ class LocalString extends Translations {
           'homepage': 'How can we help you?',
           'action1': 'Request Consultation',
           'action2': 'Request Medical Assistance',
-          'action3': 'View Queue',
+          'action3': 'View\nQueue',
           'action4': 'See All',
           //dialog1
           'dialog1': 'Is the consultation for you?',

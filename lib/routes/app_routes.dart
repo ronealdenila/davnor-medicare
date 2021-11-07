@@ -14,6 +14,9 @@ abstract class Routes {
   static const DOCTOR_APPLICATION_GUIDE = _Paths.DOCTOR_APPLICATION_GUIDE;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 
+  //Global
+  static const CALL_SESSION = _Paths.CALL_SESSION;
+
   //Patient
   static const PATIENT_HOME = _Paths.PATIENT_HOME;
   static const MA_DESCRIPTION = _Paths.MA_DESCRIPTION;
@@ -34,8 +37,8 @@ abstract class Routes {
   static const LIVE_CHAT = _Paths.LIVE_CHAT;
   static const LIVE_CHAT_INFO = _Paths.LIVE_CHAT_INFO;
   static const NOTIFICATION_FEED = _Paths.NOTIFICATION_FEED;
-  static const SELECT_QUEUE = _Paths.SELECT_QUEUE; 
-  static const SETTINGS = _Paths.SETTINGS; 
+  static const SELECT_QUEUE = _Paths.SELECT_QUEUE;
+  static const SETTINGS = _Paths.SETTINGS;
   static const APPINFO = _Paths.APPINFO;
 
   //Doctor
@@ -81,6 +84,7 @@ abstract class Routes {
 abstract class _Paths {
   //Splash
   static const SPLASH = '/';
+  static const CALL_SESSION = '/call-session';
 
   //Auth
   static const LOGIN = '/login';
@@ -111,8 +115,8 @@ abstract class _Paths {
   static const LIVE_CHAT_INFO = '/live-chat-info';
   static const NOTIFICATION_FEED = '/notification-feed';
   static const SELECT_QUEUE = '/select-queue';
-  static const SETTINGS ='/settings';
-  static const APPINFO ='/appinfo';
+  static const SETTINGS = '/settings';
+  static const APPINFO = '/appinfo';
 
   //Doctor
   static const DOCTOR_HOME = '/home';

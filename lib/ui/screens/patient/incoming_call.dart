@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,8 @@ class IncomingCallScreen extends StatelessWidget {
             children: [
               Text('Someone is CAlling...'),
               ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await acceptCall();
                     print('ACCEPTED');
                   },
                   child: Text('Accept')),
@@ -40,11 +42,21 @@ class IncomingCallScreen extends StatelessWidget {
   }
 }
 
+Future<void> acceptCall() async {
+  await firestore
+      .collection('patients')
+      .doc(auth.currentUser!.uid)
+      .collection('incomingCall')
+      .doc('value')
+      .update({'isCalling': false, 'patientJoined': true}).then(
+          (value) => Get.to(() => CallSessionScreen()));
+}
+
 Future<void> rejectCall() async {
   await firestore
       .collection('patients')
       .doc(auth.currentUser!.uid)
       .collection('incomingCall')
       .doc('value')
-      .update({'isCalling': false});
+      .update({'isCalling': false, 'didReject': true});
 }

@@ -15,11 +15,15 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: IconButton(
+      appBar: AppBar(
+        leading: IconButton(
           icon: Icon(Icons.chevron_left),
-          onPressed: () {},
-        color: Colors.black,
-        ),),
+          onPressed: () {
+            Get.back();
+          },
+          color: Colors.black,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 50),
         child: Column(

@@ -1,6 +1,8 @@
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
@@ -67,8 +69,8 @@ class LiveConsultationScreen extends StatelessWidget {
               Icons.videocam_outlined,
               size: 30,
             ),
-            onPressed: () {
-              //implement agora video calls userID
+            onPressed: () async {
+              await callPatient();
             },
           ),
           IconButton(
@@ -172,5 +174,19 @@ class LiveConsultationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> callPatient() async {
+    await firestore
+        .collection('patients')
+        .doc('WZbt7uQkDNd53rT3yhW1MumSIBN2')
+        //.doc(consData.patientID)
+        .collection('incomingCall')
+        .doc('value')
+        .update({
+      'isCalling': true,
+      'didReject': false,
+      'patientJoined': false
+    }).then((value) => Get.to(() => CallPatientScreen()));
   }
 }
