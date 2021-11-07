@@ -15,6 +15,7 @@ class CallSessionScreen extends StatefulWidget {
 }
 
 class _CallSessionScreenState extends State<CallSessionScreen> {
+  final consInfo = Get.arguments; //0 - patientId, 1 - channelId
   late RtcEngine _engine;
   late String tokenId;
   bool isJoined = false,
@@ -22,12 +23,10 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
       switchRender = true,
       isLoading = true;
   List<int> remoteUid = [];
-  String channelId = 'theconsIDhere';
+  //String channelId = 'theconsIDhere'; //fetch online
 
   @override
   void initState() {
-    //getToken();
-
     _initEngine();
     super.initState();
   }
@@ -40,9 +39,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
 
   Future<void> getToken() async {
     final url =
-        'https://davnor-medicare.herokuapp.com/access_token?channel=${channelId}';
-    // const link =
-    //     "https://AgoraTokenServer.emmalynnabiamos.repl.co/access_token?channelName=tester";
+        'https://davnor-medicare.herokuapp.com/access_token?channel=${consInfo[1]}';
     final response = await http.get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     print(data["token"]);
@@ -103,7 +100,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   Future<void> _joinChannel() async {
-    await _engine.joinChannel(tokenId, channelId, null, 0);
+    await _engine.joinChannel(tokenId, consInfo[1], null, 0);
   }
 
   Future<void> _leaveChannel() async {
@@ -223,7 +220,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                   height: 120,
                   child: RtcRemoteView.SurfaceView(
                     uid: e,
-                    channelId: channelId,
+                    channelId: consInfo[1],
                   ),
                 ),
               ),
@@ -237,5 +234,10 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   Future<bool> _onBackPressed() {
     print('Either you reject the call or accept');
     return false as Future<bool>;
+  }
+
+  Future<void> endCall() async {
+    //update didJoin = false, reset the patient data
+    //For Upgrade: Add a record for video call as a chat msg
   }
 }

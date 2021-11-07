@@ -14,14 +14,15 @@ class CallPatientScreen extends StatefulWidget {
 }
 
 class _CallPatientScreenState extends State<CallPatientScreen> {
-  final CallingPatientController callController =
-      Get.put(CallingPatientController());
+  final CallingPatientController callController = Get.find();
 
-  final String patientId = 'WZbt7uQkDNd53rT3yhW1MumSIBN2';
+  final consInfo = Get.arguments;
 
   @override
   void initState() {
-    callController.bindToList(patientId);
+    callController.patientId.value = consInfo[0];
+    callController.channelId.value = consInfo[1];
+    callController.bindToList(consInfo[0]);
     super.initState();
   }
 
@@ -40,14 +41,14 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
       return CircularProgressIndicator();
     } else if (!callController.isLoading.value &&
         callController.incCall.isEmpty) {
-      return Text('No data');
+      return Text('Something went wrong');
     }
     return Column(
       children: [
         Text('Calling patient.....'),
         ElevatedButton(
             onPressed: () async {
-              await cancelCall(patientId); //clear data?
+              await cancelCall(consInfo[0]);
             },
             child: Text('Cancel Call'))
       ],
@@ -69,6 +70,9 @@ Future<void> cancelCall(String patientId) async {
       .update({
     'isCalling': false,
     'didReject': false,
-    'patientJoined': false
+    'patientJoined': false,
+    'otherJoined': false,
+    'channelId': '',
+    'callerName': ''
   }).then((value) => Get.back());
 }

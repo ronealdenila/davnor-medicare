@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class IncomingCallScreen extends StatelessWidget {
+  final StatusController stats = Get.find();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -17,18 +19,23 @@ class IncomingCallScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Text('Someone is CAlling...'),
-              ElevatedButton(
-                  onPressed: () async {
-                    await acceptCall();
-                    print('ACCEPTED');
-                  },
-                  child: Text('Accept')),
-              ElevatedButton(
-                  onPressed: () async {
-                    await rejectCall(); //clear data?
-                  },
-                  child: Text('Reject Call'))
+              Text('${stats.incCall[0].callerName}'),
+              Text('is calling....'),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        await acceptCall();
+                        print('ACCEPTED');
+                      },
+                      child: Text('Accept')),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await rejectCall(); //clear data?
+                      },
+                      child: Text('Reject Call')),
+                ],
+              )
             ],
           ),
         ),
@@ -40,16 +47,19 @@ class IncomingCallScreen extends StatelessWidget {
     print('Either you reject the call or accept');
     return false as Future<bool>;
   }
-}
 
-Future<void> acceptCall() async {
-  await firestore
-      .collection('patients')
-      .doc(auth.currentUser!.uid)
-      .collection('incomingCall')
-      .doc('value')
-      .update({'isCalling': false, 'patientJoined': true}).then(
-          (value) => Get.to(() => CallSessionScreen()));
+  Future<void> acceptCall() async {
+    await firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .collection('incomingCall')
+        .doc('value')
+        .update({'isCalling': false, 'patientJoined': true}).then((value) =>
+            Get.to(() => CallSessionScreen(), arguments: [
+              auth.currentUser!.uid,
+              stats.incCall[0].channelId
+            ]));
+  }
 }
 
 Future<void> rejectCall() async {
@@ -58,5 +68,12 @@ Future<void> rejectCall() async {
       .doc(auth.currentUser!.uid)
       .collection('incomingCall')
       .doc('value')
-      .update({'isCalling': false, 'didReject': true});
+      .update({
+    'isCalling': false,
+    'didReject': true,
+    'patientJoined': false,
+    'otherJoined': false,
+    'channelId': '',
+    'callerName': ''
+  });
 }

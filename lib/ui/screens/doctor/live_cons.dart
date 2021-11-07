@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
@@ -17,6 +19,8 @@ class LiveConsultationScreen extends StatelessWidget {
   static LiveConsController liveCont = Get.find();
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
+  static AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value;
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +68,40 @@ class LiveConsultationScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.videocam_outlined,
-              size: 30,
-            ),
-            onPressed: () async {
-              await callPatient();
-            },
-          ),
+          StreamBuilder<DocumentSnapshot>(
+              stream: firestore
+                  .collection('patients')
+                  .doc(consData.patientID)
+                  .collection('incomingCall')
+                  .doc('value')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError || !snapshot.hasData) {
+                  return IconButton(
+                    icon: const Icon(
+                      Icons.videocam_outlined,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      //ERROR DIALOG - Something went wrong
+                    },
+                  );
+                }
+                final data = snapshot.data!.data() as Map<String, dynamic>;
+                return IconButton(
+                  icon: const Icon(
+                    Icons.videocam_outlined,
+                    size: 30,
+                  ),
+                  onPressed: () async {
+                    if (data['patientJoined'] && data['otherJoined']) {
+                      //ERROR DIALOG - Patient is currently on a video call, please try again later
+                    } else {
+                      await callPatient();
+                    }
+                  },
+                );
+              }),
           IconButton(
             icon: const Icon(
               Icons.info_outline,
@@ -179,14 +208,17 @@ class LiveConsultationScreen extends StatelessWidget {
   Future<void> callPatient() async {
     await firestore
         .collection('patients')
-        .doc('WZbt7uQkDNd53rT3yhW1MumSIBN2')
-        //.doc(consData.patientID)
+        .doc(consData.patientID)
         .collection('incomingCall')
         .doc('value')
         .update({
       'isCalling': true,
       'didReject': false,
-      'patientJoined': false
-    }).then((value) => Get.to(() => CallPatientScreen()));
+      'patientJoined': false,
+      'otherJoined': false,
+      'channelId': consData.consID,
+      'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
+    }).then((value) => Get.to(() => CallPatientScreen(),
+            arguments: [consData.patientID, consData.consID]));
   }
 }
