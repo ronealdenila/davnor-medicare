@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
@@ -181,6 +180,7 @@ class AuthController extends GetxController {
       'validSelfie': '',
     }).then((value) async {
       await addPatientStatus(_userID);
+      await addIncomingCallStatus(_userID);
       dismissDialog();
     });
   }
@@ -202,6 +202,22 @@ class AuthController extends GetxController {
       'notifBadge': '0',
       'queueCons': '',
       'queueMA': '',
+    });
+  }
+
+  Future<void> addIncomingCallStatus(String userID) async {
+    await firestore
+        .collection('patients')
+        .doc(userID)
+        .collection('incomingCall')
+        .doc('value')
+        .set({
+      'isCalling': false,
+      'didReject': false,
+      'patientJoined': false,
+      'otherJoined': false,
+      'channelId': '',
+      'callerName': ''
     });
   }
 
@@ -261,9 +277,10 @@ class AuthController extends GetxController {
           if (pswdModel.value!.disabled! == false) {
             await checkAppRestriction(userRole);
           } else {
-            Get.defaultDialog(title: 
-            'Your account has been disabled. Please contact this email address davnormedicare@gmail.com',
-          );
+            Get.defaultDialog(
+              title:
+                  'Your account has been disabled. Please contact this email address davnormedicare@gmail.com',
+            );
             //Error dialog, your account has been disabled. Please contact..
           }
           await checkAppRestriction(userRole);
@@ -277,9 +294,9 @@ class AuthController extends GetxController {
           if (doctorModel.value!.disabled! == false) {
             await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
           } else {
-            Get.defaultDialog(title: 
-            'Your account has been disabled. Please contact this email address davnormedicare@gmail.com'
-            );
+            Get.defaultDialog(
+                title:
+                    'Your account has been disabled. Please contact this email address davnormedicare@gmail.com');
             //Error dialog, your account has been disabled. Please contact..
           }
           break;
