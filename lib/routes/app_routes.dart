@@ -66,9 +66,6 @@ abstract class Routes {
   static const FOR_APPROVAL_LIST = _Paths.FOR_APPROVAL_LIST;
 
   //Admin
-  static const MOBILE_ADMIN_HOME = _Paths.MOBILE_ADMIN_HOME;
-  static const MOBILE_DOCTOR_LIST = _Paths.MOBILE_DOCTOR_LIST;
-  static const MOBILE_PSWD_STAFF_LIST = _Paths.MOBILE_PSWD_STAFF_LIST;
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
   static const DOCTOR_REGISTRATION = _Paths.DOCTOR_REGISTRATION;
   static const PSWD_STAFF_REGISTRATION = _Paths.PSWD_STAFF_REGISTRATION;
@@ -144,9 +141,6 @@ abstract class _Paths {
   static const FOR_APPROVAL_LIST = '/ForApprovalListScreen';
 
   //Admin
-  static const MOBILE_ADMIN_HOME = '/mobile-admin-home';
-  static const MOBILE_DOCTOR_LIST = '/mobile-doctor-list';
-  static const MOBILE_PSWD_STAFF_LIST = '/mobile-pswd-staff-list';
   static const ADMIN_HOME = '/admin-home';
   static const DOCTOR_REGISTRATION = '/adm-doctor-registration';
   static const PSWD_STAFF_REGISTRATION = '/adm-pswd-staff-registration';

@@ -58,12 +58,6 @@ class AdminHomeScreen extends StatelessWidget {
           ),
           Text(fetchedData!.firstName!,
               style: const TextStyle(color: Colors.black)),
-          // IconButton(
-          //   onPressed: () {
-          //     print('clicked');
-          //   },
-          //   icon: const Icon(Icons.arrow_drop_down),
-          // ),
           DropdownButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,

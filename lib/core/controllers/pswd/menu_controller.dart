@@ -47,6 +47,10 @@ class MenuController extends GetxController {
         return _customIcon(Icons.dashboard, itemName);
       case 'For Approval':
         return _customIcon(Icons.description, itemName);
+      case 'On Progress Request':
+        return _customIcon(Icons.description, itemName);
+      case 'Releasing Area':
+        return _customIcon(Icons.description, itemName);
       case 'Medical Assistance History':
         return _customIcon(Icons.description, itemName);
       default:
