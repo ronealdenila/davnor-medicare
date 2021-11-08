@@ -22,12 +22,10 @@ class CallingPatientController extends GetxController {
       if (incCall[0].didReject!) {
         showDialog();
       } else if (incCall[0].patientJoined!) {
+        print('CallingPatientController true patient');
         Get.to(() => CallSessionScreen(),
             arguments: [patientId.value, channelId.value]);
       }
-      // else if (!incCall[0].patientJoined! || !incCall[0].otherJoined!) {
-      //   Get.to(() => CallSessionScreen(), arguments: patientId.value);
-      // }
     });
   }
 

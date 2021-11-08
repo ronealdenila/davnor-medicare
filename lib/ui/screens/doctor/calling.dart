@@ -14,8 +14,8 @@ class CallPatientScreen extends StatefulWidget {
 }
 
 class _CallPatientScreenState extends State<CallPatientScreen> {
-  final CallingPatientController callController = Get.find();
-
+  final CallingPatientController callController =
+      Get.put(CallingPatientController());
   final consInfo = Get.arguments;
 
   @override

@@ -54,11 +54,10 @@ class IncomingCallScreen extends StatelessWidget {
         .doc(auth.currentUser!.uid)
         .collection('incomingCall')
         .doc('value')
-        .update({'isCalling': false, 'patientJoined': true}).then((value) =>
-            Get.to(() => CallSessionScreen(), arguments: [
-              auth.currentUser!.uid,
-              stats.incCall[0].channelId
-            ]));
+        .update({
+      'patientJoined': true,
+    }).then((value) => Get.to(() => CallSessionScreen(),
+            arguments: [auth.currentUser!.uid, stats.incCall[0].channelId]));
   }
 }
 
@@ -75,5 +74,5 @@ Future<void> rejectCall() async {
     'otherJoined': false,
     'channelId': '',
     'callerName': ''
-  });
+  }).then((value) => Get.back());
 }
