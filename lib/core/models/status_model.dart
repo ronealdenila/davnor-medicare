@@ -112,6 +112,7 @@ class IncomingCallModel {
   IncomingCallModel({
     this.channelId,
     this.callerName,
+    this.from,
     this.isCalling,
     this.patientJoined,
     this.otherJoined,
@@ -122,6 +123,7 @@ class IncomingCallModel {
       IncomingCallModel(
         channelId: json['channelId'] as String,
         callerName: json['callerName'] as String,
+        from: json['from'] as String,
         isCalling: json['isCalling'] as bool,
         patientJoined: json['patientJoined'] as bool,
         otherJoined: json['otherJoined'] as bool,
@@ -132,6 +134,7 @@ class IncomingCallModel {
         'channelId': channelId,
         'callerName': callerName,
         'isCalling': isCalling,
+        'from': from,
         'patientJoined': patientJoined,
         'otherJoined': otherJoined,
         'didReject': didReject,
@@ -139,6 +142,7 @@ class IncomingCallModel {
 
   String? channelId;
   String? callerName;
+  String? from;
   bool? isCalling;
   bool? patientJoined;
   bool? otherJoined;

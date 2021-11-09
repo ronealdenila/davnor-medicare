@@ -4,12 +4,11 @@ import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
-import 'package:davnor_medicare/ui/screens/patient/incoming_call.dart';
 import 'package:get/get.dart';
 
 class CallingPatientController extends GetxController {
   final log = getLogger('Status Controller');
-
+  static AuthController authController = Get.find();
   RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
   RxBool isLoading = true.obs;
   RxString patientId = ''.obs;
@@ -21,8 +20,9 @@ class CallingPatientController extends GetxController {
     ever(incCall, (value) {
       if (incCall[0].didReject!) {
         showDialog();
-      } else if (incCall[0].patientJoined!) {
-        print('CallingPatientController true patient');
+      } else if (incCall[0].patientJoined! &&
+          incCall[0].from! == authController.userRole) {
+        print('Calling Patient');
         Get.to(() => CallSessionScreen(),
             arguments: [patientId.value, channelId.value]);
       }

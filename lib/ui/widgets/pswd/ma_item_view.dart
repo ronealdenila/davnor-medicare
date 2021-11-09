@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
@@ -16,7 +17,7 @@ import 'package:get/get.dart';
 final AttachedPhotosController controller = Get.find();
 final AuthController authController = Get.find();
 final AppController appController = Get.find();
-final fetchedData = authController.doctorModel.value;
+final fetchedData = authController.pswdModel.value;
 
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status, this.model)
@@ -105,16 +106,40 @@ class PSWDItemView extends GetResponsiveView {
           Visibility(
             visible:
                 status == 'accepted' && authController.userRole == 'pswd-p',
-            child: IconButton(
-              icon: const Icon(
-                Icons.videocam_rounded,
-                color: verySoftBlueCustomColor,
-              ),
-              onPressed: () {
-                //call request patient for interview
-                interviewPatient();
-              },
-            ),
+            child: StreamBuilder<DocumentSnapshot>(
+                stream: firestore
+                    .collection('patients')
+                    .doc(model.requesterID)
+                    .collection('incomingCall')
+                    .doc('value')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.videocam_rounded,
+                        color: verySoftBlueCustomColor,
+                      ),
+                      onPressed: () async {
+                        //ERROR DIALOG - Something went wrong
+                      },
+                    );
+                  }
+                  final data = snapshot.data!.data() as Map<String, dynamic>;
+                  return IconButton(
+                    icon: Icon(
+                      Icons.videocam_rounded,
+                      color: verySoftBlueCustomColor,
+                    ),
+                    onPressed: () async {
+                      if (data['patientJoined'] && data['otherJoined']) {
+                        //ERROR DIALOG - Patient is currently on a video call, please try again later
+                      } else {
+                        await interviewPatient();
+                      }
+                    },
+                  );
+                }),
           )
         ],
       ),
@@ -238,14 +263,11 @@ class PSWDItemView extends GetResponsiveView {
         .collection('incomingCall')
         .doc('value')
         .update({
+      'from': 'pswd-p',
       'isCalling': true,
-      'didReject': false,
-      'patientJoined': false,
-      'otherJoined': false,
       'channelId': model.maID,
       'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
-    }).then((value) => Get.to(() => CallPatientScreen(),
-            arguments: [model.requesterID, model.maID]));
+    });
   }
 
   Widget attachedPhotos() {
