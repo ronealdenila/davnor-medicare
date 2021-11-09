@@ -130,7 +130,8 @@ class ResponsiveLeading extends GetResponsiveView {
 class PswdPDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-  final NavigationController navigationController = Get.find();
+  final NavigationController navigationController =
+      Get.put(NavigationController());
   static AppController appController = Get.find();
 
   @override

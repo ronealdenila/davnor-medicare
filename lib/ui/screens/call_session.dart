@@ -1,4 +1,7 @@
 import 'dart:convert';
+
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,8 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+final AuthController authController = Get.find();
 
 class CallSessionScreen extends StatefulWidget {
   @override
@@ -73,9 +78,11 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     _engine.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
         print('joinChannelSuccess ${channel} ${uid} ${elapsed}');
-        setState(() {
-          isJoined = true;
-        });
+
+        if (authController.userRole != 'patient') {
+          otherJoinedSuccess();
+        }
+        isJoined = true;
       },
       userJoined: (uid, elapsed) {
         print('userJoined  ${uid} ${elapsed}');
@@ -91,16 +98,20 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
       },
       leaveChannel: (stats) {
         print('leaveChannel ${stats.toJson()}');
-        setState(() {
-          isJoined = false;
-          remoteUid.clear();
-        });
+        if (authController.userRole == 'patient') {
+          patientLeaveSuccess();
+        } else {
+          otherLeaveSuccess();
+        }
+        isJoined = false;
+        remoteUid.clear();
       },
     ));
   }
 
   Future<void> _joinChannel() async {
-    await _engine.joinChannel(tokenId, consInfo[1], null, 0);
+    final int userUid = authController.userRole == 'patient' ? 0 : 1;
+    await _engine.joinChannel(tokenId, consInfo[1], null, userUid);
   }
 
   Future<void> _leaveChannel() async {
@@ -168,13 +179,17 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                     color: Colors.red,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: Icon(
-                                      Icons.call_end_rounded,
-                                      color: Colors.white,
-                                      size: 40,
-                                    ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          _leaveChannel();
+                                        },
+                                        icon: Icon(
+                                          Icons.call_end_rounded,
+                                          color: Colors.white,
+                                          size: 40,
+                                        )),
                                   ),
                                 ),
                                 const SizedBox(
@@ -229,6 +244,51 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         )
       ],
     );
+  }
+
+  // Future<void> patientJoinedSuccess() async {
+  //   await firestore
+  //       .collection('patients')
+  //       .doc(consInfo[0])
+  //       .collection('incomingCall')
+  //       .doc('value')
+  //       .update({'patientJoined': true});
+  // }
+
+//LEAVE SHOULD RESET
+  Future<void> patientLeaveSuccess() async {
+    await firestore
+        .collection('patients')
+        .doc(consInfo[0])
+        .collection('incomingCall')
+        .doc('value')
+        .update({'patientJoined': false, 'isCalling': false}).then((value) {
+      _engine.destroy();
+      Get.back();
+      Get.back();
+    });
+  }
+
+  Future<void> otherJoinedSuccess() async {
+    await firestore
+        .collection('patients')
+        .doc(consInfo[0])
+        .collection('incomingCall')
+        .doc('value')
+        .update({'otherJoined': true});
+  }
+
+  Future<void> otherLeaveSuccess() async {
+    await firestore
+        .collection('patients')
+        .doc(consInfo[0])
+        .collection('incomingCall')
+        .doc('value')
+        .update({'otherJoined': false, 'isCalling': false}).then((value) {
+      _engine.destroy();
+      Get.back();
+      Get.back();
+    });
   }
 
   Future<bool> _onBackPressed() {

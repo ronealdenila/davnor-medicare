@@ -1,17 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
+import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-//CHANGE BUTTON, SEARCH BUTTON
 final AttachedPhotosController controller = Get.find();
+final AuthController authController = Get.find();
 final AppController appController = Get.find();
+final fetchedData = authController.doctorModel.value;
 
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status, this.model)
@@ -98,7 +103,8 @@ class PSWDItemView extends GetResponsiveView {
           ]),
           horizontalSpace20,
           Visibility(
-            visible: status == 'accepted',
+            visible:
+                status == 'accepted' && authController.userRole == 'pswd-p',
             child: IconButton(
               icon: const Icon(
                 Icons.videocam_rounded,
@@ -106,6 +112,7 @@ class PSWDItemView extends GetResponsiveView {
               ),
               onPressed: () {
                 //call request patient for interview
+                interviewPatient();
               },
             ),
           )
@@ -222,6 +229,23 @@ class PSWDItemView extends GetResponsiveView {
         ),
       ],
     );
+  }
+
+  Future<void> interviewPatient() async {
+    await firestore
+        .collection('patients')
+        .doc(model.requesterID)
+        .collection('incomingCall')
+        .doc('value')
+        .update({
+      'isCalling': true,
+      'didReject': false,
+      'patientJoined': false,
+      'otherJoined': false,
+      'channelId': model.maID,
+      'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
+    }).then((value) => Get.to(() => CallPatientScreen(),
+            arguments: [model.requesterID, model.maID]));
   }
 
   Widget attachedPhotos() {
