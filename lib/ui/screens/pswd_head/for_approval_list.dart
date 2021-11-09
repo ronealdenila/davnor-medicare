@@ -4,7 +4,9 @@ import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.da
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
+import 'package:davnor_medicare/ui/screens/pswd_head/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -240,10 +242,13 @@ Widget customTableRow(OnProgressMAModel model) {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    Get.to(
-                      () => ForApprovalItemScreen(),
-                      arguments: model,
-                    );
+                    navigationController.navigateToWithArgs(
+                        Routes.FOR_APPROVAL_ITEM,
+                        arguments: model);
+                    // Get.to(
+                    //   () => ForApprovalItemScreen(),
+                    //   arguments: model,
+                    // );
                   },
                   child: Text(
                     'View',

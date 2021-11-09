@@ -3,6 +3,12 @@
 //agora Video Call
 const appId = '369277470acc4438b3622bf48f4b0b7d';
 
+final appLogoURL =
+    'https://firebasestorage.googleapis.com/v0/b/davnor-medicare-15c1d.appspot.com/o/app%2FappLogo.jpeg?alt=media&token=cd13494f-51c7-4051-a548-f157ecd025f6';
+
+final maLogoURL =
+    'https://firebasestorage.googleapis.com/v0/b/davnor-medicare-15c1d.appspot.com/o/app%2FmaLogo.png?alt=media&token=cc2539ca-dad5-4834-ac4f-446a4ec75807';
+
 const String forgotPasswordDescription =
     'Help us recover your password. Enter your registered email then enter the code 6-digit code.';
 

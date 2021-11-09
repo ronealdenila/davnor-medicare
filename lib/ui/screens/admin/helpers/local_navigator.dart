@@ -3,6 +3,8 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
+import 'package:davnor_medicare/ui/screens/admin/disabled_doctors.dart';
+import 'package:davnor_medicare/ui/screens/admin/disabled_pswd.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
@@ -49,6 +51,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final VerificationReqModel passedData =
           settings.arguments as VerificationReqModel;
       return _getPageRoute(VerificationReqItemScreen(passedData: passedData));
+    case Routes.DISABLED_DOCTORS:
+      return _getPageRoute(DisabledDoctorListScreen());
+    case Routes.DISABLED_PSWD_STAFF:
+      return _getPageRoute(DisabledPSWDStaffScreen());
     default:
       return _getPageRoute(const SizedBox());
   }

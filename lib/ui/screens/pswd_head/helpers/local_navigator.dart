@@ -48,6 +48,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final OnProgressMAModel passedData =
           settings.arguments as OnProgressMAModel;
       return _getPageRoute(ReleasingAreaItemScreen(passedData: passedData));
+    case Routes.FOR_APPROVAL_ITEM:
+      final OnProgressMAModel passedData =
+          settings.arguments as OnProgressMAModel;
+      return _getPageRoute(ForApprovalItemScreen(passedData: passedData));
     default:
       return _getPageRoute(const SizedBox());
   }

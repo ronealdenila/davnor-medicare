@@ -1,13 +1,10 @@
 // ignore_for_file: constant_identifier_names
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/ui/screens/admin/admin_profile.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/doctor_registration.dart';
-import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_list.dart';
 import 'package:davnor_medicare/ui/screens/admin/pswd_staff_registration.dart';
-import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
@@ -269,10 +266,10 @@ class AppPages {
     //   name: _Paths.ON_PROGRESS_REQ_ITEM,
     //   page: () => OnProgressReqItemScreen(),
     // ),
-    GetPage(
-      name: _Paths.FOR_APPROVAL_ITEM,
-      page: () => ForApprovalItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.FOR_APPROVAL_ITEM,
+    //   page: () => ForApprovalItemScreen(),
+    // ),
     GetPage(
       name: _Paths.FOR_APPROVAL_LIST,
       page: () => ForApprovalListScreen(),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
@@ -19,9 +20,6 @@ class ForVerificationController extends GetxController {
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();
   TextEditingController reason = TextEditingController();
   RxBool accepted = false.obs;
-
-  final appLogoURL =
-      'https://firebasestorage.googleapis.com/v0/b/davnor-medicare-15c1d.appspot.com/o/app%2FappLogo.jpeg?alt=media&token=cd13494f-51c7-4051-a548-f157ecd025f6';
 
   @override
   void onReady() {

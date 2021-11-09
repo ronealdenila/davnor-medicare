@@ -109,7 +109,7 @@ Future<void> addNotification(String uid) async {
       .doc(uid)
       .collection('notifications')
       .add({
-    'photo': '',
+    'photo': maLogoURL,
     'from': 'The pswd personnel',
     'action': action,
     'subject': 'MA Request',

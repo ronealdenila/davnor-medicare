@@ -28,6 +28,11 @@ import 'package:get/get.dart';
 //*https://youtu.be/udsysUj-X4w
 //*https://github.com/filiph/hn_app/tree/episode51-upgrade
 
+final AppController appController = Get.find();
+final AuthController authController = Get.find();
+final fetchedData = authController.pswdModel.value;
+final NavigationController navigationController =
+    Get.put(NavigationController());
 final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
 final StatusController stats = Get.put(StatusController(), permanent: true);
 final AttachedPhotosController pcontroller =
@@ -35,9 +40,6 @@ final AttachedPhotosController pcontroller =
 
 class PSWDPersonnelHome extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  static AuthController authController = Get.find();
-  final fetchedData = authController.pswdModel.value;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +105,34 @@ AppBar topNavigationBar(
           icon: const Icon(Icons.notifications),
         ),
         Text(name!, style: const TextStyle(color: Colors.black)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_drop_down)),
+        DropdownButton(
+          icon: const Icon(Icons.keyboard_arrow_down),
+          iconSize: 40,
+          underline: Container(),
+          items: [
+            DropdownMenuItem(
+              value: 1,
+              child: TextButton.icon(
+                label: const Text('Profile'),
+                onPressed: () {
+                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                },
+                icon: const Icon(Icons.account_circle),
+                style: TextButton.styleFrom(primary: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 2,
+              child: TextButton.icon(
+                label: const Text('Logout'),
+                onPressed: authController.signOut,
+                icon: const Icon(Icons.account_circle),
+                style: TextButton.styleFrom(primary: Colors.black),
+              ),
+            )
+          ],
+          onChanged: (int? newValue) {},
+        ),
       ],
     ),
   );
@@ -128,12 +157,6 @@ class ResponsiveLeading extends GetResponsiveView {
 }
 
 class PswdPDashboardScreen extends GetView<MenuController> {
-  static AuthController authController = Get.find();
-  final fetchedData = authController.pswdModel.value;
-  final NavigationController navigationController =
-      Get.put(NavigationController());
-  static AppController appController = Get.find();
-
   @override
   Widget build(BuildContext context) {
     //Note: Breakpoint is for desktop lang

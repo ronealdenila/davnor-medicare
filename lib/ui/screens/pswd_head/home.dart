@@ -5,7 +5,9 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
@@ -20,9 +22,11 @@ import 'package:get/get.dart';
 
 final AppController appController = Get.find();
 final StatusController stats = Get.put(StatusController(), permanent: true);
+final AuthController authController = Get.find();
+final NavigationController navigationController =
+    Get.put(NavigationController());
 
 class PSWDHeadHomeScreen extends StatelessWidget {
-  static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final AttachedPhotosController pswdController =
@@ -95,7 +99,34 @@ AppBar topNavigationBar(
           icon: const Icon(Icons.notifications),
         ),
         Text(name!, style: const TextStyle(color: Colors.black)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_drop_down)),
+        DropdownButton(
+          icon: const Icon(Icons.keyboard_arrow_down),
+          iconSize: 40,
+          underline: Container(),
+          items: [
+            DropdownMenuItem(
+              value: 1,
+              child: TextButton.icon(
+                label: const Text('Profile'),
+                onPressed: () {
+                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                },
+                icon: const Icon(Icons.account_circle),
+                style: TextButton.styleFrom(primary: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 2,
+              child: TextButton.icon(
+                label: const Text('Logout'),
+                onPressed: authController.signOut,
+                icon: const Icon(Icons.account_circle),
+                style: TextButton.styleFrom(primary: Colors.black),
+              ),
+            )
+          ],
+          onChanged: (int? newValue) {},
+        ),
       ],
     ),
   );

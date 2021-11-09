@@ -1,18 +1,17 @@
-import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DoctorListScreen extends StatelessWidget {
-  static DoctorListController dListController = Get.put(DoctorListController());
+class DisabledPSWDStaffScreen extends StatelessWidget {
+  static DisabledStaffsController dListController =
+      Get.put(DisabledStaffsController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class DoctorListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Doctors List',
+            Text('Disabled PSWD Staff',
                 textAlign: TextAlign.left, style: title24BoldNeutral80),
             verticalSpace50,
             Wrap(
@@ -34,39 +33,13 @@ class DoctorListScreen extends StatelessWidget {
                 SizedBox(
                   width: 450,
                   child: CustomTextFormField(
-                    controller: dListController.docFilter,
-                    labelText: 'Search doctor name here...',
+                    controller: dListController.filterKey,
+                    labelText: 'Search personnel name here...',
                     validator: Validator().notEmpty,
                     onChanged: (value) {
                       return;
                     },
-                    onSaved: (value) => dListController.docFilter.text = value!,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                  width: 250,
-                  child: CustomDropdown(
-                    hintText: 'Select doctor title',
-                    dropdownItems: titleDropdown,
-                    onChanged: (Item? item) {
-                      dListController.title.value = item!.name;
-                    },
-                    onSaved: (Item? item) =>
-                        dListController.title.value = item!.name,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                  width: 300,
-                  child: CustomDropdown(
-                    hintText: 'Select doctor department',
-                    dropdownItems: deptDropdown,
-                    onChanged: (Item? item) {
-                      dListController.department.value = item!.name;
-                    },
-                    onSaved: (Item? item) =>
-                        dListController.department.value = item!.name,
+                    onSaved: (value) => dListController.filterKey.text = value!,
                   ),
                 ),
                 horizontalSpace18,
@@ -79,9 +52,8 @@ class DoctorListScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         dListController.filter(
-                            name: dListController.docFilter.text,
-                            title: dListController.title.value,
-                            dept: dListController.department.value);
+                          name: dListController.filterKey.text,
+                        );
                       },
                     )),
                 horizontalSpace10,
@@ -93,14 +65,11 @@ class DoctorListScreen extends StatelessWidget {
                         primary: Colors.blue[900],
                       ),
                       onPressed: () {
-                        dListController.docFilter.clear();
-                        dListController.title.value = '';
-                        dListController.department.value = '';
-                        dListController.doctorList
-                            .assignAll(dListController.filteredDoctorList);
+                        dListController.filterKey.clear();
+                        dListController.disabledList
+                            .assignAll(dListController.filteredDisabledList);
                       },
                     )),
-                //IconButton(onPressed: (){}, icon: Ico)
               ],
             ),
             verticalSpace25,
@@ -117,13 +86,14 @@ class DoctorListScreen extends StatelessWidget {
       return const SizedBox(
           height: 24, width: 24, child: CircularProgressIndicator());
     }
-    if (dListController.doctorList.isEmpty &&
+    if (dListController.disabledList.isEmpty &&
         !dListController.isLoading.value) {
-      return Padding(
-        padding: const EdgeInsets.all(20),
-        child: const Text(
-          'No doctors',
-          textAlign: TextAlign.center,
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: const Text(
+            'No disabled pswd staff',
+          ),
         ),
       );
     }
@@ -132,9 +102,9 @@ class DoctorListScreen extends StatelessWidget {
       removeTop: true,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: dListController.doctorList.length,
+          itemCount: dListController.disabledList.length,
           itemBuilder: (context, index) {
-            return customTableRow(dListController.doctorList[index]);
+            return customTableRow(dListController.disabledList[index], context);
           }),
     );
   }
@@ -155,6 +125,14 @@ class DoctorListScreen extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
+                child:
+                    Text('ID', style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text('FULLNAME',
                     style: body16Bold.copyWith(color: Colors.white)),
               ),
@@ -168,14 +146,6 @@ class DoctorListScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('DEPARTMENT',
-                    style: body16Bold.copyWith(color: Colors.white)),
-              ),
-            ),
-            Expanded(
               child: Text('ACTION',
                   style: body16Bold.copyWith(color: Colors.white)),
             )
@@ -183,7 +153,7 @@ class DoctorListScreen extends StatelessWidget {
     );
   }
 
-  Widget customTableRow(DoctorModel model) {
+  Widget customTableRow(PswdModel model, BuildContext context) {
     return SizedBox(
       width: Get.width,
       child: Padding(
@@ -192,6 +162,16 @@ class DoctorListScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  model.userID!,
+                  style: body16Medium,
+                ),
+              ),
+            ),
             Expanded(
               flex: 2,
               child: Padding(
@@ -207,64 +187,29 @@ class DoctorListScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  model.title!,
-                  style: body16Medium,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  model.department!,
+                  model.position!,
                   style: body16Medium,
                 ),
               ),
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Wrap(
                   runSpacing: 8,
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        navigationController.navigateToWithArgs(
-                            Routes.EDIT_DOCTOR,
-                            arguments: model);
-                        //Get.to(() => EditDoctorScrenn(), arguments: model);
+                        showDialog(
+                            context: context,
+                            builder: (context) => confirmProcess(model));
                       },
                       child: Text(
-                        'View',
+                        'Remove',
                         style: body16RegularUnderlineBlue,
                       ),
                     ),
                     horizontalSpace15,
-                    InkWell(
-                      onTap: () {
-                        dListController.enableEditing.value = true;
-                        navigationController.navigateToWithArgs(
-                            Routes.EDIT_DOCTOR,
-                            arguments: model);
-                        //Get.to(() => EditDoctorScrenn(), arguments: model);
-                      },
-                      child: Text(
-                        'Edit',
-                        style: body16RegularUnderlineBlue,
-                      ),
-                    ),
-                    horizontalSpace15,
-                    InkWell(
-                      onTap: () {
-                        dListController.disableDoctor(model.email!);
-                        //Change to userID instead of email
-                      },
-                      child: Text(
-                        'Disable',
-                        style: body16RegularUnderlineBlue,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -274,4 +219,46 @@ class DoctorListScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget confirmProcess(PswdModel model) {
+  return SimpleDialog(
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 50,
+      ),
+      children: [
+        SizedBox(
+            width: Get.width * .7,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'REMINDER: Follow our proper process',
+                  textAlign: TextAlign.center,
+                  style: title32Regular,
+                ),
+                verticalSpace15,
+                Text(
+                  'Make sure the following data is already deleted in the authentication database:\nID - ${model.userID}\nEmail - ${model.email}',
+                  textAlign: TextAlign.center,
+                  style: title32Regular,
+                ),
+                verticalSpace25,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TextButton(
+                        onPressed: () async {
+                          //DELETION sa users collection ug pswd_personnel collection
+                        },
+                        child: Text('Got it!'))),
+                verticalSpace15,
+                Text(
+                  'By clicking this button, you are indicating that you have followed the process',
+                  textAlign: TextAlign.center,
+                  style: title32Regular,
+                ),
+              ],
+            ))
+      ]);
 }
