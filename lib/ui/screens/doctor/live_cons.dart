@@ -212,10 +212,8 @@ class LiveConsultationScreen extends StatelessWidget {
         .collection('incomingCall')
         .doc('value')
         .update({
+      'from': 'doctor',
       'isCalling': true,
-      'didReject': false,
-      'patientJoined': false,
-      'otherJoined': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
     }).then((value) => Get.to(() => CallPatientScreen(),

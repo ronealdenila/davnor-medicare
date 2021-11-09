@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
-import 'package:davnor_medicare/ui/screens/admin/verification_req_item.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/for_verification_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -43,10 +44,13 @@ class VerificationReqListScreen extends StatelessWidget {
                     return ForVerificationCard(
                         verifiReq: vf.verifReq[index],
                         onItemTap: () {
-                          Get.to(
-                            () => VerificationReqItemScreen(),
-                            arguments: vf.verifReq[index],
-                          );
+                          navigationController.navigateToWithArgs(
+                              Routes.VERIFICATION_REQ_ITEM,
+                              arguments: vf.verifReq[index]);
+                          // Get.to(
+                          //   () => VerificationReqItemScreen(),
+                          //   arguments: vf.verifReq[index],
+                          // );
                         });
                   });
             } else {

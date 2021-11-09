@@ -11,21 +11,25 @@ import 'package:davnor_medicare/core/controllers/admin/for_verification_controll
 import 'package:get/get.dart';
 
 class VerificationReqItemScreen extends StatelessWidget {
+  VerificationReqItemScreen({Key? key, required this.passedData})
+      : super(key: key);
+  final VerificationReqModel passedData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
-          child: SingleChildScrollView(child: ResponsiveView(context))),
+          child: SingleChildScrollView(
+              child: ResponsiveView(context, passedData))),
     );
   }
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
+  ResponsiveView(this.context, this.vfModel) : super(alwaysUseBuilder: false);
   final BuildContext context;
-  final VerificationReqModel vfModel = Get.arguments as VerificationReqModel;
+  final VerificationReqModel vfModel;
   final ForVerificationController vf = Get.find();
 
   @override

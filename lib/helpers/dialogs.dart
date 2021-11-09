@@ -53,6 +53,30 @@ void showDefaultDialog({
   );
 }
 
+void showDefaultDialogWithText({
+  String? dialogTitle,
+  String? dialogCaption,
+  String? textConfirm,
+  void Function()? onConfirmTap,
+}) {
+  Get.defaultDialog(
+    radius: 8,
+    titleStyle: title24Bold,
+    titlePadding: const EdgeInsets.all(10),
+    title: dialogTitle!,
+    content: Text(
+      dialogCaption!,
+      style: body16SemiBold.copyWith(
+        color: neutralColor,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    onConfirm: onConfirmTap,
+    textConfirm: textConfirm,
+    confirmTextColor: Colors.white,
+  );
+}
+
 void showConfirmationDialog({
   String? dialogTitle,
   String? dialogCaption,

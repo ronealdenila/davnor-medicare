@@ -73,6 +73,7 @@ Future<void> cancelCall(String patientId) async {
     'patientJoined': false,
     'otherJoined': false,
     'channelId': '',
-    'callerName': ''
+    'callerName': '',
+    'from': ''
   }).then((value) => Get.back());
 }

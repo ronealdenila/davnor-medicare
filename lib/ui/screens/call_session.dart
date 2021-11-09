@@ -28,7 +28,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
       switchRender = true,
       isLoading = true;
   List<int> remoteUid = [];
-  //String channelId = 'theconsIDhere'; //fetch online
 
   @override
   void initState() {
@@ -78,7 +77,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     _engine.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
         print('joinChannelSuccess ${channel} ${uid} ${elapsed}');
-
         if (authController.userRole != 'patient') {
           otherJoinedSuccess();
         }
@@ -95,14 +93,11 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         setState(() {
           remoteUid.removeWhere((element) => element == uid);
         });
+        leaveSuccess();
       },
       leaveChannel: (stats) {
         print('leaveChannel ${stats.toJson()}');
-        if (authController.userRole == 'patient') {
-          patientLeaveSuccess();
-        } else {
-          otherLeaveSuccess();
-        }
+        leaveSuccess();
         isJoined = false;
         remoteUid.clear();
       },
@@ -180,7 +175,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(8),
                                     child: IconButton(
                                         onPressed: () {
                                           _leaveChannel();
@@ -188,7 +183,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                         icon: Icon(
                                           Icons.call_end_rounded,
                                           color: Colors.white,
-                                          size: 40,
+                                          size: 35,
                                         )),
                                   ),
                                 ),
@@ -246,23 +241,22 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     );
   }
 
-  // Future<void> patientJoinedSuccess() async {
-  //   await firestore
-  //       .collection('patients')
-  //       .doc(consInfo[0])
-  //       .collection('incomingCall')
-  //       .doc('value')
-  //       .update({'patientJoined': true});
-  // }
-
 //LEAVE SHOULD RESET
-  Future<void> patientLeaveSuccess() async {
+  Future<void> leaveSuccess() async {
     await firestore
         .collection('patients')
         .doc(consInfo[0])
         .collection('incomingCall')
         .doc('value')
-        .update({'patientJoined': false, 'isCalling': false}).then((value) {
+        .update({
+      'patientJoined': false,
+      'isCalling': false,
+      'didReject': false,
+      'otherJoined': false,
+      'channelId': '',
+      'from': '',
+      'callerName': ''
+    }).then((value) {
       _engine.destroy();
       Get.back();
       Get.back();
@@ -276,19 +270,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         .collection('incomingCall')
         .doc('value')
         .update({'otherJoined': true});
-  }
-
-  Future<void> otherLeaveSuccess() async {
-    await firestore
-        .collection('patients')
-        .doc(consInfo[0])
-        .collection('incomingCall')
-        .doc('value')
-        .update({'otherJoined': false, 'isCalling': false}).then((value) {
-      _engine.destroy();
-      Get.back();
-      Get.back();
-    });
   }
 
   Future<bool> _onBackPressed() {

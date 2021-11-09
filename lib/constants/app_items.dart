@@ -17,7 +17,7 @@ class ItemNum {
 final discomfortData = [
   Category(
       iconPath: earacheIcon,
-      title: 'Earache',//
+      title: 'Earache', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: heartburnIcon,
@@ -26,59 +26,59 @@ final discomfortData = [
       categoryID: 'category25'),
   Category(
       iconPath: vomitingIcon,
-      title: 'Nausea or Vomiting',//
+      title: 'Nausea or Vomiting', //
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
       iconPath: diarrheaIcon,
-      title: 'Diarrhea or Constipation',//
+      title: 'Diarrhea or Constipation', //
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
       iconPath: abdominalpainIcon,
-      title: 'Ulcer or Abdonimal Pain',//
+      title: 'Ulcer or Abdonimal Pain', //
       specialist: 'Gastroenterologist',
       categoryID: 'category25'),
   Category(
       iconPath: sinusitisIcon,
-      title: 'Sinusitis',//
+      title: 'Sinusitis', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: coughIcon,
-      title: 'Cold or Cough',//
+      title: 'Cold or Cough', //
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
       iconPath: hypertensionIcon,
-      title: 'Hypertension',//
+      title: 'Hypertension', //
       specialist: 'Nephrologist'), //pedia or family department
   Category(
       iconPath: backpainIcon,
-      title: 'Back Pain',//
+      title: 'Back Pain', //
       specialist: 'Orthopedist'), //pedia or family department
   Category(
       iconPath: conjunctivitisIcon,
-      title: 'Conjunctivitis',//
+      title: 'Conjunctivitis', //
       specialist: 'Ophthalmologist'), //pedia or family department
   Category(
       iconPath: diabetesIcon,
-      title: 'Diabetes',//
+      title: 'Diabetes', //
       specialist: 'Diabetologist',
       categoryID: 'category23'),
   Category(
       iconPath: asthma,
-      title: 'Asthma',//
+      title: 'Asthma', //
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
       iconPath: foodallergyIcon,
-      title: 'Food Allergy',//
+      title: 'Food Allergy', //
       specialist: 'Immunologist'), //pedia or family department
   Category(
       iconPath: sorethroatIcon,
-      title: 'Sore Throat',//
+      title: 'Sore Throat', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: pneomoniaIcon,
-      title: 'Pneumonia',//
+      title: 'Pneumonia', //
       specialist: 'Pulmonologist'), //pedia or family department
 ];
 
@@ -170,10 +170,11 @@ List<MenuItem> pswdPSideMenuItemRoutes = [
 
 List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
-  //Change me to my appropriate route
   MenuItem('List Of Doctors', Routes.DOCTOR_LIST),
   MenuItem('List of PSWD Personnel', Routes.PSWD_STAFF_LIST),
   MenuItem('Verification Requests', Routes.VERIFICATION_REQ_LIST),
+  MenuItem('Disabled Doctors', Routes.DISABLED_DOCTORS),
+  MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [

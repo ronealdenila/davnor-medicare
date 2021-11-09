@@ -217,7 +217,8 @@ class AuthController extends GetxController {
       'patientJoined': false,
       'otherJoined': false,
       'channelId': '',
-      'callerName': ''
+      'callerName': '',
+      'from': ''
     });
   }
 

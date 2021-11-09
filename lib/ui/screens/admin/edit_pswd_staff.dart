@@ -14,20 +14,22 @@ import 'package:get/get.dart';
 final PSWDStaffListController controller = Get.find();
 
 class EditPSWDStaffScrenn extends StatelessWidget {
+  EditPSWDStaffScrenn({Key? key, required this.passedData}) : super(key: key);
+  final PswdModel passedData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SingleChildScrollView(child: ResponsiveView())),
+          child: SingleChildScrollView(child: ResponsiveView(passedData))),
     );
   }
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView() : super(alwaysUseBuilder: false);
-  final PswdModel model = Get.arguments as PswdModel;
+  ResponsiveView(this.model) : super(alwaysUseBuilder: false);
+  final PswdModel model;
 
   @override
   Widget phone() => Column(

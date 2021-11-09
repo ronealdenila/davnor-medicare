@@ -2,7 +2,9 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -188,7 +190,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                        navigationController.navigateToWithArgs(
+                            Routes.EDIT_PSWD_STAFF,
+                            arguments: model);
+                        //Get.to(() => EditPSWDStaffScrenn(), arguments: model);
                       },
                       child: Text(
                         'View',
@@ -199,7 +204,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         pListController.enableEditing.value = true;
-                        Get.to(() => EditPSWDStaffScrenn(), arguments: model);
+                        navigationController.navigateToWithArgs(
+                            Routes.EDIT_PSWD_STAFF,
+                            arguments: model);
+                        //Get.to(() => EditPSWDStaffScrenn(), arguments: model);
                       },
                       child: Text(
                         'Edit',
