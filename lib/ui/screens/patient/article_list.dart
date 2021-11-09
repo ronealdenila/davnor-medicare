@@ -24,8 +24,8 @@ class ArticleListScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Column(
               children: [
-                const Text(
-                  'Articles',
+                Text(
+                  'item1'.tr,
                   style: subtitle20Medium,
                 ),
                 verticalSpace15,

@@ -26,13 +26,13 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Upload past prescription or laboratory results',
+              Text(
+                'consform16'.tr,
                 style: title32Regular,
               ),
               verticalSpace50,
-              const Text(
-                consForm3Description,
+              Text(
+                'consform17'.tr,
                 style: subtitle18Regular,
               ),
               verticalSpace20,
@@ -60,7 +60,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                   width: 211,
                   child: CustomButton(
                     onTap: controller.submitConsultRequest,
-                    text: 'Consult Now',
+                    text: 'consform19'.tr,
                     buttonColor: verySoftBlueColor,
                   ),
                 ),
@@ -90,7 +90,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
               ),
               verticalSpace10,
               Text(
-                'Upload here',
+                'consform18'.tr,
                 style: subtitle18RegularNeutral,
               )
             ],

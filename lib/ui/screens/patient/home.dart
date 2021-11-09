@@ -147,9 +147,9 @@ class PatientHomeScreen extends StatelessWidget {
                 if (stats.patientStatus[0].hasActiveQueueCons!) {
                   showErrorDialog(
                       errorTitle:
-                          'Sorry, you still have an on progress consultation transaction',
+                          'action5'.tr,
                       errorDescription:
-                          'Please proceed to your existing consultation');
+                          'action6'.tr);
                 } else {
                   showConfirmationDialog(
                     dialogTitle: 'dialog1'.tr,
@@ -167,9 +167,9 @@ class PatientHomeScreen extends StatelessWidget {
               } else {
                 showErrorDialog(
                     errorTitle:
-                        'Sorry, only verified users can use this feature',
+                        'action7'.tr,
                     errorDescription:
-                        'Please verify your account first in your profile');
+                        'action8'.tr);
               }
             },
           ),
@@ -201,16 +201,16 @@ class PatientHomeScreen extends StatelessWidget {
                   Get.to(() => QueueMAScreen());
                 } else {
                   showErrorDialog(
-                      errorTitle: 'Sorry, you have no queue number',
+                      errorTitle: 'dialog3'.tr,
                       errorDescription:
-                          'You need to request consultation or medical assistance to be in a queue.');
+                          'dialogsub3'.tr);
                 }
               } else {
                 showErrorDialog(
                     errorTitle:
-                        'Sorry, only verified users can use this feature',
+                        'action7'.tr,
                     errorDescription:
-                        'Please verify your account first in your profile');
+                        'action8'.tr);
               }
             },
           ),
@@ -225,7 +225,7 @@ class PatientHomeScreen extends StatelessWidget {
       children: [
         Expanded(
           child: ActionCard(
-            text: 'Request Consultation',
+            text: 'action1'.tr,
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
@@ -235,7 +235,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: ActionCard(
-              text: 'Request Medical Assistance',
+              text: 'action2'.tr,
               color: verySoftOrange[60],
               secondaryColor: verySoftOrangeCustomColor,
               //Note: Has weird transition
@@ -245,7 +245,7 @@ class PatientHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: ActionCard(
-            text: 'View\nQueue',
+            text: 'action3'.tr,
             color: verySoftRed[60],
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
@@ -353,8 +353,8 @@ class PatientHomeScreen extends StatelessWidget {
       Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
     }
     showErrorDialog(
-        errorTitle: 'You have no current consultation',
-        errorDescription: 'Please request consultation first');
+        errorTitle: 'action9'.tr,
+        errorDescription: 'action10'.tr);
   }
 
   Future<void> resetBadge() async {

@@ -26,7 +26,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Patient's Information",
+                      Text('mahistory1'.tr,
                           textAlign: TextAlign.justify,
                           style: subtitle20Medium.copyWith(
                               color: const Color(0xFF64748B))),
@@ -40,9 +40,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Patient Name',
+                                child: Text('mah3'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -61,9 +61,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Patient Age',
+                                child: Text('mah4'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -82,9 +82,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Address',
+                                child: Text('mah5'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -103,9 +103,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Gender',
+                                child: Text('mah6'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -124,9 +124,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                               SizedBox(
                                 width: 160,
-                                child: Text('Patient Type',
+                                child: Text('mah7'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -145,7 +145,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace35,
-                Text('MA Request Information',
+                Text('mah8'.tr,
                     textAlign: TextAlign.justify,
                     style: subtitle20Medium.copyWith(
                         color: const Color(0xFF64748B))),
@@ -158,9 +158,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Received by',
+                                child: Text('mah9'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -179,9 +179,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Pharmacy',
+                                child: Text('mah10'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -200,9 +200,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Medicine Worth',
+                                child: Text('mah11'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -221,9 +221,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Date Requested',
+                                child: Text('mah12'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -244,9 +244,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 160,
-                                child: Text('Date MA Claimed',
+                                child: Text('mah13'.tr,
                                     textAlign: TextAlign.left,
                                     style: body16SemiBold),
                               ),
@@ -273,7 +273,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                     onTap: () async {
                       //
                     },
-                    text: 'See Attached Photos',
+                    text: 'mah14'.tr,
                     buttonColor: verySoftBlueColor,
                     fontSize: 18,
                   ),

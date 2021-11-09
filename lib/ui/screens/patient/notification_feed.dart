@@ -12,8 +12,8 @@ class NotificationFeedScreen extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               elevation: 1,
-              title: const Text(
-                'Notifications',
+              title: Text(
+                'notification'.tr,
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.white,
@@ -24,9 +24,9 @@ class NotificationFeedScreen extends StatelessWidget {
 
   Widget displayNotification() {
     return notifController.notif.isEmpty
-        ? const Center(
+        ? Center(
             child: Text(
-              'You have no notifications',
+              'notif'.tr,
               textAlign: TextAlign.center,
             ),
           )

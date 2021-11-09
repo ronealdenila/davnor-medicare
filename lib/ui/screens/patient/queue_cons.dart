@@ -25,8 +25,8 @@ class QueueConsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'YOUR  QUEUE NUMBER',
+            Text(
+              'maqueue1'.tr,
               style: subtitle18Medium,
             ),
             verticalSpace15,
@@ -67,7 +67,7 @@ class QueueConsScreen extends StatelessWidget {
                           children: [
                             verticalSpace35,
                             Text(
-                              'SERVING NOW',
+                              'maqueue2'.tr,
                               style: subtitle18MediumNeutral,
                             ),
                             verticalSpace10,
@@ -93,8 +93,8 @@ class QueueConsScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            'More info',
+                          Text(
+                            'maqueue3'.tr,
                             style: subtitle18RegularWhite,
                           ),
                           horizontalSpace5,
@@ -130,7 +130,7 @@ class QueueConsScreen extends StatelessWidget {
                 () => Text(
                   cQController.isLoading.value
                       ? ''
-                      : '${cQController.queueConsList.length} PEOPLE WAITING',
+                      : '${cQController.queueConsList.length} maqueue4'.tr,
                   style: subtitle20Medium,
                 ),
               ),

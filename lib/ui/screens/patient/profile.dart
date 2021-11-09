@@ -95,7 +95,7 @@ class PatientProfileScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const Text('STATUS', style: body14Regular),
+                              Text('profile'.tr, style: body14Regular),
                               displayStatus()
                             ],
                           ),
@@ -125,7 +125,7 @@ class PatientProfileScreen extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     )),
-                label: const Text('Change Password'),
+                label: Text('profile2'.tr),
               ),
               const SizedBox(height: 20),
               Visibility(
@@ -184,7 +184,7 @@ class PatientProfileScreen extends StatelessWidget {
               Get.to(() => VerificationScreen());
             },
             child: Text(
-              'Click here to get verified',
+              'profile1'.tr,
               style: body16RegularUnderlineBlue,
             ));
       },
@@ -195,9 +195,9 @@ class PatientProfileScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text('YOUR ATTACHED PHOTOS', style: body14Regular),
+          child: Text('profile3'.tr, style: body14Regular),
         ),
         SizedBox(
           width: Get.width,

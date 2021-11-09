@@ -51,9 +51,9 @@ class QueueMATableScreen extends StatelessWidget {
         child: PaginatedDataTable(
           rowsPerPage: 8,
           source: QueueDataSource(queueMAList: maQueueController.queueMAList),
-          columns: const [
-            DataColumn(label: Text('No.', style: subtitle18BoldWhite)),
-            DataColumn(label: Text('Queue No.', style: subtitle18BoldWhite)),
+          columns: [
+            DataColumn(label: Text('queue6', style: subtitle18BoldWhite)),
+            DataColumn(label: Text('queue7'.tr, style: subtitle18BoldWhite)),
           ],
         ),
       ),
@@ -71,6 +71,6 @@ class QueueMATableScreen extends StatelessWidget {
   }
 
   Widget noData() {
-    return const Text('There are no queue');
+    return Text('queue5'.tr);
   }
 }

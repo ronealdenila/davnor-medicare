@@ -29,13 +29,13 @@ class MAForm2Screen extends GetView<MARequestController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Upload prescription',
+              Text(
+                'maform10'.tr,
                 style: title32Regular,
               ),
               verticalSpace20,
-              const Text(
-                maForm2Screen,
+             Text(
+                'maform11'.tr,
                 style: subtitle18Regular,
               ),
               verticalSpace25,
@@ -64,7 +64,7 @@ class MAForm2Screen extends GetView<MARequestController> {
                   width: 300,
                   child: CustomButton(
                     onTap: controller.requestMAButton,
-                    text: 'Request Assistance',
+                    text: 'maform13'.tr,
                     buttonColor: verySoftBlueColor,
                   ),
                 ),
@@ -92,7 +92,7 @@ class MAForm2Screen extends GetView<MARequestController> {
               ),
               verticalSpace10,
               Text(
-                'Upload here',
+                'maform12'.tr,
                 style: subtitle18RegularNeutral,
               )
             ],

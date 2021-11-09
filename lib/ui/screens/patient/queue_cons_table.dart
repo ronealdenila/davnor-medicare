@@ -50,9 +50,9 @@ class QueueConsTableScreen extends StatelessWidget {
         child: PaginatedDataTable(
           rowsPerPage: 8,
           source: QueueDataSource(queueConsList: cQController.queueConsList),
-          columns: const [
-            DataColumn(label: Text('No.', style: subtitle18BoldWhite)),
-            DataColumn(label: Text('Queue No.', style: subtitle18BoldWhite)),
+          columns: [
+            DataColumn(label: Text('queue6'.tr, style: subtitle18BoldWhite)),
+            DataColumn(label: Text('queue7'.tr, style: subtitle18BoldWhite)),
           ],
         ),
       ),
@@ -73,6 +73,6 @@ class QueueConsTableScreen extends StatelessWidget {
   }
 
   Widget noData() {
-    return const Text('There are no queue');
+    return Text('queue5'.tr);
   }
 }

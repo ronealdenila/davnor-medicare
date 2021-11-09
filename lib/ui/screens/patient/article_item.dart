@@ -80,10 +80,10 @@ class ArticleItemScreen extends StatelessWidget {
                         ),
                       }),
                       verticalSpace10,
-                      const Align(
+                      Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          'See original source here:',
+                          'item'.tr,
                           style: body16SemiBold,
                         ),
                       ),

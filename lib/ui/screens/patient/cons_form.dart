@@ -40,15 +40,15 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'What kind of discomfort are you experiencing?',
+                    Text(
+                      'consform'.tr,
                       style: title32Regular,
                     ),
                     verticalSpace18,
                     DiscomfortCategoryWidget(),
                     verticalSpace10,
-                    const Text(
-                      'What type of consultation?',
+                    Text(
+                      'consform1'.tr,
                       style: subtitle20Medium,
                     ),
                     verticalSpace10,
@@ -57,8 +57,8 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                         Expanded(
                           child: RadioListTile<bool>(
                             contentPadding: EdgeInsets.zero,
-                            title: const Text(
-                              'New Consultation',
+                            title: Text(
+                              'consformii'.tr,
                               style: body16Regular,
                             ),
                             value: true,
@@ -70,8 +70,8 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                         Expanded(
                           child: RadioListTile<bool>(
                             contentPadding: EdgeInsets.zero,
-                            title: const Text(
-                              'Follow-Up',
+                            title: Text(
+                              'consformi'.tr,
                               style: body16Regular,
                             ),
                             value: false,
@@ -83,8 +83,8 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                       ],
                     ),
                     verticalSpace18,
-                    const Text(
-                      "Patient's Infomation",
+                    Text(
+                      'consform2'.tr,
                       style: subtitle20Medium,
                     ),
                     verticalSpace10,
@@ -92,7 +92,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                       visible: !controller.isConsultForYou.value,
                       child: CustomTextFormField(
                         controller: controller.firstNameController,
-                        labelText: 'First Name',
+                        labelText: 'consform8'.tr,
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
@@ -106,7 +106,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                       visible: !controller.isConsultForYou.value,
                       child: CustomTextFormField(
                         controller: controller.lastNameController,
-                        labelText: 'Last Name',
+                        labelText: 'consform9'.tr,
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
@@ -123,7 +123,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           width: 160,
                           child: CustomTextFormField(
                             controller: controller.ageController,
-                            labelText: 'Age',
+                            labelText: 'consform3'.tr,
                             validator: Validator().notEmpty,
                             keyboardType: TextInputType.number,
                             //* for improvement: pwede ta pag click sa done
@@ -144,7 +144,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                                 await controller.nextButton();
                               }
                             },
-                            text: 'Next',
+                            text: 'consform4'.tr,
                             buttonColor: verySoftBlueColor,
                           ),
                         ),

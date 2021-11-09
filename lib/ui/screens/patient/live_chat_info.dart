@@ -59,7 +59,7 @@ class LiveChatInfoScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 verticalSpace35,
-                Text('Consultation Info',
+                Text('livechat'.tr,
                     textAlign: TextAlign.left,
                     style:
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
@@ -67,9 +67,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                     SizedBox(
                       width: 170,
-                      child: Text('Patient',
+                      child: Text('chat1'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
                     ),
                     SizedBox(
@@ -86,9 +86,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                     SizedBox(
                       width: 170,
-                      child: Text('Age of Patient',
+                      child: Text('chat2'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
                     ),
                     SizedBox(
@@ -105,9 +105,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 170,
-                      child: Text('Date Requested',
+                      child: Text('chat3'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
                     ),
                     SizedBox(
@@ -125,9 +125,9 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 170,
-                      child: Text('Consultation Started',
+                      child: Text('chat4'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
                     ),
                     SizedBox(

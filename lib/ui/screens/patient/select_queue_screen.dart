@@ -24,7 +24,7 @@ class SelectQueueScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           verticalSpace20,
-          Text('Select to view your queue ', style: subtitle20Medium),
+          Text('slctQS'.tr, style: subtitle20Medium),
           verticalSpace20,
           Align(
             alignment: Alignment.bottomCenter,
@@ -35,7 +35,7 @@ class SelectQueueScreen extends StatelessWidget {
                 onTap: () {
                   Get.to(() => QueueConsScreen());
                 },
-                text: 'CONSULTATION',
+                text: 'btnq1'.tr,
                 buttonColor: verySoftBlueColor[80],
               ),
             ),
@@ -50,7 +50,7 @@ class SelectQueueScreen extends StatelessWidget {
                 onTap: () {
                   Get.to(() => QueueMAScreen());
                 },
-                text: 'PSWD MA',
+                text: 'btnq2'.tr,
                 buttonColor: verySoftBlueColor[80],
               ),
             ),

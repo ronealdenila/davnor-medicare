@@ -30,18 +30,18 @@ class VerificationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'To Verify Your Account',
+              Text(
+                'verification'.tr,
                 style: title24Bold,
               ),
               verticalSpace10,
-              const Text(
-                verificationDescription,
+              Text(
+                'verifi1'.tr,
                 style: body14Regular,
               ),
               verticalSpace35,
-              const Text(
-                'Upload Valid ID or Brgy. Certificate',
+              Text(
+                'verifi2'.tr,
                 style: body16Regular,
               ),
               verticalSpace10,
@@ -61,8 +61,8 @@ class VerificationScreen extends StatelessWidget {
                 ),
               ),
               verticalSpace25,
-              const Text(
-                'Upload Valid ID or Brgy. Certificate with selfie',
+              Text(
+                'verifi3'.tr,
                 style: body16Regular,
               ),
               verticalSpace10,
@@ -88,7 +88,7 @@ class VerificationScreen extends StatelessWidget {
                   width: 211,
                   child: CustomButton(
                     onTap: verificationController.submitVerification,
-                    text: 'Submit',
+                    text: 'verifi5'.tr,
                     buttonColor: verySoftBlueColor,
                   ),
                 ),
@@ -114,7 +114,7 @@ class VerificationScreen extends StatelessWidget {
             ),
             verticalSpace10,
             Text(
-              'Upload here',
+              'verifi4'.tr,
               style: subtitle18RegularNeutral,
             )
           ],
@@ -166,7 +166,7 @@ class VerificationScreen extends StatelessWidget {
             ),
             verticalSpace10,
             Text(
-              'Upload here',
+              'verifi4'.tr,
               style: subtitle18RegularNeutral,
             )
           ],

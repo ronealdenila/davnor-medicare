@@ -45,9 +45,9 @@ class MADescriptionScreen extends StatelessWidget {
                     Text(madescriptionParagraph1, style: body16Regular),
                   ],
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text(madescriptionParagraph2,
+                  child: Text('medicalasssistance'.tr,
                       textAlign: TextAlign.justify, style: body14Regular),
                 ),
                 Row(
@@ -56,15 +56,15 @@ class MADescriptionScreen extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(
-                        'REQUIREMENTS',
+                      child: Text(
+                        'ma1'.tr,
                         style: body14SemiBold,
                       ),
                     ),
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(
-                        'WHERE TO SECURE',
+                      child: Text(
+                        'ma4'.tr,
                         style: body14SemiBold,
                       ),
                     ),
@@ -79,13 +79,13 @@ class MADescriptionScreen extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(madescriptionParagraph3,
+                      child: Text('ma2'.tr,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(madescriptionParagraph4,
+                      child: Text('ma5'.tr,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
@@ -100,35 +100,35 @@ class MADescriptionScreen extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(madescriptionParagraph5,
+                      child: Text('ma3'.tr,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
                     SizedBox(
                       width: screenWidthPercentage(context, percentage: .4),
-                      child: const Text(madescriptionParagraph6,
+                      child: Text('ma6'.tr,
                           textAlign: TextAlign.justify,
                           style: caption12Regular),
                     ),
                   ],
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text('SCHEDULE',
+                  child: Text('ma7'.tr,
                       textAlign: TextAlign.justify, style: body14SemiBold),
                 ),
                 Row(
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
-                          Text('Morning',
+                        children:  <Widget>[
+                          Text('ma8'.tr,
                               textAlign: TextAlign.left,
                               style: caption12SemiBold),
                           SizedBox(
                             height: 5,
                           ),
-                          Text('Afternoon',
+                          Text('ma9'.tr,
                               textAlign: TextAlign.left,
                               style: caption12SemiBold),
                         ]),
@@ -170,8 +170,8 @@ class MADescriptionScreen extends StatelessWidget {
                 if (controller.hasAvailableSlot()) {
                   //check activeQueue/slot/fund
                   return showConfirmationDialog(
-                    dialogTitle: dialog2Title,
-                    dialogCaption: dialog2Caption,
+                    dialogTitle: 'dialog2'.tr,
+                    dialogCaption: 'dialogsub2'.tr,
                     onYesTap: () {
                       controller.isMAForYou.value = true;
                       Get.to(() => MAFormScreen());
@@ -183,9 +183,8 @@ class MADescriptionScreen extends StatelessWidget {
                   );
                 } else {
                   showErrorDialog(
-                    errorTitle: 'No Slot Available',
-                    errorDescription:
-                        'Sorry, there are no available slots at the moment. Please try again next time',
+                    errorTitle: 'maerror'.tr,
+                    errorDescription: 'maerror2'.tr,
                   );
                 }
               } else {
@@ -197,18 +196,18 @@ class MADescriptionScreen extends StatelessWidget {
           } else {
             showErrorDialog(
                 errorTitle:
-                    'Sorry, you still have an on progress MA request transaction',
+                    'maerror3'.tr,
                 errorDescription:
-                    'Please proceed to your existing consultation');
+                    'action6'.tr);
           }
         } else {
           showErrorDialog(
-              errorTitle: 'Sorry, only verified users can use this feature',
+              errorTitle: 'action7'.tr,
               errorDescription:
-                  'Please verify your account first in your profile');
+                  'action8'.tr);
         }
       },
-      text: 'Avail Medical Assistance',
+      text: 'ma10'.tr,
       buttonColor: verySoftBlueColor,
       fontSize: 20,
     );
@@ -216,8 +215,8 @@ class MADescriptionScreen extends StatelessWidget {
 
   void showDialog() {
     return showConfirmationDialog(
-      dialogTitle: dialog2Title,
-      dialogCaption: dialog2Caption,
+      dialogTitle: 'dialog2'.tr,
+      dialogCaption: 'dialogsub2'.tr,
       onYesTap: () {
         controller.isMAForYou.value = true;
         Get.to(() => MAFormScreen());

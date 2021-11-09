@@ -34,14 +34,14 @@ class ConsHistoryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     verticalSpace20,
-                    const Text('Consultation History', style: title24BoldWhite),
+                    Text('conshistory'.tr, style: title24BoldWhite),
                     verticalSpace15,
                     InkWell(
                       onTap: () {
                         if (consHController.isLoading.value) {
-                          print('Dialog for: please wait, fetching record...');
+                          print('conslog'.tr);
                         } else if (consHController.consHistory.isEmpty) {
-                          print('Dialog for: you have no consultation history');
+                          print('conslog1'.tr);
                         } else {
                           consHController.showDialog(context);
                         }
@@ -62,7 +62,7 @@ class ConsHistoryScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Search by date',
+                                'conslog2'.tr,
                                 style:
                                     body14Medium.copyWith(color: Colors.white),
                               ),
@@ -117,7 +117,7 @@ class ConsHistoryScreen extends StatelessWidget {
     if (consHController.consHistory.isEmpty &&
         !consHController.isLoading.value) {
       return const Text(
-        'No Consultation History',
+        'conslog3',
         textAlign: TextAlign.center,
         style: body14Medium,
       );

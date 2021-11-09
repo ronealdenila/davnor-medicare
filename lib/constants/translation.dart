@@ -10,6 +10,12 @@ class LocalString extends Translations {
           'action2': 'Request Medical Assistance',
           'action3': 'View\nQueue',
           'action4': 'See All',
+          'action5': 'Sorry, you still have an on progress consultation transaction',
+          'action6': 'Please proceed to your existing consultation',
+          'action7': 'Sorry, only verified users can use this feature',
+          'action8': 'Please verify your account first in your profile',
+          'action9': 'You have no current consultation',
+          'action10': 'Please request consultation first',
           //dialog1
           'dialog1': 'Is the consultation for you?',
           'dialogsub1':
@@ -17,7 +23,7 @@ class LocalString extends Translations {
           'dialogbtn1': 'YES',
           'dialogbtn01': 'NO',
           //ConsFormY
-          'consform': 'Where are you experiencing discomfort?',
+          'consform': 'What kind of discomfort are you experiencing?',
           'consform1': 'What type of consultation?',
           'consformi': 'Follow-up',
           'consformii': 'New Consultation',
@@ -25,7 +31,7 @@ class LocalString extends Translations {
           'consform3': 'Age',
           'consform4': 'Next',
           //ConsForm
-          'consform5': 'Where are you experiencing discomfort?',
+          'consform5': 'What kind of discomfort are you experiencing?',
           'consform6': 'What type of consultation?',
           'consformsub1': 'Follow-up',
           'consformsub2': 'New Consultation',
@@ -39,6 +45,7 @@ class LocalString extends Translations {
           'consform13': 'Tell us more about the discomfort',
           'consform14': 'Consult Now',
           'consform15': 'Next',
+          'consformlabel': 'Enter your description here',
           //consform3
           'consform16': 'Upload past prescription or laboratory results',
           'consform17':
@@ -62,13 +69,15 @@ class LocalString extends Translations {
           'ma4': 'WHERE TO SECURE',
           'ma5':
               'Client himself /herself and/or Barangay where the client resides',
-
           'ma6':
               'Any National Government and District Hospitals of Davao del Norte such as: DRMC, SPMC, 3 District Hospitals (Kapalong Zone, Samal Zone and Carmen Zone), CHO, MHO, PHO and PGH',
           'ma7': 'Schedule',
           'ma8': 'Morning',
           'ma9': 'Afternoon',
           'ma10': 'Avail Medical Assistance',
+          'maerror': 'No Slot Available',
+          'maerror2': 'Sorry, there are no available slots at the moment. Please try again next time',
+          'maerror3': 'Sorry, you still have an on progress MA request transaction',
           //Dialog2
           'dialog2': 'Is the medical assistance request for you?',
           'dialogsub2':
@@ -106,9 +115,10 @@ class LocalString extends Translations {
               'Your priority number is MA24 Please check the queue and wait for your turn. Thank you',
           'dialogbtn5': 'Got it',
           //Profile
-          'profile': 'Status',
+          'profile': 'STATUS',
           'profile1': 'Click here to get verified',
           'profile2': 'Change Password',
+          'profile3': 'YOUR ATTACHED PHOTOS',
           //Verification
           'verification': 'To Verify Your Account',
           'verifi1':
@@ -122,7 +132,7 @@ class LocalString extends Translations {
           'dialogsub6': 'We will verify your account 24hrs. Thank you',
           'dialogbtn6': 'Got it!',
           //Dialog 3 No Queue
-          'dialog3': 'Sorry you have no queue',
+          'dialog3': 'Sorry you have no queue number',
           'dialogsub3':
               'You need to request consultation or medical assistance to be in a queue.',
           'dialogbtn3': 'Okay',
@@ -134,21 +144,26 @@ class LocalString extends Translations {
           'queue1': 'YOUR  QUEUE NUMBER',
           'queue2': 'SERVING NOW',
           'queue3': 'More info',
-          'queue4': '27 PEOPLE WAITING',
+          'queue4': 'PEOPLE WAITING',
           //Has Queue-MA
           'maqueue1': 'YOUR  QUEUE NUMBER',
           'maqueue2': 'SERVING NOW',
           'maqueue3': 'More info',
-          'maqueue4': '27 PEOPLE WAITING',
+          'maqueue4': ' PEOPLE WAITING',
           //QueueInfo
-          'queue6': 'Number',
-          'queue7': 'Queue number',
+          'queue6': 'No.',
+          'queue7': 'Queue No.',
           'queue8': 'Previous',
           'queue9': 'Next',
+          'queue5': 'There are no queue',
           //Cons History
           'conshistory': 'Consultation History',
           'cons1': 'Month',
           'cons2': 'Day',
+          'conslog': 'Dialog for: please wait, fetching record...',
+          'conslog1': 'Dialog for: you have no consultation history',
+          'conslog2': 'Search by date',
+          'conslog3': 'No Consultation History',
           //Cons History Info
           'conshistory1': 'Consultation Info',
           'cons3': 'Patient',
@@ -166,6 +181,7 @@ class LocalString extends Translations {
           'mahistory': 'Medical Assistance History',
           'mah1': 'Month',
           'mah2': 'Day',
+          'mahrec': 'You have no Medical Assistance (MA) record',
           //MA History Info
           'mahistory1': 'Patient Information',
           'mah3': 'Patient Name',
@@ -179,7 +195,12 @@ class LocalString extends Translations {
           'mah11': 'Medecine Worth',
           'mah12': 'Date Requested',
           'mah13': 'Date MA Claimed',
-          'mah14': 'See attached Photos'
+          'mah14': 'See attached Photos',
+          //articleItem
+          'item': 'See original source here:',
+          //Notifications
+          'notification': 'Notifications',
+          'notif': 'You have no notifications'
         },
 
         //TAGALOG
@@ -189,6 +210,12 @@ class LocalString extends Translations {
           'action2': 'Humiling ng Tulong Medikal',
           'action3': 'Tignan ang  Queue',
           'action4': 'Tignan lahat',
+          'action5': 'Paumanhin, mayroon ka pa ring patuloy na transaksyon ng konsultasyon',
+          'action6': 'Mangyaring magpatuloy sa iyong kasalukuyang konsultasyon',
+          'action7': 'Paumanhin, ang mga na-verify na user lang ang makakagamit ng feature na ito',
+          'action8': 'Paki-verify muna ang iyong account sa iyong profile',
+          'action9': 'Wala kang kasalukuyang konsultasyon',
+          'action10': 'PMangyaring humiling ng konsultasyon muna',
           //dialog1
           'dialog1': 'Ang konsulta ba ay para sa iyo?',
           'dialogsub1':
@@ -196,7 +223,7 @@ class LocalString extends Translations {
           'dialogbtn1': 'OO',
           'dialogbtn01': 'HINDI',
           //consformY
-          'consform': 'Saan ka nakakaranas ng ibang pakiramdam?',
+          'consform': 'Anong uri ng ibang pakiramdam ang iyong nararanasan?',
           'consform1': 'Anong uri ng konsulta?',
           'consformi': 'Magfollow-up',
           'consformii': 'Bagong Konsulta',
@@ -204,7 +231,7 @@ class LocalString extends Translations {
           'consform3': 'Edad',
           'consform4': 'Susunod',
           //consform
-          'consform5': 'Saan ka nakakaranas ng ibang pakiramdam?',
+          'consform5': 'Anong uri ng ibang pakiramdam ang iyong nararanasan?',
           'consform6': 'Anong uri ng konsulta?',
           'consformsub1': 'Magfollow-up',
           'consformsub2': 'Bagong Konsulta',
@@ -218,6 +245,7 @@ class LocalString extends Translations {
           'consform13': 'Sabihin sa amin ang higit pa tungkol sa dinadamdam',
           'consform14': 'Kumunsulta Ngayon',
           'consform15': 'Susunod',
+          'consformlabel': 'Ilagay ang iyong paglalarawan dito',
           //consform3
           'consform16':
               'Mag-upload ng nakaraang mga resulta sa reseta o laboratoryo',
@@ -247,6 +275,9 @@ class LocalString extends Translations {
           'ma8': 'Umaga',
           'ma9': 'Hapon',
           'ma10': 'Kumuha ng Tulong Medikal',
+          'maerror': 'Wala ng bakante',
+          'maerror2': 'Paumanhin, walang ng bakante sa ngayon. Pakisubukang muli sa susunod',
+          'maerror3': 'Paumanhin, mayroon ka pa ring kasulukuyang transaksyon sa kahilingan sa MA',
           //Dialog2
           'dialog2': 'Ang kahilingan ba sa tulong medikal para sa iyo?',
           'dialogsub2':
@@ -287,6 +318,7 @@ class LocalString extends Translations {
           'profile': 'Status',
           'profile1': 'I-click ito upang ma-verify',
           'profile2': 'Palitang ang Password',
+          'profile3': 'Ang iyong kalakip na litrato',
           //Verification
           'verification': 'Upang Mapatunayan ang Iyong Account',
           'verifi1':
@@ -311,12 +343,12 @@ class LocalString extends Translations {
           'btnq1': 'KONSULTASYON',
           'btnq2': 'PSWD MA',
           //Has Queue-Cons
-          'queue1': 'Iyong numero ng QUEUE (YOUR  QUEUE NUMBER)',
+          'queue1': 'Iyong numero ng QUEUE',
           'queue2': 'SERVING NOW',
           'queue3': 'Karagdagang impormasyon',
-          'queue4': '27 taong naghihintay',
+          'queue4': ' taong naghihintay',
           //Has Queue-MA
-          'maqueue1': 'Iyong numero ng QUEUE (YOUR  QUEUE NUMBER)',
+          'maqueue1': 'Iyong numero ng QUEUE',
           'maqueue2': 'SERVING NOW',
           'maqueue3': 'Karagdagang impormasyon',
           'maqueue4': 'taong naghihintay',
@@ -325,10 +357,15 @@ class LocalString extends Translations {
           'queue7': 'Queue No.',
           'queue8': 'Ibalik',
           'queue9': 'sunod',
+          'queue5': 'Walang queue',
           //Cons History
           'conshistory': 'Consultation History',
           'cons1': 'Buwan',
           'cons2': 'Araw',
+          'conslog': 'Diyalogo para sa: mangyaring maghintay, kumukuha ng record...',
+          'conslog1': 'Diyalogo para sa: wala kang history ng konsultasyon',
+          'conslog2': 'Maghanap ayon sa petsa',
+          'conslog3': 'No Consultation History',
           //Cons History Info
           'conshistory1': 'Impormasyon ng Konsultasyon',
           'cons3': 'Pasyente',
@@ -346,6 +383,7 @@ class LocalString extends Translations {
           'mahistory': 'Medical Assistance History',
           'mah1': 'Buwan',
           'mah2': 'Araw',
+          'mahrec': 'Wala kang rekord ng Medical Assistance (MA)',
           //MA History Info
           'mahistory1': 'Impormasyon ng Pasyente',
           'mah3': 'Pangalan ng Pasysente',
@@ -359,7 +397,14 @@ class LocalString extends Translations {
           'mah11': 'Nagkakahalaga ang gamot',
           'mah12': 'Kailan humiling',
           'mah13': 'Kailan kinuha ang MA',
-          'mah14': 'Tingnan ang kalakip na Mga Larawan'
+          'mah14': 'Tingnan ang kalakip na mga Larawan',
+          //articleItem
+          'item': 'Tingnan ang orihinal na pinagmulan dito:',
+          'item1': 'Articles',
+          //Notifications
+          'notification': 'Mga abiso',
+          'notif': 'Wala kang abiso'
+
         },
 
         //BISAYA
@@ -369,6 +414,12 @@ class LocalString extends Translations {
           'action2': 'Mag-request ug tabang medikal',
           'action3': 'Tan-awon ang queue',
           'action4': 'Tan-awon tanan',
+          'action5': 'Pasensya, anaa pakay transakyon sa konsulta',
+          'action6': 'Palihug adto sa imung anaa na konsulta',
+          'action7': 'Pasensya, ang napamatud-an nga tiggamit lamang ang makagamit niini nga bahin',
+          'action8': 'Palihug i-verify una ang imong account sa imong profile',
+          'action9': 'Wala ka karon nga konsultasyon',
+          'action10': 'Palihug hangyo og konsultasyon una',
           //dialog1
           'dialog1': 'Para nimu ang konsulta?',
           'dialogsub1':
@@ -376,7 +427,7 @@ class LocalString extends Translations {
           'dialogbtn1': 'OO',
           'dialogbtn01': 'DILI',
           //consformY
-          'consform': 'Asa dapit sa kalawasan nimu ang laeng ginabati?',
+          'consform': 'Unsa nga klase ang ginabati nimu sa imu lawas?',
           'consform1': 'Unsa nga konsulta imu kinahanglan?',
           'consformi': 'Magpafollow-up',
           'consformii': 'Bag-o nga Konsulta',
@@ -384,7 +435,7 @@ class LocalString extends Translations {
           'consform3': 'Edad',
           'consform4': 'Sunod',
           //consform
-          'consform5': 'Asa dapit sa kalawasan nimu ang laeng ginabati?',
+          'consform5': 'Unsa nga klase ang ginabati nimu sa imu lawas?',
           'consform6': 'Unsa nga konsulta imu kinahanglan?',
           'consformsub1': 'Magpafollow-up',
           'consformsub2': 'Bag-o nga Konsulta',
@@ -398,6 +449,7 @@ class LocalString extends Translations {
           'consform13': 'Isulti pa diri ang laeng ginabati nimu',
           'consform14': 'Magpa konsulta na',
           'consform15': 'Sunod',
+          'consformlabel': 'Ibutang ang imong paghulagway dinhi',
           //consform3
           'consform16':
               'I-upload diria ang niaging reseta o resulta sa laboratory',
@@ -427,6 +479,9 @@ class LocalString extends Translations {
           'ma8': 'Buntag',
           'ma9': 'Udto',
           'ma10': 'Magkuha ug Tabang Medikal',
+          'maerror': 'Walay Slot nga anaa',
+          'maerror2': 'Pasensya, wala’y magamit nga mga slot sa pagkakaron. Palihug sulayi pag-usab sa sunod',
+          'maerror3': 'Pasensya, naa pakay gihapung transaksyon sa MA na imu gihango',
           //Dialog2
           'dialog2': 'Ang pagkuha bag tabang medikal ay para nimu?',
           'dialogsub2':
@@ -467,6 +522,7 @@ class LocalString extends Translations {
           'profile': 'Status',
           'profile1': 'Pag-klik dinhi aron mapamatud-an imuhang account',
           'profile2': 'Bag-oha ang imung password',
+          'profile3': 'Imong gilakip na hulagway',
           //Verification
           'verification': 'Aron mapanghimatuud ang imong Account',
           'verifi1':
@@ -490,25 +546,30 @@ class LocalString extends Translations {
           'btnq1': 'KONSULTASYON',
           'btnq2': 'PSWD MA',
           //Has Queue-Cons
-          'queue1': 'YOUR  QUEUE NUMBER',
+          'queue1': 'Imong  QUEUE NUMBER',
           'queue2': 'SERVING NOW',
           'queue3': 'Dungag na impormasyon',
-          'queue4': '27 katao ang naghulat',
+          'queue4': 'katao ang naghulat',
           //Has Queue-MA
-          'maqueue1': 'YOUR  QUEUE NUMBER',
+          'maqueue1': 'Imong  QUEUE NUMBER',
           'maqueue2': 'SERVING NOW',
           'maqueue3': 'Dungag na impormasyon',
-          'maqueue4': '27 katao ang naghulat',
+          'maqueue4': 'katao ang naghulat',
           //QueueInfo
           'queue6': 'No',
           'queue7': 'Queue No.',
           'queue8': 'Balik',
           'queue9': 'Sunod',
+          'queue5': 'Walay queue',
           //Cons History
           'conshistory': 'Consultation History',
           'cons1': 'Bulan',
           'cons2': 'Adlaw',
-          //Cons History Info
+          'conslog': 'Dialog for: please wait, fetching record...',
+          'conslog1': 'Dialog for: you have no consultation history',
+          'conslog2': 'Search by date',
+          'conslog3': 'No Consultation History',
+          //Cons History Info2
           'conshistory1': 'Impormasyon sa konsulta',
           'cons3': 'Pasyente',
           'cons4': 'Edad sa Pasyente',
@@ -525,6 +586,7 @@ class LocalString extends Translations {
           'mahistory': 'Medical Assistance History',
           'mah1': 'Bulan',
           'mah2': 'Adlaw',
+          'mahrec': 'Wala kay rekord sa Medical Assistance (MA)',
           //MA History Info
           'mahistory1': 'Impormasyon sa Pasyente',
           'mah3': 'Pangalan sa Pasyente',
@@ -538,7 +600,13 @@ class LocalString extends Translations {
           'mah11': 'Tagpila ang tambal?',
           'mah12': 'Kanus-a nangayo',
           'mah13': 'Kanus-a gikuha ang MA',
-          'mah14': 'Tan-awa ang gilakip nga mga Litrato'
+          'mah14': 'Tan-awa ang gilakip nga mga Litrato',
+          //articleItem
+          'item': 'Tan-awon ang orihinal nga tinubdan dinhi:',
+          'item1': 'Article',
+          //Notifications
+          'notification': 'Pahibalo',
+          'notif': 'Wala kay nadawat na pahibalo'
         }
       };
 }

@@ -36,10 +36,10 @@ class MAFormScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(
+                  SizedBox(
                     width: 255,
                     child: Text(
-                      'Patients Information',
+                      'details'.tr,
                       style: subtitle20Medium,
                     ),
                   ),
@@ -62,8 +62,8 @@ class MAFormScreen extends StatelessWidget {
               //please utilize it.
               child: TextFormField(
                 controller: ma.firstNameController,
-                decoration: const InputDecoration(
-                  labelText: 'First Name',
+                decoration: InputDecoration(
+                  labelText: 'maform4'.tr,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
@@ -81,8 +81,8 @@ class MAFormScreen extends StatelessWidget {
               visible: !ma.isMAForYou.value,
               child: TextFormField(
                 controller: ma.lastNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Last Name',
+                decoration: InputDecoration(
+                  labelText: 'maform2'.tr,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
@@ -98,8 +98,8 @@ class MAFormScreen extends StatelessWidget {
             verticalSpace10,
             TextFormField(
               controller: ma.addressController,
-              decoration: const InputDecoration(
-                labelText: 'Address',
+              decoration: InputDecoration(
+                labelText: 'maform3'.tr,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -119,8 +119,8 @@ class MAFormScreen extends StatelessWidget {
                   width: 145,
                   child: TextFormField(
                     controller: ma.ageController,
-                    decoration: const InputDecoration(
-                      labelText: 'Age',
+                    decoration:  InputDecoration(
+                      labelText: 'maform4'.tr,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
@@ -139,7 +139,7 @@ class MAFormScreen extends StatelessWidget {
                   width: 180,
                   height: 70,
                   child: CustomDropdown(
-                    hintText: 'Select Gender',
+                    hintText: 'maform5'.tr,
                     dropdownItems: gender,
                     onChanged: (Item? item) => ma.gender.value = item!.name,
                     onSaved: (Item? item) => ma.gender.value = item!.name,
@@ -154,7 +154,7 @@ class MAFormScreen extends StatelessWidget {
                 width: screenWidth(context),
                 height: 60,
                 child: CustomDropdown(
-                  hintText: 'Select Type',
+                  hintText: 'maform6'.tr,
                   dropdownItems: type,
                   onChanged: (Item? item) => ma.type.value = item!.name,
                   onSaved: (Item? item) => ma.type.value = item!.name,
@@ -167,8 +167,8 @@ class MAFormScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    maFormScreen,
+                  Text(
+                    'maform7'.tr,
                     style: subtitle20Medium,
                   ),
                   verticalSpace10,
@@ -199,7 +199,7 @@ class MAFormScreen extends StatelessWidget {
                 width: 160,
                 child: CustomButton(
                   onTap: ma.nextButton,
-                  text: 'Next',
+                  text: 'maform9'.tr,
                   buttonColor: verySoftBlueColor,
                 ),
               ),
@@ -225,7 +225,7 @@ class MAFormScreen extends StatelessWidget {
             ),
             verticalSpace10,
             Text(
-              'Upload here',
+              'maform12'.tr,
               style: subtitle18RegularNeutral,
             )
           ],

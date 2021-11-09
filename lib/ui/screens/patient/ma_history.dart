@@ -37,7 +37,7 @@ class MAHistoryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     verticalSpace20,
-                    const Text('Medical Assistance History',
+                    Text('mahistory'.tr,
                         style: title24BoldWhite),
                     verticalSpace15,
                     InkWell(
@@ -66,7 +66,7 @@ class MAHistoryScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Search by date',
+                                'conslog2'.tr,
                                 style:
                                     body14Medium.copyWith(color: Colors.white),
                               ),
@@ -119,8 +119,8 @@ class MAHistoryScreen extends StatelessWidget {
       );
     }
     if (maHController.maHistoryList.isEmpty && !maHController.isLoading.value) {
-      return const Text(
-        'You have no Medical Assistance (MA) record',
+      return Text(
+        'mahrec'.tr,
         textAlign: TextAlign.center,
         style: body14Medium,
       );

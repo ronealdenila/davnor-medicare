@@ -27,13 +27,13 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Almost there!',
+              Text(
+                'consform12'.tr,
                 style: title40Regular,
               ),
               verticalSpace50,
-              const Text(
-                'Tell us more about the discomfort',
+              Text(
+                'consform13'.tr,
                 style: subtitle18Regular,
               ),
               verticalSpace18,
@@ -48,8 +48,8 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
                     //   return 'Description must be at least 10 words';
                     // }
                   },
-                  decoration: const InputDecoration(
-                    labelText: 'Enter your description here',
+                  decoration: InputDecoration(
+                    labelText: 'consformlabel'.tr,
                     alignLabelWithHint: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -77,7 +77,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
                           await controller.submitConsultRequest();
                         }
                       },
-                      text: 'Consult Now',
+                      text: 'consform14'.tr,
                       buttonColor: verySoftBlueColor,
                     ),
                   ),
@@ -97,7 +97,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
                             await Get.to(() => ConsForm3Screen());
                           }
                         },
-                        text: 'Next',
+                        text: 'consform15'.tr,
                         buttonColor: verySoftBlueColor,
                       ),
                     ),
