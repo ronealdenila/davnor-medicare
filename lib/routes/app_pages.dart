@@ -291,10 +291,10 @@ class AppPages {
       name: _Paths.PSWD_STAFF_REGISTRATION,
       page: () => PSWDStaffRegistrationScreen(),
     ),
-    GetPage(
-      name: _Paths.VERIFICATION_REQ_ITEM,
-      page: () => VerificationReqItemScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.VERIFICATION_REQ_ITEM,
+    //   page: () => VerificationReqItemScreen(),
+    // ),
     GetPage(
       name: _Paths.VERIFICATION_REQ_LIST,
       page: () => VerificationReqListScreen(),
@@ -303,10 +303,10 @@ class AppPages {
       name: _Paths.ADMIN_PROFILE,
       page: () => AdminProfileScreen(),
     ),
-    GetPage(
-      name: _Paths.EDIT_PSWD_STAFF,
-      page: () => EditPSWDStaffScrenn(),
-    ),
+    // GetPage(
+    //   name: _Paths.EDIT_PSWD_STAFF,
+    //   page: () => EditPSWDStaffScrenn(),
+    // ),
     GetPage(
       name: _Paths.DOCTOR_LIST,
       page: () => DoctorListScreen(),

@@ -217,31 +217,34 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                 ActionCard(
                                   text: 'Register a doctor',
                                   onTap: () {
-                                    Get.dialog(
-                                      Dialog(
-                                        elevation: 0,
-                                        backgroundColor: Colors.transparent,
-                                        child: Container(
-                                          height: 800,
-                                          width: 1300,
-                                          padding: const EdgeInsets.only(
-                                            top: 18,
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                              top: 13, right: 8),
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: <BoxShadow>[
-                                              BoxShadow(
-                                                color: Colors.black26,
-                                              ),
-                                            ],
-                                          ),
-                                          child: DoctoRegistrationForm(),
-                                        ),
-                                      ),
-                                      barrierDismissible: false,
-                                    );
+                                    //NAVIGATE TO REGISTER DOCTOR SCREEN
+                                    navigationController
+                                        .navigateTo(Routes.DOCTOR_REGISTRATION);
+                                    // Get.dialog(
+                                    //   Dialog(
+                                    //     elevation: 0,
+                                    //     backgroundColor: Colors.transparent,
+                                    //     child: Container(
+                                    //       height: 800,
+                                    //       width: 1300,
+                                    //       padding: const EdgeInsets.only(
+                                    //         top: 18,
+                                    //       ),
+                                    //       margin: const EdgeInsets.only(
+                                    //           top: 13, right: 8),
+                                    //       decoration: const BoxDecoration(
+                                    //         color: Colors.white,
+                                    //         boxShadow: <BoxShadow>[
+                                    //           BoxShadow(
+                                    //             color: Colors.black26,
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //       child: DoctoRegistrationForm(),
+                                    //     ),
+                                    //   ),
+                                    //   barrierDismissible: false,
+                                    // );
                                   },
                                   color: verySoftMagenta[60],
                                   secondaryColor: verySoftMagentaCustomColor,
@@ -249,31 +252,34 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                 ActionCard(
                                   text: 'Add a PSWD Personnel',
                                   onTap: () {
-                                    Get.dialog(
-                                      Dialog(
-                                        elevation: 0,
-                                        backgroundColor: Colors.transparent,
-                                        child: Container(
-                                          height: 800,
-                                          width: 1300,
-                                          padding: const EdgeInsets.only(
-                                            top: 18,
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                              top: 13, right: 8),
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: <BoxShadow>[
-                                              BoxShadow(
-                                                color: Colors.black26,
-                                              ),
-                                            ],
-                                          ),
-                                          child: PSWDRegistrationForm(),
-                                        ),
-                                      ),
-                                      barrierDismissible: false,
-                                    );
+                                    //NAVIGATE TO REGISTER PSWD SCREEN
+                                    navigationController.navigateTo(
+                                        Routes.PSWD_STAFF_REGISTRATION);
+                                    // Get.dialog(
+                                    //   Dialog(
+                                    //     elevation: 0,
+                                    //     backgroundColor: Colors.transparent,
+                                    //     child: Container(
+                                    //       height: 800,
+                                    //       width: 1300,
+                                    //       padding: const EdgeInsets.only(
+                                    //         top: 18,
+                                    //       ),
+                                    //       margin: const EdgeInsets.only(
+                                    //           top: 13, right: 8),
+                                    //       decoration: const BoxDecoration(
+                                    //         color: Colors.white,
+                                    //         boxShadow: <BoxShadow>[
+                                    //           BoxShadow(
+                                    //             color: Colors.black26,
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //       child: PSWDRegistrationForm(),
+                                    //     ),
+                                    //   ),
+                                    //   barrierDismissible: false,
+                                    // );
                                   },
                                   color: verySoftOrange[60],
                                   secondaryColor: verySoftOrangeCustomColor,
@@ -551,329 +557,6 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                                       color: kcNeutralColor,
                                     ),
                                   ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PSWDRegistrationForm extends GetView<PSWDRegistrationController> {
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: controller.formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DmText.title42Bold(
-                  'PSWD Staff Registration Form',
-                ),
-                verticalSpace15,
-                DmText.title32Bold(
-                  'Please fill  in the information of the PSWD Personnel.',
-                ),
-              ],
-            ),
-          ),
-          verticalSpace15,
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DmText.title24Medium(
-                          'Lastname',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        //TODO: Change into regular text field
-                        DmInputField(
-                          controller: controller.lastNameController,
-                          placeholder: 'Last Name',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                        verticalSpace20,
-                        DmText.title24Medium(
-                          'First Name',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        DmInputField(
-                          controller: controller.firstNameController,
-                          placeholder: 'First Name',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                        verticalSpace20,
-                        DmText.title24Medium(
-                          'Email Address',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        DmInputField(
-                          controller: controller.emailController,
-                          placeholder: 'Email Address',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(30),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DmText.title24Medium(
-                                'Position',
-                                color: const Color(
-                                  0xFF6A6565,
-                                ),
-                              ),
-                              verticalSpace15,
-                              CustomDropdown(
-                                hintText: 'Choose',
-                                dropdownItems: position,
-                                onChanged: (Item? item) =>
-                                    controller.position.value = item!.name,
-                                onSaved: (Item? item) =>
-                                    controller.position.value = item!.name,
-                              ),
-                              verticalSpace20,
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                height: 67,
-                                width: 260,
-                                child: DmButton(
-                                  title: 'ADD',
-                                  onTap: controller.registerPSWD,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 67,
-                                width: 260,
-                                child: DmButton.outline(
-                                  title: 'Cancel',
-                                  onTap: Get.back,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class DoctoRegistrationForm extends GetView<DoctorRegistrationController> {
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: controller.formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DmText.title42Bold(
-                  'Doctor Registration Form',
-                ),
-                verticalSpace15,
-                DmText.title32Bold(
-                  'Please fill  in the information of the  Doctor.',
-                ),
-              ],
-            ),
-          ),
-          verticalSpace15,
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DmText.title24Medium(
-                          'Lastname',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        //TODO: Change into regular text field
-                        DmInputField(
-                          controller: controller.lastNameController,
-                          placeholder: 'Last Name',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                        verticalSpace20,
-                        DmText.title24Medium(
-                          'First Name',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        DmInputField(
-                          controller: controller.firstNameController,
-                          placeholder: 'First Name',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                        verticalSpace20,
-                        DmText.title24Medium(
-                          'Email Address',
-                          color: const Color(
-                            0xFF6A6565,
-                          ),
-                        ),
-                        verticalSpace15,
-                        DmInputField(
-                          controller: controller.emailController,
-                          placeholder: 'Email Address',
-                          validator: Validator().notEmpty,
-                          isRequired: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(30),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DmText.title24Medium(
-                                'Title',
-                                color: const Color(
-                                  0xFF6A6565,
-                                ),
-                              ),
-                              verticalSpace15,
-                              CustomDropdown(
-                                hintText: 'Choose',
-                                dropdownItems: title,
-                                onChanged: (Item? item) =>
-                                    controller.title.value = item!.name,
-                                onSaved: (Item? item) =>
-                                    controller.title.value = item!.name,
-                              ),
-                              verticalSpace20,
-                              DmText.title24Medium(
-                                'Department',
-                                color: const Color(
-                                  0xFF6A6565,
-                                ),
-                              ),
-                              verticalSpace15,
-                              CustomDropdown(
-                                hintText:
-                                    'Which department(s) do you belong to?',
-                                dropdownItems: department,
-                                onChanged: (Item? item) =>
-                                    controller.department.value = item!.name,
-                                onSaved: (Item? item) =>
-                                    controller.department.value = item!.name,
-                              ),
-                              verticalSpace20,
-                              DmText.title24Medium(
-                                'Clinic Hours',
-                                color: const Color(
-                                  0xFF6A6565,
-                                ),
-                              ),
-                              verticalSpace15,
-                              DmInputField(
-                                controller: controller.clinicHours,
-                                placeholder: 'Clinic Hours',
-                                validator: Validator().notEmpty,
-                                isRequired: true,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                height: 67,
-                                width: 260,
-                                //TODO:(R) registered button has fix color
-                                //either create a new button or make a parameter
-                                //that ask for color
-                                child: DmButton(
-                                  title: 'ADD',
-                                  onTap: controller.registerDoctor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 67,
-                                width: 260,
-                                child: DmButton.outline(
-                                  title: 'Cancel',
-                                  onTap: Get.back,
                                 ),
                               ),
                             ],

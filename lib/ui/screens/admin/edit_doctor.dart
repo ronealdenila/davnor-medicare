@@ -15,20 +15,22 @@ import 'package:get/get.dart';
 final DoctorListController controller = Get.find();
 
 class EditDoctorScrenn extends StatelessWidget {
+  EditDoctorScrenn({Key? key, required this.passedData}) : super(key: key);
+  final DoctorModel passedData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SingleChildScrollView(child: ResponsiveView())),
+          child: SingleChildScrollView(child: ResponsiveView(passedData))),
     );
   }
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView() : super(alwaysUseBuilder: false);
-  final DoctorModel model = Get.arguments as DoctorModel;
+  ResponsiveView(this.model) : super(alwaysUseBuilder: false);
+  final DoctorModel model;
 
   @override
   Widget phone() => Column(

@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.da
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';

@@ -1,230 +1,188 @@
-import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/admin/doctor_registration_controller.dart';
+import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DoctorRegistrationScreen extends StatelessWidget {
+class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Colors.white,
-      body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SingleChildScrollView(child: ResponsiveView())),
+    return Form(
+      key: controller.formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DmText.title42Bold(
+                  'Doctor Registration Form',
+                ),
+                verticalSpace15,
+                DmText.title32Bold(
+                  'Please fill  in the information of the  Doctor.',
+                ),
+              ],
+            ),
+          ),
+          verticalSpace15,
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DmText.title24Medium(
+                          'Lastname',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
+                        ),
+                        verticalSpace15,
+                        //TODO: Change into regular text field
+                        DmInputField(
+                          controller: controller.lastNameController,
+                          placeholder: 'Last Name',
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'First Name',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
+                        ),
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.firstNameController,
+                          placeholder: 'First Name',
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'Email Address',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
+                        ),
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.emailController,
+                          placeholder: 'Email Address',
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DmText.title24Medium(
+                                'Title',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
+                              ),
+                              verticalSpace15,
+                              CustomDropdown(
+                                hintText: 'Choose',
+                                dropdownItems: title,
+                                onChanged: (Item? item) =>
+                                    controller.title.value = item!.name,
+                                onSaved: (Item? item) =>
+                                    controller.title.value = item!.name,
+                              ),
+                              verticalSpace20,
+                              DmText.title24Medium(
+                                'Department',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
+                              ),
+                              verticalSpace15,
+                              CustomDropdown(
+                                hintText:
+                                    'Which department(s) do you belong to?',
+                                dropdownItems: department,
+                                onChanged: (Item? item) =>
+                                    controller.department.value = item!.name,
+                                onSaved: (Item? item) =>
+                                    controller.department.value = item!.name,
+                              ),
+                              verticalSpace20,
+                              DmText.title24Medium(
+                                'Clinic Hours',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
+                              ),
+                              verticalSpace15,
+                              DmInputField(
+                                controller: controller.clinicHours,
+                                placeholder: 'Clinic Hours',
+                                validator: Validator().notEmpty,
+                                isRequired: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Wrap(
+                            children: [
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton(
+                                  title: 'REGISTER',
+                                  onTap: controller.registerDoctor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton.outline(
+                                  title: 'Cancel',
+                                  onTap: goBack,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
-}
 
-class ResponsiveView extends GetResponsiveView {
-  ResponsiveView() : super(alwaysUseBuilder: false);
-
-  //TODO(R): Try to achieve phone and tablet must have same view
-  @override
-  Widget phone() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              docInfo(),
-              verticalSpace25,
-              Column(
-                children: <Widget>[
-                  regDoctorInfo(),
-                  verticalSpace25,
-                  regDoctorInfop(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons()
-            ]),
-          )
-        ],
-      );
-
-  @override
-  Widget tablet() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              docInfo(),
-              verticalSpace25,
-              Column(
-                children: <Widget>[
-                  regDoctorInfo(),
-                  verticalSpace25,
-                  regDoctorInfop(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons()
-            ]),
-          )
-        ],
-      );
-
-  @override
-  Widget desktop() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: screen.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              docInfo(),
-              verticalSpace25,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  regDoctorInfo(),
-                  horizontalSpace80,
-                  regDoctorInfop(),
-                ],
-              ),
-              verticalSpace15,
-              screenButtons()
-            ]),
-          ),
-        ],
-      );
-
-  Widget screenButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        CustomButton(
-          onTap: () async {},
-          text: 'ADD',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
-        horizontalSpace40,
-        CustomButton(
-          onTap: () async {},
-          text: 'Cancel',
-          buttonColor: Colors.blue[900],
-          fontSize: 15,
-        ),
-      ],
-    );
-  }
-
-  Widget regDoctorInfo() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        'Last Name',
-        style: body14Medium,
-      ),
-      verticalSpace15,
-      SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-      const Text(
-        'First Name',
-        style: body14Medium,
-      ),
-      verticalSpace15,
-      SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-      const Text(
-        'Email Address',
-        style: body14Medium,
-      ),
-      verticalSpace15,
-      SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ]);
-  }
-
-  Widget regDoctorInfop() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        'Title',
-        style: body14Medium,
-      ),
-      verticalSpace15,
-      SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-      const Text(
-        'Department',
-        style: body14Medium,
-      ),
-      verticalSpace15,
-      SizedBox(
-        width: 340,
-        height: 90,
-        child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ]);
-  }
-
-  Widget docInfo() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text('Doctor Registration Form ',
-              textAlign: TextAlign.left, style: title24Bold),
-          verticalSpace10,
-          Text(doctorRegister,
-              textAlign: TextAlign.left, style: body16SemiBold),
-        ]);
+  Future<void> goBack() {
+    return navigationController.navigatorKey.currentState!
+        .popAndPushNamed('/dashboard');
   }
 }

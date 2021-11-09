@@ -2,7 +2,9 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_doctor.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -223,7 +225,10 @@ class DoctorListScreen extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                        navigationController.navigateToWithArgs(
+                            Routes.EDIT_DOCTOR,
+                            arguments: model);
+                        //Get.to(() => EditDoctorScrenn(), arguments: model);
                       },
                       child: Text(
                         'View',
@@ -234,7 +239,10 @@ class DoctorListScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         dListController.enableEditing.value = true;
-                        Get.to(() => EditDoctorScrenn(), arguments: model);
+                        navigationController.navigateToWithArgs(
+                            Routes.EDIT_DOCTOR,
+                            arguments: model);
+                        //Get.to(() => EditDoctorScrenn(), arguments: model);
                       },
                       child: Text(
                         'Edit',
