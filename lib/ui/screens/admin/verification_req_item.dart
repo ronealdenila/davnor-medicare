@@ -341,14 +341,6 @@ class ResponsiveView extends GetResponsiveView {
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [
-        // IconButton(
-        //   onPressed: () {
-        //     //downloadFile(imgURL);
-        //   },
-        //   icon: const Icon(
-        //     Icons.file_download_rounded,
-        //   ),
-        // ),
         Container(
           decoration: const BoxDecoration(
               color: Colors.transparent,
