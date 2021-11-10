@@ -41,8 +41,8 @@ class AppInfoScreen extends StatelessWidget {
               ),
               verticalSpace20,
               //sample app info
-             const Text(
-                'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people efficiently to connect to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
+              Text(
+                'appinfo'.tr,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -64,14 +64,31 @@ class AppInfoScreen extends StatelessWidget {
               style: caption18RegularNeutral
               ),
               verticalSpace18,
-              const Text('Credits:',
+              const Text('Ilenesses Icons from:',
                 textAlign: TextAlign.left,
                   style: subtitle18Bold,
                 ),
-                Text('https://icons8.com',
-              style: caption18RegularNeutral
+                
+              verticalSpace10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      icons8,
+                      fit: BoxFit.fill,
+                      height: 50,
+                      width: 70,
+                ),
+                  ),
+                  Text('Icons /n https://icons8.com',
+                style: caption18RegularNeutral
               ),
-              verticalSpace10,    
+
+                ],
+              )
+                  
             ]),
           )
         )

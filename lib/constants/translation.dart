@@ -200,7 +200,10 @@ class LocalString extends Translations {
           'item': 'See original source here:',
           //Notifications
           'notification': 'Notifications',
-          'notif': 'You have no notifications'
+          'notif': 'You have no notifications',
+          //appinfo
+          'appinfo': 
+                'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people efficiently to connect to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.'
         },
 
         //TAGALOG
@@ -403,8 +406,10 @@ class LocalString extends Translations {
           'item1': 'Articles',
           //Notifications
           'notification': 'Mga abiso',
-          'notif': 'Wala kang abiso'
-
+          'notif': 'Wala kang abiso',
+          //appinfo
+           'appinfo': 
+                'Ang DavNor Medicare ay isang multiplatform-based na aplikasyon na nag-aalok ng libreng online na konsultasyon at Tulong Medikal mula sa PSWD. Ang aplikasyon ay naglalayon na tulungan ang mga tao na mahusay na kumonekta sa mga doktor nang halos magkaroon ng regulasyon na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang aplikasyon nang walang anumang problema. At panghuli, ang mga residente lang ng Davao del Norte ang makakagamit ng aplikasyon.'
         },
 
         //BISAYA
@@ -606,7 +611,11 @@ class LocalString extends Translations {
           'item1': 'Article',
           //Notifications
           'notification': 'Pahibalo',
-          'notif': 'Wala kay nadawat na pahibalo'
-        }
+          'notif': 'Wala kay nadawat na pahibalo',
+          //appinfo
+          'appinfo': 
+                'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Tabang Medikal gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga episyente nga makakonektar sa mga doktor halos aron adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug sa katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.'
+          
+          }
       };
 }
