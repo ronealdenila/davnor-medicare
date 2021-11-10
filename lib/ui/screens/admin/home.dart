@@ -211,375 +211,361 @@ Widget desktopVersion() {
             ),
           ),
           Container(
-            child: Expanded(
-              child: Row(
-                children: [
-                  Container(
-                    // color: Colors.amber,
-                    margin: const EdgeInsets.all(25),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          // color: Colors.blue,
-                          child: DmText.title24Medium(
-                            'Actions',
-                            color: neutralColor,
-                          ),
+            child: Row(
+              children: [
+                Container(
+                  width: 220,
+                  margin: const EdgeInsets.all(25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        // color: Colors.blue,
+                        child: DmText.title24Medium(
+                          'Actions',
+                          color: neutralColor,
                         ),
-                        verticalSpace15,
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ActionCard(
-                                text: 'Register a doctor',
-                                onTap: () {
-                                  //NAVIGATE TO REGISTER DOCTOR SCREEN
-                                  navigationController
-                                      .navigateTo(Routes.DOCTOR_REGISTRATION);
-                                },
-                                color: verySoftMagenta[60],
-                                secondaryColor: verySoftMagentaCustomColor,
-                              ),
-                              ActionCard(
-                                text: 'Add a PSWD\nPersonnel',
-                                onTap: () {
-                                  //NAVIGATE TO REGISTER PSWD SCREEN
-                                  navigationController.navigateTo(
-                                      Routes.PSWD_STAFF_REGISTRATION);
-                                },
-                                color: verySoftOrange[60],
-                                secondaryColor: verySoftOrangeCustomColor,
-                              ),
-                              ActionCard(
-                                text: 'Verify User',
-                                onTap: () => navigationController
-                                    .navigateTo('/adm-verification-req-list'),
-                                color: verySoftRed[60],
-                                secondaryColor: verySoftRedCustomColor,
-                              ),
-                            ],
-                          ),
+                      ),
+                      verticalSpace15,
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ActionCard(
+                              text: 'Register a doctor',
+                              onTap: () {
+                                //NAVIGATE TO REGISTER DOCTOR SCREEN
+                                navigationController
+                                    .navigateTo(Routes.DOCTOR_REGISTRATION);
+                              },
+                              color: verySoftMagenta[60],
+                              secondaryColor: verySoftMagentaCustomColor,
+                            ),
+                            ActionCard(
+                              text: 'Add a PSWD\nPersonnel',
+                              onTap: () {
+                                //NAVIGATE TO REGISTER PSWD SCREEN
+                                navigationController
+                                    .navigateTo(Routes.PSWD_STAFF_REGISTRATION);
+                              },
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                            ),
+                            ActionCard(
+                              text: 'Verify User',
+                              onTap: () => navigationController
+                                  .navigateTo('/adm-verification-req-list'),
+                              color: verySoftRed[60],
+                              secondaryColor: verySoftRedCustomColor,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        verticalSpace25,
-                        DmText.title24Medium(
-                          'Davnor Medicare Data',
-                          color: kcNeutralColor,
-                        ),
-                        verticalSpace15,
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: Get.width * .7,
-                                        height: 470,
-                                        padding: const EdgeInsets.all(25),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), //color of shadow
-                                              spreadRadius: 5, //spread radius
-                                              blurRadius: 7, // blur radius
-                                              offset: const Offset(4,
-                                                  8), //  changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: 'As Of Now ',
-                                                      style: title32Bold.copyWith(
-                                                          color:
-                                                              kcNeutralColor),
-                                                    ),
-                                                    TextSpan(
-                                                      text:
-                                                          '(${appController.dateNow})',
-                                                      style: subtitle18Regular,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            // verticalSpace15,
-
-                                            DmText.subtitle18Regular(
-                                              medicareDataSubtitle,
-                                            ),
-                                            verticalSpace20,
-                                            Align(
-                                              child: AutoSizeText(
-                                                '12',
-                                                style: title130Bold.copyWith(
-                                                    color: kcVerySoftBlueColor),
-                                                maxLines: 1,
-                                              ),
-                                              // DmText.title150Bold(
-                                              //   '40',
-                                              //   color: kcVerySoftBlueColor,
-                                              // ),
-                                            ),
-                                            Align(
-                                              child:
-                                                  DmText.title32Bold('Doctors'),
-                                            ),
-                                            // verticalSpace50,
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpace25,
+                      DmText.title24Medium(
+                        'Davnor Medicare Data',
+                        color: kcNeutralColor,
+                      ),
+                      verticalSpace15,
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: Get.width * .7,
+                                      height: 470,
+                                      padding: const EdgeInsets.all(25),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(
+                                                0.5), //color of shadow
+                                            spreadRadius: 5, //spread radius
+                                            blurRadius: 7, // blur radius
+                                            offset: const Offset(4,
+                                                8), //  changes position of shadow
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: RichText(
+                                              text: TextSpan(
                                                 children: [
-                                                  DmText.body16Regular(
-                                                      'View Doctors'),
-                                                  const Icon(
-                                                      Icons.chevron_right),
+                                                  TextSpan(
+                                                    text: 'As Of Now ',
+                                                    style: title32Bold.copyWith(
+                                                        color: kcNeutralColor),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        '(${appController.dateNow})',
+                                                    style: subtitle18Regular,
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          // verticalSpace15,
+
+                                          DmText.subtitle18Regular(
+                                            medicareDataSubtitle,
+                                          ),
+                                          verticalSpace20,
+                                          Align(
+                                            child: AutoSizeText(
+                                              '12',
+                                              style: title130Bold.copyWith(
+                                                  color: kcVerySoftBlueColor),
+                                              maxLines: 1,
+                                            ),
+                                            // DmText.title150Bold(
+                                            //   '40',
+                                            //   color: kcVerySoftBlueColor,
+                                            // ),
+                                          ),
+                                          Align(
+                                            child:
+                                                DmText.title32Bold('Doctors'),
+                                          ),
+                                          // verticalSpace50,
+                                          TextButton(
+                                            onPressed: () {},
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                DmText.body16Regular(
+                                                    'View Doctors'),
+                                                const Icon(Icons.chevron_right),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 25),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 6,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    height: Get.height * .35,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(
-                                                                  0.5), //color of shadow
-                                                          spreadRadius:
-                                                              3, //spread radius
-                                                          blurRadius:
-                                                              4, // blur radius
-                                                          offset: const Offset(
-                                                              4,
-                                                              8), // position of shadow
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 6,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  height: Get.height * .35,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(
+                                                                0.5), //color of shadow
+                                                        spreadRadius:
+                                                            3, //spread radius
+                                                        blurRadius:
+                                                            4, // blur radius
+                                                        offset: const Offset(4,
+                                                            8), // position of shadow
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      AutoSizeText(
+                                                        'The application has',
+                                                        style: body16Regular
+                                                            .copyWith(
+                                                          color: kcNeutralColor,
                                                         ),
-                                                      ],
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        AutoSizeText(
-                                                          'The application has',
-                                                          style: body16Regular
-                                                              .copyWith(
-                                                            color:
-                                                                kcNeutralColor,
-                                                          ),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 1,
+                                                      ),
+                                                      AutoSizeText(
+                                                        '3',
+                                                        style: title130Bold
+                                                            .copyWith(
+                                                                color:
+                                                                    kcVerySoftBlueColor),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 1,
+                                                      ),
+                                                      DmText.subtitle20Medium(
+                                                        'PSWD Personnel',
+                                                      ),
+                                                      const AutoSizeText(
+                                                        cardSubtitle1,
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w400,
                                                         ),
-                                                        DmText.title24Medium(
-                                                            'ON PROGRESS REQUESTS TODAY'),
-                                                        DmText.title150Bold(
-                                                            '2'),
-                                                        AutoSizeText(
-                                                          '3',
-                                                          style: title130Bold
-                                                              .copyWith(
-                                                                  color:
-                                                                      kcVerySoftBlueColor),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
-                                                        ),
-                                                        DmText.subtitle20Medium(
-                                                          'PSWD Personnel',
-                                                        ),
-                                                        const AutoSizeText(
-                                                          cardSubtitle1,
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          maxLines: 2,
-                                                        ),
-                                                      ],
-                                                    ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 2,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                horizontalSpace25,
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    height: Get.height * .35,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 30),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(
-                                                                  0.5), //color of shadow
-                                                          spreadRadius:
-                                                              5, //spread radius
-                                                          blurRadius:
-                                                              7, // blur radius
-                                                          offset: const Offset(
-                                                              4,
-                                                              8), // / changes position of shadow
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    // padding: const EdgeInsets.all(25),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        // AutoSizeText(
-                                                        //   'The application has',
-                                                        //   style: body16Regular.copyWith(
-                                                        //       color: neutralColor),
-                                                        //   maxLines: 1,
-                                                        // ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: DmText
-                                                              .title24Medium(
-                                                            'VERIFIED \nUSERS',
-                                                            color: neutralColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '120',
-                                                          style:
-                                                              title90BoldBlue,
-                                                        ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomRight,
-                                                          child: TextButton(
-                                                            onPressed: () {},
-                                                            child:
-                                                                Wrap(children: [
-                                                              DmText
-                                                                  .body16Regular(
-                                                                'See Verification Requests',
-                                                              ),
-                                                              const Icon(Icons
-                                                                  .chevron_right),
-                                                            ]),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                              ),
+                                              horizontalSpace25,
+                                              Expanded(
+                                                flex: 2,
+                                                child: Container(
+                                                  height: Get.height * .35,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 30),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(
+                                                                0.5), //color of shadow
+                                                        spreadRadius:
+                                                            5, //spread radius
+                                                        blurRadius:
+                                                            7, // blur radius
+                                                        offset: const Offset(4,
+                                                            8), // / changes position of shadow
+                                                      ),
+                                                    ],
                                                   ),
+                                                  // padding: const EdgeInsets.all(25),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      // AutoSizeText(
+                                                      //   'The application has',
+                                                      //   style: body16Regular.copyWith(
+                                                      //       color: neutralColor),
+                                                      //   maxLines: 1,
+                                                      // ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: DmText
+                                                            .title24Medium(
+                                                          'VERIFIED \nUSERS',
+                                                          color: neutralColor,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '120',
+                                                        style: title90BoldBlue,
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: TextButton(
+                                                          onPressed: () {},
+                                                          child:
+                                                              Wrap(children: [
+                                                            DmText
+                                                                .body16Regular(
+                                                              'See Verification Requests',
+                                                            ),
+                                                            const Icon(Icons
+                                                                .chevron_right),
+                                                          ]),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          verticalSpace20,
+                                          Container(
+                                            // color: Colors.green,
+                                            padding: const EdgeInsets.all(25),
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(
+                                                      0.5), //color of shadow
+                                                  spreadRadius:
+                                                      5, //spread radius
+                                                  blurRadius: 7, // blur radius
+                                                  offset: const Offset(4,
+                                                      8), //  changes position of shadow
                                                 ),
                                               ],
                                             ),
-                                            verticalSpace20,
-                                            Container(
-                                              // color: Colors.green,
-                                              padding: const EdgeInsets.all(25),
-                                              width: Get.width,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey.withOpacity(
-                                                        0.5), //color of shadow
-                                                    spreadRadius:
-                                                        5, //spread radius
-                                                    blurRadius:
-                                                        7, // blur radius
-                                                    offset: const Offset(4,
-                                                        8), //  changes position of shadow
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  DmText.title32Bold(
-                                                    'DavNor Medicare',
-                                                    color: kcNeutralColor,
-                                                  ),
-                                                  DmText.body16Regular(
-                                                    cardSubtitle2,
-                                                    color: kcNeutralColor,
-                                                  ),
-                                                ],
-                                              ),
+                                            child: Column(
+                                              children: [
+                                                DmText.title32Bold(
+                                                  'DavNor Medicare',
+                                                  color: kcNeutralColor,
+                                                ),
+                                                DmText.body16Regular(
+                                                  cardSubtitle2,
+                                                  color: kcNeutralColor,
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
