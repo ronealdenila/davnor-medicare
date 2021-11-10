@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
@@ -18,6 +19,9 @@ final AttachedPhotosController controller = Get.find();
 final AuthController authController = Get.find();
 final AppController appController = Get.find();
 final fetchedData = authController.pswdModel.value;
+
+final CallingPatientController callController =
+    Get.put(CallingPatientController());
 
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status, this.model)
@@ -265,9 +269,11 @@ class PSWDItemView extends GetResponsiveView {
         .update({
       'from': 'pswd-p',
       'isCalling': true,
+      'didReject': false,
       'channelId': model.maID,
       'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
-    });
+    }).then((value) => Get.to(() => CallPatientScreen(),
+            arguments: [model.requesterID, model.maID]));
   }
 
   Widget attachedPhotos() {

@@ -6,10 +6,12 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:get/get.dart';
 
+final AuthController authController = Get.find();
+
 class CallingPatientController extends GetxController {
   final log = getLogger('Status Controller');
-  static AuthController authController = Get.find();
   RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
+  RxBool isAlertboxOpened = false.obs;
   RxBool isLoading = true.obs;
   RxString patientId = ''.obs;
   RxString channelId = ''.obs;
@@ -18,8 +20,10 @@ class CallingPatientController extends GetxController {
   void onInit() {
     super.onInit();
     ever(incCall, (value) {
-      if (incCall[0].didReject!) {
-        showDialog();
+      if (incCall[0].didReject! &&
+          incCall[0].from! == authController.userRole) {
+        Get.back();
+        showRejectedCallDialog();
       } else if (incCall[0].patientJoined! &&
           incCall[0].from! == authController.userRole) {
         print('Calling Patient');
@@ -27,6 +31,16 @@ class CallingPatientController extends GetxController {
             arguments: [patientId.value, channelId.value]);
       }
     });
+  }
+
+  void showRejectedCallDialog() {
+    showDefaultDialog(
+      dialogTitle: 'The patient rejected your call',
+      dialogCaption: 'Please try again.',
+      onConfirmTap: () {
+        dismissDialog();
+      },
+    );
   }
 
   void bindToList(String patientId) {
@@ -46,16 +60,5 @@ class CallingPatientController extends GetxController {
         return IncomingCallModel.fromJson(item.data());
       }).toList();
     });
-  }
-
-  Future<void> showDialog() async {
-    showDefaultDialog(
-      dialogTitle: 'The patient rejected your call',
-      dialogCaption: 'Please try again.',
-      onConfirmTap: () {
-        dismissDialog();
-        Get.back();
-      },
-    );
   }
 }

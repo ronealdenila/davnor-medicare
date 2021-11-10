@@ -55,6 +55,23 @@ class AuthController extends GetxController {
     super.onReady();
   }
 
+// else if (authController.userRole == 'pswd-p' ||
+//           authController.userRole == 'doctor') {
+//         if (incCall[0].didReject! &&
+//             incCall[0].from == authController.userRole) {
+//           showRejectedCallDialog();
+//         }
+//       }
+//   void showRejectedCallDialog() {
+//     showDefaultDialog(
+//       dialogTitle: 'The patient rejected your call',
+//       dialogCaption: 'Please try again.',
+//       onConfirmTap: () {
+//         dismissDialog();
+//       },
+//     );
+//   }
+
   Stream<User?> get user => auth.authStateChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {

@@ -121,7 +121,7 @@ class MADescriptionScreen extends StatelessWidget {
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  <Widget>[
+                        children: <Widget>[
                           Text('ma8'.tr,
                               textAlign: TextAlign.left,
                               style: caption12SemiBold),
@@ -188,23 +188,18 @@ class MADescriptionScreen extends StatelessWidget {
                   );
                 }
               } else {
-                //error dialog - Sorry cut off na
+                //error dialog - Something like sorry cut off na message
               }
             } else {
-              //error dialog - Sorry MA has no fund for now. Please try again next time
+              //error dialog - Sorry PSWD MA has no available fund for now. Please try again next time
             }
           } else {
             showErrorDialog(
-                errorTitle:
-                    'maerror3'.tr,
-                errorDescription:
-                    'action6'.tr);
+                errorTitle: 'maerror3'.tr, errorDescription: 'action6'.tr);
           }
         } else {
           showErrorDialog(
-              errorTitle: 'action7'.tr,
-              errorDescription:
-                  'action8'.tr);
+              errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
         }
       },
       text: 'ma10'.tr,

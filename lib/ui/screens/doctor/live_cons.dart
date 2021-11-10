@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -21,6 +23,8 @@ class LiveConsultationScreen extends StatelessWidget {
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
+  final CallingPatientController callController =
+      Get.put(CallingPatientController());
 
   @override
   Widget build(BuildContext context) {
@@ -214,6 +218,7 @@ class LiveConsultationScreen extends StatelessWidget {
         .update({
       'from': 'doctor',
       'isCalling': true,
+      'didReject': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
     }).then((value) => Get.to(() => CallPatientScreen(),
