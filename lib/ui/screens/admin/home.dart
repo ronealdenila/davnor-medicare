@@ -71,7 +71,7 @@ class AdminHomeScreen extends StatelessWidget {
                   onPressed: () {
                     navigationController.navigateTo(Routes.ADMIN_PROFILE);
                   },
-                  icon: const Icon(Icons.account_circle),
+                  icon: const Icon(Icons.person_outline),
                   style: TextButton.styleFrom(primary: Colors.black),
                 ),
               ),
@@ -80,7 +80,7 @@ class AdminHomeScreen extends StatelessWidget {
                 child: TextButton.icon(
                   label: const Text('Logout'),
                   onPressed: authController.signOut,
-                  icon: const Icon(Icons.account_circle),
+                  icon: const Icon(Icons.logout_outlined),
                   style: TextButton.styleFrom(primary: Colors.black),
                 ),
               )
