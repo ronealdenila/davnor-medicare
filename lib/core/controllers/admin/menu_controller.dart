@@ -32,13 +32,13 @@ class AdminMenuController extends GetxController {
       case 'List of PSWD Personnel':
         return _customIcon(Icons.list_outlined, itemName);
       case 'Verification Requests':
-        return _customIcon(Icons.list_outlined, itemName);
-      case 'Disabled Doctors':
-        return _customIcon(Icons.list_outlined, itemName);
-      case 'Disabled PSWD Personnel':
-        return _customIcon(Icons.list_outlined, itemName);
-      default:
         return _customIcon(Icons.verified_outlined, itemName);
+      case 'Disabled Doctors':
+        return _customIcon(Icons.person_off_outlined, itemName);
+      case 'Disabled PSWD Personnel':
+        return _customIcon(Icons.person_off_outlined, itemName);
+      default:
+        return _customIcon(Icons.logout_outlined, itemName);
     }
   }
 
