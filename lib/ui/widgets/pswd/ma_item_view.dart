@@ -7,6 +7,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -125,7 +126,9 @@ class PSWDItemView extends GetResponsiveView {
                         color: verySoftBlueCustomColor,
                       ),
                       onPressed: () async {
-                        //ERROR DIALOG - Something went wrong
+                        showErrorDialog(
+                          errorDescription: 'Something went wrong'
+                        );
                       },
                     );
                   }
@@ -137,7 +140,10 @@ class PSWDItemView extends GetResponsiveView {
                     ),
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
-                        //ERROR DIALOG - Patient is currently on a video call, please try again later
+                        showErrorDialog(
+                          errorDescription: 
+                            'Patient is currently on a video call, please try again later'
+                        );
                       } else {
                         await interviewPatient();
                       }

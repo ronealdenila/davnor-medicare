@@ -87,7 +87,9 @@ class LiveConsultationScreen extends StatelessWidget {
                       size: 30,
                     ),
                     onPressed: () async {
-                      //ERROR DIALOG - Something went wrong
+                      showErrorDialog(
+                        errorDescription: 'Something went wrong'
+                      );
                     },
                   );
                 }
@@ -99,7 +101,11 @@ class LiveConsultationScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     if (data['patientJoined'] && data['otherJoined']) {
-                      //ERROR DIALOG - Patient is currently on a video call, please try again later
+                      showErrorDialog(
+                        errorDescription: 
+                          'Patient is currently on a video call, please try again later'
+                        );
+                    
                     } else {
                       await callPatient();
                     }

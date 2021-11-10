@@ -5,6 +5,7 @@ final String logo = _getImagePath('logo.png');
 final String patientHomeHeader = _getImagePath('home_samp.png');
 final String maImage = _getImagePath('ma_image.png');
 final String blankProfile = _getImagePath('blank_profile.png');
+final String icons8 = _getImagePath('icons8.png');
 
 //Cons Form
 final String earIconPath = _getImagePath('ear.png');

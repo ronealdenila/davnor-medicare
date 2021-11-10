@@ -342,8 +342,9 @@ class DoctorHomeScreen extends StatelessWidget {
                               print('Changed status');
                               count.value = 1;
                             }).catchError((error) {
-                              //snack bar for ERROR DIALOG
-                              print("Something went wrong");
+                              showErrorDialog(
+                                errorDescription: 'Something went wrong!'
+                              );
                             });
                           },
                           child: Text('ACCOMMODATE MY PATIENTS FIRST'))),
@@ -367,8 +368,9 @@ class DoctorHomeScreen extends StatelessWidget {
                               print('Changed status');
                               count.value = 1;
                             }).catchError((error) {
-                              //snack bar for ERROR DIALOG
-                              print("Something went wrong");
+                              showErrorDialog(
+                                errorDescription: 'Something went wrong'
+                              );
                             });
                           },
                           child: Text('GO OFFLINE NOW'))),
@@ -424,8 +426,9 @@ class DoctorHomeScreen extends StatelessWidget {
                               print('Changed status');
                               count.value = 1;
                             }).catchError((error) {
-                              //snack bar for ERROR DIALOG
-                              print("Something went wrong");
+                              showErrorDialog(
+                                errorDescription: 'Something went wrong'
+                              );
                             });
                           },
                           child: Text('Ready for Consultation'))),
@@ -479,8 +482,9 @@ class DoctorHomeScreen extends StatelessWidget {
                               print('Add count');
                               countAdd.value = 1;
                             }).catchError((error) {
-                              //snack bar for ERROR DIALOG
-                              print("Something went wrong");
+                              showErrorDialog(
+                                errorDescription: 'Something went wrong'
+                              );
                             });
                           },
                           child: Text('Add count'))),

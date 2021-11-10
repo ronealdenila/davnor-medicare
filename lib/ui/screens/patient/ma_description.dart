@@ -188,10 +188,14 @@ class MADescriptionScreen extends StatelessWidget {
                   );
                 }
               } else {
-                //error dialog - Something like sorry cut off na message
+                showErrorDialog(
+                    errorDescription:
+                        'Sorry were cut off already. Please try again next time.');
               }
             } else {
-              //error dialog - Sorry PSWD MA has no available fund for now. Please try again next time
+              showErrorDialog(
+                  errorDescription:
+                      'Sorry MA has no fund for now. Please try again next time');
             }
           } else {
             showErrorDialog(
