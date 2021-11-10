@@ -116,8 +116,8 @@ class ConsHistoryScreen extends StatelessWidget {
     }
     if (consHController.consHistory.isEmpty &&
         !consHController.isLoading.value) {
-      return const Text(
-        'conslog3',
+      return Text(
+        'conslog3'.tr,
         textAlign: TextAlign.center,
         style: body14Medium,
       );

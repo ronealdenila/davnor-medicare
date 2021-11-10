@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/ui/screens/patient/app_info.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,6 +77,7 @@ class SettingScreen extends StatelessWidget {
               verticalSpace10,
               InkWell(
                 onTap: () {
+                  Get.to(() => AppInfoScreen());
                   //go to app info, always credit icons8 website
                 },
                 child: Padding(
