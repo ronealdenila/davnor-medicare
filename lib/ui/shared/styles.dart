@@ -8,6 +8,12 @@ const TextStyle title150Bold = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle title130Bold = TextStyle(
+  fontSize: 130,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+);
+
 TextStyle title90BoldBlue = TextStyle(
   fontSize: 90,
   fontWeight: FontWeight.w700,
@@ -318,10 +324,10 @@ const TextStyle caption18Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
- TextStyle caption18RegularNeutral = TextStyle(
+TextStyle caption18RegularNeutral = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
-   color: neutralColor[60],
+  color: neutralColor[60],
   height: 1,
 );

@@ -217,7 +217,8 @@ class PSWDStaffListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        pListController.disablePSWDStaff(model.email!);
+                        //DIALOG CONFIRMATION MUNA
+                        pListController.disablePSWDStaff(model.userID!);
                         //Change to userID instead of email
                       },
                       child: Text(

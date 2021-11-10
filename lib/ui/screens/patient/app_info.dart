@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppInfoScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
      return SafeArea(
@@ -68,7 +67,6 @@ class AppInfoScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
                   style: subtitle18Bold,
                 ),
-                
               verticalSpace10,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

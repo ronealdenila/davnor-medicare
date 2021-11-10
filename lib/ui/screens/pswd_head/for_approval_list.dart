@@ -87,7 +87,6 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                 )),
           ],
         ),
-        //IconButton(onPressed: (){}, icon: Ico)
         verticalSpace25,
         header(),
         Obx(() => requestList(context))
@@ -245,10 +244,6 @@ Widget customTableRow(OnProgressMAModel model) {
                     navigationController.navigateToWithArgs(
                         Routes.FOR_APPROVAL_ITEM,
                         arguments: model);
-                    // Get.to(
-                    //   () => ForApprovalItemScreen(),
-                    //   arguments: model,
-                    // );
                   },
                   child: Text(
                     'View',

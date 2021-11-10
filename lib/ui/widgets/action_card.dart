@@ -50,7 +50,7 @@ class ActionCard extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   height: kIsWeb ? 29 : 25,
-                  width: kIsWeb ? 440 : 99,
+                  width: kIsWeb ? 220 : 99,
                   decoration: BoxDecoration(
                       color: secondaryColor,
                       borderRadius: const BorderRadius.only(

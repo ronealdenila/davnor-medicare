@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
+import 'package:davnor_medicare/ui/screens/doctor/dcons_history_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -150,9 +151,8 @@ class DocConsHistoryScreen extends StatelessWidget {
           return ConsultationHistoryCard(
             consHistory: model,
             onItemTap: () {
-              Get.to(() => HistoryInfoScreen(),
-                  arguments: model, transition: Transition.rightToLeft);
-              //TO DO SHOULD GO TO HISTORY ITEM
+              Get.to(() => DoctorConsHistoryItemScreen(),
+                  arguments: model);
             },
           );
         }

@@ -245,10 +245,6 @@ Widget customTableRow(OnProgressMAModel model, BuildContext context) {
                     navigationController.navigateToWithArgs(
                         Routes.ON_PROGRESS_REQ_ITEM,
                         arguments: model);
-                    // Get.to(
-                    //   () => OnProgressReqItemScreen(),
-                    //   arguments: model,
-                    // );
                   },
                   child: Text(
                     'View',

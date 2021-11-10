@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/admin/doctor_registration_contr
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
@@ -17,6 +18,11 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
+
+final AuthController authController = Get.find();
+final fetchedData = authController.adminModel.value;
+final AppController appController = Get.find();
+final AdminMenuController menuController = Get.put(AdminMenuController());
 
 class AdminHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -150,20 +156,42 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
   Widget build(BuildContext context) {
     //Note: Breakpoint is for desktop lang
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        title: DmText.title42Bold(
-          'Dashboard',
-          color: kcNeutralColor[80],
+        appBar: AppBar(
+          leading: Container(),
+          title: DmText.title42Bold(
+            'Dashboard',
+            color: kcNeutralColor[80],
+          ),
         ),
-      ),
-      body: Column(
+        body: ResponsiveView(context));
+  }
+}
+
+class ResponsiveView extends GetResponsiveView {
+  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
+  final BuildContext context;
+
+  @override
+  Widget phone() => phoneVersion();
+
+  @override
+  Widget tablet() => phoneVersion();
+
+  @override
+  Widget desktop() => desktopVersion();
+}
+
+Widget desktopVersion() {
+  return SingleChildScrollView(
+    child: Container(
+      height: Get.height - 95,
+      child: Column(
         children: [
           Container(
             margin: const EdgeInsets.all(25),
             padding: const EdgeInsets.all(25),
-            width: context.width,
-            height: context.height * .2,
+            width: Get.width,
+            height: Get.height * .2,
             decoration: const BoxDecoration(
               color: kcVerySoftBlueColor,
               borderRadius: BorderRadius.all(
@@ -182,14 +210,14 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
               ],
             ),
           ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    // color: Colors.amber,
+          Container(
+            child: Expanded(
+              child: Row(
+                children: [
+                  Container(
                     margin: const EdgeInsets.all(25),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           alignment: Alignment.centerLeft,
@@ -200,358 +228,346 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                           ),
                         ),
                         verticalSpace15,
-                        Expanded(
-                          flex: 6,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            // color: Colors.cyanAccent,
-                            child: Column(
-                              children: [
-                                //Make other global widget if you want to make
-                                //the text centered? (R)
-                                ActionCard(
-                                  text: 'Register a doctor',
-                                  onTap: () {
-                                    //NAVIGATE TO REGISTER DOCTOR SCREEN
-                                    navigationController
-                                        .navigateTo(Routes.DOCTOR_REGISTRATION);
-                                    // Get.dialog(
-                                    //   Dialog(
-                                    //     elevation: 0,
-                                    //     backgroundColor: Colors.transparent,
-                                    //     child: Container(
-                                    //       height: 800,
-                                    //       width: 1300,
-                                    //       padding: const EdgeInsets.only(
-                                    //         top: 18,
-                                    //       ),
-                                    //       margin: const EdgeInsets.only(
-                                    //           top: 13, right: 8),
-                                    //       decoration: const BoxDecoration(
-                                    //         color: Colors.white,
-                                    //         boxShadow: <BoxShadow>[
-                                    //           BoxShadow(
-                                    //             color: Colors.black26,
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //       child: DoctoRegistrationForm(),
-                                    //     ),
-                                    //   ),
-                                    //   barrierDismissible: false,
-                                    // );
-                                  },
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
-                                ),
-                                ActionCard(
-                                  text: 'Add a PSWD Personnel',
-                                  onTap: () {
-                                    //NAVIGATE TO REGISTER PSWD SCREEN
-                                    navigationController.navigateTo(
-                                        Routes.PSWD_STAFF_REGISTRATION);
-                                    // Get.dialog(
-                                    //   Dialog(
-                                    //     elevation: 0,
-                                    //     backgroundColor: Colors.transparent,
-                                    //     child: Container(
-                                    //       height: 800,
-                                    //       width: 1300,
-                                    //       padding: const EdgeInsets.only(
-                                    //         top: 18,
-                                    //       ),
-                                    //       margin: const EdgeInsets.only(
-                                    //           top: 13, right: 8),
-                                    //       decoration: const BoxDecoration(
-                                    //         color: Colors.white,
-                                    //         boxShadow: <BoxShadow>[
-                                    //           BoxShadow(
-                                    //             color: Colors.black26,
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //       child: PSWDRegistrationForm(),
-                                    //     ),
-                                    //   ),
-                                    //   barrierDismissible: false,
-                                    // );
-                                  },
-                                  color: verySoftOrange[60],
-                                  secondaryColor: verySoftOrangeCustomColor,
-                                ),
-                                ActionCard(
-                                  text: 'Verify User',
-                                  onTap: () => navigationController
-                                      .navigateTo('/adm-verification-req-list'),
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
-                                ),
-                              ],
-                            ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ActionCard(
+                                text: 'Register a doctor',
+                                onTap: () {
+                                  //NAVIGATE TO REGISTER DOCTOR SCREEN
+                                  navigationController
+                                      .navigateTo(Routes.DOCTOR_REGISTRATION);
+                                },
+                                color: verySoftMagenta[60],
+                                secondaryColor: verySoftMagentaCustomColor,
+                              ),
+                              ActionCard(
+                                text: 'Add a PSWD\nPersonnel',
+                                onTap: () {
+                                  //NAVIGATE TO REGISTER PSWD SCREEN
+                                  navigationController.navigateTo(
+                                      Routes.PSWD_STAFF_REGISTRATION);
+                                },
+                                color: verySoftOrange[60],
+                                secondaryColor: verySoftOrangeCustomColor,
+                              ),
+                              ActionCard(
+                                text: 'Verify User',
+                                onTap: () {
+                                  menuController.changeActiveItemTo(
+                                      'Verification Requests');
+                                  navigationController
+                                      .navigateTo(Routes.VERIFICATION_REQ_LIST);
+                                },
+                                color: verySoftRed[60],
+                                secondaryColor: verySoftRedCustomColor,
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    // color: Colors.cyan,
-                    margin: const EdgeInsets.all(25),
+                  Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          // color: Colors.yellowAccent,
-                          child: DmText.title24Medium(
-                            'Davnor Medicare Data',
-                            color: kcNeutralColor,
-                          ),
+                        verticalSpace25,
+                        DmText.title24Medium(
+                          'Davnor Medicare Data',
+                          color: kcNeutralColor,
                         ),
                         verticalSpace15,
                         Expanded(
-                          flex: 6,
-                          child: Container(
-                            padding: const EdgeInsets.all(25),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.5), //color of shadow
-                                  spreadRadius: 5, //spread radius
-                                  blurRadius: 7, // blur radius
-                                  offset: const Offset(
-                                      4, 8), //  changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'As Of Now ',
-                                          style: title32Bold.copyWith(
-                                              color: kcNeutralColor),
-                                        ),
-                                        TextSpan(
-                                          text: '(${appController.dateNow})',
-                                          style: subtitle18Regular,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                // verticalSpace15,
-
-                                DmText.subtitle18Regular(
-                                  medicareDataSubtitle,
-                                ),
-                                // verticalSpace20,
-                                Align(
-                                  child: AutoSizeText(
-                                    '12',
-                                    style: title150Bold.copyWith(
-                                        color: kcVerySoftBlueColor),
-                                    maxLines: 1,
-                                  ),
-                                  // DmText.title150Bold(
-                                  //   '40',
-                                  //   color: kcVerySoftBlueColor,
-                                  // ),
-                                ),
-                                Align(
-                                  child: DmText.title32Bold('Doctors'),
-                                ),
-                                // verticalSpace50,
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  child: Column(
                                     children: [
-                                      DmText.subtitle18Regular('View Doctors'),
-                                      const Icon(Icons.chevron_right),
+                                      Container(
+                                        width: Get.width * .7,
+                                        height: 470,
+                                        padding: const EdgeInsets.all(25),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(
+                                                  0.5), //color of shadow
+                                              spreadRadius: 5, //spread radius
+                                              blurRadius: 7, // blur radius
+                                              offset: const Offset(4,
+                                                  8), //  changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: 'As Of Now',
+                                                      style: title32Bold.copyWith(
+                                                          color:
+                                                              kcNeutralColor),
+                                                    ),
+                                                    TextSpan(
+                                                      text:
+                                                          '(${appController.dateNow})',
+                                                      style: subtitle18Regular,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            DmText.subtitle18Regular(
+                                              medicareDataSubtitle,
+                                            ),
+                                            verticalSpace20,
+                                            Align(
+                                              child: AutoSizeText(
+                                                '12',
+                                                style: title130Bold.copyWith(
+                                                    color: kcVerySoftBlueColor),
+                                                maxLines: 1,
+                                              ),
+                                            ),
+                                            Align(
+                                              child:
+                                                  DmText.title32Bold('Doctors'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                menuController
+                                                    .changeActiveItemTo(
+                                                        'List Of Doctors');
+                                                navigationController.navigateTo(
+                                                    Routes.DOCTOR_LIST);
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  DmText.body16Regular(
+                                                      'View Doctors'),
+                                                  const Icon(
+                                                      Icons.chevron_right),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    // color: Colors.lime,
-                    margin: const EdgeInsets.all(25),
-                    child: Column(
-                      children: [
-                        DmText.title24Medium(
-                          '',
-                        ),
-                        verticalSpace15,
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: context.height * .35,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), //color of shadow
-                                            spreadRadius: 3, //spread radius
-                                            blurRadius: 4, // blur radius
-                                            offset: const Offset(
-                                                4, 8), // position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          AutoSizeText(
-                                            'The application has',
-                                            style: body16Regular.copyWith(
-                                              color: kcNeutralColor,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                          ),
-                                          // DmText.title24Medium(
-                                          // 'ON PROGRESS REQUESTS TODAY'),
-                                          // DmText.title150Bold('2'),
-                                          AutoSizeText(
-                                            '3',
-                                            style: title150Bold.copyWith(
-                                                color: kcVerySoftBlueColor),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                          ),
-                                          DmText.subtitle20Medium(
-                                            'PSWD Personnel',
-                                          ),
-                                          const AutoSizeText(
-                                            cardSubtitle1,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  horizontalSpace25,
-                                  Expanded(
-                                    flex: 2,
-                                    child: Container(
-                                      height: context.height * .35,
-                                      padding: const EdgeInsets.only(left: 30),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), //color of shadow
-                                            spreadRadius: 5, //spread radius
-                                            blurRadius: 7, // blur radius
-                                            offset: const Offset(4,
-                                                8), // / changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      // padding: const EdgeInsets.all(25),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          // AutoSizeText(
-                                          //   'The application has',
-                                          //   style: body16Regular.copyWith(
-                                          //       color: neutralColor),
-                                          //   maxLines: 1,
-                                          // ),
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: DmText.title24Medium(
-                                              'VERIFIED \nUSERS',
-                                              color: neutralColor,
-                                            ),
-                                          ),
-                                          DmText.title150Bold(
-                                            '120',
-                                            color: kcVerySoftBlueColor,
-                                          ),
-                                          TextButton(
-                                            onPressed: () {},
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 25),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 6,
+                                        child: Column(
+                                          children: [
+                                            Row(
                                               children: [
-                                                DmText.subtitle18Regular(
-                                                  'See Verification Requests',
+                                                Expanded(
+                                                  child: Container(
+                                                    height: Get.height * .35,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.5), //color of shadow
+                                                          spreadRadius:
+                                                              3, //spread radius
+                                                          blurRadius:
+                                                              4, // blur radius
+                                                          offset: const Offset(
+                                                              4,
+                                                              8), // position of shadow
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        AutoSizeText(
+                                                          'The application has',
+                                                          style: body16Regular
+                                                              .copyWith(
+                                                            color:
+                                                                kcNeutralColor,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        ),
+                                                        AutoSizeText(
+                                                          '3',
+                                                          style: title130Bold
+                                                              .copyWith(
+                                                                  color:
+                                                                      kcVerySoftBlueColor),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        ),
+                                                        DmText.subtitle20Medium(
+                                                          'PSWD Personnel',
+                                                        ),
+                                                        const AutoSizeText(
+                                                          cardSubtitle1,
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                                const Icon(Icons.chevron_right),
+                                                horizontalSpace25,
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    height: Get.height * .35,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 30),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.5), //color of shadow
+                                                          spreadRadius:
+                                                              5, //spread radius
+                                                          blurRadius:
+                                                              7, // blur radius
+                                                          offset: const Offset(
+                                                              4,
+                                                              8), // / changes position of shadow
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: DmText
+                                                              .title24Medium(
+                                                            'VERIFIED \nUSERS',
+                                                            color: neutralColor,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '120',
+                                                          style:
+                                                              title90BoldBlue,
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomRight,
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              menuController
+                                                                  .changeActiveItemTo(
+                                                                      'Verification Requests');
+                                                              navigationController
+                                                                  .navigateTo(Routes
+                                                                      .VERIFICATION_REQ_LIST);
+                                                            },
+                                                            child:
+                                                                Wrap(children: [
+                                                              DmText
+                                                                  .body16Regular(
+                                                                'See Verification Requests',
+                                                              ),
+                                                              const Icon(Icons
+                                                                  .chevron_right),
+                                                            ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                            verticalSpace20,
+                                            Container(
+                                              // color: Colors.green,
+                                              padding: const EdgeInsets.all(25),
+                                              width: Get.width,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(
+                                                        0.5), //color of shadow
+                                                    spreadRadius:
+                                                        5, //spread radius
+                                                    blurRadius:
+                                                        7, // blur radius
+                                                    offset: const Offset(4,
+                                                        8), //  changes position of shadow
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  DmText.title32Bold(
+                                                    'DavNor Medicare',
+                                                    color: kcNeutralColor,
+                                                  ),
+                                                  DmText.body16Regular(
+                                                    cardSubtitle2,
+                                                    color: kcNeutralColor,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              verticalSpace50,
-                              Container(
-                                // color: Colors.green,
-                                padding: const EdgeInsets.all(25),
-                                width: context.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey
-                                          .withOpacity(0.5), //color of shadow
-                                      spreadRadius: 5, //spread radius
-                                      blurRadius: 7, // blur radius
-                                      offset: const Offset(
-                                          4, 8), //  changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  children: [
-                                    DmText.title32Bold(
-                                      'DavNor Medicare',
-                                      color: kcNeutralColor,
-                                    ),
-                                    DmText.body16Regular(
-                                      cardSubtitle2,
-                                      color: kcNeutralColor,
-                                    ),
-                                  ],
                                 ),
                               ),
                             ],
@@ -560,14 +576,334 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+Widget phoneVersion() {
+  return SingleChildScrollView(
+    child: Column(children: [
+      Container(
+        margin: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
+        width: Get.width,
+        height: Get.height * .2,
+        decoration: const BoxDecoration(
+          color: kcVerySoftBlueColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
+          ),
+        ),
+        child: Row(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: DmText.title42Bold(
+                'Hello, ${fetchedData!.firstName}',
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(25),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    // color: Colors.blue,
+                    child: DmText.title24Medium(
+                      'Actions',
+                      color: neutralColor,
+                    ),
+                  ),
+                  verticalSpace15,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      children: [
+                        ActionCard(
+                          text: 'Register a doctor',
+                          onTap: () {
+                            //NAVIGATE TO REGISTER DOCTOR SCREEN
+                            navigationController
+                                .navigateTo(Routes.DOCTOR_REGISTRATION);
+                          },
+                          color: verySoftMagenta[60],
+                          secondaryColor: verySoftMagentaCustomColor,
+                        ),
+                        ActionCard(
+                          text: 'Add a PSWD Personnel',
+                          onTap: () {
+                            //NAVIGATE TO REGISTER PSWD SCREEN
+                            navigationController
+                                .navigateTo(Routes.PSWD_STAFF_REGISTRATION);
+                          },
+                          color: verySoftOrange[60],
+                          secondaryColor: verySoftOrangeCustomColor,
+                        ),
+                        ActionCard(
+                          text: 'Verify User',
+                          onTap: () {
+                            menuController
+                                .changeActiveItemTo('Verification Requests');
+                            navigationController
+                                .navigateTo(Routes.VERIFICATION_REQ_LIST);
+                          },
+                          color: verySoftRed[60],
+                          secondaryColor: verySoftRedCustomColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              margin: const EdgeInsets.all(25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DmText.title24Medium(
+                    'Davnor Medicare Data',
+                    color: kcNeutralColor,
+                  ),
+                  verticalSpace15,
+                  Container(
+                    height: 470,
+                    padding: const EdgeInsets.all(25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), //color of shadow
+                          spreadRadius: 5, //spread radius
+                          blurRadius: 7, // blur radius
+                          offset:
+                              const Offset(4, 8), //  changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'As Of Now ',
+                                  style: title32Bold.copyWith(
+                                      color: kcNeutralColor),
+                                ),
+                                TextSpan(
+                                  text: '(${appController.dateNow})',
+                                  style: subtitle18Regular,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        DmText.subtitle18Regular(
+                          medicareDataSubtitle,
+                        ),
+                        Align(
+                          child: AutoSizeText(
+                            '12',
+                            style: title130Bold.copyWith(
+                                color: kcVerySoftBlueColor),
+                            maxLines: 1,
+                          ),
+                        ),
+                        Align(
+                          child: DmText.body16Bold('Doctors'),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () {
+                              menuController
+                                  .changeActiveItemTo('List Of Doctors');
+                              navigationController
+                                  .navigateTo(Routes.DOCTOR_LIST);
+                            },
+                            child: Wrap(children: [
+                              DmText.body16Regular(
+                                'View Doctors',
+                              ),
+                              const Icon(Icons.chevron_right),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: Get.height * .35,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), //color of shadow
+                      spreadRadius: 3, //spread radius
+                      blurRadius: 4, // blur radius
+                      offset: const Offset(4, 8), // position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    AutoSizeText(
+                      'The application has',
+                      style: body16Regular.copyWith(
+                        color: kcNeutralColor,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    AutoSizeText(
+                      '3',
+                      style: title130Bold.copyWith(color: kcVerySoftBlueColor),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    DmText.subtitle20Medium(
+                      'PSWD Personnel',
+                    ),
+                    const AutoSizeText(
+                      cardSubtitle1,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            horizontalSpace25,
+            Expanded(
+              flex: 2,
+              child: Container(
+                height: Get.height * .35,
+                padding: const EdgeInsets.only(left: 30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), //color of shadow
+                      spreadRadius: 5, //spread radius
+                      blurRadius: 7, // blur radius
+                      offset:
+                          const Offset(4, 8), // / changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: DmText.title24Medium(
+                        'VERIFIED \nUSERS',
+                        color: neutralColor,
+                      ),
+                    ),
+                    Text(
+                      '120',
+                      style: title130Bold.copyWith(color: kcVerySoftBlueColor),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        menuController
+                            .changeActiveItemTo('Verification Requests');
+                        navigationController
+                            .navigateTo(Routes.VERIFICATION_REQ_LIST);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          DmText.subtitle18Regular(
+                            'See Verification Requests',
+                          ),
+                          const Icon(Icons.chevron_right),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      verticalSpace15,
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Container(
+          padding: const EdgeInsets.all(25),
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), //color of shadow
+                spreadRadius: 5, //spread radius
+                blurRadius: 7, // blur radius
+                offset: const Offset(4, 8), //  changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              DmText.title32Bold(
+                'DavNor Medicare',
+                color: kcNeutralColor,
+              ),
+              DmText.body16Regular(
+                cardSubtitle2,
+                color: kcNeutralColor,
+              ),
+            ],
+          ),
+        ),
+      ),
+      verticalSpace25,
+    ]),
+  );
 }
 
 class AdminSideMenuItem extends GetView<AdminMenuController> {
