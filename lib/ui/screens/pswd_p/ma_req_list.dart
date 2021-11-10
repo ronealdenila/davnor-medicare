@@ -107,46 +107,6 @@ class MARequestListScreen extends StatelessWidget {
     );
   }
 
-  // Widget requestList(BuildContext context) {
-  //   if (maController.isLoading.value) {
-  //     return Align(
-  //       alignment: Alignment.center,
-  //       child: Padding(
-  //         padding: const EdgeInsets.only(top: 10),
-  //         child: const SizedBox(
-  //             height: 24, width: 24, child: CircularProgressIndicator()),
-  //       ),
-  //     );
-  //   }
-  //   if (maController.maRequests.isEmpty && !maController.isLoading.value) {
-  //     return const Text(
-  //       'No MA request at the moment',
-  //       textAlign: TextAlign.center,
-  //       style: body14Medium,
-  //     );
-  //   } else {
-  //     firedOnce.value
-  //         ? null
-  //         : maController.filteredList.assignAll(maController.maRequests);
-  //     firedOnce.value = true;
-  //     return MediaQuery.removePadding(
-  //       context: context,
-  //       removeTop: true,
-  //       child: Expanded(
-  //         child: SingleChildScrollView(
-  //           child: ListView.builder(
-  //               physics: const NeverScrollableScrollPhysics(),
-  //               shrinkWrap: true,
-  //               itemCount: maController.filteredList.length,
-  //               itemBuilder: (context, index) {
-  //                 return customTableRow(maController.filteredList[index]);
-  //               }),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
-
   requestList(BuildContext context) {
     if (maController.isLoading.value) {
       return Align(
@@ -290,12 +250,7 @@ class MARequestListScreen extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () => navigationController
-                    .navigateToWithArgs(Routes.MA_REQ_ITEM, arguments: model)
-                // Get.to(
-                //   () => MARequestItemScreen(),
-                //   arguments: model,
-                // );
-                ,
+                    .navigateToWithArgs(Routes.MA_REQ_ITEM, arguments: model),
                 child: Text(
                   'View',
                   style: body16RegularUnderlineBlue,

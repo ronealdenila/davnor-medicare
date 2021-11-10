@@ -257,7 +257,8 @@ class DoctorListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        dListController.disableDoctor(model.email!);
+                        //DIALOG CONFIRMATION MUNA
+                        dListController.disableDoctor(model.userID!);
                         //Change to userID instead of email
                       },
                       child: Text(

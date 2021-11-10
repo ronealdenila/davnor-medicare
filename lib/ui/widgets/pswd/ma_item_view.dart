@@ -271,76 +271,80 @@ class PSWDItemView extends GetResponsiveView {
   }
 
   Widget attachedPhotos() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(
-        width: 310,
-        child: Text(
-          'Attached Photos',
-          style: caption12RegularNeutral,
-        ),
-      ),
-      verticalSpace20,
-      Container(
-        width: 310,
-        height: 170,
-        decoration: BoxDecoration(
-          color: neutralColor[10],
-          borderRadius: BorderRadius.circular(2),
-        ),
-        child: GridView.count(
-          shrinkWrap: true,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 3,
-          children: List.generate(controller.fetchedImages.length - 1, (index) {
-            return GestureDetector(
-              onTap: () {
-                controller.selectedIndex.value = index;
-                showDialog(
-                    context: context,
-                    builder: (context) => attachedPhotosDialog());
-              },
-              child: Image.network(
-                controller.fetchedImages[index],
-                width: 5,
-                height: 5,
-                fit: BoxFit.fill,
-              ),
-            );
-          }),
-        ),
-      ),
-      verticalSpace20,
-      Row(children: [
-        const SizedBox(
-          width: 120,
-          child: Text(
-            'Date Requested',
-            style: caption12SemiBold,
-          ),
-        ),
-        horizontalSpace15,
-        Text(
-          appController.convertTimeStamp(model.dateRqstd!),
-          style: caption12RegularNeutral,
-        ),
-      ]),
-      verticalSpace10,
-      Visibility(
-        visible: status == 'completed',
-        child: Row(children: [
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
           const SizedBox(
-            width: 120,
+            width: 310,
             child: Text(
-              'Date MA Claimed',
-              style: caption12SemiBold,
+              'Attached Photos',
+              style: caption12RegularNeutral,
             ),
           ),
-          horizontalSpace15,
-          displayDateClaimed(model),
-        ]),
-      ),
-    ]);
+          verticalSpace20,
+          Container(
+            width: 310,
+            height: 170,
+            decoration: BoxDecoration(
+              color: neutralColor[10],
+              borderRadius: BorderRadius.circular(2),
+            ),
+            child: GridView.count(
+              shrinkWrap: true,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              crossAxisCount: 3,
+              children:
+                  List.generate(controller.fetchedImages.length - 1, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    controller.selectedIndex.value = index;
+                    showDialog(
+                        context: context,
+                        builder: (context) => attachedPhotosDialog());
+                  },
+                  child: Image.network(
+                    controller.fetchedImages[index],
+                    width: 5,
+                    height: 5,
+                    fit: BoxFit.fill,
+                  ),
+                );
+              }),
+            ),
+          ),
+          verticalSpace20,
+          Row(children: [
+            const SizedBox(
+              width: 120,
+              child: Text(
+                'Date Requested',
+                style: caption12SemiBold,
+              ),
+            ),
+            horizontalSpace15,
+            Text(
+              appController.convertTimeStamp(model.dateRqstd!),
+              style: caption12RegularNeutral,
+            ),
+          ]),
+          verticalSpace10,
+          Visibility(
+            visible: status == 'completed',
+            child: Row(children: [
+              const SizedBox(
+                width: 120,
+                child: Text(
+                  'Date MA Claimed',
+                  style: caption12SemiBold,
+                ),
+              ),
+              horizontalSpace15,
+              displayDateClaimed(model),
+            ]),
+          ),
+        ]);
   }
 
   Widget displayDateClaimed(GeneralMARequestModel model) {

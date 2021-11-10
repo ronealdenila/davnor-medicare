@@ -26,6 +26,7 @@ final AuthController authController = Get.find();
 final NavigationController navigationController =
     Get.put(NavigationController());
 final fetchedData = authController.pswdModel.value;
+final MenuController menuController = Get.put(MenuController());
 
 class PSWDHeadHomeScreen extends StatelessWidget {
   final fetchedData = authController.pswdModel.value;
@@ -95,10 +96,10 @@ AppBar topNavigationBar(
     title: Row(
       children: [
         Expanded(child: Container()),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications),
-        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(Icons.notifications),
+        // ),
         Text(name!, style: const TextStyle(color: Colors.black)),
         DropdownButton(
           icon: const Icon(Icons.keyboard_arrow_down),
@@ -268,14 +269,12 @@ Widget desktopVersion() {
                             color: Colors.white,
                           ),
                           verticalSpace15,
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              padding: const EdgeInsets.all(20),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
                             ),
-                            onPressed: () async {
-                              await changeIsCutOff();
-                            },
+                            padding: EdgeInsets.all(12),
                             child: Obx(
                               () => stats.isPSLoading.value
                                   ? Text('Loading..')
@@ -299,14 +298,12 @@ Widget desktopVersion() {
                             color: Colors.white,
                           ),
                           verticalSpace15,
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              padding: const EdgeInsets.all(20),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
                             ),
-                            onPressed: () async {
-                              await changeHasFunds();
-                            },
+                            padding: EdgeInsets.all(12),
                             child: Obx(
                               () => stats.isPSLoading.value
                                   ? Text('Loading..')
@@ -351,7 +348,10 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'View For \nApproval \nRequests',
                                 onTap: () async {
-                                  //navigate to for approval
+                                  menuController
+                                      .changeActiveItemTo('For Approval');
+                                  navigationController
+                                      .navigateTo(Routes.FOR_APPROVAL_LIST);
                                 },
                                 color: verySoftMagenta[60],
                                 secondaryColor: verySoftMagentaCustomColor,
@@ -359,7 +359,10 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'View On \nProgress \nRequests',
                                 onTap: () async {
-                                  //navigate to on progress
+                                  menuController.changeActiveItemTo(
+                                      'On Progress Request');
+                                  navigationController
+                                      .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
                                 },
                                 color: verySoftOrange[60],
                                 secondaryColor: verySoftOrangeCustomColor,
@@ -367,6 +370,8 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'View MA History',
                                 onTap: () {
+                                  menuController.changeActiveItemTo(
+                                      'Medical Assistance History');
                                   navigationController
                                       .navigateTo(Routes.MA_HISTORY_LIST);
                                 },
@@ -456,10 +461,13 @@ Widget desktopVersion() {
                                               child: DmText.title32Bold(
                                                   'Requests'),
                                             ),
-                                            // verticalSpace50,
                                             TextButton(
                                               onPressed: () {
-                                                //navigate to for approval list
+                                                menuController
+                                                    .changeActiveItemTo(
+                                                        'For Approval');
+                                                navigationController.navigateTo(
+                                                    Routes.FOR_APPROVAL_LIST);
                                               },
                                               child: Row(
                                                 mainAxisAlignment:
@@ -611,7 +619,12 @@ Widget desktopVersion() {
                                                               .bottomRight,
                                                           child: TextButton(
                                                             onPressed: () {
-                                                              //navigate to on progress
+                                                              menuController
+                                                                  .changeActiveItemTo(
+                                                                      'On Progress Request');
+                                                              navigationController
+                                                                  .navigateTo(Routes
+                                                                      .ON_PROGRESS_REQ_LIST);
                                                             },
                                                             child:
                                                                 Wrap(children: [
@@ -724,14 +737,12 @@ Widget phoneVersion() {
                         color: Colors.white,
                       ),
                       verticalSpace15,
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          padding: const EdgeInsets.all(20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
-                        onPressed: () async {
-                          await changeIsCutOff();
-                        },
+                        padding: EdgeInsets.all(12),
                         child: Obx(
                           () => stats.isPSLoading.value
                               ? Text('Loading..')
@@ -755,14 +766,12 @@ Widget phoneVersion() {
                         color: Colors.white,
                       ),
                       verticalSpace15,
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          padding: const EdgeInsets.all(20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
-                        onPressed: () async {
-                          await changeHasFunds();
-                        },
+                        padding: EdgeInsets.all(12),
                         child: Obx(
                           () => stats.isPSLoading.value
                               ? Text('Loading..')
@@ -806,7 +815,9 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'View For Approval Requests',
                           onTap: () async {
-                            //navigate to for approval
+                            menuController.changeActiveItemTo('For Approval');
+                            navigationController
+                                .navigateTo(Routes.FOR_APPROVAL_LIST);
                           },
                           color: verySoftMagenta[60],
                           secondaryColor: verySoftMagentaCustomColor,
@@ -814,7 +825,10 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'View On Progress Requests',
                           onTap: () async {
-                            //navigate to on progress
+                            menuController
+                                .changeActiveItemTo('On Progress Request');
+                            navigationController
+                                .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
                           },
                           color: verySoftOrange[60],
                           secondaryColor: verySoftOrangeCustomColor,
@@ -822,6 +836,8 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'View MA History',
                           onTap: () {
+                            menuController.changeActiveItemTo(
+                                'Medical Assistance History');
                             navigationController
                                 .navigateTo(Routes.MA_HISTORY_LIST);
                           },
@@ -902,7 +918,9 @@ Widget phoneVersion() {
                           alignment: Alignment.bottomRight,
                           child: TextButton(
                             onPressed: () {
-                              //navigate to for approval list
+                              menuController.changeActiveItemTo('For Approval');
+                              navigationController
+                                  .navigateTo(Routes.FOR_APPROVAL_LIST);
                             },
                             child: Wrap(children: [
                               DmText.body16Regular(
@@ -1006,7 +1024,12 @@ Widget phoneVersion() {
                       style: title130Bold.copyWith(color: kcVerySoftBlueColor),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        menuController
+                            .changeActiveItemTo('On Progress Request');
+                        navigationController
+                            .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

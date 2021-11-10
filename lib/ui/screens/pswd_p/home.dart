@@ -8,6 +8,7 @@ import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller
 import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
@@ -33,6 +34,7 @@ final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
 final StatusController stats = Get.put(StatusController(), permanent: true);
 final AttachedPhotosController pcontroller =
     Get.put(AttachedPhotosController());
+final MenuController menuController = Get.put(MenuController());
 
 class PSWDPersonnelHome extends StatelessWidget {
   static AuthController authController = Get.find();
@@ -290,14 +292,12 @@ Widget desktopVersion() {
                             color: Colors.white,
                           ),
                           verticalSpace15,
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              padding: const EdgeInsets.all(20),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
                             ),
-                            onPressed: () async {
-                              await changeIsCutOff();
-                            },
+                            padding: EdgeInsets.all(12),
                             child: Obx(
                               () => stats.isPSLoading.value
                                   ? Text('Loading..')
@@ -321,14 +321,12 @@ Widget desktopVersion() {
                             color: Colors.white,
                           ),
                           verticalSpace15,
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              padding: const EdgeInsets.all(20),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
                             ),
-                            onPressed: () async {
-                              await changeHasFunds();
-                            },
+                            padding: EdgeInsets.all(12),
                             child: Obx(
                               () => stats.isPSLoading.value
                                   ? Text('Loading..')
@@ -372,16 +370,36 @@ Widget desktopVersion() {
                             children: [
                               ActionCard(
                                 text: 'Change MA\nStatus',
-                                onTap: () async {
-                                  await changeIsCutOff();
+                                onTap: () {
+                                  showConfirmationDialog(
+                                    dialogTitle: 'Changing MA Status',
+                                    dialogCaption:
+                                        'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                    onYesTap: () async {
+                                      await changeIsCutOff();
+                                    },
+                                    onNoTap: () {
+                                      dismissDialog();
+                                    },
+                                  );
                                 },
                                 color: verySoftMagenta[60],
                                 secondaryColor: verySoftMagentaCustomColor,
                               ),
                               ActionCard(
                                 text: 'Change PSWD \nFund Status',
-                                onTap: () async {
-                                  await changeHasFunds();
+                                onTap: () {
+                                  showConfirmationDialog(
+                                    dialogTitle: 'Changing PSWD MA Fund',
+                                    dialogCaption:
+                                        'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                    onYesTap: () async {
+                                      await changeHasFunds();
+                                    },
+                                    onNoTap: () {
+                                      dismissDialog();
+                                    },
+                                  );
                                 },
                                 color: verySoftOrange[60],
                                 secondaryColor: verySoftOrangeCustomColor,
@@ -389,6 +407,8 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'View MA History',
                                 onTap: () {
+                                  menuController.changeActiveItemTo(
+                                      'Medical Assistance History');
                                   navigationController
                                       .navigateTo(Routes.MA_HISTORY_LIST);
                                 },
@@ -480,7 +500,13 @@ Widget desktopVersion() {
                                             ),
                                             // verticalSpace50,
                                             TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                menuController
+                                                    .changeActiveItemTo(
+                                                        'MA Request');
+                                                navigationController.navigateTo(
+                                                    Routes.MA_REQ_LIST);
+                                              },
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
@@ -630,7 +656,14 @@ Widget desktopVersion() {
                                                           alignment: Alignment
                                                               .bottomRight,
                                                           child: TextButton(
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              menuController
+                                                                  .changeActiveItemTo(
+                                                                      'On Progress Request');
+                                                              navigationController
+                                                                  .navigateTo(Routes
+                                                                      .ON_PROGRESS_REQ_LIST);
+                                                            },
                                                             child:
                                                                 Wrap(children: [
                                                               DmText
@@ -742,14 +775,12 @@ Widget phoneVersion() {
                         color: Colors.white,
                       ),
                       verticalSpace15,
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          padding: const EdgeInsets.all(20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
-                        onPressed: () async {
-                          await changeIsCutOff();
-                        },
+                        padding: EdgeInsets.all(12),
                         child: Obx(
                           () => stats.isPSLoading.value
                               ? Text('Loading..')
@@ -773,14 +804,12 @@ Widget phoneVersion() {
                         color: Colors.white,
                       ),
                       verticalSpace15,
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          padding: const EdgeInsets.all(20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
-                        onPressed: () async {
-                          await changeHasFunds();
-                        },
+                        padding: EdgeInsets.all(12),
                         child: Obx(
                           () => stats.isPSLoading.value
                               ? Text('Loading..')
@@ -823,16 +852,36 @@ Widget phoneVersion() {
                       children: [
                         ActionCard(
                           text: 'Change MA Status',
-                          onTap: () async {
-                            await changeIsCutOff();
+                          onTap: () {
+                            showConfirmationDialog(
+                              dialogTitle: 'Changing MA Status',
+                              dialogCaption:
+                                  'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                              onYesTap: () async {
+                                await changeIsCutOff();
+                              },
+                              onNoTap: () {
+                                dismissDialog();
+                              },
+                            );
                           },
                           color: verySoftMagenta[60],
                           secondaryColor: verySoftMagentaCustomColor,
                         ),
                         ActionCard(
                           text: 'Change PSWD Fund Status',
-                          onTap: () async {
-                            await changeHasFunds();
+                          onTap: () {
+                            showConfirmationDialog(
+                              dialogTitle: 'Changing PSWD MA Fund',
+                              dialogCaption:
+                                  'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                              onYesTap: () async {
+                                await changeHasFunds();
+                              },
+                              onNoTap: () {
+                                dismissDialog();
+                              },
+                            );
                           },
                           color: verySoftOrange[60],
                           secondaryColor: verySoftOrangeCustomColor,
@@ -840,6 +889,8 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'View MA History',
                           onTap: () {
+                            menuController.changeActiveItemTo(
+                                'Medical Assistance History');
                             navigationController
                                 .navigateTo(Routes.MA_HISTORY_LIST);
                           },
@@ -919,7 +970,11 @@ Widget phoneVersion() {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              menuController.changeActiveItemTo('MA Request');
+                              navigationController
+                                  .navigateTo(Routes.MA_REQ_LIST);
+                            },
                             child: Wrap(children: [
                               DmText.body16Regular(
                                 'View MA Request',
@@ -1023,7 +1078,12 @@ Widget phoneVersion() {
                       style: title130Bold.copyWith(color: kcVerySoftBlueColor),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        menuController
+                            .changeActiveItemTo('On Progress Request');
+                        navigationController
+                            .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -1082,12 +1142,14 @@ Future<void> changeHasFunds() async {
   await firestore
       .collection('pswd_status')
       .doc('status')
-      .update({'hasFunds': !(stats.pswdPStatus[0].hasFunds!)});
+      .update({'hasFunds': !(stats.pswdPStatus[0].hasFunds!)}).then(
+          (value) => dismissDialog());
 }
 
 Future<void> changeIsCutOff() async {
   await firestore
       .collection('pswd_status')
       .doc('status')
-      .update({'isCutOff': !(stats.pswdPStatus[0].isCutOff!)});
+      .update({'isCutOff': !(stats.pswdPStatus[0].isCutOff!)}).then(
+          (value) => dismissDialog());
 }

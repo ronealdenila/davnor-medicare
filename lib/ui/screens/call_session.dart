@@ -169,24 +169,36 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          _leaveChannel();
-                                        },
-                                        icon: Icon(
-                                          Icons.call_end_rounded,
-                                          color: Colors.white,
-                                          size: 35,
-                                        )),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _leaveChannel();
+                                  },
+                                  child: Icon(Icons.call_end_rounded,
+                                      color: Colors.white, size: 40),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    padding: EdgeInsets.all(12),
+                                    primary: Colors.red,
                                   ),
                                 ),
+                                // Container(
+                                //   decoration: const BoxDecoration(
+                                //     color: Colors.red,
+                                //     shape: BoxShape.circle,
+                                //   ),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8),
+                                //     child: IconButton(
+                                //         onPressed: () {
+                                //           _leaveChannel();
+                                //         },
+                                //         icon: Icon(
+                                //           Icons.call_end_rounded,
+                                //           color: Colors.white,
+                                //           size: 35,
+                                //         )),
+                                //   ),
+                                // ),
                                 const SizedBox(
                                   width: 20,
                                 ),
