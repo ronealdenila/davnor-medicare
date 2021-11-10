@@ -28,7 +28,6 @@ class PSWDItemView extends GetResponsiveView {
   final GeneralMARequestModel model;
   final String status;
   final BuildContext context;
-
   final RxBool doneLoad = false.obs;
 
   @override
@@ -299,6 +298,7 @@ class PSWDItemView extends GetResponsiveView {
               borderRadius: BorderRadius.circular(2),
             ),
             child: GridView.count(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,

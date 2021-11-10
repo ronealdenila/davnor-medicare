@@ -78,7 +78,8 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                bubbleChat(consHController.chatHistory[index]),
+                                bubbleChat(consHController.chatHistory[index],
+                                    context),
                                 verticalSpace15
                               ],
                             );

@@ -229,7 +229,7 @@ class PatientProfileScreen extends StatelessWidget {
                             onTap: () => showDialog(
                                 context: context,
                                 builder: (context) =>
-                                    attachedPhotosDialog(data['validID'])),
+                                    attachedPhotoDialog(data['validID'])),
                             child: Image.network(
                               data['validID'],
                               height: 106,
@@ -245,7 +245,7 @@ class PatientProfileScreen extends StatelessWidget {
                             onTap: () => showDialog(
                                 context: context,
                                 builder: (context) =>
-                                    attachedPhotosDialog(data['validSelfie'])),
+                                    attachedPhotoDialog(data['validSelfie'])),
                             child: Image.network(
                               data['validSelfie'],
                               height: 106,
@@ -264,7 +264,7 @@ class PatientProfileScreen extends StatelessWidget {
   }
 }
 
-Widget attachedPhotosDialog(String imgURL) {
+Widget attachedPhotoDialog(String imgURL) {
   return SimpleDialog(
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
