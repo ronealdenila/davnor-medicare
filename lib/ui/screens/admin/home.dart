@@ -332,7 +332,7 @@ Widget desktopVersion() {
                                             DmText.subtitle18Regular(
                                               medicareDataSubtitle,
                                             ),
-                                            // verticalSpace20,
+                                            verticalSpace20,
                                             Align(
                                               child: AutoSizeText(
                                                 '12',
@@ -422,9 +422,10 @@ Widget desktopVersion() {
                                                               .ellipsis,
                                                           maxLines: 1,
                                                         ),
-                                                        // DmText.title24Medium(
-                                                        // 'ON PROGRESS REQUESTS TODAY'),
-                                                        // DmText.title150Bold('2'),
+                                                        DmText.title24Medium(
+                                                            'ON PROGRESS REQUESTS TODAY'),
+                                                        DmText.title150Bold(
+                                                            '2'),
                                                         AutoSizeText(
                                                           '3',
                                                           style: title130Bold

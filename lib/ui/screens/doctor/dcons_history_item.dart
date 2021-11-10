@@ -23,7 +23,42 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          toolbarHeight: 80,
+          elevation: 1,
+          title: Row(
+            children: [
+              Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: getPhoto(consData)),
+              horizontalSpace15,
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    consHController.getPatientName(consData),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: subtitle18Medium.copyWith(color: Colors.black),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.info_outline,
+                size: 30,
+              ),
+              onPressed: () => Get.to(() => HistoryInfoScreen(),
+                  arguments: consData, transition: Transition.rightToLeft),
+            ),
+            horizontalSpace10,
+          ],
+        ),
         body: SizedBox(
           width: Get.width,
           height: Get.height,

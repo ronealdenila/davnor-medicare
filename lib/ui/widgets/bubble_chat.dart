@@ -32,7 +32,9 @@ Widget displaySingleImage(ChatModel chat) {
             constraints: BoxConstraints(maxWidth: Get.width * .7),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: verySoftBlueColor[60],
+              color: chat.senderID == auth.currentUser!.uid
+                  ? neutralBubbleColor
+                  : verySoftBlueColor[60],
               borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(10),
                   topRight: const Radius.circular(10),
@@ -63,7 +65,9 @@ Widget displayMultipleImages(List<String> displayImages, ChatModel chat) {
           constraints: BoxConstraints(maxWidth: Get.width * .7),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: verySoftBlueColor[60],
+            color: chat.senderID == auth.currentUser!.uid
+                ? neutralBubbleColor
+                : verySoftBlueColor[60],
             borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(10),
                 topRight: const Radius.circular(10),
@@ -109,7 +113,9 @@ Widget displayMessage(ChatModel chat) {
             constraints: BoxConstraints(maxWidth: Get.width * .7),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: verySoftBlueColor[60],
+              color: chat.senderID == auth.currentUser!.uid
+                  ? neutralBubbleColor
+                  : verySoftBlueColor[60],
               borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(10),
                   topRight: const Radius.circular(10),
@@ -122,7 +128,11 @@ Widget displayMessage(ChatModel chat) {
             ),
             child: Text(
               chat.message!,
-              style: body16Medium.copyWith(color: Colors.white, height: 1.4),
+              style: body16Medium.copyWith(
+                  color: chat.senderID == auth.currentUser!.uid
+                      ? Colors.black
+                      : Colors.white,
+                  height: 1.4),
             )),
       ),
     ],
