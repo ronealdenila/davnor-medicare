@@ -121,7 +121,7 @@ class MADescriptionScreen extends StatelessWidget {
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  <Widget>[
+                        children: <Widget>[
                           Text('ma8'.tr,
                               textAlign: TextAlign.left,
                               style: caption12SemiBold),
@@ -168,16 +168,17 @@ class MADescriptionScreen extends StatelessWidget {
             if (stats.pswdPStatus[0].hasFunds!) {
               if (stats.pswdPStatus[0].isCutOff!) {
                 if (controller.hasAvailableSlot()) {
-                  //check activeQueue/slot/fund
                   return showConfirmationDialog(
                     dialogTitle: 'dialog2'.tr,
                     dialogCaption: 'dialogsub2'.tr,
                     onYesTap: () {
                       controller.isMAForYou.value = true;
+                      dismissDialog();
                       Get.to(() => MAFormScreen());
                     },
                     onNoTap: () {
                       controller.isMAForYou.value = false;
+                      dismissDialog();
                       Get.to(() => MAFormScreen());
                     },
                   );
@@ -188,28 +189,22 @@ class MADescriptionScreen extends StatelessWidget {
                   );
                 }
               } else {
-               
                 showErrorDialog(
-                  errorDescription: 'Sorry were cut off already. Please try again next time.'
-                );
+                    errorDescription:
+                        'Sorry were cut off already. Please try again next time.');
               }
             } else {
               showErrorDialog(
-                  errorDescription: 'Sorry MA has no fund for now. Please try again next time'
-                );
+                  errorDescription:
+                      'Sorry MA has no fund for now. Please try again next time');
             }
           } else {
             showErrorDialog(
-                errorTitle:
-                    'maerror3'.tr,
-                errorDescription:
-                    'action6'.tr);
+                errorTitle: 'maerror3'.tr, errorDescription: 'action6'.tr);
           }
         } else {
           showErrorDialog(
-              errorTitle: 'action7'.tr,
-              errorDescription:
-                  'action8'.tr);
+              errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
         }
       },
       text: 'ma10'.tr,

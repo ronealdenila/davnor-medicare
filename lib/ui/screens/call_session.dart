@@ -181,24 +181,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                     primary: Colors.red,
                                   ),
                                 ),
-                                // Container(
-                                //   decoration: const BoxDecoration(
-                                //     color: Colors.red,
-                                //     shape: BoxShape.circle,
-                                //   ),
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8),
-                                //     child: IconButton(
-                                //         onPressed: () {
-                                //           _leaveChannel();
-                                //         },
-                                //         icon: Icon(
-                                //           Icons.call_end_rounded,
-                                //           color: Colors.white,
-                                //           size: 35,
-                                //         )),
-                                //   ),
-                                // ),
                                 const SizedBox(
                                   width: 20,
                                 ),
@@ -211,7 +193,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                     padding: const EdgeInsets.all(5),
                                     child: IconButton(
                                         onPressed: () {
-                                          //mic func
+                                          //TO THINK - wheter mag add ug mic func
                                         },
                                         icon: Icon(
                                           Icons.mic,
@@ -289,8 +271,9 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     return false as Future<bool>;
   }
 
-  Future<void> endCall() async {
-    //update didJoin = false, reset the patient data
-    //For Upgrade: Add a record for video call as a chat msg
-  }
+  //TO DO - DELETE I guess, murag walay gamit
+  // Future<void> endCall() async {
+  //   //update didJoin = false, reset the patient data
+  //   //For Upgrade: Add a record for video call as a chat msg
+  // }
 }

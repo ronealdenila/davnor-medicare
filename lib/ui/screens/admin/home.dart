@@ -235,7 +235,6 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'Register a doctor',
                                 onTap: () {
-                                  //NAVIGATE TO REGISTER DOCTOR SCREEN
                                   navigationController
                                       .navigateTo(Routes.DOCTOR_REGISTRATION);
                                 },
@@ -245,7 +244,6 @@ Widget desktopVersion() {
                               ActionCard(
                                 text: 'Add a PSWD\nPersonnel',
                                 onTap: () {
-                                  //NAVIGATE TO REGISTER PSWD SCREEN
                                   navigationController.navigateTo(
                                       Routes.PSWD_STAFF_REGISTRATION);
                                 },
@@ -636,7 +634,6 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'Register a doctor',
                           onTap: () {
-                            //NAVIGATE TO REGISTER DOCTOR SCREEN
                             navigationController
                                 .navigateTo(Routes.DOCTOR_REGISTRATION);
                           },
@@ -646,7 +643,6 @@ Widget phoneVersion() {
                         ActionCard(
                           text: 'Add a PSWD Personnel',
                           onTap: () {
-                            //NAVIGATE TO REGISTER PSWD SCREEN
                             navigationController
                                 .navigateTo(Routes.PSWD_STAFF_REGISTRATION);
                           },

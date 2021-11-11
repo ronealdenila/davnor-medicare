@@ -78,7 +78,6 @@ class SettingScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Get.to(() => AppInfoScreen());
-                  //go to app info, always credit icons8 website
                 },
                 child: Padding(
                   padding:

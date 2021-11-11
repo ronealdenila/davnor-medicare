@@ -88,7 +88,8 @@ class LiveChatScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                bubbleChat(liveChatCont.liveChat[index]),
+                                bubbleChat(
+                                    liveChatCont.liveChat[index], context),
                                 verticalSpace15
                               ],
                             );

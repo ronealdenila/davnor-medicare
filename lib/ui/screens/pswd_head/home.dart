@@ -96,7 +96,7 @@ AppBar topNavigationBar(
     title: Row(
       children: [
         Expanded(child: Container()),
-        // IconButton(
+        // TO THINK: IconButton(
         //   onPressed: () {},
         //   icon: const Icon(Icons.notifications),
         // ),
@@ -111,7 +111,7 @@ AppBar topNavigationBar(
               child: TextButton.icon(
                 label: const Text('Profile'),
                 onPressed: () {
-                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                  //TO DO - ADD PROFILE FOR PSWD navigationController.navigateTo(Routes.ADMIN_PROFILE);
                 },
                 icon: const Icon(Icons.account_circle),
                 style: TextButton.styleFrom(primary: Colors.black),
@@ -154,7 +154,6 @@ class ResponsiveLeading extends GetResponsiveView {
 
 class PswdHeadDashboardScreen extends GetView<MenuController> {
   static AuthController authController = Get.find();
-  //final OnProgressReqController homeController = Get.find();
   final fetchedData = authController.pswdModel.value;
 
   @override

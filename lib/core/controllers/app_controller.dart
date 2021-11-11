@@ -70,7 +70,8 @@ class AppController {
 
   //Global Function FOR DYNAMIC PSWD ITEM VIEW - PSWD Side
   Future<void> getPatientData(GeneralMARequestModel model) async {
-    await controller.splitFetchedImage(model.prescriptions!);
+    final allImages = '${model.validID}>>>${model.prescriptions}';
+    await controller.splitFetchedImage(allImages);
     model.requester.value = await firestore
         .collection('patients')
         .doc(model.requesterID)

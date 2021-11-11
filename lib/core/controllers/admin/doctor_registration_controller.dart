@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,7 +44,7 @@ class DoctorRegistrationController extends GetxController {
     });
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
-        'categoryID': 'to be added yet', //TO DO: fetch categoryID
+        'categoryID': fetchCategories(), //TO CHECK
         'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,
@@ -56,6 +57,21 @@ class DoctorRegistrationController extends GetxController {
       },
     ).then((value) => addDoctorStatus(userID));
     _clearControllers();
+  }
+
+  Future<String> fetchCategories() async {
+    await firestore
+        .collection('cons_status')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc['title'] as String == title.value &&
+            doc['title'] as String == department.value) {
+          return doc['categoryID'];
+        }
+      });
+    });
+    return 'nullFetchingCategoryID';
   }
 
   Future<void> addDoctorStatus(String userID) async {

@@ -282,7 +282,6 @@ class AuthController extends GetxController {
               title:
                   'Your account has been disabled. Please contact this email address davnormedicare@gmail.com',
             );
-           
           }
           await checkAppRestriction(userRole);
           break;
@@ -298,7 +297,6 @@ class AuthController extends GetxController {
             Get.defaultDialog(
                 title:
                     'Your account has been disabled. Please contact this email address davnormedicare@gmail.com');
-            
           }
           break;
         case 'patient':

@@ -1,12 +1,16 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -22,6 +26,9 @@ class LiveConsultationScreen extends StatelessWidget {
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
+  final AttachedPhotosController controller = Get.find();
+  final CallingPatientController callController =
+      Get.put(CallingPatientController());
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +91,7 @@ class LiveConsultationScreen extends StatelessWidget {
                       size: 30,
                     ),
                     onPressed: () async {
-                      showErrorDialog(
-                        errorDescription: 'Something went wrong'
-                      );
+                      showErrorDialog(errorDescription: 'Something went wrong');
                     },
                   );
                 }
@@ -99,10 +104,8 @@ class LiveConsultationScreen extends StatelessWidget {
                   onPressed: () async {
                     if (data['patientJoined'] && data['otherJoined']) {
                       showErrorDialog(
-                        errorDescription: 
-                          'Patient is currently on a video call, please try again later'
-                        );
-                    
+                          errorDescription:
+                              'Patient is currently on a video call, please try again later');
                     } else {
                       await callPatient();
                     }
@@ -140,8 +143,7 @@ class LiveConsultationScreen extends StatelessWidget {
                             return Column(
                               children: [
                                 bubbleChat(
-                                  liveChatCont.liveChat[index],
-                                ),
+                                    liveChatCont.liveChat[index], context),
                                 verticalSpace15
                               ],
                             );
@@ -221,6 +223,7 @@ class LiveConsultationScreen extends StatelessWidget {
         .update({
       'from': 'doctor',
       'isCalling': true,
+      'didReject': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
     }).then((value) => Get.to(() => CallPatientScreen(),

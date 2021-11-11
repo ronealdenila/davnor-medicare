@@ -13,7 +13,6 @@ class ItemNum {
   final int num;
 }
 
-//TO DO: change images
 final discomfortData = [
   Category(
       iconPath: earacheIcon,

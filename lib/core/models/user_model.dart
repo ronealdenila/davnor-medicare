@@ -1,5 +1,4 @@
 //User Model
-
 class PatientModel {
   PatientModel({
     required this.email,
@@ -112,7 +111,7 @@ class AdminModel {
   String? email;
   String? firstName;
   String? lastName;
-  String? profileImage; //data that will change
+  String? profileImage;
 }
 
 class PswdModel {

@@ -20,7 +20,9 @@ class MAForm2Screen extends GetView<MARequestController> {
       appBar: AppBar(
         leading: CupertinoNavigationBarBackButton(
           color: Colors.black,
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -34,7 +36,7 @@ class MAForm2Screen extends GetView<MARequestController> {
                 style: title32Regular,
               ),
               verticalSpace20,
-             Text(
+              Text(
                 'maform11'.tr,
                 style: subtitle18Regular,
               ),
@@ -52,7 +54,6 @@ class MAForm2Screen extends GetView<MARequestController> {
                       width: screenWidth(context),
                       color: neutralColor[10],
                       child: Obx(getPrescription),
-                      // child: Image.memory(Uint8List.fromList(file.bytes!)),
                     );
                   }),
                 ),
@@ -136,7 +137,6 @@ class MAForm2Screen extends GetView<MARequestController> {
                   top: 5,
                   child: InkWell(
                     onTap: () {
-                      //controller.imagesListNew.remove(controller.images[index]);
                       controller.images.removeAt(index);
                     },
                     child: const Icon(
@@ -154,11 +154,3 @@ class MAForm2Screen extends GetView<MARequestController> {
     );
   }
 }
-
-//   Widget getImages() {
-// return Container(
-//   child: Image.memory(Uint8List.fromList(controller.)),
-// );
-//   }
-
-  

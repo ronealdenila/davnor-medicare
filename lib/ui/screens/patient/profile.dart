@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/patient/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
@@ -17,7 +18,6 @@ class PatientProfileScreen extends StatelessWidget {
   static ProfileController profileController = Get.put(ProfileController());
   static VerificationController verificationController =
       Get.put(VerificationController());
-
   final fetchedData = authController.patientModel.value;
 
   @override
@@ -147,7 +147,6 @@ class PatientProfileScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      // backgroundImage: NetworkImage(fetchedData!.profileImage!),
       backgroundImage: AssetImage(blankProfile),
     );
   }
@@ -163,8 +162,6 @@ class PatientProfileScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading');
         }
-
-        // ignore: cast_nullable_to_non_nullable
         final data = snapshot.data!.data() as Map<String, dynamic>;
         if (data['pStatus'] as bool) {
           return Text(
@@ -192,40 +189,98 @@ class PatientProfileScreen extends StatelessWidget {
   }
 
   Widget displayAttachedPhotos() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text('profile3'.tr, style: body14Regular),
-        ),
-        SizedBox(
-          width: Get.width,
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: Image.asset(
-                      blankProfile,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  horizontalSpace10,
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: Image.asset(
-                      blankProfile,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      ],
+    return StreamBuilder<DocumentSnapshot>(
+      stream: firestore
+          .collection('patients')
+          .doc(auth.currentUser!.uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError || !snapshot.hasData) {
+          return SizedBox(
+            height: 0,
+            width: 0,
+          );
+        }
+        final data = snapshot.data!.data() as Map<String, dynamic>;
+        return Visibility(
+          visible: data['validID'] != '' && data['validSelfie'] != '',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text('profile3'.tr, style: body14Regular),
+              ),
+              SizedBox(
+                width: Get.width,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: InkWell(
+                            onTap: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    attachedPhotoDialog(data['validID'])),
+                            child: Image.network(
+                              data['validID'],
+                              height: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        horizontalSpace10,
+                        SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: InkWell(
+                            onTap: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    attachedPhotoDialog(data['validSelfie'])),
+                            child: Image.network(
+                              data['validSelfie'],
+                              height: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
+}
+
+Widget attachedPhotoDialog(String imgURL) {
+  return SimpleDialog(
+    contentPadding: EdgeInsets.zero,
+    titlePadding: EdgeInsets.zero,
+    children: [
+      Container(
+        decoration: const BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(
+              Radius.circular(40),
+            )),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        width: Get.width * .9,
+        child: Container(
+          color: Colors.white,
+          child: Image.network(
+            imgURL,
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+      ),
+    ],
+  );
 }

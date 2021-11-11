@@ -4,10 +4,10 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -19,6 +19,8 @@ final AttachedPhotosController controller = Get.find();
 final AuthController authController = Get.find();
 final AppController appController = Get.find();
 final fetchedData = authController.pswdModel.value;
+final CallingPatientController callController =
+    Get.put(CallingPatientController());
 
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status, this.model)
@@ -26,7 +28,6 @@ class PSWDItemView extends GetResponsiveView {
   final GeneralMARequestModel model;
   final String status;
   final BuildContext context;
-
   final RxBool doneLoad = false.obs;
 
   @override
@@ -123,8 +124,7 @@ class PSWDItemView extends GetResponsiveView {
                       ),
                       onPressed: () async {
                         showErrorDialog(
-                          errorDescription: 'Something went wrong'
-                        );
+                            errorDescription: 'Something went wrong');
                       },
                     );
                   }
@@ -137,9 +137,8 @@ class PSWDItemView extends GetResponsiveView {
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
                         showErrorDialog(
-                          errorDescription: 
-                            'Patient is currently on a video call, please try again later'
-                        );
+                            errorDescription:
+                                'Patient is currently on a video call, please try again later');
                       } else {
                         await interviewPatient();
                       }
@@ -271,9 +270,11 @@ class PSWDItemView extends GetResponsiveView {
         .update({
       'from': 'pswd-p',
       'isCalling': true,
+      'didReject': false,
       'channelId': model.maID,
       'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
-    });
+    }).then((value) => Get.to(() => CallPatientScreen(),
+            arguments: [model.requesterID, model.maID]));
   }
 
   Widget attachedPhotos() {
@@ -297,6 +298,7 @@ class PSWDItemView extends GetResponsiveView {
               borderRadius: BorderRadius.circular(2),
             ),
             child: GridView.count(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,

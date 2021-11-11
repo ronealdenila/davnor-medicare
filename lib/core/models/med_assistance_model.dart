@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:get/get.dart';
 
-//Ako lang gibutangan og required para pagtawag sa model i set na niya daan ang
-//constructor (R)
 class MARequestModel {
   MARequestModel({
     required this.maID,
@@ -17,7 +15,6 @@ class MARequestModel {
     required this.type,
     required this.prescriptions,
     required this.validID,
-    // ignore: non_constant_identifier_names
     required this.date_rqstd,
   });
 

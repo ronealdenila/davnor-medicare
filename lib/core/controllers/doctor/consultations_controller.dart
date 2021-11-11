@@ -24,7 +24,6 @@ class ConsultationsController extends GetxController {
     consultations.bindStream(getConsultations());
   }
 
-  //TO DO: ALL STREAM LIST MUST BE REFACTORED LIKE THIS
   Stream<List<ConsultationModel>> getConsultations() {
     log.i('getConsultations | Streaming Consultation Request');
     return firestore

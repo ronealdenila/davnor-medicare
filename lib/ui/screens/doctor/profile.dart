@@ -134,7 +134,6 @@ class DoctorProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               const Text(
-                                //'${to.userModel.value.department}'
                                 'DEPARTMENT',
                                 style: TextStyle(
                                   fontSize: 14,

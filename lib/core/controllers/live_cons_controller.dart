@@ -120,7 +120,7 @@ class LiveConsController extends GetxController {
       'dateConsStart': model.dateConsStart,
       'dateConsEnd': Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
-      //NOTIF TO SUCCESS/DONE CONSULTATION??
+      //TO THINK - NOTIF TO SUCCESS/DONE CONSULTATION??
       await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
       await updateDocStatus(fetchedData!.userID!);
@@ -192,7 +192,7 @@ class LiveConsController extends GetxController {
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
     await deleteConsFromQueue(consID);
-    //del storage folder
+    //TO DO - del storage folder
     await removeFromLive(consID);
     await removeFromChat(consID);
     await updatePatientStatus(patientID);
