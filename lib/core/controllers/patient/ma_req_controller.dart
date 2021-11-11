@@ -94,7 +94,7 @@ class MARequestController extends GetxController {
       await checkEmptyFields();
     } else {
       log.i(
-          'ERROR DIALOG: please provide valid ID'); // TO DO ERROR DIALOG: ilisan ni si log ug error dialog
+          'ERROR DIALOG: please provide valid ID');
     }
   }
 
@@ -105,8 +105,8 @@ class MARequestController extends GetxController {
         lastNameController.text == '' ||
         ageController.text == '' ||
         addressController.text == '') {
-      log.i(
-          'ERROR DIALOG: please dont leave any empty fields'); // TO DO ERROR DIALOG: ilisan ni si log ug error dialog
+      showErrorDialog(
+          errorDescription: 'ERROR DIALOG: please dont leave any empty fields');
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -127,12 +127,16 @@ class MARequestController extends GetxController {
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
-        //TO DO - ERROR DIALOG about : sorry naunhan naka, naa nay nakakuha sa last slot
+        showErrorDialog(
+          errorDescription: 'Sorry, someone already got the last slot.'
+        );
       }
       dismissDialog();
     } else {
       dismissDialog();
-      //TO DO - ERROR DIALOG about :'ERROR: please provide prescriptions');
+      showErrorDialog(
+          errorDescription: 'ERROR: please provide prescriptions.'
+        );
     }
   }
 

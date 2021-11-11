@@ -105,7 +105,10 @@ class ConsRequestController extends GetxController {
 
   Future<void> submitConsultRequest() async {
     if (statusList[statusIndex.value].consSlot! == 0) {
-      //TO DO: Show error dialog "Sorry, there are currently no available that specialize in the illness. Please try again later"
+      showErrorDialog(
+        errorDescription:
+             'Sorry, there are currently no available that specialize in the illness. Please try again later.'
+      );
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
