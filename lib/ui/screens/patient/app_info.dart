@@ -63,13 +63,13 @@ class AppInfoScreen extends StatelessWidget {
               style: caption18RegularNeutral
               ),
               verticalSpace18,
-              const Text('Ilenesses Icons from:',
+              const Text('Illness Icons from:',
                 textAlign: TextAlign.left,
                   style: subtitle18Bold,
                 ),
               verticalSpace10,
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
@@ -77,10 +77,11 @@ class AppInfoScreen extends StatelessWidget {
                       icons8,
                       fit: BoxFit.fill,
                       height: 50,
-                      width: 70,
+                      width: 60,
                 ),
                   ),
-                  Text('Icons /n https://icons8.com',
+                  horizontalSpace15,
+                  Text('Icons \nhttps://icons8.com',
                 style: caption18RegularNeutral
               ),
 

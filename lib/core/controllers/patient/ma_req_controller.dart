@@ -107,7 +107,9 @@ class MARequestController extends GetxController {
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
-        //sorry naunhan naka, naay mas paspas mu fill up
+        showErrorDialog(
+          errorDescription: 'Sorry, theres a person got it first.'
+        );
       }
       dismissDialog();
     } else {
