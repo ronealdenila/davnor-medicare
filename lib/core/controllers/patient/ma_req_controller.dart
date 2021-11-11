@@ -132,7 +132,7 @@ class MARequestController extends GetxController {
       dismissDialog();
     } else {
       dismissDialog();
-      log.i('ERROR: please provide prescriptions');
+      //TO DO - ERROR DIALOG about :'ERROR: please provide prescriptions');
     }
   }
 
