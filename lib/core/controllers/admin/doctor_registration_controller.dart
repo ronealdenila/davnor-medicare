@@ -43,7 +43,7 @@ class DoctorRegistrationController extends GetxController {
     });
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
-        'categoryID': 'to be added yet', //TO DO: fetch categoryID
+        'categoryID': 'to be added yet', //TO DO : fetch categoryID
         'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,

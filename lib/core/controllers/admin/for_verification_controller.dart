@@ -194,7 +194,7 @@ class ForVerificationController extends GetxController {
       });
     });
 
-    //SEND NOTIF TO DEVICE ALSO
+    //TO THINK - SEND NOTIF TO DEVICE ALSO
   }
 
   Future<void> removeVerificationReq(String uid) async {

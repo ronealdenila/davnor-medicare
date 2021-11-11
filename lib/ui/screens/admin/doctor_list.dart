@@ -233,7 +233,6 @@ class DoctorListScreen extends StatelessWidget {
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_DOCTOR,
                             arguments: model);
-                        //Get.to(() => EditDoctorScrenn(), arguments: model);
                       },
                       child: Text(
                         'View',
@@ -247,7 +246,6 @@ class DoctorListScreen extends StatelessWidget {
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_DOCTOR,
                             arguments: model);
-                        //Get.to(() => EditDoctorScrenn(), arguments: model);
                       },
                       child: Text(
                         'Edit',
@@ -257,9 +255,10 @@ class DoctorListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        //DIALOG CONFIRMATION MUNA
+                        //TO DO: ADD DIALOG CONFIRMATION MUNA
+                        //onTapYes -> function
                         dListController.disableDoctor(model.userID!);
-                        //Change to userID instead of email
+                        //onTapNo -> dismissdialog();
                       },
                       child: Text(
                         'Disable',

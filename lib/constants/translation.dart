@@ -10,7 +10,8 @@ class LocalString extends Translations {
           'action2': 'Request Medical Assistance',
           'action3': 'View\nQueue',
           'action4': 'See All',
-          'action5': 'Sorry, you still have an on progress consultation transaction',
+          'action5':
+              'Sorry, you still have an on progress consultation transaction',
           'action6': 'Please proceed to your existing consultation',
           'action7': 'Sorry, only verified users can use this feature',
           'action8': 'Please verify your account first in your profile',
@@ -76,8 +77,10 @@ class LocalString extends Translations {
           'ma9': 'Afternoon',
           'ma10': 'Avail Medical Assistance',
           'maerror': 'No Slot Available',
-          'maerror2': 'Sorry, there are no available slots at the moment. Please try again next time',
-          'maerror3': 'Sorry, you still have an on progress MA request transaction',
+          'maerror2':
+              'Sorry, there are no available slots at the moment. Please try again next time',
+          'maerror3':
+              'Sorry, you still have an on progress MA request transaction',
           //Dialog2
           'dialog2': 'Is the medical assistance request for you?',
           'dialogsub2':
@@ -195,15 +198,15 @@ class LocalString extends Translations {
           'mah11': 'Medecine Worth',
           'mah12': 'Date Requested',
           'mah13': 'Date MA Claimed',
-          'mah14': 'See attached Photos',
+          'mah14': 'See Attached Photos',
           //articleItem
           'item': 'See original source here:',
           //Notifications
           'notification': 'Notifications',
           'notif': 'You have no notifications',
           //appinfo
-          'appinfo': 
-                'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people efficiently to connect to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.'
+          'appinfo':
+              'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people efficiently to connect to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.'
         },
 
         //TAGALOG
@@ -213,9 +216,11 @@ class LocalString extends Translations {
           'action2': 'Humiling ng Tulong Medikal',
           'action3': 'Tignan ang  Queue',
           'action4': 'Tignan lahat',
-          'action5': 'Paumanhin, mayroon ka pa ring patuloy na transaksyon ng konsultasyon',
+          'action5':
+              'Paumanhin, mayroon ka pa ring patuloy na transaksyon ng konsultasyon',
           'action6': 'Mangyaring magpatuloy sa iyong kasalukuyang konsultasyon',
-          'action7': 'Paumanhin, ang mga na-verify na user lang ang makakagamit ng feature na ito',
+          'action7':
+              'Paumanhin, ang mga na-verify na user lang ang makakagamit ng feature na ito',
           'action8': 'Paki-verify muna ang iyong account sa iyong profile',
           'action9': 'Wala kang kasalukuyang konsultasyon',
           'action10': 'PMangyaring humiling ng konsultasyon muna',
@@ -279,8 +284,10 @@ class LocalString extends Translations {
           'ma9': 'Hapon',
           'ma10': 'Kumuha ng Tulong Medikal',
           'maerror': 'Wala ng bakante',
-          'maerror2': 'Paumanhin, walang ng bakante sa ngayon. Pakisubukang muli sa susunod',
-          'maerror3': 'Paumanhin, mayroon ka pa ring kasulukuyang transaksyon sa kahilingan sa MA',
+          'maerror2':
+              'Paumanhin, walang ng bakante sa ngayon. Pakisubukang muli sa susunod',
+          'maerror3':
+              'Paumanhin, mayroon ka pa ring kasulukuyang transaksyon sa kahilingan sa MA',
           //Dialog2
           'dialog2': 'Ang kahilingan ba sa tulong medikal para sa iyo?',
           'dialogsub2':
@@ -365,7 +372,8 @@ class LocalString extends Translations {
           'conshistory': 'Consultation History',
           'cons1': 'Buwan',
           'cons2': 'Araw',
-          'conslog': 'Diyalogo para sa: mangyaring maghintay, kumukuha ng record...',
+          'conslog':
+              'Diyalogo para sa: mangyaring maghintay, kumukuha ng record...',
           'conslog1': 'Diyalogo para sa: wala kang history ng konsultasyon',
           'conslog2': 'Maghanap ayon sa petsa',
           'conslog3': 'No Consultation History',
@@ -408,8 +416,8 @@ class LocalString extends Translations {
           'notification': 'Mga abiso',
           'notif': 'Wala kang abiso',
           //appinfo
-           'appinfo': 
-                'Ang DavNor Medicare ay isang multiplatform-based na aplikasyon na nag-aalok ng libreng online na konsultasyon at Tulong Medikal mula sa PSWD. Ang aplikasyon ay naglalayon na tulungan ang mga tao na mahusay na kumonekta sa mga doktor nang halos magkaroon ng regulasyon na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang aplikasyon nang walang anumang problema. At panghuli, ang mga residente lang ng Davao del Norte ang makakagamit ng aplikasyon.'
+          'appinfo':
+              'Ang DavNor Medicare ay isang multiplatform-based na aplikasyon na nag-aalok ng libreng online na konsultasyon at Tulong Medikal mula sa PSWD. Ang aplikasyon ay naglalayon na tulungan ang mga tao na mahusay na kumonekta sa mga doktor nang halos magkaroon ng regulasyon na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang aplikasyon nang walang anumang problema. At panghuli, ang mga residente lang ng Davao del Norte ang makakagamit ng aplikasyon.'
         },
 
         //BISAYA
@@ -421,7 +429,8 @@ class LocalString extends Translations {
           'action4': 'Tan-awon tanan',
           'action5': 'Pasensya, anaa pakay transakyon sa konsulta',
           'action6': 'Palihug adto sa imung anaa na konsulta',
-          'action7': 'Pasensya, ang napamatud-an nga tiggamit lamang ang makagamit niini nga bahin',
+          'action7':
+              'Pasensya, ang napamatud-an nga tiggamit lamang ang makagamit niini nga bahin',
           'action8': 'Palihug i-verify una ang imong account sa imong profile',
           'action9': 'Wala ka karon nga konsultasyon',
           'action10': 'Palihug hangyo og konsultasyon una',
@@ -485,8 +494,10 @@ class LocalString extends Translations {
           'ma9': 'Udto',
           'ma10': 'Magkuha ug Tabang Medikal',
           'maerror': 'Walay Slot nga anaa',
-          'maerror2': 'Pasensya, wala’y magamit nga mga slot sa pagkakaron. Palihug sulayi pag-usab sa sunod',
-          'maerror3': 'Pasensya, naa pakay gihapung transaksyon sa MA na imu gihango',
+          'maerror2':
+              'Pasensya, wala’y magamit nga mga slot sa pagkakaron. Palihug sulayi pag-usab sa sunod',
+          'maerror3':
+              'Pasensya, naa pakay gihapung transaksyon sa MA na imu gihango',
           //Dialog2
           'dialog2': 'Ang pagkuha bag tabang medikal ay para nimu?',
           'dialogsub2':
@@ -613,9 +624,8 @@ class LocalString extends Translations {
           'notification': 'Pahibalo',
           'notif': 'Wala kay nadawat na pahibalo',
           //appinfo
-          'appinfo': 
-                'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Tabang Medikal gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga episyente nga makakonektar sa mga doktor halos aron adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug sa katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.'
-          
-          }
+          'appinfo':
+              'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Tabang Medikal gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga episyente nga makakonektar sa mga doktor halos aron adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug sa katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.'
+        }
       };
 }

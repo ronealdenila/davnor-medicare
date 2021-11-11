@@ -124,7 +124,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               SizedBox(
+                              SizedBox(
                                 width: 160,
                                 child: Text('mah7'.tr,
                                     textAlign: TextAlign.left,
@@ -271,7 +271,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                   alignment: FractionalOffset.bottomLeft,
                   child: CustomButton(
                     onTap: () async {
-                      //
+                      //TO DO - Open Dialog ang show the attached photos (Valid ID + Prescription)
                     },
                     text: 'mah14'.tr,
                     buttonColor: verySoftBlueColor,

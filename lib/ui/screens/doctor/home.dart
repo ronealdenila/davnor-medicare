@@ -215,7 +215,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftMagentaCustomColor,
                 onTap: () {
                   print(stats.isLoading.value);
-                  //Snackbar: Please wait while we are currently connecting to the server},
+                  //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
                 }),
           ),
           Expanded(
@@ -224,7 +224,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftOrange[60],
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
-                  //Snackbar: Please wait while we are currently connecting to the server},
+                  //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
                 }),
           ),
           Expanded(
@@ -233,7 +233,7 @@ class DoctorHomeScreen extends StatelessWidget {
                   color: verySoftRed[60],
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
-                    //Snackbar: Please wait while we are currently connecting to the server},
+                    //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
                   })),
         ],
       );
@@ -343,8 +343,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               count.value = 1;
                             }).catchError((error) {
                               showErrorDialog(
-                                errorDescription: 'Something went wrong!'
-                              );
+                                  errorDescription: 'Something went wrong!');
                             });
                           },
                           child: Text('ACCOMMODATE MY PATIENTS FIRST'))),
@@ -363,14 +362,13 @@ class DoctorHomeScreen extends StatelessWidget {
                               'numToAccomodate': 0,
                               'dStatus': false
                             }).then((value) {
-                              //TODO consSlot - num in category
+                              //TO THINK - the offline should affect the slot available consSlot - num in category
                               dismissDialog();
                               print('Changed status');
                               count.value = 1;
                             }).catchError((error) {
                               showErrorDialog(
-                                errorDescription: 'Something went wrong'
-                              );
+                                  errorDescription: 'Something went wrong');
                             });
                           },
                           child: Text('GO OFFLINE NOW'))),
@@ -427,8 +425,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               count.value = 1;
                             }).catchError((error) {
                               showErrorDialog(
-                                errorDescription: 'Something went wrong'
-                              );
+                                  errorDescription: 'Something went wrong');
                             });
                           },
                           child: Text('Ready for Consultation'))),
@@ -483,8 +480,7 @@ class DoctorHomeScreen extends StatelessWidget {
                               countAdd.value = 1;
                             }).catchError((error) {
                               showErrorDialog(
-                                errorDescription: 'Something went wrong'
-                              );
+                                  errorDescription: 'Something went wrong');
                             });
                           },
                           child: Text('Add count'))),

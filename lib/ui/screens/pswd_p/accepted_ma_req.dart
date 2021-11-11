@@ -49,10 +49,10 @@ class AcceptedMARequestScreen extends StatelessWidget {
                     }).then((value) async {
                       await deleteMAFromQueue(model.maID!);
                       await updatePatientStatus(model.requesterID!);
-                      //notify patient
+                      //TO THINK: if i notify pa si patient if na accept ba iyang request
                       Get.back();
                     }).catchError((onError) {
-                      //dialog, "something went wrong"
+                      //TO DO - ADD ERROR DIALOG, "something went wrong"
                     });
                   },
                   buttonText: 'Transfer for Head Approval',

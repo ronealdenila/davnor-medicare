@@ -63,7 +63,3 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MAHistoryController>(() => MAHistoryController());
   }
 }
-
-    //?Note: Lazyput para dili siya ma initialize during runtime
-    //?then pag call sa Get.put() kung asa na screen 
-    //?dihaa lang siya mag inititate (R)

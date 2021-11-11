@@ -21,11 +21,9 @@ class MARequestController extends GetxController {
   static StatusController stats = Get.find();
 
   final uuid = const Uuid();
-
   final fetchedData = authController.patientModel.value;
   RxBool isMAForYou = true.obs;
   final String userID = auth.currentUser!.uid;
-
   bool isAvailable = true;
 
   //Input Data from MA Form
@@ -64,10 +62,30 @@ class MARequestController extends GetxController {
 
   Future<void> assignValues() async {
     if (isMAForYou.value) {
+      if (fetchedData!.validID! == '') {
+        await fetchnewlyAddedValidID();
+      } else {
+        imgOfValidID.value = fetchedData!.validID!;
+      }
       firstNameController.text = fetchedData!.firstName!;
       lastNameController.text = fetchedData!.lastName!;
-      imgOfValidID.value = 'kay null sa firestore'; //fetchedData!.validId!;
     }
+  }
+
+  Future<void> fetchnewlyAddedValidID() async {
+    await firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+        imgOfValidID.value = data['validID'];
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
   }
 
   Future<void> nextButton() async {
@@ -75,7 +93,8 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      log.i('ERROR: please provide valid ID');
+      log.i(
+          'ERROR: please provide valid ID'); // TO DO: ilisan ni si log ug error dialog
     }
   }
 
@@ -86,7 +105,8 @@ class MARequestController extends GetxController {
         lastNameController.text == '' ||
         ageController.text == '' ||
         addressController.text == '') {
-      log.i('ERROR: please dont leave any empty fields');
+      log.i(
+          'ERROR: please dont leave any empty fields'); // TO DO: ilisan ni si log ug error dialog
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -107,7 +127,7 @@ class MARequestController extends GetxController {
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
-        //sorry naunhan naka, naay mas paspas mu fill up
+        //TO DO - ERROR DIALOG about : sorry naunhan naka, naa nay nakakuha sa last slot
       }
       dismissDialog();
     } else {

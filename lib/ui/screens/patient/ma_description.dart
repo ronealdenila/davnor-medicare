@@ -168,16 +168,17 @@ class MADescriptionScreen extends StatelessWidget {
             if (stats.pswdPStatus[0].hasFunds!) {
               if (stats.pswdPStatus[0].isCutOff!) {
                 if (controller.hasAvailableSlot()) {
-                  //check activeQueue/slot/fund
                   return showConfirmationDialog(
                     dialogTitle: 'dialog2'.tr,
                     dialogCaption: 'dialogsub2'.tr,
                     onYesTap: () {
                       controller.isMAForYou.value = true;
+                      dismissDialog();
                       Get.to(() => MAFormScreen());
                     },
                     onNoTap: () {
                       controller.isMAForYou.value = false;
+                      dismissDialog();
                       Get.to(() => MAFormScreen());
                     },
                   );

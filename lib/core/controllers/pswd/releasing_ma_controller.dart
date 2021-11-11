@@ -35,24 +35,6 @@ class ReleasingMAController extends GetxController {
     });
   }
 
-  // Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-  //   log.i('Releasing MA Controller | get Collection');
-  //   return firestore
-  //       .collection('on_progress_ma')
-  //       .orderBy('dateRqstd')
-  //       .where('isMedReady', isEqualTo: true)
-  //       .snapshots();
-  // }
-
-  // Stream<List<OnProgressMAModel>> assignListStream() {
-  //   log.i('Releasing MA Controller | assign');
-  //   return getCollection().map(
-  //     (query) => query.docs
-  //         .map((item) => OnProgressMAModel.fromJson(item.data()))
-  //         .toList(),
-  //   );
-  // }
-
   String convertTimeStamp(Timestamp recordTime) {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);

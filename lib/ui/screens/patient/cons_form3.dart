@@ -74,7 +74,6 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
 
   Widget getPrescriptionAndLabResults() {
     final images = controller.images;
-    //final images = controller.imagesListNew;
     if (images.isEmpty) {
       return InkWell(
         onTap: controller.pickForFollowUpImagess,

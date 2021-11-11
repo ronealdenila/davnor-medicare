@@ -249,7 +249,7 @@ Widget confirmProcess(PswdModel model) {
                     alignment: Alignment.bottomCenter,
                     child: TextButton(
                         onPressed: () async {
-                          //DELETION sa users collection ug pswd_personnel collection
+                          //TO DO: Delete doc sa users collection & pswd_personnel collection
                         },
                         child: Text('Got it!'))),
                 verticalSpace15,

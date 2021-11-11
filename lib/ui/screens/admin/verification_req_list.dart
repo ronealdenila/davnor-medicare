@@ -47,10 +47,6 @@ class VerificationReqListScreen extends StatelessWidget {
                           navigationController.navigateToWithArgs(
                               Routes.VERIFICATION_REQ_ITEM,
                               arguments: vf.verifReq[index]);
-                          // Get.to(
-                          //   () => VerificationReqItemScreen(),
-                          //   arguments: vf.verifReq[index],
-                          // );
                         });
                   });
             } else {

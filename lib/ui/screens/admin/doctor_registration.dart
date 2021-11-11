@@ -48,7 +48,7 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                           ),
                         ),
                         verticalSpace15,
-                        //TODO: Change into regular text field
+                        //TO DO: Change into regular text field???
                         DmInputField(
                           controller: controller.lastNameController,
                           placeholder: 'Last Name',

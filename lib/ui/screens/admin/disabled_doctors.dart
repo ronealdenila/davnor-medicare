@@ -248,7 +248,7 @@ Widget confirmProcess(DoctorModel model) {
                     alignment: Alignment.bottomCenter,
                     child: TextButton(
                         onPressed: () async {
-                          //DELETION sa users collection ug doctors collection
+                          //TO DO: Delete doc sa users collection & doctors collection
                         },
                         child: Text('Got it!'))),
                 verticalSpace15,

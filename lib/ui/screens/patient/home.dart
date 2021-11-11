@@ -146,10 +146,7 @@ class PatientHomeScreen extends StatelessWidget {
               if (stats.patientStatus[0].pStatus!) {
                 if (stats.patientStatus[0].hasActiveQueueCons!) {
                   showErrorDialog(
-                      errorTitle:
-                          'action5'.tr,
-                      errorDescription:
-                          'action6'.tr);
+                      errorTitle: 'action5'.tr, errorDescription: 'action6'.tr);
                 } else {
                   showConfirmationDialog(
                     dialogTitle: 'dialog1'.tr,
@@ -166,10 +163,7 @@ class PatientHomeScreen extends StatelessWidget {
                 }
               } else {
                 showErrorDialog(
-                    errorTitle:
-                        'action7'.tr,
-                    errorDescription:
-                        'action8'.tr);
+                    errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
               }
             },
           ),
@@ -202,15 +196,11 @@ class PatientHomeScreen extends StatelessWidget {
                 } else {
                   showErrorDialog(
                       errorTitle: 'dialog3'.tr,
-                      errorDescription:
-                          'dialogsub3'.tr);
+                      errorDescription: 'dialogsub3'.tr);
                 }
               } else {
                 showErrorDialog(
-                    errorTitle:
-                        'action7'.tr,
-                    errorDescription:
-                        'action8'.tr);
+                    errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
               }
             },
           ),
@@ -229,7 +219,7 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftMagenta[60],
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
-              //Snackbar: Please wait while we are currently connecting to the server
+              //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server
             },
           ),
         ),
@@ -240,7 +230,7 @@ class PatientHomeScreen extends StatelessWidget {
               secondaryColor: verySoftOrangeCustomColor,
               //Note: Has weird transition
               onTap: () {
-                //Snackbar: Please wait while we are currently connecting to the server}
+                //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server}
               }),
         ),
         Expanded(
@@ -249,7 +239,7 @@ class PatientHomeScreen extends StatelessWidget {
             color: verySoftRed[60],
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
-              //Snackbar: Please wait while we are currently connecting to the server
+              //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server
             },
           ),
         ),
@@ -352,9 +342,7 @@ class PatientHomeScreen extends StatelessWidget {
     if (liveCont.liveCons.isNotEmpty) {
       Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
     }
-    showErrorDialog(
-        errorTitle: 'action9'.tr,
-        errorDescription: 'action10'.tr);
+    showErrorDialog(errorTitle: 'action9'.tr, errorDescription: 'action10'.tr);
   }
 
   Future<void> resetBadge() async {

@@ -147,7 +147,6 @@ class PatientProfileScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      // backgroundImage: NetworkImage(fetchedData!.profileImage!),
       backgroundImage: AssetImage(blankProfile),
     );
   }
@@ -163,8 +162,6 @@ class PatientProfileScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading');
         }
-
-        // ignore: cast_nullable_to_non_nullable
         final data = snapshot.data!.data() as Map<String, dynamic>;
         if (data['pStatus'] as bool) {
           return Text(
@@ -204,7 +201,6 @@ class PatientProfileScreen extends StatelessWidget {
             width: 0,
           );
         }
-        // ignore: cast_nullable_to_non_nullable
         final data = snapshot.data!.data() as Map<String, dynamic>;
         return Visibility(
           visible: data['validID'] != '' && data['validSelfie'] != '',

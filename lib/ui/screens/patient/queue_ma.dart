@@ -92,7 +92,7 @@ class QueueMAScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Get.to(() => QueueMATableScreen());
-                      }, //See More Screen
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

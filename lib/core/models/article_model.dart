@@ -7,7 +7,7 @@ class ArticleModel {
     required this.source,
   });
 
-//TODO: Try to remove this bunch of codes
+//TO DO: Try to remove this bunch of codes (check first if this is not needed)
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
         title: json['title'] as String,
         content: json['content'] as String,

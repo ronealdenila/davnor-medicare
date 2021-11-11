@@ -31,7 +31,7 @@ class IncomingCallScreen extends StatelessWidget {
                       child: Text('Accept')),
                   ElevatedButton(
                       onPressed: () async {
-                        await rejectCall(); //clear data?
+                        await rejectCall(); //clear data except from
                       },
                       child: Text('Reject Call')),
                 ],

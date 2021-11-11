@@ -71,7 +71,6 @@ class MARequestItemScreen extends StatelessWidget {
             dialogCaption:
                 'Please select yes if you want to accept the request',
             onYesTap: () async {
-              //hasAccepted.value = true;
               if (stats.pswdPStatus.isEmpty && !stats.isPSLoading.value) {
                 await acceptMA(model);
               } else {
@@ -161,7 +160,7 @@ Future<void> acceptMA(GeneralMARequestModel model) async {
     'medWorth': '',
     'pharmacy': '',
   }).then((value) async {
-    //NOTIF TO PREPARE FOR AN INTERVIEW (undecided yet)
+    //TO DO: NOTIF PATIENT TO PREPARE FOR AN INTERVIEW?? (undecided yet)
     await deleteMA(model.maID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for are your sure? yes/no

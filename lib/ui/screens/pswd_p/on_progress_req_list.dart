@@ -341,7 +341,7 @@ Widget detailsDialogMA(OnProgressMAModel model) {
                             'medWorth': _worthController.text,
                             'pharmacy': _pharmacyController.text
                           }).then((value) {
-                            //TO DO: notify patient na pwede na ma claime
+                            //TO DO: notify patient na pwede na ma claim
                           });
                         },
                         buttonText: 'Submit')),

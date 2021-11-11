@@ -88,7 +88,6 @@ class ArticleItemScreen extends StatelessWidget {
                         ),
                       ),
                       verticalSpace5,
-                      //TODO: URL Launcher for this Source
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: GestureDetector(

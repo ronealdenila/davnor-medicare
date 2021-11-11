@@ -5,7 +5,6 @@ import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -14,7 +13,6 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 final MAHistoryController hController = Get.put(MAHistoryController());
 final NavigationController navigationController = Get.find();
 
@@ -104,8 +102,6 @@ class MAHistoryList extends StatelessWidget {
                 },
               ),
             )
-
-            //IconButton(onPressed: (){}, icon: Ico)
           ],
         ),
         verticalSpace25,
@@ -242,10 +238,6 @@ Widget customTableRow(MAHistoryModel model) {
               onTap: () {
                 navigationController.navigateToWithArgs(Routes.MA_HISTORY_ITEM,
                     arguments: model);
-                // Get.to(
-                //   () => MAHistoryItemScreen(),
-                //   arguments: model,
-                // );
               },
               child: Text(
                 'View',

@@ -316,7 +316,7 @@ Future<void> transfferToHistpry(OnProgressMAModel model) async {
     'pharmacy': model.pharmacy,
     'dateClaimed': Timestamp.fromDate(DateTime.now()),
   }).then((value) async {
-    //NOTIF USER: CLAIMED
+    //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
     await deleteMA(model.maID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for are your sure? yes/no

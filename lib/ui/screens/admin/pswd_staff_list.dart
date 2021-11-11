@@ -193,7 +193,6 @@ class PSWDStaffListScreen extends StatelessWidget {
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_PSWD_STAFF,
                             arguments: model);
-                        //Get.to(() => EditPSWDStaffScrenn(), arguments: model);
                       },
                       child: Text(
                         'View',
@@ -207,7 +206,6 @@ class PSWDStaffListScreen extends StatelessWidget {
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_PSWD_STAFF,
                             arguments: model);
-                        //Get.to(() => EditPSWDStaffScrenn(), arguments: model);
                       },
                       child: Text(
                         'Edit',
@@ -217,9 +215,10 @@ class PSWDStaffListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        //DIALOG CONFIRMATION MUNA
+                        //TO DO: ADD DIALOG CONFIRMATION MUNA
+                        //onTapYes -> function
                         pListController.disablePSWDStaff(model.userID!);
-                        //Change to userID instead of email
+                        //onTapNo -> dismissdialog();
                       },
                       child: Text(
                         'Disable',

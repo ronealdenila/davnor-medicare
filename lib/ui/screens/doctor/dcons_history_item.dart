@@ -1,9 +1,5 @@
-import 'dart:ui';
-import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
-import 'package:davnor_medicare/ui/screens/patient/cons_history_info.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +9,6 @@ import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 
-//TO DO: bubble chat
 class DoctorConsHistoryItemScreen extends StatelessWidget {
   static ConsHistoryController consHController = Get.find();
   final ConsultationHistoryModel consData =
@@ -108,61 +103,4 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
       backgroundImage: NetworkImage(consHController.getPatientProfile(model)),
     );
   }
-
-//   Widget bubbleChat(ChatModel chat) {
-//     if (chat.senderID == auth.currentUser!.uid) {
-//       return rightBubbleChat(chat);
-//     }
-//     return leftBubbleChat(chat);
-//   }
-
-//   Widget leftBubbleChat(ChatModel chat) {
-//     return Row(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Flexible(
-//           child: Container(
-//               constraints: BoxConstraints(maxWidth: Get.width * .7),
-//               padding: const EdgeInsets.all(15),
-//               decoration: const BoxDecoration(
-//                 color: neutralBubbleColor,
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(10),
-//                   topRight: Radius.circular(10),
-//                   bottomRight: Radius.circular(10),
-//                 ),
-//               ),
-//               child: Text(
-//                 chat.message!,
-//                 style: body16Medium.copyWith(height: 1.4),
-//               )),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget rightBubbleChat(ChatModel chat) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         Flexible(
-//           child: Container(
-//               constraints: BoxConstraints(maxWidth: Get.width * .7),
-//               padding: const EdgeInsets.all(15),
-//               decoration: BoxDecoration(
-//                 color: verySoftBlueColor[60],
-//                 borderRadius: const BorderRadius.only(
-//                   topLeft: Radius.circular(10),
-//                   topRight: Radius.circular(10),
-//                   bottomLeft: Radius.circular(10),
-//                 ),
-//               ),
-//               child: Text(
-//                 chat.message!,
-//                 style: body16Medium.copyWith(color: Colors.white, height: 1.4),
-//               )),
-//         ),
-//       ],
-//     );
-//   }
 }

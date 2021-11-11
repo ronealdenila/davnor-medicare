@@ -95,8 +95,8 @@ class ConsultationCard extends StatelessWidget {
       docConsController.getProfilePhoto(model),
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        //TODO: Add this one to all image network
-        //so that the app return "x" if the image is invalid/error
+        //TO DO: Add this one to all image network (add new blank photo, for other na dili profile)
+        //so that the app wont return "x" and just blank if the image is invalid/error
         return Image.asset(blankProfile, fit: BoxFit.cover);
       },
     );

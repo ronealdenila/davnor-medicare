@@ -16,9 +16,6 @@ class MAHistoryItemScreen extends StatelessWidget {
   final AttachedPhotosController pcontroller = Get.find();
 
   final MAHistoryController hController = Get.find();
-
-  // = Get.arguments as MAHistoryModel;
-  //final MAHistoryModel passedData = Get.arguments as MAHistoryModel;
   late final GeneralMARequestModel model;
 
   @override

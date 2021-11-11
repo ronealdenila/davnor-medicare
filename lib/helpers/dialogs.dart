@@ -32,9 +32,6 @@ void showDefaultDialog({
   String? textConfirm = 'Got it!',
   void Function()? onConfirmTap,
 }) {
-  //wala pako kaexplore sa ubang parameter sadefault dialog pero limit ra
-  //ang pag configure sa dialog niya if gusto nato i custom ni pwede ta mag
-  //dialog parehas sa akong gibuhat sa showConfirmationDialog (R)
   Get.defaultDialog(
     radius: 8,
     titleStyle: title24Bold,
@@ -147,7 +144,7 @@ void showConfirmationDialog({
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
                   radius: 14,
-                  //TO BE REGISTERED ON APP COLOR
+                  //TO DO: BE REGISTERED ON APP COLOR - LP
                   backgroundColor: const Color(0xFFE3E6E8),
                   child: Icon(Icons.close, color: neutralColor[100]),
                 ),
