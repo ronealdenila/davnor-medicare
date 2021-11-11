@@ -94,7 +94,7 @@ class MARequestController extends GetxController {
       await checkEmptyFields();
     } else {
       log.i(
-          'ERROR: please provide valid ID'); // TO DO: ilisan ni si log ug error dialog
+          'ERROR DIALOG: please provide valid ID'); // TO DO ERROR DIALOG: ilisan ni si log ug error dialog
     }
   }
 
@@ -106,7 +106,7 @@ class MARequestController extends GetxController {
         ageController.text == '' ||
         addressController.text == '') {
       log.i(
-          'ERROR: please dont leave any empty fields'); // TO DO: ilisan ni si log ug error dialog
+          'ERROR DIALOG: please dont leave any empty fields'); // TO DO ERROR DIALOG: ilisan ni si log ug error dialog
     } else {
       await Get.to(() => MAForm2Screen());
     }

@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppInfoScreen extends StatelessWidget {
+  final UrlLauncherService _urlLauncherService = UrlLauncherService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +22,7 @@ class AppInfoScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,25 +65,30 @@ class AppInfoScreen extends StatelessWidget {
                     ),
                     verticalSpace10,
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Image.asset(
-                            icons8,
-                            fit: BoxFit.fill,
-                            height: 50,
-                            width: 70,
-                          ),
+                        Image.asset(
+                          icons8,
+                          fit: BoxFit.fill,
+                          height: 50,
+                          width: 50,
                         ),
-                        Text('Icons', style: caption18RegularNeutral),
-                        verticalSpace10,
-                        InkWell(
-                          onTap: () {
-                            //TO DO - Launch to link
-                          },
-                          child: Text('https://icons8.com',
-                              style: body16RegularUnderlineBlue),
+                        horizontalSpace10,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Icons8', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://icons8.com');
+                              },
+                              child: Text('https://icons8.com',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ],
                         ),
                       ],
                     )

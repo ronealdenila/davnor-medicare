@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
@@ -255,10 +256,18 @@ class DoctorListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        //TO DO: ADD DIALOG CONFIRMATION MUNA
-                        //onTapYes -> function
-                        dListController.disableDoctor(model.userID!);
-                        //onTapNo -> dismissdialog();
+                        //TO CHECK
+                        showConfirmationDialog(
+                          dialogTitle: 'Are you sure?',
+                          dialogCaption:
+                              'Select YES to disable the selected doctor. Otherwise, NO',
+                          onYesTap: () {
+                            dListController.disableDoctor(model.userID!);
+                          },
+                          onNoTap: () {
+                            dismissDialog();
+                          },
+                        );
                       },
                       child: Text(
                         'Disable',

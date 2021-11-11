@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
@@ -249,7 +250,8 @@ Widget confirmProcess(PswdModel model) {
                     alignment: Alignment.bottomCenter,
                     child: TextButton(
                         onPressed: () async {
-                          //TO DO: Delete doc sa users collection & pswd_personnel collection
+                          //TO CHECK
+                          await deleteUserInDocuments(model.userID!);
                         },
                         child: Text('Got it!'))),
                 verticalSpace15,
@@ -261,4 +263,13 @@ Widget confirmProcess(PswdModel model) {
               ],
             ))
       ]);
+}
+
+Future<void> deleteUserInDocuments(String userID) async {
+  await firestore.collection('users').doc(userID).delete().then((value) async {
+    print("User Deleted from Users Collection");
+    await firestore.collection('pswd_personnel').doc(userID).delete();
+  }).catchError((error) {
+    print("Failed to end consultation");
+  });
 }

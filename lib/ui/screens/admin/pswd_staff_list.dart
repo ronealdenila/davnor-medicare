@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
@@ -215,10 +216,18 @@ class PSWDStaffListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        //TO DO: ADD DIALOG CONFIRMATION MUNA
-                        //onTapYes -> function
-                        pListController.disablePSWDStaff(model.userID!);
-                        //onTapNo -> dismissdialog();
+                        //TO CHECK
+                        showConfirmationDialog(
+                          dialogTitle: 'Are you sure?',
+                          dialogCaption:
+                              'Select YES to disable the selected PSWD MA Personnel. Otherwise, NO',
+                          onYesTap: () {
+                            pListController.disablePSWDStaff(model.userID!);
+                          },
+                          onNoTap: () {
+                            dismissDialog();
+                          },
+                        );
                       },
                       child: Text(
                         'Disable',
