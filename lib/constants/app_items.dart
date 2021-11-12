@@ -176,6 +176,15 @@ List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
+List<MenuItem> doctorSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DOC_WEB_HOME),
+  MenuItem('Consultation Requests', Routes.DOCTOR_LIST),
+  MenuItem('Live Consultation', Routes.PSWD_STAFF_LIST),
+  // MenuItem('Verification Requests', Routes.VERIFICATION_REQ_LIST),
+  // MenuItem('Disabled Doctors', Routes.DISABLED_DOCTORS),
+  //MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
+];
+
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
   MenuItem('For Approval', Routes.FOR_APPROVAL_LIST),

@@ -1,7 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';

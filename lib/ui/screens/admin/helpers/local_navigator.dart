@@ -1,4 +1,4 @@
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';

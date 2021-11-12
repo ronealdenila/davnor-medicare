@@ -1,7 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';

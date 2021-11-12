@@ -292,7 +292,11 @@ class AuthController extends GetxController {
         case 'doctor':
           await _initializeDoctorModel();
           if (doctorModel.value!.disabled! == false) {
-            await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
+            if (kIsWeb) {
+              await navigateWithDelay(Get.offAllNamed(Routes.DOC_WEB_HOME));
+            } else {
+              await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
+            }
           } else {
             Get.defaultDialog(
                 title:

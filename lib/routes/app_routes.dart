@@ -48,6 +48,7 @@ abstract class Routes {
   static const DOC_CONS_HISTORY = _Paths.DOC_CONS_HISTORY;
   static const DOC_LIVE_CONS_INFO = _Paths.DOC_LIVE_CONS_INFO;
   static const DOC_CONS_REQ_INFO = _Paths.DOC_CONS_REQ_INFO;
+  static const DOC_WEB_HOME = _Paths.DOC_WEB_HOME;
 
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
@@ -117,6 +118,7 @@ abstract class _Paths {
   static const SETTINGS = '/settings';
   static const APPINFO = '/appinfo';
 
+  static const DASHBOARD = '/dashboard';
   //Doctor
   static const DOCTOR_HOME = '/home';
   static const DOCTOR_PROFILE = '/profile';
@@ -124,11 +126,11 @@ abstract class _Paths {
   static const DOC_CONS_HISTORY = '/cons-history';
   static const DOC_LIVE_CONS_INFO = '/live-cons-info';
   static const DOC_CONS_REQ_INFO = '/cons-req-info';
+  static const DOC_WEB_HOME = '/doc-web-home';
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';
   static const PSWD_PERSONNEL_HOME = '/pswd-home';
-  static const DASHBOARD = '/dashboard';
 
   static const MA_REQ_LIST = '/MAReqListScreen';
   static const MA_REQ_ITEM = '/MAReqItemScreen';

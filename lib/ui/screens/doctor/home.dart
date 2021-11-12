@@ -35,7 +35,6 @@ class DoctorHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('SERROLE' + authController.userRole!);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(

@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
@@ -17,7 +18,7 @@ import 'package:davnor_medicare/core/controllers/patient/verification_req_contro
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
@@ -44,6 +45,7 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<ConsultationsController>(() => ConsultationsController());
     Get.lazyPut<LiveChatController>(() => LiveChatController());
     Get.lazyPut<LiveConsController>(() => LiveConsController());
+    Get.lazyPut<DoctorMenuController>(() => DoctorMenuController());
 
     //admin
     Get.lazyPut<ForVerificationController>(() => ForVerificationController());

@@ -19,6 +19,7 @@ import 'package:davnor_medicare/ui/screens/doctor/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/profile.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/app_info.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
@@ -195,6 +196,7 @@ class AppPages {
       name: _Paths.DOCTOR_HOME,
       page: () => DoctorHomeScreen(),
     ),
+    GetPage(name: _Paths.DOC_WEB_HOME, page: () => DoctorWebHomeScreen()),
     GetPage(
       name: _Paths.DOCTOR_PROFILE,
       page: () => DoctorProfileScreen(),

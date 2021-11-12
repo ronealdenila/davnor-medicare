@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';

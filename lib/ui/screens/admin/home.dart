@@ -5,7 +5,7 @@ import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -203,7 +203,7 @@ Widget desktopVersion() {
                 Align(
                   alignment: Alignment.topCenter,
                   child: DmText.title42Bold(
-                    'Hello, ${fetchedData!.firstName}',
+                    'Hello,', // ${fetchedData!.firstName}',
                     color: Colors.white,
                   ),
                 ),
