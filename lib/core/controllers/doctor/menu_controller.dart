@@ -27,7 +27,7 @@ class DoctorMenuController extends GetxController {
     switch (itemName) {
       case 'Dashboard':
         return _customIcon(Icons.dashboard_outlined, itemName);
-      case 'List Of Doctors':
+      case 'Consultation Requests':
         return _customIcon(Icons.list_outlined, itemName);
       case 'List of PSWD Personnel':
         return _customIcon(Icons.list_outlined, itemName);

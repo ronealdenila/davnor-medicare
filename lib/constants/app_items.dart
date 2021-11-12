@@ -178,7 +178,7 @@ List<MenuItem> adminSideMenuItemRoutes = [
 
 List<MenuItem> doctorSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DOC_WEB_HOME),
-  MenuItem('Consultation Requests', Routes.DOCTOR_LIST),
+  MenuItem('Consultation Requests', Routes.CONS_REQ_WEB),
   MenuItem('Live Consultation', Routes.PSWD_STAFF_LIST),
   // MenuItem('Verification Requests', Routes.VERIFICATION_REQ_LIST),
   // MenuItem('Disabled Doctors', Routes.DISABLED_DOCTORS),

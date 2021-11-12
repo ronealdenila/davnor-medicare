@@ -9,6 +9,7 @@ import 'package:davnor_medicare/ui/screens/doctor/live_cons.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/cons_req_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/cons_req_item.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/cons_requests.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/dcons_history_item.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/live_cons_info.dart';
@@ -28,8 +29,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.DOC_WEB_HOME:
       return _getPageRoute(DoctorDashboardScreen());
-    case Routes.DOCTOR_LIST: //----
-      return _getPageRoute(ArticleListScreen());
+    case Routes.CONS_REQ_WEB: //----
+      return _getPageRoute(ConsRequestsWeb());
     case Routes.DOCTOR_LIST: //----
       return _getPageRoute(ArticleItemScreen());
     case Routes.PSWD_STAFF_LIST: //----
