@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
@@ -52,7 +53,9 @@ class AcceptedMARequestScreen extends StatelessWidget {
                       //TO THINK: if i notify pa si patient if na accept ba iyang request
                       Get.back();
                     }).catchError((onError) {
-                      //TO DO - ADD ERROR DIALOG, "something went wrong"
+                      showErrorDialog(
+                    errorDescription: 'Something went wrong'
+                  );
                     });
                   },
                   buttonText: 'Transfer for Head Approval',

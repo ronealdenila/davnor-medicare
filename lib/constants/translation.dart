@@ -223,7 +223,7 @@ class LocalString extends Translations {
               'Paumanhin, ang mga na-verify na user lang ang makakagamit ng feature na ito',
           'action8': 'Paki-verify muna ang iyong account sa iyong profile',
           'action9': 'Wala kang kasalukuyang konsultasyon',
-          'action10': 'PMangyaring humiling ng konsultasyon muna',
+          'action10': 'Mangyaring humiling ng konsultasyon muna',
           //dialog1
           'dialog1': 'Ang konsulta ba ay para sa iyo?',
           'dialogsub1':

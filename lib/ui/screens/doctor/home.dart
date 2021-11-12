@@ -214,7 +214,9 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftMagentaCustomColor,
                 onTap: () {
                   print(stats.isLoading.value);
-                  //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
+                  showErrorDialog(
+                    errorDescription: 'Please wait while we are currently connecting to the server'
+                  );
                 }),
           ),
           Expanded(
@@ -223,7 +225,9 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftOrange[60],
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
-                  //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
+                  showErrorDialog(
+                    errorDescription: 'Please wait while we are currently connecting to the server'
+                  );
                 }),
           ),
           Expanded(
@@ -232,7 +236,9 @@ class DoctorHomeScreen extends StatelessWidget {
                   color: verySoftRed[60],
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
-                    //TO DO - ERROR DIALOG: Please wait while we are currently connecting to the server},
+                    showErrorDialog(
+                    errorDescription: 'Please wait while we are currently connecting to the server'
+                  );
                   })),
         ],
       );
