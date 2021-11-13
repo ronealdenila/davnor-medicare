@@ -3,6 +3,7 @@ import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/calling.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/cons_requests.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(DoctorDashboardScreen());
     case Routes.CONS_REQ_WEB: //----
       return _getPageRoute(ConsRequestsWeb());
-    case Routes.PSWD_STAFF_LIST: //----
-      return _getPageRoute(CallPatientScreen());
+    case Routes.CONS_HISTORY_WEB: //----
+      return _getPageRoute(ConsHistoryWeb());
     case Routes.ADMIN_PROFILE: //----
       return _getPageRoute(HistoryInfoScreen());
     case Routes.VERIFICATION_REQ_LIST: //----

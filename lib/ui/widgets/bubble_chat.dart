@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/ui/shared/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -12,6 +13,7 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 
 final AttachedPhotosController controller = Get.find();
+final double bubbleChatSize = kIsWeb ? .3 : .7;
 
 Widget bubbleChat(ChatModel chat, BuildContext context) {
   if (chat.message!.startsWith('https://firebasestorage.googleapis.com/')) {
@@ -34,7 +36,7 @@ Widget displaySingleImage(ChatModel chat, BuildContext context) {
     children: [
       Flexible(
         child: Container(
-            constraints: BoxConstraints(maxWidth: Get.width * .7),
+            constraints: BoxConstraints(maxWidth: Get.width * bubbleChatSize),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: chat.senderID == auth.currentUser!.uid
@@ -75,7 +77,7 @@ Widget displayMultipleImages(
     children: [
       Flexible(
         child: Container(
-          constraints: BoxConstraints(maxWidth: Get.width * .7),
+          constraints: BoxConstraints(maxWidth: Get.width * bubbleChatSize),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: chat.senderID == auth.currentUser!.uid
@@ -134,7 +136,7 @@ Widget displayMessage(ChatModel chat) {
     children: [
       Flexible(
         child: Container(
-            constraints: BoxConstraints(maxWidth: Get.width * .7),
+            constraints: BoxConstraints(maxWidth: Get.width * bubbleChatSize),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: chat.senderID == auth.currentUser!.uid

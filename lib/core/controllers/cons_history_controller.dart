@@ -16,11 +16,12 @@ class ConsHistoryController extends GetxController {
   final log = getLogger('Consultation History Controller');
   static AuthController authController = Get.find();
   final RxBool isLoading = true.obs;
+  final RxBool isLoadingAdditionalData = true.obs;
+  final RxBool chatDone = false.obs;
 
   RxList<ConsultationHistoryModel> consHistory =
       RxList<ConsultationHistoryModel>([]);
   RxList<ChatModel> chatHistory = RxList<ChatModel>([]);
-  RxBool doneFetching = false.obs;
 
   //searching consultation history in doctor side...
   RxList<ConsultationHistoryModel> filteredListforDoc =
@@ -87,6 +88,7 @@ class ConsHistoryController extends GetxController {
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
     await getPatientData(model);
     await getDoctorData(model);
+    //isLoadingAdditionalData.value = false;
   }
 
   Future<void> getPatientData(ConsultationHistoryModel model) async {
@@ -95,6 +97,7 @@ class ConsHistoryController extends GetxController {
         .doc(model.patientId)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+    isLoadingAdditionalData.value = false;
   }
 
   Future<void> getDoctorData(ConsultationHistoryModel model) async {
@@ -103,6 +106,7 @@ class ConsHistoryController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
+    //isLoadingAdditionalData.value = false;
   }
 
   String getPatientProfile(ConsultationHistoryModel model) {
@@ -143,18 +147,21 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
-    log.i(model.consID);
-    await firestore
-        .collection('chat')
-        .doc(model.consID)
-        .collection('messages')
-        .orderBy('dateCreated', descending: true)
-        .get()
-        .then((value) {
-      for (final result in value.docs) {
-        chatHistory.add(ChatModel.fromJson(result.data()));
-      }
-    });
+    if (!chatDone.value) {
+      log.i(model.consID);
+      await firestore
+          .collection('chat')
+          .doc(model.consID)
+          .collection('messages')
+          .orderBy('dateCreated', descending: true)
+          .get()
+          .then((value) {
+        for (final result in value.docs) {
+          chatHistory.add(ChatModel.fromJson(result.data()));
+        }
+      });
+    }
+    chatDone.value = true;
   }
 
   filterForDoctor({required String name}) {

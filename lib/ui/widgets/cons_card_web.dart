@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:shimmer/shimmer.dart';
@@ -32,9 +31,6 @@ class ConsultationCardWeb extends StatelessWidget {
                 bottom: BorderSide(
                   color: Color(0xFFCBD4E1),
                 ),
-                top: BorderSide(
-                  color: Color(0xFFCBD4E1),
-                ),
               ),
             ),
             child: Padding(
@@ -47,9 +43,7 @@ class ConsultationCardWeb extends StatelessWidget {
                       SizedBox(
                         width: 50,
                         height: 50,
-                        child: ClipRRect(
-                            //borderRadius: BorderRadius.circular(10),
-                            child: getPhoto(consReq!)),
+                        child: ClipRRect(child: getPhoto(consReq!)),
                       ),
                       horizontalSpace20,
                       Flexible(
@@ -82,7 +76,6 @@ class ConsultationCardWeb extends StatelessWidget {
             ),
           ),
         ),
-        verticalSpace15,
       ],
     );
   }

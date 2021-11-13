@@ -36,7 +36,6 @@ class ResponsiveBody extends GetResponsiveView {
       Get.put(ConsultationsController());
   final ConsultationsController doctorHomeController = Get.find();
   final RxInt selectedIndex = 0.obs;
-  final RxBool displayData = false.obs;
 
   @override
   Widget? builder() {
@@ -80,11 +79,33 @@ class ResponsiveBody extends GetResponsiveView {
       children: [
         Expanded(
             flex: 3,
-            child: Container(width: Get.width * .3, child: RequestsListView())),
+            child: Container(
+                width: Get.width * .3,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Color(0xFFCBD4E1),
+                    ),
+                  ),
+                ),
+                child: RequestsListView())),
         Expanded(
             flex: 6,
             child: Container(
                 width: Get.width * .7,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Color(0xFFCBD4E1),
+                    ),
+                    left: BorderSide(
+                      color: Color(0xFFCBD4E1),
+                    ),
+                    right: BorderSide(
+                      color: Color(0xFFCBD4E1),
+                    ),
+                  ),
+                ),
                 child: Obx(() => consRequests.isLoadingPatientData.value
                     ? Shimmer.fromColors(
                         baseColor: neutralColor[10]!,
@@ -173,67 +194,52 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsChatView(ConsultationModel consData, BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFFCBD4E1),
-          ),
-          left: BorderSide(
-            color: Color(0xFFCBD4E1),
-          ),
-          right: BorderSide(
-            color: Color(0xFFCBD4E1),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        screen.isDesktop
+            ? topHeaderRequest(consData)
+            : topHeaderRequestWeb(consData),
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
+            shrinkWrap: true,
+            children: [
+              Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Container(
+                            constraints: BoxConstraints(
+                                maxWidth:
+                                    Get.width * (screen.isDesktop ? .2 : .45)),
+                            padding: const EdgeInsets.all(15),
+                            decoration: const BoxDecoration(
+                              color: neutralBubbleColor,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              consData.description!,
+                              style: body16Medium.copyWith(height: 1.4),
+                            )),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  displayImages(context, consData),
+                ],
+              ),
+            ],
           ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          screen.isDesktop
-              ? topHeaderRequest(consData)
-              : topHeaderRequestWeb(consData),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
-              shrinkWrap: true,
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Container(
-                              constraints: BoxConstraints(
-                                  maxWidth: Get.width *
-                                      (screen.isDesktop ? .2 : .45)),
-                              padding: const EdgeInsets.all(15),
-                              decoration: const BoxDecoration(
-                                color: neutralBubbleColor,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              child: Text(
-                                consData.description!,
-                                style: body16Medium.copyWith(height: 1.4),
-                              )),
-                        ),
-                      ],
-                    ),
-                    verticalSpace15,
-                    displayImages(context, consData),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          startConsultationButton(consData)
-        ],
-      ),
+        startConsultationButton(consData)
+      ],
     );
   }
 
@@ -261,15 +267,6 @@ class ResponsiveBody extends GetResponsiveView {
                 style: subtitle18Medium.copyWith(color: Colors.black),
               ),
             ),
-            // IconButton(
-            //   icon: const Icon(
-            //     Icons.info_outline,
-            //     size: 30,
-            //   ),
-            //   onPressed: () => Get.to(() => ConsReqInfoScreen(),
-            //       arguments: consData, transition: Transition.rightToLeft),
-            // ),
-            // horizontalSpace10,
           ],
         ),
       ),
@@ -387,13 +384,6 @@ class ResponsiveBody extends GetResponsiveView {
     return Column(children: <Widget>[
       Container(
         width: Get.width,
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Color(0xFFCBD4E1),
-            ),
-          ),
-        ),
         child: Column(children: <Widget>[
           verticalSpace15,
           Card(

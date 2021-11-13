@@ -29,7 +29,7 @@ class DoctorMenuController extends GetxController {
         return _customIcon(Icons.dashboard_outlined, itemName);
       case 'Consultation Requests':
         return _customIcon(Icons.list_outlined, itemName);
-      case 'List of PSWD Personnel':
+      case 'Consultation History':
         return _customIcon(Icons.list_outlined, itemName);
       case 'Verification Requests':
         return _customIcon(Icons.verified_outlined, itemName);

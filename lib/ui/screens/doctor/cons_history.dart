@@ -151,8 +151,7 @@ class DocConsHistoryScreen extends StatelessWidget {
           return ConsultationHistoryCard(
             consHistory: model,
             onItemTap: () {
-              Get.to(() => DoctorConsHistoryItemScreen(),
-                  arguments: model);
+              Get.to(() => DoctorConsHistoryItemScreen(), arguments: model);
             },
           );
         }
