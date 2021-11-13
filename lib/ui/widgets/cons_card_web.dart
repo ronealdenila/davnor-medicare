@@ -32,10 +32,13 @@ class ConsultationCardWeb extends StatelessWidget {
                 bottom: BorderSide(
                   color: Color(0xFFCBD4E1),
                 ),
+                top: BorderSide(
+                  color: Color(0xFFCBD4E1),
+                ),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

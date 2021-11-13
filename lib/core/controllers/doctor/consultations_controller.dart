@@ -17,6 +17,7 @@ class ConsultationsController extends GetxController {
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   RxBool isLoading = true.obs;
+  RxBool isLoadingPatientData = true.obs;
 
   @override
   void onReady() {
@@ -106,6 +107,7 @@ class ConsultationsController extends GetxController {
         .doc(model.patientId)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+    isLoadingPatientData.value = false;
   }
 
   String getProfilePhoto(ConsultationModel model) {

@@ -94,10 +94,7 @@ class ResponsiveBody extends GetResponsiveView {
     if (screen.isDesktop) {
       return DesktopScreen();
     } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: localNavigator(),
-      );
+      return localNavigator();
     }
   }
 }
@@ -110,10 +107,7 @@ class DesktopScreen extends StatelessWidget {
         Expanded(child: DoctorSideMenu()),
         Expanded(
           flex: 5,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: localNavigator(),
-          ),
+          child: localNavigator(),
         )
       ],
     );
