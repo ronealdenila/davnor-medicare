@@ -51,6 +51,7 @@ abstract class Routes {
   static const DOC_WEB_HOME = _Paths.DOC_WEB_HOME;
   static const CONS_REQ_WEB = _Paths.CONS_REQ_WEB;
   static const CONS_HISTORY_WEB = _Paths.CONS_HISTORY_WEB;
+  static const LIVE_CONS_WEB = _Paths.LIVE_CONS_WEB;
 
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
@@ -131,6 +132,7 @@ abstract class _Paths {
   static const DOC_WEB_HOME = '/doc-web-home';
   static const CONS_REQ_WEB = '/cons-req-web';
   static const CONS_HISTORY_WEB = '/cons-history-web';
+  static const LIVE_CONS_WEB = '/live-cons-web';
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';

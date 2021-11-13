@@ -25,7 +25,10 @@ Widget chatInput(LiveChatController liveChatCont) {
           Stack(
             children: [
               kIsWeb
-                  ? Image.network(liveChatCont.image.value)
+                  ? Image.network(
+                      liveChatCont.image.value,
+                      fit: BoxFit.fill,
+                    )
                   : Image.file(
                       File(liveChatCont.image.value),
                       width: 80,
@@ -63,6 +66,7 @@ Widget chatInput(LiveChatController liveChatCont) {
       ),
       child: Center(
         child: GridView.count(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
@@ -75,11 +79,16 @@ Widget chatInput(LiveChatController liveChatCont) {
                 child: Wrap(children: [
                   Stack(
                     children: [
-                      Image.file(
-                        File(liveChatCont.images[index].path),
-                        fit: BoxFit.fill,
-                        height: 68.5,
-                      ),
+                      kIsWeb
+                          ? Image.network(
+                              liveChatCont.images[index].path,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.file(
+                              File(liveChatCont.images[index].path),
+                              fit: BoxFit.fill,
+                              height: 68.5,
+                            ),
                       Positioned(
                         right: 5,
                         top: 5,

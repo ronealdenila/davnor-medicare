@@ -19,6 +19,8 @@ class LiveConsController extends GetxController {
   TextEditingController reason = TextEditingController();
   final RxBool isLoading = true.obs;
 
+  final RxBool doneFetching = false.obs;
+
   @override
   void onReady() {
     super.onReady();
@@ -58,6 +60,8 @@ class LiveConsController extends GetxController {
         .doc(model.patientID)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+
+    doneFetching.value = true;
   }
 
   Future<void> getDoctorData(LiveConsultationModel model) async {

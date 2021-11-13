@@ -21,7 +21,7 @@ class LiveConsInfoScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         backgroundColor: Colors.white,
-        body: ListView(children: <Widget>[
+        body: Column(children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
