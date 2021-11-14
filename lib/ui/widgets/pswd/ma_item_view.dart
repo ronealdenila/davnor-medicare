@@ -273,8 +273,12 @@ class PSWDItemView extends GetResponsiveView {
       'didReject': false,
       'channelId': model.maID,
       'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
-    }).then((value) => Get.to(() => CallPatientScreen(),
-            arguments: [model.requesterID, model.maID]));
+    }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
+              model.requesterID,
+              model.maID,
+              model.requester.value!.profileImage,
+              appController.getFullName(model)
+            ]));
   }
 
   Widget attachedPhotos() {

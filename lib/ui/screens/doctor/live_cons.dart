@@ -226,7 +226,11 @@ class LiveConsultationScreen extends StatelessWidget {
       'didReject': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    }).then((value) => Get.to(() => CallPatientScreen(),
-            arguments: [consData.patientID, consData.consID]));
+    }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
+              consData.patientID,
+              consData.consID,
+              consData.patient.value!.profileImage,
+              liveCont.getPatientName(consData)
+            ]));
   }
 }

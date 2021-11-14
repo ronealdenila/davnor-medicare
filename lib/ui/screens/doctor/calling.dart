@@ -1,6 +1,10 @@
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +30,7 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        body: SafeArea(child: Obx(() => displayState())),
+        body: SafeArea(child: Center(child: Obx(() => displayState()))),
       ),
     );
   }
@@ -39,13 +43,39 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
       return Text('Something went wrong');
     }
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Calling patient.....'),
+        getPhoto(consInfo[2]),
+        verticalSpace35,
+        Text(
+          'Calling...',
+          style: subtitle20Regular,
+        ),
+        verticalSpace15,
+        Text(
+          '${consInfo[3]}',
+          style: subtitle18Medium,
+        ),
+        verticalSpace5,
+        Text(
+          '(Patient)',
+          style: body16Regular,
+        ),
+        verticalSpace50,
         ElevatedButton(
-            onPressed: () async {
-              await cancelCall(consInfo[0]);
-            },
-            child: Text('Cancel Call'))
+          onPressed: () async {
+            await cancelCall(consInfo[0]);
+          },
+          child: Icon(Icons.close_rounded, color: Colors.white, size: 40),
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(12),
+            primary: Colors.red,
+          ),
+        ),
+        verticalSpace5,
+        Text('Cancel Call'),
       ],
     );
   }
@@ -53,6 +83,19 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
   Future<bool> _onBackPressed() {
     print('Either you reject the call or accept');
     return false as Future<bool>;
+  }
+
+  Widget getPhoto(String img) {
+    if (img == '') {
+      return CircleAvatar(
+        radius: kIsWeb ? 120 : 80,
+        backgroundImage: AssetImage(blankProfile),
+      );
+    }
+    return CircleAvatar(
+      radius: kIsWeb ? 120 : 80,
+      backgroundImage: NetworkImage(img),
+    );
   }
 }
 

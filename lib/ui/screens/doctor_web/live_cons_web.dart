@@ -425,7 +425,9 @@ class LiveConsultationWeb extends StatelessWidget {
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
     }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
               liveCont.liveCons[0].patientID,
-              liveCont.liveCons[0].consID
+              liveCont.liveCons[0].consID,
+              liveCont.liveCons[0].patient.value!.profileImage,
+              liveCont.getPatientName(liveCont.liveCons[0])
             ]));
   }
 
