@@ -31,7 +31,8 @@ class ResponsiveBody extends GetResponsiveView {
   final AttachedPhotosController controller = Get.find();
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController());
-  final RxInt selectedIndex = 1.obs;
+  final RxInt selectedIndex = 0.obs;
+  final RxInt counterReload = 0.obs;
 
   @override
   Widget? builder() {
@@ -122,12 +123,8 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                child: Obx(() => consHController.isLoadingAdditionalData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: Container(),
-                      )
+                child: Obx(() => consHController.isLoading.value
+                    ? SizedBox()
                     : RequestsChatView(
                         consHController.consHistory[selectedIndex.value],
                         context)))),
@@ -143,12 +140,8 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 height: Get.height,
                 width: Get.width * .2,
-                child: Obx(() => consHController.isLoadingAdditionalData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: Container(),
-                      )
+                child: Obx(() => consHController.isLoading.value
+                    ? SizedBox()
                     : RequestsInfoView(
                         consHController.consHistory[selectedIndex.value]))))
       ],
@@ -196,11 +189,19 @@ class ResponsiveBody extends GetResponsiveView {
       future: consHController.getPatientData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return ConsultationHistoryCardWeb(
-            consHistory: model,
-            onItemTap: () {
-              selectedIndex.value = index;
-            },
+          return Obx(
+            () => Container(
+              color: selectedIndex.value == index
+                  ? neutralBubbleColor
+                  : Colors.white,
+              child: ConsultationHistoryCardWeb(
+                consHistory: model,
+                onItemTap: () {
+                  selectedIndex.value = index;
+                  consHController.chatHistory.clear();
+                },
+              ),
+            ),
           );
         }
         return loadingCardIndicator();
@@ -210,6 +211,10 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget RequestsChatView(
       ConsultationHistoryModel consData, BuildContext context) {
+    if (consData.patient.value == null) {
+      return Container();
+    }
+    print(selectedIndex.value);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -217,8 +222,9 @@ class ResponsiveBody extends GetResponsiveView {
             ? topHeaderRequest(consData)
             : topHeaderRequestWeb(consData),
         Expanded(
-          child: FutureBuilder(
-              future: consHController.getChatHistory(consData),
+          child: Obx(() => FutureBuilder(
+              future: consHController.getChatHistory(
+                  consHController.consHistory[selectedIndex.value]),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
@@ -237,8 +243,12 @@ class ResponsiveBody extends GetResponsiveView {
                     },
                   );
                 }
-                return const Text('Loading ..');
-              }),
+                return Center(
+                    child: Container(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator()));
+              })),
         ),
       ],
     );
@@ -260,13 +270,11 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 child: getPhotoHeader(consData)),
             horizontalSpace15,
-            Flexible(
-              child: Text(
-                consHController.getPatientName(consData),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: subtitle18Medium.copyWith(color: Colors.black),
-              ),
+            Text(
+              consHController.getPatientName(consData),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: subtitle18Medium.copyWith(color: Colors.black),
             ),
           ],
         ),
@@ -285,26 +293,22 @@ class ResponsiveBody extends GetResponsiveView {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Spacer(),
-            Flexible(
-              child: Row(
-                children: [
-                  Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: getPhotoHeader(consData)),
-                  horizontalSpace15,
-                  Flexible(
-                    child: Text(
-                      consHController.getPatientName(consData),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: subtitle18Medium.copyWith(color: Colors.black),
+            Row(
+              children: [
+                Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                  ),
-                ],
-              ),
+                    child: getPhotoHeader(consData)),
+                horizontalSpace15,
+                Text(
+                  consHController.getPatientName(consData),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: subtitle18Medium.copyWith(color: Colors.black),
+                ),
+              ],
             ),
             Spacer(),
             Padding(
@@ -354,157 +358,152 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsInfoView(ConsultationHistoryModel consData) {
-    return Column(children: <Widget>[
-      Container(
-        width: Get.width,
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Color(0xFFCBD4E1),
-            ),
-          ),
-        ),
-        child: Column(children: <Widget>[
-          verticalSpace15,
-          Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
+    if (consData.patient.value == null) {
+      return Container();
+    }
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: Get.width,
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xFFCBD4E1),
+                ),
               ),
-              child: getPhoto(consData)),
-          verticalSpace20,
-          Text(
-            //TO FIX - NULL
-            consHController.getPatientName(consData),
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            style: subtitle18Medium,
-            textAlign: TextAlign.center,
+            ),
+            child: Column(children: <Widget>[
+              verticalSpace15,
+              Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: getPhoto(consData)),
+              verticalSpace20,
+              Text(
+                consHController.getPatientName(consData),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: subtitle18Medium,
+                textAlign: TextAlign.center,
+              ),
+              verticalSpace25
+            ]),
           ),
-          verticalSpace25
-        ]),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            verticalSpace35,
-            Text('Consultation Info',
-                textAlign: TextAlign.left,
-                style: body16Regular.copyWith(color: const Color(0xFF727F8D))),
-            verticalSpace20,
-            Row(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Patient',
-                      textAlign: TextAlign.left, style: body14SemiBold),
+                verticalSpace35,
+                Text('Consultation Info',
+                    textAlign: TextAlign.left,
+                    style:
+                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
+                verticalSpace20,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(consData.fullName!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
                 ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(consData.fullName!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Age of Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(consData.age!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Date Requested',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                          consHController.convertDate(consData.dateRqstd!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Consultation Started',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                          consHController.convertDate(consData.dateConsStart!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Consultation Ended',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                          consHController.convertDate(consData.dateConsEnd!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
                 ),
               ],
             ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Age of Patient',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(consData.age!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Date Requested',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(
-                        consHController.convertDate(consData.dateRqstd!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Consultation Started',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(
-                        consHController.convertDate(consData.dateConsStart!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Consultation Ended',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(
-                        consHController.convertDate(consData.dateConsEnd!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ]);
+          ),
+        ]);
   }
 
   Widget infoDialog(ConsultationHistoryModel model) {
@@ -515,7 +514,7 @@ class ResponsiveBody extends GetResponsiveView {
         ),
         children: [
           SizedBox(
-              width: Get.width * .3,
+              width: Get.width * .5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [RequestsInfoView(model)],

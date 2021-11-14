@@ -534,24 +534,23 @@ Widget offlineDialog() {
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-          vertical: 30, horizontal: kIsWeb ? 50 : 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       children: [
         SizedBox(
-            width: Get.width * .7,
+            width: Get.width * .3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Change Status',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : subtitle20Bold,
+                  style: title24Bold,
                 ),
                 verticalSpace15,
                 const Text(
                   'It looks like you still have some patients waiting',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : body16Regular,
+                  style: subtitle18Regular,
                 ),
                 verticalSpace25,
                 Align(
@@ -590,7 +589,6 @@ Widget offlineDialog() {
                           }).then((value) {
                             //TO THINK - the offline should affect the slot available consSlot - num in category
                             dismissDialog();
-                            print('Changed status');
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
@@ -602,7 +600,7 @@ Widget offlineDialog() {
                 Text(
                   'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : body14RegularNeutral,
+                  style: body14RegularNeutral,
                 ),
               ],
             ))
@@ -613,24 +611,23 @@ Widget detailsDialogCons1() {
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-          vertical: 30, horizontal: kIsWeb ? 50 : 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       children: [
         SizedBox(
-            width: Get.width * .7,
+            width: Get.width * .3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Change Status',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : subtitle20Bold,
+                  style: title24Bold,
                 ),
                 verticalSpace15,
                 const Text(
                   'Please state the number of patient you want to accomodate',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : body16Regular,
+                  style: subtitle18Regular,
                 ),
                 verticalSpace25,
                 counter(),
@@ -661,7 +658,7 @@ Widget detailsDialogCons1() {
                 Text(
                   'By clicking this button your status will be available and you will be able to receive consultation requests',
                   textAlign: TextAlign.center,
-                  style: kIsWeb ? title32Regular : body14RegularNeutral,
+                  style: body14RegularNeutral,
                 ),
               ],
             ))
@@ -672,24 +669,23 @@ Widget detailsDialogCons2(int currentCount) {
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-          vertical: 30, horizontal: kIsWeb ? 50 : 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       children: [
         SizedBox(
-            width: Get.width * .7,
+            width: Get.width * .2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Add more patient to examine',
                   textAlign: TextAlign.center,
-                  style: title32Regular,
+                  style: title24Bold,
                 ),
                 verticalSpace15,
                 const Text(
                   'Please input the value of how many patients you want to add to examine.',
                   textAlign: TextAlign.center,
-                  style: title32Regular,
+                  style: subtitle18Regular,
                 ),
                 verticalSpace25,
                 counterAddittional(),

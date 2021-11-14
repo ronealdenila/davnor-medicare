@@ -8,6 +8,7 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/cons_card_web.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -57,15 +58,8 @@ class ResponsiveBody extends GetResponsiveView {
             flex: 6,
             child: Container(
                 width: Get.width * .7,
-                child: Obx(() => consRequests.isLoadingPatientData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      )
+                child: Obx(() => consRequests.isLoading.value
+                    ? SizedBox()
                     : RequestsChatView(
                         consRequests.consultations[selectedIndex.value],
                         context)))),
@@ -106,15 +100,8 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                child: Obx(() => consRequests.isLoadingPatientData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      )
+                child: Obx(() => consRequests.isLoading.value
+                    ? SizedBox()
                     : RequestsChatView(
                         consRequests.consultations[selectedIndex.value],
                         context)))),
@@ -130,15 +117,8 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 height: Get.height,
                 width: Get.width * .2,
-                child: Obx(() => consRequests.isLoadingPatientData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      )
+                child: Obx(() => consRequests.isLoading.value
+                    ? SizedBox()
                     : RequestsInfoView(
                         consRequests.consultations[selectedIndex.value]))))
       ],
@@ -146,7 +126,7 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsListView() {
-    return requestList();
+    return Obx(() => requestList());
   }
 
   Widget requestList() {
@@ -181,12 +161,18 @@ class ResponsiveBody extends GetResponsiveView {
       future: consRequests.getPatientData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return ConsultationCardWeb(
-              consReq: model,
-              onItemTap: () {
-                selectedIndex.value = index;
-                //Get.to(() => ConsRequestItemScreen(), arguments: model);
-              });
+          return Obx(
+            () => Container(
+              color: selectedIndex.value == index
+                  ? neutralBubbleColor
+                  : Colors.white,
+              child: ConsultationCardWeb(
+                  consReq: model,
+                  onItemTap: () {
+                    selectedIndex.value = index;
+                  }),
+            ),
+          );
         }
         return loadingCardIndicator();
       },
@@ -194,6 +180,9 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsChatView(ConsultationModel consData, BuildContext context) {
+    if (consData.data.value == null) {
+      return Container();
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -217,7 +206,7 @@ class ResponsiveBody extends GetResponsiveView {
                                     Get.width * (screen.isDesktop ? .2 : .45)),
                             padding: const EdgeInsets.all(15),
                             decoration: const BoxDecoration(
-                              color: neutralBubbleColor,
+                              color: verySoftBlueColor,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10),
@@ -226,7 +215,8 @@ class ResponsiveBody extends GetResponsiveView {
                             ),
                             child: Text(
                               consData.description!,
-                              style: body16Medium.copyWith(height: 1.4),
+                              style: body16Medium.copyWith(
+                                  height: 1.4, color: Colors.white),
                             )),
                       ),
                     ],
@@ -381,107 +371,114 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsInfoView(ConsultationModel consData) {
-    return Column(children: <Widget>[
-      Container(
-        width: Get.width,
-        child: Column(children: <Widget>[
-          verticalSpace15,
-          Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
+    if (consData.data.value == null) {
+      return Container();
+    }
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xFFCBD4E1),
+                ),
               ),
-              child: getPhoto(consData)),
-          verticalSpace20,
-          Text(
-            doctorHomeController.getFullName(consData),
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            style: subtitle18Medium,
-            textAlign: TextAlign.center,
+            ),
+            width: Get.width,
+            child: Column(children: <Widget>[
+              verticalSpace15,
+              Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: getPhoto(consData)),
+              verticalSpace20,
+              Text(
+                doctorHomeController.getFullName(consData),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: subtitle18Medium,
+                textAlign: TextAlign.center,
+              ),
+              verticalSpace25
+            ]),
           ),
-          verticalSpace25
-        ]),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            verticalSpace35,
-            Text('Consultation Info',
-                textAlign: TextAlign.left,
-                style: body16Regular.copyWith(color: const Color(0xFF727F8D))),
-            verticalSpace20,
-            Row(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Patient',
-                      textAlign: TextAlign.left, style: body14SemiBold),
+                verticalSpace35,
+                Text('Consultation Info',
+                    textAlign: TextAlign.left,
+                    style:
+                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
+                verticalSpace20,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(consData.fullName!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
                 ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(consData.fullName!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Age of Patient',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(consData.age!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
                 ),
+                verticalSpace15,
+                Wrap(
+                  runSpacing: 8,
+                  children: [
+                    const SizedBox(
+                      width: 170,
+                      child: Text('Date Requested',
+                          textAlign: TextAlign.left, style: body14SemiBold),
+                    ),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                          doctorHomeController
+                              .convertTimeStamp(consData.dateRqstd!),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: body14Regular),
+                    ),
+                  ],
+                ),
+                verticalSpace15,
               ],
             ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Age of Patient',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(consData.age!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace15,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 170,
-                  child: Text('Date Requested',
-                      textAlign: TextAlign.left, style: body14SemiBold),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: Get.width - 230,
-                    child: Text(
-                        doctorHomeController
-                            .convertTimeStamp(consData.dateRqstd!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace15,
-          ],
-        ),
-      ),
-    ]);
+          ),
+        ]);
   }
 
   Widget getPhoto(ConsultationModel model) {
@@ -522,7 +519,7 @@ class ResponsiveBody extends GetResponsiveView {
                   maxWidth: Get.width * (screen.isDesktop ? .2 : .45)),
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: neutralBubbleColor,
+                color: verySoftBlueColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -556,7 +553,7 @@ class ResponsiveBody extends GetResponsiveView {
                 maxWidth: Get.width * (screen.isDesktop ? .2 : .45)),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: neutralBubbleColor,
+              color: verySoftBlueColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -741,7 +738,7 @@ class ResponsiveBody extends GetResponsiveView {
         ),
         children: [
           SizedBox(
-              width: Get.width * .3,
+              width: Get.width * .5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [RequestsInfoView(model)],

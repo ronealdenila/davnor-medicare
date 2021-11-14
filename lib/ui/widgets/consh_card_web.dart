@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:shimmer/shimmer.dart';
@@ -50,27 +49,30 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
                         child: getPhoto(consHistory!),
                       ),
                       horizontalSpace20,
-                      SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (authController.userRole! == 'patient')
-                                  ? consHCont.getDoctorFullName(consHistory!)
-                                  : consHistory!.fullName!,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: body16SemiBold,
-                            ),
-                            verticalSpace5,
-                            Text(
-                              consHCont.convertDate(consHistory!.dateConsEnd!),
-                              style: caption12Medium,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ],
+                      Flexible(
+                        child: SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                (authController.userRole! == 'patient')
+                                    ? consHCont.getDoctorFullName(consHistory!)
+                                    : consHistory!.fullName!,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: body16SemiBold,
+                              ),
+                              verticalSpace5,
+                              Text(
+                                consHCont
+                                    .convertDate(consHistory!.dateConsEnd!),
+                                style: caption12Medium,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

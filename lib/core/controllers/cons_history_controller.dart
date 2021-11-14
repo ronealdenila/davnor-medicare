@@ -147,21 +147,18 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
-    if (!chatDone.value) {
-      log.i(model.consID);
-      await firestore
-          .collection('chat')
-          .doc(model.consID)
-          .collection('messages')
-          .orderBy('dateCreated', descending: true)
-          .get()
-          .then((value) {
-        for (final result in value.docs) {
-          chatHistory.add(ChatModel.fromJson(result.data()));
-        }
-      });
-    }
-    chatDone.value = true;
+    log.i(model.consID);
+    await firestore
+        .collection('chat')
+        .doc(model.consID)
+        .collection('messages')
+        .orderBy('dateCreated', descending: true)
+        .get()
+        .then((value) {
+      for (final result in value.docs) {
+        chatHistory.add(ChatModel.fromJson(result.data()));
+      }
+    });
   }
 
   filterForDoctor({required String name}) {
