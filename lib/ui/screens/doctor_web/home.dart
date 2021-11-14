@@ -1,16 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
+import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/doctor/side_menu_doctor.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
@@ -133,11 +136,13 @@ class ResponsiveLeading extends GetResponsiveView {
   }
 }
 
+final ArticleController articleService = Get.put(ArticleController());
 final StatusController stats = Get.put(StatusController(), permanent: true);
 final RxInt count = 1.obs;
 final RxInt countAdd = 1.obs; //for additionals
 
 class DoctorDashboardScreen extends GetView<DoctorMenuController> {
+  final ArticleController articleService = Get.find();
   final ConsultationsController consRequests =
       Get.put(ConsultationsController());
   final LiveConsController liveCont =
@@ -161,6 +166,35 @@ class DoctorDashboardScreen extends GetView<DoctorMenuController> {
   }
 }
 
+Widget showArticles() {
+  final UrlLauncherService urlLauncherService = UrlLauncherService();
+  if (articleService.doneLoading.value &&
+      articleService.articlesList.isNotEmpty) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: articleService.articlesList.length,
+        itemBuilder: (context, index) {
+          return ArticleCard(
+              title: articleService.articlesList[index].title!,
+              content: articleService.articlesList[index].short!,
+              photoURL: articleService.articlesList[index].photoURL!,
+              textStyleTitle: caption12SemiBold,
+              textStyleContent: caption10RegularNeutral,
+              height: 115,
+              onTap: () {
+                urlLauncherService
+                    .launchURL('${articleService.articlesList[index].source}');
+              });
+        });
+  } else if (articleService.doneLoading.value &&
+      articleService.articlesList.isEmpty) {
+    return const Center(child: Text('No articles found'));
+  }
+  return const Center(
+      child:
+          SizedBox(width: 20, height: 20, child: CircularProgressIndicator()));
+}
+
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.context) : super(alwaysUseBuilder: false);
 
@@ -178,7 +212,6 @@ class ResponsiveView extends GetResponsiveView {
 
 Widget desktopVersion(BuildContext context) {
   final AuthController authController = Get.find();
-
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(
     child: Container(
@@ -197,26 +230,28 @@ Widget desktopVersion(BuildContext context) {
               ),
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: DmText.title42Bold(
-                    'Hello, Dr. ${fetchedData!.lastName}',
-                    color: Colors.white,
-                  ),
+                DmText.title42Bold(
+                  'Hello, Dr. ${fetchedData!.lastName}',
+                  color: Colors.white,
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    'DOCTOR STATUS',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Colors.white,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'DOCTOR STATUS',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    Obx(() => doctorStatus()),
+                  ],
                 ),
-                Obx(() => doctorStatus()),
               ],
             ),
           ),
@@ -292,6 +327,7 @@ Widget desktopVersion(BuildContext context) {
                     ),
                   ),
                   Expanded(
+                    flex: 4,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -301,112 +337,104 @@ Widget desktopVersion(BuildContext context) {
                           color: kcNeutralColor,
                         ),
                         verticalSpace15,
-                        Expanded(
-                          child: Row(
+                        Container(
+                          child: Column(
                             children: [
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: Get.width * .7,
-                                        height: 470,
-                                        padding: const EdgeInsets.all(25),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), //color of shadow
-                                              spreadRadius: 5, //spread radius
-                                              blurRadius: 7, // blur radius
-                                              offset: const Offset(4,
-                                                  8), //  changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                'As Of Now',
-                                                style: title32Bold.copyWith(
-                                                    color: kcNeutralColor),
-                                              ),
-                                            ),
-                                            DmText.subtitle18Regular(
-                                              'The overall number of patients you have examine through the appplication',
-                                            ),
-                                            verticalSpace20,
-                                            Align(
-                                              child: AutoSizeText(
-                                                '12',
-                                                style: title130Bold.copyWith(
-                                                    color: kcVerySoftBlueColor),
-                                                maxLines: 1,
-                                              ),
-                                            ),
-                                            Align(
-                                              child: DmText.title32Bold(
-                                                  'Patients'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                //TO DO - NAVIGATE TO CONS HISTORY
-                                                // menuController
-                                                //     .changeActiveItemTo(
-                                                //         'List Of Doctors');
-                                                // navigationController.navigateTo(
-                                                //     Routes.DOCTOR_LIST);
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  DmText.body16Regular(
-                                                      'View Consultation History'),
-                                                  const Icon(
-                                                      Icons.chevron_right),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              Container(
+                                width: Get.width * .7,
+                                height: 470,
+                                padding: const EdgeInsets.all(25),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey
+                                          .withOpacity(0.5), //color of shadow
+                                      spreadRadius: 5, //spread radius
+                                      blurRadius: 7, // blur radius
+                                      offset: const Offset(
+                                          4, 8), //  changes position of shadow
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 25),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      //TO DO - ARTICLE LIST HERE
-                                      Text('ARTICLE LISTs HERE'),
-                                      Text('ARTICLE LISTs HERE'),
-                                      Text('ARTICLE LISTs HERE'),
-                                      Text('ARTICLE LISTs HERE'),
-                                      Text('ARTICLE LISTs HERE'),
-                                      Text('ARTICLE LISTs HERE'),
-                                    ],
-                                  ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'As Of Now',
+                                        style: title32Bold.copyWith(
+                                            color: kcNeutralColor),
+                                      ),
+                                    ),
+                                    DmText.subtitle18Regular(
+                                      'The overall number of patients you have examine through the appplication',
+                                    ),
+                                    verticalSpace20,
+                                    Align(
+                                      child: AutoSizeText(
+                                        '12',
+                                        style: title130Bold.copyWith(
+                                            color: kcVerySoftBlueColor),
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    Align(
+                                      child: DmText.title32Bold('Patients'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        //TO DO - NAVIGATE TO CONS HISTORY
+                                        // menuController
+                                        //     .changeActiveItemTo(
+                                        //         'List Of Doctors');
+                                        // navigationController.navigateTo(
+                                        //     Routes.DOCTOR_LIST);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          DmText.body16Regular(
+                                              'View Consultation History'),
+                                          const Icon(Icons.chevron_right),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          verticalSpace25,
+                          DmText.title24Medium(
+                            'Articles',
+                            color: kcNeutralColor,
+                          ),
+                          verticalSpace15,
+                          Container(
+                            height: 470,
+                            child: SingleChildScrollView(
+                              child: Obx(showArticles),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -465,19 +493,10 @@ class DoctorSideMenuItem extends GetView<DoctorMenuController> {
 //OBX
 Widget doctorStatus() {
   if (!stats.isLoading.value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          stats.doctorStatus[0].numToAccomodate != 0
-              ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
-              : '',
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-            color: Colors.white,
-          ),
-        ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
@@ -491,10 +510,20 @@ Widget doctorStatus() {
                   : 'Unavailable',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 14,
+                fontSize: 17,
                 color: verySoftBlueColor,
               ),
             ),
+          ),
+        ),
+        Text(
+          stats.doctorStatus[0].numToAccomodate != 0
+              ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
+              : '',
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 17,
+            color: Colors.white,
           ),
         ),
       ],
