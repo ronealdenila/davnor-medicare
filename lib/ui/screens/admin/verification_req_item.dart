@@ -129,6 +129,7 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget declineDialog() {
     return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
       children: [
         SizedBox(
@@ -338,6 +339,7 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget attachedPhotosDialog(String imgURL) {
     return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [

@@ -78,6 +78,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
     final _pharmacyController = TextEditingController();
     final _worthController = TextEditingController();
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
         children: [

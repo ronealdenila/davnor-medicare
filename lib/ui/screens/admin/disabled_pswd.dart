@@ -224,6 +224,7 @@ class DisabledPSWDStaffScreen extends StatelessWidget {
 
 Widget confirmProcess(PswdModel model) {
   return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: EdgeInsets.symmetric(
         vertical: 30,
         horizontal: 50,

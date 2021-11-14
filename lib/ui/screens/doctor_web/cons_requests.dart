@@ -600,6 +600,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget attachedPhotosDialog() {
     return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [
@@ -707,6 +708,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget attachedPhotoDialog(String imgURL) {
     return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [
@@ -732,6 +734,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget infoDialog(ConsultationModel model) {
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: EdgeInsets.symmetric(
           vertical: 30,
           horizontal: 50,

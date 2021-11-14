@@ -1,11 +1,14 @@
 const String imageAssetRoot = 'assets/images/';
 
+//TO DO - ADD: BLANK IMAGE
 final String authHeader = _getImagePath('auth_header.png');
 final String logo = _getImagePath('logo.png');
 final String patientHomeHeader = _getImagePath('home_samp.png');
-final String maImage = _getImagePath('ma_image.png');
+final String maImage =
+    _getImagePath('ma_image.png'); //TO BE CHANGE: katong gihimo ni H
 final String blankProfile = _getImagePath('blank_profile.png');
 final String icons8 = _getImagePath('icons8.png');
+final String doctorDefault = _getImagePath('doctor_pic.png');
 
 //Cons Form
 final String earIconPath = _getImagePath('ear.png');

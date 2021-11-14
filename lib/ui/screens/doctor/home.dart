@@ -215,8 +215,8 @@ class DoctorHomeScreen extends StatelessWidget {
                 onTap: () {
                   print(stats.isLoading.value);
                   showErrorDialog(
-                    errorDescription: 'Please wait while we are currently connecting to the server'
-                  );
+                      errorDescription:
+                          'Please wait while we are currently connecting to the server');
                 }),
           ),
           Expanded(
@@ -226,8 +226,8 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
                   showErrorDialog(
-                    errorDescription: 'Please wait while we are currently connecting to the server'
-                  );
+                      errorDescription:
+                          'Please wait while we are currently connecting to the server');
                 }),
           ),
           Expanded(
@@ -237,8 +237,8 @@ class DoctorHomeScreen extends StatelessWidget {
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
                     showErrorDialog(
-                    errorDescription: 'Please wait while we are currently connecting to the server'
-                  );
+                        errorDescription:
+                            'Please wait while we are currently connecting to the server');
                   })),
         ],
       );
@@ -313,6 +313,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
   Widget offlineDialog() {
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: const EdgeInsets.symmetric(
             vertical: 30, horizontal: kIsWeb ? 50 : 20),
         children: [
@@ -335,48 +336,64 @@ class DoctorHomeScreen extends StatelessWidget {
                   verticalSpace25,
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                          onPressed: () async {
-                            await firestore
-                                .collection('doctors')
-                                .doc(fetchedData!.userID!)
-                                .collection('status')
-                                .doc('value')
-                                .update({'dStatus': false}).then((value) {
-                              dismissDialog();
-                              print('Changed status');
-                              count.value = 1;
-                            }).catchError((error) {
-                              showErrorDialog(
-                                  errorDescription: 'Something went wrong!');
-                            });
-                          },
-                          child: Text('ACCOMMODATE MY PATIENTS FIRST'))),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({'dStatus': false}).then((value) {
+                            dismissDialog();
+                            print('Changed status');
+                            count.value = 1;
+                          }).catchError((error) {
+                            showErrorDialog(
+                                errorDescription: 'Something went wrong!');
+                          });
+                        },
+                        child: Text('ACCOMMODATE MY PATIENTS FIRST'),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      )),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                          onPressed: () async {
-                            //final num = data['numToAccomodate'];
-                            await firestore
-                                .collection('doctors')
-                                .doc(fetchedData!.userID!)
-                                .collection('status')
-                                .doc('value')
-                                .update({
-                              'accomodated': 0,
-                              'numToAccomodate': 0,
-                              'dStatus': false
-                            }).then((value) {
-                              //TO THINK - the offline should affect the slot available consSlot - num in category
-                              dismissDialog();
-                              print('Changed status');
-                              count.value = 1;
-                            }).catchError((error) {
-                              showErrorDialog(
-                                  errorDescription: 'Something went wrong');
-                            });
-                          },
-                          child: Text('GO OFFLINE NOW'))),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          //final num = data['numToAccomodate'];
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({
+                            'accomodated': 0,
+                            'numToAccomodate': 0,
+                            'dStatus': false
+                          }).then((value) {
+                            //TO THINK - the offline should affect the slot available consSlot - num in category
+                            dismissDialog();
+                            print('Changed status');
+                            count.value = 1;
+                          }).catchError((error) {
+                            showErrorDialog(
+                                errorDescription: 'Something went wrong');
+                          });
+                        },
+                        child: Text('GO OFFLINE NOW'),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      )),
                   verticalSpace15,
                   Text(
                     'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
@@ -390,6 +407,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
   Widget detailsDialogCons1() {
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: const EdgeInsets.symmetric(
             vertical: 30, horizontal: kIsWeb ? 50 : 20),
         children: [
@@ -413,27 +431,35 @@ class DoctorHomeScreen extends StatelessWidget {
                   counter(),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                          onPressed: () async {
-                            await firestore
-                                .collection('doctors')
-                                .doc(fetchedData!.userID!)
-                                .collection('status')
-                                .doc('value')
-                                .update({
-                              'accomodated': 0,
-                              'numToAccomodate': count.value,
-                              'dStatus': true
-                            }).then((value) {
-                              dismissDialog();
-                              print('Changed status');
-                              count.value = 1;
-                            }).catchError((error) {
-                              showErrorDialog(
-                                  errorDescription: 'Something went wrong');
-                            });
-                          },
-                          child: Text('Ready for Consultation'))),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({
+                            'accomodated': 0,
+                            'numToAccomodate': count.value,
+                            'dStatus': true
+                          }).then((value) {
+                            dismissDialog();
+                            print('Changed status');
+                            count.value = 1;
+                          }).catchError((error) {
+                            showErrorDialog(
+                                errorDescription: 'Something went wrong');
+                          });
+                        },
+                        child: Text('Ready for Consultation'),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      )),
                   verticalSpace15,
                   Text(
                     'By clicking this button your status will be available and you will be able to receive consultation requests',
@@ -447,6 +473,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
   Widget detailsDialogCons2(int currentCount) {
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: const EdgeInsets.symmetric(
             vertical: 30, horizontal: kIsWeb ? 50 : 20),
         children: [
@@ -470,25 +497,33 @@ class DoctorHomeScreen extends StatelessWidget {
                   counterAddittional(),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                          onPressed: () async {
-                            await firestore
-                                .collection('doctors')
-                                .doc(fetchedData!.userID!)
-                                .collection('status')
-                                .doc('value')
-                                .update({
-                              'numToAccomodate': currentCount + countAdd.value
-                            }).then((value) {
-                              dismissDialog();
-                              print('Add count');
-                              countAdd.value = 1;
-                            }).catchError((error) {
-                              showErrorDialog(
-                                  errorDescription: 'Something went wrong');
-                            });
-                          },
-                          child: Text('Add count'))),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({
+                            'numToAccomodate': currentCount + countAdd.value
+                          }).then((value) {
+                            dismissDialog();
+                            print('Add count');
+                            countAdd.value = 1;
+                          }).catchError((error) {
+                            showErrorDialog(
+                                errorDescription: 'Something went wrong');
+                          });
+                        },
+                        child: Text('Add count'),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      ))
                 ],
               ))
         ]);

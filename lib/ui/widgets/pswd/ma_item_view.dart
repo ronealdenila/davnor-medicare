@@ -371,6 +371,7 @@ class PSWDItemView extends GetResponsiveView {
 
 Widget attachedPhotosDialog() {
   return SimpleDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [

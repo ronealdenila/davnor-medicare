@@ -262,6 +262,7 @@ class PatientProfileScreen extends StatelessWidget {
 
 Widget attachedPhotoDialog(String imgURL) {
   return SimpleDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [

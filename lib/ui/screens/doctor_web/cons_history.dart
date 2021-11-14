@@ -508,6 +508,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget infoDialog(ConsultationHistoryModel model) {
     return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: EdgeInsets.symmetric(
           vertical: 30,
           horizontal: 50,

@@ -167,6 +167,7 @@ Widget displayMessage(ChatModel chat) {
 
 Widget attachedPhotosDialog() {
   return SimpleDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [
@@ -274,6 +275,7 @@ Widget buildImage(int index) {
 
 Widget attachedPhotoDialog(String imgURL) {
   return SimpleDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [

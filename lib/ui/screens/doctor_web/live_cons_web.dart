@@ -9,6 +9,7 @@ import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
@@ -422,10 +423,10 @@ class LiveConsultationWeb extends StatelessWidget {
       'didReject': false,
       'channelId': liveCont.liveCons[0].consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    });
-    //TO DO: THE CALL
-    // .then((value) => Get.to(() => CallPatientScreen(),
-    //         arguments: [consData.patientID, consData.consID]));
+    }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
+              liveCont.liveCons[0].patientID,
+              liveCont.liveCons[0].consID
+            ]));
   }
 
   void confirmationDialog() {
