@@ -101,16 +101,22 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
     return Image.network(
       model.doc.value!.profileImage!,
       fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(blankProfile, fit: BoxFit.cover);
+      },
     );
   }
 
   Widget getDoctorPhoto(ConsultationHistoryModel model) {
     if (model.patient.value!.profileImage! == '') {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
+      return Image.asset(doctorDefault, fit: BoxFit.cover);
     }
     return Image.network(
       model.patient.value!.profileImage!,
       fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(doctorDefault, fit: BoxFit.cover);
+      },
     );
   }
 }

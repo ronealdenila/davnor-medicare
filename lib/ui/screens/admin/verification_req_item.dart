@@ -217,6 +217,9 @@ class ResponsiveView extends GetResponsiveView {
                   vf.getValidID(vfModel),
                   height: 106,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
                 ),
               ),
             ),
@@ -256,6 +259,9 @@ class ResponsiveView extends GetResponsiveView {
                   vf.getValidIDWithSelfie(vfModel),
                   height: 106,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
                 ),
               ),
             ),
@@ -356,6 +362,9 @@ class ResponsiveView extends GetResponsiveView {
             child: Image.network(
               imgURL,
               fit: BoxFit.fitHeight,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(grayBlank, fit: BoxFit.cover);
+              },
             ),
           ),
         ),

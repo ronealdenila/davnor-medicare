@@ -212,6 +212,9 @@ class ConsRequestItemScreen extends StatelessWidget {
                 child: Image.network(
                   img,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
                 ),
               )),
         ),
@@ -259,6 +262,9 @@ class ConsRequestItemScreen extends StatelessWidget {
                     child: Image.network(
                       displayImages[index],
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(grayBlank, fit: BoxFit.cover);
+                      },
                     ),
                   )),
                 );
@@ -354,6 +360,10 @@ Widget attachedPhotosDialog() {
                                 height: kIsWeb ? 100 : 50,
                                 width: kIsWeb ? 100 : 50,
                                 fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(grayBlank,
+                                      fit: BoxFit.cover);
+                                },
                               ),
                             ),
                           ),
@@ -375,6 +385,9 @@ Widget buildImage(int index) {
     child: Image.network(
       controller.fetchedImages[index],
       fit: BoxFit.fitWidth,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(grayBlank, fit: BoxFit.cover);
+      },
     ),
   );
 }
@@ -398,6 +411,9 @@ Widget attachedPhotoDialog(String imgURL) {
           child: Image.network(
             imgURL,
             fit: BoxFit.fitHeight,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(grayBlank, fit: BoxFit.cover);
+            },
           ),
         ),
       ),

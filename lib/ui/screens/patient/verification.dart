@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -126,7 +127,12 @@ class VerificationScreen extends StatelessWidget {
       child: Stack(
         children: [
           kIsWeb
-              ? Image.network(verificationController.imgOfValidID.value)
+              ? Image.network(
+                  verificationController.imgOfValidID.value,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
+                )
               : Image.file(
                   File(verificationController.imgOfValidID.value),
                   width: Get.width,
@@ -179,7 +185,11 @@ class VerificationScreen extends StatelessWidget {
         children: [
           kIsWeb
               ? Image.network(
-                  verificationController.imgOfValidIDWithSelfie.value)
+                  verificationController.imgOfValidIDWithSelfie.value,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
+                )
               : Image.file(
                   File(verificationController.imgOfValidIDWithSelfie.value),
                   width: Get.width,

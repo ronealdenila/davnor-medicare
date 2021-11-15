@@ -61,7 +61,12 @@ class PatientHomeScreen extends StatelessWidget {
                       Icons.person,
                       size: 56,
                     )
-                  : Image.network(fetchedData!.profileImage!),
+                  : Image.network(
+                      fetchedData!.profileImage!,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(blankProfile, fit: BoxFit.cover);
+                      },
+                    ),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
@@ -220,9 +225,8 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
               showErrorDialog(
-                    errorDescription: 
-                        'Please wait while we are currently connecting to the server'
-                  );
+                  errorDescription:
+                      'Please wait while we are currently connecting to the server');
             },
           ),
         ),
@@ -234,9 +238,8 @@ class PatientHomeScreen extends StatelessWidget {
               //Note: Has weird transition
               onTap: () {
                 showErrorDialog(
-                    errorDescription: 
-                        'Please wait while we are currently connecting to the server'
-                  );
+                    errorDescription:
+                        'Please wait while we are currently connecting to the server');
               }),
         ),
         Expanded(
@@ -247,8 +250,7 @@ class PatientHomeScreen extends StatelessWidget {
             onTap: () {
               showErrorDialog(
                   errorDescription:
-                       'Please wait while we are currently connecting to the server'
-              );
+                      'Please wait while we are currently connecting to the server');
             },
           ),
         ),
@@ -260,7 +262,7 @@ class PatientHomeScreen extends StatelessWidget {
     if (stats.isLoading.value) {
       return notifIconNormal();
     }
-    return stats.patientStatus[0].notifBadge == '0'
+    return stats.patientStatus[0].notifBadge == 0
         ? notifIconNormal()
         : notifIconWithBadge(stats.patientStatus[0].notifBadge!);
   }
@@ -277,11 +279,11 @@ class PatientHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget notifIconWithBadge(String count) {
+  Widget notifIconWithBadge(int count) {
     return Badge(
       position: BadgePosition.topEnd(top: 1, end: 3),
       badgeContent: Text(
-        count,
+        '$count',
         style: const TextStyle(color: Colors.white),
       ),
       child: IconButton(
@@ -361,7 +363,7 @@ class PatientHomeScreen extends StatelessWidget {
         .collection('status')
         .doc('value')
         .update({
-      'notifBadge': '0',
+      'notifBadge': 0,
     });
   }
 }

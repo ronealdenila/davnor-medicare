@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/shared/responsive.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,6 +62,9 @@ Widget displaySingleImage(ChatModel chat, BuildContext context) {
               child: Image.network(
                 chat.message!,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(grayBlank, fit: BoxFit.cover);
+                },
               ),
             )),
       ),
@@ -117,6 +121,9 @@ Widget displayMultipleImages(
                   child: Image.network(
                     displayImages[index],
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(grayBlank, fit: BoxFit.cover);
+                    },
                   ),
                 )),
               );
@@ -248,6 +255,10 @@ Widget attachedPhotosDialog() {
                                 height: kIsWeb ? 100 : 50,
                                 width: kIsWeb ? 100 : 50,
                                 fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(grayBlank,
+                                      fit: BoxFit.cover);
+                                },
                               ),
                             ),
                           ),
@@ -269,6 +280,9 @@ Widget buildImage(int index) {
     child: Image.network(
       controller.fetchedImages[index],
       fit: BoxFit.fitWidth,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(grayBlank, fit: BoxFit.cover);
+      },
     ),
   );
 }
@@ -292,6 +306,9 @@ Widget attachedPhotoDialog(String imgURL) {
           child: Image.network(
             imgURL,
             fit: BoxFit.fitHeight,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(grayBlank, fit: BoxFit.cover);
+            },
           ),
         ),
       ),

@@ -16,7 +16,7 @@ class PatientStatusModel {
         queueMA: json['queueMA'] as String,
         queueCons: json['queueCons'] as String,
         deviceToken: json['deviceToken'] as String,
-        notifBadge: json['notifBadge'] as String,
+        notifBadge: json['notifBadge'] as int,
         pStatus: json['pStatus'] as bool,
         hasActiveQueueMA: json['hasActiveQueueMA'] as bool,
         hasActiveQueueCons: json['hasActiveQueueCons'] as bool,
@@ -43,7 +43,7 @@ class PatientStatusModel {
   final bool? pendingVerification;
   final bool? pStatus;
   final String? deviceToken;
-  final String? notifBadge;
+  final int? notifBadge;
 }
 
 class DoctorStatusModel {

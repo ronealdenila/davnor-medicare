@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
@@ -1006,7 +1007,8 @@ Widget detailsDialogCons2(int currentCount) {
                             .collection('status')
                             .doc('value')
                             .update({
-                          'numToAccomodate': currentCount + countAdd.value
+                          'numToAccomodate':
+                              FieldValue.increment(countAdd.value)
                         }).then((value) {
                           dismissDialog();
                           countAdd.value = 1;

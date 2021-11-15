@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -126,6 +127,9 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                       width: 140,
                       height: 140,
                       fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(grayBlank, fit: BoxFit.cover);
+                      },
                     ),
               Positioned(
                 right: 5,

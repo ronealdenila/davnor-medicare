@@ -106,9 +106,8 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequest() async {
     if (statusList[statusIndex.value].consSlot! == 0) {
       showErrorDialog(
-        errorDescription:
-             'Sorry, there are currently no available that specialize in the illness. Please try again later.'
-      );
+          errorDescription:
+              'Sorry, there are currently no available that specialize in the illness. Please try again later.');
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
@@ -177,8 +176,8 @@ class ConsRequestController extends GetxController {
         .collection('cons_status')
         .doc(categoryID.value)
         .update({
-          'qLastNum': statusList[statusIndex.value].qLastNum! + 1,
-          'consRqstd': statusList[statusIndex.value].consRqstd! + 1
+          'qLastNum': FieldValue.increment(1),
+          'consRqstd': FieldValue.increment(1)
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));

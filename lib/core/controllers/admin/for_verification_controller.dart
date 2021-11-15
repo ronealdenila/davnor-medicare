@@ -181,17 +181,8 @@ class ForVerificationController extends GetxController {
         .doc(uid)
         .collection('status')
         .doc('value')
-        .get()
-        .then((doc) async {
-      final count = int.parse(doc['notifBadge'] as String) + 1;
-      await firestore
-          .collection('patients')
-          .doc(uid)
-          .collection('status')
-          .doc('value')
-          .update({
-        'notifBadge': '$count',
-      });
+        .update({
+      'notifBadge': FieldValue.increment(1),
     });
 
     //TO THINK - SEND NOTIF TO DEVICE ALSO

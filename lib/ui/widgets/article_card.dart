@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -56,6 +57,9 @@ class ArticleCard extends StatelessWidget {
                           child: Image.network(
                             photoURL,
                             fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(grayBlank, fit: BoxFit.cover);
+                            },
                           ),
                         ),
                       ),

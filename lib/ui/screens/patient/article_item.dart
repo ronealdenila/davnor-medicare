@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -35,6 +36,9 @@ class ArticleItemScreen extends StatelessWidget {
                       Image.network(
                         articleList[index].photoURL!,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(grayBlank, fit: BoxFit.cover);
+                        },
                       ),
                       Positioned(
                         top: 0,

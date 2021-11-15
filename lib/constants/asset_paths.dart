@@ -7,6 +7,7 @@ final String patientHomeHeader = _getImagePath('home_samp.png');
 final String maImage =
     _getImagePath('ma_image.png'); //TO BE CHANGE: katong gihimo ni H
 final String blankProfile = _getImagePath('blank_profile.png');
+final String grayBlank = _getImagePath('gray_blank.jpg');
 final String icons8 = _getImagePath('icons8.png');
 final String doctorDefault = _getImagePath('doctor_pic.png');
 

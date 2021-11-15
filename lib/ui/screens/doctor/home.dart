@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
@@ -50,7 +52,12 @@ class DoctorHomeScreen extends StatelessWidget {
                       Icons.person,
                       size: 56,
                     )
-                  : Image.network(fetchedData!.profileImage!),
+                  : Image.network(
+                      fetchedData!.profileImage!,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(blankProfile, fit: BoxFit.cover);
+                      },
+                    ),
               onProfileTap: () => Get.to(() => DoctorProfileScreen()),
               onCurrentConsultTap: () {
                 if (liveCont.liveCons.isNotEmpty) {
@@ -184,8 +191,7 @@ class DoctorHomeScreen extends StatelessWidget {
                   if (stats.doctorStatus[0].dStatus!) {
                     showDialog(
                         context: context,
-                        builder: (context) => detailsDialogCons2(
-                            stats.doctorStatus[0].numToAccomodate!));
+                        builder: (context) => detailsDialogCons2());
                   } else {
                     showErrorDialog(
                         errorTitle: "Could not process your request",
@@ -471,7 +477,7 @@ class DoctorHomeScreen extends StatelessWidget {
         ]);
   }
 
-  Widget detailsDialogCons2(int currentCount) {
+  Widget detailsDialogCons2() {
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: const EdgeInsets.symmetric(
@@ -505,7 +511,8 @@ class DoctorHomeScreen extends StatelessWidget {
                               .collection('status')
                               .doc('value')
                               .update({
-                            'numToAccomodate': currentCount + countAdd.value
+                            'numToAccomodate':
+                                FieldValue.increment(countAdd.value)
                           }).then((value) {
                             dismissDialog();
                             print('Add count');

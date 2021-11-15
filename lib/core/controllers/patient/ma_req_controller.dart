@@ -93,8 +93,7 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      log.i(
-          'ERROR DIALOG: please provide valid ID');
+      log.i('ERROR DIALOG: please provide valid ID');
     }
   }
 
@@ -128,15 +127,12 @@ class MARequestController extends GetxController {
         await saveRequestforMA();
       } else {
         showErrorDialog(
-          errorDescription: 'Sorry, someone already got the last slot.'
-        );
+            errorDescription: 'Sorry, someone already got the last slot.');
       }
       dismissDialog();
     } else {
       dismissDialog();
-      showErrorDialog(
-          errorDescription: 'ERROR: please provide prescriptions.'
-        );
+      showErrorDialog(errorDescription: 'ERROR: please provide prescriptions.');
     }
   }
 
@@ -219,8 +215,8 @@ class MARequestController extends GetxController {
         .collection('pswd_status')
         .doc('status')
         .update({
-          'qLastNum': stats.pswdPStatus[0].qLastNum! + 1,
-          'maRequested': stats.pswdPStatus[0].maRequested! + 1
+          'qLastNum': FieldValue.increment(1),
+          'maRequested': FieldValue.increment(1)
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));
