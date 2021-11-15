@@ -9,6 +9,7 @@ import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -209,6 +210,7 @@ class ResponsiveView extends GetResponsiveView {
 }
 
 Widget tabletVersion(BuildContext context) {
+  DoctorMenuController menuController = Get.find();
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(
@@ -372,11 +374,15 @@ Widget tabletVersion(BuildContext context) {
                             ),
                             verticalSpace20,
                             Align(
-                              child: AutoSizeText(
-                                '12',
-                                style: title130Bold.copyWith(
-                                    color: kcVerySoftBlueColor),
-                                maxLines: 1,
+                              child: Obx(
+                                () => AutoSizeText(
+                                  stats.isLoading.value
+                                      ? '0'
+                                      : '${stats.doctorStatus[0].overall!}',
+                                  style: title130Bold.copyWith(
+                                      color: kcVerySoftBlueColor),
+                                  maxLines: 1,
+                                ),
                               ),
                             ),
                             Align(
@@ -384,12 +390,10 @@ Widget tabletVersion(BuildContext context) {
                             ),
                             TextButton(
                               onPressed: () {
-                                //TO DO - NAVIGATE TO CONS HISTORY
-                                // menuController
-                                //     .changeActiveItemTo(
-                                //         'List Of Doctors');
-                                // navigationController.navigateTo(
-                                //     Routes.DOCTOR_LIST);
+                                menuController
+                                    .changeActiveItemTo('Consultation History');
+                                navigationController
+                                    .navigateTo(Routes.CONS_HISTORY_WEB);
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -432,6 +436,7 @@ Widget tabletVersion(BuildContext context) {
 }
 
 Widget desktopVersion(BuildContext context) {
+  DoctorMenuController menuController = Get.find();
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(
@@ -604,11 +609,15 @@ Widget desktopVersion(BuildContext context) {
                                     ),
                                     verticalSpace20,
                                     Align(
-                                      child: AutoSizeText(
-                                        '12',
-                                        style: title130Bold.copyWith(
-                                            color: kcVerySoftBlueColor),
-                                        maxLines: 1,
+                                      child: Obx(
+                                        () => AutoSizeText(
+                                          stats.isLoading.value
+                                              ? '0'
+                                              : '${stats.doctorStatus[0].overall!}',
+                                          style: title130Bold.copyWith(
+                                              color: kcVerySoftBlueColor),
+                                          maxLines: 1,
+                                        ),
                                       ),
                                     ),
                                     Align(
@@ -616,12 +625,10 @@ Widget desktopVersion(BuildContext context) {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        //TO DO - NAVIGATE TO CONS HISTORY
-                                        // menuController
-                                        //     .changeActiveItemTo(
-                                        //         'List Of Doctors');
-                                        // navigationController.navigateTo(
-                                        //     Routes.DOCTOR_LIST);
+                                        menuController.changeActiveItemTo(
+                                            'Consultation History');
+                                        navigationController.navigateTo(
+                                            Routes.CONS_HISTORY_WEB);
                                       },
                                       child: Row(
                                         mainAxisAlignment:

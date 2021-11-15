@@ -36,7 +36,7 @@ class DocConsHistoryScreen extends StatelessWidget {
                     Row(children: [
                       SizedBox(
                         height: 50,
-                        width: screenWidthPercentage(context, percentage: .5),
+                        width: Get.width * .5,
                         child: TextFormField(
                           controller: consHController.searchKeyword,
                           decoration: const InputDecoration(
