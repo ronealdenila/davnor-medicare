@@ -154,7 +154,6 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    //Note: Breakpoint is for desktop lang
     return Scaffold(
         appBar: AppBar(
           leading: Container(),

@@ -154,38 +154,37 @@ class DoctorDashboardScreen extends GetView<DoctorMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: Container(),
-          title: DmText.title42Bold(
-            'Dashboard',
-            color: kcNeutralColor[80],
-          ),
-        ),
-        body: ResponsiveView(context));
+    return Padding(
+      padding: const EdgeInsets.only(top: 55),
+      child: ResponsiveView(context),
+    );
   }
 }
 
-Widget showArticles() {
+Widget showArticles(BuildContext context) {
   final UrlLauncherService urlLauncherService = UrlLauncherService();
   if (articleService.doneLoading.value &&
       articleService.articlesList.isNotEmpty) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: articleService.articlesList.length,
-        itemBuilder: (context, index) {
-          return ArticleCard(
-              title: articleService.articlesList[index].title!,
-              content: articleService.articlesList[index].short!,
-              photoURL: articleService.articlesList[index].photoURL!,
-              textStyleTitle: caption12SemiBold,
-              textStyleContent: caption10RegularNeutral,
-              height: 115,
-              onTap: () {
-                urlLauncherService
-                    .launchURL('${articleService.articlesList[index].source}');
-              });
-        });
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: articleService.articlesList.length,
+          itemBuilder: (context, index) {
+            return ArticleCard(
+                title: articleService.articlesList[index].title!,
+                content: articleService.articlesList[index].short!,
+                photoURL: articleService.articlesList[index].photoURL!,
+                textStyleTitle: caption12SemiBold,
+                textStyleContent: caption10RegularNeutral,
+                height: 115,
+                onTap: () {
+                  urlLauncherService.launchURL(
+                      '${articleService.articlesList[index].source}');
+                });
+          }),
+    );
   } else if (articleService.doneLoading.value &&
       articleService.articlesList.isEmpty) {
     return const Center(child: Text('No articles found'));
@@ -200,14 +199,236 @@ class ResponsiveView extends GetResponsiveView {
 
   final BuildContext context;
 
-  // @override
-  // Widget phone() => phoneVersion();
-
-  // @override
-  // Widget tablet() => phoneVersion();
+  @override
+  Widget phone() => tabletVersion(context);
+  @override
+  Widget tablet() => tabletVersion(context);
 
   @override
   Widget desktop() => desktopVersion(context);
+}
+
+Widget tabletVersion(BuildContext context) {
+  final AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value;
+  return SingleChildScrollView(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Padding(
+      padding: const EdgeInsets.only(left: 18),
+      child: Text(
+        'Dashboard',
+        style: title32Bold,
+      ),
+    ),
+    Container(
+      margin: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
+      width: Get.width,
+      height: Get.height * .2,
+      decoration: const BoxDecoration(
+        color: kcVerySoftBlueColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(50),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          DmText.title42Bold(
+            'Hello, Dr. ${fetchedData!.lastName}',
+            color: Colors.white,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'DOCTOR STATUS',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+              Obx(() => doctorStatus()),
+            ],
+          ),
+        ],
+      ),
+    ),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: DmText.title24Medium(
+                    'Actions',
+                    color: neutralColor,
+                  ),
+                ),
+                verticalSpace15,
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ActionCard(
+                          text: 'Change Status',
+                          color: verySoftMagenta[60],
+                          secondaryColor: verySoftMagentaCustomColor,
+                          onTap: () {
+                            if (stats.doctorStatus[0].dStatus!) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => offlineDialog());
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => detailsDialogCons1());
+                            }
+                          }),
+                      ActionCard(
+                          text: 'Add More \nPatients \nto Examine',
+                          color: verySoftOrange[60],
+                          secondaryColor: verySoftOrangeCustomColor,
+                          onTap: () {
+                            if (stats.doctorStatus[0].dStatus!) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => detailsDialogCons2(
+                                      stats.doctorStatus[0].numToAccomodate!));
+                            } else {
+                              showErrorDialog(
+                                  errorTitle: "Could not process your request",
+                                  errorDescription:
+                                      "You can't make an additional when status is unavailable. Please make sure your status is available");
+                            }
+                          }),
+                      ActionCard(
+                          text: 'Read \nHealth Articles',
+                          color: verySoftRed[60],
+                          secondaryColor: verySoftRedCustomColor,
+                          //TO DO: DOC ARTICLE SCREEN??
+                          onTap: () => Get.to(() => ArticleListScreen())),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DmText.title24Medium(
+                'Your Data',
+                color: kcNeutralColor,
+              ),
+              verticalSpace15,
+              Padding(
+                padding: const EdgeInsets.only(right: 25),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 470,
+                        padding: const EdgeInsets.all(25),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5), //color of shadow
+                              spreadRadius: 5, //spread radius
+                              blurRadius: 7, // blur radius
+                              offset: const Offset(
+                                  4, 8), //  changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'As Of Now',
+                                style:
+                                    title32Bold.copyWith(color: kcNeutralColor),
+                              ),
+                            ),
+                            DmText.subtitle18Regular(
+                              'The overall number of patients you have examine through the appplication',
+                            ),
+                            verticalSpace20,
+                            Align(
+                              child: AutoSizeText(
+                                '12',
+                                style: title130Bold.copyWith(
+                                    color: kcVerySoftBlueColor),
+                                maxLines: 1,
+                              ),
+                            ),
+                            Align(
+                              child: DmText.title32Bold('Patients'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                //TO DO - NAVIGATE TO CONS HISTORY
+                                // menuController
+                                //     .changeActiveItemTo(
+                                //         'List Of Doctors');
+                                // navigationController.navigateTo(
+                                //     Routes.DOCTOR_LIST);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  DmText.body16Regular(
+                                      'View Consultation History'),
+                                  const Icon(Icons.chevron_right),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+    Container(
+      padding: const EdgeInsets.all(25),
+      width: Get.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DmText.title24Medium(
+            'Articles',
+            color: kcNeutralColor,
+          ),
+          verticalSpace15,
+          Obx(() => showArticles(context)),
+        ],
+      ),
+    )
+  ]));
 }
 
 Widget desktopVersion(BuildContext context) {
@@ -215,9 +436,17 @@ Widget desktopVersion(BuildContext context) {
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(
     child: Container(
-      height: Get.height - 95,
+      height: Get.height - 55,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25),
+            child: Text(
+              'Dashboard',
+              style: title32Bold,
+            ),
+          ),
           Container(
             margin: const EdgeInsets.all(25),
             padding: const EdgeInsets.all(25),
@@ -430,7 +659,7 @@ Widget desktopVersion(BuildContext context) {
                           Container(
                             height: 470,
                             child: SingleChildScrollView(
-                              child: Obx(showArticles),
+                              child: Obx(() => showArticles(context)),
                             ),
                           ),
                         ],
