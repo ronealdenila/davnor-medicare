@@ -76,6 +76,13 @@ const TextStyle title29Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
+TextStyle title29BoldNeutral80 = TextStyle(
+  fontSize: 29,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+  color: neutralColor[80],
+);
+
 const TextStyle title24BoldWhite = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w700,

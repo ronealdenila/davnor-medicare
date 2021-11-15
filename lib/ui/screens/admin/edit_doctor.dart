@@ -316,13 +316,15 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget textTitle() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+      padding: const EdgeInsets.symmetric(
+          horizontal: 20, vertical: 50
+        ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Edit Doctor Details',
-                textAlign: TextAlign.left, style: title24Bold),
+             Text('Edit Doctor Details',
+                textAlign: TextAlign.left, style: title29BoldNeutral80),
             horizontalSpace80,
             IconButton(
                 iconSize: 30,

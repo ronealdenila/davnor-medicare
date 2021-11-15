@@ -38,6 +38,9 @@ final String foodallergyIcon = _getImagePath('foodallergy.png');
 final String sorethroatIcon = _getImagePath('sore_throat.png');
 final String pneomoniaIcon = _getImagePath('pneumonia.png');
 
+final String logo2 = _getImagePath('davnormedicare.png');
+
+
 String _getImagePath(String fileName) {
   return imageAssetRoot + fileName;
 }

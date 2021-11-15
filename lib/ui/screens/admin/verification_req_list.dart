@@ -16,13 +16,13 @@ class VerificationReqListScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 20, vertical: 50
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Users to be Verified',
-                textAlign: TextAlign.left, style: title24BoldNeutral80),
+                textAlign: TextAlign.left, style: title29BoldNeutral80),
             verticalSpace50,
             requestList()
           ],

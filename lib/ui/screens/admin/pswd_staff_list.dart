@@ -23,7 +23,7 @@ class PSWDStaffListScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 20, vertical: 50
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
