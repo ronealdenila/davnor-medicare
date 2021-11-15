@@ -500,6 +500,7 @@ Widget getPhoto(GeneralMARequestModel model) {
   }
   return CircleAvatar(
     radius: 29,
-    backgroundImage: NetworkImage(appController.getProfilePhoto(model)),
+    foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
+    backgroundImage: AssetImage(blankProfile),
   );
 }

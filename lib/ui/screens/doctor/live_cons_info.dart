@@ -261,7 +261,8 @@ class LiveConsInfoScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

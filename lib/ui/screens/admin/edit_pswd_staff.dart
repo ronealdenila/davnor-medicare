@@ -132,7 +132,8 @@ class ResponsiveView extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 40,
-      backgroundImage: NetworkImage(controller.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 

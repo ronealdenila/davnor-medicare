@@ -325,8 +325,9 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage:
+      foregroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
@@ -490,8 +491,9 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage:
+      foregroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 

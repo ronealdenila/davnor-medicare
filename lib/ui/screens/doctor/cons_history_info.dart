@@ -169,7 +169,8 @@ class HistoryInfoScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

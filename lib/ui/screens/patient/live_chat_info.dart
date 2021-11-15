@@ -67,7 +67,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     SizedBox(
+                    SizedBox(
                       width: 170,
                       child: Text('chat1'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
@@ -86,7 +86,7 @@ class LiveChatInfoScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     SizedBox(
+                    SizedBox(
                       width: 170,
                       child: Text('chat2'.tr,
                           textAlign: TextAlign.left, style: body14SemiBold),
@@ -159,7 +159,8 @@ class LiveChatInfoScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+      foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

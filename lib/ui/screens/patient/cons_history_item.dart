@@ -103,7 +103,8 @@ class ConsHistoryItemScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+      foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 

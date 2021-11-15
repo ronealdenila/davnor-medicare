@@ -94,7 +94,8 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
     }
     return CircleAvatar(
       radius: kIsWeb ? 120 : 80,
-      backgroundImage: NetworkImage(img),
+      foregroundImage: NetworkImage(img),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }
