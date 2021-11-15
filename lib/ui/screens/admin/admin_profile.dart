@@ -89,7 +89,7 @@ class ResponsiveView extends GetResponsiveView {
           verticalSpace10,
           Text(
             fetchedData!.email!,
-            style: body14Regular,
+            style: body16Regular,
           ),
           verticalSpace50,
           Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -102,7 +102,7 @@ class ResponsiveView extends GetResponsiveView {
               },
               child: const Text(
                 'Change Password',
-                style: body14Regular,
+                style: body16Regular,
               ),
             ),
           ])
@@ -120,19 +120,19 @@ class ResponsiveView extends GetResponsiveView {
         builder: (context, snapshot) {
           if (snapshot.hasError || !snapshot.hasData) {
             return CircleAvatar(
-              radius: 150,
+              radius: 115,
               backgroundImage: AssetImage(blankProfile),
             );
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
           if (data['profileImage'] == '') {
             return CircleAvatar(
-              radius: 150,
+              radius: 115,
               backgroundImage: AssetImage(blankProfile),
             );
           }
           return CircleAvatar(
-            radius: 150,
+            radius: 115,
             foregroundImage: NetworkImage(data['profileImage']),
             backgroundImage: AssetImage(blankProfile),
           );

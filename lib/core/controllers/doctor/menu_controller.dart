@@ -28,11 +28,11 @@ class DoctorMenuController extends GetxController {
       case 'Dashboard':
         return _customIcon(Icons.dashboard_outlined, itemName);
       case 'Consultation Requests':
-        return _customIcon(Icons.list_outlined, itemName);
+        return _customIcon(Icons.group_outlined, itemName);
       case 'Consultation History':
-        return _customIcon(Icons.list_outlined, itemName);
+        return _customIcon(Icons.history_outlined, itemName);
       case 'Live Consultation':
-        return _customIcon(Icons.verified_outlined, itemName);
+        return _customIcon(Icons.chat_bubble_outline, itemName);
       default:
         return _customIcon(Icons.logout_outlined, itemName);
     }
