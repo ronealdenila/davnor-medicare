@@ -16,29 +16,18 @@ Navigator localNavigator() => Navigator(
       onGenerateRoute: generateRoute,
       initialRoute: '/doc-web-home',
     );
+
 //DOCTOR ROUTES
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.DOC_WEB_HOME:
       return _getPageRoute(DoctorDashboardScreen());
-    case Routes.CONS_REQ_WEB: //----
+    case Routes.CONS_REQ_WEB:
       return _getPageRoute(ConsRequestsWeb());
-    case Routes.CONS_HISTORY_WEB: //----
+    case Routes.CONS_HISTORY_WEB:
       return _getPageRoute(ConsHistoryWeb());
-    case Routes.LIVE_CONS_WEB: //----
+    case Routes.LIVE_CONS_WEB:
       return _getPageRoute(LiveConsultationWeb());
-    // case Routes.VERIFICATION_REQ_LIST: //----
-    //   return _getPageRoute(DocConsHistoryScreen());
-    // case Routes.EDIT_DOCTOR:
-    //   final DoctorModel passedData = settings.arguments as DoctorModel;
-    //   return _getPageRoute(EditDoctorScrenn(passedData: passedData));
-    // case Routes.EDIT_PSWD_STAFF:
-    //   final PswdModel passedData = settings.arguments as PswdModel;
-    //   return _getPageRoute(EditPSWDStaffScrenn(passedData: passedData));
-    // case Routes.VERIFICATION_REQ_ITEM:
-    //   final VerificationReqModel passedData =
-    //       settings.arguments as VerificationReqModel;
-    //   return _getPageRoute(VerificationReqItemScreen(passedData: passedData));
     default:
       return _getPageRoute(const SizedBox());
   }

@@ -74,7 +74,7 @@ class ForApprovalItemScreen extends StatelessWidget {
       horizontalSpace25,
       PSWDButton(
         onItemTap: () async {
-          //TO DO: maybe delete in on_progress_ma
+          //TO THINK: FUNCTION, maybe delete in on_progress_ma ??? mag add pabag decline in the approval stage
           //delete folder in storage
           //and notify user, add reason
         },

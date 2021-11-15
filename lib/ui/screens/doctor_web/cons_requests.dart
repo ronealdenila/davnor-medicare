@@ -325,8 +325,9 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage:
+      foregroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
@@ -490,8 +491,9 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage:
+      foregroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
@@ -535,6 +537,9 @@ class ResponsiveBody extends GetResponsiveView {
                 child: Image.network(
                   img,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
                 ),
               )),
         ),
@@ -586,6 +591,9 @@ class ResponsiveBody extends GetResponsiveView {
                       child: Image.network(
                         displayImages[index],
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(grayBlank, fit: BoxFit.cover);
+                        },
                       ),
                     )),
                   );
@@ -681,6 +689,10 @@ class ResponsiveBody extends GetResponsiveView {
                                   height: 100,
                                   width: 100,
                                   fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(grayBlank,
+                                        fit: BoxFit.cover);
+                                  },
                                 ),
                               ),
                             ),
@@ -702,6 +714,9 @@ class ResponsiveBody extends GetResponsiveView {
       child: Image.network(
         controller.fetchedImages[index],
         fit: BoxFit.fitWidth,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(grayBlank, fit: BoxFit.cover);
+        },
       ),
     );
   }
@@ -725,6 +740,9 @@ class ResponsiveBody extends GetResponsiveView {
             child: Image.network(
               imgURL,
               fit: BoxFit.fitHeight,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(grayBlank, fit: BoxFit.cover);
+              },
             ),
           ),
         ),

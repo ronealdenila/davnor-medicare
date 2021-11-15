@@ -321,6 +321,9 @@ class PSWDItemView extends GetResponsiveView {
                     width: 5,
                     height: 5,
                     fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(grayBlank, fit: BoxFit.cover);
+                    },
                   ),
                 );
               }),
@@ -456,6 +459,10 @@ Widget attachedPhotosDialog() {
                                 height: 100,
                                 width: 100,
                                 fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(grayBlank,
+                                      fit: BoxFit.cover);
+                                },
                               ),
                             ),
                           ),
@@ -477,6 +484,9 @@ Widget buildImage(int index) {
     child: Image.network(
       controller.fetchedImages[index],
       fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(grayBlank, fit: BoxFit.cover);
+      },
     ),
   );
 }
@@ -490,6 +500,7 @@ Widget getPhoto(GeneralMARequestModel model) {
   }
   return CircleAvatar(
     radius: 29,
-    backgroundImage: NetworkImage(appController.getProfilePhoto(model)),
+    foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
+    backgroundImage: AssetImage(blankProfile),
   );
 }

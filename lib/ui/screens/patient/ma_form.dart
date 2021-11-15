@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -240,6 +241,9 @@ class MAFormScreen extends StatelessWidget {
                   width: Get.width,
                   height: Get.height,
                   fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(grayBlank, fit: BoxFit.cover);
+                  },
                 ),
           Positioned(
             right: 5,

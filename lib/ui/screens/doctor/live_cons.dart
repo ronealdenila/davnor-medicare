@@ -171,7 +171,8 @@ class LiveConsultationScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 

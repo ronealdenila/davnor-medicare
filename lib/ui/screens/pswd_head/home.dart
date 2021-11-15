@@ -800,7 +800,6 @@ Widget phoneVersion() {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    // color: Colors.blue,
                     child: DmText.title24Medium(
                       'Actions',
                       color: neutralColor,

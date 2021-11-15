@@ -83,6 +83,7 @@ class DoctorRegistrationController extends GetxController {
         .set({
       'accomodated': 0,
       'numToAccomodate': 0,
+      'overall': 0,
       'dStatus': false,
       'hasOngoingCons': false,
     });

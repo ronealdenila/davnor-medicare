@@ -110,7 +110,8 @@ class ForVerificationCard extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 35,
-      backgroundImage: NetworkImage(vf.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

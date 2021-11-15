@@ -199,7 +199,7 @@ class AuthController extends GetxController {
       'categoryID': '',
       'pendingVerification': false,
       'deviceToken': tokenID.value,
-      'notifBadge': '0',
+      'notifBadge': 0,
       'queueCons': '',
       'queueMA': '',
     });

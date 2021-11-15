@@ -16,7 +16,7 @@ class PatientStatusModel {
         queueMA: json['queueMA'] as String,
         queueCons: json['queueCons'] as String,
         deviceToken: json['deviceToken'] as String,
-        notifBadge: json['notifBadge'] as String,
+        notifBadge: json['notifBadge'] as int,
         pStatus: json['pStatus'] as bool,
         hasActiveQueueMA: json['hasActiveQueueMA'] as bool,
         hasActiveQueueCons: json['hasActiveQueueCons'] as bool,
@@ -43,13 +43,14 @@ class PatientStatusModel {
   final bool? pendingVerification;
   final bool? pStatus;
   final String? deviceToken;
-  final String? notifBadge;
+  final int? notifBadge;
 }
 
 class DoctorStatusModel {
   DoctorStatusModel({
     required this.numToAccomodate,
     required this.accomodated,
+    required this.overall,
     required this.dStatus,
     required this.hasOngoingCons,
   });
@@ -58,6 +59,7 @@ class DoctorStatusModel {
       DoctorStatusModel(
         numToAccomodate: json['numToAccomodate'] as int,
         accomodated: json['accomodated'] as int,
+        overall: json['overall'] as int,
         dStatus: json['dStatus'] as bool,
         hasOngoingCons: json['hasOngoingCons'] as bool,
       );
@@ -65,12 +67,14 @@ class DoctorStatusModel {
   Map<String, dynamic> toJson() => {
         'numToAccomodate': numToAccomodate,
         'accomodated': accomodated,
+        'overall': overall,
         'dStatus': dStatus,
         'hasOngoingCons': hasOngoingCons,
       };
 
   int? numToAccomodate;
   int? accomodated;
+  int? overall;
   bool? dStatus;
   bool? hasOngoingCons;
 }

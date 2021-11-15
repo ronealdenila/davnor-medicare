@@ -162,15 +162,10 @@ class LiveConsController extends GetxController {
         .doc(docID)
         .collection('status')
         .doc('value')
-        .get()
-        .then((DocumentSnapshot snap) async {
-      final addedCount = snap['accomodated'] + 1;
-      await firestore
-          .collection('doctors')
-          .doc(docID)
-          .collection('status')
-          .doc('value')
-          .update({'hasOngoingCons': false, 'accomodated': addedCount});
+        .update({
+      'hasOngoingCons': false,
+      'accomodated': FieldValue.increment(1),
+      'overall': FieldValue.increment(1)
     });
   }
 
@@ -243,17 +238,8 @@ class LiveConsController extends GetxController {
         .doc(uid)
         .collection('status')
         .doc('value')
-        .get()
-        .then((doc) async {
-      final count = int.parse(doc['notifBadge'] as String) + 1;
-      await firestore
-          .collection('patients')
-          .doc(uid)
-          .collection('status')
-          .doc('value')
-          .update({
-        'notifBadge': '$count',
-      });
+        .update({
+      'notifBadge': FieldValue.increment(1),
     });
   }
 

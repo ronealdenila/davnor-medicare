@@ -270,10 +270,4 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     print('Either you reject the call or accept');
     return false as Future<bool>;
   }
-
-  //TO DO - DELETE I guess, murag walay gamit
-  // Future<void> endCall() async {
-  //   //update didJoin = false, reset the patient data
-  //   //For Upgrade: Add a record for video call as a chat msg
-  // }
 }

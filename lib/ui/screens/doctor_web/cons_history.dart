@@ -2,10 +2,12 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/consh_card_web.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,10 +19,7 @@ class ConsHistoryWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50),
-        child: ResponsiveBody(context),
-      ),
+      body: ResponsiveBody(context),
     );
   }
 }
@@ -37,9 +36,124 @@ class ResponsiveBody extends GetResponsiveView {
   @override
   Widget? builder() {
     if (screen.isDesktop) {
-      return DesktopScreen();
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
+            child: DmText.title24Bold(
+              'Consultation History',
+              color: kcNeutralColor[80],
+            ),
+          ),
+          verticalSpace5,
+          Row(children: [
+            horizontalSpace10,
+            SizedBox(
+              width: 350,
+              child: CustomTextFormField(
+                controller: consHController.searchKeyword,
+                labelText: 'Search here...',
+                onChanged: (value) {
+                  if (consHController.searchKeyword.text == '') {
+                    consHController.consHistory
+                        .assignAll(consHController.filteredListforDoc);
+                  }
+                },
+                validator: Validator().notEmpty,
+                onSaved: (value) => consHController.searchKeyword.text = value!,
+              ),
+            ),
+            horizontalSpace10,
+            InkWell(
+              onTap: () {
+                print(consHController.searchKeyword.text);
+                consHController.filterForDoctor(
+                    name: consHController.searchKeyword.text);
+              },
+              child: Card(
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: verySoftBlueColor[100],
+                  ),
+                  child: const Icon(
+                    Icons.search_rounded,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+          ]),
+          verticalSpace10,
+          Flexible(child: DesktopScreen()),
+        ],
+      );
     } else {
-      return TabletScreen();
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10, left: 55, bottom: 10),
+          child: DmText.title24Bold(
+            'Consultation History',
+            color: kcNeutralColor[80],
+          ),
+        ),
+        verticalSpace5,
+        Row(children: [
+          horizontalSpace10,
+          SizedBox(
+            width: 350,
+            child: CustomTextFormField(
+              controller: consHController.searchKeyword,
+              labelText: 'Search here...',
+              onChanged: (value) {
+                if (consHController.searchKeyword.text == '') {
+                  consHController.consHistory
+                      .assignAll(consHController.filteredListforDoc);
+                }
+              },
+              validator: Validator().notEmpty,
+              onSaved: (value) => consHController.searchKeyword.text = value!,
+            ),
+          ),
+          horizontalSpace10,
+          InkWell(
+            onTap: () {
+              print(consHController.searchKeyword.text);
+              consHController.filterForDoctor(
+                  name: consHController.searchKeyword.text);
+            },
+            child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: verySoftBlueColor[100],
+                ),
+                child: const Icon(
+                  Icons.search_rounded,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+          ),
+        ]),
+        verticalSpace10,
+        Flexible(child: TabletScreen())
+      ]);
     }
   }
 
@@ -340,7 +454,8 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
@@ -353,7 +468,8 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
@@ -361,149 +477,150 @@ class ResponsiveBody extends GetResponsiveView {
     if (consData.patient.value == null) {
       return Container();
     }
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: Get.width,
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Color(0xFFCBD4E1),
-                ),
+    return SingleChildScrollView(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+          Widget>[
+        Container(
+          width: Get.width,
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Color(0xFFCBD4E1),
               ),
             ),
-            child: Column(children: <Widget>[
-              verticalSpace15,
-              Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: getPhoto(consData)),
+          ),
+          child: Column(children: <Widget>[
+            verticalSpace15,
+            Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: getPhoto(consData)),
+            verticalSpace20,
+            Text(
+              consHController.getPatientName(consData),
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: subtitle18Medium,
+              textAlign: TextAlign.center,
+            ),
+            verticalSpace25
+          ]),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalSpace35,
+              Text('Consultation Info',
+                  textAlign: TextAlign.left,
+                  style:
+                      body16Regular.copyWith(color: const Color(0xFF727F8D))),
               verticalSpace20,
-              Text(
-                consHController.getPatientName(consData),
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-                style: subtitle18Medium,
-                textAlign: TextAlign.center,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Patient',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(consData.fullName!,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
               ),
-              verticalSpace25
-            ]),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Age of Patient',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(consData.age!,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Date Requested',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consHController.convertDate(consData.dateRqstd!),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Consultation Started',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consHController.convertDate(consData.dateConsStart!),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Consultation Ended',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consHController.convertDate(consData.dateConsEnd!),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace35,
-                Text('Consultation Info',
-                    textAlign: TextAlign.left,
-                    style:
-                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
-                verticalSpace20,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: Text(consData.fullName!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Age of Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: Text(consData.age!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Date Requested',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: Text(
-                          consHController.convertDate(consData.dateRqstd!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Started',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: Text(
-                          consHController.convertDate(consData.dateConsStart!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Ended',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: Text(
-                          consHController.convertDate(consData.dateConsEnd!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ]);
+        ),
+      ]),
+    );
   }
 
   Widget infoDialog(ConsultationHistoryModel model) {

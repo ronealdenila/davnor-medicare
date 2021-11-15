@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -131,6 +132,9 @@ class MAForm2Screen extends GetView<MARequestController> {
                         width: 140,
                         height: 140,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(grayBlank, fit: BoxFit.cover);
+                        },
                       ),
                 Positioned(
                   right: 5,

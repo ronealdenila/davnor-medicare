@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,6 +29,9 @@ Widget chatInput(LiveChatController liveChatCont) {
                   ? Image.network(
                       liveChatCont.image.value,
                       fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(grayBlank, fit: BoxFit.cover);
+                      },
                     )
                   : Image.file(
                       File(liveChatCont.image.value),
@@ -83,6 +87,10 @@ Widget chatInput(LiveChatController liveChatCont) {
                           ? Image.network(
                               liveChatCont.images[index].path,
                               fit: BoxFit.fill,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(grayBlank,
+                                    fit: BoxFit.cover);
+                              },
                             )
                           : Image.file(
                               File(liveChatCont.images[index].path),

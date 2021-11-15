@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/controllers/admin/doctor_registration_contr
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
@@ -19,17 +18,17 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
-final AuthController authController = Get.find();
-final fetchedData = authController.adminModel.value;
-final AppController appController = Get.find();
-final AdminMenuController menuController = Get.put(AdminMenuController());
-
 class AdminHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static AuthController authController = Get.find();
   final NavigationController navigationController =
-      Get.put(NavigationController());
-
+      Get.put(NavigationController(), permanent: true);
+  final AdminMenuController menuController =
+      Get.put(AdminMenuController(), permanent: true);
+  final DoctorRegistrationController doctorRegistrationController =
+      Get.put(DoctorRegistrationController());
+  final PSWDRegistrationController pswdRegistrationController =
+      Get.put(PSWDRegistrationController());
   final fetchedData = authController.adminModel.value;
 
   @override
@@ -52,11 +51,7 @@ class AdminHomeScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       title: Row(
         children: [
-          Expanded(child: Container()),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
-          ),
+          Spacer(),
           Text(fetchedData!.firstName!,
               style: const TextStyle(color: Colors.black)),
           DropdownButton(
@@ -65,23 +60,26 @@ class AdminHomeScreen extends StatelessWidget {
             underline: Container(),
             items: [
               DropdownMenuItem(
+                onTap: () =>
+                    navigationController.navigateTo(Routes.ADMIN_PROFILE),
                 value: 1,
-                child: TextButton.icon(
-                  label: const Text('Profile'),
-                  onPressed: () {
-                    navigationController.navigateTo(Routes.ADMIN_PROFILE);
-                  },
-                  icon: const Icon(Icons.person_outline),
-                  style: TextButton.styleFrom(primary: Colors.black),
+                child: Row(
+                  children: [
+                    const Icon(Icons.person_outline),
+                    horizontalSpace10,
+                    Text('Profile'),
+                  ],
                 ),
               ),
               DropdownMenuItem(
+                onTap: authController.signOut,
                 value: 2,
-                child: TextButton.icon(
-                  label: const Text('Logout'),
-                  onPressed: authController.signOut,
-                  icon: const Icon(Icons.logout_outlined),
-                  style: TextButton.styleFrom(primary: Colors.black),
+                child: Row(
+                  children: [
+                    const Icon(Icons.logout_outlined),
+                    horizontalSpace10,
+                    Text('Logout'),
+                  ],
                 ),
               )
             ],
@@ -154,7 +152,6 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    //Note: Breakpoint is for desktop lang
     return Scaffold(
         appBar: AppBar(
           leading: Container(),
@@ -182,6 +179,8 @@ class ResponsiveView extends GetResponsiveView {
 }
 
 Widget desktopVersion() {
+  final AdminMenuController menuController = Get.find();
+  final AppController appController = Get.find();
   return SingleChildScrollView(
     child: Container(
       height: Get.height - 95,
@@ -585,6 +584,11 @@ Widget desktopVersion() {
 }
 
 Widget phoneVersion() {
+  final AdminMenuController menuController = Get.find();
+
+  final AuthController authController = Get.find();
+  final fetchedData = authController.adminModel.value;
+  final AppController appController = Get.find();
   return SingleChildScrollView(
     child: Column(children: [
       Container(

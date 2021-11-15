@@ -178,7 +178,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
+      foregroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

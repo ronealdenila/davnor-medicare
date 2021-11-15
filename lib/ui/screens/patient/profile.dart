@@ -230,6 +230,10 @@ class PatientProfileScreen extends StatelessWidget {
                               data['validID'],
                               height: 106,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(grayBlank,
+                                    fit: BoxFit.cover);
+                              },
                             ),
                           ),
                         ),
@@ -246,6 +250,10 @@ class PatientProfileScreen extends StatelessWidget {
                               data['validSelfie'],
                               height: 106,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(grayBlank,
+                                    fit: BoxFit.cover);
+                              },
                             ),
                           ),
                         ),
@@ -279,6 +287,9 @@ Widget attachedPhotoDialog(String imgURL) {
           child: Image.network(
             imgURL,
             fit: BoxFit.fitHeight,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(grayBlank, fit: BoxFit.cover);
+            },
           ),
         ),
       ),

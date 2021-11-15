@@ -133,8 +133,9 @@ class ConsReqInfoScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
-      backgroundImage:
+      foregroundImage:
           NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 }

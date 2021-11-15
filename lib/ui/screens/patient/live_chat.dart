@@ -117,7 +117,8 @@ class LiveChatScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+      foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+      backgroundImage: AssetImage(blankProfile),
     );
   }
 
