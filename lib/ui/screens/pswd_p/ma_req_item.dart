@@ -151,7 +151,7 @@ Future<void> acceptMA(GeneralMARequestModel model) async {
     'medWorth': '',
     'pharmacy': '',
   }).then((value) async {
-    //TO DO: NOTIF PATIENT TO PREPARE FOR AN INTERVIEW?? (undecided yet)
+    //TO DO: NOTIF PATIENT TO STANDBY and PREPARE FOR AN INTERVIEW?? (undecided yet)
     await deleteMA(model.maID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for are your sure? yes/no

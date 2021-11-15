@@ -144,7 +144,6 @@ void showConfirmationDialog({
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
                   radius: 14,
-                  //TO DO: BE REGISTERED ON APP COLOR - LP
                   backgroundColor: const Color(0xFFE3E6E8),
                   child: Icon(Icons.close, color: neutralColor[100]),
                 ),

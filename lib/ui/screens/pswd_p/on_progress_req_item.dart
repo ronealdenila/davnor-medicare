@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
@@ -147,13 +149,43 @@ class OnProgressReqItemScreen extends StatelessWidget {
                                   'medWorth': _worthController.text,
                                   'pharmacy': _pharmacyController.text
                                 }).then((value) {
-                                  //TO DO: notify patient na pwede na ma claim iyang tambal
+                                  sendNotification(model.requesterID!);
                                 });
                               },
                               buttonText: 'Submit')),
                 ],
               ))
         ]);
+  }
+
+  Future<void> sendNotification(String uid) async {
+    final action = ' is ready ';
+    final title = 'MA${action}to be claimed';
+    final message = 'You can now claim you MA in the PSWD Office';
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+      'photo': maLogoURL,
+      'from': 'The PSWD Staff',
+      'action': ' is informing you that your ',
+      'subject': 'Medical Assistance is ready',
+      'message': message,
+      'createdAt': Timestamp.fromDate(DateTime.now()),
+    });
+
+    await appController.sendNotificationViaFCM(title, message, uid);
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('status')
+        .doc('value')
+        .update({
+      'notifBadge': FieldValue.increment(1),
+    });
   }
 
   Future<void> goBack() {

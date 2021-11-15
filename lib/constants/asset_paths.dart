@@ -1,6 +1,5 @@
 const String imageAssetRoot = 'assets/images/';
 
-//TO DO - ADD: BLANK IMAGE
 final String authHeader = _getImagePath('auth_header.png');
 final String logo = _getImagePath('logo.png');
 final String patientHomeHeader = _getImagePath('home_samp.png');

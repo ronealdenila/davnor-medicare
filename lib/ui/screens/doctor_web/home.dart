@@ -68,7 +68,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
                 child: TextButton.icon(
                   label: const Text('Profile'),
                   onPressed: () {
-                    //TO DO: SHOULD NAVIGATE TO DOCTOR PROFILE
+                    //TO DO: SHOULD NAVIGATE TO DOCTOR PROFILE MAKE PROFILE SCREEN FIRST
                     //navigationController.navigateTo(Routes.ADMIN_PROFILE);
                   },
                   icon: const Icon(Icons.person_outline),
@@ -315,11 +315,14 @@ Widget tabletVersion(BuildContext context) {
                             }
                           }),
                       ActionCard(
+                          //TO BE CHANGED
                           text: 'Read \nHealth Articles',
                           color: verySoftRed[60],
                           secondaryColor: verySoftRedCustomColor,
                           //TO DO: DOC ARTICLE SCREEN??
-                          onTap: () => Get.to(() => ArticleListScreen())),
+                          onTap: () {}
+                          //=> Get.to(() => ArticleListScreen())
+                          ),
                     ],
                   ),
                 ),

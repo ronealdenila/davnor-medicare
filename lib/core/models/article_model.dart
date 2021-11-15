@@ -8,21 +8,21 @@ class ArticleModel {
   });
 
 //TO DO: Try to remove this bunch of codes (check first if this is not needed)
-  factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
-        title: json['title'] as String,
-        content: json['content'] as String,
-        photoURL: json['photoURL'] as String,
-        source: json['source'] as String,
-        short: json['short'] as String,
-      );
+  // factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
+  //       title: json['title'] as String,
+  //       content: json['content'] as String,
+  //       photoURL: json['photoURL'] as String,
+  //       source: json['source'] as String,
+  //       short: json['short'] as String,
+  //     );
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'content': content,
-        'photoURL': photoURL,
-        'source': source,
-        'short': short,
-      };
+  // Map<String, dynamic> toJson() => {
+  //       'title': title,
+  //       'content': content,
+  //       'photoURL': photoURL,
+  //       'source': source,
+  //       'short': short,
+  //     };
 
   final String? title;
   final String? content;
