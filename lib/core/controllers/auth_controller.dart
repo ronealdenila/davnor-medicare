@@ -305,7 +305,11 @@ class AuthController extends GetxController {
           break;
         case 'patient':
           await _initializePatientModel();
-          await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
+          if (kIsWeb) {
+            await navigateWithDelay(Get.offAllNamed(Routes.PATIENT_WEB_HOME));
+          } else {
+            await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
+          }
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');

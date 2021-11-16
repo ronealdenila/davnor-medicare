@@ -41,6 +41,9 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const APPINFO = _Paths.APPINFO;
 
+  //PATIENT WEB
+  static const PATIENT_WEB_HOME = _Paths.PATIENT_WEB_HOME;
+
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
   static const DOCTOR_PROFILE = _Paths.DOCTOR_PROFILE;
@@ -120,6 +123,7 @@ abstract class _Paths {
   static const SELECT_QUEUE = '/select-queue';
   static const SETTINGS = '/settings';
   static const APPINFO = '/appinfo';
+  static const PATIENT_WEB_HOME = '/patient-web-home';
 
   static const DASHBOARD = '/dashboard';
   //Doctor

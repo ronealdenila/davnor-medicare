@@ -42,6 +42,7 @@ import 'package:davnor_medicare/ui/screens/patient/queue_ma_table.dart';
 import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
 import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
+import 'package:davnor_medicare/ui/screens/patient_web/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
@@ -189,6 +190,10 @@ class AppPages {
     GetPage(
       name: _Paths.APPINFO,
       page: () => AppInfoScreen(),
+    ),
+    GetPage(
+      name: _Paths.PATIENT_WEB_HOME,
+      page: () => PatientWebHomeScreen(),
     ),
 
     //Doctor

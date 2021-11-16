@@ -176,13 +176,21 @@ List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
+//TO DO: CHANGE TO PROPER ROUTES
+List<MenuItem> patientSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DOC_WEB_HOME),
+  MenuItem('Live Consultation', Routes.LIVE_CONS_WEB),
+  MenuItem('Consultation History', Routes.CONS_HISTORY_WEB),
+  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
+  MenuItem('Change Language', Routes.CONS_HISTORY_WEB),
+  MenuItem('App Info', Routes.MA_HISTORY_LIST),
+];
+
 List<MenuItem> doctorSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DOC_WEB_HOME),
   MenuItem('Consultation Requests', Routes.CONS_REQ_WEB),
   MenuItem('Live Consultation', Routes.LIVE_CONS_WEB),
   MenuItem('Consultation History', Routes.CONS_HISTORY_WEB),
-  // MenuItem('Disabled Doctors', Routes.DISABLED_DOCTORS),
-  //MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
