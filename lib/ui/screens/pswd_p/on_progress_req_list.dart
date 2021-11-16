@@ -27,12 +27,12 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        verticalSpace20,
+        verticalSpace25,
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
             MenuController.to.activeItem.value,
-            style: title32Regular,
+            style: title29BoldNeutral80,
           ),
         ),
         verticalSpace50,

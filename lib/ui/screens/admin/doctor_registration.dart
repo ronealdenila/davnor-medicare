@@ -49,9 +49,9 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                         ),
                         verticalSpace15,
                         //TO DO: Change into regular text field???
+
                         DmInputField(
                           controller: controller.lastNameController,
-                          placeholder: 'Last Name',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
@@ -65,7 +65,6 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                         verticalSpace15,
                         DmInputField(
                           controller: controller.firstNameController,
-                          placeholder: 'First Name',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
@@ -79,7 +78,6 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                         verticalSpace15,
                         DmInputField(
                           controller: controller.emailController,
-                          placeholder: 'Email Address',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
@@ -139,7 +137,6 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                               verticalSpace15,
                               DmInputField(
                                 controller: controller.clinicHours,
-                                placeholder: 'Clinic Hours',
                                 validator: Validator().notEmpty,
                                 isRequired: true,
                               ),

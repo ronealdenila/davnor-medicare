@@ -17,15 +17,11 @@ class PswdPSideMenu extends GetView<MenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset(
-                logo,
-                fit: BoxFit.fill,
-                height: 120,
-                width: 120,
+              Image.asset(
+                logo2,
+                fit: BoxFit.contain,
               ),
-            ),
+            
             ...pswdPSideMenuItemRoutes
                 .map((item) => PswdPSideMenuItem(
                     itemName: item.name,
@@ -52,15 +48,11 @@ class PswdHeadSideMenu extends GetView<MenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset(
-                logo,
-                fit: BoxFit.fill,
-                height: 120,
-                width: 120,
+            Image.asset(
+                logo2,
+                fit: BoxFit.contain,
               ),
-            ),
+              
             ...pswdHeadSideMenuItemRoutes
                 .map((item) => PswdHeadSideMenuItem(
                     itemName: item.name,

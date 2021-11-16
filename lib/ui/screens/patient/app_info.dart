@@ -22,26 +22,17 @@ class AppInfoScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Align(
                       alignment: Alignment.center,
                       child: Image.asset(
-                        logo,
-                        fit: BoxFit.fill,
-                        height: 120,
-                        width: 120,
+                        logo2,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    verticalSpace10,
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text('DavNor Medicare',
-                          style: subtitle18RegularOrange),
-                    ),
-                    verticalSpace20,
                     Text(
                       'appinfo'.tr,
                       textAlign: TextAlign.justify,
