@@ -1,10 +1,10 @@
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/menu_controller.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -233,6 +233,16 @@ Widget desktopVersion(BuildContext context) {
                 ],
               ),
             ),
+            TextButton(
+                onPressed: () {
+                  navigationController.navigateTo(Routes.PATIENT_WEB_CONS_FORM);
+                },
+                child: Text('go to ConsFORM')),
+            TextButton(
+                onPressed: () {
+                  navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                },
+                child: Text('go to MAFORM')),
           ])));
 }
 
