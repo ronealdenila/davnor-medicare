@@ -41,6 +41,17 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const APPINFO = _Paths.APPINFO;
 
+  //PATIENT WEB
+  static const PATIENT_WEB_HOME = _Paths.PATIENT_WEB_HOME;
+  static const PATIENT_MA_DETAILS = _Paths.PATIENT_MA_DETAILS;
+  static const PATIENT_WEB_CONS_FORM = _Paths.PATIENT_WEB_CONS_FORM;
+  static const PATIENT_WEB_MA_FORM = _Paths.PATIENT_WEB_MA_FORM;
+  static const PATIENT_WEB_LIVE_CONS = _Paths.PATIENT_WEB_LIVE_CONS;
+  static const PATIENT_WEB_MA_HISTORY = _Paths.PATIENT_WEB_MA_HISTORY;
+  static const PATIENT_WEB_CONS_HISTORY = _Paths.PATIENT_WEB_CONS_HISTORY;
+  //static const PATIENT_WEB_HOME = _Paths.PATIENT_WEB_HOME; ??? verif dialog??
+  //TO DO: Add queue screen
+
   //Doctor
   static const DOCTOR_HOME = _Paths.DOCTOR_HOME;
   static const DOCTOR_PROFILE = _Paths.DOCTOR_PROFILE;
@@ -120,6 +131,13 @@ abstract class _Paths {
   static const SELECT_QUEUE = '/select-queue';
   static const SETTINGS = '/settings';
   static const APPINFO = '/appinfo';
+  static const PATIENT_WEB_HOME = '/patient-web-home';
+  static const PATIENT_MA_DETAILS = '/patient-web-ma-details';
+  static const PATIENT_WEB_CONS_FORM = '/PATIENT_WEB_CONS_FORM';
+  static const PATIENT_WEB_MA_FORM = '/PATIENT_WEB_MA_FORM';
+  static const PATIENT_WEB_LIVE_CONS = '/PATIENT_WEB_LIVE_CONS';
+  static const PATIENT_WEB_MA_HISTORY = '/PATIENT_WEB_MA_HISTORY';
+  static const PATIENT_WEB_CONS_HISTORY = '/PATIENT_WEB_CONS_HISTORY';
 
   static const DASHBOARD = '/dashboard';
   //Doctor

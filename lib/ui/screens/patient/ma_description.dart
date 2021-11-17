@@ -212,19 +212,4 @@ class MADescriptionScreen extends StatelessWidget {
       fontSize: 20,
     );
   }
-
-  void showDialog() {
-    return showConfirmationDialog(
-      dialogTitle: 'dialog2'.tr,
-      dialogCaption: 'dialogsub2'.tr,
-      onYesTap: () {
-        controller.isMAForYou.value = true;
-        Get.to(() => MAFormScreen());
-      },
-      onNoTap: () {
-        controller.isMAForYou.value = false;
-        Get.to(() => MAFormScreen());
-      },
-    );
-  }
 }

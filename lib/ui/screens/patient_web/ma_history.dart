@@ -2,20 +2,17 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
-import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/consh_card_web.dart';
-import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_responsive.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ConsHistoryWeb extends StatelessWidget {
+class MaHistoryWebScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,57 +37,49 @@ class ResponsiveBody extends GetResponsiveView {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
-            child: DmText.title24Bold(
-              'Consultation History',
-              color: kcNeutralColor[80],
-            ),
+            child: Text('conshistory'.tr, style: title24BoldWhite),
           ),
           verticalSpace5,
-          Row(children: [
-            horizontalSpace10,
-            SizedBox(
-              width: 350,
-              child: CustomTextFormField(
-                controller: consHController.searchKeyword,
-                labelText: 'Search here...',
-                onChanged: (value) {
-                  if (consHController.searchKeyword.text == '') {
-                    consHController.consHistory
-                        .assignAll(consHController.filteredListforDoc);
-                  }
-                },
-                validator: Validator().notEmpty,
-                onSaved: (value) => consHController.searchKeyword.text = value!,
+          InkWell(
+            onTap: () {
+              if (consHController.isLoading.value) {
+                print('conslog'.tr);
+              } else if (consHController.consHistory.isEmpty) {
+                print('conslog1'.tr);
+              } else {
+                consHController.showDialog(context);
+              }
+            },
+            child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
-            ),
-            horizontalSpace10,
-            InkWell(
-              onTap: () {
-                print(consHController.searchKeyword.text);
-                consHController.filterForDoctor(
-                    name: consHController.searchKeyword.text);
-              },
-              child: Card(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 170,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: verySoftBlueColor[100],
                 ),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: verySoftBlueColor[100],
-                  ),
-                  child: const Icon(
-                    Icons.search_rounded,
-                    color: Colors.white,
-                    size: 30,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'conslog2'.tr,
+                      style: body14Medium.copyWith(color: Colors.white),
+                    ),
+                    horizontalSpace5,
+                    const Icon(
+                      Icons.calendar_today,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ]),
+          ),
           verticalSpace10,
           Flexible(child: DesktopScreen()),
         ],
@@ -98,58 +87,50 @@ class ResponsiveBody extends GetResponsiveView {
     } else {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10, left: 55, bottom: 10),
-          child: DmText.title24Bold(
-            'Consultation History',
-            color: kcNeutralColor[80],
-          ),
+          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
+          child: Text('conshistory'.tr, style: title24BoldWhite),
         ),
         verticalSpace5,
-        Row(children: [
-          horizontalSpace10,
-          SizedBox(
-            width: 350,
-            child: CustomTextFormField(
-              controller: consHController.searchKeyword,
-              labelText: 'Search here...',
-              onChanged: (value) {
-                if (consHController.searchKeyword.text == '') {
-                  consHController.consHistory
-                      .assignAll(consHController.filteredListforDoc);
-                }
-              },
-              validator: Validator().notEmpty,
-              onSaved: (value) => consHController.searchKeyword.text = value!,
+        InkWell(
+          onTap: () {
+            if (consHController.isLoading.value) {
+              print('conslog'.tr);
+            } else if (consHController.consHistory.isEmpty) {
+              print('conslog1'.tr);
+            } else {
+              consHController.showDialog(context);
+            }
+          },
+          child: Card(
+            elevation: 6,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-          horizontalSpace10,
-          InkWell(
-            onTap: () {
-              print(consHController.searchKeyword.text);
-              consHController.filterForDoctor(
-                  name: consHController.searchKeyword.text);
-            },
-            child: Card(
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: 170,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: verySoftBlueColor[100],
               ),
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: verySoftBlueColor[100],
-                ),
-                child: const Icon(
-                  Icons.search_rounded,
-                  color: Colors.white,
-                  size: 30,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'conslog2'.tr,
+                    style: body14Medium.copyWith(color: Colors.white),
+                  ),
+                  horizontalSpace5,
+                  const Icon(
+                    Icons.calendar_today,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ],
               ),
             ),
           ),
-        ]),
+        ),
         verticalSpace10,
         Flexible(child: TabletScreen())
       ]);
@@ -278,8 +259,8 @@ class ResponsiveBody extends GetResponsiveView {
     }
     if (consHController.consHistory.isEmpty &&
         !consHController.isLoading.value) {
-      return const Text(
-        'No Consultation History',
+      return Text(
+        'conslog3'.tr,
         textAlign: TextAlign.center,
         style: body14Medium,
       );
@@ -299,7 +280,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget displayConsHistory(ConsultationHistoryModel model, index) {
     return FutureBuilder(
-      future: consHController.getPatientData(model),
+      future: consHController.getDoctorData(model),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx(
@@ -324,7 +305,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget RequestsChatView(
       ConsultationHistoryModel consData, BuildContext context) {
-    if (consData.patient.value == null) {
+    if (consData.doc.value == null) {
       return Container();
     }
     print(selectedIndex.value);
@@ -384,7 +365,7 @@ class ResponsiveBody extends GetResponsiveView {
                 child: getPhotoHeader(consData)),
             horizontalSpace15,
             Text(
-              consHController.getPatientName(consData),
+              'Dr. ${consHController.getDoctorFullName(consData)}',
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: subtitle18Medium.copyWith(color: Colors.black),
@@ -416,7 +397,7 @@ class ResponsiveBody extends GetResponsiveView {
                     child: getPhotoHeader(consData)),
                 horizontalSpace15,
                 Text(
-                  consHController.getPatientName(consData),
+                  'Dr. ${consHController.getDoctorFullName(consData)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: subtitle18Medium.copyWith(color: Colors.black),
@@ -445,35 +426,35 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationHistoryModel model) {
-    if (consHController.getPatientProfile(model) == '') {
+    if (consHController.getDoctorProfile(model) == '') {
       return CircleAvatar(
         radius: 25,
-        backgroundImage: AssetImage(blankProfile),
+        backgroundImage: AssetImage(doctorDefault),
       );
     }
     return CircleAvatar(
       radius: 25,
-      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
+      foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+      backgroundImage: AssetImage(doctorDefault),
     );
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    if (consHController.getPatientProfile(model) == '') {
+    if (consHController.getDoctorProfile(model) == '') {
       return CircleAvatar(
         radius: 50,
-        backgroundImage: AssetImage(blankProfile),
+        backgroundImage: AssetImage(doctorDefault),
       );
     }
     return CircleAvatar(
       radius: 50,
-      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
+      foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+      backgroundImage: AssetImage(doctorDefault),
     );
   }
 
   Widget RequestsInfoView(ConsultationHistoryModel consData) {
-    if (consData.patient.value == null) {
+    if (consData.doc.value == null) {
       return Container();
     }
     return SingleChildScrollView(
@@ -498,7 +479,7 @@ class ResponsiveBody extends GetResponsiveView {
                 child: getPhoto(consData)),
             verticalSpace20,
             Text(
-              consHController.getPatientName(consData),
+              'Dr. ${consHController.getDoctorFullName(consData)}',
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: subtitle18Medium,
@@ -513,7 +494,7 @@ class ResponsiveBody extends GetResponsiveView {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace35,
-              Text('Consultation Info',
+              Text('conshistory1'.tr,
                   textAlign: TextAlign.left,
                   style:
                       body16Regular.copyWith(color: const Color(0xFF727F8D))),
@@ -521,9 +502,9 @@ class ResponsiveBody extends GetResponsiveView {
               Wrap(
                 runSpacing: 8,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 170,
-                    child: Text('Patient',
+                    child: Text('cons3'.tr,
                         textAlign: TextAlign.left, style: body14SemiBold),
                   ),
                   SizedBox(
@@ -540,9 +521,9 @@ class ResponsiveBody extends GetResponsiveView {
               Wrap(
                 runSpacing: 8,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 170,
-                    child: Text('Age of Patient',
+                    child: Text('cons4'.tr,
                         textAlign: TextAlign.left, style: body14SemiBold),
                   ),
                   SizedBox(
@@ -559,9 +540,9 @@ class ResponsiveBody extends GetResponsiveView {
               Wrap(
                 runSpacing: 8,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 170,
-                    child: Text('Date Requested',
+                    child: Text('cons5'.tr,
                         textAlign: TextAlign.left, style: body14SemiBold),
                   ),
                   SizedBox(
@@ -579,9 +560,9 @@ class ResponsiveBody extends GetResponsiveView {
               Wrap(
                 runSpacing: 8,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 170,
-                    child: Text('Consultation Started',
+                    child: Text('cons6'.tr,
                         textAlign: TextAlign.left, style: body14SemiBold),
                   ),
                   SizedBox(
@@ -599,9 +580,9 @@ class ResponsiveBody extends GetResponsiveView {
               Wrap(
                 runSpacing: 8,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 170,
-                    child: Text('Consultation Ended',
+                    child: Text('cons7'.tr,
                         textAlign: TextAlign.left, style: body14SemiBold),
                   ),
                   SizedBox(

@@ -55,38 +55,32 @@ class DoctorWebHomeScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       title: Row(
         children: [
-          Expanded(child: Container()),
-          Text(fetchedData!.firstName!,
-              style: const TextStyle(color: Colors.black)),
+          Spacer(),
+          horizontalSpace25,
           DropdownButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,
             underline: Container(),
+            hint: Text(fetchedData!.firstName!,
+                style: const TextStyle(color: Colors.black)),
             items: [
               DropdownMenuItem(
-                value: 1,
-                child: TextButton.icon(
-                  label: const Text('Profile'),
-                  onPressed: () {
-                    //TO DO: SHOULD NAVIGATE TO DOCTOR PROFILE MAKE PROFILE SCREEN FIRST
-                    //navigationController.navigateTo(Routes.ADMIN_PROFILE);
-                  },
-                  icon: const Icon(Icons.person_outline),
-                  style: TextButton.styleFrom(primary: Colors.black),
-                ),
+                onTap: () {
+                  //TO DO: SHOULD NAVIGATE TO Patient PROFILE MAKE PROFILE SCREEN FIRST
+                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                },
+                value: 2,
+                child: Text('Profile'),
               ),
               DropdownMenuItem(
+                onTap: authController.signOut,
                 value: 2,
-                child: TextButton.icon(
-                  label: const Text('Logout'),
-                  onPressed: authController.signOut,
-                  icon: const Icon(Icons.logout_outlined),
-                  style: TextButton.styleFrom(primary: Colors.black),
-                ),
+                child: Text('Logout'),
               )
             ],
             onChanged: (int? newValue) {},
           ),
+          horizontalSpace10
         ],
       ),
     );

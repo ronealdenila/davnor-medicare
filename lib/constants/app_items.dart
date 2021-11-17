@@ -176,13 +176,20 @@ List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
+List<MenuItem> patientSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.PATIENT_WEB_HOME),
+  MenuItem('Live Consultation', Routes.PATIENT_WEB_LIVE_CONS),
+  MenuItem('Consultation History', Routes.PATIENT_WEB_CONS_HISTORY),
+  MenuItem('Medical Assistance History', Routes.PATIENT_WEB_MA_HISTORY),
+  MenuItem('Change Language', Routes.CONS_HISTORY_WEB),
+  MenuItem('App Info', Routes.MA_HISTORY_LIST),
+];
+
 List<MenuItem> doctorSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DOC_WEB_HOME),
   MenuItem('Consultation Requests', Routes.CONS_REQ_WEB),
   MenuItem('Live Consultation', Routes.LIVE_CONS_WEB),
   MenuItem('Consultation History', Routes.CONS_HISTORY_WEB),
-  // MenuItem('Disabled Doctors', Routes.DISABLED_DOCTORS),
-  //MenuItem('Disabled PSWD Personnel', Routes.DISABLED_PSWD_STAFF),
 ];
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
