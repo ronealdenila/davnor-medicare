@@ -1,5 +1,11 @@
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
+import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -125,14 +131,17 @@ class ResponsiveLeading extends GetResponsiveView {
 }
 
 class PatientDashboardScreen extends GetView<PatientMenuController> {
-  // final ArticleController articleService = Get.find();
-  // final ConsultationsController consRequests =
-  //     Get.put(ConsultationsController());
-  // final LiveConsController liveCont =
-  //     Get.put(LiveConsController(), permanent: true);
   static AuthController authController = Get.find();
   final NavigationController navigationController = Get.find();
   final fetchedData = authController.patientModel.value;
+  static AppController appController = Get.find();
+  static ArticleController articleService = Get.find();
+  final List<ArticleModel> articleList = articleService.articlesList;
+  static ConsRequestController consController =
+      Get.put(ConsRequestController());
+  final LiveConsController liveCont =
+      Get.put(LiveConsController(), permanent: true);
+  final StatusController stats = Get.put(StatusController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -155,95 +164,96 @@ class ResponsiveView extends GetResponsiveView {
 
   @override
   Widget desktop() => desktopVersion(context);
-}
 
-Widget tabletVersion(BuildContext context) {
-  PatientMenuController menuController = Get.find();
-  final AuthController authController = Get.find();
-  final fetchedData = authController.patientModel.value;
-  return SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    Padding(
-      padding: const EdgeInsets.only(left: 18),
-      child: Text(
-        'Dashboard',
-        style: title32Bold,
-      ),
-    ),
-    Container(
-      margin: const EdgeInsets.all(25),
-      padding: const EdgeInsets.all(25),
-      width: Get.width,
-      height: Get.height * .2,
-      decoration: const BoxDecoration(
-        color: kcVerySoftBlueColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(50),
+  Widget tabletVersion(BuildContext context) {
+    PatientMenuController menuController = Get.find();
+    final AuthController authController = Get.find();
+    final fetchedData = authController.patientModel.value;
+    return SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 18),
+        child: Text(
+          'Dashboard',
+          style: title32Bold,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          DmText.title42Bold(
-            'Hello, ${fetchedData!.firstName}',
-            color: Colors.white,
+      Container(
+        margin: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
+        width: Get.width,
+        height: Get.height * .2,
+        decoration: const BoxDecoration(
+          color: kcVerySoftBlueColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
           ),
-        ],
-      ),
-    ),
-  ]));
-}
-
-Widget desktopVersion(BuildContext context) {
-  PatientMenuController menuController = Get.find();
-  final AuthController authController = Get.find();
-  final fetchedData = authController.patientModel.value;
-  return SingleChildScrollView(
-      child: Container(
-          height: Get.height - 55,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 25),
-              child: Text(
-                'Dashboard',
-                style: title32Bold,
-              ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DmText.title42Bold(
+              'Hello, ${fetchedData!.firstName}',
+              color: Colors.white,
             ),
-            Container(
-              margin: const EdgeInsets.all(25),
-              padding: const EdgeInsets.all(25),
-              width: Get.width,
-              height: Get.height * .2,
-              decoration: const BoxDecoration(
-                color: kcVerySoftBlueColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
+          ],
+        ),
+      ),
+    ]));
+  }
+
+  Widget desktopVersion(BuildContext context) {
+    PatientMenuController menuController = Get.find();
+    final AuthController authController = Get.find();
+    final fetchedData = authController.patientModel.value;
+    return SingleChildScrollView(
+        child: Container(
+            height: Get.height - 55,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: Text(
+                  'Dashboard',
+                  style: title32Bold,
                 ),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DmText.title42Bold(
-                    'Hello, ${fetchedData!.firstName}',
-                    color: Colors.white,
+              Container(
+                margin: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
+                width: Get.width,
+                height: Get.height * .2,
+                decoration: const BoxDecoration(
+                  color: kcVerySoftBlueColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50),
                   ),
-                ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DmText.title42Bold(
+                      'Hello, ${fetchedData!.firstName}',
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            TextButton(
-                onPressed: () {
-                  navigationController.navigateTo(Routes.PATIENT_WEB_CONS_FORM);
-                },
-                child: Text('go to ConsFORM')),
-            TextButton(
-                onPressed: () {
-                  navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
-                },
-                child: Text('go to MAFORM')),
-          ])));
+              TextButton(
+                  onPressed: () {
+                    navigationController
+                        .navigateTo(Routes.PATIENT_WEB_CONS_FORM);
+                  },
+                  child: Text('go to ConsFORM')),
+              TextButton(
+                  onPressed: () {
+                    navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                  },
+                  child: Text('go to MAFORM')),
+            ])));
+  }
 }
 
 class PatientSideMenuItem extends GetView<PatientMenuController> {

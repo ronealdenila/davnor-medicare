@@ -154,13 +154,13 @@ class LiveChatInfoScreen extends StatelessWidget {
     if (liveCont.getDoctorProfile(model) == '') {
       return CircleAvatar(
         radius: 50,
-        backgroundImage: AssetImage(blankProfile),
+        backgroundImage: AssetImage(doctorDefault),
       );
     }
     return CircleAvatar(
       radius: 50,
       foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
+      backgroundImage: AssetImage(doctorDefault),
     );
   }
 }

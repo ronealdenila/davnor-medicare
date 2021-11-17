@@ -31,7 +31,6 @@ class ResponsiveBody extends GetResponsiveView {
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController());
   final RxInt selectedIndex = 0.obs;
-  final RxInt counterReload = 0.obs;
 
   @override
   Widget? builder() {

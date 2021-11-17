@@ -52,7 +52,7 @@ class MAForm2Screen extends GetView<MARequestController> {
                   child: LayoutBuilder(builder:
                       (BuildContext context, BoxConstraints constraints) {
                     return Container(
-                      width: screenWidth(context),
+                      width: Get.width,
                       color: neutralColor[10],
                       child: Obx(getPrescription),
                     );
