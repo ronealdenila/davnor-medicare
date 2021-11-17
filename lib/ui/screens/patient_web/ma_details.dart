@@ -1,17 +1,22 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MADescriptionWebScreen extends StatelessWidget {
-  final MARequestController controller = Get.put(MARequestController());
+  final MARequestController ma = Get.find();
   final StatusController stats = Get.find();
+  final NavigationController navigationController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,62 +46,43 @@ class MADescriptionWebScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text(
-                          'ma1'.tr,
-                          style: body14SemiBold,
+                    children: [
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'ma1'.tr,
+                              style: body14SemiBold,
+                            ),
+                            Text('(1) ${'ma2'.tr}',
+                                textAlign: TextAlign.justify,
+                                style: caption12Regular),
+                            Text('(2) ${'ma3'.tr}',
+                                textAlign: TextAlign.justify,
+                                style: caption12Regular),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text(
-                          'ma4'.tr,
-                          style: body14SemiBold,
+                      horizontalSpace20,
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'ma4'.tr,
+                              style: body14SemiBold,
+                            ),
+                            Text('(1) ${'ma5'.tr}',
+                                textAlign: TextAlign.justify,
+                                style: caption12Regular),
+                            Text('(2) ${'ma6'.tr}',
+                                textAlign: TextAlign.justify,
+                                style: caption12Regular),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text('ma2'.tr,
-                            textAlign: TextAlign.justify,
-                            style: caption12Regular),
-                      ),
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text('ma5'.tr,
-                            textAlign: TextAlign.justify,
-                            style: caption12Regular),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text('ma3'.tr,
-                            textAlign: TextAlign.justify,
-                            style: caption12Regular),
-                      ),
-                      SizedBox(
-                        width: Get.width * .4,
-                        child: Text('ma6'.tr,
-                            textAlign: TextAlign.justify,
-                            style: caption12Regular),
                       ),
                     ],
                   ),
@@ -139,7 +125,9 @@ class MADescriptionWebScreen extends StatelessWidget {
                     ],
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                  Align(child: availMAButton()),
+                  Align(
+                      alignment: FractionalOffset.bottomRight,
+                      child: availMAButton()),
                 ]),
           ),
         ),
@@ -153,22 +141,22 @@ class MADescriptionWebScreen extends StatelessWidget {
         if (stats.patientStatus[0].pStatus!) {
           if (!stats.patientStatus[0].hasActiveQueueMA!) {
             if (stats.pswdPStatus[0].hasFunds!) {
-              if (stats.pswdPStatus[0].isCutOff!) {
-                if (controller.hasAvailableSlot()) {
+              if (!stats.pswdPStatus[0].isCutOff!) {
+                if (ma.hasAvailableSlot()) {
                   return showConfirmationDialog(
                     dialogTitle: 'dialog2'.tr,
                     dialogCaption: 'dialogsub2'.tr,
                     onYesTap: () {
-                      controller.isMAForYou.value = true;
+                      ma.isMAForYou.value = true;
                       dismissDialog();
-                      //TO DO: navigate to
-                      //Get.to(() => MAFormScreen());
+                      navigationController
+                          .navigateTo(Routes.PATIENT_WEB_MA_FORM);
                     },
                     onNoTap: () {
-                      controller.isMAForYou.value = false;
+                      ma.isMAForYou.value = false;
                       dismissDialog();
-                      //TO DO: navigate to
-                      // Get.to(() => MAFormScreen());
+                      navigationController
+                          .navigateTo(Routes.PATIENT_WEB_MA_FORM);
                     },
                   );
                 } else {

@@ -52,39 +52,30 @@ class AdminHomeScreen extends StatelessWidget {
       title: Row(
         children: [
           Spacer(),
-          Text(fetchedData!.firstName!,
-              style: const TextStyle(color: Colors.black)),
+          horizontalSpace25,
           DropdownButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,
             underline: Container(),
+            hint: Text(fetchedData!.firstName!,
+                style: const TextStyle(color: Colors.black)),
             items: [
               DropdownMenuItem(
-                onTap: () =>
-                    navigationController.navigateTo(Routes.ADMIN_PROFILE),
-                value: 1,
-                child: Row(
-                  children: [
-                    const Icon(Icons.person_outline),
-                    horizontalSpace10,
-                    Text('Profile'),
-                  ],
-                ),
+                onTap: () {
+                  navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                },
+                value: 2,
+                child: Text('Profile'),
               ),
               DropdownMenuItem(
                 onTap: authController.signOut,
                 value: 2,
-                child: Row(
-                  children: [
-                    const Icon(Icons.logout_outlined),
-                    horizontalSpace10,
-                    Text('Logout'),
-                  ],
-                ),
+                child: Text('Logout'),
               )
             ],
             onChanged: (int? newValue) {},
           ),
+          horizontalSpace10
         ],
       ),
     );

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
