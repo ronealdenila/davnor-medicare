@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
@@ -43,9 +44,14 @@ class MAHistoryScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (maHController.isLoading.value) {
-                          print('Dialog for: please wait, fetching record...');
+                          showErrorDialog(
+                            errorDescription: 'mahrec1'.tr
+                          );
                         } else if (maHController.maHistoryList.isEmpty) {
-                          print('Dialog for: you have no MA history');
+                          showErrorDialog(
+                            errorDescription: 'mahrec2'.tr
+                          );
+                          
                         } else {
                           maHController.showDialog(context);
                         }

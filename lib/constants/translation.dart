@@ -163,8 +163,8 @@ class LocalString extends Translations {
           'conshistory': 'Consultation History',
           'cons1': 'Month',
           'cons2': 'Day',
-          'conslog': 'Dialog for: please wait, fetching record...',
-          'conslog1': 'Dialog for: you have no consultation history',
+          'conslog': 'Please wait, fetching record...',
+          'conslog1': 'You have no consultation history',
           'conslog2': 'Search by date',
           'conslog3': 'No Consultation History',
           //Cons History Info
@@ -185,6 +185,8 @@ class LocalString extends Translations {
           'mah1': 'Month',
           'mah2': 'Day',
           'mahrec': 'You have no Medical Assistance (MA) record',
+          'mahrec1': 'Please wait, fetching record...',
+          'mahrec2': 'You have no MA history',
           //MA History Info
           'mahistory1': 'Patient Information',
           'mah3': 'Patient Name',
@@ -373,10 +375,10 @@ class LocalString extends Translations {
           'cons1': 'Buwan',
           'cons2': 'Araw',
           'conslog':
-              'Diyalogo para sa: mangyaring maghintay, kumukuha ng record...',
-          'conslog1': 'Diyalogo para sa: wala kang history ng konsultasyon',
+              'Mangyaring maghintay, kumukuha ng record...',
+          'conslog1': 'Wala kang history ng konsultasyon',
           'conslog2': 'Maghanap ayon sa petsa',
-          'conslog3': 'No Consultation History',
+          'conslog3': 'Walang konsultasyon',
           //Cons History Info
           'conshistory1': 'Impormasyon ng Konsultasyon',
           'cons3': 'Pasyente',
@@ -395,6 +397,8 @@ class LocalString extends Translations {
           'mah1': 'Buwan',
           'mah2': 'Araw',
           'mahrec': 'Wala kang rekord ng Medical Assistance (MA)',
+          'mahrec1': 'Mangyaring maghintay, kumukuha ng record...',
+          'mahrec2': 'Wala kang history sa MA',
           //MA History Info
           'mahistory1': 'Impormasyon ng Pasyente',
           'mah3': 'Pangalan ng Pasysente',
@@ -581,10 +585,10 @@ class LocalString extends Translations {
           'conshistory': 'Consultation History',
           'cons1': 'Bulan',
           'cons2': 'Adlaw',
-          'conslog': 'Dialog for: please wait, fetching record...',
-          'conslog1': 'Dialog for: you have no consultation history',
-          'conslog2': 'Search by date',
-          'conslog3': 'No Consultation History',
+          'conslog': 'Palihug paghulat, nagkuha pag  rekord...',
+          'conslog1': 'Wala kay Consultation History',
+          'conslog2': 'Pangita sa petsa',
+          'conslog3': 'Wala kay Consultation History',
           //Cons History Info2
           'conshistory1': 'Impormasyon sa konsulta',
           'cons3': 'Pasyente',
@@ -603,6 +607,8 @@ class LocalString extends Translations {
           'mah1': 'Bulan',
           'mah2': 'Adlaw',
           'mahrec': 'Wala kay rekord sa Medical Assistance (MA)',
+          'mahrec1': 'Palihug paghulat, nagakuha pag rekord...',
+          'mahrec2': 'Wala kay history sa MA',
           //MA History Info
           'mahistory1': 'Impormasyon sa Pasyente',
           'mah3': 'Pangalan sa Pasyente',
