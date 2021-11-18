@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_history_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -39,9 +40,13 @@ class ConsHistoryScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (consHController.isLoading.value) {
-                          print('conslog'.tr);
+                          showErrorDialog(
+                            errorDescription: 'conslog'.tr
+                          );
                         } else if (consHController.consHistory.isEmpty) {
-                          print('conslog1'.tr);
+                          showErrorDialog(
+                            errorDescription: 'conslog1'.tr
+                          );
                         } else {
                           consHController.showDialog(context);
                         }

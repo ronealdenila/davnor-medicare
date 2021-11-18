@@ -21,15 +21,11 @@ class DoctorSideMenu extends GetView<DoctorMenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset(
-                logo,
-                fit: BoxFit.fill,
-                height: 120,
-                width: 120,
+             Image.asset(
+                logo2,
+                fit: BoxFit.contain,
               ),
-            ),
+              
             ...doctorSideMenuItemRoutes
                 .map((item) => DoctorSideMenuItem(
                     itemName: item.name,

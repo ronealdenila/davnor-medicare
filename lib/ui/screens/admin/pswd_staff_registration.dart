@@ -51,7 +51,6 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                         //TO DO: Change into regular text field ???
                         DmInputField(
                           controller: controller.lastNameController,
-                          placeholder: 'Last Name',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
@@ -65,7 +64,6 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                         verticalSpace15,
                         DmInputField(
                           controller: controller.firstNameController,
-                          placeholder: 'First Name',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
@@ -79,7 +77,6 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                         verticalSpace15,
                         DmInputField(
                           controller: controller.emailController,
-                          placeholder: 'Email Address',
                           validator: Validator().notEmpty,
                           isRequired: true,
                         ),
