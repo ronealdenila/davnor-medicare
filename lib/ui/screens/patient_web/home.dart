@@ -8,6 +8,7 @@ import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dar
 import 'package:davnor_medicare/core/controllers/patient/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
@@ -22,6 +23,7 @@ import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -128,8 +130,7 @@ class PatientWebHomeScreen extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 onTap: () {
-                  //TO DO: SHOULD NAVIGATE TO Patient PROFILE MAKE PROFILE SCREEN FIRST
-                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                  navigationController.navigateTo(Routes.PATIENT_WEB_PROFILE);
                 },
                 value: 2,
                 child: Text('Profile'),
@@ -441,6 +442,7 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget showArticles(BuildContext context) {
+    final UrlLauncherService urlLauncherService = UrlLauncherService();
     if (articleService.doneLoading.value) {
       return MediaQuery.removePadding(
         context: context,
@@ -453,11 +455,13 @@ class ResponsiveView extends GetResponsiveView {
                   title: articleList[index].title!,
                   content: articleList[index].short!,
                   photoURL: articleList[index].photoURL!,
-                  textStyleTitle: caption12SemiBold,
-                  textStyleContent: caption10RegularNeutral,
+                  textStyleTitle: kIsWeb ? body16SemiBold : caption12SemiBold,
+                  textStyleContent:
+                      kIsWeb ? body14RegularNeutral : caption10RegularNeutral,
                   height: 115,
                   onTap: () {
-                    goToArticleItemScreen(index);
+                    urlLauncherService.launchURL(
+                        '${articleService.articlesList[index].source}');
                   });
             }),
       );

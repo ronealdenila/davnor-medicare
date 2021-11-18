@@ -7,6 +7,7 @@ import 'package:davnor_medicare/ui/screens/patient_web/live_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_details.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_history.dart';
+import 'package:davnor_medicare/ui/screens/patient_web/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(MaHistoryWebScreen());
     case Routes.PATIENT_WEB_CONS_HISTORY:
       return _getPageRoute(ConsHistoryWebScreen());
-
+    case Routes.PATIENT_WEB_PROFILE:
+      return _getPageRoute(PatientProfileWebScreen());
     default:
       return _getPageRoute(const SizedBox());
   }

@@ -1,14 +1,10 @@
-import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
-
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
-import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +33,7 @@ class MAHistoryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     verticalSpace20,
-                    Text('mahistory'.tr,
-                        style: title24BoldWhite),
+                    Text('mahistory'.tr, style: title24BoldWhite),
                     verticalSpace15,
                     InkWell(
                       onTap: () {

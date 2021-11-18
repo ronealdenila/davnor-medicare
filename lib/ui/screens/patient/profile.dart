@@ -147,6 +147,7 @@ class PatientProfileScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 50,
+      foregroundImage: NetworkImage(fetchedData!.profileImage!),
       backgroundImage: AssetImage(blankProfile),
     );
   }

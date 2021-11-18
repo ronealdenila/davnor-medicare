@@ -33,6 +33,10 @@ class PatientMenuController extends GetxController {
         return _customIcon(Icons.history_outlined, itemName);
       case 'Live Consultation':
         return _customIcon(Icons.chat_bubble_outline, itemName);
+      case 'Change Language':
+        return _customIcon(Icons.history_outlined, itemName);
+      case 'App Info':
+        return _customIcon(Icons.chat_bubble_outline, itemName);
       default:
         return _customIcon(Icons.logout_outlined, itemName);
     }

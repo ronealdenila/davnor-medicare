@@ -59,7 +59,7 @@ class AppInfoScreen extends StatelessWidget {
                         style: caption18RegularNeutral),
                     verticalSpace18,
                     const Text(
-                      'Ilenesses Icons from:',
+                      'Illnesses Icons from:',
                       textAlign: TextAlign.left,
                       style: subtitle18Bold,
                     ),
