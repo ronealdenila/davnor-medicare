@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:async';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
@@ -116,6 +118,45 @@ class MARequestController extends GetxController {
       return true;
     }
     return false;
+  }
+  //FOR WEB:
+  // await assignValues();
+  // //if (hasIDSelected()) {
+  // if (gender.value == '' ||
+  //     type.value == '' ||
+  //     firstNameController.text == '' ||
+  //     lastNameController.text == '' ||
+  //     ageController.text == '' ||
+  //     addressController.text == '') {
+  //   showErrorDialog(
+  //       errorDescription: 'ERROR DIALOG: please dont leave any empty fields');
+  // } else {
+  //   await requestMAButton();
+  // }
+  // // } else {
+  // //   log.i('ERROR DIALOG: please provide valid ID');
+  // // }
+
+  Future<void> webMARequest() async {
+    await uploadImagesWEb();
+  }
+
+  Future<void> uploadImagesWEb() async {
+    for (var i = 0; i < images.length; i++) {
+      final v4 = uuid.v4();
+      final fileBytes = images[i].readAsBytes();
+      final ref = storageRef.child('MA_Request/Pr-$v4$v4');
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': images[i].path});
+
+      await ref.putData(await fileBytes, metadata).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          listPhotoURL.value += '$value>>>';
+        });
+      });
+      //log.i('$i -> fileName: $i-Presc$fileName');
+    }
   }
 
   Future<void> requestMAButton() async {
