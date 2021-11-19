@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/ui/screens/patient/incoming_call.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class StatusController extends GetxController {
@@ -21,6 +22,9 @@ class StatusController extends GetxController {
   void onReady() {
     super.onReady();
     if (authController.userRole == 'patient') {
+      if (!kIsWeb) {
+        setDeviceToken();
+      }
       patientStatus.bindStream(getPStatus());
       pswdPStatus.bindStream(getMAStatus());
       incCall.bindStream(getCallStatus());
@@ -35,13 +39,29 @@ class StatusController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
-        if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
-          Get.to(() => IncomingCallScreen());
+        if (!isCallStatsLoading.value) {
+          if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
+            Get.to(() => IncomingCallScreen());
+          }
         }
       }
     });
+  }
+
+  Future<void> setDeviceToken() async {
+    await firestore
+        .collection('patients')
+        .doc(auth.currentUser!.uid)
+        .collection('status')
+        .doc('value')
+        .update({'deviceToken': await getDeviceToken()});
+  }
+
+  Future<String> getDeviceToken() async {
+    return (await messaging.getToken())!;
   }
 
   Stream<List<PatientStatusModel>> getPStatus() {

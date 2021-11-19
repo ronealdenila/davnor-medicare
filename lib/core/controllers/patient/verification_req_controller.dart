@@ -6,7 +6,11 @@ import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-// import 'package:davnor_medicare/ui/screens/patient/profile.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
+import 'dart:async';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
@@ -14,13 +18,15 @@ class VerificationController extends GetxController {
 
   static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
-
+  final uuid = const Uuid();
   final String userID = auth.currentUser!.uid;
 
   final fetchedData = authController.patientModel.value;
 
   final RxString imgOfValidID = ''.obs;
   final RxString imgOfValidIDWithSelfie = ''.obs;
+  XFile? imgOfValidIDWeb;
+  XFile? imgOfValidIDWithSelfiWeb;
   final RxString imgURL = ''.obs;
   final RxString imgURLselfie = ''.obs;
   final RxString file = ''.obs;
@@ -36,8 +42,8 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadID(String filePathID) async {
-    file.value = filePathID.split('/').last;
-    final ref = storageRef.child('user/$userID/Valid-ID-$file');
+    final v4 = uuid.v4();
+    final ref = storageRef.child('user/$userID/Valid-ID-$v4$v4');
     final uploadTask = ref.putFile(File(filePathID));
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -45,9 +51,35 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadIDS(String filePathIDS) async {
-    file.value = filePathIDS.split('/').last;
-    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$file');
+    final v4 = uuid.v4();
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$v4$v4');
     final uploadTask = ref.putFile(File(filePathIDS));
+    await uploadTask.then((res) async {
+      imgURLselfie.value = await res.ref.getDownloadURL();
+    });
+  }
+
+  Future<void> uploadIDWeb(XFile image) async {
+    final v4 = uuid.v4();
+    final fileBytes = image.readAsBytes();
+    final metadata = firebase_storage.SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': image.path});
+    final ref = storageRef.child('user/$userID/ID-$v4$v4');
+    final uploadTask = ref.putData(await fileBytes, metadata);
+    await uploadTask.then((res) async {
+      imgURL.value = await res.ref.getDownloadURL();
+    });
+  }
+
+  Future<void> uploadIDSDWeb(XFile image) async {
+    final v4 = uuid.v4();
+    final fileBytes = image.readAsBytes();
+    final metadata = firebase_storage.SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': image.path});
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$v4$v4');
+    final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();
     });
@@ -62,8 +94,13 @@ class VerificationController extends GetxController {
 
   Future<void> addVerificationRequest() async {
     showLoading();
-    await uploadID(imgOfValidID.value);
-    await uploadIDS(imgOfValidIDWithSelfie.value);
+    if (kIsWeb) {
+      await uploadIDWeb(imgOfValidIDWeb!);
+      await uploadIDSDWeb(imgOfValidIDWeb!);
+    } else {
+      await uploadID(imgOfValidID.value);
+      await uploadIDS(imgOfValidIDWithSelfie.value);
+    }
     await firestore.collection('to_verify').doc(userID).set({
       'patientID': userID,
       'firstName': fetchedData!.firstName,
@@ -98,12 +135,13 @@ class VerificationController extends GetxController {
     }
   }
 
-  void pickValidID() {
-    _imagePickerService.pickImage(imgOfValidID);
+  void pickValidID() async {
+    imgOfValidIDWeb = await _imagePickerService.pickImageOnWeb(imgOfValidID);
   }
 
-  void pickValidIDWithSelfie() {
-    _imagePickerService.pickImage(imgOfValidIDWithSelfie);
+  void pickValidIDWithSelfie() async {
+    imgOfValidIDWithSelfiWeb =
+        await _imagePickerService.pickImageOnWeb(imgOfValidIDWithSelfie);
   }
 
   Future<void> showDialog() async {

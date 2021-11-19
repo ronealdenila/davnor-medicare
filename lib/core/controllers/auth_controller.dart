@@ -103,7 +103,6 @@ class AuthController extends GetxController {
           .then(
         (result) async {
           final _userID = auth.currentUser!.uid;
-          print(_userID);
           await _createPatientUser(_userID);
         },
       );
@@ -186,7 +185,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> addPatientStatus(String userID) async {
-    await getDeviceToken();
     await firestore
         .collection('patients')
         .doc(userID)
@@ -198,7 +196,7 @@ class AuthController extends GetxController {
       'pStatus': false,
       'categoryID': '',
       'pendingVerification': false,
-      'deviceToken': tokenID.value,
+      'deviceToken': '',
       'notifBadge': 0,
       'queueCons': '',
       'queueMA': '',
@@ -228,7 +226,7 @@ class AuthController extends GetxController {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
-          log.i('getUserRole | The current user has user role of $userRole');
+          //log.i('getUserRole | The current user has user role of $userRole');
         }
       },
     );
@@ -237,7 +235,7 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     if (userRole == 'patient') {
-      await setDeviceToken(false);
+      await clearDeviceToken();
     }
     try {
       userSignedOut = true;
@@ -258,6 +256,7 @@ class AuthController extends GetxController {
     passwordController.clear();
     firstNameController.clear();
     lastNameController.clear();
+    confirmPassController.clear();
   }
 
   Future<void> _changePasswordSuccess() async {
@@ -354,25 +353,16 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
-    if (!kIsWeb) {
-      await setDeviceToken(true);
-    }
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
   }
 
-  Future<void> setDeviceToken(bool loggedIn) async {
-    await getDeviceToken();
+  Future<void> clearDeviceToken() async {
     await firestore
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .collection('status')
         .doc('value')
-        .update({'deviceToken': loggedIn ? tokenID.value : ''});
-  }
-
-  Future<void> getDeviceToken() async {
-    tokenID.value = (await messaging.getToken())!;
-    log.i('TOKEN $tokenID');
+        .update({'deviceToken': ''});
   }
 
   Future<void> _initializeDoctorModel() async {

@@ -31,7 +31,7 @@ class MACard extends StatelessWidget {
             ),
             child: Container(
               height: 95,
-              width: screenWidth(context),
+              width: Get.width,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),

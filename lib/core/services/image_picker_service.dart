@@ -14,6 +14,17 @@ class ImagePickerService {
     }
   }
 
+  Future<XFile?> pickImageOnWeb(RxString path) async {
+    log.i('pickImage on web called');
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      //imageWeb = pickedImage;
+      path.value = pickedImage.path;
+      return pickedImage;
+    }
+  }
+
   Future<void> pickMultiImage(RxList<XFile> images) async {
     log.i('pickMultiImage called here');
     final pickedFileList = await ImagePicker().pickMultiImage();

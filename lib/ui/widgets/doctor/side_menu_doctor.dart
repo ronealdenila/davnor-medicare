@@ -5,7 +5,6 @@ import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ import 'package:get/get.dart';
 class DoctorSideMenu extends GetView<DoctorMenuController> {
   final NavigationController navigationController = Get.find();
   final DoctorMenuController menuController = Get.find();
-  LiveConsController liveCont = Get.find();
+  final LiveConsController liveCont = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(

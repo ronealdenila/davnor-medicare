@@ -255,7 +255,6 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   )
                 ]),
-                //TO DO: FUNCTION FOR next + requestMAButton
                 verticalSpace25,
                 Align(
                   alignment: FractionalOffset.bottomRight,
@@ -263,7 +262,7 @@ class ResponsiveBody extends GetResponsiveView {
                     margin: EdgeInsets.only(right: 30),
                     width: 300,
                     child: CustomButton(
-                      onTap: ma.requestMAButton,
+                      onTap: ma.webMARequest,
                       text: 'maform13'.tr,
                       buttonColor: verySoftBlueColor,
                     ),

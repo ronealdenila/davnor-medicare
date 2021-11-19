@@ -55,9 +55,7 @@ class Validator {
   }
 
   String? notEmpty(String? value) {
-    const pattern = r'^\S+$';
-    final regex = RegExp(pattern);
-    if (!regex.hasMatch(value!)) {
+    if (value == '') {
       return 'This is a required field';
     } else {
       return null;

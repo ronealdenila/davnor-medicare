@@ -49,6 +49,8 @@ abstract class Routes {
   static const PATIENT_WEB_LIVE_CONS = _Paths.PATIENT_WEB_LIVE_CONS;
   static const PATIENT_WEB_MA_HISTORY = _Paths.PATIENT_WEB_MA_HISTORY;
   static const PATIENT_WEB_CONS_HISTORY = _Paths.PATIENT_WEB_CONS_HISTORY;
+  static const PATIENT_WEB_PROFILE = _Paths.PATIENT_WEB_PROFILE;
+
   //static const PATIENT_WEB_HOME = _Paths.PATIENT_WEB_HOME; ??? verif dialog??
   //TO DO: Add queue screen
 
@@ -138,6 +140,7 @@ abstract class _Paths {
   static const PATIENT_WEB_LIVE_CONS = '/PATIENT_WEB_LIVE_CONS';
   static const PATIENT_WEB_MA_HISTORY = '/PATIENT_WEB_MA_HISTORY';
   static const PATIENT_WEB_CONS_HISTORY = '/PATIENT_WEB_CONS_HISTORY';
+  static const PATIENT_WEB_PROFILE = '/PATIENT_WEB_PROFILE';
 
   static const DASHBOARD = '/dashboard';
   //Doctor

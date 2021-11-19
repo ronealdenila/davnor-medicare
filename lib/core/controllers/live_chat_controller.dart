@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
@@ -84,6 +84,22 @@ class LiveChatController extends GetxController {
     }
   }
 
+  Future<void> sendButtonWeb() async {
+    if (isPhotoAttachClicked.value && images.isNotEmpty) {
+      await uploadImagesWeb();
+      await sendMessage(listPhotoURL.value);
+      await clearImages();
+    } else {
+      if (chatController.text.isEmpty) {
+        Get.snackbar('No message', 'Please write a message',
+            snackPosition: SnackPosition.BOTTOM);
+      } else {
+        await sendMessage(chatController.text);
+        await clearMessage();
+      }
+    }
+  }
+
   Future<void> sendMessage(String message) async {
     await firestore
         .collection('chat')
@@ -111,10 +127,8 @@ class LiveChatController extends GetxController {
   Future<void> uploadImage() async {
     final img = image.value;
     final v4 = uuid.v4();
-    log.i('Using UID for making sure of the uniqueness -> $v4');
-    fileName.value = img.split('/').last;
     final ref =
-        storageRef.child('Consultation/${consData.consID}/Cam-Ph-$v4$fileName');
+        storageRef.child('Consultation/${consData.consID}/Cam-Ph-$v4$v4');
     final uploadTask = ref.putFile(File(img));
     await uploadTask.then((res) async {
       photoURL.value = await res.ref.getDownloadURL();
@@ -124,10 +138,27 @@ class LiveChatController extends GetxController {
   Future<void> uploadImages() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
-      fileName.value = images[i].path.split('/').last;
-      final ref = storageRef
-          .child('Consultation/${consData.consID}/$i-Ph-$v4$fileName');
+      final ref =
+          storageRef.child('Consultation/${consData.consID}/$i-Ph-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          listPhotoURL.value += '$value>>>';
+        });
+      });
+      log.i('$i -> fileName: $i-Photos$fileName');
+    }
+  }
+
+  Future<void> uploadImagesWeb() async {
+    for (var i = 0; i < images.length; i++) {
+      final v4 = uuid.v4();
+      final fileBytes = images[i].readAsBytes();
+      final ref =
+          storageRef.child('Consultation/${consData.consID}/$i-Ph-$v4$v4');
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': images[i].path});
+      await ref.putData(await fileBytes, metadata).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
         });

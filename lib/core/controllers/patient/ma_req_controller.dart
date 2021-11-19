@@ -9,10 +9,13 @@ import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:async';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MARequestController extends GetxController {
   final log = getLogger('MA Controller');
@@ -35,6 +38,7 @@ class MARequestController extends GetxController {
   TextEditingController ageController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   final RxList<XFile> images = RxList<XFile>();
+  XFile? imgOfValidIDFile;
 
   //final RxString fileName = ''.obs;
   final RxString listPhotoURL = ''.obs;
@@ -119,6 +123,28 @@ class MARequestController extends GetxController {
     return false;
   }
 
+  Future<void> webMARequest() async {
+    await assignValues();
+    if (hasIDSelected()) {
+      if (gender.value == '' ||
+          type.value == '' ||
+          firstNameController.text == '' ||
+          lastNameController.text == '' ||
+          ageController.text == '' ||
+          addressController.text == '') {
+        //showErrorDialog(errorDescription: 'Please dont leave any empty fields');
+        //DAPAT ING-ANI, NAAY TITLE:
+        showErrorDialog(
+            errorTitle: 'Some fields were missing',
+            errorDescription: 'Please dont leave any empty fields');
+      } else {
+        await requestMAButton();
+      }
+    } else {
+      log.i('ERROR DIALOG: please provide valid ID');
+    }
+  }
+
   Future<void> requestMAButton() async {
     showLoading();
     if (hasPrescriptionSelected()) {
@@ -142,9 +168,17 @@ class MARequestController extends GetxController {
 
   Future<void> uploadAndSaveImgs() async {
     if (isMAForYou.value == false) {
-      await uploadImage();
+      if (kIsWeb) {
+        await uploadImageWeb();
+      } else {
+        await uploadImage();
+      }
     }
-    await uploadImages();
+    if (kIsWeb) {
+      await uploadImagesWeb();
+    } else {
+      await uploadImages();
+    }
   }
 
   Future<void> uploadImage() async {
@@ -160,6 +194,20 @@ class MARequestController extends GetxController {
     });
   }
 
+  Future<void> uploadImageWeb() async {
+    final v4 = uuid.v4();
+    final fileBytes = imgOfValidIDFile!.readAsBytes();
+    final metadata = firebase_storage.SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': imgOfValidID.value});
+    final ref = storageRef
+        .child('MA_Request/$userID/ma_req/${generatedMAID.value}/ID-$v4$v4');
+    final uploadTask = ref.putData(await fileBytes, metadata);
+    await uploadTask.then((res) async {
+      photoURL.value = await res.ref.getDownloadURL();
+    });
+  }
+
   Future<void> uploadImages() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
@@ -167,6 +215,25 @@ class MARequestController extends GetxController {
       final ref = storageRef
           .child('MA_Request/$userID/ma_req/${generatedMAID.value}/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          listPhotoURL.value += '$value>>>';
+        });
+      });
+      //log.i('$i -> fileName: $i-Presc$fileName');
+    }
+  }
+
+  Future<void> uploadImagesWeb() async {
+    for (var i = 0; i < images.length; i++) {
+      final v4 = uuid.v4();
+      final fileBytes = images[i].readAsBytes();
+      final ref = storageRef
+          .child('MA_Request/$userID/ma_req/${generatedMAID.value}/Pr-$v4$v4');
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': images[i].path});
+
+      await ref.putData(await fileBytes, metadata).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
         });
@@ -202,7 +269,11 @@ class MARequestController extends GetxController {
 
     await showAllData(); //FOR TESTING ONLY
     await clearControllers();
-    await showDialog();
+    if (kIsWeb) {
+      await showDialogWeb();
+    } else {
+      await showDialog();
+    }
   }
 
   Future<void> addToMAQueueCollection() async {
@@ -230,16 +301,30 @@ class MARequestController extends GetxController {
         .doc(userID)
         .collection('status')
         .doc('value')
-        .update({'hasActiveQueueMA': true, 'queueMA': generatedCode});
+        .update({'hasActiveQueueMA': true, 'queueMA': generatedCode.value});
   }
 
   Future<void> showDialog() async {
-    final caption = 'Your priority number is $generatedCode.\n$dialog4Caption';
+    final caption =
+        'Your priority number is ${generatedCode.value}.\n$dialog4Caption';
     showDefaultDialog(
       dialogTitle: dialog5Title,
       dialogCaption: caption,
       onConfirmTap: () {
         Get.to(() => PatientHomeScreen());
+      },
+    );
+  }
+
+  Future<void> showDialogWeb() async {
+    final caption =
+        'Your priority number is ${generatedCode.value}.\n$dialog4Caption';
+    showDefaultDialog(
+      dialogTitle: dialog5Title,
+      dialogCaption: caption,
+      onConfirmTap: () {
+        dismissDialog();
+        Get.back();
       },
     );
   }
@@ -268,8 +353,8 @@ class MARequestController extends GetxController {
     generatedMAID.value = '';
   }
 
-  void pickSingleImage() {
-    _imagePickerService.pickImage(imgOfValidID);
+  void pickSingleImage() async {
+    imgOfValidIDFile = await _imagePickerService.pickImageOnWeb(imgOfValidID);
   }
 
   void pickMultiImageS() {
