@@ -42,7 +42,6 @@ class AuthController extends GetxController {
   RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
   RxString tokenID = ''.obs;
-  RxBool? logInClicked = false.obs;
 
   //Doctor Application Guide
   static const emailScheme = doctorapplicationinstructionParagraph0;
@@ -83,7 +82,6 @@ class AuthController extends GetxController {
       );
       await _clearControllers();
     } catch (e) {
-      logInClicked!.value = false;
       dismissDialog();
       Get.snackbar(
         'Error logging in',
@@ -187,9 +185,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> addPatientStatus(String userID) async {
-    if (!kIsWeb) {
-      await getDeviceToken();
-    }
     await firestore
         .collection('patients')
         .doc(userID)
@@ -201,7 +196,7 @@ class AuthController extends GetxController {
       'pStatus': false,
       'categoryID': '',
       'pendingVerification': false,
-      'deviceToken': tokenID.value,
+      'deviceToken': '',
       'notifBadge': 0,
       'queueCons': '',
       'queueMA': '',
@@ -231,7 +226,7 @@ class AuthController extends GetxController {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
-          log.i('getUserRole | The current user has user role of $userRole');
+          //log.i('getUserRole | The current user has user role of $userRole');
         }
       },
     );
@@ -239,8 +234,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    if (userRole == 'patient' && !kIsWeb) {
-      await setDeviceToken(false);
+    if (userRole == 'patient') {
+      await clearDeviceToken();
     }
     try {
       userSignedOut = true;
@@ -262,7 +257,6 @@ class AuthController extends GetxController {
     firstNameController.clear();
     lastNameController.clear();
     confirmPassController.clear();
-    logInClicked!.value = false;
   }
 
   Future<void> _changePasswordSuccess() async {
@@ -313,7 +307,6 @@ class AuthController extends GetxController {
           if (kIsWeb) {
             await navigateWithDelay(Get.offAllNamed(Routes.PATIENT_WEB_HOME));
           } else {
-            //await setDeviceToken(true);
             await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
           }
           break;
@@ -363,19 +356,13 @@ class AuthController extends GetxController {
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
   }
 
-  Future<void> setDeviceToken(bool loggedIn) async {
-    await getDeviceToken();
+  Future<void> clearDeviceToken() async {
     await firestore
         .collection('patients')
         .doc(firebaseUser.value!.uid)
         .collection('status')
         .doc('value')
-        .update({'deviceToken': loggedIn ? tokenID.value : ''});
-  }
-
-  Future<void> getDeviceToken() async {
-    tokenID.value = (await messaging.getToken())!;
-    log.i('TOKEN $tokenID');
+        .update({'deviceToken': ''});
   }
 
   Future<void> _initializeDoctorModel() async {
