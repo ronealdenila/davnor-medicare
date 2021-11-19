@@ -1,5 +1,7 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/auth/forgot_password.dart';
 import 'package:davnor_medicare/ui/screens/auth/signup.dart';
@@ -10,6 +12,7 @@ import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -100,7 +103,14 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: TextButton(
                               onPressed: () {
-                                Get.to(() => ForgotPasswordScreen());
+                                if (kIsWeb) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          forgotPassword(context));
+                                } else {
+                                  Get.to(() => ForgotPasswordScreen());
+                                }
                               },
                               style: TextButton.styleFrom(primary: infoColor),
                               child: const Text(
@@ -141,4 +151,56 @@ class LoginScreen extends StatelessWidget {
       ),
     ])));
   }
+}
+
+Widget forgotPassword(BuildContext context) {
+  final AuthController authController = Get.find();
+  return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 50,
+      ),
+      children: [
+        SizedBox(
+          width: Get.width * .2,
+          child: Column(
+            children: [
+              verticalSpace25,
+              const Text(
+                'Recover Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
+              ),
+              verticalSpace10,
+              const Text(
+                forgotPasswordDescription,
+                style: TextStyle(fontSize: 18, color: neutralColor),
+              ),
+              verticalSpace50,
+              FormInputFieldWithIcon(
+                  controller: authController.emailController,
+                  iconPrefix: Icons.email,
+                  labelText: 'Email',
+                  validator: Validator().email,
+                  onChanged: (value) {
+                    return;
+                  },
+                  onSaved: (value) =>
+                      authController.emailController.text = value!),
+              verticalSpace25,
+              CustomButton(
+                onTap: () async {
+                  await authController.sendPasswordResetEmail(context);
+                  dismissDialog();
+                },
+                text: 'Request Password Reset',
+                buttonColor: verySoftBlueColor,
+              ),
+            ],
+          ),
+        )
+      ]);
 }
