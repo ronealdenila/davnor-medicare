@@ -51,34 +51,32 @@ class MACard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    horizontalSpace20,
-                    Flexible(
-                      child: SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              maHController
-                                  .convertTimeStamp(maHistory!.dateClaimed!),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: body16SemiBold,
-                            ),
-                            verticalSpace5,
-                            const Text(
-                              'Medicine Worth',
-                              style: caption12RegularNeutral,
-                            ),
-                            verticalSpace5,
-                            Text(
-                              'Php ${maHistory!.medWorth}',
-                              style: caption12Medium,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
+                    horizontalSpace10,
+                    SizedBox(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            maHController
+                                .convertTimeStamp(maHistory!.dateClaimed!),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: body16SemiBold,
+                          ),
+                          verticalSpace5,
+                          const Text(
+                            'Medicine Worth',
+                            style: caption12RegularNeutral,
+                          ),
+                          verticalSpace5,
+                          Text(
+                            'Php ${maHistory!.medWorth}',
+                            style: caption12Medium,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ],
                       ),
                     ),
                   ],

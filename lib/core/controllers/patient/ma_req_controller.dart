@@ -108,7 +108,9 @@ class MARequestController extends GetxController {
         lastNameController.text == '' ||
         ageController.text == '' ||
         addressController.text == '') {
-      showErrorDialog(errorDescription: 'Please dont leave any empty fields');
+      showErrorDialog(
+        errorTitle: 'ERROR!',
+        errorDescription: 'Please dont leave any empty fields');
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -152,12 +154,15 @@ class MARequestController extends GetxController {
         await saveRequestforMA();
       } else {
         showErrorDialog(
-            errorDescription: 'Sorry, someone already got the last slot.');
+          errorTitle: 'ERROR!',
+          errorDescription: 'Sorry, someone already got the last slot.');
       }
       dismissDialog();
     } else {
       dismissDialog();
-      showErrorDialog(errorDescription: 'ERROR: please provide prescriptions.');
+      showErrorDialog(
+        errorTitle: 'ERROR! ',
+        errorDescription: 'Please provide prescriptions.');
     }
   }
 

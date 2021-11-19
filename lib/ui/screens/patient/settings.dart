@@ -26,25 +26,18 @@ class SettingScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  logo,
-                  fit: BoxFit.fill,
-                  height: 120,
-                  width: 120,
+                  logo2,
+                  fit: BoxFit.contain,
                 ),
               ),
-              verticalSpace10,
-              Align(
-                alignment: Alignment.center,
-                child: Text('Davnor Medicare', style: subtitle18RegularOrange),
-              ),
-              verticalSpace35,
+             
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text('Settings', style: subtitle20Bold),

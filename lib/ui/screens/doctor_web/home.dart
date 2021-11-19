@@ -832,7 +832,8 @@ Widget offlineDialog() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                              errorDescription: 'Something went wrong!');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong!');
                         });
                       },
                       child: Text(
@@ -869,7 +870,8 @@ Widget offlineDialog() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                              errorDescription: 'Something went wrong');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(
@@ -941,7 +943,8 @@ Widget detailsDialogCons1() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                              errorDescription: 'Something went wrong');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(
@@ -1011,7 +1014,8 @@ Widget detailsDialogCons2(int currentCount) {
                           countAdd.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                              errorDescription: 'Something went wrong');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(

@@ -39,9 +39,16 @@ class MAHistoryScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (maHController.isLoading.value) {
-                          showErrorDialog(errorDescription: 'mahrec1'.tr);
+                          showErrorDialog(
+                            errorTitle: '',
+                            errorDescription: 'mahrec1'.tr
+                          );
                         } else if (maHController.maHistoryList.isEmpty) {
-                          showErrorDialog(errorDescription: 'mahrec2'.tr);
+                          showErrorDialog(
+                            errorTitle: '',
+                            errorDescription: 'mahrec2'.tr
+                          );
+                          
                         } else {
                           maHController.showDialog(context);
                         }
@@ -122,7 +129,7 @@ class MAHistoryScreen extends StatelessWidget {
       );
     }
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       shrinkWrap: true,
       itemCount: maHController.maHistoryList.length,
       itemBuilder: (context, index) {
