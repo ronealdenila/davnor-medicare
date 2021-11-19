@@ -41,10 +41,12 @@ class ConsHistoryScreen extends StatelessWidget {
                       onTap: () {
                         if (consHController.isLoading.value) {
                           showErrorDialog(
+                            errorTitle: '',
                             errorDescription: 'conslog'.tr
                           );
                         } else if (consHController.consHistory.isEmpty) {
                           showErrorDialog(
+                            errorTitle: '',
                             errorDescription: 'conslog1'.tr
                           );
                         } else {

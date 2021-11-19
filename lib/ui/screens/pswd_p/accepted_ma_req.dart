@@ -54,7 +54,8 @@ class AcceptedMARequestScreen extends StatelessWidget {
                       Get.back();
                     }).catchError((onError) {
                       showErrorDialog(
-                    errorDescription: 'Something went wrong'
+                        errorTitle: 'ERROR',
+                        errorDescription: 'Something went wrong'
                   );
                     });
                   },

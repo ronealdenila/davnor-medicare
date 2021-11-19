@@ -45,10 +45,12 @@ class MAHistoryScreen extends StatelessWidget {
                       onTap: () {
                         if (maHController.isLoading.value) {
                           showErrorDialog(
+                            errorTitle: '',
                             errorDescription: 'mahrec1'.tr
                           );
                         } else if (maHController.maHistoryList.isEmpty) {
                           showErrorDialog(
+                            errorTitle: '',
                             errorDescription: 'mahrec2'.tr
                           );
                           
@@ -132,7 +134,7 @@ class MAHistoryScreen extends StatelessWidget {
       );
     }
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       shrinkWrap: true,
       itemCount: maHController.maHistoryList.length,
       itemBuilder: (context, index) {

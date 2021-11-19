@@ -39,6 +39,7 @@ class LoginScreen extends StatelessWidget {
               : CrossAxisAlignment.center,
           children: <Widget>[
             if (isMobile(context)) Image.asset(authHeader, fit: BoxFit.fill),
+            verticalSpace10,
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
