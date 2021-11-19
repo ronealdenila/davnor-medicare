@@ -37,8 +37,10 @@ class StatusController extends GetxController {
     super.onInit();
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
-        if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
-          Get.to(() => IncomingCallScreen());
+        if (!isCallStatsLoading.value) {
+          if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
+            Get.to(() => IncomingCallScreen());
+          }
         }
       }
     });

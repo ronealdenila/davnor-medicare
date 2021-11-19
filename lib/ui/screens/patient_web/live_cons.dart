@@ -10,6 +10,7 @@ import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -344,12 +345,17 @@ class LiveConsWebScreen extends StatelessWidget {
                     )),
               ),
               IconButton(
-                icon: const Icon(
-                  Icons.send,
-                  color: kcInfoColor,
-                ),
-                onPressed: liveChatCont.sendButton,
-              ),
+                  icon: const Icon(
+                    Icons.send,
+                    color: kcInfoColor,
+                  ),
+                  onPressed: () {
+                    if (kIsWeb) {
+                      liveChatCont.sendButtonWeb();
+                    } else {
+                      liveChatCont.sendButton();
+                    }
+                  }),
             ],
           ),
         ),

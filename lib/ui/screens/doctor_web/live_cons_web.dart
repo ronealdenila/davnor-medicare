@@ -399,12 +399,17 @@ class LiveConsultationWeb extends StatelessWidget {
                     )),
               ),
               IconButton(
-                icon: const Icon(
-                  Icons.send,
-                  color: kcInfoColor,
-                ),
-                onPressed: liveChatCont.sendButton,
-              ),
+                  icon: const Icon(
+                    Icons.send,
+                    color: kcInfoColor,
+                  ),
+                  onPressed: () {
+                    if (kIsWeb) {
+                      liveChatCont.sendButtonWeb();
+                    } else {
+                      liveChatCont.sendButton();
+                    }
+                  }),
             ],
           ),
         ),

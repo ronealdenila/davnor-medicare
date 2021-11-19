@@ -112,6 +112,7 @@ class LoginScreen extends StatelessWidget {
                           verticalSpace25,
                           CustomButton(
                             onTap: () async {
+                              authController.logInClicked!.value = true;
                               if (_formKey.currentState!.validate()) {
                                 await authController
                                     .signInWithEmailAndPassword(context);

@@ -11,10 +11,12 @@ import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ConsRequestController extends GetxController {
   final log = getLogger('Cons Controller');
@@ -94,6 +96,24 @@ class ConsRequestController extends GetxController {
     log.i('uploadPrescription| $imageUrls image/s save to storage');
   }
 
+  Future<void> uploadLabResultsWeb() async {
+    for (var i = 0; i < images.length; i++) {
+      final v4 = uuid.v4();
+      final fileBytes = images[i].readAsBytes();
+      final ref = storageRef.child(
+          'Cons_Request/$userID/cons_req/${generatedConsID.value}/Pr-$v4$v4');
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': images[i].path});
+      await ref.putData(await fileBytes, metadata).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          imageUrls += '$value>>>';
+        });
+      });
+    }
+    log.i('uploadPrescription| $imageUrls image/s save to storage');
+  }
+
   bool hasAvailableSlot() {
     final slot = statusList[statusIndex.value].consSlot!;
     final rqstd = statusList[statusIndex.value].consRqstd!;
@@ -111,7 +131,11 @@ class ConsRequestController extends GetxController {
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
-      await uploadLabResults();
+      if (kIsWeb) {
+        await uploadLabResultsWeb();
+      } else {
+        await uploadLabResults();
+      }
       await assignValues();
       await firestore
           .collection('cons_request')
@@ -215,7 +239,7 @@ class ConsRequestController extends GetxController {
         categoryHolder.value = discomfortData[indexBtn].categoryID!;
         specialistD.value = discomfortData[indexBtn].specialist!;
         log.i('Temporary: ${categoryHolder.value} is selected');
-      } else {}
+      }
     }
   }
 

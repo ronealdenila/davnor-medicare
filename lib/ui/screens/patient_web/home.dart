@@ -136,7 +136,9 @@ class PatientWebHomeScreen extends StatelessWidget {
                 child: Text('Profile'),
               ),
               DropdownMenuItem(
-                onTap: authController.signOut,
+                onTap: () {
+                  authController.signOut();
+                },
                 value: 2,
                 child: Text('Logout'),
               )

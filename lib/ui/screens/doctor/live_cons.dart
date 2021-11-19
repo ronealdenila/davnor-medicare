@@ -14,6 +14,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -206,7 +207,13 @@ class LiveConsultationScreen extends StatelessWidget {
                   Icons.send,
                   color: kcInfoColor,
                 ),
-                onPressed: liveChatCont.sendButton,
+                onPressed: () {
+                  if (kIsWeb) {
+                    liveChatCont.sendButtonWeb();
+                  } else {
+                    liveChatCont.sendButton();
+                  }
+                },
               ),
             ],
           ),

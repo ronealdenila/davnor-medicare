@@ -42,6 +42,7 @@ class AuthController extends GetxController {
   RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
   RxString tokenID = ''.obs;
+  RxBool? logInClicked = false.obs;
 
   //Doctor Application Guide
   static const emailScheme = doctorapplicationinstructionParagraph0;
@@ -82,6 +83,7 @@ class AuthController extends GetxController {
       );
       await _clearControllers();
     } catch (e) {
+      logInClicked!.value = false;
       dismissDialog();
       Get.snackbar(
         'Error logging in',
@@ -103,7 +105,6 @@ class AuthController extends GetxController {
           .then(
         (result) async {
           final _userID = auth.currentUser!.uid;
-          print(_userID);
           await _createPatientUser(_userID);
         },
       );
@@ -186,7 +187,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> addPatientStatus(String userID) async {
-    await getDeviceToken();
+    if (!kIsWeb) {
+      await getDeviceToken();
+    }
     await firestore
         .collection('patients')
         .doc(userID)
@@ -236,7 +239,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    if (userRole == 'patient') {
+    if (userRole == 'patient' && !kIsWeb) {
       await setDeviceToken(false);
     }
     try {
@@ -258,6 +261,8 @@ class AuthController extends GetxController {
     passwordController.clear();
     firstNameController.clear();
     lastNameController.clear();
+    confirmPassController.clear();
+    logInClicked!.value = false;
   }
 
   Future<void> _changePasswordSuccess() async {
@@ -308,6 +313,7 @@ class AuthController extends GetxController {
           if (kIsWeb) {
             await navigateWithDelay(Get.offAllNamed(Routes.PATIENT_WEB_HOME));
           } else {
+            //await setDeviceToken(true);
             await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
           }
           break;
@@ -354,9 +360,6 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
-    if (!kIsWeb) {
-      await setDeviceToken(true);
-    }
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
   }
 
