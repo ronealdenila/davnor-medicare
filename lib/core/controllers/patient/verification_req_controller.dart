@@ -96,7 +96,7 @@ class VerificationController extends GetxController {
     showLoading();
     if (kIsWeb) {
       await uploadIDWeb(imgOfValidIDWeb!);
-      await uploadIDSDWeb(imgOfValidIDWeb!);
+      await uploadIDSDWeb(imgOfValidIDWithSelfiWeb!);
     } else {
       await uploadID(imgOfValidID.value);
       await uploadIDS(imgOfValidIDWithSelfie.value);

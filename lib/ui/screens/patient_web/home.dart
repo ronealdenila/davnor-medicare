@@ -344,12 +344,14 @@ class ResponsiveView extends GetResponsiveView {
                                           dialogTitle: 'dialog1'.tr,
                                           dialogCaption: 'dialogsub1'.tr,
                                           onYesTap: () {
+                                            dismissDialog();
                                             consController
                                                 .isConsultForYou.value = true;
                                             navigationController.navigateTo(
                                                 Routes.PATIENT_WEB_CONS_FORM);
                                           },
                                           onNoTap: () {
+                                            dismissDialog();
                                             consController
                                                 .isConsultForYou.value = false;
                                             navigationController.navigateTo(

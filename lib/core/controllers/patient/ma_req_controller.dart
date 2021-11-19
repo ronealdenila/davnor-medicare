@@ -3,10 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form2.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +30,7 @@ class MARequestController extends GetxController {
   RxBool isMAForYou = true.obs;
   final String userID = auth.currentUser!.uid;
   bool isAvailable = true;
+  final NavigationController navigationController = Get.find();
 
   //Input Data from MA Form
   final RxString imgOfValidID = ''.obs;
@@ -109,8 +112,8 @@ class MARequestController extends GetxController {
         ageController.text == '' ||
         addressController.text == '') {
       showErrorDialog(
-        errorTitle: 'ERROR!',
-        errorDescription: 'Please dont leave any empty fields');
+          errorTitle: 'ERROR!',
+          errorDescription: 'Please dont leave any empty fields');
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -132,8 +135,6 @@ class MARequestController extends GetxController {
           lastNameController.text == '' ||
           ageController.text == '' ||
           addressController.text == '') {
-        //showErrorDialog(errorDescription: 'Please dont leave any empty fields');
-        //DAPAT ING-ANI, NAAY TITLE:
         showErrorDialog(
             errorTitle: 'Some fields were missing',
             errorDescription: 'Please dont leave any empty fields');
@@ -153,16 +154,16 @@ class MARequestController extends GetxController {
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
+        dismissDialog();
         showErrorDialog(
-          errorTitle: 'ERROR!',
-          errorDescription: 'Sorry, someone already got the last slot.');
+            errorTitle: 'ERROR!',
+            errorDescription: 'Sorry, someone already got the last slot.');
       }
-      dismissDialog();
     } else {
       dismissDialog();
       showErrorDialog(
-        errorTitle: 'ERROR! ',
-        errorDescription: 'Please provide prescriptions.');
+          errorTitle: 'ERROR! ',
+          errorDescription: 'Please provide prescriptions.');
     }
   }
 
@@ -269,6 +270,8 @@ class MARequestController extends GetxController {
 
     await showAllData(); //FOR TESTING ONLY
     await clearControllers();
+
+    dismissDialog();
     if (kIsWeb) {
       await showDialogWeb();
     } else {
@@ -324,7 +327,11 @@ class MARequestController extends GetxController {
       dialogCaption: caption,
       onConfirmTap: () {
         dismissDialog();
-        Get.back();
+        if (kIsWeb) {
+          navigationController.navigateTo(Routes.PATIENT_WEB_HOME);
+        } else {
+          Get.back();
+        }
       },
     );
   }

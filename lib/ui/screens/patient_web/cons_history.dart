@@ -150,8 +150,11 @@ class ResponsiveBody extends GetResponsiveView {
                   top: BorderSide(
                     color: Color(0xFFCBD4E1),
                   ),
+                  right: BorderSide(
+                    color: Color(0xFFCBD4E1),
+                  ),
                 )),
-                child: RequestsListView())),
+                child: Obx(() => RequestsListView()))),
         Expanded(
             flex: 6,
             child: Container(
@@ -161,26 +164,9 @@ class ResponsiveBody extends GetResponsiveView {
                     top: BorderSide(
                       color: Color(0xFFCBD4E1),
                     ),
-                    left: BorderSide(
-                      color: Color(0xFFCBD4E1),
-                    ),
-                    right: BorderSide(
-                      color: Color(0xFFCBD4E1),
-                    ),
                   ),
                 ),
-                child: Obx(() => consHController.isLoadingAdditionalData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      )
-                    : RequestsChatView(
-                        consHController.consHistory[selectedIndex.value],
-                        context)))),
+                child: Obx(() => RequestsChatView(context)))),
       ],
     );
   }
@@ -193,23 +179,25 @@ class ResponsiveBody extends GetResponsiveView {
             flex: 3,
             child: Container(
                 width: Get.width * .3,
+                height: Get.height,
                 decoration: const BoxDecoration(
                     border: Border(
                   top: BorderSide(
                     color: Color(0xFFCBD4E1),
                   ),
+                  right: BorderSide(
+                    color: Color(0xFFCBD4E1),
+                  ),
                 )),
-                child: RequestsListView())),
+                child: Obx(() => RequestsListView()))),
         Expanded(
             flex: 6,
             child: Container(
                 width: Get.width * .7,
+                height: Get.height,
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: Color(0xFFCBD4E1),
-                    ),
-                    left: BorderSide(
                       color: Color(0xFFCBD4E1),
                     ),
                     right: BorderSide(
@@ -217,11 +205,7 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                child: Obx(() => consHController.isLoading.value
-                    ? SizedBox()
-                    : RequestsChatView(
-                        consHController.consHistory[selectedIndex.value],
-                        context)))),
+                child: Obx(() => RequestsChatView(context)))),
         Expanded(
             flex: 3,
             child: Container(
@@ -234,19 +218,12 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 height: Get.height,
                 width: Get.width * .2,
-                child: Obx(() => consHController.isLoading.value
-                    ? SizedBox()
-                    : RequestsInfoView(
-                        consHController.consHistory[selectedIndex.value]))))
+                child: Obx(() => RequestsInfoView())))
       ],
     );
   }
 
   Widget RequestsListView() {
-    return Obx(() => listBuilder());
-  }
-
-  Widget listBuilder() {
     if (consHController.isLoading.value) {
       return Align(
         alignment: Alignment.center,
@@ -256,8 +233,7 @@ class ResponsiveBody extends GetResponsiveView {
               height: 24, width: 24, child: CircularProgressIndicator()),
         ),
       );
-    }
-    if (consHController.consHistory.isEmpty &&
+    } else if (consHController.consHistory.isEmpty &&
         !consHController.isLoading.value) {
       return Text(
         'conslog3'.tr,
@@ -303,18 +279,31 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 
-  Widget RequestsChatView(
-      ConsultationHistoryModel consData, BuildContext context) {
-    if (consData.doc.value == null) {
-      return Container();
+  Widget RequestsChatView(BuildContext context) {
+    if (consHController.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
+    } else if (consHController.consHistory.isEmpty &&
+        !consHController.isLoading.value) {
+      return SizedBox();
+    } else if (consHController.consHistory[selectedIndex.value].doc.value ==
+        null) {
+      return SizedBox();
     }
     print(selectedIndex.value);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         screen.isDesktop
-            ? topHeaderRequest(consData)
-            : topHeaderRequestWeb(consData),
+            ? topHeaderRequest(consHController.consHistory[selectedIndex.value])
+            : topHeaderRequestWeb(
+                consHController.consHistory[selectedIndex.value]),
         Expanded(
           child: Obx(() => FutureBuilder(
               future: consHController.getChatHistory(
@@ -414,8 +403,7 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 onPressed: () {
                   showDialog(
-                      context: context,
-                      builder: (context) => infoDialog(consData));
+                      context: context, builder: (context) => infoDialog());
                 },
               ),
             ),
@@ -453,8 +441,12 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 
-  Widget RequestsInfoView(ConsultationHistoryModel consData) {
-    if (consData.doc.value == null) {
+  Widget RequestsInfoView() {
+    if (consHController.consHistory.isEmpty ||
+        consHController.isLoading.value) {
+      return SizedBox();
+    }
+    if (consHController.consHistory[selectedIndex.value].doc.value == null) {
       return Container();
     }
     return SingleChildScrollView(
@@ -476,10 +468,11 @@ class ResponsiveBody extends GetResponsiveView {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
-                child: getPhoto(consData)),
+                child:
+                    getPhoto(consHController.consHistory[selectedIndex.value])),
             verticalSpace20,
             Text(
-              'Dr. ${consHController.getDoctorFullName(consData)}',
+              'Dr. ${consHController.getDoctorFullName(consHController.consHistory[selectedIndex.value])}',
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: subtitle18Medium,
@@ -509,7 +502,9 @@ class ResponsiveBody extends GetResponsiveView {
                   ),
                   SizedBox(
                     width: 170,
-                    child: Text(consData.fullName!,
+                    child: Text(
+                        consHController
+                            .consHistory[selectedIndex.value].fullName!,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -528,7 +523,8 @@ class ResponsiveBody extends GetResponsiveView {
                   ),
                   SizedBox(
                     width: 170,
-                    child: Text(consData.age!,
+                    child: Text(
+                        consHController.consHistory[selectedIndex.value].age!,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -548,7 +544,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateRqstd!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateRqstd!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -568,7 +565,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateConsStart!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateConsStart!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -588,7 +586,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateConsEnd!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateConsEnd!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -603,7 +602,7 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 
-  Widget infoDialog(ConsultationHistoryModel model) {
+  Widget infoDialog() {
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: EdgeInsets.symmetric(
@@ -615,7 +614,7 @@ class ResponsiveBody extends GetResponsiveView {
               width: Get.width * .5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [RequestsInfoView(model)],
+                children: [RequestsInfoView()],
               ))
         ]);
   }
