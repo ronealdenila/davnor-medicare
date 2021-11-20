@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * .2,
             height: MediaQuery.of(context).size.height,
-            child: Image.asset(authHeader, fit: BoxFit.fill),
+            child: Image.asset(davnormedicare, fit: BoxFit.fill),
           ),
         ),
       Expanded(
@@ -38,8 +38,7 @@ class LoginScreen extends StatelessWidget {
               ? CrossAxisAlignment.center
               : CrossAxisAlignment.center,
           children: <Widget>[
-            if (isMobile(context)) Image.asset(authHeader, fit: BoxFit.fill),
-            verticalSpace10,
+            if (isMobile(context)) Image.asset(davnormedicare, fit: BoxFit.fill),
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
@@ -57,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                         children: <Widget>[
                           verticalSpace15,
                           const Text('Welcome Back!', style: title32Bold),
-                          verticalSpace35,
+                          verticalSpace25,
                           FormInputFieldWithIcon(
                             controller: authController.emailController,
                             iconPrefix: Icons.email,
@@ -110,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          verticalSpace25,
+                        //  verticalSpace10,
                           CustomButton(
                             onTap: () async {
                               if (_formKey.currentState!.validate()) {
@@ -122,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                             buttonColor: verySoftBlueColor,
                             fontSize: 20,
                           ),
-                          verticalSpace25,
+                          verticalSpace15,
                         ],
                       ),
                     ),
@@ -137,6 +136,7 @@ class LoginScreen extends StatelessWidget {
               text1: "Don't have an account?",
               text2: 'Signup here',
             ),
+            verticalSpace15,
           ],
         ),
       ),
