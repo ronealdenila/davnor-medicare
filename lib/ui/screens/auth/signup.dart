@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -5,12 +6,14 @@ import 'package:davnor_medicare/ui/screens/auth/doctor_application_guide.dart';
 import 'package:davnor_medicare/ui/screens/auth/terms_and_policy.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/responsive.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/auth/bottom_text.dart';
 import 'package:davnor_medicare/ui/widgets/auth/checkbox_form_field.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -167,7 +170,14 @@ class SignupScreen extends GetView<AuthController> {
                             CheckboxFormField(
                               title: BottomTextWidget(
                                   onTap: () {
-                                    Get.to(() => TermsAndPolicyScreen());
+                                    if (kIsWeb) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              termsAndCondition(context));
+                                    } else {
+                                      Get.to(() => TermsAndPolicyScreen());
+                                    }
                                   },
                                   text1: 'I agree to',
                                   text2: 'Terms & Condition'),
@@ -190,9 +200,17 @@ class SignupScreen extends GetView<AuthController> {
                             verticalSpace15,
                             Align(
                               child: BottomTextWidget(
-                                onTap: () => Get.to(
-                                  () => DoctorApplicationGuideScreen(),
-                                ),
+                                onTap: () {
+                                  if (kIsWeb) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            joinUsNow(context));
+                                  } else {
+                                    Get.to(
+                                        () => DoctorApplicationGuideScreen());
+                                  }
+                                },
                                 text1: 'Are you a doctor?',
                                 text2: 'Join us now!',
                               ),
@@ -205,10 +223,235 @@ class SignupScreen extends GetView<AuthController> {
                   ),
                 ),
               ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Visibility(
+                      visible: kIsWeb,
+                      child: TextButton(
+                          onPressed: () => Get.back(),
+                          child: Text(
+                            'Login',
+                          ))),
+                ),
+              ),
             ],
           ),
         ),
       ])),
     );
   }
+}
+
+Widget termsAndCondition(BuildContext context) {
+  return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 50,
+      ),
+      children: [
+        SizedBox(
+          width: Get.width * .2,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  'Terms & Conditions',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 35),
+                child: Text(
+                  termsAndPolicyParagraph1,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 7, horizontal: 35),
+                child: Text(
+                  'Privacy Policy',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+                child: Text(
+                  termsAndPolicyParagraph2,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 35),
+                child: Text(
+                  'Information Collection and Use',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+                child: Text(
+                  termsAndPolicyParagraph3,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 7, horizontal: 35),
+                child: Text(
+                  'Termination',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 35),
+                child: Text(
+                  termsAndPolicyParagraph4,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+              ),
+            ],
+          ),
+        )
+      ]);
+}
+
+Widget joinUsNow(BuildContext context) {
+  final AuthController authController = Get.find();
+  return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 50,
+      ),
+      children: [
+        SizedBox(
+          width: Get.width * .2,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  'Join Our Team',
+                  textAlign: TextAlign.center,
+                  style: title24Bold,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Text(
+                  doctorapplicationinstructionParagraph1,
+                  style: body14Regular,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 40, horizontal: 35),
+                child: Text(
+                  doctorapplicationinstructionParagraph2,
+                  textAlign: TextAlign.justify,
+                  style: body16Regular,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 35),
+                child: Text(
+                  doctorapplicationinstructionParagraph3,
+                  textAlign: TextAlign.justify,
+                  style: body16Regular,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 35),
+                child: Text(
+                  'For Interested Doctors:',
+                  textAlign: TextAlign.left,
+                  style: body16SemiBold,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+                child: GestureDetector(
+                  onTap: authController.launchDoctorApplicationForm,
+                  child: Text(
+                    'Join us here',
+                    textAlign: TextAlign.left,
+                    style: body14RegularUnderline.copyWith(color: infoColor),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 35),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+                child: Text(
+                  'For any inquiries, please email us at:',
+                  textAlign: TextAlign.left,
+                  style: body16SemiBold,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+                child: GestureDetector(
+                  onTap: authController.launchDoctorApplicationEmail,
+                  child: Text(
+                    'davnor.medicare@gmail.com',
+                    textAlign: TextAlign.left,
+                    style: body14Regular.copyWith(color: infoColor),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ]);
 }

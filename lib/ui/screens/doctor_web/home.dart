@@ -18,7 +18,6 @@ import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/doctor/side_menu_doctor.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -832,8 +831,8 @@ Widget offlineDialog() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                            errorTitle: 'ERROR!',
-                            errorDescription: 'Something went wrong!');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong!');
                         });
                       },
                       child: Text(
@@ -870,8 +869,8 @@ Widget offlineDialog() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                            errorTitle: 'ERROR!',
-                            errorDescription: 'Something went wrong');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(
@@ -943,8 +942,8 @@ Widget detailsDialogCons1() {
                           count.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                            errorTitle: 'ERROR!',
-                            errorDescription: 'Something went wrong');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(
@@ -1014,8 +1013,8 @@ Widget detailsDialogCons2(int currentCount) {
                           countAdd.value = 1;
                         }).catchError((error) {
                           showErrorDialog(
-                            errorTitle: 'ERROR!',
-                            errorDescription: 'Something went wrong');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong');
                         });
                       },
                       child: Text(

@@ -1,10 +1,10 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 class MARequestListScreen extends StatelessWidget {
   static MAReqListController maController = Get.put(MAReqListController());
   final RxBool firedOnce = false.obs;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {

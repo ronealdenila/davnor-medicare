@@ -101,7 +101,7 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: true, //!consController.isConsultForYou.value,
+                      visible: !consController.isConsultForYou.value,
                       child: CustomTextFormField(
                         controller: consController.firstNameController,
                         labelText: 'consform8'.tr,
@@ -115,7 +115,7 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: true, //!consController.isConsultForYou.value,
+                      visible: !consController.isConsultForYou.value,
                       child: CustomTextFormField(
                         controller: consController.lastNameController,
                         labelText: 'consform9'.tr,

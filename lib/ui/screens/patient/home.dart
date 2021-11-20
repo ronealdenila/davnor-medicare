@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
@@ -44,6 +45,8 @@ class PatientHomeScreen extends StatelessWidget {
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
+  final NavigationController navigationController =
+      Get.put(NavigationController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +65,9 @@ class PatientHomeScreen extends StatelessWidget {
                       size: 56,
                     )
                   : CircleAvatar(
-                   // foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
-                    backgroundImage: AssetImage(blankProfile),
-                  ),
+                      // foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
+                      backgroundImage: AssetImage(blankProfile),
+                    ),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
@@ -223,8 +226,8 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
               showErrorDialog(
-                errorTitle: '',
-                errorDescription:
+                  errorTitle: '',
+                  errorDescription:
                       'Please wait while we are currently connecting to the server');
             },
           ),
@@ -237,9 +240,9 @@ class PatientHomeScreen extends StatelessWidget {
               //Note: Has weird transition
               onTap: () {
                 showErrorDialog(
-                  errorTitle: '',
-                  errorDescription:
-                      'Please wait while we are currently connecting to the server');
+                    errorTitle: '',
+                    errorDescription:
+                        'Please wait while we are currently connecting to the server');
               }),
         ),
         Expanded(
@@ -249,9 +252,9 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
               showErrorDialog(
-                errorTitle: '',
-                errorDescription:
-                    'Please wait while we are currently connecting to the server');
+                  errorTitle: '',
+                  errorDescription:
+                      'Please wait while we are currently connecting to the server');
             },
           ),
         ),

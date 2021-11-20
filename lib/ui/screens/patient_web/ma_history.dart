@@ -199,7 +199,6 @@ class ResponsiveBody extends GetResponsiveView {
     if (maHController.maHistoryList.isEmpty || maHController.isLoading.value) {
       return SizedBox();
     }
-    print(maHController.maHistoryList[selectedIndex.value].fullName);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

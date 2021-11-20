@@ -13,6 +13,8 @@ class GeneralMARequestModel {
       required this.type,
       required this.prescriptions,
       required this.validID,
+      this.receiverID,
+      this.isAccepted = false,
       this.isTransferred = false,
       this.receivedBy = '',
       this.isApproved = false,
@@ -32,6 +34,8 @@ class GeneralMARequestModel {
   String? prescriptions;
   String? validID;
   Timestamp? dateRqstd;
+  String? receiverID;
+  bool? isAccepted;
   bool? isTransferred;
   String? receivedBy;
   bool? isApproved;

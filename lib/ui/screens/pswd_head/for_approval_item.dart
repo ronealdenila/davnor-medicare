@@ -94,6 +94,7 @@ class ForApprovalItemScreen extends StatelessWidget {
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
           opController.refresh();
+          goBack();
         });
       },
       onNoTap: () {

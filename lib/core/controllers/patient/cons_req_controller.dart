@@ -4,11 +4,13 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/cons_stats_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:flutter/foundation.dart';
@@ -24,7 +26,7 @@ class ConsRequestController extends GetxController {
   static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
   final fetchedData = authController.patientModel.value;
-
+  final NavigationController navigationController = Get.find();
   final uuid = const Uuid();
   //final RxString fileName = ''.obs;
   final String userID = auth.currentUser!.uid;
@@ -47,7 +49,7 @@ class ConsRequestController extends GetxController {
 
   //Cons Form 3
   RxList<XFile> images = RxList<XFile>();
-  String imageUrls = '';
+  final RxString imageUrls = ''.obs;
   final RxString generatedCode = 'C025'.obs; //MA24 -> mock code
 
   RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>();
@@ -89,7 +91,7 @@ class ConsRequestController extends GetxController {
           'Cons_Request/$userID/cons_req/${generatedConsID.value}/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
-          imageUrls += '$value>>>';
+          imageUrls.value = imageUrls.value + '$value>>>';
         });
       });
     }
@@ -107,11 +109,11 @@ class ConsRequestController extends GetxController {
           customMetadata: {'picked-file-path': images[i].path});
       await ref.putData(await fileBytes, metadata).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
-          imageUrls += '$value>>>';
+          imageUrls.value = imageUrls.value + '$value>>>';
         });
       });
     }
-    log.i('uploadPrescription| $imageUrls image/s save to storage');
+    log.i('uploadPrescription| ${imageUrls.value} image/s save to storage');
   }
 
   bool hasAvailableSlot() {
@@ -124,6 +126,9 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> submitConsultRequest() async {
+    if (kIsWeb) {
+      await initCategoryForWeb();
+    }
     if (statusList[statusIndex.value].consSlot! == 0) {
       showErrorDialog(
           errorTitle: 'ERROR!',
@@ -150,7 +155,7 @@ class ConsRequestController extends GetxController {
         'dateRqstd': Timestamp.fromDate(DateTime.now()),
         'description': descriptionController.text,
         'isFollowUp': isFollowUp.value ? true : false,
-        'imgs': imageUrls,
+        'imgs': imageUrls.value,
       });
 
       //Generate Cons Queue
@@ -192,7 +197,11 @@ class ConsRequestController extends GetxController {
         dialogTitle: dialog4Title,
         dialogCaption: caption,
         onConfirmTap: () {
-          Get.to(() => PatientHomeScreen());
+          if (kIsWeb) {
+            navigationController.navigateTo(Routes.PATIENT_WEB_HOME);
+          } else {
+            Get.to(() => PatientHomeScreen());
+          }
         });
   }
 
@@ -254,6 +263,15 @@ class ConsRequestController extends GetxController {
     await Get.to(() => ConsForm2Screen());
   }
 
+  Future<void> initCategoryForWeb() async {
+    if (categoryHolder == '') {
+      await getconsultationCategory(specialistD.value);
+    } else {
+      categoryID.value = categoryHolder.value;
+    }
+    log.wtf('Final: ${categoryID.value} is selected');
+  }
+
   Future<void> getconsultationCategory(String specialistD) async {
     final ageInput = ageController.text == '' ? '0' : ageController.text;
     final parseAge = int.parse(ageInput);
@@ -262,6 +280,7 @@ class ConsRequestController extends GetxController {
     for (var i = 0; i < statusList.length; i++) {
       if (statusList[i].deptName == dept &&
           statusList[i].title == specialistD) {
+        print('found on index $i');
         statusIndex.value = i;
         categoryID.value = statusList[i].categoryID!;
         return;

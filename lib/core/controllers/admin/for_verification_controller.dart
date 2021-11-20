@@ -3,10 +3,12 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -20,6 +22,7 @@ class ForVerificationController extends GetxController {
   RxList<VerificationReqModel> verifReq = RxList<VerificationReqModel>();
   TextEditingController reason = TextEditingController();
   RxBool accepted = false.obs;
+  final NavigationController navigationController = Get.find();
 
   @override
   void onReady() {
@@ -110,7 +113,9 @@ class ForVerificationController extends GetxController {
       transferPhotos(model);
       addNotification(model.patientID!);
       removeVerificationReq(model.patientID!);
-      Get.off(() => VerificationReqListScreen());
+      dismissDialog();
+      navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
+      //Get.off(() => VerificationReqListScreen());
       clearController();
     }).catchError((error) {
       dismissDialog();
@@ -143,7 +148,8 @@ class ForVerificationController extends GetxController {
       deletePhotos(model);
       removeVerificationReq(model.patientID!);
       dismissDialog();
-      Get.off(() => VerificationReqListScreen());
+      navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
+      //Get.off(() => VerificationReqListScreen());
       clearController();
     }).catchError((error) {
       dismissDialog();
