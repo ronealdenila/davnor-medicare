@@ -69,6 +69,8 @@ class OnProgressMAModel {
     this.prescriptions,
     this.dateRqstd,
     this.validID,
+    this.receiverID = '',
+    this.isAccepted = false,
     this.isTransferred = false,
     this.receivedBy = '',
     this.isApproved = false,
@@ -90,6 +92,8 @@ class OnProgressMAModel {
         validID: json['validID'] as String,
         isTransferred: json['isTransferred'] as bool,
         receivedBy: json['receivedBy'] as String,
+        receiverID: json['receiverID'] as String,
+        isAccepted: json['isAccepted'] as bool,
         isApproved: json['isApproved'] as bool,
         isMedReady: json['isMedReady'] as bool,
         medWorth: json['medWorth'] as String,
@@ -110,6 +114,8 @@ class OnProgressMAModel {
         'dateRqstd': dateRqstd,
         'isTransferred': isTransferred,
         'receivedBy': receivedBy,
+        'receiverID': receiverID,
+        'isAccepted': isAccepted,
         'isApproved': isApproved,
         'isMedReady': isMedReady,
         'medWorth': medWorth,
@@ -127,6 +133,8 @@ class OnProgressMAModel {
   String? validID;
   bool? isTransferred;
   String? receivedBy;
+  String? receiverID;
+  bool? isAccepted;
   bool? isApproved;
   bool? isMedReady;
   String? medWorth;
@@ -140,6 +148,7 @@ class MAHistoryModel {
       {this.maID,
       this.requesterID,
       this.fullName,
+      this.receiverID,
       this.age,
       this.address,
       this.gender,
@@ -155,6 +164,7 @@ class MAHistoryModel {
   factory MAHistoryModel.fromJson(Map<String, dynamic> json) => MAHistoryModel(
         maID: json['maID'] as String,
         requesterID: json['requesterID'] as String,
+        receiverID: json['receiverID'] as String,
         fullName: json['fullName'] as String,
         age: json['age'] as String,
         address: json['address'] as String,
@@ -171,13 +181,14 @@ class MAHistoryModel {
 
   Map<String, dynamic> toJson() => {
         'maID': maID,
-        'patientId': requesterID,
+        'requesterID': requesterID,
         'fullName': fullName,
         'age': age,
         'address': address,
         'gender': gender,
         'type': type,
         'prescriptions': prescriptions,
+        'receiverID': receiverID,
         'validID': validID,
         'dateRqstd': dateRqstd,
         'receivedBy': receivedBy,
@@ -197,6 +208,7 @@ class MAHistoryModel {
   String? validID;
   Timestamp? dateRqstd;
   String? receivedBy;
+  String? receiverID;
   String? medWorth;
   String? pharmacy;
   Timestamp? dateClaimed;

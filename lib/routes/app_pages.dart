@@ -287,10 +287,10 @@ class AppPages {
       name: _Paths.ON_PROGRESS_REQ_LIST,
       page: () => OnProgressReqListScreen(),
     ),
-    GetPage(
-      name: _Paths.PSWD_ACCEPTED_MA_REQ,
-      page: () => AcceptedMARequestScreen(),
-    ),
+    // GetPage(
+    //   name: _Paths.PSWD_ACCEPTED_MA_REQ,
+    //   page: () => AcceptedMARequestScreen(),
+    // ),
     // GetPage(
     //   name: _Paths.MA_HISTORY_ITEM,
     //   page: () => MAHistoryItemScreen(passedData: null),

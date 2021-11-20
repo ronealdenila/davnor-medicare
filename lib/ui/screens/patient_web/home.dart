@@ -42,6 +42,8 @@ class PatientWebHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final ArticleController articleService = Get.put(ArticleController());
+  final ConsRequestController consController =
+      Get.put(ConsRequestController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +203,10 @@ class PatientDashboardScreen extends GetView<PatientMenuController> {
   static AuthController authController = Get.find();
   final NavigationController navigationController = Get.find();
   final fetchedData = authController.patientModel.value;
-  static AppController appController = Get.find();
+  final AppController appController = Get.find();
   static ArticleController articleService = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
-  static ConsRequestController consController =
-      Get.put(ConsRequestController());
+  final ConsRequestController consController = Get.find();
   final LiveConsController liveCont = Get.find();
   final StatusController stats = Get.find();
 

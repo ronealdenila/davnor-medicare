@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/releasing_ma_controller.dart';
@@ -16,11 +14,11 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final ReleasingMAController rlsController = Get.put(ReleasingMAController());
-final AuthController authController = Get.find();
-final RxBool firedOnce = false.obs;
-
 class ReleasingAreaListScreen extends StatelessWidget {
+  final ReleasingMAController rlsController = Get.find();
+  final AuthController authController = Get.find();
+  final RxBool firedOnce = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -100,235 +98,192 @@ class ReleasingAreaListScreen extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget requestList(BuildContext context) {
-  if (rlsController.isLoading.value) {
-    return Align(
-      alignment: Alignment.center,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: const SizedBox(
-            height: 24, width: 24, child: CircularProgressIndicator()),
+  Widget requestList(BuildContext context) {
+    if (rlsController.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
+      return const Text(
+        'No MA request for releasing at the moment',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+
+    firedOnce.value
+        ? null
+        : rlsController.filteredList.assignAll(rlsController.toRelease);
+    firedOnce.value = true;
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: Expanded(
+        child: SingleChildScrollView(
+          child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: rlsController.filteredList.length,
+              itemBuilder: (context, index) {
+                return customTableRow(rlsController.filteredList[index]);
+              }),
+        ),
       ),
     );
   }
-  if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
-    return const Text(
-      'No MA request for releasing at the moment',
-      textAlign: TextAlign.center,
-      style: body14Medium,
-    );
-  }
 
-  firedOnce.value
-      ? null
-      : rlsController.filteredList.assignAll(rlsController.toRelease);
-  firedOnce.value = true;
-  return MediaQuery.removePadding(
-    context: context,
-    removeTop: true,
-    child: Expanded(
-      child: SingleChildScrollView(
-        child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: rlsController.filteredList.length,
-            itemBuilder: (context, index) {
-              return customTableRow(rlsController.filteredList[index]);
-            }),
-      ),
-    ),
-  );
-}
-
-Widget header() {
-  return Container(
-    width: Get.width,
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: verySoftBlueColor,
-    ),
-    child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('PATIENT NAME',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Text('DATE', style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('PHARMACY',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('MEDICINE WORTH',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            child:
-                Text('ACTION', style: body16Bold.copyWith(color: Colors.white)),
-          )
-        ]),
-  );
-}
-
-Widget customTableRow(OnProgressMAModel model) {
-  return SizedBox(
-    width: Get.width,
-    child: Padding(
+  Widget header() {
+    return Container(
+      width: Get.width,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: verySoftBlueColor,
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                model.fullName!,
-                style: body16Medium,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('PATIENT NAME',
+                    style: body16Bold.copyWith(color: Colors.white)),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                rlsController.convertTimeStamp(model.dateRqstd!),
-                style: body16Medium,
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('DATE',
+                    style: body16Bold.copyWith(color: Colors.white)),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                '${model.pharmacy}',
-                style: body16Medium,
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('PHARMACY',
+                    style: body16Bold.copyWith(color: Colors.white)),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                'Php ${model.medWorth}',
-                style: body16Medium,
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('MEDICINE WORTH',
+                    style: body16Bold.copyWith(color: Colors.white)),
               ),
             ),
-          ),
-          Expanded(
-            child: Wrap(
-              runSpacing: 8,
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    navigationController.navigateToWithArgs(
-                        Routes.RELEASING_AREA_ITEM,
-                        arguments: model);
-                    // Get.to(
-                    //   () => ReleasingAreaItemScreen(),
-                    //   arguments: model,
-                    // );
-                  },
-                  child: Text(
-                    'View',
-                    style: body16RegularUnderlineBlue,
-                  ),
+            Expanded(
+              child: Text('ACTION',
+                  style: body16Bold.copyWith(color: Colors.white)),
+            )
+          ]),
+    );
+  }
+
+  Widget customTableRow(OnProgressMAModel model) {
+    return SizedBox(
+      width: Get.width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  model.fullName!,
+                  style: body16Medium,
                 ),
-                horizontalSpace15,
-                Visibility(
-                  visible: authController.userRole == 'pswd-p',
-                  child: InkWell(
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  rlsController.convertTimeStamp(model.dateRqstd!),
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  '${model.pharmacy}',
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Php ${model.medWorth}',
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Wrap(
+                runSpacing: 8,
+                children: <Widget>[
+                  InkWell(
                     onTap: () {
-                      showConfirmationDialog(
-                        dialogTitle: dialogpswdTitle,
-                        dialogCaption: dialogpswdCaption,
-                        onYesTap: () {
-                          showLoading();
-                          transfferToHistpry(model);
-                          dismissDialog();
-                        },
-                        onNoTap: () {
-                          dismissDialog();
-                        },
-                      );
+                      navigationController.navigateToWithArgs(
+                          Routes.RELEASING_AREA_ITEM,
+                          arguments: model);
                     },
                     child: Text(
-                      'Claimed',
+                      'View',
                       style: body16RegularUnderlineBlue,
                     ),
                   ),
-                ),
-              ],
+                  horizontalSpace15,
+                  Visibility(
+                    visible: authController.userRole == 'pswd-p',
+                    child: InkWell(
+                      onTap: () {
+                        showConfirmationDialog(
+                          dialogTitle: dialogpswdTitle,
+                          dialogCaption: dialogpswdCaption,
+                          onYesTap: () async {
+                            await rlsController
+                                .transfferToHistoryFromList(model);
+                          },
+                          onNoTap: () {
+                            dismissDialog();
+                          },
+                        );
+                      },
+                      child: Text(
+                        'Claimed',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
-Future<void> transfferToHistpry(OnProgressMAModel model) async {
-  showLoading();
-  await firestore
-      .collection('ma_history')
-      .doc(model.maID)
-      .set(<String, dynamic>{
-    'maID': model.maID,
-    'patientId': model.requesterID,
-    'fullName': model.fullName,
-    'age': model.age,
-    'address': model.address,
-    'gender': model.gender,
-    'type': model.type,
-    'prescriptions': model.prescriptions,
-    'dateRqstd': model.dateRqstd,
-    'validID': model.validID,
-    'receivedBy': model.receivedBy,
-    'medWorth': model.medWorth,
-    'pharmacy': model.pharmacy,
-    'dateClaimed': Timestamp.fromDate(DateTime.now()),
-  }).then((value) async {
-    //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
-    await deleteMA(model.maID!);
-    dismissDialog(); //dismissLoading
-    dismissDialog(); //then dismiss dialog for are your sure? yes/no
-    Get.back();
-  });
-}
-
-Future<void> deleteMA(String maID) async {
-  await firestore
-      .collection('on_progress_ma')
-      .doc(maID)
-      .delete()
-      .then((value) => print("MA Request Deleted"))
-      .catchError((error) => print("Failed to delete MA Request"));
+    );
+  }
 }

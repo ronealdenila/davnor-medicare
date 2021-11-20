@@ -4,8 +4,10 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/pswd_custom_button.dart';
@@ -20,7 +22,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
   final AuthController authController = Get.find();
   final AttachedPhotosController pcontroller = Get.find();
   late final GeneralMARequestModel model;
-  final NavigationController navigationController = Get.find();
+  final OnProgressReqController opController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
               verticalSpace50,
               TextButton(
                   onPressed: () {
-                    goBack();
+                    opController.goBack();
                   },
                   child: Text('Back to on progressed Table')),
               PSWDItemView(context, 'approved', model),
@@ -77,8 +79,6 @@ class OnProgressReqItemScreen extends StatelessWidget {
   }
 
   Widget detailsDialogMA() {
-    final _pharmacyController = TextEditingController();
-    final _worthController = TextEditingController();
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding:
@@ -98,7 +98,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
                     width: 360,
                     height: 60,
                     child: TextFormField(
-                      controller: _pharmacyController,
+                      controller: opController.pharmacyController,
                       decoration: const InputDecoration(
                         labelText: 'Name of Pharmacy',
                         alignLabelWithHint: true,
@@ -117,7 +117,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
                     width: 360,
                     height: 60,
                     child: TextFormField(
-                      controller: _worthController,
+                      controller: opController.worthController,
                       decoration: const InputDecoration(
                         labelText: 'Worth of Medicine',
                         alignLabelWithHint: true,
@@ -141,56 +141,12 @@ class OnProgressReqItemScreen extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           child: PSWDButton(
                               onItemTap: () async {
-                                await firestore
-                                    .collection('on_progress_ma')
-                                    .doc(model.maID)
-                                    .update({
-                                  'isMedReady': true,
-                                  'medWorth': _worthController.text,
-                                  'pharmacy': _pharmacyController.text
-                                }).then((value) {
-                                  sendNotification(model.requesterID!);
-                                });
+                                await opController.toBeReleased(
+                                    model.maID!, model.requesterID!);
                               },
                               buttonText: 'Submit')),
                 ],
               ))
         ]);
-  }
-
-  Future<void> sendNotification(String uid) async {
-    final action = ' is ready ';
-    final title = 'MA${action}to be claimed';
-    final message = 'You can now claim you MA in the PSWD Office';
-
-    await firestore
-        .collection('patients')
-        .doc(uid)
-        .collection('notifications')
-        .add({
-      'photo': maLogoURL,
-      'from': 'The PSWD Staff',
-      'action': ' is informing you that your ',
-      'subject': 'Medical Assistance is ready',
-      'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
-    });
-
-    await appController.sendNotificationViaFCM(title, message, uid);
-
-    await firestore
-        .collection('patients')
-        .doc(uid)
-        .collection('status')
-        .doc('value')
-        .update({
-      'notifBadge': FieldValue.increment(1),
-    });
-  }
-
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(
-            '/OnProgressReqListScreen', (Route<dynamic> route) => true);
   }
 }

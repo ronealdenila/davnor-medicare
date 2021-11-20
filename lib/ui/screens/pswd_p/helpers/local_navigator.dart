@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
@@ -47,6 +48,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final OnProgressMAModel passedData =
           settings.arguments as OnProgressMAModel;
       return _getPageRoute(ReleasingAreaItemScreen(passedData: passedData));
+    case Routes.PSWD_ACCEPTED_MA_REQ:
+      final OnProgressMAModel passedData =
+          settings.arguments as OnProgressMAModel;
+      return _getPageRoute(AcceptedMARequestScreen(passedData: passedData));
     default:
       return _getPageRoute(const SizedBox());
   }

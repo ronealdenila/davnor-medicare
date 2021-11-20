@@ -33,7 +33,8 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final AttachedPhotosController pswdController =
       Get.put(AttachedPhotosController());
-
+  final NavigationController navigationController =
+      Get.put(NavigationController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
