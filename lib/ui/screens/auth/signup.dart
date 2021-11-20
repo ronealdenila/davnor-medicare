@@ -22,8 +22,7 @@ class SignupScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
           //color: Colors.white,
           body: SingleChildScrollView(
               child: Row(children: <Widget>[
@@ -32,7 +31,7 @@ class SignupScreen extends GetView<AuthController> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * .2,
               height: MediaQuery.of(context).size.height,
-              child: Image.asset(authHeader, fit: BoxFit.fill),
+              child: Image.asset(davnormedicare, fit: BoxFit.fill),
             ),
           ),
         Expanded(
@@ -43,17 +42,17 @@ class SignupScreen extends GetView<AuthController> {
             children: <Widget>[
               if (isMobile(context))
                 Stack(children: [
-                  Image.asset(authHeader, fit: BoxFit.fill),
+                  Image.asset(davnormedicare, fit: BoxFit.fill),
                   Positioned(
                     left: 5,
-                    top: 5,
+                    top: 20,
                     child: IconButton(
                       icon: Icon(
                         Icons.chevron_left,
-                        size: 35,
+                        size: 30,
                       ),
                       onPressed: Get.back,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 ]),
@@ -62,6 +61,7 @@ class SignupScreen extends GetView<AuthController> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 margin: const EdgeInsets.all(20),
+                elevation: 3,
                 child: Form(
                   key: _formKey,
                   child: Padding(
@@ -238,7 +238,7 @@ class SignupScreen extends GetView<AuthController> {
             ],
           ),
         ),
-      ]))),
+      ])),
     );
   }
 }

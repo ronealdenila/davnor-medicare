@@ -9,6 +9,8 @@ final String blankProfile = _getImagePath('blank_profile.png');
 final String grayBlank = _getImagePath('gray_blank.jpg');
 final String icons8 = _getImagePath('icons8.png');
 final String doctorDefault = _getImagePath('doctor_pic.png');
+final String logo2 = _getImagePath('davnormedicare.png');
+final String davnormedicare = _getImagePath('davnormedicare_cover.jpg');
 
 //Cons Form
 final String earIconPath = _getImagePath('ear.png');
@@ -37,8 +39,6 @@ final String asthma = _getImagePath('asthma.png');
 final String foodallergyIcon = _getImagePath('foodallergy.png');
 final String sorethroatIcon = _getImagePath('sore_throat.png');
 final String pneomoniaIcon = _getImagePath('pneumonia.png');
-
-final String logo2 = _getImagePath('davnormedicare.png');
 
 
 String _getImagePath(String fileName) {
