@@ -200,16 +200,6 @@ class ResponsiveLeading extends GetResponsiveView {
 }
 
 class PatientDashboardScreen extends GetView<PatientMenuController> {
-  static AuthController authController = Get.find();
-  final NavigationController navigationController = Get.find();
-  final fetchedData = authController.patientModel.value;
-  final AppController appController = Get.find();
-  static ArticleController articleService = Get.find();
-  final List<ArticleModel> articleList = articleService.articlesList;
-  final ConsRequestController consController = Get.find();
-  final LiveConsController liveCont = Get.find();
-  final StatusController stats = Get.find();
-
   @override
   Widget build(BuildContext context) {
     return Padding(

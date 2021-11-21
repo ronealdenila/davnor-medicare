@@ -9,6 +9,7 @@ import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/pswd_profile.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_list.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ReleasingAreaListScreen());
     case Routes.MA_HISTORY_LIST:
       return _getPageRoute(MAHistoryList());
+    case Routes.PSWD_WEB_PROFILE:
+      return _getPageRoute(PSWDProfileScreen());
     case Routes.MA_HISTORY_ITEM:
       final MAHistoryModel passedData = settings.arguments as MAHistoryModel;
       return _getPageRoute(MAHistoryItemScreen(passedData: passedData));

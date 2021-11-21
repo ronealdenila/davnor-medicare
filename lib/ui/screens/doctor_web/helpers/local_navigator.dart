@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
-import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/doctor_profile.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/cons_requests.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
@@ -28,6 +27,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ConsHistoryWeb());
     case Routes.LIVE_CONS_WEB:
       return _getPageRoute(LiveConsultationWeb());
+    case Routes.DOC_WEB_PROFILE:
+      return _getPageRoute(DoctorWebProfileScreen());
     default:
       return _getPageRoute(const SizedBox());
   }
