@@ -221,9 +221,9 @@ class DoctorHomeScreen extends StatelessWidget {
                 onTap: () {
                   print(stats.isLoading.value);
                   showErrorDialog(
-                    errorTitle: '',
-                    errorDescription:
-                        'Please wait while we are currently connecting to the server');
+                      errorTitle: '',
+                      errorDescription:
+                          'Please wait while we are currently connecting to the server');
                 }),
           ),
           Expanded(
@@ -245,8 +245,8 @@ class DoctorHomeScreen extends StatelessWidget {
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
                     showErrorDialog(
-                      errorTitle: '',
-                      errorDescription:
+                        errorTitle: '',
+                        errorDescription:
                             'Please wait while we are currently connecting to the server');
                   })),
         ],
@@ -358,8 +358,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong!');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong!');
                           });
                         },
                         child: Text('ACCOMMODATE MY PATIENTS FIRST'),
@@ -392,8 +392,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('GO OFFLINE NOW'),
@@ -459,8 +459,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Ready for Consultation'),
@@ -525,8 +525,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             countAdd.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Add count'),
@@ -573,8 +573,8 @@ class DoctorHomeScreen extends StatelessWidget {
               height: 24, width: 24, child: CircularProgressIndicator()),
         ),
       );
-    }
-    if (consRequests.consultations.isEmpty && !consRequests.isLoading.value) {
+    } else if (consRequests.consultations.isEmpty &&
+        !consRequests.isLoading.value) {
       return const Center(child: Text('No consultation request at the moment'));
     }
     return ListView.builder(

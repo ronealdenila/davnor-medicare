@@ -147,7 +147,11 @@ class AuthController extends GetxController {
       user.updatePassword(newPasswordController.text).then((_) {
         dismissDialog();
         _changePasswordSuccess();
-        Get.back();
+        if (kIsWeb) {
+          dismissDialog();
+        } else {
+          Get.back();
+        }
         Get.snackbar('Password Changed Successfully',
             'You may now use your new password.',
             snackPosition: SnackPosition.BOTTOM,
@@ -156,6 +160,9 @@ class AuthController extends GetxController {
             colorText: Get.theme.snackBarTheme.actionTextColor);
       });
     }).catchError((err) {
+      if (kIsWeb) {
+        dismissDialog();
+      }
       dismissDialog();
       Get.snackbar('Password Change Failed',
           'Your current password you have entered is not correct',

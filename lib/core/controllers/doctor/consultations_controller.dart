@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -23,6 +24,14 @@ class ConsultationsController extends GetxController {
   void onReady() {
     super.onReady();
     consultations.bindStream(getConsultations());
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
   }
 
   Stream<List<ConsultationModel>> getConsultations() {
@@ -47,7 +56,11 @@ class ConsultationsController extends GetxController {
     await sendNotification(consData.patientId!);
     await updateDocStatus();
     dismissDialog();
-    Get.back();
+    if (kIsWeb) {
+      //navPop
+    } else {
+      Get.back();
+    }
   }
 
   Future<void> addChatCollection(ConsultationModel consData) async {
