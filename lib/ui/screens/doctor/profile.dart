@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
-
   final fetchedData = authController.doctorModel.value;
 
   @override

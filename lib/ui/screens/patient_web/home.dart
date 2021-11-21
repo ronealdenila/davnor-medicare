@@ -14,13 +14,11 @@ import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
-import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
-import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
-import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
+import 'package:davnor_medicare/ui/widgets/patient/patient_custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
@@ -375,13 +373,18 @@ class ResponsiveView extends GetResponsiveView {
                                               .hasActiveQueueCons! &&
                                           stats.patientStatus[0]
                                               .hasActiveQueueMA!) {
-                                        Get.to(() => SelectQueueScreen());
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                selectQueueDialog());
                                       } else if (stats.patientStatus[0]
                                           .hasActiveQueueCons!) {
-                                        Get.to(() => QueueConsScreen());
+                                        navigationController
+                                            .navigateTo(Routes.Q_CONS_WEB);
                                       } else if (stats
                                           .patientStatus[0].hasActiveQueueMA!) {
-                                        Get.to(() => QueueMAScreen());
+                                        navigationController
+                                            .navigateTo(Routes.Q_MA_WEB);
                                       } else {
                                         showErrorDialog(
                                             errorTitle: 'dialog3'.tr,
@@ -434,6 +437,60 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
             ])));
+  }
+
+  Widget selectQueueDialog() {
+    return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.zero,
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(
+                Radius.circular(40),
+              )),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          width: Get.width * .4,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            verticalSpace20,
+            Text('slctQS'.tr, style: subtitle20Medium),
+            verticalSpace20,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 230,
+                height: 70,
+                child: PCustomButton(
+                  onTap: () {
+                    navigationController.navigateTo(Routes.Q_CONS_WEB);
+                  },
+                  text: 'btnq1'.tr,
+                  buttonColor: verySoftBlueColor[80],
+                ),
+              ),
+            ),
+            verticalSpace25,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 230,
+                height: 70,
+                child: PCustomButton(
+                  onTap: () {
+                    navigationController.navigateTo(Routes.Q_MA_WEB);
+                  },
+                  text: 'btnq2'.tr,
+                  buttonColor: verySoftBlueColor[80],
+                ),
+              ),
+            )
+          ]),
+        ),
+      ],
+    );
   }
 
   Widget showArticles(BuildContext context) {

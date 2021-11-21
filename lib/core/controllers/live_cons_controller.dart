@@ -18,7 +18,6 @@ class LiveConsController extends GetxController {
   RxList<LiveConsultationModel> liveCons = RxList<LiveConsultationModel>([]);
   TextEditingController reason = TextEditingController();
   final RxBool isLoading = true.obs;
-
   final RxBool doneFetching = false.obs;
 
   @override
@@ -60,7 +59,6 @@ class LiveConsController extends GetxController {
         .doc(model.patientID)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
-
     doneFetching.value = true;
   }
 
@@ -70,6 +68,7 @@ class LiveConsController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
+    doneFetching.value = true;
   }
 
   String getPatientProfile(LiveConsultationModel model) {

@@ -304,20 +304,17 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget getFloatingButton() {
-    if (!liveCont.isLoading.value) {
-      if (liveCont.liveCons.isNotEmpty) {
-        return FloatingActionButton(
-          backgroundColor: verySoftBlueColor[30],
-          elevation: 2,
-          onPressed: () {
-            Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
-          },
-          child: const Icon(
-            Icons.chat_rounded,
-          ),
-        );
-      }
-      return const SizedBox(height: 0, width: 0);
+    if (liveCont.liveCons.isNotEmpty) {
+      return FloatingActionButton(
+        backgroundColor: verySoftBlueColor[30],
+        elevation: 2,
+        onPressed: () {
+          Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
+        },
+        child: const Icon(
+          Icons.chat_rounded,
+        ),
+      );
     }
     return const SizedBox(height: 0, width: 0);
   }
