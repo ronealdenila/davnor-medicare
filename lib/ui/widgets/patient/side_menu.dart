@@ -113,19 +113,11 @@ appInfoDialog(BuildContext context) {
                       Align(
                         alignment: Alignment.center,
                         child: Image.asset(
-                          logo,
-                          fit: BoxFit.fill,
-                          height: 120,
-                          width: 120,
+                          logo2,
+                          fit: BoxFit.contain,
                         ),
                       ),
                       verticalSpace10,
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text('DavNor Medicare',
-                            style: subtitle18RegularOrange),
-                      ),
-                      verticalSpace20,
                       Text(
                         'appinfo'.tr,
                         textAlign: TextAlign.justify,
