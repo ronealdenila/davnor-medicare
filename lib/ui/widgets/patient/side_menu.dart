@@ -184,6 +184,6 @@ appInfoDialog(BuildContext context) {
 }
 
 updateLanguage(Locale locale) {
-  Get.back();
   Get.updateLocale(locale);
+  dismissDialog();
 }
