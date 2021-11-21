@@ -29,7 +29,8 @@ class PSWDPersonnelHome extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
+  final AcceptedMAController acceptedMA =
+      Get.put(AcceptedMAController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final AttachedPhotosController pcontroller =
       Get.put(AttachedPhotosController());
@@ -107,8 +108,7 @@ AppBar topNavigationBar(
           items: [
             DropdownMenuItem(
               onTap: () {
-                //TO DO: SHOULD NAVIGATE TO Patient PROFILE MAKE PROFILE SCREEN FIRST
-                //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                navigationController.navigateTo(Routes.PSWD_WEB_PROFILE);
               },
               value: 2,
               child: Text('Profile'),
@@ -149,7 +149,7 @@ class PswdPDashboardScreen extends GetView<MenuController> {
   final AppController appController = Get.find();
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-  final AcceptedMAController acceptedMA = Get.put(AcceptedMAController());
+  final AcceptedMAController acceptedMA = Get.find();
   @override
   Widget build(BuildContext context) {
     //Note: Breakpoint is for desktop lang
@@ -168,21 +168,16 @@ class PswdPDashboardScreen extends GetView<MenuController> {
   Widget getFloatingButton() {
     if (!acceptedMA.isLoading.value) {
       if (acceptedMA.accMA.isNotEmpty) {
-        if (acceptedMA.checkIfPersonnelHasAccepted() == -1) {
+        if (acceptedMA.indexOfLive.value == -1) {
           return const SizedBox(height: 0, width: 0);
         } else {
           return FloatingActionButton(
             backgroundColor: verySoftBlueColor[30],
             elevation: 2,
             onPressed: () {
-              //navigate to
               navigationController.navigateToWithArgs(
                   Routes.PSWD_ACCEPTED_MA_REQ,
-                  arguments: acceptedMA
-                      .accMA[acceptedMA.checkIfPersonnelHasAccepted()]);
-              // Get.to(() => AcceptedMARequestScreen(),
-              //     arguments: acceptedMA
-              //         .accMA[acceptedMA.checkIfPersonnelHasAccepted()]);
+                  arguments: acceptedMA.accMA[acceptedMA.indexOfLive.value]);
             },
             child: const Icon(
               Icons.chat_rounded,

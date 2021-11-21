@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
@@ -14,6 +13,7 @@ class AcceptedMAController extends GetxController {
   RxList<OnProgressMAModel> accMA = RxList<OnProgressMAModel>([]);
   RxInt index = (-1).obs;
   RxBool isLoading = true.obs;
+  RxInt indexOfLive = (-1).obs;
 
   @override
   void onReady() {
@@ -21,12 +21,20 @@ class AcceptedMAController extends GetxController {
     accMA.bindStream(getAcceptedMA());
   }
 
+  @override
+  void onInit() {
+    ever(accMA, (value) {
+      checkIfPersonnelHasAccepted();
+    });
+    super.onInit();
+  }
+
   Stream<List<OnProgressMAModel>> getAcceptedMA() {
     log.i('Accepted MA Controller | get Accepted MA');
     return firestore
         .collection('on_progress_ma')
         .orderBy('dateRqstd')
-        .where('isAccepted', isEqualTo: false)
+        .where('isAccepted', isEqualTo: true)
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
@@ -49,13 +57,13 @@ class AcceptedMAController extends GetxController {
         .then((doc) => PatientModel.fromJson(doc.data()!));
   }
 
-  int checkIfPersonnelHasAccepted() {
+  void checkIfPersonnelHasAccepted() {
     for (int i = 0; i < accMA.length; i++) {
       if (accMA[i].receiverID == auth.currentUser!.uid) {
-        return i;
+        indexOfLive.value = i;
       }
     }
-    return -1;
+    indexOfLive.value - 1;
   }
 
   String getProfilePhoto(OnProgressMAModel model) {

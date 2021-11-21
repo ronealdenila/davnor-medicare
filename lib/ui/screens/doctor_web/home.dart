@@ -67,8 +67,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 onTap: () {
-                  //TO DO: SHOULD NAVIGATE TO Patient PROFILE MAKE PROFILE SCREEN FIRST
-                  //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                  navigationController.navigateTo(Routes.DOC_WEB_PROFILE);
                 },
                 value: 2,
                 child: Text('Profile'),

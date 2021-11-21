@@ -65,6 +65,7 @@ abstract class Routes {
   static const CONS_REQ_WEB = _Paths.CONS_REQ_WEB;
   static const CONS_HISTORY_WEB = _Paths.CONS_HISTORY_WEB;
   static const LIVE_CONS_WEB = _Paths.LIVE_CONS_WEB;
+  static const DOC_WEB_PROFILE = _Paths.DOC_WEB_PROFILE;
 
   //PSWD
   static const PSWD_HEAD_HOME = _Paths.PSWD_HEAD_HOME;
@@ -81,6 +82,7 @@ abstract class Routes {
   static const RELEASING_AREA_ITEM = _Paths.RELEASING_AREA_ITEM;
   static const FOR_APPROVAL_ITEM = _Paths.FOR_APPROVAL_ITEM;
   static const FOR_APPROVAL_LIST = _Paths.FOR_APPROVAL_LIST;
+  static const PSWD_WEB_PROFILE = _Paths.PSWD_WEB_PROFILE;
 
   //Admin
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
@@ -154,11 +156,11 @@ abstract class _Paths {
   static const CONS_REQ_WEB = '/cons-req-web';
   static const CONS_HISTORY_WEB = '/cons-history-web';
   static const LIVE_CONS_WEB = '/live-cons-web';
+  static const DOC_WEB_PROFILE = '/doc-web-profile';
 
   //PSWD
   static const PSWD_HEAD_HOME = '/pswd-head-home';
   static const PSWD_PERSONNEL_HOME = '/pswd-home';
-
   static const MA_REQ_LIST = '/MAReqListScreen';
   static const MA_REQ_ITEM = '/MAReqItemScreen';
   static const ON_PROGRESS_REQ_ITEM = '/OnProgressReqItemScreen';
@@ -170,6 +172,7 @@ abstract class _Paths {
   static const RELEASING_AREA_LIST = '/ReleasingAreaListScreen';
   static const FOR_APPROVAL_ITEM = '/ForApprovalItemScreen';
   static const FOR_APPROVAL_LIST = '/ForApprovalListScreen';
+  static const PSWD_WEB_PROFILE = '/PSWD_WEB_PROFILE';
 
   //Admin
   static const ADMIN_HOME = '/admin-home';

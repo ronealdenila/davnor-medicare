@@ -226,7 +226,7 @@ class AuthController extends GetxController {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
-          //log.i('getUserRole | The current user has user role of $userRole');
+          log.i('getUserRole | The current user has user role of $userRole');
         }
       },
     );
@@ -277,9 +277,10 @@ class AuthController extends GetxController {
           if (pswdModel.value!.disabled! == false) {
             await checkAppRestriction(userRole);
           } else {
+            //CHANGE TO ERROR DIALOG
             Get.defaultDialog(
               title:
-                  'Your account has been disabled. Please contact this email address davnormedicare@gmail.com',
+                  'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com',
             );
           }
           await checkAppRestriction(userRole);
@@ -297,9 +298,10 @@ class AuthController extends GetxController {
               await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
             }
           } else {
+            //CHANGE TO ERROR DIALOG
             Get.defaultDialog(
                 title:
-                    'Your account has been disabled. Please contact this email address davnormedicare@gmail.com');
+                    'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com');
           }
           break;
         case 'patient':
@@ -311,7 +313,11 @@ class AuthController extends GetxController {
           }
           break;
         default:
-          await Get.defaultDialog(title: 'Error Occured');
+          dismissDialog();
+          showErrorDialog(
+              errorTitle: 'ERROR!',
+              errorDescription:
+                  'Sorry, we could not fetch your data.\nPlease contact davnor.medicare@gmail.com');
       }
     }
   }

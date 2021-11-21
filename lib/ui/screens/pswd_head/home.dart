@@ -101,8 +101,7 @@ AppBar topNavigationBar(
           items: [
             DropdownMenuItem(
               onTap: () {
-                //TO DO: SHOULD NAVIGATE TO Patient PROFILE MAKE PROFILE SCREEN FIRST
-                //navigationController.navigateTo(Routes.ADMIN_PROFILE);
+                navigationController.navigateTo(Routes.PSWD_WEB_PROFILE);
               },
               value: 2,
               child: Text('Profile'),
