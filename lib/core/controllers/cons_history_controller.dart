@@ -64,6 +64,7 @@ class ConsHistoryController extends GetxController {
               .toList(),
         )
         .catchError((onError) {
+      print(onError);
       isLoading.value = false;
     });
   }
@@ -81,6 +82,7 @@ class ConsHistoryController extends GetxController {
               .toList(),
         )
         .catchError((onError) {
+      print(onError);
       isLoading.value = false;
     });
   }
@@ -106,7 +108,7 @@ class ConsHistoryController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
-    //isLoadingAdditionalData.value = false;
+    isLoadingAdditionalData.value = false;
   }
 
   String getPatientProfile(ConsultationHistoryModel model) {
