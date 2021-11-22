@@ -166,7 +166,7 @@ class MADescriptionScreen extends StatelessWidget {
         if (stats.patientStatus[0].pStatus!) {
           if (!stats.patientStatus[0].hasActiveQueueMA!) {
             if (stats.pswdPStatus[0].hasFunds!) {
-              if (stats.pswdPStatus[0].isCutOff!) {
+              if (!stats.pswdPStatus[0].isCutOff!) {
                 if (controller.hasAvailableSlot()) {
                   return showConfirmationDialog(
                     dialogTitle: 'dialog2'.tr,

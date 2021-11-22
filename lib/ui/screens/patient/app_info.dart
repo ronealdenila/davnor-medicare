@@ -52,9 +52,9 @@ class AppInfoScreen extends StatelessWidget {
                     const Text(
                       'Illnesses Icons from:',
                       textAlign: TextAlign.left,
-                      style: subtitle18Bold,
+                      style: subtitle16Bold,
                     ),
-                    verticalSpace10,
+                    verticalSpace5,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -65,7 +65,7 @@ class AppInfoScreen extends StatelessWidget {
                           height: 50,
                           width: 50,
                         ),
-                        horizontalSpace10,
+                        horizontalSpace15,
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -79,11 +79,85 @@ class AppInfoScreen extends StatelessWidget {
                               child: Text('https://icons8.com',
                                   style: body16RegularUnderlineBlue),
                             ),
-                          ],
+                          ]),
+                      ]),
+                      verticalSpace18,
+                      const Text(
+                      'Icons made by: backwoods',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          flaticon,
+                          fit: BoxFit.fill,
+                          height: 60,
+                          width: 60,
                         ),
-                      ],
-                    )
+                        horizontalSpace10,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Flaticon', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://www.flaticon.com');
+                              },
+                              child: Text('https://www.flaticon.com',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ]),
+                      ]),
+                      verticalSpace18,
+                      const Text(
+                      'Icons made by: freepik,',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    const Text(
+                      'Medical vector created by freepik',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          freepik,
+                          fit: BoxFit.fill,
+                          height: 50,
+                          width: 50,
+                        ),
+                        horizontalSpace15,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Freepik', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://www.freepik.com');
+                              },
+                              child: Text('https://www.freepik.com',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ]),
+                      ]),
+                    
+                    verticalSpace15
                   ]),
-            ))));
+            )
+      ))
+    );
   }
 }

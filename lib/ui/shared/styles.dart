@@ -122,6 +122,12 @@ const TextStyle title20Regular = TextStyle(
 );
 
 // Subtitles
+const TextStyle subtitle16Bold = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+);
+
 const TextStyle subtitle20Bold = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.w700,

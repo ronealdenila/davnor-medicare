@@ -51,8 +51,7 @@ class PatientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
             appBar: AppBar(
               actions: [Obx(() => notificationIcon()), horizontalSpace10],
             ),
@@ -136,7 +135,7 @@ class PatientHomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            floatingActionButton: Obx(getFloatingButton)));
+            floatingActionButton: Obx(getFloatingButton));
   }
 
   Widget ActionButtons() {
