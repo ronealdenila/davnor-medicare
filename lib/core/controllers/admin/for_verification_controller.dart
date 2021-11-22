@@ -97,8 +97,12 @@ class ForVerificationController extends GetxController {
   }
 
   Future<void> deletePhotos(VerificationReqModel model) async {
-    await storage.refFromURL(model.validID!).delete();
-    await storage.refFromURL(model.validSelfie!).delete();
+    // await storage.refFromURL(model.validID!).delete();
+    // await storage.refFromURL(model.validSelfie!).delete();
+    await firestore.collection('patients').doc(auth.currentUser!.uid).update({
+      'validID': '',
+      'validSelfie': '',
+    });
   }
 
   Future<void> acceptUserVerification(VerificationReqModel model) async {
