@@ -6,7 +6,10 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -123,15 +126,18 @@ class LiveConsController extends GetxController {
       'dateConsStart': model.dateConsStart,
       'dateConsEnd': Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
-      //TO THINK - NOTIF TO SUCCESS/DONE CONSULTATION??
       await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
       await updateDocStatus(fetchedData!.userID!);
       await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      Get.back(); //back to Live Screen Info
-      Get.back(); //
+      if (kIsWeb) {
+        navigationController.navigateTo(Routes.DOC_WEB_HOME);
+      } else {
+        Get.back(); //back to Live Screen Info
+        Get.back(); //
+      }
     });
   }
 
@@ -198,8 +204,12 @@ class LiveConsController extends GetxController {
     await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
-    Get.back(); //back to Live Screen Info
-    Get.back(); //back to Patient Home
+    if (kIsWeb) {
+      navigationController.navigateTo(Routes.DOC_WEB_HOME);
+    } else {
+      Get.back(); //back to Live Screen Info
+      Get.back(); //back to Patient Home
+    }
   }
 
   Future<void> updateDocStatusSkip(String docID) async {

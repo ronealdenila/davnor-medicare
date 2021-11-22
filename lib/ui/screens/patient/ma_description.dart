@@ -166,7 +166,7 @@ class MADescriptionScreen extends StatelessWidget {
         if (stats.patientStatus[0].pStatus!) {
           if (!stats.patientStatus[0].hasActiveQueueMA!) {
             if (stats.pswdPStatus[0].hasFunds!) {
-              if (stats.pswdPStatus[0].isCutOff!) {
+              if (!stats.pswdPStatus[0].isCutOff!) {
                 if (controller.hasAvailableSlot()) {
                   return showConfirmationDialog(
                     dialogTitle: 'dialog2'.tr,
@@ -191,14 +191,12 @@ class MADescriptionScreen extends StatelessWidget {
               } else {
                 showErrorDialog(
                     errorTitle: 'Sorry were cut off already.',
-                    errorDescription: 'Please try again next time.'
-                  );
+                    errorDescription: 'Please try again next time.');
               }
             } else {
               showErrorDialog(
-                errorTitle: 'Sorry MA has no fund for now.',
-                errorDescription: 'Please try again next time'
-                );
+                  errorTitle: 'Sorry MA has no fund for now.',
+                  errorDescription: 'Please try again next time');
             }
           } else {
             showErrorDialog(

@@ -3,6 +3,7 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
@@ -37,7 +38,8 @@ class PSWDPersonnelHome extends StatelessWidget {
   final MenuController menuController = Get.put(MenuController());
   final NavigationController navigationController =
       Get.put(NavigationController());
-
+  final CallingPatientController callController =
+      Get.put(CallingPatientController(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

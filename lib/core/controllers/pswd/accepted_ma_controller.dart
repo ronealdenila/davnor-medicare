@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +25,7 @@ class AcceptedMAController extends GetxController {
   @override
   void onInit() {
     ever(accMA, (value) {
+      print('checking');
       checkIfPersonnelHasAccepted();
     });
     super.onInit();
@@ -61,9 +63,10 @@ class AcceptedMAController extends GetxController {
     for (int i = 0; i < accMA.length; i++) {
       if (accMA[i].receiverID == auth.currentUser!.uid) {
         indexOfLive.value = i;
+        return;
       }
     }
-    indexOfLive.value - 1;
+    indexOfLive.value = -1;
   }
 
   String getProfilePhoto(OnProgressMAModel model) {
@@ -89,12 +92,16 @@ class AcceptedMAController extends GetxController {
     }).then((value) async {
       await deleteMAFromQueue(model.maID!);
       await updatePatientStatus(model.requesterID!);
-      //TO THINK: if i notify pa si patient if na accept ba iyang request
-      Get.back();
+      goBack(); //TO DO: pop
     }).catchError((onError) {
       showErrorDialog(
           errorTitle: 'ERROR', errorDescription: 'Something went wrong');
     });
+  }
+
+  void goBack() {
+    return navigationController.navigatorKey.currentState!.pop();
+    //TO DO CHANGE TO PSWD HOME?
   }
 
   Future<void> deleteMAFromQueue(String maID) async {

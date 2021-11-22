@@ -195,7 +195,7 @@ class ForVerificationController extends GetxController {
       'notifBadge': FieldValue.increment(1),
     });
 
-    //TO THINK - SEND NOTIF TO DEVICE ALSO
+    //TO THINK - SEND NOTIF TO DEVICE ALSO ?????
   }
 
   Future<void> removeVerificationReq(String uid) async {

@@ -108,7 +108,8 @@ class LiveChatController extends GetxController {
         .add({
       'senderID': auth.currentUser!.uid,
       'message': message,
-      'dateCreated': Timestamp.fromDate(DateTime.now()),
+      'dateCreated':
+          FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
   }
 

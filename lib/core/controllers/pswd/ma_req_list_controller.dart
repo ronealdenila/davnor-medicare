@@ -147,7 +147,7 @@ class MAReqListController extends GetxController {
     await deleteMA(maID);
     dismissDialog(); //dismiss Loading
     dismissDialog(); //dismiss Popup Dialog
-    Get.back(); //navigate
+    goBack();
   }
 
   Future<void> deleteMA(String maID) async {
