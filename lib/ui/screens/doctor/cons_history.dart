@@ -138,12 +138,12 @@ class DocConsHistoryScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: consHController.consHistory.length,
       itemBuilder: (context, index) {
-        return displayConsHistory(consHController.consHistory[index]);
+        return displayConsHistory(consHController.consHistory[index], index);
       },
     );
   }
 
-  Widget displayConsHistory(ConsultationHistoryModel model) {
+  Widget displayConsHistory(ConsultationHistoryModel model, int index) {
     return FutureBuilder(
       future: consHController.getPatientData(model),
       builder: (context, snapshot) {

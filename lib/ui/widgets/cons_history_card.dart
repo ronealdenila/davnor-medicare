@@ -57,7 +57,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            (authController.userRole! == 'patient')
+                            (authController.userRole == 'patient')
                                 ? consHCont.getDoctorFullName(consHistory!)
                                 : consHistory!.fullName!,
                             overflow: TextOverflow.ellipsis,
@@ -66,7 +66,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                           ),
                           verticalSpace5,
                           Text(
-                            (authController.userRole! == 'patient')
+                            (authController.userRole == 'patient')
                                 ? consHistory!.doc.value!.title!
                                 : 'Consultation Date:',
                             style: caption12RegularNeutral,
@@ -80,15 +80,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                             maxLines: 1,
                           ),
                           verticalSpace5,
-                          Visibility(
-                            visible: authController.userRole! == 'doctor',
-                            child: Text(
-                              'By: ${consHCont.getPatientName(consHistory!)}',
-                              style: caption12Medium,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
+                          getForDoctor(consHistory!)
                         ],
                       ),
                     ),
@@ -111,28 +103,50 @@ class ConsultationHistoryCard extends StatelessWidget {
     }
   }
 
+  Widget getForDoctor(ConsultationHistoryModel model) {
+    if (authController.userRole! == 'doctor') {
+      if (model.patient.value == null) {
+        return SizedBox(width: 0, height: 0);
+      } else {
+        return Text(
+          'By: ${consHCont.getPatientName(consHistory!)}',
+          style: caption12Medium,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        );
+      }
+    }
+    return SizedBox(width: 0, height: 0);
+  }
+
   Widget forPatientHistory(ConsultationHistoryModel model) {
+    if (model.doc.value == null) {
+      return Image.asset(doctorDefault, fit: BoxFit.cover);
+    }
     if (model.doc.value!.profileImage! == '') {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
+      return Image.asset(doctorDefault, fit: BoxFit.cover);
     }
     return Image.network(
       model.doc.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(blankProfile, fit: BoxFit.cover);
+        return Image.asset(doctorDefault, fit: BoxFit.cover);
       },
     );
   }
 
   Widget getDoctorPhoto(ConsultationHistoryModel model) {
+    if (model.patient.value == null) {
+      return Image.asset(blankProfile, fit: BoxFit.cover);
+    }
     if (model.patient.value!.profileImage! == '') {
-      return Image.asset(doctorDefault, fit: BoxFit.cover);
+      return Image.asset(blankProfile, fit: BoxFit.cover);
     }
     return Image.network(
       model.patient.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(doctorDefault, fit: BoxFit.cover);
+        return Image.asset(blankProfile, fit: BoxFit.cover);
       },
     );
   }

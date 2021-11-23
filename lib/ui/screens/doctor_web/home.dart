@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
@@ -73,7 +74,10 @@ class DoctorWebHomeScreen extends StatelessWidget {
                 child: Text('Profile'),
               ),
               DropdownMenuItem(
-                onTap: authController.signOut,
+                onTap: () async {
+                  await goOffline();
+                  await authController.signOut();
+                },
                 value: 2,
                 child: Text('Logout'),
               )
@@ -793,8 +797,6 @@ Widget loadingDoctorStats() {
 
 //DIALOGS
 Widget offlineDialog() {
-  final AuthController authController = Get.find();
-  final fetchedData = authController.doctorModel.value;
   return SimpleDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -811,67 +813,16 @@ Widget offlineDialog() {
                 ),
                 verticalSpace15,
                 const Text(
-                  'It looks like you still have some patients waiting',
+                  'It looks like you want to change your status from available to unavailable',
                   textAlign: TextAlign.center,
-                  style: subtitle18Regular,
+                  style: body16Regular,
                 ),
                 verticalSpace20,
                 Align(
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await firestore
-                            .collection('doctors')
-                            .doc(fetchedData!.userID!)
-                            .collection('status')
-                            .doc('value')
-                            .update({'dStatus': false}).then((value) {
-                          dismissDialog();
-                          print('Changed status');
-                          count.value = 1;
-                        }).catchError((error) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong!');
-                        });
-                      },
-                      child: Text(
-                        'ACCOMMODATE MY PATIENTS FIRST',
-                        style: body16Regular,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                        primary: Color(0xFF0280FD),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18),
-                        ),
-                      ),
-                    )),
-                verticalSpace10,
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        //final num = data['numToAccomodate'];
-                        await firestore
-                            .collection('doctors')
-                            .doc(fetchedData!.userID!)
-                            .collection('status')
-                            .doc('value')
-                            .update({
-                          'accomodated': 0,
-                          'numToAccomodate': 0,
-                          'dStatus': false
-                        }).then((value) {
-                          //TO THINK - the offline should affect the slot available consSlot - num in category
-                          dismissDialog();
-                          count.value = 1;
-                        }).catchError((error) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
-                        });
+                        await goOffline();
                       },
                       child: Text(
                         'GO OFFLINE NOW',
@@ -895,6 +846,30 @@ Widget offlineDialog() {
               ],
             ))
       ]);
+}
+
+Future<void> goOffline() async {
+  final AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value;
+  final DoctorFunctions func = DoctorFunctions();
+
+  final total = stats.doctorStatus[0].numToAccomodate! -
+      stats.doctorStatus[0].accomodated!;
+  await firestore
+      .collection('doctors')
+      .doc(fetchedData!.userID!)
+      .collection('status')
+      .doc('value')
+      .update({'accomodated': 0, 'numToAccomodate': 0, 'dStatus': false}).then(
+          (value) async {
+    await func.updateSlot(total);
+    dismissDialog();
+    print('Changed status');
+    count.value = 1;
+  }).catchError((error) {
+    showErrorDialog(
+        errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
+  });
 }
 
 Widget detailsDialogCons1() {
@@ -936,7 +911,13 @@ Widget detailsDialogCons1() {
                           'accomodated': 0,
                           'numToAccomodate': count.value,
                           'dStatus': true
-                        }).then((value) {
+                        }).then((value) async {
+                          await firestore
+                              .collection('cons_status')
+                              .doc(fetchedData.categoryID!)
+                              .update({
+                            'consSlot': FieldValue.increment(count.value)
+                          });
                           dismissDialog();
                           print('Changed status');
                           count.value = 1;
@@ -1008,7 +989,13 @@ Widget detailsDialogCons2(int currentCount) {
                             .update({
                           'numToAccomodate':
                               FieldValue.increment(countAdd.value)
-                        }).then((value) {
+                        }).then((value) async {
+                          await firestore
+                              .collection('cons_status')
+                              .doc(fetchedData.categoryID!)
+                              .update({
+                            'consSlot': FieldValue.increment(countAdd.value)
+                          });
                           dismissDialog();
                           countAdd.value = 1;
                         }).catchError((error) {

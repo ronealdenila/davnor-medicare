@@ -18,6 +18,8 @@ class ConsultationsController extends GetxController {
   final fetchedData = authController.doctorModel.value;
   RxBool isLoading = true.obs;
   RxBool isLoadingPatientData = true.obs;
+  final RxInt selectedIndex = 0.obs;
+  final RxInt mobileIndex = 0.obs;
 
   @override
   void onReady() {
@@ -47,7 +49,11 @@ class ConsultationsController extends GetxController {
     await sendNotification(consData.patientId!);
     await updateDocStatus();
     dismissDialog();
-    Get.back();
+    if (kIsWeb) {
+      //TO DO: after starting cons go to hashboard navPop
+    } else {
+      Get.back();
+    }
   }
 
   Future<void> addChatCollection(ConsultationModel consData) async {

@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReleasingAreaListScreen extends StatelessWidget {
-  final ReleasingMAController rlsController = Get.find();
+  final ReleasingMAController rlsController = Get.put(ReleasingMAController());
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
 

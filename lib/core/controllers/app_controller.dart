@@ -45,27 +45,38 @@ class AppController {
 
   Future<void> sendNotificationViaFCM(
       String title, String message, String sendTo) async {
-    const postUrl = 'https://fcm.googleapis.com/fcm/send';
-    final data = {
-      'notification': {'title': title, 'body': message},
-      'to': sendTo
-    };
+    await firestore
+        .collection('patients')
+        .doc(sendTo)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (documentSnapshot.exists) {
+        Map data = documentSnapshot.data() as Map;
+        if (data['deviceToken'] != '') {
+          const postUrl = 'https://fcm.googleapis.com/fcm/send';
+          final data = {
+            'notification': {'title': title, 'body': message},
+            'to': sendTo
+          };
 
-    final headers = {
-      'content-type': 'application/json',
-      'Authorization': serverkey
-    };
+          final headers = {
+            'content-type': 'application/json',
+            'Authorization': serverkey
+          };
 
-    final response = await http.post(Uri.parse(postUrl),
-        body: json.encode(data),
-        encoding: Encoding.getByName('utf-8'),
-        headers: headers);
+          final response = await http.post(Uri.parse(postUrl),
+              body: json.encode(data),
+              encoding: Encoding.getByName('utf-8'),
+              headers: headers);
 
-    if (response.statusCode == 200) {
-      log.i('Send via POST success!');
-    } else {
-      log.i('Send via POST failed');
-    }
+          if (response.statusCode == 200) {
+            log.i('Send via POST success!');
+          } else {
+            log.i('Send via POST failed');
+          }
+        }
+      }
+    });
   }
 
   //Global Function FOR DYNAMIC PSWD ITEM VIEW - PSWD Side

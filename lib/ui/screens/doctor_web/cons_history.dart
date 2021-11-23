@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_responsive.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ConsHistoryWeb extends StatelessWidget {
   @override
@@ -170,7 +169,7 @@ class ResponsiveBody extends GetResponsiveView {
                     color: Color(0xFFCBD4E1),
                   ),
                 )),
-                child: RequestsListView())),
+                child: Obx(() => RequestsListView()))),
         Expanded(
             flex: 6,
             child: Container(
@@ -188,18 +187,7 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                child: Obx(() => consHController.isLoadingAdditionalData.value
-                    ? Shimmer.fromColors(
-                        baseColor: neutralColor[10]!,
-                        highlightColor: Colors.white,
-                        child: SizedBox(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      )
-                    : RequestsChatView(
-                        consHController.consHistory[selectedIndex.value],
-                        context)))),
+                child: Obx(() => RequestsChatView(context)))),
       ],
     );
   }
@@ -218,7 +206,7 @@ class ResponsiveBody extends GetResponsiveView {
                     color: Color(0xFFCBD4E1),
                   ),
                 )),
-                child: RequestsListView())),
+                child: Obx(() => RequestsListView()))),
         Expanded(
             flex: 6,
             child: Container(
@@ -236,11 +224,7 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                child: Obx(() => consHController.isLoading.value
-                    ? SizedBox()
-                    : RequestsChatView(
-                        consHController.consHistory[selectedIndex.value],
-                        context)))),
+                child: Obx(() => RequestsChatView(context)))),
         Expanded(
             flex: 3,
             child: Container(
@@ -253,19 +237,12 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 height: Get.height,
                 width: Get.width * .2,
-                child: Obx(() => consHController.isLoading.value
-                    ? SizedBox()
-                    : RequestsInfoView(
-                        consHController.consHistory[selectedIndex.value]))))
+                child: Obx(() => RequestsInfoView())))
       ],
     );
   }
 
   Widget RequestsListView() {
-    return Obx(() => listBuilder());
-  }
-
-  Widget listBuilder() {
     if (consHController.isLoading.value) {
       return Align(
         alignment: Alignment.center,
@@ -322,9 +299,13 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 
-  Widget RequestsChatView(
-      ConsultationHistoryModel consData, BuildContext context) {
-    if (consData.patient.value == null) {
+  Widget RequestsChatView(BuildContext context) {
+    if (consHController.consHistory.isEmpty) {
+      return Container();
+    }
+    if (consHController.consHistory[selectedIndex.value].patient.value ==
+            null ||
+        consHController.consHistory.isEmpty) {
       return Container();
     }
     print(selectedIndex.value);
@@ -332,8 +313,9 @@ class ResponsiveBody extends GetResponsiveView {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         screen.isDesktop
-            ? topHeaderRequest(consData)
-            : topHeaderRequestWeb(consData),
+            ? topHeaderRequest(consHController.consHistory[selectedIndex.value])
+            : topHeaderRequestWeb(
+                consHController.consHistory[selectedIndex.value]),
         Expanded(
           child: Obx(() => FutureBuilder(
               future: consHController.getChatHistory(
@@ -472,8 +454,12 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 
-  Widget RequestsInfoView(ConsultationHistoryModel consData) {
-    if (consData.patient.value == null) {
+  Widget RequestsInfoView() {
+    if (consHController.consHistory.isEmpty) {
+      return Container();
+    }
+    if (consHController.consHistory[selectedIndex.value].patient.value ==
+        null) {
       return Container();
     }
     return SingleChildScrollView(
@@ -495,10 +481,12 @@ class ResponsiveBody extends GetResponsiveView {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
-                child: getPhoto(consData)),
+                child:
+                    getPhoto(consHController.consHistory[selectedIndex.value])),
             verticalSpace20,
             Text(
-              consHController.getPatientName(consData),
+              consHController.getPatientName(
+                  consHController.consHistory[selectedIndex.value]),
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: subtitle18Medium,
@@ -528,7 +516,9 @@ class ResponsiveBody extends GetResponsiveView {
                   ),
                   SizedBox(
                     width: 170,
-                    child: Text(consData.fullName!,
+                    child: Text(
+                        consHController
+                            .consHistory[selectedIndex.value].fullName!,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -547,7 +537,8 @@ class ResponsiveBody extends GetResponsiveView {
                   ),
                   SizedBox(
                     width: 170,
-                    child: Text(consData.age!,
+                    child: Text(
+                        consHController.consHistory[selectedIndex.value].age!,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -567,7 +558,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateRqstd!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateRqstd!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -587,7 +579,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateConsStart!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateConsStart!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -607,7 +600,8 @@ class ResponsiveBody extends GetResponsiveView {
                   SizedBox(
                     width: 170,
                     child: Text(
-                        consHController.convertDate(consData.dateConsEnd!),
+                        consHController.convertDate(consHController
+                            .consHistory[selectedIndex.value].dateConsEnd!),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -634,7 +628,7 @@ class ResponsiveBody extends GetResponsiveView {
               width: Get.width * .5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [RequestsInfoView(model)],
+                children: [RequestsInfoView()],
               ))
         ]);
   }

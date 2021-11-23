@@ -116,7 +116,7 @@ class LiveConsController extends GetxController {
         .doc(model.consID)
         .set(<String, dynamic>{
       'consID': model.consID,
-      'patientID': model.patientID,
+      'patientId': model.patientID,
       'docID': model.docID,
       'fullName': model.fullName,
       'age': model.age,

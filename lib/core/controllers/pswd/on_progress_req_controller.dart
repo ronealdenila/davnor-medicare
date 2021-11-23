@@ -67,10 +67,8 @@ class OnProgressReqController extends GetxController {
     }
   }
 
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(
-            '/OnProgressReqListScreen', (Route<dynamic> route) => true);
+  void goBack() {
+    return navigationController.navigatorKey.currentState!.pop();
   }
 
   Future<void> toBeReleased(String maID, String requesterID) async {

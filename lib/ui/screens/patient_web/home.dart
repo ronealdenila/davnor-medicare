@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/notif_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
@@ -13,14 +14,12 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
-import 'package:davnor_medicare/ui/screens/patient/notification_feed.dart';
-import 'package:davnor_medicare/ui/screens/patient/queue_cons.dart';
-import 'package:davnor_medicare/ui/screens/patient/queue_ma.dart';
-import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
+import 'package:davnor_medicare/ui/widgets/patient/notification_card.dart';
+import 'package:davnor_medicare/ui/widgets/patient/patient_custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/side_menu.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
@@ -44,6 +43,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   final ArticleController articleService = Get.put(ArticleController());
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
+  final NotifController notifController = Get.put(NotifController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class PatientWebHomeScreen extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: topNavigationBar(),
+      appBar: topNavigationBar(context),
       drawer: Drawer(
         child: PatientSideMenu(),
       ),
@@ -59,19 +59,20 @@ class PatientWebHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget notificationIcon() {
+  Widget notificationIcon(BuildContext context) {
     if (stats.isLoading.value) {
-      return notifIconNormal();
+      return notifIconNormal(context);
     }
     return stats.patientStatus[0].notifBadge == 0
-        ? notifIconNormal()
-        : notifIconWithBadge(stats.patientStatus[0].notifBadge!);
+        ? notifIconNormal(context)
+        : notifIconWithBadge(stats.patientStatus[0].notifBadge!, context);
   }
 
-  Widget notifIconNormal() {
+  Widget notifIconNormal(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Get.to(() => NotificationFeedScreen());
+        showDialog(
+            context: context, builder: (context) => notificationDialog());
       },
       icon: const Icon(
         Icons.notifications_outlined,
@@ -80,7 +81,7 @@ class PatientWebHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget notifIconWithBadge(int count) {
+  Widget notifIconWithBadge(int count, BuildContext context) {
     return Badge(
       position: BadgePosition.topEnd(top: 1, end: 3),
       badgeContent: Text(
@@ -89,7 +90,8 @@ class PatientWebHomeScreen extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: () {
-          Get.to(() => NotificationFeedScreen());
+          showDialog(
+              context: context, builder: (context) => notificationDialog());
           resetBadge();
         },
         icon: const Icon(
@@ -98,6 +100,42 @@ class PatientWebHomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget notificationDialog() {
+    return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 30,
+          horizontal: 50,
+        ),
+        children: [
+          SizedBox(
+              width: Get.width * .2,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Obx(displayNotification)],
+                ),
+              ))
+        ]);
+  }
+
+  Widget displayNotification() {
+    return notifController.notif.isEmpty
+        ? Center(
+            child: Text(
+              'notif'.tr,
+              textAlign: TextAlign.center,
+            ),
+          )
+        : ListView.builder(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            shrinkWrap: true,
+            itemCount: notifController.notif.length,
+            itemBuilder: (context, index) {
+              return NotificationCard(notif: notifController.notif[index]);
+            });
   }
 
   Future<void> resetBadge() async {
@@ -111,7 +149,7 @@ class PatientWebHomeScreen extends StatelessWidget {
     });
   }
 
-  AppBar topNavigationBar() {
+  AppBar topNavigationBar(BuildContext context) {
     final AuthController authController = Get.find();
     final fetchedData = authController.patientModel.value;
     return AppBar(
@@ -121,7 +159,7 @@ class PatientWebHomeScreen extends StatelessWidget {
       title: Row(
         children: [
           Spacer(),
-          Obx(() => notificationIcon()),
+          Obx(() => notificationIcon(context)),
           horizontalSpace25,
           DropdownButton(
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -411,18 +449,11 @@ class ResponsiveView extends GetResponsiveView {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 DmText.title24Medium(
                                   'homepage'.tr,
                                   color: neutralColor,
-                                ),
-                                InkWell(
-                                  onTap: seeAllArticles,
-                                  child: Text(
-                                    'action4'.tr,
-                                    style: subtitle18MediumNeutral,
-                                  ),
                                 ),
                               ],
                             ),

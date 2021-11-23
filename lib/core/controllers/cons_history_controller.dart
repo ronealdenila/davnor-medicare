@@ -64,6 +64,7 @@ class ConsHistoryController extends GetxController {
               .toList(),
         )
         .catchError((onError) {
+      print(onError);
       isLoading.value = false;
     });
   }
@@ -81,8 +82,14 @@ class ConsHistoryController extends GetxController {
               .toList(),
         )
         .catchError((onError) {
+      print(onError);
       isLoading.value = false;
     });
+  }
+
+  void refresh() {
+    consHistory.clear();
+    consHistory.assignAll(filteredListforP);
   }
 
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
@@ -106,7 +113,7 @@ class ConsHistoryController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
-    //isLoadingAdditionalData.value = false;
+    isLoadingAdditionalData.value = false;
   }
 
   String getPatientProfile(ConsultationHistoryModel model) {
@@ -147,6 +154,9 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
+    if (!kIsWeb) {
+      chatHistory.clear();
+    }
     log.i(model.consID);
     await firestore
         .collection('chat')

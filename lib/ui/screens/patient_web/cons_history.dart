@@ -10,7 +10,6 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ConsHistoryWebScreen extends StatelessWidget {
   @override
@@ -145,6 +144,7 @@ class ResponsiveBody extends GetResponsiveView {
             flex: 3,
             child: Container(
                 width: Get.width * .3,
+                height: Get.height,
                 decoration: const BoxDecoration(
                     border: Border(
                   top: BorderSide(
@@ -280,21 +280,13 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsChatView(BuildContext context) {
-    if (consHController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: const SizedBox(
-              height: 24, width: 24, child: CircularProgressIndicator()),
-        ),
-      );
-    } else if (consHController.consHistory.isEmpty &&
-        !consHController.isLoading.value) {
-      return SizedBox();
-    } else if (consHController.consHistory[selectedIndex.value].doc.value ==
-        null) {
-      return SizedBox();
+    if (consHController.consHistory.isEmpty) {
+      return Container();
+    }
+
+    if (consHController.consHistory[selectedIndex.value].doc.value == null ||
+        consHController.consHistory.isEmpty) {
+      return Container();
     }
     print(selectedIndex.value);
     return Column(
@@ -442,9 +434,8 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget RequestsInfoView() {
-    if (consHController.consHistory.isEmpty ||
-        consHController.isLoading.value) {
-      return SizedBox();
+    if (consHController.consHistory.isEmpty) {
+      return Container();
     }
     if (consHController.consHistory[selectedIndex.value].doc.value == null) {
       return Container();

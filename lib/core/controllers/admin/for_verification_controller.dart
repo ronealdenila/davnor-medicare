@@ -149,7 +149,6 @@ class ForVerificationController extends GetxController {
       removeVerificationReq(model.patientID!);
       dismissDialog();
       navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
-      //Get.off(() => VerificationReqListScreen());
       clearController();
     }).catchError((error) {
       dismissDialog();

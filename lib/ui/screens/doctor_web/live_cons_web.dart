@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
@@ -31,6 +32,7 @@ class LiveConsultationWeb extends StatelessWidget {
   final fetchedData = authController.doctorModel.value;
   final CallingPatientController callController =
       Get.put(CallingPatientController());
+  final ConsultationsController consRequests = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -301,8 +303,8 @@ class LiveConsultationWeb extends StatelessWidget {
                       ),
                       onPressed: () async {
                         showErrorDialog(
-                          errorTitle: 'ERROR!',
-                          errorDescription: 'Something went wrong');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong');
                       },
                     );
                   }
@@ -446,6 +448,7 @@ class LiveConsultationWeb extends StatelessWidget {
           'Select YES if you want to end the consultation. Otherwise, select NO',
       onYesTap: () {
         liveCont.endConsultation(liveCont.liveCons[0]);
+        consRequests.selectedIndex.value = 0;
       },
       onNoTap: () => dismissDialog(),
     );
@@ -505,10 +508,13 @@ class LiveConsultationWeb extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: CustomButton(
                       buttonColor: verySoftBlueColor,
-                      onTap: () => liveCont.skipConsultation(
-                            consData.consID!,
-                            consData.patientID!,
-                          ),
+                      onTap: () {
+                        liveCont.skipConsultation(
+                          consData.consID!,
+                          consData.patientID!,
+                        );
+                        consRequests.selectedIndex.value = 0;
+                      },
                       //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
                       text: 'Submit')),
             ],

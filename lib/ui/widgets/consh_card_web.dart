@@ -11,11 +11,11 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class ConsultationHistoryCardWeb extends StatelessWidget {
   const ConsultationHistoryCardWeb({
-    this.consHistory,
+    required this.consHistory,
     this.onItemTap,
   });
 
-  final ConsultationHistoryModel? consHistory;
+  final ConsultationHistoryModel consHistory;
   final void Function()? onItemTap;
   static ConsHistoryController consHCont = Get.find();
   static AuthController authController = Get.find();
@@ -46,7 +46,7 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
                       SizedBox(
                         width: 50,
                         height: 50,
-                        child: getPhoto(consHistory!),
+                        child: getPhoto(consHistory),
                       ),
                       horizontalSpace20,
                       Flexible(
@@ -57,16 +57,15 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
                             children: [
                               Text(
                                 (authController.userRole! == 'patient')
-                                    ? consHCont.getDoctorFullName(consHistory!)
-                                    : consHistory!.fullName!,
+                                    ? consHCont.getDoctorFullName(consHistory)
+                                    : consHistory.fullName!,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: body16SemiBold,
                               ),
                               verticalSpace5,
                               Text(
-                                consHCont
-                                    .convertDate(consHistory!.dateConsEnd!),
+                                consHCont.convertDate(consHistory.dateConsEnd!),
                                 style: caption12Medium,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -90,32 +89,38 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
     if (authController.userRole! == 'patient') {
       return forPatientHistory(model);
     } else {
-      return getDoctorPhoto(model);
+      return forDoctorHistory(model);
     }
   }
 
   Widget forPatientHistory(ConsultationHistoryModel model) {
+    if (model.doc.value == null) {
+      return Image.asset(doctorDefault, fit: BoxFit.cover);
+    }
     if (model.doc.value!.profileImage! == '') {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
+      return Image.asset(doctorDefault, fit: BoxFit.cover);
     }
     return Image.network(
       model.doc.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(blankProfile, fit: BoxFit.cover);
+        return Image.asset(doctorDefault, fit: BoxFit.cover);
       },
     );
   }
 
-  Widget getDoctorPhoto(ConsultationHistoryModel model) {
+  Widget forDoctorHistory(ConsultationHistoryModel model) {
+    if (model.patient.value == null) {
+      return Image.asset(blankProfile, fit: BoxFit.cover);
+    }
     if (model.patient.value!.profileImage! == '') {
-      return Image.asset(doctorDefault, fit: BoxFit.cover);
+      return Image.asset(blankProfile, fit: BoxFit.cover);
     }
     return Image.network(
       model.patient.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(doctorDefault, fit: BoxFit.cover);
+        return Image.asset(blankProfile, fit: BoxFit.cover);
       },
     );
   }

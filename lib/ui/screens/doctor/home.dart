@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
-import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
@@ -25,6 +25,7 @@ import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
   final StatusController stats = Get.put(StatusController(), permanent: true);
+  final DoctorFunctions func = DoctorFunctions();
   final ConsultationsController consRequests =
       Get.put(ConsultationsController());
   final LiveConsController liveCont =
@@ -70,7 +71,10 @@ class DoctorHomeScreen extends StatelessWidget {
                 }
               },
               onConsultHisoryTap: () => Get.to(() => DocConsHistoryScreen()),
-              onLogoutTap: authController.signOut,
+              onLogoutTap: () async {
+                await goOffline();
+                await authController.signOut();
+              },
             ),
             backgroundColor: verySoftBlueColor,
             body: SizedBox(
@@ -334,67 +338,20 @@ class DoctorHomeScreen extends StatelessWidget {
                   const Text(
                     'Change Status',
                     textAlign: TextAlign.center,
-                    style: kIsWeb ? title32Regular : subtitle20Bold,
+                    style: subtitle20Bold,
                   ),
                   verticalSpace15,
                   const Text(
-                    'It looks like you still have some patients waiting',
+                    'It looks like you want to change your status from available to unavailable',
                     textAlign: TextAlign.center,
-                    style: kIsWeb ? title32Regular : body16Regular,
+                    style: body16Regular,
                   ),
                   verticalSpace25,
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await firestore
-                              .collection('doctors')
-                              .doc(fetchedData!.userID!)
-                              .collection('status')
-                              .doc('value')
-                              .update({'dStatus': false}).then((value) {
-                            dismissDialog();
-                            print('Changed status');
-                            count.value = 1;
-                          }).catchError((error) {
-                            showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong!');
-                          });
-                        },
-                        child: Text('ACCOMMODATE MY PATIENTS FIRST'),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          primary: Color(0xFF0280FD),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18),
-                          ),
-                        ),
-                      )),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          //final num = data['numToAccomodate'];
-                          await firestore
-                              .collection('doctors')
-                              .doc(fetchedData!.userID!)
-                              .collection('status')
-                              .doc('value')
-                              .update({
-                            'accomodated': 0,
-                            'numToAccomodate': 0,
-                            'dStatus': false
-                          }).then((value) {
-                            //TO THINK - the offline should affect the slot available consSlot - num in category
-                            dismissDialog();
-                            print('Changed status');
-                            count.value = 1;
-                          }).catchError((error) {
-                            showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
-                          });
+                          await goOffline();
                         },
                         child: Text('GO OFFLINE NOW'),
                         style: ElevatedButton.styleFrom(
@@ -407,13 +364,36 @@ class DoctorHomeScreen extends StatelessWidget {
                       )),
                   verticalSpace15,
                   Text(
-                    'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
+                    'By clicking this button your status will be unavailable and all patients waiting will be notified',
                     textAlign: TextAlign.center,
                     style: kIsWeb ? title32Regular : body14RegularNeutral,
                   ),
                 ],
               ))
         ]);
+  }
+
+  Future<void> goOffline() async {
+    final total = stats.doctorStatus[0].numToAccomodate! -
+        stats.doctorStatus[0].accomodated!;
+    await firestore
+        .collection('doctors')
+        .doc(fetchedData!.userID!)
+        .collection('status')
+        .doc('value')
+        .update({
+      'accomodated': 0,
+      'numToAccomodate': 0,
+      'dStatus': false
+    }).then((value) async {
+      await func.updateSlot(total);
+      dismissDialog();
+      print('Changed status');
+      count.value = 1;
+    }).catchError((error) {
+      showErrorDialog(
+          errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
+    });
   }
 
   Widget detailsDialogCons1() {
@@ -453,9 +433,14 @@ class DoctorHomeScreen extends StatelessWidget {
                             'accomodated': 0,
                             'numToAccomodate': count.value,
                             'dStatus': true
-                          }).then((value) {
+                          }).then((value) async {
+                            await firestore
+                                .collection('cons_status')
+                                .doc(fetchedData!.categoryID!)
+                                .update({
+                              'consSlot': FieldValue.increment(count.value)
+                            });
                             dismissDialog();
-                            print('Changed status');
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
@@ -519,9 +504,14 @@ class DoctorHomeScreen extends StatelessWidget {
                               .update({
                             'numToAccomodate':
                                 FieldValue.increment(countAdd.value)
-                          }).then((value) {
+                          }).then((value) async {
                             dismissDialog();
-                            print('Add count');
+                            await firestore
+                                .collection('cons_status')
+                                .doc(fetchedData!.categoryID!)
+                                .update({
+                              'consSlot': FieldValue.increment(countAdd.value)
+                            });
                             countAdd.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
@@ -582,12 +572,12 @@ class DoctorHomeScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: consRequests.consultations.length,
       itemBuilder: (context, index) {
-        return displayConsultations(consRequests.consultations[index]);
+        return displayConsultations(consRequests.consultations[index], index);
       },
     );
   }
 
-  Widget displayConsultations(ConsultationModel model) {
+  Widget displayConsultations(ConsultationModel model, int index) {
     return FutureBuilder(
       future: consRequests.getPatientData(model),
       builder: (context, snapshot) {
@@ -596,6 +586,7 @@ class DoctorHomeScreen extends StatelessWidget {
               consReq: model,
               onItemTap: () {
                 Get.to(() => ConsRequestItemScreen(), arguments: model);
+                consRequests.mobileIndex.value = index;
               });
         }
         return loadingCardIndicator();
@@ -692,11 +683,4 @@ class DoctorHomeScreen extends StatelessWidget {
       )
     ]);
   }
-
-  // Future<void> minusCategorySlot() async {
-  //   await firestore
-  //       .collection('cons_status')
-  //       .doc(fetchedData!.categoryID!)
-  //       .update({'consSlot': currentCount + countAdd.value});
-  // }
 }

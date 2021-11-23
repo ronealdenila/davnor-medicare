@@ -193,7 +193,6 @@ class ResponsiveBody extends GetResponsiveView {
           )),
           Obx(forFollowUp)
         ]),
-        //TO DO: FUNCTION FOR next + next + followup + submitConsultRequest
         verticalSpace25,
         Align(
           alignment: FractionalOffset.bottomRight,

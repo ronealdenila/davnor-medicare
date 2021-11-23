@@ -8,7 +8,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 
 class ConsQueueController extends GetxController {
   final log = getLogger('Cons Queue Controller');
-  static StatusController stats = Get.find();
+  final StatusController stats = Get.find();
   RxList<ConsQueueModel> queueConsList = RxList<ConsQueueModel>();
   RxBool isLoading = true.obs;
 

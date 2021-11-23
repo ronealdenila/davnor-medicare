@@ -146,6 +146,118 @@ class LoginScreen extends StatelessWidget {
       ),
     ])));
   }
+
+  Widget phoneVersion(BuildContext context) {
+    return SingleChildScrollView(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(
+            width: Get.width,
+            height: Get.height * .45,
+            child: Image.asset(davnormedicare, fit: BoxFit.cover)),
+        Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          margin: const EdgeInsets.all(20),
+          elevation: 3,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    verticalSpace15,
+                    const Text('Welcome Back!', style: title32Bold),
+                    verticalSpace25,
+                    FormInputFieldWithIcon(
+                      controller: authController.emailController,
+                      iconPrefix: Icons.email,
+                      labelText: 'Email',
+                      validator: Validator().email,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                        return;
+                      },
+                      onSaved: (value) =>
+                          authController.emailController.text = value!,
+                    ),
+                    verticalSpace20,
+                    Obx(
+                      () => FormInputFieldWithIcon(
+                        controller: authController.passwordController,
+                        iconPrefix: Icons.lock,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            authController.togglePasswordVisibility();
+                          },
+                          icon: Icon(
+                            authController.isObscureText!.value
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                        labelText: 'Password',
+                        validator: Validator().password,
+                        obscureText: authController.isObscureText!.value,
+                        onChanged: (value) {
+                          return;
+                        },
+                        onSaved: (value) =>
+                            authController.passwordController.text = value!,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          if (kIsWeb) {
+                            showDialog(
+                                context: context,
+                                builder: (context) => forgotPassword(context));
+                          } else {
+                            Get.to(() => ForgotPasswordScreen());
+                          }
+                        },
+                        style: TextButton.styleFrom(primary: infoColor),
+                        child: const Text(
+                          'Forgot Password?',
+                          style: body14SemiBold,
+                        ),
+                      ),
+                    ),
+                    //  verticalSpace10,
+                    CustomButton(
+                      onTap: () async {
+                        await authController
+                            .signInWithEmailAndPassword(context);
+                      },
+                      text: 'Sign In',
+                      buttonColor: verySoftBlueColor,
+                      fontSize: 20,
+                    ),
+                    verticalSpace15,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        BottomTextWidget(
+          onTap: () {
+            Get.to(() => SignupScreen());
+          },
+          text1: "Don't have an account?",
+          text2: 'Signup here',
+        ),
+        verticalSpace15,
+      ],
+    ));
+  }
 }
 
 Widget forgotPassword(BuildContext context) {

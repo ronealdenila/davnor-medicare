@@ -46,6 +46,11 @@ class MAHistoryController extends GetxController {
     }
   }
 
+  void refresh() {
+    maHistoryList.clear();
+    maHistoryList.assignAll(filteredListforP);
+  }
+
   Future<List<MAHistoryModel>> getMAHistoryForPatient() async {
     log.i('Get MA History for Patient - ${auth.currentUser!.uid}');
     return firestore

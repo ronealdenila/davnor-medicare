@@ -72,6 +72,7 @@ class ReleasingMAController extends GetxController {
         .set(<String, dynamic>{
       'maID': model.maID,
       'requesterID': model.requesterID,
+      'receiverID': model.receiverID,
       'fullName': model.fullName,
       'age': model.age,
       'address': model.address,
@@ -106,10 +107,8 @@ class ReleasingMAController extends GetxController {
         .catchError((error) => print("Failed to delete MA Request"));
   }
 
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(
-            '/ReleasingAreaListScreen', (Route<dynamic> route) => true);
+  void goBack() {
+    return navigationController.navigatorKey.currentState!.pop();
   }
 
   Future<void> transfferToHistoryFromList(OnProgressMAModel model) async {
