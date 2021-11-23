@@ -20,6 +20,7 @@ class ConsultationsController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isLoadingPatientData = true.obs;
   final RxInt selectedIndex = 0.obs;
+  final RxInt mobileIndex = 0.obs;
 
   @override
   void onReady() {

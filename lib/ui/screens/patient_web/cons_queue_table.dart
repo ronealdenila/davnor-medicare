@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -57,6 +59,34 @@ class QueueConsTableWebScreen extends StatelessWidget {
                                       style: title42BoldNeutral100,
                                     ),
                                   ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Slots: ',
+                                      style: body14RegularNeutral,
+                                    ),
+                                    StreamBuilder<DocumentSnapshot>(
+                                        stream: firestore
+                                            .collection('cons_status')
+                                            .doc(stats
+                                                .patientStatus[0].categoryID)
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return const Text(
+                                                'Something went wrong');
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Text('Loading');
+                                          }
+                                          final data = snapshot.data!.data()
+                                              as Map<String, dynamic>;
+                                          return Text('${data['consSlot']}');
+                                        }),
+                                  ],
                                 ),
                               ]),
                         ],

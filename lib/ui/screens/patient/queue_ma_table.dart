@@ -12,8 +12,23 @@ class QueueMATableScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
-            child: SizedBox(
-                width: Get.width, child: Obx(() => returnTable(context)))),
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Slots: ',
+                  style: body14RegularNeutral,
+                ),
+                Text('${maQueueController.stats.pswdPStatus[0].maSlot}'),
+              ],
+            ),
+            SizedBox(width: Get.width, child: Obx(() => returnTable(context))),
+          ],
+        )),
       ),
     );
   }

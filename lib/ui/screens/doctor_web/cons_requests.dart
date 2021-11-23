@@ -342,21 +342,29 @@ class ResponsiveBody extends GetResponsiveView {
         child: Center(
           child: InkWell(
             onTap: () {
-              if (stats.doctorStatus[0].hasOngoingCons!) {
+              if (stats.doctorStatus[0].dStatus!) {
+                if (stats.doctorStatus[0].hasOngoingCons!) {
+                  showErrorDialog(
+                      errorTitle:
+                          'Sorry, you still have an on progress consultation',
+                      errorDescription:
+                          'Please make sure to end your accepted consultation first before starting new one');
+                } else {
+                  if (index == 0) {
+                    doctorHomeController.startConsultation(consData);
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'Please select the first request',
+                        errorDescription:
+                            'You are not allowed to accept request that are not the first one');
+                  }
+                }
+              } else {
                 showErrorDialog(
                     errorTitle:
-                        'Sorry, you still have an on progress consultation',
+                        'Please make sure to change your status to available',
                     errorDescription:
-                        'Please make sure to end your accepted consultation first before starting new one');
-              } else {
-                if (index == 0) {
-                  doctorHomeController.startConsultation(consData);
-                } else {
-                  showErrorDialog(
-                      errorTitle: 'Please select the first request',
-                      errorDescription:
-                          'You are not allowed to accept request that are not the first one');
-                }
+                        'You are not allowed to accept request when unavailable');
               }
             },
             child: Container(

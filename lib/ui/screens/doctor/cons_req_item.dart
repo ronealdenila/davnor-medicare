@@ -19,7 +19,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 final AttachedPhotosController controller = Get.find();
 
 class ConsRequestItemScreen extends StatelessWidget {
-  final ConsultationsController doctorHomeController = Get.find();
+  final ConsultationsController consRequests = Get.find();
   final ConsultationModel consData = Get.arguments as ConsultationModel;
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
@@ -44,7 +44,7 @@ class ConsRequestItemScreen extends StatelessWidget {
               Expanded(
                 child: SizedBox(
                   child: Text(
-                    doctorHomeController.getFullName(consData),
+                    consRequests.getFullName(consData),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: subtitle18Medium.copyWith(color: Colors.black),
@@ -129,14 +129,29 @@ class ConsRequestItemScreen extends StatelessWidget {
         child: Center(
           child: InkWell(
             onTap: () {
-              if (stats.doctorStatus[0].hasOngoingCons!) {
+              if (stats.doctorStatus[0].dStatus!) {
+                if (stats.doctorStatus[0].hasOngoingCons!) {
+                  showErrorDialog(
+                      errorTitle:
+                          'Sorry, you still have an on progress consultation',
+                      errorDescription:
+                          'Please make sure to end your accepted consultation first before starting new one');
+                } else {
+                  if (consRequests.mobileIndex.value == 0) {
+                    consRequests.startConsultation(consData);
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'Please select the first request',
+                        errorDescription:
+                            'You are not allowed to accept request that are not the first one');
+                  }
+                }
+              } else {
                 showErrorDialog(
                     errorTitle:
-                        'Sorry, you still have an on progress consultation',
+                        'Please make sure to change your status to available',
                     errorDescription:
-                        'Please make sure to end your accepted consultation first before starting new one');
-              } else {
-                doctorHomeController.startConsultation(consData);
+                        'You are not allowed to accept request when unavailable');
               }
             },
             child: Container(
@@ -160,7 +175,7 @@ class ConsRequestItemScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (doctorHomeController.getProfilePhoto(model) == '') {
+    if (consRequests.getProfilePhoto(model) == '') {
       return CircleAvatar(
         radius: 25,
         backgroundImage: AssetImage(blankProfile),
@@ -168,8 +183,7 @@ class ConsRequestItemScreen extends StatelessWidget {
     }
     return CircleAvatar(
       radius: 25,
-      foregroundImage:
-          NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
       backgroundImage: AssetImage(blankProfile),
     );
   }

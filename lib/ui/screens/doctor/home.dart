@@ -330,7 +330,7 @@ class DoctorHomeScreen extends StatelessWidget {
                   ),
                   verticalSpace15,
                   const Text(
-                    'It looks like you still have some patients waiting',
+                    'It looks like you want to change your status from available to unavailable',
                     textAlign: TextAlign.center,
                     style: kIsWeb ? title32Regular : body16Regular,
                   ),
@@ -339,35 +339,9 @@ class DoctorHomeScreen extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await firestore
-                              .collection('doctors')
-                              .doc(fetchedData!.userID!)
-                              .collection('status')
-                              .doc('value')
-                              .update({'dStatus': false}).then((value) {
-                            dismissDialog();
-                            print('Changed status');
-                            count.value = 1;
-                          }).catchError((error) {
-                            showErrorDialog(
-                                errorTitle: 'ERROR!',
-                                errorDescription: 'Something went wrong!');
-                          });
-                        },
-                        child: Text('ACCOMMODATE MY PATIENTS FIRST'),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          primary: Color(0xFF0280FD),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18),
-                          ),
-                        ),
-                      )),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ElevatedButton(
-                        onPressed: () async {
                           //final num = data['numToAccomodate'];
+                          //num to accomodate - accomodate = result
+                          //consSlot - result
                           await firestore
                               .collection('doctors')
                               .doc(fetchedData!.userID!)
@@ -379,6 +353,7 @@ class DoctorHomeScreen extends StatelessWidget {
                             'dStatus': false
                           }).then((value) {
                             //TO THINK - the offline should affect the slot available consSlot - num in category
+                            //nptify all patient
                             dismissDialog();
                             print('Changed status');
                             count.value = 1;
@@ -399,7 +374,7 @@ class DoctorHomeScreen extends StatelessWidget {
                       )),
                   verticalSpace15,
                   Text(
-                    'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
+                    'By clicking this button your status will be unavailable and all patients waiting will be notified',
                     textAlign: TextAlign.center,
                     style: kIsWeb ? title32Regular : body14RegularNeutral,
                   ),
@@ -600,12 +575,12 @@ class DoctorHomeScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: consRequests.consultations.length,
       itemBuilder: (context, index) {
-        return displayConsultations(consRequests.consultations[index]);
+        return displayConsultations(consRequests.consultations[index], index);
       },
     );
   }
 
-  Widget displayConsultations(ConsultationModel model) {
+  Widget displayConsultations(ConsultationModel model, int index) {
     return FutureBuilder(
       future: consRequests.getPatientData(model),
       builder: (context, snapshot) {
@@ -614,6 +589,7 @@ class DoctorHomeScreen extends StatelessWidget {
               consReq: model,
               onItemTap: () {
                 Get.to(() => ConsRequestItemScreen(), arguments: model);
+                consRequests.mobileIndex.value = index;
               });
         }
         return loadingCardIndicator();

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
@@ -78,13 +79,57 @@ class ProfileController extends GetxController {
     final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       url.value = await res.ref.getDownloadURL();
-      //send to collection -> change to different ROLES TOO
-      updateStatus('patients');
+      await updateProfile();
     });
   }
 
-  Future<void> updateStatus(String role) async {
-    await firestore.collection(role).doc(auth.currentUser!.uid).update({
+  Future<void> updateProfile() async {
+    switch (authController.userRole) {
+      case 'pswd-p':
+      case 'pswd-h':
+        await updateProfileForPSWD();
+        break;
+      case 'admin':
+        await updateProfileForAdmin();
+        break;
+      case 'doctor':
+        await updateProfileForDoctor();
+
+        break;
+      case 'patient':
+        await updateProfileForPatient();
+        break;
+      default:
+        showErrorDialog(
+            errorTitle: 'ERROR!',
+            errorDescription:
+                'Sorry, an error occured while updating your profile photo');
+    }
+  }
+
+  Future<void> updateProfileForPatient() async {
+    await firestore.collection('patients').doc(auth.currentUser!.uid).update({
+      'profileImage': url.value,
+    });
+  }
+
+  Future<void> updateProfileForDoctor() async {
+    await firestore.collection('doctors').doc(auth.currentUser!.uid).update({
+      'profileImage': url.value,
+    });
+  }
+
+  Future<void> updateProfileForPSWD() async {
+    await firestore
+        .collection('pswd_personnel')
+        .doc(auth.currentUser!.uid)
+        .update({
+      'profileImage': url.value,
+    });
+  }
+
+  Future<void> updateProfileForAdmin() async {
+    await firestore.collection('admins').doc(auth.currentUser!.uid).update({
       'profileImage': url.value,
     });
   }

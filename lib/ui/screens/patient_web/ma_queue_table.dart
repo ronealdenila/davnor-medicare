@@ -56,6 +56,16 @@ class QueueMATableWebScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Slots: ',
+                              style: body14RegularNeutral,
+                            ),
+                            Text('${stats.pswdPStatus[0].maSlot}'),
+                          ],
+                        ),
                       ],
                     ),
                   ],

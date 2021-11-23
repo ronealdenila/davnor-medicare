@@ -11,7 +11,7 @@ class MAQueueController extends GetxController {
   final log = getLogger('MA Queue Controller');
 
   RxList<MAQueueModel> queueMAList = RxList<MAQueueModel>();
-  static StatusController stats = Get.find();
+  final StatusController stats = Get.find();
   RxBool isLoading = true.obs;
 
   @override

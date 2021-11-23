@@ -87,6 +87,11 @@ class ConsHistoryController extends GetxController {
     });
   }
 
+  void refresh() {
+    consHistory.clear();
+    consHistory.assignAll(filteredListforP);
+  }
+
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
     await getPatientData(model);
     await getDoctorData(model);
@@ -149,6 +154,7 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
+    chatHistory.clear();
     log.i(model.consID);
     await firestore
         .collection('chat')
