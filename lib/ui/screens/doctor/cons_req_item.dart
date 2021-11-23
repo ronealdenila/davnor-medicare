@@ -138,7 +138,16 @@ class ConsRequestItemScreen extends StatelessWidget {
                           'Please make sure to end your accepted consultation first before starting new one');
                 } else {
                   if (consRequests.mobileIndex.value == 0) {
-                    consRequests.startConsultation(consData);
+                    if (stats.doctorStatus[0].numToAccomodate! >
+                        stats.doctorStatus[0].accomodated!) {
+                      consRequests.startConsultation(consData);
+                    } else {
+                      showErrorDialog(
+                          errorTitle:
+                              'Looks like you already accomodated your desired number of patient',
+                          errorDescription:
+                              'You can add more number to accomodate');
+                    }
                   } else {
                     showErrorDialog(
                         errorTitle: 'Please select the first request',

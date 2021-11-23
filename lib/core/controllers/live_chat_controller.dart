@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
@@ -65,21 +66,26 @@ class LiveChatController extends GetxController {
   }
 
   Future<void> sendButton() async {
+    showLoading();
     if (isPhotoCameraClicked.value && image.value.isNotEmpty) {
       await uploadImage();
       await sendMessage(photoURL.value);
       await clearImage();
+      dismissDialog();
     } else if (isPhotoAttachClicked.value && images.isNotEmpty) {
       await uploadImages();
       await sendMessage(listPhotoURL.value);
       await clearImages();
+      dismissDialog();
     } else {
       if (chatController.text.isEmpty) {
+        dismissDialog();
         Get.snackbar('No message', 'Please write a message',
             snackPosition: SnackPosition.BOTTOM);
       } else {
         await sendMessage(chatController.text);
         await clearMessage();
+        dismissDialog();
       }
     }
   }

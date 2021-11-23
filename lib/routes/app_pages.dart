@@ -75,7 +75,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => const SplashScreen(),
+      page: () => SplashScreen(),
     ),
     GetPage(
       name: _Paths.CALL_SESSION,

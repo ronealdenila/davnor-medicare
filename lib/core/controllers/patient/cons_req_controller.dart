@@ -198,8 +198,10 @@ class ConsRequestController extends GetxController {
         dialogCaption: caption,
         onConfirmTap: () {
           if (kIsWeb) {
+            dismissDialog();
             navigationController.navigateTo(Routes.PATIENT_WEB_HOME);
           } else {
+            dismissDialog();
             Get.to(() => PatientHomeScreen());
           }
         });

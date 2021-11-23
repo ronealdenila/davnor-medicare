@@ -45,7 +45,7 @@ class AppController {
 
   Future<void> sendNotificationViaFCM(
       String title, String message, String sendTo) async {
-    FirebaseFirestore.instance
+    await firestore
         .collection('patients')
         .doc(sendTo)
         .get()

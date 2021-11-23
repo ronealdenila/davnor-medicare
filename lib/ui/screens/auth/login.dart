@@ -171,8 +171,7 @@ class ResponsiveView extends GetResponsiveView {
         SizedBox(
             width: Get.width,
             height: Get.height * .45,
-            child: Image.asset(davnormedicare,
-                fit: BoxFit.cover, gaplessPlayback: true)),
+            child: Image.asset(davnormedicare, fit: BoxFit.cover)),
         Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
