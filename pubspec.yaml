@@ -30,6 +30,9 @@ dependencies:
   firebase_analytics: ^8.3.4
   #firebase_app_check: ^0.0.2+3
 
+  #lottie
+  lottie: ^1.2.1
+
   #agora
   agora_rtc_engine: ^4.1.0-alpha.2
   permission_handler: ^6.0.2
@@ -92,6 +95,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/splash-animation.json
 
   fonts:
     - family: Inter

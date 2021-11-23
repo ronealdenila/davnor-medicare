@@ -63,7 +63,8 @@ class AuthController extends GetxController {
       if (userSignedOut == true) {
         await Get.offAll(() => LoginScreen());
       } else {
-        await navigateWithDelay(Get.offAll(() => LoginScreen()));
+        await Future.delayed(
+            const Duration(seconds: 5), () => Get.offAll(() => LoginScreen()));
       }
     } else {
       userSignedOut = false;
@@ -300,9 +301,11 @@ class AuthController extends GetxController {
           await _initializeDoctorModel();
           if (doctorModel.value!.disabled! == false) {
             if (kIsWeb) {
-              await navigateWithDelay(Get.offAllNamed(Routes.DOC_WEB_HOME));
+              await Future.delayed(const Duration(seconds: 3),
+                  () => Get.offAllNamed(Routes.DOC_WEB_HOME));
             } else {
-              await navigateWithDelay(Get.offAll(() => DoctorHomeScreen()));
+              await Future.delayed(const Duration(seconds: 3),
+                  () => Get.offAll(() => DoctorHomeScreen()));
             }
           } else {
             //CHANGE TO ERROR DIALOG
@@ -314,9 +317,11 @@ class AuthController extends GetxController {
         case 'patient':
           await _initializePatientModel();
           if (kIsWeb) {
-            await navigateWithDelay(Get.offAllNamed(Routes.PATIENT_WEB_HOME));
+            await Future.delayed(const Duration(seconds: 3),
+                () => Get.offAllNamed(Routes.PATIENT_WEB_HOME));
           } else {
-            await navigateWithDelay(Get.offAll(() => PatientHomeScreen()));
+            await Future.delayed(const Duration(seconds: 3),
+                () => Get.offAll(() => PatientHomeScreen()));
           }
           break;
         default:
@@ -334,13 +339,17 @@ class AuthController extends GetxController {
     if (kIsWeb) {
       switch (userRole) {
         case 'pswd-p':
-          await navigateWithDelay(Get.offAllNamed(Routes.PSWD_PERSONNEL_HOME));
+          await Future.delayed(const Duration(seconds: 3),
+              () => Get.offAllNamed(Routes.PSWD_PERSONNEL_HOME));
           break;
         case 'pswd-h':
-          await navigateWithDelay(Get.offAllNamed(Routes.PSWD_HEAD_HOME));
+          await Future.delayed(const Duration(seconds: 3),
+              () => Get.offAllNamed(Routes.PSWD_HEAD_HOME));
           break;
         case 'admin':
-          await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
+          await Future.delayed(const Duration(seconds: 3),
+              () => Get.offAllNamed(Routes.ADMIN_HOME));
+          //await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');
@@ -356,7 +365,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> navigateWithDelay(dynamic route) async {
-    await Future.delayed(const Duration(seconds: 1), () => route);
+    await Future.delayed(const Duration(seconds: 3), () => route);
   }
 
   //initializedBaseOnUserRoles
