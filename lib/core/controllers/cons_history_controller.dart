@@ -154,7 +154,9 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
-    chatHistory.clear();
+    if (!kIsWeb) {
+      chatHistory.clear();
+    }
     log.i(model.consID);
     await firestore
         .collection('chat')

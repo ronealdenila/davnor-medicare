@@ -94,7 +94,6 @@ class ProfileController extends GetxController {
         break;
       case 'doctor':
         await updateProfileForDoctor();
-
         break;
       case 'patient':
         await updateProfileForPatient();

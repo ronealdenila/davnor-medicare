@@ -414,18 +414,11 @@ class ResponsiveView extends GetResponsiveView {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 DmText.title24Medium(
                                   'homepage'.tr,
                                   color: neutralColor,
-                                ),
-                                InkWell(
-                                  onTap: seeAllArticles,
-                                  child: Text(
-                                    'action4'.tr,
-                                    style: subtitle18MediumNeutral,
-                                  ),
                                 ),
                               ],
                             ),

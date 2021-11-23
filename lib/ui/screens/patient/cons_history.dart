@@ -6,8 +6,6 @@ import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
-import 'package:davnor_medicare/ui/widgets/custom_dropdown2.dart';
-import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
