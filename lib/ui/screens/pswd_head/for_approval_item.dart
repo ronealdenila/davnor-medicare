@@ -71,6 +71,15 @@ class ForApprovalItemScreen extends StatelessWidget {
         },
         buttonText: 'Approve',
       ),
+      horizontalSpace25,
+      PSWDButton(
+        onItemTap: () async {
+          //TO THINK: FUNCTION, maybe delete in on_progress_ma ??? mag add pabag decline in the approval stage
+          //delete folder in storage
+          //and notify user, add reason
+        },
+        buttonText: 'Decline',
+      ),
     ]);
   }
 
@@ -85,7 +94,6 @@ class ForApprovalItemScreen extends StatelessWidget {
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
           opController.refresh();
-          dismissDialog();
           goBack();
         });
       },

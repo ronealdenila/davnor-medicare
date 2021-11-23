@@ -89,9 +89,9 @@ void showConfirmationDialog({
       child: Stack(
         children: <Widget>[
           Container(
-            width: kIsWeb ? Get.width * .3 : Get.width * .8,
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
-            margin: const EdgeInsets.only(top: 13, right: 8),
+            width: kIsWeb ? Get.width * .2 : Get.width * .9,
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
+            margin: const EdgeInsets.only(top: 13),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
@@ -120,12 +120,14 @@ void showConfirmationDialog({
                 ),
                 verticalSpace10,
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     DialogButton(
                       buttonText: 'dialogbtn1'.tr,
                       onTap: onYesTap,
                     ),
+                    horizontalSpace5,
                     DialogButton(
                       buttonText: 'dialogbtn01'.tr,
                       onTap: onNoTap,
@@ -136,16 +138,17 @@ void showConfirmationDialog({
             ),
           ),
           Positioned(
-            right: 20,
+            right: 8,
             top: 20,
             child: GestureDetector(
               onTap: Get.back,
               child: Align(
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
-                  radius: 14,
+                  radius: 10,
                   backgroundColor: const Color(0xFFE3E6E8),
-                  child: Icon(Icons.close, color: neutralColor[100]),
+                  child: Icon(Icons.close, color: neutralColor[100],
+                  size: 16,),
                 ),
               ),
             ),

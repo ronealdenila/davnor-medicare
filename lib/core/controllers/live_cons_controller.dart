@@ -6,10 +6,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -21,6 +18,7 @@ class LiveConsController extends GetxController {
   RxList<LiveConsultationModel> liveCons = RxList<LiveConsultationModel>([]);
   TextEditingController reason = TextEditingController();
   final RxBool isLoading = true.obs;
+
   final RxBool doneFetching = false.obs;
 
   @override
@@ -62,6 +60,7 @@ class LiveConsController extends GetxController {
         .doc(model.patientID)
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
+
     doneFetching.value = true;
   }
 
@@ -71,7 +70,6 @@ class LiveConsController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
-    doneFetching.value = true;
   }
 
   String getPatientProfile(LiveConsultationModel model) {
@@ -124,20 +122,17 @@ class LiveConsController extends GetxController {
       'age': model.age,
       'dateRqstd': model.dateRqstd,
       'dateConsStart': model.dateConsStart,
-      'dateConsEnd': Timestamp.fromDate(DateTime.now()),
+      'dateConsEnd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
+      //TO THINK - NOTIF TO SUCCESS/DONE CONSULTATION??
       await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
       await updateDocStatus(fetchedData!.userID!);
       await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      if (kIsWeb) {
-        navigationController.navigateTo(Routes.DOC_WEB_HOME);
-      } else {
-        Get.back(); //back to Live Screen Info
-        Get.back(); //
-      }
+      Get.back(); //back to Live Screen Info
+      Get.back(); //
     });
   }
 
@@ -204,12 +199,8 @@ class LiveConsController extends GetxController {
     await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
-    if (kIsWeb) {
-      navigationController.navigateTo(Routes.DOC_WEB_HOME);
-    } else {
-      Get.back(); //back to Live Screen Info
-      Get.back(); //back to Patient Home
-    }
+    Get.back(); //back to Live Screen Info
+    Get.back(); //back to Patient Home
   }
 
   Future<void> updateDocStatusSkip(String docID) async {
@@ -237,7 +228,7 @@ class LiveConsController extends GetxController {
       'action': action,
       'subject': 'Consultation Request Skipped',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

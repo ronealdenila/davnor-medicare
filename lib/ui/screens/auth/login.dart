@@ -21,42 +21,26 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ResponsiveView(context));
-  }
-}
-
-class ResponsiveView extends GetResponsiveView {
-  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
-  final BuildContext context;
-  final AuthController authController = Get.find();
-
-  @override
-  Widget phone() => phoneVersion(context);
-
-  @override
-  Widget tablet() => desktopVersion(context);
-
-  @override
-  Widget desktop() => desktopVersion(context);
-
-  Widget desktopVersion(BuildContext context) {
-    if (isMobile(context)) {
-      return phoneVersion(context);
-    } else {}
-    return SingleChildScrollView(
-        child: Row(children: <Widget>[
-      Expanded(
-        flex: 1,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .2,
-          height: MediaQuery.of(context).size.height,
-          child: Image.asset(davnormedicare, fit: BoxFit.fill),
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: Row(children: <Widget>[
+      if (isDesktop(context) || isTab(context))
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * .2,
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset(davnormedicare, fit: BoxFit.fill),
+          ),
         ),
-      ),
       Expanded(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: !isMobile(context)
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.center,
           children: <Widget>[
+            if (isMobile(context))
+              Image.asset(davnormedicare, fit: BoxFit.fill),
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
@@ -160,7 +144,7 @@ class ResponsiveView extends GetResponsiveView {
           ],
         ),
       ),
-    ]));
+    ])));
   }
 
   Widget phoneVersion(BuildContext context) {

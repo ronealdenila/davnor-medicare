@@ -413,18 +413,13 @@ class ResponsiveView extends GetResponsiveView {
                                               .hasActiveQueueCons! &&
                                           stats.patientStatus[0]
                                               .hasActiveQueueMA!) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) =>
-                                                selectQueueDialog());
+                                        Get.to(() => SelectQueueScreen());
                                       } else if (stats.patientStatus[0]
                                           .hasActiveQueueCons!) {
-                                        navigationController
-                                            .navigateTo(Routes.Q_CONS_WEB);
+                                        Get.to(() => QueueConsScreen());
                                       } else if (stats
                                           .patientStatus[0].hasActiveQueueMA!) {
-                                        navigationController
-                                            .navigateTo(Routes.Q_MA_WEB);
+                                        Get.to(() => QueueMAScreen());
                                       } else {
                                         showErrorDialog(
                                             errorTitle: 'dialog3'.tr,
@@ -470,60 +465,6 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
             ])));
-  }
-
-  Widget selectQueueDialog() {
-    return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      contentPadding: EdgeInsets.zero,
-      titlePadding: EdgeInsets.zero,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.all(
-                Radius.circular(40),
-              )),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          width: Get.width * .4,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            verticalSpace20,
-            Text('slctQS'.tr, style: subtitle20Medium),
-            verticalSpace20,
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 230,
-                height: 70,
-                child: PCustomButton(
-                  onTap: () {
-                    navigationController.navigateTo(Routes.Q_CONS_WEB);
-                  },
-                  text: 'btnq1'.tr,
-                  buttonColor: verySoftBlueColor[80],
-                ),
-              ),
-            ),
-            verticalSpace25,
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 230,
-                height: 70,
-                child: PCustomButton(
-                  onTap: () {
-                    navigationController.navigateTo(Routes.Q_MA_WEB);
-                  },
-                  text: 'btnq2'.tr,
-                  buttonColor: verySoftBlueColor[80],
-                ),
-              ),
-            )
-          ]),
-        ),
-      ],
-    );
   }
 
   Widget showArticles(BuildContext context) {

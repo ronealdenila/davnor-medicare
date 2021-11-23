@@ -46,9 +46,20 @@ const TextStyle title40Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle title40Medium = TextStyle(
+  fontSize: 40,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+);
+
 const TextStyle title36Regular = TextStyle(
   fontSize: 36,
   fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+);
+const TextStyle title36Medium = TextStyle(
+  fontSize: 36,
+  fontWeight: FontWeight.w500,
   fontFamily: 'Inter',
 );
 
@@ -122,6 +133,12 @@ const TextStyle title20Regular = TextStyle(
 );
 
 // Subtitles
+const TextStyle subtitle16Bold = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+);
+
 const TextStyle subtitle20Bold = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.w700,
@@ -206,6 +223,26 @@ TextStyle subtitle18RegularOrange = TextStyle(
 );
 
 // Body
+const TextStyle body20Regular = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  height: 1.3,
+);
+
+const TextStyle body20SemiBold = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+);
+
+const TextStyle body18Regular = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  height: 1.3,
+);
+
 const TextStyle body16Bold = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w700,
@@ -285,6 +322,32 @@ TextStyle body14RegularNeutral = TextStyle(
 );
 
 // Captions
+const TextStyle caption22SemiBold = TextStyle(
+  fontSize: 22,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  height: 1.5,
+);
+
+const TextStyle caption20Regular = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+);
+
+const TextStyle caption18SemiBold = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  height: 1.5,
+);
+
+const TextStyle caption16Regular = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+);
+
 const TextStyle caption12SemiBold = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w600,

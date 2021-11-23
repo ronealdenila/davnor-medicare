@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
@@ -9,7 +8,6 @@ import 'package:davnor_medicare/core/controllers/doctor/consultations_controller
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
-import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -49,20 +47,26 @@ class PatientHomeScreen extends StatelessWidget {
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
-  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
             appBar: AppBar(
               actions: [Obx(() => notificationIcon()), horizontalSpace10],
             ),
             drawer: CustomDrawer(
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
-              userProfile: displayProfile(),
+              userProfile: fetchedData!.profileImage == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 56,
+                    )
+                  : CircleAvatar(
+                      // foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
+                      backgroundImage: AssetImage(blankProfile),
+                    ),
               onProfileTap: () => Get.to(() => PatientProfileScreen()),
               onCurrentConsultTap: currentConsultation,
               onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
@@ -131,33 +135,7 @@ class PatientHomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            floatingActionButton: Obx(getFloatingButton)));
-  }
-
-  Widget displayProfile() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: profileController.getProfilePatient(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
-          }
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(blankProfile),
-            );
-          }
-          return CircleAvatar(
-            radius: 50,
-            foregroundImage: NetworkImage(data['profileImage']),
-            backgroundImage: AssetImage(blankProfile),
-          );
-        });
+            floatingActionButton: Obx(getFloatingButton));
   }
 
   Widget ActionButtons() {
@@ -247,7 +225,7 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
               showErrorDialog(
-                  errorTitle: '',
+                  errorTitle: 'ERROR!',
                   errorDescription:
                       'Please wait while we are currently connecting to the server');
             },
@@ -261,7 +239,7 @@ class PatientHomeScreen extends StatelessWidget {
               //Note: Has weird transition
               onTap: () {
                 showErrorDialog(
-                    errorTitle: '',
+                    errorTitle: 'ERROR!',
                     errorDescription:
                         'Please wait while we are currently connecting to the server');
               }),
@@ -273,7 +251,7 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
               showErrorDialog(
-                  errorTitle: '',
+                  errorTitle: 'ERROR!',
                   errorDescription:
                       'Please wait while we are currently connecting to the server');
             },
@@ -325,17 +303,20 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget getFloatingButton() {
-    if (liveCont.liveCons.isNotEmpty) {
-      return FloatingActionButton(
-        backgroundColor: verySoftBlueColor[30],
-        elevation: 2,
-        onPressed: () {
-          Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
-        },
-        child: const Icon(
-          Icons.chat_rounded,
-        ),
-      );
+    if (!liveCont.isLoading.value) {
+      if (liveCont.liveCons.isNotEmpty) {
+        return FloatingActionButton(
+          backgroundColor: verySoftBlueColor[30],
+          elevation: 2,
+          onPressed: () {
+            Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
+          },
+          child: const Icon(
+            Icons.chat_rounded,
+          ),
+        );
+      }
+      return const SizedBox(height: 0, width: 0);
     }
     return const SizedBox(height: 0, width: 0);
   }

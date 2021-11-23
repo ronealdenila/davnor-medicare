@@ -6,7 +6,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -26,14 +25,6 @@ class ConsultationsController extends GetxController {
   void onReady() {
     super.onReady();
     consultations.bindStream(getConsultations());
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    Future.delayed(const Duration(seconds: 5), () {
-      isLoading.value = false;
-    });
   }
 
   Stream<List<ConsultationModel>> getConsultations() {
@@ -77,7 +68,7 @@ class ConsultationsController extends GetxController {
     await firestore.collection('chat').doc(consID).collection('messages').add({
       'senderID': patientID,
       'message': msg,
-      'dateCreated': Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
   }
 
@@ -92,7 +83,7 @@ class ConsultationsController extends GetxController {
       'fullName': consData.fullName,
       'age': consData.age,
       'dateRqstd': consData.dateRqstd,
-      'dateConsStart': Timestamp.fromDate(DateTime.now()),
+      'dateConsStart': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       await deleteConsFromReq(consData.consID!);
     });
@@ -168,7 +159,7 @@ class ConsultationsController extends GetxController {
       'action': action,
       'subject': 'Consultation Request Accepted',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

@@ -49,10 +49,10 @@ class SignupScreen extends GetView<AuthController> {
                     child: IconButton(
                       icon: Icon(
                         Icons.chevron_left,
-                        size: 30,
+                        size: 65,
                       ),
                       onPressed: Get.back,
-                      color: Colors.white,
+                      color: Colors.blueGrey
                     ),
                   ),
                 ]),

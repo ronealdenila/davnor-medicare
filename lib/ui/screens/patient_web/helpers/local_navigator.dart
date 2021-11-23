@@ -2,13 +2,11 @@ import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/cons_form.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/cons_history.dart';
-import 'package:davnor_medicare/ui/screens/patient_web/cons_queue_table.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/home.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/live_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_details.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_history.dart';
-import 'package:davnor_medicare/ui/screens/patient_web/ma_queue_table.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,10 +37,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ConsHistoryWebScreen());
     case Routes.PATIENT_WEB_PROFILE:
       return _getPageRoute(PatientProfileWebScreen());
-    case Routes.Q_MA_WEB:
-      return _getPageRoute(QueueMATableWebScreen());
-    case Routes.Q_CONS_WEB:
-      return _getPageRoute(QueueConsTableWebScreen());
     default:
       return _getPageRoute(const SizedBox());
   }

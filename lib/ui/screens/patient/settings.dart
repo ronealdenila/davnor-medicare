@@ -33,7 +33,7 @@ class SettingScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  logo2,
+                  logo,
                   fit: BoxFit.contain,
                 ),
               ),

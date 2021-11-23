@@ -181,6 +181,27 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
                                     primary: Colors.red,
                                   ),
                                 ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          //TO THINK - wheter mag add ug mic func
+                                        },
+                                        icon: Icon(
+                                          Icons.mic,
+                                          color: Colors.grey[800],
+                                          size: 27,
+                                        )),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

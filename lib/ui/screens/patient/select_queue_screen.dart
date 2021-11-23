@@ -15,7 +15,9 @@ class SelectQueueScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.chevron_left),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         color: Colors.black,
         ),
       ),

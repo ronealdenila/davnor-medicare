@@ -65,7 +65,7 @@ class VerificationController extends GetxController {
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
         customMetadata: {'picked-file-path': image.path});
-    final ref = storageRef.child('user/$userID/ID');
+    final ref = storageRef.child('user/$userID/ID-$v4$v4');
     final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -73,11 +73,12 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadIDSDWeb(XFile image) async {
+    final v4 = uuid.v4();
     final fileBytes = image.readAsBytes();
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
         customMetadata: {'picked-file-path': image.path});
-    final ref = storageRef.child('user/$userID/Valid-ID-Selfie');
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$v4$v4');
     final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();
@@ -106,7 +107,7 @@ class VerificationController extends GetxController {
       'lastName': fetchedData!.lastName,
       'validID': imgURL.value,
       'validSelfie': imgURLselfie.value,
-      'dateRqstd': Timestamp.fromDate(DateTime.now()),
+      'dateRqstd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
     await setPendingVerification();
     await clearData();

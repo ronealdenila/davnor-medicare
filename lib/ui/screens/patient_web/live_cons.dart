@@ -234,7 +234,7 @@ class LiveConsWebScreen extends StatelessWidget {
         width: Get.width,
         height: 80,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
@@ -254,6 +254,7 @@ class LiveConsWebScreen extends StatelessWidget {
                 ),
               ],
             ),
+            Spacer(),
           ],
         ),
       ),
