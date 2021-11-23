@@ -31,7 +31,7 @@ class PatientSideMenu extends GetView<PatientMenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
             Image.asset(
-              logo2,
+              logo,
               fit: BoxFit.contain,
             ),
             ...patientSideMenuItemRoutes
@@ -106,18 +106,17 @@ appInfoDialog(BuildContext context) {
               child: SingleChildScrollView(
                   child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.center,
                         child: Image.asset(
-                          logo2,
-                          fit: BoxFit.contain,
+                          logo,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      verticalSpace10,
                       Text(
                         'appinfo'.tr,
                         textAlign: TextAlign.justify,
@@ -167,8 +166,81 @@ appInfoDialog(BuildContext context) {
                               ),
                             ],
                           ),
-                        ],
-                      )
+                        ]),
+                        verticalSpace18,
+                      const Text(
+                      'Icons made by: backwoods',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          flaticon,
+                          fit: BoxFit.fill,
+                          height: 60,
+                          width: 60,
+                        ),
+                        horizontalSpace10,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Flaticon', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://www.flaticon.com');
+                              },
+                              child: Text('https://www.flaticon.com',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ]),
+                      ]),
+                      verticalSpace18,
+                      const Text(
+                      'Icons made by: freepik,',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    const Text(
+                      'Medical vector created by freepik',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          freepik,
+                          fit: BoxFit.fill,
+                          height: 60,
+                          width: 60,
+                        ),
+                        horizontalSpace15,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Freepik', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://www.freepik.com');
+                              },
+                              child: Text('https://www.freepik.com',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ]),
+                      ]),
+                    
+                    verticalSpace15
                     ]),
               ))),
         );

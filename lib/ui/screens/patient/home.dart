@@ -225,7 +225,7 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftMagentaCustomColor,
             onTap: () {
               showErrorDialog(
-                  errorTitle: '',
+                  errorTitle: 'ERROR!',
                   errorDescription:
                       'Please wait while we are currently connecting to the server');
             },
@@ -239,7 +239,7 @@ class PatientHomeScreen extends StatelessWidget {
               //Note: Has weird transition
               onTap: () {
                 showErrorDialog(
-                    errorTitle: '',
+                    errorTitle: 'ERROR!',
                     errorDescription:
                         'Please wait while we are currently connecting to the server');
               }),
@@ -251,7 +251,7 @@ class PatientHomeScreen extends StatelessWidget {
             secondaryColor: verySoftRedCustomColor,
             onTap: () {
               showErrorDialog(
-                  errorTitle: '',
+                  errorTitle: 'ERROR!',
                   errorDescription:
                       'Please wait while we are currently connecting to the server');
             },

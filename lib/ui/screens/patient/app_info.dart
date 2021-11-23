@@ -29,7 +29,7 @@ class AppInfoScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.center,
                       child: Image.asset(
-                        logo2,
+                        logo,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -153,6 +153,22 @@ class AppInfoScreen extends StatelessWidget {
                             ),
                           ]),
                       ]),
+                      verticalSpace5,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Splash Screen used from: Abdul Latif', style: body14SemiBold),
+                            verticalSpace5,
+                            InkWell(
+                              onTap: () {
+                                _urlLauncherService
+                                    .launchURL('https://lottiefiles.com/53911-online-medical-assistance-animation');
+                              },
+                              child: Text('https://lottiefiles.com/53911-online-medical-assistance-animation',
+                                  style: body16RegularUnderlineBlue),
+                            ),
+                          ]),
+                     
                     
                     verticalSpace15
                   ]),

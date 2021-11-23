@@ -40,12 +40,12 @@ class MAHistoryScreen extends StatelessWidget {
                       onTap: () {
                         if (maHController.isLoading.value) {
                           showErrorDialog(
-                            errorTitle: '',
+                            errorTitle: 'ERROR!',
                             errorDescription: 'mahrec1'.tr
                           );
                         } else if (maHController.maHistoryList.isEmpty) {
                           showErrorDialog(
-                            errorTitle: '',
+                            errorTitle: 'ERROR!',
                             errorDescription: 'mahrec2'.tr
                           );
                           
@@ -59,7 +59,7 @@ class MAHistoryScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Container(
-                          width: 170,
+                          width: 220,
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),

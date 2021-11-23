@@ -122,7 +122,7 @@ class LiveConsController extends GetxController {
       'age': model.age,
       'dateRqstd': model.dateRqstd,
       'dateConsStart': model.dateConsStart,
-      'dateConsEnd': Timestamp.fromDate(DateTime.now()),
+      'dateConsEnd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       //TO THINK - NOTIF TO SUCCESS/DONE CONSULTATION??
       await deleteConsFromQueue(model.consID!);
@@ -228,7 +228,7 @@ class LiveConsController extends GetxController {
       'action': action,
       'subject': 'Consultation Request Skipped',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

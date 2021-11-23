@@ -22,7 +22,7 @@ class DoctorSideMenu extends GetView<DoctorMenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
              Image.asset(
-                logo2,
+                logo,
                 fit: BoxFit.contain,
               ),
               

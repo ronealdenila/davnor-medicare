@@ -41,12 +41,12 @@ class ConsHistoryScreen extends StatelessWidget {
                       onTap: () {
                         if (consHController.isLoading.value) {
                           showErrorDialog(
-                            errorTitle: '',
+                            errorTitle: 'ERROR!',
                             errorDescription: 'conslog'.tr
                           );
                         } else if (consHController.consHistory.isEmpty) {
                           showErrorDialog(
-                            errorTitle: '',
+                            errorTitle: 'ERROR!',
                             errorDescription: 'conslog1'.tr
                           );
                         } else {
@@ -59,7 +59,7 @@ class ConsHistoryScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Container(
-                          width: 170,
+                          width: 220,
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),

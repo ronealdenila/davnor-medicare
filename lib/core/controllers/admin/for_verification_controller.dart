@@ -177,7 +177,7 @@ class ForVerificationController extends GetxController {
       'action': action,
       'subject': 'Verification Request',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

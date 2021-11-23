@@ -83,7 +83,7 @@ class ReleasingMAController extends GetxController {
       'receivedBy': model.receivedBy,
       'medWorth': model.medWorth,
       'pharmacy': model.pharmacy,
-      'dateClaimed': Timestamp.fromDate(DateTime.now()),
+      'dateClaimed': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);
@@ -132,7 +132,7 @@ class ReleasingMAController extends GetxController {
       'receiverID': model.receiverID,
       'medWorth': model.medWorth,
       'pharmacy': model.pharmacy,
-      'dateClaimed': Timestamp.fromDate(DateTime.now()),
+      'dateClaimed': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     }).then((value) async {
       //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);

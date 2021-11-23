@@ -33,15 +33,15 @@ class MADescriptionWebScreen extends StatelessWidget {
                     children: const <Widget>[
                       Text(
                         'Medical Assistance (MA)',
-                        style: title24Medium,
+                        style: title40Medium,
                       ),
-                      Text(madescriptionParagraph1, style: body16Regular),
+                      Text(madescriptionParagraph1, style: body20Regular),
                     ],
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Text('medicalasssistance'.tr,
-                        textAlign: TextAlign.justify, style: body14Regular),
+                        textAlign: TextAlign.justify, style: body18Regular),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,14 +54,15 @@ class MADescriptionWebScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'ma1'.tr,
-                              style: body14SemiBold,
+                              style: body20SemiBold,
                             ),
+                            verticalSpace5,
                             Text('(1) ${'ma2'.tr}',
                                 textAlign: TextAlign.justify,
-                                style: caption12Regular),
+                                style: caption18Regular),
                             Text('(2) ${'ma3'.tr}',
                                 textAlign: TextAlign.justify,
-                                style: caption12Regular),
+                                style: caption18Regular),
                           ],
                         ),
                       ),
@@ -73,14 +74,15 @@ class MADescriptionWebScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'ma4'.tr,
-                              style: body14SemiBold,
+                              style: body20SemiBold,
                             ),
+                            verticalSpace5,
                             Text('(1) ${'ma5'.tr}',
                                 textAlign: TextAlign.justify,
-                                style: caption12Regular),
+                                style: caption18Regular),
                             Text('(2) ${'ma6'.tr}',
                                 textAlign: TextAlign.justify,
-                                style: caption12Regular),
+                                style: caption18Regular),
                           ],
                         ),
                       ),
@@ -89,7 +91,7 @@ class MADescriptionWebScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Text('ma7'.tr,
-                        textAlign: TextAlign.justify, style: body14SemiBold),
+                        textAlign: TextAlign.justify, style: body20SemiBold),
                   ),
                   Row(
                     children: [
@@ -98,28 +100,27 @@ class MADescriptionWebScreen extends StatelessWidget {
                           children: <Widget>[
                             Text('ma8'.tr,
                                 textAlign: TextAlign.left,
-                                style: caption12SemiBold),
-                            SizedBox(
-                              height: 5,
-                            ),
+                                style: caption18SemiBold),
+                            verticalSpace10,
                             Text('ma9'.tr,
                                 textAlign: TextAlign.left,
-                                style: caption12SemiBold),
+                                style: caption18SemiBold),
                           ]),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(10, 2, 0, 0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const <Widget>[
+                              verticalSpace5,
                               Text('Cut-off: 9:30 am & Releasing: 12:30 pm',
                                   textAlign: TextAlign.left,
-                                  style: caption12Regular),
+                                  style: caption18Regular),
                               SizedBox(
-                                height: 5,
+                                height: 18,
                               ),
                               Text('Cut-off: 1:30 pm & Releasing: 4:30 pm',
                                   textAlign: TextAlign.left,
-                                  style: caption12Regular),
+                                  style: caption18Regular),
                             ]),
                       ),
                     ],
@@ -188,7 +189,7 @@ class MADescriptionWebScreen extends StatelessWidget {
       },
       text: 'ma10'.tr,
       buttonColor: verySoftBlueColor,
-      fontSize: 20,
+      fontSize: 28,
     );
   }
 }
