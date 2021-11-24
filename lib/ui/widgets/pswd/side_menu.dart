@@ -18,7 +18,7 @@ class PswdPSideMenu extends GetView<MenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
               Image.asset(
-                logo2,
+                logo,
                 fit: BoxFit.contain,
               ),
             
@@ -49,7 +49,7 @@ class PswdHeadSideMenu extends GetView<MenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
             Image.asset(
-                logo2,
+                logo,
                 fit: BoxFit.contain,
               ),
               

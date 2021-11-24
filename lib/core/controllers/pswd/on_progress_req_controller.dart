@@ -107,7 +107,7 @@ class OnProgressReqController extends GetxController {
       'action': ' is informing you that your ',
       'subject': 'Medical Assistance is ready',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

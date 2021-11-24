@@ -97,12 +97,8 @@ class ForVerificationController extends GetxController {
   }
 
   Future<void> deletePhotos(VerificationReqModel model) async {
-    // await storage.refFromURL(model.validID!).delete();
-    // await storage.refFromURL(model.validSelfie!).delete();
-    await firestore.collection('patients').doc(auth.currentUser!.uid).update({
-      'validID': '',
-      'validSelfie': '',
-    });
+    await storage.refFromURL(model.validID!).delete();
+    await storage.refFromURL(model.validSelfie!).delete();
   }
 
   Future<void> acceptUserVerification(VerificationReqModel model) async {
@@ -180,7 +176,7 @@ class ForVerificationController extends GetxController {
       'action': action,
       'subject': 'Verification Request',
       'message': message,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);
@@ -194,7 +190,7 @@ class ForVerificationController extends GetxController {
       'notifBadge': FieldValue.increment(1),
     });
 
-    //TO THINK - SEND NOTIF TO DEVICE ALSO ?????
+    //TO THINK - SEND NOTIF TO DEVICE ALSO
   }
 
   Future<void> removeVerificationReq(String uid) async {

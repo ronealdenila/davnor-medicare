@@ -58,13 +58,7 @@ Widget chatInput(LiveChatController liveChatCont) {
     );
   } else if (liveChatCont.images.isNotEmpty) {
     return Container(
-      height: kIsWeb
-          ? (liveChatCont.images.length <= 3)
-              ? 200
-              : 270
-          : (liveChatCont.images.length <= 3)
-              ? 100
-              : 170,
+      height: (liveChatCont.images.length <= 3) ? 100 : 170,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
         border: Border.all(
@@ -83,9 +77,8 @@ Widget chatInput(LiveChatController liveChatCont) {
           crossAxisCount: 3,
           children: List.generate(liveChatCont.images.length, (index) {
             return Container(
-              height: kIsWeb ? 170 : 68.5,
+              height: 68.5,
               color: verySoftBlueColor,
-              padding: EdgeInsets.zero,
               child: Center(
                 child: Wrap(children: [
                   Stack(
@@ -93,7 +86,6 @@ Widget chatInput(LiveChatController liveChatCont) {
                       kIsWeb
                           ? Image.network(
                               liveChatCont.images[index].path,
-                              height: 170,
                               fit: BoxFit.fill,
                               errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(grayBlank,

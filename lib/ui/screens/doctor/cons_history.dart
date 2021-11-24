@@ -1,4 +1,3 @@
-import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
 import 'package:davnor_medicare/ui/screens/doctor/dcons_history_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';

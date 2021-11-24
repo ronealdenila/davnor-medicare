@@ -138,7 +138,7 @@ class PSWDItemView extends GetResponsiveView {
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
                         showErrorDialog(
-                          errorTitle: '',
+                          errorTitle: 'ERROR!',
                           errorDescription:
                                 'Patient is currently on a video call, please try again later');
                       } else {

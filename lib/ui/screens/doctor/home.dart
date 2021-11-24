@@ -3,7 +3,6 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
-import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -33,7 +32,6 @@ class DoctorHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
-  final ProfileController profileController = Get.put(ProfileController());
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
@@ -50,7 +48,17 @@ class DoctorHomeScreen extends StatelessWidget {
               forDoctorDrawer: true,
               accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
               accountEmail: fetchedData!.email,
-              userProfile: displayProfile(),
+              userProfile: fetchedData!.profileImage == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 56,
+                    )
+                  : Image.network(
+                      fetchedData!.profileImage!,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(blankProfile, fit: BoxFit.cover);
+                      },
+                    ),
               onProfileTap: () => Get.to(() => DoctorProfileScreen()),
               onCurrentConsultTap: () {
                 if (liveCont.liveCons.isNotEmpty) {
@@ -217,9 +225,9 @@ class DoctorHomeScreen extends StatelessWidget {
                 onTap: () {
                   print(stats.isLoading.value);
                   showErrorDialog(
-                      errorTitle: '',
-                      errorDescription:
-                          'Please wait while we are currently connecting to the server');
+                    errorTitle: 'ERROR!',
+                    errorDescription:
+                        'Please wait while we are currently connecting to the server');
                 }),
           ),
           Expanded(
@@ -229,7 +237,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
                   showErrorDialog(
-                      errorTitle: '',
+                      errorTitle: 'ERROR!',
                       errorDescription:
                           'Please wait while we are currently connecting to the server');
                 }),
@@ -241,8 +249,8 @@ class DoctorHomeScreen extends StatelessWidget {
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
                     showErrorDialog(
-                        errorTitle: '',
-                        errorDescription:
+                      errorTitle: 'ERROR!',
+                      errorDescription:
                             'Please wait while we are currently connecting to the server');
                   })),
         ],
@@ -436,8 +444,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                                errorTitle: 'ERROR!',
-                                errorDescription: 'Something went wrong');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Ready for Consultation'),
@@ -507,8 +515,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             countAdd.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                                errorTitle: 'ERROR!',
-                                errorDescription: 'Something went wrong');
+                              errorTitle: 'ERROR!',
+                              errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Add count'),
@@ -523,32 +531,6 @@ class DoctorHomeScreen extends StatelessWidget {
                 ],
               ))
         ]);
-  }
-
-  Widget displayProfile() {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: profileController.getProfileDoctor(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
-          }
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(doctorDefault),
-            );
-          }
-          return CircleAvatar(
-            radius: 50,
-            foregroundImage: NetworkImage(data['profileImage']),
-            backgroundImage: AssetImage(doctorDefault),
-          );
-        });
   }
 
   Widget getFloatingButton() {
@@ -581,8 +563,8 @@ class DoctorHomeScreen extends StatelessWidget {
               height: 24, width: 24, child: CircularProgressIndicator()),
         ),
       );
-    } else if (consRequests.consultations.isEmpty &&
-        !consRequests.isLoading.value) {
+    }
+    if (consRequests.consultations.isEmpty && !consRequests.isLoading.value) {
       return const Center(child: Text('No consultation request at the moment'));
     }
     return ListView.builder(

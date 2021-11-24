@@ -18,7 +18,7 @@ class AdminSideMenu extends GetView<AdminMenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
             Image.asset(
-                logo2,
+                logo,
                 fit: BoxFit.contain,
               ),
             

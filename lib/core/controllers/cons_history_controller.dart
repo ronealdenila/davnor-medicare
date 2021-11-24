@@ -92,6 +92,11 @@ class ConsHistoryController extends GetxController {
     consHistory.assignAll(filteredListforP);
   }
 
+  void refreshD() {
+    consHistory.clear();
+    consHistory.assignAll(filteredListforDoc);
+  }
+
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
     await getPatientData(model);
     await getDoctorData(model);

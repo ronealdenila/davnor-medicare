@@ -63,31 +63,49 @@ class ResponsiveBody extends GetResponsiveView {
               ),
             ),
             horizontalSpace10,
-            InkWell(
-              onTap: () {
-                print(consHController.searchKeyword.text);
-                consHController.filterForDoctor(
-                    name: consHController.searchKeyword.text);
-              },
-              child: Card(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: verySoftBlueColor[100],
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    print(consHController.searchKeyword.text);
+                    consHController.filterForDoctor(
+                        name: consHController.searchKeyword.text);
+                  },
+                  child: Card(
+                    elevation: 6,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: verySoftBlueColor[100],
+                      ),
+                      child: const Icon(
+                        Icons.search_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.search_rounded,
-                    color: Colors.white,
-                    size: 30,
-                  ),
                 ),
-              ),
+                verticalSpace10,
+                SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      child: Icon(
+                        Icons.refresh,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor[100],
+                      ),
+                      onPressed: () {
+                        consHController.refreshD();
+                      },
+                    )),
+              ],
             ),
           ]),
           verticalSpace10,

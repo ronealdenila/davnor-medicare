@@ -6,7 +6,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:get/get.dart';
 
-//TO THINK: if clickable ba ang notification cards - show tanan
+//TO THINK: if clickable ba ang notification cards
 class NotificationCard extends StatelessWidget {
   const NotificationCard({Key? key, required this.notif
       //required this.onTap,

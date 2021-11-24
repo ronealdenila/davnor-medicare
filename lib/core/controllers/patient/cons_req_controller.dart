@@ -133,7 +133,7 @@ class ConsRequestController extends GetxController {
       showErrorDialog(
           errorTitle: 'ERROR!',
           errorDescription:
-              'Sorry, there are currently no available doctor that specialize in the illness. Please try again later.');
+              'Sorry, there are currently no available that specialize in the illness. Please try again later.');
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
@@ -152,7 +152,7 @@ class ConsRequestController extends GetxController {
         'fullName': fullName,
         'age': ageController.text,
         'category': categoryID.value,
-        'dateRqstd': Timestamp.fromDate(DateTime.now()),
+        'dateRqstd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
         'description': descriptionController.text,
         'isFollowUp': isFollowUp.value ? true : false,
         'imgs': imageUrls.value,
@@ -187,7 +187,7 @@ class ConsRequestController extends GetxController {
       'requesterID': auth.currentUser!.uid,
       'consID': generatedConsID.value,
       'queueNum': generatedCode.value,
-      'dateCreated': Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
   }
 
