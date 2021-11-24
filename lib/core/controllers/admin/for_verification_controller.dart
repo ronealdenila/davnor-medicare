@@ -9,7 +9,6 @@ import 'package:davnor_medicare/core/models/verification_req_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/verification_req_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -176,7 +175,8 @@ class ForVerificationController extends GetxController {
       'action': action,
       'subject': 'Verification Request',
       'message': message,
-      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'createdAt':
+          FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

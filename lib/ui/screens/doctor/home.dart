@@ -225,9 +225,9 @@ class DoctorHomeScreen extends StatelessWidget {
                 onTap: () {
                   print(stats.isLoading.value);
                   showErrorDialog(
-                    errorTitle: 'ERROR!',
-                    errorDescription:
-                        'Please wait while we are currently connecting to the server');
+                      errorTitle: 'ERROR!',
+                      errorDescription:
+                          'Please wait while we are currently connecting to the server');
                 }),
           ),
           Expanded(
@@ -249,8 +249,8 @@ class DoctorHomeScreen extends StatelessWidget {
                   secondaryColor: verySoftRedCustomColor,
                   onTap: () {
                     showErrorDialog(
-                      errorTitle: 'ERROR!',
-                      errorDescription:
+                        errorTitle: 'ERROR!',
+                        errorDescription:
                             'Please wait while we are currently connecting to the server');
                   })),
         ],
@@ -444,8 +444,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             count.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Ready for Consultation'),
@@ -515,8 +515,8 @@ class DoctorHomeScreen extends StatelessWidget {
                             countAdd.value = 1;
                           }).catchError((error) {
                             showErrorDialog(
-                              errorTitle: 'ERROR!',
-                              errorDescription: 'Something went wrong');
+                                errorTitle: 'ERROR!',
+                                errorDescription: 'Something went wrong');
                           });
                         },
                         child: Text('Add count'),
