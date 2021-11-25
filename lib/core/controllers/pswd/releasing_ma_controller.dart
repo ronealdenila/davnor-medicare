@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -16,6 +17,7 @@ class ReleasingMAController extends GetxController {
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
   final TextEditingController rlsFilter = TextEditingController();
   RxBool isLoading = true.obs;
+  final MAHistoryController maHController = Get.find();
 
   @override
   void onReady() {
@@ -84,7 +86,7 @@ class ReleasingMAController extends GetxController {
       'receivedBy': model.receivedBy,
       'medWorth': model.medWorth,
       'pharmacy': model.pharmacy,
-      'dateClaimed': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateClaimed': FieldValue.serverTimestamp(),
     }).then((value) async {
       //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);
@@ -131,12 +133,13 @@ class ReleasingMAController extends GetxController {
       'receiverID': model.receiverID,
       'medWorth': model.medWorth,
       'pharmacy': model.pharmacy,
-      'dateClaimed': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateClaimed': FieldValue.serverTimestamp(),
     }).then((value) async {
       //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
+      maHController.refreshPSWD();
       goBack();
     }).catchError((onError) {
       dismissDialog(); //dismissLoading

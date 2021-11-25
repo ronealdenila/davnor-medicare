@@ -152,7 +152,7 @@ class ConsRequestController extends GetxController {
         'fullName': fullName,
         'age': ageController.text,
         'category': categoryID.value,
-        'dateRqstd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+        'dateRqstd': FieldValue.serverTimestamp(),
         'description': descriptionController.text,
         'isFollowUp': isFollowUp.value ? true : false,
         'imgs': imageUrls.value,
@@ -187,7 +187,7 @@ class ConsRequestController extends GetxController {
       'requesterID': auth.currentUser!.uid,
       'consID': generatedConsID.value,
       'queueNum': generatedCode.value,
-      'dateCreated': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(),
     });
   }
 

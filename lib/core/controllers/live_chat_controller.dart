@@ -66,13 +66,14 @@ class LiveChatController extends GetxController {
   }
 
   Future<void> sendButton() async {
-    showLoading();
     if (isPhotoCameraClicked.value && image.value.isNotEmpty) {
+      showLoading();
       await uploadImage();
       await sendMessage(photoURL.value);
       await clearImage();
       dismissDialog();
     } else if (isPhotoAttachClicked.value && images.isNotEmpty) {
+      showLoading();
       await uploadImages();
       await sendMessage(listPhotoURL.value);
       await clearImages();
@@ -114,7 +115,7 @@ class LiveChatController extends GetxController {
         .add({
       'senderID': auth.currentUser!.uid,
       'message': message,
-      'dateCreated': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(),
     });
   }
 
