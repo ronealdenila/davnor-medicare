@@ -107,7 +107,7 @@ class VerificationController extends GetxController {
       'lastName': fetchedData!.lastName,
       'validID': imgURL.value,
       'validSelfie': imgURLselfie.value,
-      'dateRqstd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateRqstd': FieldValue.serverTimestamp(),
     });
     await setPendingVerification();
     await clearData();

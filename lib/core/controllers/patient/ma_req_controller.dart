@@ -254,7 +254,7 @@ class MARequestController extends GetxController {
       'type': type.value,
       'prescriptions': listPhotoURL.value,
       'validID': isMAForYou.value ? imgOfValidID.value : photoURL.value,
-      'date_rqstd': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'date_rqstd': FieldValue.serverTimestamp(),
     });
 
     //Generate MA Queue
@@ -284,7 +284,7 @@ class MARequestController extends GetxController {
       'requesterID': auth.currentUser!.uid,
       'maID': generatedMAID.value,
       'queueNum': generatedCode.value,
-      'dateCreated': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(),
     });
   }
 

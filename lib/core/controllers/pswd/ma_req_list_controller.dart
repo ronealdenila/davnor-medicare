@@ -4,10 +4,12 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +26,8 @@ class MAReqListController extends GetxController {
   RxBool isLoading = true.obs;
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
+
+  final MenuController menuController = Get.find();
 
   @override
   void onReady() {
@@ -135,7 +139,8 @@ class MAReqListController extends GetxController {
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      Get.back();
+      menuController.changeActiveItemTo('Dashboard');
+      navigationController.navigateTo(Routes.DASHBOARD);
     });
   }
 
@@ -147,7 +152,8 @@ class MAReqListController extends GetxController {
     await deleteMA(maID);
     dismissDialog(); //dismiss Loading
     dismissDialog(); //dismiss Popup Dialog
-    Get.back(); //navigate
+    menuController.changeActiveItemTo('Dashboard');
+    navigationController.navigateTo(Routes.DASHBOARD);
   }
 
   Future<void> deleteMA(String maID) async {
@@ -192,7 +198,7 @@ class MAReqListController extends GetxController {
       'action': action,
       'subject': 'MA Request',
       'message': message,
-      'createdAt': FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);

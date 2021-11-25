@@ -10,7 +10,6 @@ import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';

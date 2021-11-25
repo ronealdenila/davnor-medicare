@@ -69,8 +69,7 @@ class ConsultationsController extends GetxController {
     await firestore.collection('chat').doc(consID).collection('messages').add({
       'senderID': patientID,
       'message': msg,
-      'dateCreated':
-          FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateCreated': FieldValue.serverTimestamp(),
     });
   }
 
@@ -85,8 +84,7 @@ class ConsultationsController extends GetxController {
       'fullName': consData.fullName,
       'age': consData.age,
       'dateRqstd': consData.dateRqstd,
-      'dateConsStart':
-          FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'dateConsStart': FieldValue.serverTimestamp(),
     }).then((value) async {
       await deleteConsFromReq(consData.consID!);
     });
@@ -162,8 +160,7 @@ class ConsultationsController extends GetxController {
       'action': action,
       'subject': 'Consultation Request Accepted',
       'message': message,
-      'createdAt':
-          FieldValue.serverTimestamp(), //Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(),
     });
 
     await appController.sendNotificationViaFCM(title, message, uid);
