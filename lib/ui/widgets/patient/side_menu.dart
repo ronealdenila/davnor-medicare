@@ -239,7 +239,23 @@ appInfoDialog(BuildContext context) {
                             ),
                           ]),
                       ]),
-                    
+                      verticalSpace18,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Splash Screen used from: Abdul Latif',
+                              style: subtitle16Bold),
+                          verticalSpace5,
+                          InkWell(
+                            onTap: () {
+                              _urlLauncherService.launchURL(
+                                  'https://lottiefiles.com/53911-online-medical-assistance-animation');
+                            },
+                            child: Text(
+                                'https://lottiefiles.com/53911-online-medical-assistance-animation',
+                                style: body16RegularUnderlineBlue),
+                          ),
+                          ]),
                     verticalSpace15
                     ]),
               ))),
