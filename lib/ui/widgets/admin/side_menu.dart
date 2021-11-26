@@ -6,7 +6,6 @@ import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class AdminSideMenu extends GetView<AdminMenuController> {
   final NavigationController navigationController = Get.find();
@@ -18,14 +17,14 @@ class AdminSideMenu extends GetView<AdminMenuController> {
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
             Image.asset(
-                logo,
-                fit: BoxFit.contain,
-              ),
-            
+              logo,
+              fit: BoxFit.contain,
+            ),
             ...adminSideMenuItemRoutes
                 .map((item) => AdminSideMenuItem(
                     itemName: item.name,
                     onTap: () {
+                      print('${item.name} - ${item.route}');
                       if (!controller.isActive(item.name!)!) {
                         controller.changeActiveItemTo(item.name);
                         navigationController.navigateTo(item.route!);

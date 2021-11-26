@@ -35,6 +35,11 @@ class DisabledDoctorsController extends GetxController {
         );
   }
 
+  void reloadAfter() {
+    disabledList.clear();
+    disabledList.assignAll(filteredDisabledList);
+  }
+
   filter({required String name}) {
     disabledList.clear();
 

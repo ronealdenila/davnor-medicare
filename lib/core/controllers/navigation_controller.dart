@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class NavigationController extends GetxController {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  Future<dynamic> navigateTo(String routeName) {
+  Future<void> navigateTo(String routeName) {
     return navigatorKey.currentState!.pushReplacementNamed(routeName);
   }
 

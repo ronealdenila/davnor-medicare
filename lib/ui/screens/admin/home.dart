@@ -898,9 +898,10 @@ Widget phoneVersion() {
 }
 
 class AdminSideMenuItem extends GetView<AdminMenuController> {
-  const AdminSideMenuItem({required this.itemName, required this.onTap});
+  AdminSideMenuItem({required this.itemName, required this.onTap});
   final String? itemName;
   final void Function()? onTap;
+  final AdminMenuController menuController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -908,25 +909,25 @@ class AdminSideMenuItem extends GetView<AdminMenuController> {
       onTap: onTap,
       onHover: (value) {
         value
-            ? controller.onHover(itemName!)
-            : controller.onHover('not hovering');
+            ? menuController.onHover(itemName!)
+            : menuController.onHover('not hovering');
       },
       child: Obx(
         () => Container(
-          color: controller.isHovering(itemName!)!
+          color: menuController.isHovering(itemName!)!
               ? const Color(0xFFA4A6B3)
               : Colors.transparent,
           child: Row(
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: controller.returnIconFor(itemName!),
+                child: menuController.returnIconFor(itemName!),
               ),
               Flexible(
                 child: Text(
                   itemName!,
                   style: subtitle18Medium.copyWith(
-                    color: controller.isActive(itemName!)!
+                    color: menuController.isActive(itemName!)!
                         ? infoColor
                         : neutralColor[60],
                   ),

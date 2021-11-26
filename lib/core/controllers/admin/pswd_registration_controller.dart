@@ -17,21 +17,19 @@ class PSWDRegistrationController extends GetxController {
   final RxString position = ''.obs;
 
   Future<void> registerPSWD() async {
-    if (formKey.currentState!.validate()) {
-      final app = await Firebase.initializeApp(
-          name: 'secondary', options: Firebase.app().options);
-      await FirebaseAuth.instanceFor(app: app)
-          .createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: '123456',
-      )
-          .then((result) async {
-        final _userId = result.user!.uid;
-        await _createPSWDUser(_userId);
-      });
+    final app = await Firebase.initializeApp(
+        name: 'secondary', options: Firebase.app().options);
+    await FirebaseAuth.instanceFor(app: app)
+        .createUserWithEmailAndPassword(
+      email: emailController.text,
+      password: '123456',
+    )
+        .then((result) async {
+      final _userId = result.user!.uid;
+      await _createPSWDUser(_userId);
+    });
 
-      await app.delete();
-    }
+    await app.delete();
   }
 
   Future<void> _createPSWDUser(String userID) async {
@@ -50,7 +48,12 @@ class PSWDRegistrationController extends GetxController {
         'profileImage': '',
         'disabled': false
       },
-    );
+    ).then((value) {
+      Get.defaultDialog(title: 'Doctor is successfully registered');
+    }).catchError((onError) {
+      Get.defaultDialog(title: 'Something went wrong');
+    });
+
     _clearControllers();
   }
 

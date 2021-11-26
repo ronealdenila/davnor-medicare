@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/disabled_doctors_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,8 @@ import 'package:get/get.dart';
 
 class DoctorListController extends GetxController {
   final log = getLogger('Doctor List Controller');
+  final DisabledDoctorsController dListController =
+      Get.put(DisabledDoctorsController());
 
   final RxList<DoctorModel> doctorList = RxList<DoctorModel>();
   final RxList<DoctorModel> filteredDoctorList = RxList<DoctorModel>();
@@ -49,21 +52,18 @@ class DoctorListController extends GetxController {
     await firestore
         .collection('doctors')
         .doc(uid)
-        .update({'disabled': true})
-        .then(
-          (value) => {
-            //Dialog success
-             Get.defaultDialog(title: 
-            'Successfuly disabled Doctor')
-          },
-        )
-        .catchError(
-          (error) => {
-            //Dialog error
-             Get.defaultDialog(title: 
-            'Error Occured! Doctor not disabled')
-          },
-        );
+        .update({'disabled': true}).then(
+      (value) {
+        dListController.reloadAfter();
+        //Dialog success
+        Get.defaultDialog(title: 'Successfuly disabled Doctor');
+      },
+    ).catchError(
+      (error) {
+        //Dialog error
+        Get.defaultDialog(title: 'Error Occured! Doctor not disabled');
+      },
+    );
   }
 
   Future<void> updateDoctor(DoctorModel model) async {
@@ -86,15 +86,13 @@ class DoctorListController extends GetxController {
         .then(
           (value) => {
             //Dialog success
-             Get.defaultDialog(title: 
-            'Successfuly updated Doctor')
+            Get.defaultDialog(title: 'Successfuly updated Doctor')
           },
         )
         .catchError(
           (error) => {
             //Dialog error
-             Get.defaultDialog(title: 
-            'Error Occured! Unable to update doctor')
+            Get.defaultDialog(title: 'Error Occured! Unable to update doctor')
           },
         );
   }
