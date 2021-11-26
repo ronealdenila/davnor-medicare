@@ -35,13 +35,14 @@ class Validator {
   }
 
   String? number(String? value) {
-    const pattern = r'^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$';
-    final regex = RegExp(pattern);
-    if (!regex.hasMatch(value!)) {
-      return 'validator.number'.tr;
-    } else {
+    if (value == null) {
       return null;
     }
+    bool isNum = double.tryParse(value) != null;
+    if (!isNum) {
+      return 'Enter a number';
+    }
+    return null;
   }
 
   String? amount(String? value) {

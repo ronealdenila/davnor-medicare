@@ -1,22 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
-import 'package:davnor_medicare/core/models/consultation_model.dart';
-import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
-import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
-import 'package:davnor_medicare/ui/widgets/consh_card_web.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/ma_item_view.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class MaHistoryWebScreen extends StatelessWidget {
   @override

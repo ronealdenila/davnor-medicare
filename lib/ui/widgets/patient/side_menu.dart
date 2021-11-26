@@ -17,6 +17,7 @@ class PatientSideMenu extends GetView<PatientMenuController> {
   final ConsRequestController consController = Get.find();
   final NavigationController navigationController = Get.find();
   final LiveConsController liveCont = Get.find();
+
   final List locale = [
     {'name': 'English', 'locale': Locale('english', 'US')},
     {'name': 'Tagalog', 'locale': Locale('tagalog', 'ph')},
@@ -105,8 +106,7 @@ appInfoDialog(BuildContext context) {
               width: Get.width * .3,
               child: SingleChildScrollView(
                   child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -134,136 +134,134 @@ appInfoDialog(BuildContext context) {
                       Text('Hanna Alondra Demegillo',
                           style: caption18RegularNeutral),
                       verticalSpace18,
-                      
                       const Text(
-                      'Icons used credits to:',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
-                    verticalSpace5,
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            icons8,
-                            fit: BoxFit.fill,
-                            height: 50,
-                            width: 50,
-                          ),
-                          horizontalSpace10,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Icons8', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://icons8.com');
-                                  },
-                                  child: Text('https://icons8.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
-                        ]),
-                    verticalSpace5,
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            flaticon,
-                            fit: BoxFit.fill,
-                            height: 60,
-                            width: 60,
-                          ),
-                          horizontalSpace10,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Flaticon', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://www.flaticon.com');
-                                  },
-                                  child: Text('https://www.flaticon.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
-                        ]),
-                    verticalSpace18,
-                    const Text(
-                      'Photo used from:',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
-                    verticalSpace5,
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            freepik,
-                            fit: BoxFit.fill,
-                            height: 50,
-                            width: 50,
-                          ),
-                          horizontalSpace15,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Freepik', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://www.freepik.com');
-                                  },
-                                  child: Text('https://www.freepik.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
-                        ]),
-                    verticalSpace18,
-                     const Text(
-                      'Splast screen animation from:',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
-                    verticalSpace5,
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            lottiefile,
-                            fit: BoxFit.fill,
-                            height: 50,
-                            width: 50,
-                          ),
-                          horizontalSpace15,
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Lottie by: Abdul Latif',
-                              style: body14SemiBold),
-                          verticalSpace5,
-                          InkWell(
-                            onTap: () {
-                              _urlLauncherService.launchURL(
-                                  'https://lottiefiles.com');
-                            },
-                            child: Text(
-                                'https://lottiefiles.com',
-                                style: body16RegularUnderlineBlue),
-                          ),
-                        ])
-                        ]),
-                    verticalSpace15
-                  ]),
+                        'Icons used credits to:',
+                        textAlign: TextAlign.left,
+                        style: subtitle16Bold,
+                      ),
+                      verticalSpace5,
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              icons8,
+                              fit: BoxFit.fill,
+                              height: 50,
+                              width: 50,
+                            ),
+                            horizontalSpace10,
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Icons8', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://icons8.com');
+                                    },
+                                    child: Text('https://icons8.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ]),
+                      verticalSpace5,
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              flaticon,
+                              fit: BoxFit.fill,
+                              height: 60,
+                              width: 60,
+                            ),
+                            horizontalSpace10,
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Flaticon', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService.launchURL(
+                                          'https://www.flaticon.com');
+                                    },
+                                    child: Text('https://www.flaticon.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ]),
+                      verticalSpace18,
+                      const Text(
+                        'Photo used from:',
+                        textAlign: TextAlign.left,
+                        style: subtitle16Bold,
+                      ),
+                      verticalSpace5,
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              freepik,
+                              fit: BoxFit.fill,
+                              height: 50,
+                              width: 50,
+                            ),
+                            horizontalSpace15,
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Freepik', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://www.freepik.com');
+                                    },
+                                    child: Text('https://www.freepik.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ]),
+                      verticalSpace18,
+                      const Text(
+                        'Splast screen animation from:',
+                        textAlign: TextAlign.left,
+                        style: subtitle16Bold,
+                      ),
+                      verticalSpace5,
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              lottiefile,
+                              fit: BoxFit.fill,
+                              height: 50,
+                              width: 50,
+                            ),
+                            horizontalSpace15,
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Lottie by: Abdul Latif',
+                                      style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://lottiefiles.com');
+                                    },
+                                    child: Text('https://lottiefiles.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ])
+                          ]),
+                      verticalSpace15
+                    ]),
               ))),
         );
       });

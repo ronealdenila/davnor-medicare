@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/patient/cons_form2.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -124,7 +123,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           child: CustomTextFormField(
                             controller: controller.ageController,
                             labelText: 'consform3'.tr,
-                            validator: Validator().notEmpty,
+                            validator: Validator().number,
                             keyboardType: TextInputType.number,
                             //* for improvement: pwede ta pag click sa done
                             //* magsubmit na ang form

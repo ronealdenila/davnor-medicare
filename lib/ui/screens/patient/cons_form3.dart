@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/constants/app_strings.dart';
 
 class ConsForm3Screen extends GetView<ConsRequestController> {
   @override

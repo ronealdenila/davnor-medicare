@@ -36,8 +36,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   final PatientMenuController menuController =
       Get.put(PatientMenuController(), permanent: true);
   final GlobalKey<ScaffoldState> scaffoldKeyP = GlobalKey();
-  final NavigationController navigationController =
-      Get.put(NavigationController(), permanent: true);
+  final NavigationController navigationController = Get.find();
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
@@ -572,9 +571,10 @@ class ResponsiveView extends GetResponsiveView {
 }
 
 class PatientSideMenuItem extends GetView<PatientMenuController> {
-  const PatientSideMenuItem({required this.itemName, required this.onTap});
+  PatientSideMenuItem({required this.itemName, required this.onTap});
   final String? itemName;
   final void Function()? onTap;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
