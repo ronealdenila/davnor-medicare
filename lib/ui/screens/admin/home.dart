@@ -19,7 +19,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class AdminHomeScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKeyA = GlobalKey();
   static AuthController authController = Get.find();
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
@@ -34,7 +34,7 @@ class AdminHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldKeyA,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(),
       drawer: Drawer(
@@ -46,7 +46,7 @@ class AdminHomeScreen extends StatelessWidget {
 
   AppBar topNavigationBar() {
     return AppBar(
-      leading: ResponsiveLeading(scaffoldKey),
+      leading: ResponsiveLeading(scaffoldKeyA),
       elevation: 0,
       backgroundColor: Colors.transparent,
       title: Row(
@@ -116,8 +116,8 @@ class DesktopScreen extends StatelessWidget {
 
 //Refactor
 class ResponsiveLeading extends GetResponsiveView {
-  ResponsiveLeading(this.scaffoldKey);
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  ResponsiveLeading(this.scaffoldKeyA);
+  final GlobalKey<ScaffoldState> scaffoldKeyA;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -126,7 +126,7 @@ class ResponsiveLeading extends GetResponsiveView {
       return IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          scaffoldKeyA.currentState!.openDrawer();
         },
       );
     }
