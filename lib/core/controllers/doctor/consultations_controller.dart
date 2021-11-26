@@ -28,6 +28,14 @@ class ConsultationsController extends GetxController {
     consultations.bindStream(getConsultations());
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   Stream<List<ConsultationModel>> getConsultations() {
     log.i('getConsultations | Streaming Consultation Request');
     return firestore

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
@@ -34,6 +35,10 @@ class DoctorWebHomeScreen extends StatelessWidget {
       Get.put(NavigationController(), permanent: true);
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
+  final ConsultationsController consRequests =
+      Get.put(ConsultationsController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +148,7 @@ final RxInt countAdd = 1.obs; //for additionals
 
 class DoctorDashboardScreen extends GetView<DoctorMenuController> {
   final ArticleController articleService = Get.find();
-  final ConsultationsController consRequests =
-      Get.put(ConsultationsController());
+  final ConsultationsController consRequests = Get.find();
   final LiveConsController liveCont = Get.find();
   static AuthController authController = Get.find();
   static AppController appController = Get.find();
@@ -208,7 +212,7 @@ class ResponsiveView extends GetResponsiveView {
 }
 
 Widget tabletVersion(BuildContext context) {
-  DoctorMenuController menuController = Get.find();
+  final DoctorMenuController menuController = Get.find();
   final AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(

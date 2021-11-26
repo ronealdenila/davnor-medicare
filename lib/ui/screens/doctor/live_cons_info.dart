@@ -239,10 +239,12 @@ class LiveConsInfoScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: CustomButton(
                       buttonColor: verySoftBlueColor,
-                      onTap: () => liveCont.skipConsultation(
-                            consData.consID!,
-                            consData.patientID!,
-                          ),
+                      onTap: () async {
+                        await liveCont.skipConsultation(
+                          consData.consID!,
+                          consData.patientID!,
+                        );
+                      },
                       //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
                       text: 'Submit')),
             ],

@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
@@ -44,6 +45,8 @@ class PatientWebHomeScreen extends StatelessWidget {
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
   final NotifController notifController = Get.put(NotifController());
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -258,6 +261,7 @@ class ResponsiveView extends GetResponsiveView {
   final ConsRequestController consController = Get.find();
   final LiveConsController liveCont = Get.find();
   final StatusController stats = Get.find();
+  final ConsHistoryController consHController = Get.find();
 
   @override
   Widget phone() => tabletVersion(context);

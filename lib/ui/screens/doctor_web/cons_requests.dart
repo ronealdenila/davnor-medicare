@@ -31,9 +31,8 @@ class ResponsiveBody extends GetResponsiveView {
   ResponsiveBody(this.context);
   final BuildContext context;
   final AttachedPhotosController controller = Get.find();
-  final ConsultationsController consRequests =
-      Get.put(ConsultationsController());
-  final ConsultationsController doctorHomeController = Get.find();
+  final ConsultationsController consRequests = Get.find();
+  //final ConsultationsController doctorHomeController = Get.find();
 
   @override
   Widget? builder() {
@@ -252,7 +251,7 @@ class ResponsiveBody extends GetResponsiveView {
             horizontalSpace15,
             Flexible(
               child: Text(
-                doctorHomeController.getFullName(consData),
+                consRequests.getFullName(consData),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: subtitle18Medium.copyWith(color: Colors.black),
@@ -287,7 +286,7 @@ class ResponsiveBody extends GetResponsiveView {
                   horizontalSpace15,
                   Flexible(
                     child: Text(
-                      doctorHomeController.getFullName(consData),
+                      consRequests.getFullName(consData),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: subtitle18Medium.copyWith(color: Colors.black),
@@ -318,7 +317,7 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationModel model) {
-    if (doctorHomeController.getProfilePhoto(model) == '') {
+    if (consRequests.getProfilePhoto(model) == '') {
       return CircleAvatar(
         radius: 25,
         backgroundImage: AssetImage(blankProfile),
@@ -326,8 +325,7 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 25,
-      foregroundImage:
-          NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
       backgroundImage: AssetImage(blankProfile),
     );
   }
@@ -427,7 +425,7 @@ class ResponsiveBody extends GetResponsiveView {
                   .consultations[consRequests.selectedIndex.value])),
           verticalSpace20,
           Text(
-            doctorHomeController.getFullName(
+            consRequests.getFullName(
                 consRequests.consultations[consRequests.selectedIndex.value]),
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
@@ -501,7 +499,7 @@ class ResponsiveBody extends GetResponsiveView {
                 SizedBox(
                   width: 170,
                   child: Text(
-                      doctorHomeController.convertTimeStamp(consRequests
+                      consRequests.convertTimeStamp(consRequests
                           .consultations[consRequests.selectedIndex.value]
                           .dateRqstd!),
                       maxLines: 5,
@@ -519,7 +517,7 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (doctorHomeController.getProfilePhoto(model) == '') {
+    if (consRequests.getProfilePhoto(model) == '') {
       return CircleAvatar(
         radius: 50,
         backgroundImage: AssetImage(blankProfile),
@@ -527,8 +525,7 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return CircleAvatar(
       radius: 50,
-      foregroundImage:
-          NetworkImage(doctorHomeController.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
       backgroundImage: AssetImage(blankProfile),
     );
   }
