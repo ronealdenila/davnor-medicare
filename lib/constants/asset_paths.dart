@@ -11,6 +11,8 @@ final String freepik = _getImagePath('freepik.png');
 final String doctorDefault = _getImagePath('doctor_pic.png');
 final String logo = _getImagePath('davnormedicare.png');
 final String davnormedicare = _getImagePath('davnormedicare_cover.jpg');
+final String lottiefile = _getImagePath('lottie.PNG');
+
 
 final String earacheIcon = _getImagePath('earache.png');
 final String heartburnIcon = _getImagePath('gerd.png');

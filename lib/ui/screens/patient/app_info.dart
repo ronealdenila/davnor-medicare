@@ -50,7 +50,7 @@ class AppInfoScreen extends StatelessWidget {
                         style: caption18RegularNeutral),
                     verticalSpace18,
                     const Text(
-                      'Illnesses Icons from:',
+                      'Icons used credits to:',
                       textAlign: TextAlign.left,
                       style: subtitle16Bold,
                     ),
@@ -65,7 +65,7 @@ class AppInfoScreen extends StatelessWidget {
                             height: 50,
                             width: 50,
                           ),
-                          horizontalSpace15,
+                          horizontalSpace10,
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -81,12 +81,6 @@ class AppInfoScreen extends StatelessWidget {
                                 ),
                               ]),
                         ]),
-                    verticalSpace18,
-                    const Text(
-                      'Icons made by: backwoods',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
                     verticalSpace5,
                     Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,13 +110,7 @@ class AppInfoScreen extends StatelessWidget {
                         ]),
                     verticalSpace18,
                     const Text(
-                      'Icons made by: freepik,',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
-                    verticalSpace5,
-                    const Text(
-                      'Medical vector created by freepik',
+                      'Photo used from:',
                       textAlign: TextAlign.left,
                       style: subtitle16Bold,
                     ),
@@ -154,21 +142,39 @@ class AppInfoScreen extends StatelessWidget {
                               ]),
                         ]),
                     verticalSpace18,
+                     const Text(
+                      'Splast screen animation from:',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            lottiefile,
+                            fit: BoxFit.fill,
+                            height: 50,
+                            width: 50,
+                          ),
+                          horizontalSpace15,
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Splash Screen used from: Abdul Latif',
+                          Text('Lottie by: Abdul Latif',
                               style: body14SemiBold),
                           verticalSpace5,
                           InkWell(
                             onTap: () {
                               _urlLauncherService.launchURL(
-                                  'https://lottiefiles.com/53911-online-medical-assistance-animation');
+                                  'https://lottiefiles.com');
                             },
                             child: Text(
-                                'https://lottiefiles.com/53911-online-medical-assistance-animation',
+                                'https://lottiefiles.com',
                                 style: body16RegularUnderlineBlue),
                           ),
+                        ])
                         ]),
                     verticalSpace15
                   ]),

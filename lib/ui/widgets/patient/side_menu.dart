@@ -134,13 +134,14 @@ appInfoDialog(BuildContext context) {
                       Text('Hanna Alondra Demegillo',
                           style: caption18RegularNeutral),
                       verticalSpace18,
+                      
                       const Text(
-                        'Illnesses Icons from:',
-                        textAlign: TextAlign.left,
-                        style: subtitle18Bold,
-                      ),
-                      verticalSpace10,
-                      Row(
+                      'Icons used credits to:',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -152,112 +153,117 @@ appInfoDialog(BuildContext context) {
                           ),
                           horizontalSpace10,
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Icons8', style: body14SemiBold),
-                              verticalSpace5,
-                              InkWell(
-                                onTap: () {
-                                  _urlLauncherService
-                                      .launchURL('https://icons8.com');
-                                },
-                                child: Text('https://icons8.com',
-                                    style: body16RegularUnderlineBlue),
-                              ),
-                            ],
-                          ),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Icons8', style: body14SemiBold),
+                                verticalSpace5,
+                                InkWell(
+                                  onTap: () {
+                                    _urlLauncherService
+                                        .launchURL('https://icons8.com');
+                                  },
+                                  child: Text('https://icons8.com',
+                                      style: body16RegularUnderlineBlue),
+                                ),
+                              ]),
                         ]),
-                        verticalSpace18,
-                      const Text(
-                      'Icons made by: backwoods',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
                     verticalSpace5,
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          flaticon,
-                          fit: BoxFit.fill,
-                          height: 60,
-                          width: 60,
-                        ),
-                        horizontalSpace10,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Flaticon', style: body14SemiBold),
-                            verticalSpace5,
-                            InkWell(
-                              onTap: () {
-                                _urlLauncherService
-                                    .launchURL('https://www.flaticon.com');
-                              },
-                              child: Text('https://www.flaticon.com',
-                                  style: body16RegularUnderlineBlue),
-                            ),
-                          ]),
-                      ]),
-                      verticalSpace18,
-                      const Text(
-                      'Icons made by: freepik,',
-                      textAlign: TextAlign.left,
-                      style: subtitle16Bold,
-                    ),
-                    verticalSpace5,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            flaticon,
+                            fit: BoxFit.fill,
+                            height: 60,
+                            width: 60,
+                          ),
+                          horizontalSpace10,
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Flaticon', style: body14SemiBold),
+                                verticalSpace5,
+                                InkWell(
+                                  onTap: () {
+                                    _urlLauncherService
+                                        .launchURL('https://www.flaticon.com');
+                                  },
+                                  child: Text('https://www.flaticon.com',
+                                      style: body16RegularUnderlineBlue),
+                                ),
+                              ]),
+                        ]),
+                    verticalSpace18,
                     const Text(
-                      'Medical vector created by freepik',
+                      'Photo used from:',
                       textAlign: TextAlign.left,
                       style: subtitle16Bold,
                     ),
                     verticalSpace5,
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          freepik,
-                          fit: BoxFit.fill,
-                          height: 60,
-                          width: 60,
-                        ),
-                        horizontalSpace15,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Freepik', style: body14SemiBold),
-                            verticalSpace5,
-                            InkWell(
-                              onTap: () {
-                                _urlLauncherService
-                                    .launchURL('https://www.freepik.com');
-                              },
-                              child: Text('https://www.freepik.com',
-                                  style: body16RegularUnderlineBlue),
-                            ),
-                          ]),
-                      ]),
-                      verticalSpace18,
-                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            freepik,
+                            fit: BoxFit.fill,
+                            height: 50,
+                            width: 50,
+                          ),
+                          horizontalSpace15,
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Freepik', style: body14SemiBold),
+                                verticalSpace5,
+                                InkWell(
+                                  onTap: () {
+                                    _urlLauncherService
+                                        .launchURL('https://www.freepik.com');
+                                  },
+                                  child: Text('https://www.freepik.com',
+                                      style: body16RegularUnderlineBlue),
+                                ),
+                              ]),
+                        ]),
+                    verticalSpace18,
+                     const Text(
+                      'Splast screen animation from:',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            lottiefile,
+                            fit: BoxFit.fill,
+                            height: 50,
+                            width: 50,
+                          ),
+                          horizontalSpace15,
+                    Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Splash Screen used from: Abdul Latif',
-                              style: subtitle16Bold),
+                          Text('Lottie by: Abdul Latif',
+                              style: body14SemiBold),
                           verticalSpace5,
                           InkWell(
                             onTap: () {
                               _urlLauncherService.launchURL(
-                                  'https://lottiefiles.com/53911-online-medical-assistance-animation');
+                                  'https://lottiefiles.com');
                             },
                             child: Text(
-                                'https://lottiefiles.com/53911-online-medical-assistance-animation',
+                                'https://lottiefiles.com',
                                 style: body16RegularUnderlineBlue),
                           ),
-                          ]),
+                        ])
+                        ]),
                     verticalSpace15
-                    ]),
+                  ]),
               ))),
         );
       });
