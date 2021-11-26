@@ -23,7 +23,6 @@ class LiveConsController extends GetxController {
   RxList<LiveConsultationModel> liveCons = RxList<LiveConsultationModel>([]);
   TextEditingController reason = TextEditingController();
   final RxBool isLoading = true.obs;
-  final DoctorMenuController menuController = Get.find();
   final RxBool doneFetching = false.obs;
   final ConsHistoryController consHController = Get.find();
 
@@ -137,11 +136,8 @@ class LiveConsController extends GetxController {
       await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      if (kIsWeb) {
-        menuController.changeActiveItemTo('Dashboard');
-        navigationController.navigateTo(Routes.DOC_WEB_HOME);
-        consHController.refreshD();
-      } else {
+      if (!kIsWeb) {
+        consHController.refresh();
         Get.back(); //back to Live Screen Info
         Get.back(); //
       }
@@ -211,10 +207,7 @@ class LiveConsController extends GetxController {
     await updateDocStatusSkip(fetchedData!.userID!);
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
-    if (kIsWeb) {
-      menuController.changeActiveItemTo('Dashboard');
-      navigationController.navigateTo(Routes.DOC_WEB_HOME);
-    } else {
+    if (!kIsWeb) {
       Get.back(); //back to Live Screen Info
       Get.back(); //
     }

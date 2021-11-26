@@ -24,8 +24,7 @@ class ResponsiveBody extends GetResponsiveView {
   ResponsiveBody(this.context);
   final BuildContext context;
   final AttachedPhotosController controller = Get.find();
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController());
+  final ConsHistoryController consHController = Get.find();
   final RxInt selectedIndex = 0.obs;
 
   @override

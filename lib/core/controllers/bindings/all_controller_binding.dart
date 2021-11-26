@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/controllers/admin/pswd_registration_control
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
@@ -39,6 +40,7 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut<MAQueueController>(() => MAQueueController());
     Get.lazyPut<VerificationController>(() => VerificationController());
     Get.lazyPut<MAHistoryController>(() => MAHistoryController());
+    Get.lazyPut<ConsHistoryController>(() => ConsHistoryController());
     Get.lazyPut<ProfileController>(() => ProfileController());
 
     //doctor

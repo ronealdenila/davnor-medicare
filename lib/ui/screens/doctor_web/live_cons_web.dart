@@ -5,12 +5,15 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
+import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
@@ -24,8 +27,7 @@ import 'package:get/get.dart';
 
 class LiveConsultationWeb extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController());
+  final ConsHistoryController consHController = Get.find();
   static LiveConsController liveCont = Get.find();
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   static AuthController authController = Get.find();
@@ -33,6 +35,7 @@ class LiveConsultationWeb extends StatelessWidget {
   final CallingPatientController callController =
       Get.put(CallingPatientController());
   final ConsultationsController consRequests = Get.find();
+  final DoctorMenuController menuController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -317,8 +320,8 @@ class LiveConsultationWeb extends StatelessWidget {
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
                         showErrorDialog(
-                          errorTitle: 'ERROR!',
-                          errorDescription:
+                            errorTitle: 'ERROR!',
+                            errorDescription:
                                 'Patient is currently on a video call, please try again later');
                       } else {
                         await callPatient();
@@ -446,8 +449,11 @@ class LiveConsultationWeb extends StatelessWidget {
       dialogTitle: 'Is the consultation done?',
       dialogCaption:
           'Select YES if you want to end the consultation. Otherwise, select NO',
-      onYesTap: () {
-        liveCont.endConsultation(liveCont.liveCons[0]);
+      onYesTap: () async {
+        await liveCont.endConsultation(liveCont.liveCons[0]);
+        menuController.changeActiveItemTo('Dashboard');
+        navigationController.navigateTo(Routes.DOC_WEB_HOME);
+        consHController.refreshD();
         consRequests.selectedIndex.value = 0;
       },
       onNoTap: () => dismissDialog(),
@@ -508,11 +514,14 @@ class LiveConsultationWeb extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: CustomButton(
                       buttonColor: verySoftBlueColor,
-                      onTap: () {
-                        liveCont.skipConsultation(
+                      onTap: () async {
+                        await liveCont.skipConsultation(
                           consData.consID!,
                           consData.patientID!,
                         );
+
+                        menuController.changeActiveItemTo('Dashboard');
+                        navigationController.navigateTo(Routes.DOC_WEB_HOME);
                         consRequests.selectedIndex.value = 0;
                       },
                       //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
