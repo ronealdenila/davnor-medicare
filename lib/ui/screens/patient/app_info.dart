@@ -65,7 +65,7 @@ class AppInfoScreen extends StatelessWidget {
                             height: 50,
                             width: 50,
                           ),
-                          horizontalSpace15,
+                          horizontalSpace10,
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -109,7 +109,6 @@ class AppInfoScreen extends StatelessWidget {
                               ]),
                         ]),
                     verticalSpace18,
-                    verticalSpace5,
                     const Text(
                       'Photo used from:',
                       textAlign: TextAlign.left,
@@ -143,6 +142,12 @@ class AppInfoScreen extends StatelessWidget {
                               ]),
                         ]),
                     verticalSpace18,
+                     const Text(
+                      'Splast screen animation from:',
+                      textAlign: TextAlign.left,
+                      style: subtitle16Bold,
+                    ),
+                    verticalSpace5,
                     Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -163,10 +168,10 @@ class AppInfoScreen extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               _urlLauncherService.launchURL(
-                                  'https://lottiefiles.com/53911-online-medical-assistance-animation');
+                                  'https://lottiefiles.com');
                             },
                             child: Text(
-                                'https://lottiefiles.com/53911-online-medical-assistance-animation',
+                                'https://lottiefiles.com',
                                 style: body16RegularUnderlineBlue),
                           ),
                         ])
