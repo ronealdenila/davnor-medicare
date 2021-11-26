@@ -153,7 +153,7 @@ class AppInfoScreen extends StatelessWidget {
                                 ),
                               ]),
                         ]),
-                    verticalSpace5,
+                    verticalSpace18,
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
