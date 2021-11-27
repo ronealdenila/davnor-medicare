@@ -163,6 +163,26 @@ class MAHistoryController extends GetxController {
     }
   }
 
+  showDialogPSWD(context) {
+    Get.dialog(AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      content: Container(
+        color: Colors.white,
+        height: kIsWeb ? Get.height * 0.32 : Get.height * .45,
+        width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SfDateRangePicker(
+              onSelectionChanged: onSelectionChangedPSWD,
+              selectionMode: DateRangePickerSelectionMode.single,
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
   showDialog(context) {
     Get.dialog(AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -198,13 +218,15 @@ class MAHistoryController extends GetxController {
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     maHistoryList.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
+    print(filteredListforP.length);
     for (var i = 0; i < filteredListforP.length; i++) {
-      String dateConstant = getMonth(filteredListforP[i].dateClaimed!) +
-          " - " +
-          getDate(filteredListforP[i].dateClaimed!) +
-          " - " +
-          getYear(filteredListforP[i].dateClaimed!);
-      ;
+      String dateConstant =
+          filteredListforP[i].dateClaimed!.toDate().month.toString() +
+              " - " +
+              filteredListforP[i].dateClaimed!.toDate().day.toString() +
+              " - " +
+              filteredListforP[i].dateClaimed!.toDate().year.toString();
+
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
           myTimeStamp.toDate().day.toString() +
@@ -217,6 +239,35 @@ class MAHistoryController extends GetxController {
           dateSelected);
       if (dateConstant == dateSelected) {
         maHistoryList.add(filteredListforP[i]);
+      }
+    }
+    Get.back();
+  }
+
+  void onSelectionChangedPSWD(DateRangePickerSelectionChangedArgs args) {
+    maHistoryList.clear();
+    Timestamp myTimeStamp = Timestamp.fromDate(args.value);
+    print(filteredListforPSWD.length);
+    for (var a = 0; a < filteredListforPSWD.length; a++) {
+      String dateConstant =
+          filteredListforPSWD[a].dateClaimed!.toDate().month.toString() +
+              " - " +
+              filteredListforPSWD[a].dateClaimed!.toDate().day.toString() +
+              " - " +
+              filteredListforPSWD[a].dateClaimed!.toDate().year.toString();
+
+      String dateSelected = myTimeStamp.toDate().month.toString() +
+          " - " +
+          myTimeStamp.toDate().day.toString() +
+          " - " +
+          myTimeStamp.toDate().year.toString();
+      print(a.toString() +
+          "  " +
+          dateConstant +
+          " dateSelected  " +
+          dateSelected);
+      if (dateConstant == dateSelected) {
+        maHistoryList.add(filteredListforPSWD[a]);
       }
     }
     Get.back();

@@ -13,10 +13,10 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final MAHistoryController hController = Get.put(MAHistoryController());
-final NavigationController navigationController = Get.find();
-
 class MAHistoryList extends StatelessWidget {
+  final MAHistoryController hController = Get.put(MAHistoryController());
+  final NavigationController navigationController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -98,7 +98,7 @@ class MAHistoryList extends StatelessWidget {
                 icon: Icon(Icons.calendar_today),
                 iconSize: 48,
                 onPressed: () {
-                  hController.showDialog(context);
+                  hController.showDialogPSWD(context);
                 },
               ),
             )
@@ -110,143 +110,144 @@ class MAHistoryList extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget requestList(BuildContext context) {
-  if (hController.isLoading.value) {
-    return const SizedBox(
-        height: 24, width: 24, child: CircularProgressIndicator());
+  Widget requestList(BuildContext context) {
+    if (hController.isLoading.value) {
+      return const SizedBox(
+          height: 24, width: 24, child: CircularProgressIndicator());
+    }
+    if (hController.maHistoryList.isEmpty && hController.isLoading.value) {
+      return const Text('No MA history');
+    }
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: hController.maHistoryList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(hController.maHistoryList[index]);
+          }),
+    );
   }
-  if (hController.maHistoryList.isEmpty && hController.isLoading.value) {
-    return const Text('No MA history');
-  }
-  return MediaQuery.removePadding(
-    context: context,
-    removeTop: true,
-    child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: hController.maHistoryList.length,
-        itemBuilder: (context, index) {
-          return customTableRow(hController.maHistoryList[index]);
-        }),
-  );
-}
 
-Widget header() {
-  return Container(
-    width: Get.width,
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: verySoftBlueColor,
-    ),
-    child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('PATIENT NAME',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('DATE CLAIMED',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Text('TYPE', style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('MEDICINE WORTH',
-                  style: body16Bold.copyWith(color: Colors.white)),
-            ),
-          ),
-          Expanded(
-            child:
-                Text('ACTION', style: body16Bold.copyWith(color: Colors.white)),
-          )
-        ]),
-  );
-}
-
-Widget customTableRow(MAHistoryModel model) {
-  return SizedBox(
-    width: Get.width,
-    child: Padding(
+  Widget header() {
+    return Container(
+      width: Get.width,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                model.fullName!,
-                style: body16Medium,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                hController.convertTimeStamp(model.dateClaimed!),
-                style: body16Medium,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                '${model.type}',
-                style: body16Medium,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                'Php ${model.medWorth}',
-                style: body16Medium,
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                navigationController.navigateToWithArgs(Routes.MA_HISTORY_ITEM,
-                    arguments: model);
-              },
-              child: Text(
-                'View',
-                style: body16RegularUnderlineBlue,
-              ),
-            ),
-          ),
-        ],
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: verySoftBlueColor,
       ),
-    ),
-  );
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('PATIENT NAME',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('DATE CLAIMED',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('TYPE',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('MEDICINE WORTH',
+                    style: body16Bold.copyWith(color: Colors.white)),
+              ),
+            ),
+            Expanded(
+              child: Text('ACTION',
+                  style: body16Bold.copyWith(color: Colors.white)),
+            )
+          ]),
+    );
+  }
+
+  Widget customTableRow(MAHistoryModel model) {
+    return SizedBox(
+      width: Get.width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  model.fullName!,
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  hController.convertTimeStamp(model.dateClaimed!),
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  '${model.type}',
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Php ${model.medWorth}',
+                  style: body16Medium,
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  navigationController.navigateToWithArgs(
+                      Routes.MA_HISTORY_ITEM,
+                      arguments: model);
+                },
+                child: Text(
+                  'View',
+                  style: body16RegularUnderlineBlue,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

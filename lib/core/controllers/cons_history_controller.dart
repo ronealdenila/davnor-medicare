@@ -229,12 +229,13 @@ class ConsHistoryController extends GetxController {
     consHistory.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
     for (var i = 0; i < filteredListforP.length; i++) {
-      String dateConstant = getMonth(filteredListforP[i].dateConsEnd!) +
-          " - " +
-          getDate(filteredListforP[i].dateConsEnd!) +
-          " - " +
-          getYear(filteredListforP[i].dateConsEnd!);
-      ;
+      String dateConstant =
+          filteredListforP[i].dateConsEnd!.toDate().month.toString() +
+              " - " +
+              filteredListforP[i].dateConsEnd!.toDate().day.toString() +
+              " - " +
+              filteredListforP[i].dateConsEnd!.toDate().year.toString();
+
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
           myTimeStamp.toDate().day.toString() +

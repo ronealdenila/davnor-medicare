@@ -174,8 +174,8 @@ appInfoDialog(BuildContext context) {
                             Image.asset(
                               flaticon,
                               fit: BoxFit.fill,
-                              height: 60,
-                              width: 60,
+                              height: 50,
+                              width: 50,
                             ),
                             horizontalSpace10,
                             Column(
