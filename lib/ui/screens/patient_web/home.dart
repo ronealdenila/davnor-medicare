@@ -468,7 +468,7 @@ class ResponsiveView extends GetResponsiveView {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 DmText.title24Medium(
-                                  'homepage'.tr,
+                                  'Article',
                                   color: neutralColor,
                                 ),
                               ],

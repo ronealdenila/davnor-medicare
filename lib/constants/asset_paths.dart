@@ -13,7 +13,7 @@ final String logo = _getImagePath('davnormedicare.png');
 final String davnormedicare = _getImagePath('davnormedicare_cover.jpg');
 final String lottiefile = _getImagePath('lottie.PNG');
 
-
+//icons
 final String earacheIcon = _getImagePath('earache.png');
 final String heartburnIcon = _getImagePath('gerd.png');
 final String vomitingIcon = _getImagePath('vomiting.png');
