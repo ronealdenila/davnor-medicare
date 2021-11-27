@@ -22,6 +22,7 @@ import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/notification_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/patient_custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/side_menu.dart';
+import 'package:davnor_medicare/ui/widgets/splash_loading.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class PatientWebHomeScreen extends StatelessWidget {
       Get.put(NotifController(), permanent: true);
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,9 @@ class PatientWebHomeScreen extends StatelessWidget {
       drawer: Drawer(
         child: PatientSideMenu(),
       ),
-      body: ResponsiveBody(),
+      body: Obx(() => authController.doneInitData.value
+          ? ResponsiveBody()
+          : SplashLoading()),
     );
   }
 
@@ -168,8 +172,10 @@ class PatientWebHomeScreen extends StatelessWidget {
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,
             underline: Container(),
-            hint: Text(fetchedData!.firstName!,
-                style: const TextStyle(color: Colors.black)),
+            hint: authController.doneInitData.value
+                ? Text(fetchedData!.firstName!,
+                    style: const TextStyle(color: Colors.black))
+                : Text('Loading...'),
             items: [
               DropdownMenuItem(
                 onTap: () {

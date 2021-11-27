@@ -1,9 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
@@ -15,9 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LiveConsWebScreen extends StatelessWidget {
-  final AttachedPhotosController controller = Get.find();
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController());
   static LiveConsController liveCont = Get.find();
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   static AuthController authController = Get.find();

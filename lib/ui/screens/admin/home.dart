@@ -10,6 +10,7 @@ import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/admin/side_menu.dart';
+import 'package:davnor_medicare/ui/widgets/splash_loading.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -40,7 +41,9 @@ class AdminHomeScreen extends StatelessWidget {
       drawer: Drawer(
         child: AdminSideMenu(),
       ),
-      body: ResponsiveBody(),
+      body: Obx(() => authController.doneInitData.value
+          ? ResponsiveBody()
+          : SplashLoading()),
     );
   }
 
@@ -57,8 +60,10 @@ class AdminHomeScreen extends StatelessWidget {
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,
             underline: Container(),
-            hint: Text(fetchedData!.firstName!,
-                style: const TextStyle(color: Colors.black)),
+            hint: authController.doneInitData.value
+                ? Text(fetchedData!.firstName!,
+                    style: const TextStyle(color: Colors.black))
+                : Text('Loading...'),
             items: [
               DropdownMenuItem(
                 onTap: () {
