@@ -35,11 +35,7 @@ class PSWDHeadHomeScreen extends StatelessWidget {
     return Scaffold(
       key: scaffoldKeyPS,
       extendBodyBehindAppBar: true,
-      appBar: topNavigationBar(
-        context,
-        scaffoldKeyPS,
-        fetchedData!.firstName,
-      ),
+      appBar: topNavigationBar(context, scaffoldKeyPS),
       drawer: Drawer(
         child: PswdHeadSideMenu(),
       ),
@@ -85,9 +81,9 @@ class DesktopScreen extends StatelessWidget {
 AppBar topNavigationBar(
   BuildContext context,
   GlobalKey<ScaffoldState> key,
-  String? name,
 ) {
   final AuthController authController = Get.find();
+  final fetchedData = authController.pswdModel.value;
   return AppBar(
     leading: ResponsiveLeading(key),
     elevation: 0,
@@ -101,7 +97,8 @@ AppBar topNavigationBar(
           iconSize: 40,
           underline: Container(),
           hint: authController.doneInitData.value
-              ? Text(name!, style: const TextStyle(color: Colors.black))
+              ? Text(fetchedData!.firstName!,
+                  style: const TextStyle(color: Colors.black))
               : Text('Loading...'),
           items: [
             DropdownMenuItem(

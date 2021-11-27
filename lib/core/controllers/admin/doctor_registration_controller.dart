@@ -67,7 +67,7 @@ class DoctorRegistrationController extends GetxController {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         if (doc['title'] as String == title.value &&
-            doc['title'] as String == department.value) {
+            doc['department'] as String == department.value) {
           return doc['categoryID'];
         }
       });

@@ -10,7 +10,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
-import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -93,8 +92,8 @@ class LiveConsultationScreen extends StatelessWidget {
                     ),
                     onPressed: () async {
                       showErrorDialog(
-                        errorTitle: 'ERROR!',
-                        errorDescription: 'Something went wrong');
+                          errorTitle: 'ERROR!',
+                          errorDescription: 'Something went wrong');
                     },
                   );
                 }
@@ -107,8 +106,8 @@ class LiveConsultationScreen extends StatelessWidget {
                   onPressed: () async {
                     if (data['patientJoined'] && data['otherJoined']) {
                       showErrorDialog(
-                        errorTitle: 'ERROR!',
-                        errorDescription:
+                          errorTitle: 'ERROR!',
+                          errorDescription:
                               'Patient is currently on a video call, please try again later');
                     } else {
                       await callPatient();

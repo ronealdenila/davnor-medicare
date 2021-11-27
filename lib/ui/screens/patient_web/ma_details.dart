@@ -143,40 +143,29 @@ class MADescriptionWebScreen extends StatelessWidget {
           if (!stats.patientStatus[0].hasActiveQueueMA!) {
             if (stats.pswdPStatus[0].hasFunds!) {
               if (!stats.pswdPStatus[0].isCutOff!) {
-                if (ma.hasAvailableSlot()) {
-                  return showConfirmationDialog(
-                    dialogTitle: 'dialog2'.tr,
-                    dialogCaption: 'dialogsub2'.tr,
-                    onYesTap: () {
-                      ma.isMAForYou.value = true;
-                      dismissDialog();
-                      navigationController
-                          .navigateTo(Routes.PATIENT_WEB_MA_FORM);
-                    },
-                    onNoTap: () {
-                      ma.isMAForYou.value = false;
-                      dismissDialog();
-                      navigationController
-                          .navigateTo(Routes.PATIENT_WEB_MA_FORM);
-                    },
-                  );
-                } else {
-                  showErrorDialog(
-                    errorTitle: 'maerror'.tr,
-                    errorDescription: 'maerror2'.tr,
-                  );
-                }
+                return showConfirmationDialog(
+                  dialogTitle: 'dialog2'.tr,
+                  dialogCaption: 'dialogsub2'.tr,
+                  onYesTap: () {
+                    ma.isMAForYou.value = true;
+                    dismissDialog();
+                    navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                  },
+                  onNoTap: () {
+                    ma.isMAForYou.value = false;
+                    dismissDialog();
+                    navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                  },
+                );
               } else {
                 showErrorDialog(
-                  errorTitle: 'Sorry were cut off already.',
-                  errorDescription: 'Please try again next time.'
-                  );
+                    errorTitle: 'Sorry were cut off already.',
+                    errorDescription: 'Please try again next time.');
               }
             } else {
               showErrorDialog(
-                errorTitle: 'Sorry MA has no fund for now.',
-                errorDescription: 'Please try again next time'
-                );
+                  errorTitle: 'Sorry MA has no fund for now.',
+                  errorDescription: 'Please try again next time');
             }
           } else {
             showErrorDialog(

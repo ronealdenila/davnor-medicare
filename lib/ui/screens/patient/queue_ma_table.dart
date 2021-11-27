@@ -16,16 +16,6 @@ class QueueMATableScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Slots: ',
-                  style: body14RegularNeutral,
-                ),
-                Text('${maQueueController.stats.pswdPStatus[0].maSlot}'),
-              ],
-            ),
             SizedBox(width: Get.width, child: Obx(() => returnTable(context))),
           ],
         )),
@@ -67,7 +57,7 @@ class QueueMATableScreen extends StatelessWidget {
           rowsPerPage: 8,
           source: QueueDataSource(queueMAList: maQueueController.queueMAList),
           columns: [
-            DataColumn(label: Text('queue6', style: subtitle18BoldWhite)),
+            DataColumn(label: Text('queue6'.tr, style: subtitle18BoldWhite)),
             DataColumn(label: Text('queue7'.tr, style: subtitle18BoldWhite)),
           ],
         ),

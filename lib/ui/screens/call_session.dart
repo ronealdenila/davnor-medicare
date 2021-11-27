@@ -138,7 +138,11 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
             backgroundColor: Colors.white,
             body: SafeArea(
                 child: isLoading
-                    ? CircularProgressIndicator()
+                    ? Center(
+                        child: SizedBox(
+                            height: kIsWeb ? 35 : 24,
+                            width: kIsWeb ? 35 : 24,
+                            child: CircularProgressIndicator()))
                     : Stack(
                         children: [
                           _renderVideo(),

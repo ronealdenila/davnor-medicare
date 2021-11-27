@@ -133,7 +133,7 @@ class ConsRequestController extends GetxController {
       showErrorDialog(
           errorTitle: 'ERROR!',
           errorDescription:
-              'Sorry, there are currently no available that specialize in the illness. Please try again later.');
+              'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();

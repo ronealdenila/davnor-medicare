@@ -424,6 +424,7 @@ class ResponsiveView extends GetResponsiveView {
                                               .hasActiveQueueCons! &&
                                           stats.patientStatus[0]
                                               .hasActiveQueueMA!) {
+                                        dismissDialog();
                                         showDialog(
                                             context: context,
                                             builder: (context) =>
@@ -434,6 +435,7 @@ class ResponsiveView extends GetResponsiveView {
                                             .navigateTo(Routes.Q_CONS_WEB);
                                       } else if (stats
                                           .patientStatus[0].hasActiveQueueMA!) {
+                                        dismissDialog();
                                         navigationController
                                             .navigateTo(Routes.Q_MA_WEB);
                                       } else {
@@ -496,7 +498,7 @@ class ResponsiveView extends GetResponsiveView {
                 Radius.circular(40),
               )),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          width: Get.width * .4,
+          width: Get.width * .3,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             verticalSpace20,
@@ -509,6 +511,7 @@ class ResponsiveView extends GetResponsiveView {
                 height: 70,
                 child: PCustomButton(
                   onTap: () {
+                    dismissDialog();
                     navigationController.navigateTo(Routes.Q_CONS_WEB);
                   },
                   text: 'btnq1'.tr,
@@ -524,13 +527,15 @@ class ResponsiveView extends GetResponsiveView {
                 height: 70,
                 child: PCustomButton(
                   onTap: () {
+                    dismissDialog();
                     navigationController.navigateTo(Routes.Q_MA_WEB);
                   },
                   text: 'btnq2'.tr,
                   buttonColor: verySoftBlueColor[80],
                 ),
               ),
-            )
+            ),
+            verticalSpace25,
           ]),
         ),
       ],

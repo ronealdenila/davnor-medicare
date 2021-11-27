@@ -39,7 +39,6 @@ class StatusController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
         if (!isCallStatsLoading.value) {

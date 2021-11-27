@@ -309,6 +309,7 @@ class AuthController extends GetxController {
           }
           break;
         case 'patient':
+          await resetCallStatus(auth.currentUser!.uid);
           await _initializePatientModel();
           if (kIsWeb) {
             await Future.delayed(const Duration(seconds: 3),
@@ -430,5 +431,22 @@ class AuthController extends GetxController {
 
   void launchDoctorApplicationEmail() {
     _urlLauncherService.launchURL(emailScheme);
+  }
+
+  Future<void> resetCallStatus(String uid) async {
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('incomingCall')
+        .doc('value')
+        .update({
+      'patientJoined': false,
+      'isCalling': false,
+      'didReject': false,
+      'otherJoined': false,
+      'channelId': '',
+      'from': '',
+      'callerName': ''
+    });
   }
 }

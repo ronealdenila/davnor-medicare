@@ -51,15 +51,6 @@ class MARequestController extends GetxController {
   //Generate unique MA ID
   final RxString generatedMAID = ''.obs;
 
-  bool hasAvailableSlot() {
-    final slot = stats.pswdPStatus[0].maSlot!;
-    final rqstd = stats.pswdPStatus[0].maRequested!;
-    if (slot > rqstd) {
-      return true;
-    }
-    return false;
-  }
-
   bool hasIDSelected() {
     if (imgOfValidID.value != '') {
       return true;
@@ -149,15 +140,15 @@ class MARequestController extends GetxController {
   Future<void> requestMAButton() async {
     showLoading();
     if (hasPrescriptionSelected()) {
-      if (hasAvailableSlot()) {
+      if (stats.pswdPStatus[0].hasFunds! && !stats.pswdPStatus[0].isCutOff!) {
         generatedMAID.value = uuid.v4();
         await uploadAndSaveImgs();
         await saveRequestforMA();
       } else {
         dismissDialog();
         showErrorDialog(
-            errorTitle: 'ERROR!',
-            errorDescription: 'Sorry, someone already got the last slot.');
+            errorTitle: 'Could not send request',
+            errorDescription: 'Sorry, it is already cut off.');
       }
     } else {
       dismissDialog();

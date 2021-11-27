@@ -56,16 +56,6 @@ class QueueMATableWebScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Slots: ',
-                              style: body14RegularNeutral,
-                            ),
-                            Text('${stats.pswdPStatus[0].maSlot}'),
-                          ],
-                        ),
                       ],
                     ),
                   ],
@@ -111,7 +101,7 @@ class QueueMATableWebScreen extends StatelessWidget {
           rowsPerPage: 10,
           source: QueueDataSource(queueMAList: maQueueController.queueMAList),
           columns: [
-            DataColumn(label: Text('queue6', style: subtitle18BoldWhite)),
+            DataColumn(label: Text('queue6'.tr, style: subtitle18BoldWhite)),
             DataColumn(label: Text('queue7'.tr, style: subtitle18BoldWhite)),
           ],
         ),
