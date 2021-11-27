@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
@@ -19,6 +20,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/doctor/side_menu_doctor.dart';
+import 'package:davnor_medicare/ui/widgets/splash_loading.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -49,7 +51,9 @@ class DoctorWebHomeScreen extends StatelessWidget {
       drawer: Drawer(
         child: DoctorSideMenu(),
       ),
-      body: ResponsiveBody(),
+      body: Obx(() => authController.doneInitData.value
+          ? ResponsiveBody()
+          : SplashLoading()),
     );
   }
 
@@ -68,8 +72,10 @@ class DoctorWebHomeScreen extends StatelessWidget {
             icon: const Icon(Icons.keyboard_arrow_down),
             iconSize: 40,
             underline: Container(),
-            hint: Text(fetchedData!.firstName!,
-                style: const TextStyle(color: Colors.black)),
+            hint: authController.doneInitData.value
+                ? Text(fetchedData!.firstName!,
+                    style: const TextStyle(color: Colors.black))
+                : Text('Loading...'),
             items: [
               DropdownMenuItem(
                 onTap: () {

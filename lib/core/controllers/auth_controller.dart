@@ -43,6 +43,7 @@ class AuthController extends GetxController {
   RxBool isCheckboxChecked = false.obs;
   RxString tokenID = ''.obs;
 
+  RxBool doneInitData = false.obs;
   //Doctor Application Guide
   static const emailScheme = doctorapplicationinstructionParagraph0;
   static const formUrl = 'https://forms.gle/WKWnBsG9EuivmY1dA';
@@ -55,7 +56,7 @@ class AuthController extends GetxController {
     super.onReady();
   }
 
-  Stream<User?> get user => auth.authStateChanges();
+  Stream<User?> get user => auth.idTokenChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {
     if (_firebaseUser == null) {
@@ -369,6 +370,7 @@ class AuthController extends GetxController {
         .get()
         .then((doc) => PatientModel.fromJson(doc.data()!));
     log.i('_initializePatientModel | Initializing ${patientModel.value}');
+    doneInitData.value = true;
   }
 
   Future<void> clearDeviceToken() async {
@@ -387,6 +389,7 @@ class AuthController extends GetxController {
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
     log.i('_initializePatientModel | Initializing ${doctorModel.value}');
+    doneInitData.value = true;
   }
 
   Future<void> _initializePSWDModel() async {
@@ -396,6 +399,7 @@ class AuthController extends GetxController {
         .get()
         .then((doc) => PswdModel.fromJson(doc.data()!));
     log.i('_initializePatientModel | Initializing ${pswdModel.value}');
+    doneInitData.value = true;
   }
 
   Future<void> _initializeAdminModel() async {
@@ -405,6 +409,7 @@ class AuthController extends GetxController {
         .get()
         .then((doc) => AdminModel.fromJson(doc.data()!));
     log.i('_initializePatientModel | Initializing ${adminModel.value}');
+    doneInitData.value = true;
   }
 
   void togglePasswordVisibility() {

@@ -15,6 +15,7 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/pswd/side_menu.dart';
+import 'package:davnor_medicare/ui/widgets/splash_loading.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,9 @@ class PSWDPersonnelHome extends StatelessWidget {
         fetchedData!.firstName,
       ),
       drawer: Drawer(child: PswdPSideMenu()),
-      body: ResponsiveBody(),
+      body: Obx(() => authController.doneInitData.value
+          ? ResponsiveBody()
+          : SplashLoading()),
     );
   }
 }
@@ -103,7 +106,9 @@ AppBar topNavigationBar(
           icon: const Icon(Icons.keyboard_arrow_down),
           iconSize: 40,
           underline: Container(),
-          hint: Text(name!, style: const TextStyle(color: Colors.black)),
+          hint: authController.doneInitData.value
+              ? Text(name!, style: const TextStyle(color: Colors.black))
+              : Text('Loading...'),
           items: [
             DropdownMenuItem(
               onTap: () {
