@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,8 @@ import 'package:get/get.dart';
 
 class PSWDStaffListController extends GetxController {
   final log = getLogger('PSWD Staff List Controller');
+  final DisabledStaffsController dListController =
+      Get.put(DisabledStaffsController());
 
   final RxList<PswdModel> pswdList = RxList<PswdModel>();
   final RxList<PswdModel> filteredPswdList = RxList<PswdModel>();
@@ -46,17 +49,14 @@ class PSWDStaffListController extends GetxController {
     await firestore
         .collection('pswd_personnel')
         .doc(uid)
-        .update({'disabled': true})
-        .then((value) => {
-            //Dialog success
-            Get.defaultDialog(title: 
-            'Successfuly disabled PSWDStaff')
-          })
-        .catchError((error) => {
-            //Dialog error
-            Get.defaultDialog(title: 
-            'Error Occured! PSWD Staff not disabled')
-          });
+        .update({'disabled': true}).then((value) {
+      dListController.reloadAfter();
+      //Dialog success
+      Get.defaultDialog(title: 'Successfuly disabled PSWDStaff');
+    }).catchError((error) {
+      //Dialog error
+      Get.defaultDialog(title: 'Error Occured! PSWD Staff not disabled');
+    });
   }
 
   Future<void> updatePSWD(PswdModel model) async {
@@ -74,15 +74,13 @@ class PSWDStaffListController extends GetxController {
         .then(
           (value) => {
             //Dialog success
-            Get.defaultDialog(title: 
-            'Successfuly updated PSWD')
+            Get.defaultDialog(title: 'Successfuly updated PSWD')
           },
         )
         .catchError(
           (error) => {
             //Dialog error
-            Get.defaultDialog(title: 
-            'Error Occured! Unable to update PSWD')
+            Get.defaultDialog(title: 'Error Occured! Unable to update PSWD')
           },
         );
   }

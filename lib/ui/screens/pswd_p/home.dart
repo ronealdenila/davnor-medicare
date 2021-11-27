@@ -27,7 +27,7 @@ import 'package:get/get.dart';
 class PSWDPersonnelHome extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKeyPSH = GlobalKey();
   final AcceptedMAController acceptedMA =
       Get.put(AcceptedMAController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
@@ -40,11 +40,11 @@ class PSWDPersonnelHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldKeyPSH,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(
         context,
-        scaffoldKey,
+        scaffoldKeyPSH,
         fetchedData!.firstName,
       ),
       drawer: Drawer(child: PswdPSideMenu()),
@@ -127,8 +127,8 @@ AppBar topNavigationBar(
 }
 
 class ResponsiveLeading extends GetResponsiveView {
-  ResponsiveLeading(this.scaffoldKey);
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  ResponsiveLeading(this.scaffoldKeyPSH);
+  final GlobalKey<ScaffoldState> scaffoldKeyPSH;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -137,7 +137,7 @@ class ResponsiveLeading extends GetResponsiveView {
       return IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          scaffoldKeyPSH.currentState!.openDrawer();
         },
       );
     }

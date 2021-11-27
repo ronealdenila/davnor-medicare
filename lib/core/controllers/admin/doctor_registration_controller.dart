@@ -9,8 +9,6 @@ import 'package:get/get.dart';
 class DoctorRegistrationController extends GetxController {
   final log = getLogger('Doctor Registration Controller');
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -20,21 +18,19 @@ class DoctorRegistrationController extends GetxController {
   final RxString department = ''.obs;
 
   Future<void> registerDoctor() async {
-    if (formKey.currentState!.validate()) {
-      final app = await Firebase.initializeApp(
-          name: 'secondary', options: Firebase.app().options);
-      await FirebaseAuth.instanceFor(app: app)
-          .createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: '123456',
-      )
-          .then((result) async {
-        final _userId = result.user!.uid;
-        await _createDoctorUser(_userId);
-      });
+    final app = await Firebase.initializeApp(
+        name: 'secondary', options: Firebase.app().options);
+    await FirebaseAuth.instanceFor(app: app)
+        .createUserWithEmailAndPassword(
+      email: emailController.text,
+      password: '123456',
+    )
+        .then((result) async {
+      final _userId = result.user!.uid;
+      await _createDoctorUser(_userId);
+    });
 
-      await app.delete();
-    }
+    await app.delete();
   }
 
   Future<void> _createDoctorUser(String userID) async {
@@ -55,12 +51,17 @@ class DoctorRegistrationController extends GetxController {
         'profileImage': '',
         'disabled': false
       },
-    ).then((value) => addDoctorStatus(userID));
+    ).then((value) {
+      addDoctorStatus(userID);
+      Get.defaultDialog(title: 'Doctor is successfully registered');
+    }).catchError((onError) {
+      Get.defaultDialog(title: 'Something went wrong');
+    });
     _clearControllers();
   }
 
-  Future<String> fetchCategories() async {
-    await firestore
+  String fetchCategories() {
+    firestore
         .collection('cons_status')
         .get()
         .then((QuerySnapshot querySnapshot) {

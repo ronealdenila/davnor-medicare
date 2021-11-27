@@ -30,7 +30,7 @@ import 'package:flutter/cupertino.dart';
 class DoctorWebHomeScreen extends StatelessWidget {
   final DoctorMenuController menuController =
       Get.put(DoctorMenuController(), permanent: true);
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKeyD = GlobalKey();
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
   final LiveConsController liveCont =
@@ -43,7 +43,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldKeyD,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(),
       drawer: Drawer(
@@ -57,7 +57,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
     final AuthController authController = Get.find();
     final fetchedData = authController.doctorModel.value;
     return AppBar(
-      leading: ResponsiveLeading(scaffoldKey),
+      leading: ResponsiveLeading(scaffoldKeyD),
       elevation: 0,
       backgroundColor: Colors.transparent,
       title: Row(
@@ -124,8 +124,8 @@ class DesktopScreen extends StatelessWidget {
 
 //Refactor
 class ResponsiveLeading extends GetResponsiveView {
-  ResponsiveLeading(this.scaffoldKey);
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  ResponsiveLeading(this.scaffoldKeyD);
+  final GlobalKey<ScaffoldState> scaffoldKeyD;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -134,7 +134,7 @@ class ResponsiveLeading extends GetResponsiveView {
       return IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          scaffoldKeyD.currentState!.openDrawer();
         },
       );
     }

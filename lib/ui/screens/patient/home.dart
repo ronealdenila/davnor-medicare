@@ -4,7 +4,6 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
@@ -52,90 +51,89 @@ class PatientHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);
     return Scaffold(
-            appBar: AppBar(
-              actions: [Obx(() => notificationIcon()), horizontalSpace10],
-            ),
-            drawer: CustomDrawer(
-              accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
-              accountEmail: fetchedData!.email,
-              userProfile: fetchedData!.profileImage == ''
-                  ? const Icon(
-                      Icons.person,
-                      size: 56,
-                    )
-                  : CircleAvatar(
-                      // foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
-                      backgroundImage: AssetImage(blankProfile),
-                    ),
-              onProfileTap: () => Get.to(() => PatientProfileScreen()),
-              onCurrentConsultTap: currentConsultation,
-              onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
-              onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
-              onSettingsTap: () => Get.to(() => SettingScreen()),
-              onLogoutTap: authController.signOut,
-            ),
-            backgroundColor: Colors.white,
-            body: SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          actions: [Obx(() => notificationIcon()), horizontalSpace10],
+        ),
+        drawer: CustomDrawer(
+          accountName: '${fetchedData!.firstName} ${fetchedData!.lastName}',
+          accountEmail: fetchedData!.email,
+          userProfile: fetchedData!.profileImage == ''
+              ? const Icon(
+                  Icons.person,
+                  size: 56,
+                )
+              : CircleAvatar(
+                  // foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
+                  backgroundImage: AssetImage(blankProfile),
+                ),
+          onProfileTap: () => Get.to(() => PatientProfileScreen()),
+          onCurrentConsultTap: currentConsultation,
+          onConsultHisoryTap: () => Get.to(() => ConsHistoryScreen()),
+          onMedicalHistoryTap: () => Get.to(() => MAHistoryScreen()),
+          onSettingsTap: () => Get.to(() => SettingScreen()),
+          onLogoutTap: authController.signOut,
+        ),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Hello',
+                  style: title32Regular,
+                ),
+                verticalSpace5,
+                Text(
+                  '${fetchedData!.firstName}!',
+                  style: subtitle20Medium,
+                ),
+                verticalSpace25,
+                SizedBox(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(13),
+                    child: Image.asset(patientHomeHeader, fit: BoxFit.fill),
+                  ),
+                ),
+                verticalSpace25,
+                Text(
+                  'homepage'.tr,
+                  style: body16SemiBold,
+                ),
+                verticalSpace10,
+                SizedBox(
+                    width: screenWidth(context),
+                    child: Obx(
+                      () => !stats.isLoading.value
+                          ? ActionButtons()
+                          : ActionButtonsNormal(),
+                    )),
+                verticalSpace25,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Hello',
-                      style: title32Regular,
-                    ),
-                    verticalSpace5,
-                    Text(
-                      '${fetchedData!.firstName}!',
-                      style: subtitle20Medium,
-                    ),
-                    verticalSpace25,
-                    SizedBox(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(13),
-                        child: Image.asset(patientHomeHeader, fit: BoxFit.fill),
-                      ),
-                    ),
-                    verticalSpace25,
-                    Text(
-                      'homepage'.tr,
+                      'Health Articles',
                       style: body16SemiBold,
                     ),
-                    verticalSpace10,
-                    SizedBox(
-                        width: screenWidth(context),
-                        child: Obx(
-                          () => !stats.isLoading.value
-                              ? ActionButtons()
-                              : ActionButtonsNormal(),
-                        )),
-                    verticalSpace25,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Health Articles',
-                          style: body16SemiBold,
-                        ),
-                        InkWell(
-                          onTap: seeAllArticles,
-                          child: Text(
-                            'action4'.tr,
-                            style: body14RegularNeutral,
-                          ),
-                        ),
-                      ],
+                    InkWell(
+                      onTap: seeAllArticles,
+                      child: Text(
+                        'action4'.tr,
+                        style: body14RegularNeutral,
+                      ),
                     ),
-                    verticalSpace18,
-                    Obx(showArticles)
                   ],
                 ),
-              ),
+                verticalSpace18,
+                Obx(showArticles)
+              ],
             ),
-            floatingActionButton: Obx(getFloatingButton));
+          ),
+        ),
+        floatingActionButton: Obx(getFloatingButton));
   }
 
   Widget ActionButtons() {

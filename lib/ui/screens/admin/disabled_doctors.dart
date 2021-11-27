@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_doctors_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
-import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -18,9 +17,7 @@ class DisabledDoctorListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 50
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

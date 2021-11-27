@@ -20,7 +20,7 @@ import 'package:get/get.dart';
 class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKeyPS = GlobalKey();
   final AttachedPhotosController pswdController =
       Get.put(AttachedPhotosController());
   final NavigationController navigationController =
@@ -32,11 +32,11 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldKeyPS,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(
         context,
-        scaffoldKey,
+        scaffoldKeyPS,
         fetchedData!.firstName,
       ),
       drawer: Drawer(
@@ -121,8 +121,8 @@ AppBar topNavigationBar(
 }
 
 class ResponsiveLeading extends GetResponsiveView {
-  ResponsiveLeading(this.scaffoldKey);
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  ResponsiveLeading(this.scaffoldKeyPS);
+  final GlobalKey<ScaffoldState> scaffoldKeyPS;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -131,7 +131,7 @@ class ResponsiveLeading extends GetResponsiveView {
       return IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          scaffoldKeyPS.currentState!.openDrawer();
         },
       );
     }

@@ -133,7 +133,7 @@ class ResponsiveBody extends GetResponsiveView {
                       child: CustomTextFormField(
                         controller: consController.ageController,
                         labelText: 'consform3'.tr,
-                        validator: Validator().notEmpty,
+                        validator: Validator().number,
                         keyboardType: TextInputType.number,
                         //* for improvement: pwede ta pag click sa done
                         //* magsubmit na ang form
@@ -160,10 +160,6 @@ class ResponsiveBody extends GetResponsiveView {
                               if (value!.isEmpty) {
                                 return 'This is a required field';
                               }
-                              //! if we want to validate na dapat taas ang words
-                              // if (value.length < 10) {
-                              //   return 'Description must be at least 10 words';
-                              // }
                             },
                             decoration: InputDecoration(
                               labelText: 'consformlabel'.tr,
@@ -202,7 +198,11 @@ class ResponsiveBody extends GetResponsiveView {
             child: SizedBox(
               width: 211,
               child: CustomButton(
-                onTap: consController.submitConsultRequest,
+                onTap: () async {
+                  if (_formKey.currentState!.validate()) {
+                    await consController.submitConsultRequest();
+                  }
+                },
                 text: 'consform19'.tr,
                 buttonColor: verySoftBlueColor,
               ),

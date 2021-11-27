@@ -35,16 +35,16 @@ class PatientWebHomeScreen extends StatelessWidget {
   static AppController appController = Get.find();
   final PatientMenuController menuController =
       Get.put(PatientMenuController(), permanent: true);
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  final NavigationController navigationController =
-      Get.put(NavigationController(), permanent: true);
+  final GlobalKey<ScaffoldState> scaffoldKeyP = GlobalKey();
+  final NavigationController navigationController = Get.find();
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final ArticleController articleService = Get.put(ArticleController());
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
-  final NotifController notifController = Get.put(NotifController());
+  final NotifController notifController =
+      Get.put(NotifController(), permanent: true);
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
 
@@ -52,7 +52,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);
     return Scaffold(
-      key: scaffoldKey,
+      key: scaffoldKeyP,
       extendBodyBehindAppBar: true,
       appBar: topNavigationBar(context),
       drawer: Drawer(
@@ -156,7 +156,7 @@ class PatientWebHomeScreen extends StatelessWidget {
     final AuthController authController = Get.find();
     final fetchedData = authController.patientModel.value;
     return AppBar(
-      leading: ResponsiveLeading(scaffoldKey),
+      leading: ResponsiveLeading(scaffoldKeyP),
       elevation: 0,
       backgroundColor: Colors.transparent,
       title: Row(
@@ -223,8 +223,8 @@ class DesktopScreen extends StatelessWidget {
 
 //Refactor
 class ResponsiveLeading extends GetResponsiveView {
-  ResponsiveLeading(this.scaffoldKey);
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  ResponsiveLeading(this.scaffoldKeyP);
+  final GlobalKey<ScaffoldState> scaffoldKeyP;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -233,7 +233,7 @@ class ResponsiveLeading extends GetResponsiveView {
       return IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          scaffoldKeyP.currentState!.openDrawer();
         },
       );
     }
@@ -253,6 +253,7 @@ class PatientDashboardScreen extends GetView<PatientMenuController> {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.context) : super(alwaysUseBuilder: false);
   final BuildContext context;
+  final NavigationController navigationController = Get.find();
   static ArticleController articleService = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
   final PatientMenuController menuController = Get.find();
@@ -570,9 +571,10 @@ class ResponsiveView extends GetResponsiveView {
 }
 
 class PatientSideMenuItem extends GetView<PatientMenuController> {
-  const PatientSideMenuItem({required this.itemName, required this.onTap});
+  PatientSideMenuItem({required this.itemName, required this.onTap});
   final String? itemName;
   final void Function()? onTap;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
