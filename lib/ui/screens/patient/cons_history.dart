@@ -57,7 +57,7 @@ class ConsHistoryScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Container(
-                              width: 170,
+                              width: 220,
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
