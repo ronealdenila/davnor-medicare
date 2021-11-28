@@ -29,9 +29,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: getPhoto(consData)),
-              horizontalSpace15,
+              horizontalSpace10,
               SizedBox(
-                width: 190,
+                width: 170,
                 child: Text(
                   'Dr. ${consHController.getDoctorFullName(consData)}',
                   overflow: TextOverflow.ellipsis,
