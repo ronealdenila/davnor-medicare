@@ -66,6 +66,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
+                    faController.type.value = 'All';
                     faController.filteredList
                         .assignAll(faController.forApprovalList);
                   },
