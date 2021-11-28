@@ -120,7 +120,8 @@ AppBar topNavigationBar(
           items: [
             DropdownMenuItem(
               onTap: () {
-                navigationController.navigateTo(Routes.PSWD_WEB_PROFILE);
+                navigationController
+                    .navigateToWithBack(Routes.PSWD_WEB_PROFILE);
               },
               value: 2,
               child: Text('Profile'),

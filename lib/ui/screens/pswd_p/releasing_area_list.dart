@@ -71,6 +71,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
+                    rlsController.rlsFilter.clear();
                     rlsController.filteredList
                         .assignAll(rlsController.toRelease);
                   },

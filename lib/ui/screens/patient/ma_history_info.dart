@@ -276,7 +276,6 @@ class MAHistoryInfoScreen extends StatelessWidget {
                   alignment: FractionalOffset.bottomLeft,
                   child: CustomButton(
                     onTap: () async {
-                      //TO DO - Open Dialog ang show the attached photos (Valid ID + Prescription)
                       controller.splitFetchedImage(
                           '${maHistoryItem.validID}>>>${maHistoryItem.prescriptions}>>>');
                       showDialog(

@@ -47,7 +47,7 @@ class MAHistoryItemScreen extends StatelessWidget {
               verticalSpace50,
               TextButton(
                   onPressed: () {
-                    goBack();
+                    navigationController.goBack();
                   },
                   child: Text('Back to MA History Table')),
               PSWDItemView(context, 'completed', model),
@@ -57,12 +57,5 @@ class MAHistoryItemScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> goBack() {
-    print('clicked');
-    return navigationController.navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(
-            '/MAHistoryListScreen', (Route<dynamic> route) => true);
   }
 }

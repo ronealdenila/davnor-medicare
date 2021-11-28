@@ -17,4 +17,9 @@ class NavigationController extends GetxController {
     return navigatorKey.currentState!
         .pushNamed(routeName, arguments: arguments);
   }
+
+//THIS IS FOR ITEMS
+  void goBack() {
+    return navigatorKey.currentState!.pop();
+  }
 }

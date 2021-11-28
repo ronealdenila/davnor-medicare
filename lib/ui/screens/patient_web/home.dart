@@ -179,7 +179,8 @@ class PatientWebHomeScreen extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 onTap: () {
-                  navigationController.navigateTo(Routes.PATIENT_WEB_PROFILE);
+                  navigationController
+                      .navigateToWithBack(Routes.PATIENT_WEB_PROFILE);
                 },
                 value: 2,
                 child: Text('Profile'),
@@ -274,7 +275,7 @@ class ResponsiveView extends GetResponsiveView {
   Widget phone() => tabletVersion(context);
 
   @override
-  Widget tablet() => desktopVersion(context);
+  Widget tablet() => tabletVersion(context);
 
   @override
   Widget desktop() => desktopVersion(context);
@@ -311,6 +312,115 @@ class ResponsiveView extends GetResponsiveView {
           ],
         ),
       ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ActionCard(
+                text: 'action1'.tr,
+                color: verySoftMagenta[60],
+                secondaryColor: verySoftMagentaCustomColor,
+                onTap: () {
+                  if (stats.patientStatus[0].pStatus!) {
+                    if (stats.patientStatus[0].hasActiveQueueCons!) {
+                      showErrorDialog(
+                          errorTitle: 'action5'.tr,
+                          errorDescription: 'action6'.tr);
+                    } else {
+                      showConfirmationDialog(
+                        dialogTitle: 'dialog1'.tr,
+                        dialogCaption: 'dialogsub1'.tr,
+                        onYesTap: () {
+                          dismissDialog();
+                          consController.isConsultForYou.value = true;
+                          navigationController
+                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
+                        },
+                        onNoTap: () {
+                          dismissDialog();
+                          consController.isConsultForYou.value = false;
+                          navigationController
+                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
+                        },
+                      );
+                    }
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'action7'.tr,
+                        errorDescription: 'action8'.tr);
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              child: ActionCard(
+                  text: 'action2'.tr,
+                  color: verySoftOrange[60],
+                  secondaryColor: verySoftOrangeCustomColor,
+                  onTap: () {
+                    navigationController
+                        .navigateToWithBack(Routes.PATIENT_MA_DETAILS);
+                  }),
+            ),
+            Expanded(
+              child: ActionCard(
+                text: 'action3'.tr,
+                color: verySoftRed[60],
+                secondaryColor: verySoftRedCustomColor,
+                onTap: () {
+                  if (stats.patientStatus[0].pStatus!) {
+                    if (stats.patientStatus[0].hasActiveQueueCons! &&
+                        stats.patientStatus[0].hasActiveQueueMA!) {
+                      dismissDialog();
+                      showDialog(
+                          context: context,
+                          builder: (context) => selectQueueDialog());
+                    } else if (stats.patientStatus[0].hasActiveQueueCons!) {
+                      navigationController
+                          .navigateToWithBack(Routes.Q_CONS_WEB);
+                    } else if (stats.patientStatus[0].hasActiveQueueMA!) {
+                      dismissDialog();
+                      navigationController.navigateToWithBack(Routes.Q_MA_WEB);
+                    } else {
+                      showErrorDialog(
+                          errorTitle: 'dialog3'.tr,
+                          errorDescription: 'dialogsub3'.tr);
+                    }
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'action7'.tr,
+                        errorDescription: 'action8'.tr);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      verticalSpace15,
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        width: Get.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DmText.title24Medium(
+                  'Article',
+                  color: neutralColor,
+                ),
+              ],
+            ),
+            verticalSpace15,
+            Obx(() => showArticles(context)),
+          ],
+        ),
+      )
     ]));
   }
 
@@ -388,15 +498,17 @@ class ResponsiveView extends GetResponsiveView {
                                             dismissDialog();
                                             consController
                                                 .isConsultForYou.value = true;
-                                            navigationController.navigateTo(
-                                                Routes.PATIENT_WEB_CONS_FORM);
+                                            navigationController
+                                                .navigateToWithBack(Routes
+                                                    .PATIENT_WEB_CONS_FORM);
                                           },
                                           onNoTap: () {
                                             dismissDialog();
                                             consController
                                                 .isConsultForYou.value = false;
-                                            navigationController.navigateTo(
-                                                Routes.PATIENT_WEB_CONS_FORM);
+                                            navigationController
+                                                .navigateToWithBack(Routes
+                                                    .PATIENT_WEB_CONS_FORM);
                                           },
                                         );
                                       }
@@ -412,7 +524,7 @@ class ResponsiveView extends GetResponsiveView {
                                     color: verySoftOrange[60],
                                     secondaryColor: verySoftOrangeCustomColor,
                                     onTap: () {
-                                      navigationController.navigateTo(
+                                      navigationController.navigateToWithBack(
                                           Routes.PATIENT_MA_DETAILS);
                                     }),
                                 ActionCard(
@@ -432,13 +544,13 @@ class ResponsiveView extends GetResponsiveView {
                                                 selectQueueDialog());
                                       } else if (stats.patientStatus[0]
                                           .hasActiveQueueCons!) {
-                                        navigationController
-                                            .navigateTo(Routes.Q_CONS_WEB);
+                                        navigationController.navigateToWithBack(
+                                            Routes.Q_CONS_WEB);
                                       } else if (stats
                                           .patientStatus[0].hasActiveQueueMA!) {
                                         dismissDialog();
-                                        navigationController
-                                            .navigateTo(Routes.Q_MA_WEB);
+                                        navigationController.navigateToWithBack(
+                                            Routes.Q_MA_WEB);
                                       } else {
                                         showErrorDialog(
                                             errorTitle: 'dialog3'.tr,
@@ -477,7 +589,10 @@ class ResponsiveView extends GetResponsiveView {
                               ],
                             ),
                             verticalSpace15,
-                            Obx(() => showArticles(context)),
+                            Container(
+                                height: 470,
+                                child: SingleChildScrollView(
+                                    child: Obx(() => showArticles(context)))),
                           ],
                         ),
                       )),
@@ -513,7 +628,7 @@ class ResponsiveView extends GetResponsiveView {
                 child: PCustomButton(
                   onTap: () {
                     dismissDialog();
-                    navigationController.navigateTo(Routes.Q_CONS_WEB);
+                    navigationController.navigateToWithBack(Routes.Q_CONS_WEB);
                   },
                   text: 'btnq1'.tr,
                   buttonColor: verySoftBlueColor[80],
@@ -529,7 +644,7 @@ class ResponsiveView extends GetResponsiveView {
                 child: PCustomButton(
                   onTap: () {
                     dismissDialog();
-                    navigationController.navigateTo(Routes.Q_MA_WEB);
+                    navigationController.navigateToWithBack(Routes.Q_MA_WEB);
                   },
                   text: 'btnq2'.tr,
                   buttonColor: verySoftBlueColor[80],
@@ -551,7 +666,7 @@ class ResponsiveView extends GetResponsiveView {
         removeTop: true,
         child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 3,
+            itemCount: articleService.articlesList.length,
             itemBuilder: (context, index) {
               return ArticleCard(
                   title: articleList[index].title!,

@@ -81,6 +81,8 @@ class MARequestListScreen extends StatelessWidget {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
+                    maController.maFilter.clear();
+                    maController.type.value = 'All';
                     maController.filteredList
                         .assignAll(maController.maRequests);
                   },

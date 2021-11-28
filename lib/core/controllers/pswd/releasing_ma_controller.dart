@@ -88,7 +88,6 @@ class ReleasingMAController extends GetxController {
       'pharmacy': model.pharmacy,
       'dateClaimed': FieldValue.serverTimestamp(),
     }).then((value) async {
-      //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
@@ -135,7 +134,6 @@ class ReleasingMAController extends GetxController {
       'pharmacy': model.pharmacy,
       'dateClaimed': FieldValue.serverTimestamp(),
     }).then((value) async {
-      //TO DO / THINK - mag NOTIF paba kay USER pag claimed na niya
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no

@@ -241,6 +241,7 @@ class DoctorListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
+                        //CAN BACK POP
                         dListController.enableEditing.value = true;
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_DOCTOR,

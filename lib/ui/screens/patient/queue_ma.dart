@@ -133,7 +133,7 @@ class QueueMAScreen extends StatelessWidget {
                 () => Text(
                   maQueueController.isLoading.value
                       ? ''
-                      : '${maQueueController.queueMAList.length} maqueue4'.tr,
+                      : '${maQueueController.queueMAList.length} ${'maqueue4'.tr}',
                   style: subtitle20Medium,
                 ),
               ),

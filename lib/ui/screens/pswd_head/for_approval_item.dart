@@ -44,7 +44,7 @@ class ForApprovalItemScreen extends StatelessWidget {
               verticalSpace50,
               TextButton(
                   onPressed: () {
-                    goBack();
+                    navigationController.goBack();
                   },
                   child: Text('Back to For Approval Table')),
               PSWDItemView(context, 'transferred', model),
@@ -57,12 +57,6 @@ class ForApprovalItemScreen extends StatelessWidget {
     );
   }
 
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(
-            '/ForApprovalListScreen', (Route<dynamic> route) => true);
-  }
-
   Widget screenButtons() {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       PSWDButton(
@@ -70,15 +64,6 @@ class ForApprovalItemScreen extends StatelessWidget {
           confirmationDialog(model.maID!);
         },
         buttonText: 'Approve',
-      ),
-      horizontalSpace25,
-      PSWDButton(
-        onItemTap: () async {
-          //TO THINK: FUNCTION, maybe delete in on_progress_ma ??? mag add pabag decline in the approval stage
-          //delete folder in storage
-          //and notify user, add reason
-        },
-        buttonText: 'Decline',
       ),
     ]);
   }
@@ -94,7 +79,7 @@ class ForApprovalItemScreen extends StatelessWidget {
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
           faController.refresh();
-          goBack();
+          navigationController.goBack();
         });
       },
       onNoTap: () {

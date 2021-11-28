@@ -252,7 +252,8 @@ class PatientProfileWebScreen extends StatelessWidget {
         }
         return TextButton(
             onPressed: () {
-              Get.to(() => VerificationScreen());
+              //TO DO: Verification Dialog
+              //Get.to(() => VerificationScreen());
             },
             child: Text(
               'profile1'.tr,

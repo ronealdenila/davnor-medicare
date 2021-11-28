@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,151 +32,153 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
         ),
         verticalSpace15,
         Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DmText.title24Medium(
-                        'Lastname',
-                        color: const Color(
-                          0xFF6A6565,
+          child: Form(
+            key: _formKey,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DmText.title24Medium(
+                          'Lastname',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
                         ),
-                      ),
-                      verticalSpace15,
-                      //TO DO: Change into regular text field???
-
-                      DmInputField(
-                        controller: controller.lastNameController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                      verticalSpace20,
-                      DmText.title24Medium(
-                        'First Name',
-                        color: const Color(
-                          0xFF6A6565,
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.lastNameController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
                         ),
-                      ),
-                      verticalSpace15,
-                      DmInputField(
-                        controller: controller.firstNameController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                      verticalSpace20,
-                      DmText.title24Medium(
-                        'Email Address',
-                        color: const Color(
-                          0xFF6A6565,
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'First Name',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
                         ),
-                      ),
-                      verticalSpace15,
-                      DmInputField(
-                        controller: controller.emailController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                    ],
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.firstNameController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'Email Address',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
+                        ),
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.emailController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DmText.title24Medium(
-                              'Title',
-                              color: const Color(
-                                0xFF6A6565,
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DmText.title24Medium(
+                                'Title',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
                               ),
-                            ),
-                            verticalSpace15,
-                            CustomDropdown(
-                              hintText: 'Choose',
-                              dropdownItems: title,
-                              onChanged: (Item? item) =>
-                                  controller.title.value = item!.name,
-                              onSaved: (Item? item) =>
-                                  controller.title.value = item!.name,
-                            ),
-                            verticalSpace20,
-                            DmText.title24Medium(
-                              'Department',
-                              color: const Color(
-                                0xFF6A6565,
+                              verticalSpace15,
+                              CustomDropdown(
+                                hintText: 'Choose',
+                                dropdownItems: title,
+                                onChanged: (Item? item) =>
+                                    controller.title.value = item!.name,
+                                onSaved: (Item? item) =>
+                                    controller.title.value = item!.name,
                               ),
-                            ),
-                            verticalSpace15,
-                            CustomDropdown(
-                              hintText: 'Which department(s) do you belong to?',
-                              dropdownItems: department,
-                              onChanged: (Item? item) =>
-                                  controller.department.value = item!.name,
-                              onSaved: (Item? item) =>
-                                  controller.department.value = item!.name,
-                            ),
-                            verticalSpace20,
-                            DmText.title24Medium(
-                              'Clinic Hours',
-                              color: const Color(
-                                0xFF6A6565,
+                              verticalSpace20,
+                              DmText.title24Medium(
+                                'Department',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
                               ),
-                            ),
-                            verticalSpace15,
-                            DmInputField(
-                              controller: controller.clinicHours,
-                              validator: Validator().notEmpty,
-                              isRequired: true,
-                            ),
-                          ],
+                              verticalSpace15,
+                              CustomDropdown(
+                                hintText:
+                                    'Which department(s) do you belong to?',
+                                dropdownItems: department,
+                                onChanged: (Item? item) =>
+                                    controller.department.value = item!.name,
+                                onSaved: (Item? item) =>
+                                    controller.department.value = item!.name,
+                              ),
+                              verticalSpace20,
+                              DmText.title24Medium(
+                                'Clinic Hours',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
+                              ),
+                              verticalSpace15,
+                              DmInputField(
+                                controller: controller.clinicHours,
+                                validator: Validator().notEmpty,
+                                isRequired: true,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Wrap(
-                          children: [
-                            SizedBox(
-                              height: 67,
-                              width: 260,
-                              child: DmButton(
-                                title: 'REGISTER',
-                                onTap: controller.registerDoctor,
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Wrap(
+                            children: [
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton(
+                                    title: 'REGISTER',
+                                    onTap: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        await controller.registerDoctor();
+                                      }
+                                    }),
                               ),
-                            ),
-                            SizedBox(
-                              height: 67,
-                              width: 260,
-                              child: DmButton.outline(
-                                title: 'Cancel',
-                                onTap: goBack,
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton.outline(
+                                  title: 'Cancel',
+                                  onTap: () {
+                                    navigationController.goBack();
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
     );
-  }
-
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .popAndPushNamed('/dashboard');
   }
 }

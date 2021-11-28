@@ -79,7 +79,8 @@ class DoctorWebHomeScreen extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 onTap: () {
-                  navigationController.navigateTo(Routes.DOC_WEB_PROFILE);
+                  navigationController
+                      .navigateToWithBack(Routes.DOC_WEB_PROFILE);
                 },
                 value: 2,
                 child: Text('Profile'),
@@ -321,14 +322,14 @@ Widget tabletVersion(BuildContext context) {
                             }
                           }),
                       ActionCard(
-                          //TO BE CHANGED
-                          text: 'Read \nHealth Articles',
+                          text: 'View Consultation Requests',
                           color: verySoftRed[60],
                           secondaryColor: verySoftRedCustomColor,
-                          //TO DO: DOC ARTICLE SCREEN??
-                          onTap: () {}
-                          //=> Get.to(() => ArticleListScreen())
-                          ),
+                          onTap: () {
+                            menuController.changeActiveItemTo('Dashboard');
+                            navigationController
+                                .navigateTo(Routes.DOC_WEB_HOME);
+                          }),
                     ],
                   ),
                 ),
@@ -558,12 +559,16 @@ Widget desktopVersion(BuildContext context) {
                                     }
                                   }),
                               ActionCard(
-                                  text: 'Read \nHealth Articles',
+                                  //TO DO: CHANGE THIS
+                                  text: 'View Consultation Requests',
                                   color: verySoftRed[60],
                                   secondaryColor: verySoftRedCustomColor,
-                                  //TO DO: DOC ARTICLE SCREEN??
-                                  onTap: () =>
-                                      Get.to(() => ArticleListScreen())),
+                                  onTap: () {
+                                    menuController
+                                        .changeActiveItemTo('Dashboard');
+                                    navigationController
+                                        .navigateTo(Routes.DOC_WEB_HOME);
+                                  }),
                             ],
                           ),
                         ),

@@ -68,6 +68,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                     primary: Colors.blue[900],
                   ),
                   onPressed: () {
+                    opController.type.value = 'All';
                     opController.filteredList
                         .assignAll(opController.onProgressList);
                   },
