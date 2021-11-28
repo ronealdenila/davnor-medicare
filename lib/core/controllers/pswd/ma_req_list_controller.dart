@@ -107,7 +107,6 @@ class MAReqListController extends GetxController {
 
   void goBack() {
     return navigationController.navigatorKey.currentState!.pop();
-    //TO DO CHANGE TO PSWD HOME?
   }
 
   Future<void> acceptMA(GeneralMARequestModel model) async {

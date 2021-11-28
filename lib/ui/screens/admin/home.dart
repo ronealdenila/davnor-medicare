@@ -243,8 +243,8 @@ class ResponsiveView extends GetResponsiveView {
                                 ActionCard(
                                   text: 'Register a doctor',
                                   onTap: () {
-                                    navigationController
-                                        .navigateTo(Routes.DOCTOR_REGISTRATION);
+                                    navigationController.navigateToWithBack(
+                                        Routes.DOCTOR_REGISTRATION);
                                   },
                                   color: verySoftMagenta[60],
                                   secondaryColor: verySoftMagentaCustomColor,
@@ -252,7 +252,7 @@ class ResponsiveView extends GetResponsiveView {
                                 ActionCard(
                                   text: 'Add a PSWD\nPersonnel',
                                   onTap: () {
-                                    navigationController.navigateTo(
+                                    navigationController.navigateToWithBack(
                                         Routes.PSWD_STAFF_REGISTRATION);
                                   },
                                   color: verySoftOrange[60],
@@ -679,8 +679,8 @@ class ResponsiveView extends GetResponsiveView {
                           ActionCard(
                             text: 'Register a doctor',
                             onTap: () {
-                              navigationController
-                                  .navigateTo(Routes.DOCTOR_REGISTRATION);
+                              navigationController.navigateToWithBack(
+                                  Routes.DOCTOR_REGISTRATION);
                             },
                             color: verySoftMagenta[60],
                             secondaryColor: verySoftMagentaCustomColor,
@@ -688,8 +688,8 @@ class ResponsiveView extends GetResponsiveView {
                           ActionCard(
                             text: 'Add a PSWD Personnel',
                             onTap: () {
-                              navigationController
-                                  .navigateTo(Routes.PSWD_STAFF_REGISTRATION);
+                              navigationController.navigateToWithBack(
+                                  Routes.PSWD_STAFF_REGISTRATION);
                             },
                             color: verySoftOrange[60],
                             secondaryColor: verySoftOrangeCustomColor,

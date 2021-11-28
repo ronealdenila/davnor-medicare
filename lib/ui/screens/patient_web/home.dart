@@ -179,7 +179,8 @@ class PatientWebHomeScreen extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 onTap: () {
-                  navigationController.navigateTo(Routes.PATIENT_WEB_PROFILE);
+                  navigationController
+                      .navigateToWithBack(Routes.PATIENT_WEB_PROFILE);
                 },
                 value: 2,
                 child: Text('Profile'),
@@ -335,13 +336,13 @@ class ResponsiveView extends GetResponsiveView {
                           dismissDialog();
                           consController.isConsultForYou.value = true;
                           navigationController
-                              .navigateTo(Routes.PATIENT_WEB_CONS_FORM);
+                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
                         },
                         onNoTap: () {
                           dismissDialog();
                           consController.isConsultForYou.value = false;
                           navigationController
-                              .navigateTo(Routes.PATIENT_WEB_CONS_FORM);
+                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
                         },
                       );
                     }
@@ -359,7 +360,8 @@ class ResponsiveView extends GetResponsiveView {
                   color: verySoftOrange[60],
                   secondaryColor: verySoftOrangeCustomColor,
                   onTap: () {
-                    navigationController.navigateTo(Routes.PATIENT_MA_DETAILS);
+                    navigationController
+                        .navigateToWithBack(Routes.PATIENT_MA_DETAILS);
                   }),
             ),
             Expanded(
@@ -376,10 +378,11 @@ class ResponsiveView extends GetResponsiveView {
                           context: context,
                           builder: (context) => selectQueueDialog());
                     } else if (stats.patientStatus[0].hasActiveQueueCons!) {
-                      navigationController.navigateTo(Routes.Q_CONS_WEB);
+                      navigationController
+                          .navigateToWithBack(Routes.Q_CONS_WEB);
                     } else if (stats.patientStatus[0].hasActiveQueueMA!) {
                       dismissDialog();
-                      navigationController.navigateTo(Routes.Q_MA_WEB);
+                      navigationController.navigateToWithBack(Routes.Q_MA_WEB);
                     } else {
                       showErrorDialog(
                           errorTitle: 'dialog3'.tr,
@@ -495,15 +498,17 @@ class ResponsiveView extends GetResponsiveView {
                                             dismissDialog();
                                             consController
                                                 .isConsultForYou.value = true;
-                                            navigationController.navigateTo(
-                                                Routes.PATIENT_WEB_CONS_FORM);
+                                            navigationController
+                                                .navigateToWithBack(Routes
+                                                    .PATIENT_WEB_CONS_FORM);
                                           },
                                           onNoTap: () {
                                             dismissDialog();
                                             consController
                                                 .isConsultForYou.value = false;
-                                            navigationController.navigateTo(
-                                                Routes.PATIENT_WEB_CONS_FORM);
+                                            navigationController
+                                                .navigateToWithBack(Routes
+                                                    .PATIENT_WEB_CONS_FORM);
                                           },
                                         );
                                       }
@@ -519,7 +524,7 @@ class ResponsiveView extends GetResponsiveView {
                                     color: verySoftOrange[60],
                                     secondaryColor: verySoftOrangeCustomColor,
                                     onTap: () {
-                                      navigationController.navigateTo(
+                                      navigationController.navigateToWithBack(
                                           Routes.PATIENT_MA_DETAILS);
                                     }),
                                 ActionCard(
@@ -539,13 +544,13 @@ class ResponsiveView extends GetResponsiveView {
                                                 selectQueueDialog());
                                       } else if (stats.patientStatus[0]
                                           .hasActiveQueueCons!) {
-                                        navigationController
-                                            .navigateTo(Routes.Q_CONS_WEB);
+                                        navigationController.navigateToWithBack(
+                                            Routes.Q_CONS_WEB);
                                       } else if (stats
                                           .patientStatus[0].hasActiveQueueMA!) {
                                         dismissDialog();
-                                        navigationController
-                                            .navigateTo(Routes.Q_MA_WEB);
+                                        navigationController.navigateToWithBack(
+                                            Routes.Q_MA_WEB);
                                       } else {
                                         showErrorDialog(
                                             errorTitle: 'dialog3'.tr,
@@ -623,7 +628,7 @@ class ResponsiveView extends GetResponsiveView {
                 child: PCustomButton(
                   onTap: () {
                     dismissDialog();
-                    navigationController.navigateTo(Routes.Q_CONS_WEB);
+                    navigationController.navigateToWithBack(Routes.Q_CONS_WEB);
                   },
                   text: 'btnq1'.tr,
                   buttonColor: verySoftBlueColor[80],
@@ -639,7 +644,7 @@ class ResponsiveView extends GetResponsiveView {
                 child: PCustomButton(
                   onTap: () {
                     dismissDialog();
-                    navigationController.navigateTo(Routes.Q_MA_WEB);
+                    navigationController.navigateToWithBack(Routes.Q_MA_WEB);
                   },
                   text: 'btnq2'.tr,
                   buttonColor: verySoftBlueColor[80],

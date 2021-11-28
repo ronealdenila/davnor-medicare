@@ -49,8 +49,6 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                           ),
                         ),
                         verticalSpace15,
-                        //TO DO: Change into regular text field???
-
                         DmInputField(
                           controller: controller.lastNameController,
                           validator: Validator().notEmpty,
@@ -164,7 +162,9 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                                 width: 260,
                                 child: DmButton.outline(
                                   title: 'Cancel',
-                                  onTap: goBack,
+                                  onTap: () {
+                                    navigationController.goBack();
+                                  },
                                 ),
                               ),
                             ],
@@ -180,10 +180,5 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
         ),
       ],
     );
-  }
-
-  Future<void> goBack() {
-    return navigationController.navigatorKey.currentState!
-        .popAndPushNamed('/dashboard');
   }
 }

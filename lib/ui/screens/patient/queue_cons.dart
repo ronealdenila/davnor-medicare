@@ -130,7 +130,7 @@ class QueueConsScreen extends StatelessWidget {
                 () => Text(
                   cQController.isLoading.value
                       ? ''
-                      : '${cQController.queueConsList.length} maqueue4'.tr,
+                      : '${cQController.queueConsList.length} ${'maqueue4'.tr}',
                   style: subtitle20Medium,
                 ),
               ),

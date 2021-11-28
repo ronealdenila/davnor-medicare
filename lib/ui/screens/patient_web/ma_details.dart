@@ -149,12 +149,14 @@ class MADescriptionWebScreen extends StatelessWidget {
                   onYesTap: () {
                     ma.isMAForYou.value = true;
                     dismissDialog();
-                    navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                    navigationController
+                        .navigateToWithBack(Routes.PATIENT_WEB_MA_FORM);
                   },
                   onNoTap: () {
                     ma.isMAForYou.value = false;
                     dismissDialog();
-                    navigationController.navigateTo(Routes.PATIENT_WEB_MA_FORM);
+                    navigationController
+                        .navigateToWithBack(Routes.PATIENT_WEB_MA_FORM);
                   },
                 );
               } else {

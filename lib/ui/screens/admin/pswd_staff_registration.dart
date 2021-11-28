@@ -134,7 +134,9 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                                 width: 260,
                                 child: DmButton.outline(
                                   title: 'Cancel',
-                                  onTap: goBack,
+                                  onTap: () {
+                                    navigationController.goBack();
+                                  },
                                 ),
                               ),
                             ],
@@ -150,11 +152,5 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
         ),
       ],
     );
-  }
-
-  Future<void> goBack() {
-    //should be pop
-    return navigationController.navigatorKey.currentState!
-        .popAndPushNamed('/dashboard');
   }
 }
