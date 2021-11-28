@@ -3,6 +3,7 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -29,6 +30,7 @@ class ResponsiveView extends GetResponsiveView {
   final BuildContext context;
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
+  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget phone() => Column(
@@ -113,29 +115,79 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget displayProfile() {
     return StreamBuilder<DocumentSnapshot>(
-        stream: firestore
-            .collection('doctors')
-            .doc(auth.currentUser!.uid)
-            .snapshots(),
+        stream: profileController.getProfileDoctor(),
         builder: (context, snapshot) {
           if (snapshot.hasError || !snapshot.hasData) {
             return CircleAvatar(
               radius: 115,
-              backgroundImage: AssetImage(blankProfile),
+              backgroundImage: AssetImage(doctorDefault),
             );
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
           if (data['profileImage'] == '') {
-            return CircleAvatar(
-              radius: 115,
-              backgroundImage: AssetImage(blankProfile),
+            return Stack(
+              children: [
+                CircleAvatar(
+                  radius: 115,
+                  backgroundImage: AssetImage(doctorDefault),
+                ),
+                Positioned(
+                    bottom: 0,
+                    right: 05,
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.lightBlue,
+                        child: InkWell(
+                          onTap: () {
+                            //upload and change profile photo
+                            profileController.selectProfileImage();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Center(
+                              child: Icon(
+                                Icons.add_photo_alternate_rounded,
+                                color: Colors.white,
+                                size: 50,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+              ],
             );
           }
-          return CircleAvatar(
-            radius: 115,
-            foregroundImage: NetworkImage(data['profileImage']),
-            backgroundImage: AssetImage(blankProfile),
-          );
+          return Stack(children: [
+            CircleAvatar(
+              radius: 115,
+              foregroundImage: NetworkImage(data['profileImage']),
+              backgroundImage: AssetImage(doctorDefault),
+            ),
+            Positioned(
+                bottom: 0,
+                right: 05,
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.lightBlue,
+                    child: InkWell(
+                      onTap: () {
+                        profileController.selectProfileImage();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Center(
+                          child: Icon(
+                            Icons.add_photo_alternate_rounded,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )),
+          ]);
         });
   }
 

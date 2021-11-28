@@ -241,23 +241,22 @@ Widget tabletVersion(BuildContext context) {
           Radius.circular(50),
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DmText.title42Bold(
+          DmText.title32Bold(
             'Hello, Dr. ${fetchedData!.lastName}',
             color: Colors.white,
           ),
+          verticalSpace10,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'DOCTOR STATUS',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Colors.white,
                 ),
               ),
@@ -757,7 +756,7 @@ Widget doctorStatus() {
                   : 'Unavailable',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 17,
+                fontSize: 15,
                 color: verySoftBlueColor,
               ),
             ),
@@ -769,7 +768,7 @@ Widget doctorStatus() {
               : '',
           style: const TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 17,
+            fontSize: 15,
             color: Colors.white,
           ),
         ),

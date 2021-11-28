@@ -153,6 +153,12 @@ const String pswdStaffRegister =
 const String medicareDataSubtitle =
     'The number of government doctors we have in the application';
 
+const String medicareDataSubtitleforPSWD =
+    'The number of people who filed medical assistance request are';
+
+const String medicareDataSubtitleforPSWDH =
+    'The number medical assistance request in need for approval are';
+
 //FCM server key
 const serverkey =
     'key=AAAANu44_XE:APA91bFYjezxDsWdRJM30XQMbJXpqFhHUcFiOccx6AUNSTdRdnC5LFnS5HMcg6slswcY6ZKo-mSs8MphAIYcrUvJw3lnvASLiutN2Q3HAu1exVbos5TSPwC_1enzay_tL14j4Yd-lmKm';

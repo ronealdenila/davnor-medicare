@@ -272,6 +272,7 @@ class ResponsiveView extends GetResponsiveView {
 
   @override
   Widget phone() => tabletVersion(context);
+
   @override
   Widget tablet() => desktopVersion(context);
 

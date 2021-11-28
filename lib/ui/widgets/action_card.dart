@@ -27,7 +27,6 @@ class ActionCard extends StatelessWidget {
         ),
         child: Container(
           height: kIsWeb ? 150 : 107,
-          //width: width,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(10),
@@ -42,7 +41,7 @@ class ActionCard extends StatelessWidget {
                 child: Text(
                   text,
                   style: kIsWeb
-                      ? title24Bold.copyWith(color: Colors.white)
+                      ? subtitle20Bold.copyWith(color: Colors.white)
                       : body14SemiBoldWhite,
                 ),
               ),

@@ -8,16 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  static ForVerificationController vf = Get.put(ForVerificationController());
+  final ForVerificationController vf = Get.put(ForVerificationController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 50
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

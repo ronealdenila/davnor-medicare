@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/helpers/local_navigator.dart';
@@ -29,6 +32,12 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   final AppController appController = Get.find();
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final MenuController menuController = Get.put(MenuController());
+  final ForApprovalController faController =
+      Get.put(ForApprovalController(), permanent: true);
+  final OnProgressReqController opController =
+      Get.put(OnProgressReqController(), permanent: true);
+  final PSWDStaffListController pListController =
+      Get.put(PSWDStaffListController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +48,10 @@ class PSWDHeadHomeScreen extends StatelessWidget {
       drawer: Drawer(
         child: PswdHeadSideMenu(),
       ),
-      body: Obx(() => authController.doneInitData.value
-          ? ResponsiveBody()
-          : SplashLoading()),
+      body: Obx(() =>
+          authController.doneInitData.value && !stats.isPSLoading.value
+              ? ResponsiveBody()
+              : SplashLoading()),
     );
   }
 }
@@ -212,6 +222,9 @@ class ResponsiveView extends GetResponsiveView {
   final MenuController menuController = Get.find();
   final NavigationController navigationController = Get.find();
   final AppController appController = Get.find();
+  final ForApprovalController faController = Get.find();
+  final OnProgressReqController opController = Get.find();
+  final PSWDStaffListController pListController = Get.find();
 
   @override
   Widget phone() => phoneVersion();
@@ -443,12 +456,14 @@ class ResponsiveView extends GetResponsiveView {
                                               ),
                                               verticalSpace20,
                                               Align(
-                                                child: AutoSizeText(
-                                                  '12',
-                                                  style: title130Bold.copyWith(
-                                                      color:
-                                                          kcVerySoftBlueColor),
-                                                  maxLines: 1,
+                                                child: Obx(
+                                                  () => AutoSizeText(
+                                                    '${faController.forApprovalList.length}',
+                                                    style: title130Bold.copyWith(
+                                                        color:
+                                                            kcVerySoftBlueColor),
+                                                    maxLines: 1,
+                                                  ),
                                                 ),
                                               ),
                                               Align(
@@ -535,16 +550,18 @@ class ResponsiveView extends GetResponsiveView {
                                                                     .ellipsis,
                                                             maxLines: 1,
                                                           ),
-                                                          AutoSizeText(
-                                                            '3',
-                                                            style: title130Bold
-                                                                .copyWith(
-                                                                    color:
-                                                                        kcVerySoftBlueColor),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            maxLines: 1,
+                                                          Obx(
+                                                            () => AutoSizeText(
+                                                              '${pListController.pswdList.length}',
+                                                              style: title130Bold
+                                                                  .copyWith(
+                                                                      color:
+                                                                          kcVerySoftBlueColor),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 1,
+                                                            ),
                                                           ),
                                                           DmText
                                                               .subtitle20Medium(
@@ -609,10 +626,12 @@ class ResponsiveView extends GetResponsiveView {
                                                                   neutralColor,
                                                             ),
                                                           ),
-                                                          Text(
-                                                            '120',
-                                                            style:
-                                                                title90BoldBlue,
+                                                          Obx(
+                                                            () => Text(
+                                                              '${opController.onProgressList.length}',
+                                                              style:
+                                                                  title90BoldBlue,
+                                                            ),
                                                           ),
                                                           Align(
                                                             alignment: Alignment
@@ -718,78 +737,77 @@ class ResponsiveView extends GetResponsiveView {
               Radius.circular(50),
             ),
           ),
-          child: Row(
+          child: Wrap(
+            runSpacing: 15,
             children: [
               Align(
-                alignment: Alignment.topCenter,
-                child: DmText.title42Bold(
+                alignment: Alignment.topLeft,
+                child: DmText.title24Bold(
                   'Hello, ${fetchedData!.firstName}',
                   color: Colors.white,
                 ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DmText.title24Bold(
-                          'MA STATUS',
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DmText.subtitle18Medium(
+                        'MA STATUS',
+                        color: Colors.white,
+                      ),
+                      verticalSpace5,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
-                        verticalSpace15,
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          padding: EdgeInsets.all(12),
-                          child: Obx(
-                            () => stats.isPSLoading.value
-                                ? Text('Loading..')
-                                : DmText.subtitle20Medium(
-                                    stats.pswdPStatus[0].isCutOff!
-                                        ? 'Ready to Accept Request'
-                                        : 'Cut Off',
-                                    color: neutralColor[60],
-                                  ),
-                          ),
+                        padding: EdgeInsets.all(12),
+                        child: Obx(
+                          () => stats.isPSLoading.value
+                              ? Text('Loading..')
+                              : DmText.body16SemiBold(
+                                  stats.pswdPStatus[0].isCutOff!
+                                      ? 'Ready to Accept Request'
+                                      : 'Cut Off',
+                                  color: neutralColor[60],
+                                ),
                         ),
-                      ],
-                    ),
-                    horizontalSpace35,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DmText.title24Bold(
-                          'PSWD FUND STATUS',
+                      ),
+                    ],
+                  ),
+                  horizontalSpace35,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DmText.subtitle18Medium(
+                        'PSWD FUND STATUS',
+                        color: Colors.white,
+                      ),
+                      verticalSpace5,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
-                        verticalSpace15,
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          padding: EdgeInsets.all(12),
-                          child: Obx(
-                            () => stats.isPSLoading.value
-                                ? Text('Loading..')
-                                : DmText.subtitle20Medium(
-                                    stats.pswdPStatus[0].hasFunds!
-                                        ? 'Available'
-                                        : 'Unavailable',
-                                    color: neutralColor[60],
-                                  ),
-                          ),
+                        padding: EdgeInsets.all(12),
+                        child: Obx(
+                          () => stats.isPSLoading.value
+                              ? Text('Loading..')
+                              : DmText.body16SemiBold(
+                                  stats.pswdPStatus[0].hasFunds!
+                                      ? 'Available'
+                                      : 'Unavailable',
+                                  color: neutralColor[60],
+                                ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               )
             ],
           ),
@@ -907,11 +925,13 @@ class ResponsiveView extends GetResponsiveView {
                             medicalStatusSubtitle2,
                           ),
                           Align(
-                            child: AutoSizeText(
-                              '12',
-                              style: title130Bold.copyWith(
-                                  color: kcVerySoftBlueColor),
-                              maxLines: 1,
+                            child: Obx(
+                              () => AutoSizeText(
+                                '${faController.forApprovalList.length}',
+                                style: title130Bold.copyWith(
+                                    color: kcVerySoftBlueColor),
+                                maxLines: 1,
+                              ),
                             ),
                           ),
                           Align(
@@ -972,12 +992,14 @@ class ResponsiveView extends GetResponsiveView {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      AutoSizeText(
-                        '3',
-                        style:
-                            title130Bold.copyWith(color: kcVerySoftBlueColor),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      Obx(
+                        () => AutoSizeText(
+                          '${pListController.pswdList.length}',
+                          style:
+                              title130Bold.copyWith(color: kcVerySoftBlueColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                       DmText.subtitle20Medium(
                         'PSWD Personnel',
@@ -1024,10 +1046,11 @@ class ResponsiveView extends GetResponsiveView {
                           color: neutralColor,
                         ),
                       ),
-                      Text(
-                        '120',
-                        style:
-                            title130Bold.copyWith(color: kcVerySoftBlueColor),
+                      Obx(
+                        () => Text(
+                          '${opController.onProgressList.length}',
+                          style: title90BoldBlue,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {

@@ -108,13 +108,14 @@ class ForVerificationController extends GetxController {
         .doc(model.patientID)
         .collection('status')
         .doc('value')
-        .update({'pStatus': true, 'pendingVerification': false}).then((value) {
-      transferPhotos(model);
-      addNotification(model.patientID!);
-      removeVerificationReq(model.patientID!);
+        .update({'pStatus': true, 'pendingVerification': false}).then(
+            (value) async {
+      await transferPhotos(model);
+      await addNotification(model.patientID!);
+      await removeVerificationReq(model.patientID!);
+      await incrementVerifCount();
       dismissDialog();
       navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
-      //Get.off(() => VerificationReqListScreen());
       clearController();
     }).catchError((error) {
       dismissDialog();
@@ -123,6 +124,12 @@ class ForVerificationController extends GetxController {
         error.toString(),
         snackPosition: SnackPosition.BOTTOM,
       );
+    });
+  }
+
+  Future<void> incrementVerifCount() async {
+    await firestore.collection('app_status').doc('verified_users').update({
+      'count': FieldValue.increment(1),
     });
   }
 
@@ -142,10 +149,10 @@ class ForVerificationController extends GetxController {
         .doc(model.patientID)
         .collection('status')
         .doc('value')
-        .update({'pendingVerification': false}).then((value) {
-      addNotification(model.patientID!);
-      deletePhotos(model);
-      removeVerificationReq(model.patientID!);
+        .update({'pendingVerification': false}).then((value) async {
+      await addNotification(model.patientID!);
+      await deletePhotos(model);
+      await removeVerificationReq(model.patientID!);
       dismissDialog();
       navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
       clearController();

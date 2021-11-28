@@ -5,8 +5,12 @@ class NavigationController extends GetxController {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   Future<void> navigateTo(String routeName) {
+    return navigatorKey.currentState!.pushReplacementNamed(routeName);
+  }
+
+  //PARA NAA PAY BACK
+  Future<void> navigateToWithBack(String routeName) {
     return navigatorKey.currentState!.pushNamed(routeName);
-    //from puchReplacedNames
   }
 
   Future<dynamic> navigateToWithArgs(String routeName, {dynamic arguments}) {

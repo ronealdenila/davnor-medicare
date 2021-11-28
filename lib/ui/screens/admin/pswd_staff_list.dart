@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/edit_pswd_staff.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -14,8 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PSWDStaffListScreen extends StatelessWidget {
-  static PSWDStaffListController pListController =
-      Get.put(PSWDStaffListController());
+  final PSWDStaffListController pListController = Get.find();
 
   @override
   Widget build(BuildContext context) {

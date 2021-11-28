@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 class ForApprovalItemScreen extends StatelessWidget {
   ForApprovalItemScreen({Key? key, required this.passedData}) : super(key: key);
   final OnProgressMAModel passedData;
-  final ForApprovalController opController = Get.find();
+  final ForApprovalController faController = Get.find();
   final AttachedPhotosController controller = Get.find();
   late final GeneralMARequestModel model;
 
@@ -93,7 +93,7 @@ class ForApprovalItemScreen extends StatelessWidget {
             .collection('on_progress_ma')
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
-          opController.refresh();
+          faController.refresh();
           goBack();
         });
       },

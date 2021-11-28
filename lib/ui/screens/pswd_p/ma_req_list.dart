@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MARequestListScreen extends StatelessWidget {
-  static MAReqListController maController = Get.put(MAReqListController());
+  final MAReqListController maController = Get.find();
   final RxBool firedOnce = false.obs;
   final NavigationController navigationController = Get.find();
 

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/services/image_picker_service.dart';
@@ -65,7 +64,7 @@ class ProfileController extends GetxController {
   void selectProfileImage() async {
     imageSelected = await imagePicker.pickImageOnWeb(imagePath);
     if (imageSelected != null || imagePath.value != '') {
-      //upload photo automatically ???
+      showLoading();
       await uploadImageWeb();
     }
   }
@@ -99,6 +98,7 @@ class ProfileController extends GetxController {
         await updateProfileForPatient();
         break;
       default:
+        dismissDialog();
         showErrorDialog(
             errorTitle: 'ERROR!',
             errorDescription:
@@ -110,12 +110,14 @@ class ProfileController extends GetxController {
     await firestore.collection('patients').doc(auth.currentUser!.uid).update({
       'profileImage': url.value,
     });
+    dismissDialog();
   }
 
   Future<void> updateProfileForDoctor() async {
     await firestore.collection('doctors').doc(auth.currentUser!.uid).update({
       'profileImage': url.value,
     });
+    dismissDialog();
   }
 
   Future<void> updateProfileForPSWD() async {
@@ -125,11 +127,13 @@ class ProfileController extends GetxController {
         .update({
       'profileImage': url.value,
     });
+    dismissDialog();
   }
 
   Future<void> updateProfileForAdmin() async {
     await firestore.collection('admins').doc(auth.currentUser!.uid).update({
       'profileImage': url.value,
     });
+    dismissDialog();
   }
 }
