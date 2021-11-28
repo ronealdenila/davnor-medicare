@@ -227,20 +227,20 @@ Widget confirmProcess(PswdModel model) {
       ),
       children: [
         SizedBox(
-            width: Get.width * .7,
+            width: Get.width * .4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'REMINDER: Follow our proper process',
                   textAlign: TextAlign.center,
-                  style: title32Regular,
+                  style: body20SemiBold,
                 ),
                 verticalSpace15,
                 Text(
                   'Make sure the following data is already deleted in the authentication database:\nID - ${model.userID}\nEmail - ${model.email}',
                   textAlign: TextAlign.center,
-                  style: title32Regular,
+                  style: subtitle18Regular,
                 ),
                 verticalSpace25,
                 Align(
@@ -255,7 +255,7 @@ Widget confirmProcess(PswdModel model) {
                 Text(
                   'By clicking this button, you are indicating that you have followed the process',
                   textAlign: TextAlign.center,
-                  style: title32Regular,
+                  style: subtitle18Regular,
                 ),
               ],
             ))

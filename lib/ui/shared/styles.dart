@@ -236,11 +236,22 @@ const TextStyle body20SemiBold = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle body20Bold = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
+);
+
 const TextStyle body18Regular = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
   height: 1.3,
+);
+const TextStyle body18Bold = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Inter',
 );
 
 const TextStyle body16Bold = TextStyle(
