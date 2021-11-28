@@ -84,29 +84,39 @@ class ResponsiveView extends GetResponsiveView {
           displayProfile(),
           verticalSpace18,
           Text(
-            fetchedData!.firstName!,
-            style: body16Bold,
+            '${fetchedData!.firstName} ${fetchedData!.lastName}',
+            style: body20Bold,
           ),
           verticalSpace10,
           Text(
             fetchedData!.email!,
-            style: body16Regular,
+            style: body18Regular,
           ),
           verticalSpace50,
-          Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            const Icon(Icons.lock_outline),
-            InkWell(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => changePasswordDialog(context));
-              },
-              child: const Text(
-                'Change Password',
-                style: body16Regular,
-              ),
+          ElevatedButton.icon(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => changePasswordDialog(context));
+            },
+            icon: const Icon(
+              Icons.lock,
+              color: Colors.white,
+              size: 20,
             ),
-          ])
+            style: ElevatedButton.styleFrom(
+                elevation: 5,
+                primary: infoColor,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 35, vertical: 17),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )),
+            label: Text('Change Password'.tr),
+          )
         ],
       ),
     );

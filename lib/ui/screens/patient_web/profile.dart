@@ -98,11 +98,11 @@ class PatientProfileWebScreen extends StatelessWidget {
                       elevation: 5,
                       primary: infoColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 35, vertical: 12),
+                          horizontal: 35, vertical: 17),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       textStyle: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w500,
                       )),
                   label: Text('profile2'.tr),
