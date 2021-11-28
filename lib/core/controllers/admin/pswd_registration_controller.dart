@@ -8,8 +8,6 @@ import 'package:get/get.dart';
 class PSWDRegistrationController extends GetxController {
   final log = getLogger('PSWD Registration Controller');
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();

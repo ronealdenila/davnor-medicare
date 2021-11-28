@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,114 +33,119 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
         ),
         verticalSpace15,
         Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DmText.title24Medium(
-                        'Lastname',
-                        color: const Color(
-                          0xFF6A6565,
+          child: Form(
+            key: formKey,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DmText.title24Medium(
+                          'Lastname',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
                         ),
-                      ),
-                      verticalSpace15,
-                      //TO DO: Change into regular text field ???
-                      DmInputField(
-                        controller: controller.lastNameController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                      verticalSpace20,
-                      DmText.title24Medium(
-                        'First Name',
-                        color: const Color(
-                          0xFF6A6565,
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.lastNameController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
                         ),
-                      ),
-                      verticalSpace15,
-                      DmInputField(
-                        controller: controller.firstNameController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                      verticalSpace20,
-                      DmText.title24Medium(
-                        'Email Address',
-                        color: const Color(
-                          0xFF6A6565,
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'First Name',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
                         ),
-                      ),
-                      verticalSpace15,
-                      DmInputField(
-                        controller: controller.emailController,
-                        validator: Validator().notEmpty,
-                        isRequired: true,
-                      ),
-                    ],
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.firstNameController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                        verticalSpace20,
+                        DmText.title24Medium(
+                          'Email Address',
+                          color: const Color(
+                            0xFF6A6565,
+                          ),
+                        ),
+                        verticalSpace15,
+                        DmInputField(
+                          controller: controller.emailController,
+                          validator: Validator().notEmpty,
+                          isRequired: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DmText.title24Medium(
-                              'Position',
-                              color: const Color(
-                                0xFF6A6565,
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(30),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DmText.title24Medium(
+                                'Position',
+                                color: const Color(
+                                  0xFF6A6565,
+                                ),
                               ),
-                            ),
-                            verticalSpace15,
-                            CustomDropdown(
-                              hintText: 'Choose',
-                              dropdownItems: position,
-                              onChanged: (Item? item) =>
-                                  controller.position.value = item!.name,
-                              onSaved: (Item? item) =>
-                                  controller.position.value = item!.name,
-                            ),
-                            verticalSpace20,
-                          ],
+                              verticalSpace15,
+                              CustomDropdown(
+                                hintText: 'Choose',
+                                dropdownItems: position,
+                                onChanged: (Item? item) =>
+                                    controller.position.value = item!.name,
+                                onSaved: (Item? item) =>
+                                    controller.position.value = item!.name,
+                              ),
+                              verticalSpace20,
+                            ],
+                          ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Wrap(
-                          children: [
-                            SizedBox(
-                              height: 67,
-                              width: 260,
-                              child: DmButton(
-                                title: 'ADD',
-                                onTap: controller.registerPSWD,
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Wrap(
+                            children: [
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton(
+                                    title: 'ADD',
+                                    onTap: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        await controller.registerPSWD();
+                                      }
+                                    }),
                               ),
-                            ),
-                            SizedBox(
-                              height: 67,
-                              width: 260,
-                              child: DmButton.outline(
-                                title: 'Cancel',
-                                onTap: goBack,
+                              SizedBox(
+                                height: 67,
+                                width: 260,
+                                child: DmButton.outline(
+                                  title: 'Cancel',
+                                  onTap: goBack,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -146,6 +153,7 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
   }
 
   Future<void> goBack() {
+    //should be pop
     return navigationController.navigatorKey.currentState!
         .popAndPushNamed('/dashboard');
   }

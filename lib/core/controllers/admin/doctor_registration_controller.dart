@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +17,31 @@ class DoctorRegistrationController extends GetxController {
 
   final RxString title = ''.obs;
   final RxString department = ''.obs;
+  final RxString categoryID = ''.obs;
+  final RxBool doneFetch = false.obs;
 
   Future<void> registerDoctor() async {
-    final app = await Firebase.initializeApp(
-        name: 'secondary', options: Firebase.app().options);
-    await FirebaseAuth.instanceFor(app: app)
-        .createUserWithEmailAndPassword(
-      email: emailController.text,
-      password: '123456',
-    )
-        .then((result) async {
-      final _userId = result.user!.uid;
-      await _createDoctorUser(_userId);
-    });
+    await fetchCategories();
+    if (categoryID.value == '') {
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription:
+              'Could not find the right category ID for this type of doctor.');
+    } else {
+      final app = await Firebase.initializeApp(
+          name: 'secondary', options: Firebase.app().options);
+      await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: '123456',
+      )
+          .then((result) async {
+        final _userId = result.user!.uid;
+        await _createDoctorUser(_userId);
+      });
 
-    await app.delete();
+      await app.delete();
+    }
   }
 
   Future<void> _createDoctorUser(String userID) async {
@@ -40,7 +51,7 @@ class DoctorRegistrationController extends GetxController {
     });
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
-        'categoryID': fetchCategories(), //TO CHECK
+        'categoryID': categoryID.value,
         'userID': userID,
         'email': emailController.text.trim(),
         'firstName': firstNameController.text,
@@ -60,19 +71,19 @@ class DoctorRegistrationController extends GetxController {
     _clearControllers();
   }
 
-  String fetchCategories() {
-    firestore
+  Future<void> fetchCategories() async {
+    await firestore
         .collection('cons_status')
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      querySnapshot.docs.forEach((doc) async {
         if (doc['title'] as String == title.value &&
-            doc['department'] as String == department.value) {
-          return doc['categoryID'];
+            doc['deptName'] as String == department.value) {
+          categoryID.value = doc['categoryID'];
+          return;
         }
       });
     });
-    return 'nullFetchingCategoryID';
   }
 
   Future<void> addDoctorStatus(String userID) async {
