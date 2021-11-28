@@ -18,31 +18,6 @@ class QueueConsTableScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Slots: ',
-                  style: body14RegularNeutral,
-                ),
-                StreamBuilder<DocumentSnapshot>(
-                    stream: firestore
-                        .collection('cons_status')
-                        .doc(cQController.stats.patientStatus[0].categoryID)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text('Loading');
-                      }
-                      final data =
-                          snapshot.data!.data() as Map<String, dynamic>;
-                      return Text('${data['consSlot']}');
-                    }),
-              ],
-            ),
             SizedBox(width: Get.width, child: Obx(() => returnTable(context))),
           ],
         )),
