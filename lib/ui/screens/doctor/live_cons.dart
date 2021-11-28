@@ -63,7 +63,7 @@ class LiveConsultationScreen extends StatelessWidget {
                 ),
                 child: getPhoto(consData)),
             horizontalSpace15,
-            Expanded(
+            Flexible(
               child: SizedBox(
                 child: Text(
                   liveCont.getPatientName(consData),

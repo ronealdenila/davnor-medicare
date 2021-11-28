@@ -46,7 +46,7 @@ class LiveChatScreen extends StatelessWidget {
                 ),
                 child: getPhoto(consData)),
             horizontalSpace10,
-            Expanded(
+            Flexible(
               child: SizedBox(
                 child: Text(
                   'Dr. ${liveCont.getDoctorFullName(consData)}',

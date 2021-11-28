@@ -11,8 +11,7 @@ import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 
 class ConsHistoryScreen extends StatelessWidget {
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController());
+  final ConsHistoryController consHController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

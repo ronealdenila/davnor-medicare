@@ -5,6 +5,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
@@ -49,6 +50,8 @@ class PatientHomeScreen extends StatelessWidget {
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
   final ProfileController profileController = Get.put(ProfileController());
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
