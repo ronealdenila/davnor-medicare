@@ -21,79 +21,78 @@ class QueueMAScreen extends StatelessWidget {
           vertical: 50,
           horizontal: 30,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'maqueue1'.tr,
-              style: subtitle18Medium,
-            ),
-            verticalSpace15,
-            Center(
-              child: Text(
-                stats.patientStatus[0].queueMA!,
-                style: title90BoldBlue,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'maqueue1'.tr,
+                style: subtitle18Medium,
               ),
-            ),
-            verticalSpace25,
-            Card(
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              verticalSpace15,
+              Center(
+                child: Text(
+                  stats.patientStatus[0].queueMA!,
+                  style: title90BoldBlue,
+                ),
               ),
-              child: Container(
-                width: screenWidth(context),
-                height: 260,
-                decoration: BoxDecoration(
-                  color: verySoftBlueColor[80],
+              verticalSpace25,
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Column(
-                  children: [
-                    verticalSpace18,
-                    const Text('PSWD OFFICE', style: subtitle20BoldWhite),
-                    verticalSpace5,
-                    const Text('Medical Assistance (MA)',
-                        style: subtitle18RegularWhite),
-                    verticalSpace10,
-                    Container(
-                      width: screenWidth(context),
-                      height: 137,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            verticalSpace35,
-                            Text(
-                              'maqueue2'.tr,
-                              style: subtitle18MediumNeutral,
-                            ),
-                            verticalSpace10,
-                            Center(
-                              child: Obx(
-                                () => Text(
-                                  maQueueController.isLoading.value
-                                      ? ''
-                                      : maQueueController
-                                          .queueMAList[0].queueNum!,
-                                  style: title42BoldNeutral100,
+                child: Container(
+                  width: screenWidth(context),
+                  decoration: BoxDecoration(
+                    color: verySoftBlueColor[80],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      verticalSpace18,
+                      const Text('PSWD OFFICE', style: subtitle20BoldWhite),
+                      verticalSpace5,
+                      const Text('Medical Assistance (MA)',
+                          style: subtitle18RegularWhite),
+                      verticalSpace10,
+                      Container(
+                        width: screenWidth(context),
+                        height: 137,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              verticalSpace35,
+                              Text(
+                                'maqueue2'.tr,
+                                style: subtitle18MediumNeutral,
+                              ),
+                              verticalSpace10,
+                              Center(
+                                child: Obx(
+                                  () => Text(
+                                    maQueueController.isLoading.value
+                                        ? ''
+                                        : maQueueController
+                                            .queueMAList[0].queueNum!,
+                                    style: title42BoldNeutral100,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    verticalSpace10,
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => QueueMATableScreen());
-                      },
-                      child: Flexible(
+                      verticalSpace10,
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => QueueMATableScreen());
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -123,24 +122,24 @@ class QueueMAScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                    //Specialty
-                  ],
+                      //Specialty
+                    ],
+                  ),
                 ),
               ),
-            ),
-            verticalSpace25,
-            Center(
-              child: Obx(
-                () => Text(
-                  maQueueController.isLoading.value
-                      ? ''
-                      : '${maQueueController.queueMAList.length} ${'maqueue4'.tr}',
-                  style: subtitle20Medium,
+              verticalSpace25,
+              Center(
+                child: Obx(
+                  () => Text(
+                    maQueueController.isLoading.value
+                        ? ''
+                        : '${maQueueController.queueMAList.length} ${'maqueue4'.tr}',
+                    style: subtitle20Medium,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

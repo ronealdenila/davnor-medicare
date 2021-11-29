@@ -20,76 +20,77 @@ class QueueConsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'maqueue1'.tr,
-              style: subtitle18Medium,
-            ),
-            verticalSpace15,
-            Center(
-              child: Text(
-                stats.patientStatus[0].queueCons!,
-                style: title90BoldBlue,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'maqueue1'.tr,
+                style: subtitle18Medium,
               ),
-            ),
-            verticalSpace25,
-            Card(
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              verticalSpace15,
+              Center(
+                child: Text(
+                  stats.patientStatus[0].queueCons!,
+                  style: title90BoldBlue,
+                ),
               ),
-              child: Container(
-                width: screenWidth(context),
-                decoration: BoxDecoration(
-                  color: verySoftBlueColor[80],
+              verticalSpace25,
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Column(
-                  children: [
-                    verticalSpace18,
-                    returnTitleDept(),
-                    verticalSpace10,
-                    Container(
-                      width: Get.width,
-                      height: 137,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            verticalSpace35,
-                            Text(
-                              'maqueue2'.tr,
-                              style: subtitle18MediumNeutral,
-                            ),
-                            verticalSpace10,
-                            Center(
-                              child: Obx(
-                                () => Text(
-                                  cQController.isLoading.value
-                                      ? ''
-                                      : cQController.queueConsList[0].queueNum!,
-                                  style: title42BoldNeutral100,
+                child: Container(
+                  width: screenWidth(context),
+                  decoration: BoxDecoration(
+                    color: verySoftBlueColor[80],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      verticalSpace18,
+                      returnTitleDept(),
+                      verticalSpace10,
+                      Container(
+                        width: Get.width,
+                        height: 137,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              verticalSpace35,
+                              Text(
+                                'maqueue2'.tr,
+                                style: subtitle18MediumNeutral,
+                              ),
+                              verticalSpace10,
+                              Center(
+                                child: Obx(
+                                  () => Text(
+                                    cQController.isLoading.value
+                                        ? ''
+                                        : cQController
+                                            .queueConsList[0].queueNum!,
+                                    style: title42BoldNeutral100,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    verticalSpace10,
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => QueueConsTableScreen());
-                      },
-                      child: Flexible(
+                      verticalSpace10,
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => QueueConsTableScreen());
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -119,24 +120,24 @@ class QueueConsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                    //Specialty
-                  ],
+                      //Specialty
+                    ],
+                  ),
                 ),
               ),
-            ),
-            verticalSpace25,
-            Center(
-              child: Obx(
-                () => Text(
-                  cQController.isLoading.value
-                      ? ''
-                      : '${cQController.queueConsList.length} ${'maqueue4'.tr}',
-                  style: subtitle20Medium,
+              verticalSpace25,
+              Center(
+                child: Obx(
+                  () => Text(
+                    cQController.isLoading.value
+                        ? ''
+                        : '${cQController.queueConsList.length} ${'maqueue4'.tr}',
+                    style: subtitle20Medium,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
