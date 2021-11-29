@@ -51,7 +51,7 @@ class MACard extends StatelessWidget {
                         ),
                       ),
                       horizontalSpace10,
-                      SizedBox(
+                      Flexible(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
