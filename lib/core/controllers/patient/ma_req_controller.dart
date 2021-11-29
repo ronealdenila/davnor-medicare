@@ -91,7 +91,7 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      log.i('ERROR DIALOG: please provide valid ID');
+      log.i('Please provide valid ID');
     }
   }
 
@@ -104,7 +104,7 @@ class MARequestController extends GetxController {
         addressController.text == '') {
       showErrorDialog(
           errorTitle: 'ERROR!',
-          errorDescription: 'Please dont leave any empty fields');
+          errorDescription: 'errordialog7'.tr);
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -127,13 +127,13 @@ class MARequestController extends GetxController {
           ageController.text == '' ||
           addressController.text == '') {
         showErrorDialog(
-            errorTitle: 'Some fields were missing',
-            errorDescription: 'Please dont leave any empty fields');
+            errorTitle: 'errordialog8'.tr,
+            errorDescription: 'errordialog7'.tr);
       } else {
         await requestMAButton();
       }
     } else {
-      log.i('ERROR DIALOG: please provide valid ID');
+      log.i('Please provide valid ID');
     }
   }
 
@@ -147,14 +147,14 @@ class MARequestController extends GetxController {
       } else {
         dismissDialog();
         showErrorDialog(
-            errorTitle: 'Could not send request',
+            errorTitle: 'errordialog9'.tr,
             errorDescription: 'Sorry, it is already cut off.');
       }
     } else {
       dismissDialog();
       showErrorDialog(
           errorTitle: 'ERROR! ',
-          errorDescription: 'Please provide prescriptions.');
+          errorDescription: 'errordialog10'.tr);
     }
   }
 

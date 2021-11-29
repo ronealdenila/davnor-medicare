@@ -167,8 +167,7 @@ class PatientHomeScreen extends StatelessWidget {
               if (stats.isLoading.value) {
                 showErrorDialog(
                     errorTitle: 'ERROR!',
-                    errorDescription:
-                        'Please wait while we are currently connecting to the server');
+                    errorDescription: 'errordialog1'.tr);
               } else {
                 if (stats.patientStatus[0].pStatus!) {
                   if (stats.patientStatus[0].hasActiveQueueCons!) {
@@ -206,8 +205,7 @@ class PatientHomeScreen extends StatelessWidget {
                 if (stats.isLoading.value) {
                   showErrorDialog(
                       errorTitle: 'ERROR!',
-                      errorDescription:
-                          'Please wait while we are currently connecting to the server');
+                      errorDescription: 'errordialog1'.tr);
                 } else {
                   Get.to(() => MADescriptionScreen());
                 }
@@ -222,8 +220,7 @@ class PatientHomeScreen extends StatelessWidget {
               if (stats.isLoading.value) {
                 showErrorDialog(
                     errorTitle: 'ERROR!',
-                    errorDescription:
-                        'Please wait while we are currently connecting to the server');
+                    errorDescription: 'errordialog1'.tr);
               } else {
                 if (stats.patientStatus[0].pStatus!) {
                   if (stats.patientStatus[0].hasActiveQueueCons! &&
