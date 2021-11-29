@@ -62,20 +62,20 @@ class MAFormScreen extends StatelessWidget {
               Visibility(
                 visible: !ma.isMAForYou.value,
                 child: TextFormField(
-                  controller: ma.lastNameController,
-                  decoration: InputDecoration(
-                    labelText: 'maform2'.tr,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                    controller: ma.lastNameController,
+                    decoration: InputDecoration(
+                      labelText: 'maform2'.tr,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
                       ),
                     ),
-                  ),
-                  onChanged: (value) {
-                    return;
-                  },
-                  onSaved: (value) => ma.lastNameController.text = value!,
-                ),
+                    onChanged: (value) {
+                      return;
+                    },
+                    onSaved: (value) => ma.lastNameController.text = value!,
+                    validator: Validator().notEmpty),
               ),
               verticalSpace10,
               TextFormField(
@@ -94,40 +94,46 @@ class MAFormScreen extends StatelessWidget {
                   onSaved: (value) => ma.addressController.text = value!,
                   validator: Validator().notEmpty),
               verticalSpace10,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(
-                    width: 145,
-                    child: TextFormField(
-                        controller: ma.ageController,
-                        decoration: InputDecoration(
-                          labelText: 'maform4'.tr,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+              SizedBox(
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                          controller: ma.ageController,
+                          decoration: InputDecoration(
+                            labelText: 'maform4'.tr,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          return;
-                        },
-                        onSaved: (value) => ma.ageController.text = value!,
-                        validator: Validator().number),
-                  ),
-                  verticalSpace10,
-                  SizedBox(
-                    width: 180,
-                    height: 70,
-                    child: CustomDropdown(
-                      hintText: 'maform5'.tr,
-                      dropdownItems: gender,
-                      onChanged: (Item? item) => ma.gender.value = item!.name,
-                      onSaved: (Item? item) => ma.gender.value = item!.name,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            return;
+                          },
+                          onSaved: (value) => ma.ageController.text = value!,
+                          validator: Validator().number),
                     ),
-                  ),
-                ],
+                    Spacer(),
+                    Expanded(
+                      flex: 5,
+                      child: SizedBox(
+                        height: 70,
+                        child: CustomDropdown(
+                          hintText: 'maform5'.tr,
+                          dropdownItems: gender,
+                          onChanged: (Item? item) =>
+                              ma.gender.value = item!.name,
+                          onSaved: (Item? item) => ma.gender.value = item!.name,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               verticalSpace10,
               Align(

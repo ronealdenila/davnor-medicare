@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
+
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';

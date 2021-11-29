@@ -25,7 +25,7 @@ class ArticleListScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'item1'.tr,
+                  'Articles',
                   style: subtitle20Medium,
                 ),
                 verticalSpace15,

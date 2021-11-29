@@ -90,14 +90,16 @@ class PatientProfileScreen extends StatelessWidget {
                             size: 24,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('profile'.tr, style: body14Regular),
-                              displayStatus()
-                            ],
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('profile'.tr, style: body14Regular),
+                                displayStatus()
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -243,13 +245,14 @@ class PatientProfileScreen extends StatelessWidget {
           );
         }
         return TextButton(
-            onPressed: () {
-              Get.to(() => VerificationScreen());
-            },
-            child: Text(
-              'profile1'.tr,
-              style: body16RegularUnderlineBlue,
-            ));
+          onPressed: () {
+            Get.to(() => VerificationScreen());
+          },
+          child: Text(
+            'profile1'.tr,
+            style: body16RegularUnderlineBlue,
+          ),
+        );
       },
     );
   }

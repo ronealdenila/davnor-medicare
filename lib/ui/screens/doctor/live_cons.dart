@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
@@ -63,14 +62,12 @@ class LiveConsultationScreen extends StatelessWidget {
                 ),
                 child: getPhoto(consData)),
             horizontalSpace15,
-            Flexible(
-              child: SizedBox(
-                child: Text(
-                  liveCont.getPatientName(consData),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: subtitle18Medium.copyWith(color: Colors.black),
-                ),
+            Expanded(
+              child: Text(
+                liveCont.getPatientName(consData),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: subtitle18Medium.copyWith(color: Colors.black),
               ),
             ),
           ],

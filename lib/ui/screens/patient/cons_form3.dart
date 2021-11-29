@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -59,7 +58,9 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                 child: SizedBox(
                   width: 211,
                   child: CustomButton(
-                    onTap: controller.submitConsultRequest,
+                    onTap: () async {
+                      await controller.submitConsultRequest();
+                    },
                     text: 'consform19'.tr,
                     buttonColor: verySoftBlueColor,
                   ),

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -108,8 +107,8 @@ class ResponsiveView extends GetResponsiveView {
             style: ElevatedButton.styleFrom(
                 elevation: 5,
                 primary: infoColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 35, vertical: 17),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35, vertical: 17),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 textStyle: const TextStyle(
@@ -118,7 +117,6 @@ class ResponsiveView extends GetResponsiveView {
                 )),
             label: Text('Change Password'.tr),
           )
-          
         ],
       ),
     );

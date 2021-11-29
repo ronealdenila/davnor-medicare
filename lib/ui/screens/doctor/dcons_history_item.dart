@@ -10,7 +10,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 
 class DoctorConsHistoryItemScreen extends StatelessWidget {
-  static ConsHistoryController consHController = Get.find();
+  final ConsHistoryController consHController = Get.find();
   final ConsultationHistoryModel consData =
       Get.arguments as ConsultationHistoryModel;
 
@@ -31,13 +31,11 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
                   child: getPhoto(consData)),
               horizontalSpace15,
               Expanded(
-                child: SizedBox(
-                  child: Text(
-                    consHController.getPatientName(consData),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: subtitle18Medium.copyWith(color: Colors.black),
-                  ),
+                child: Text(
+                  consHController.getPatientName(consData),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: subtitle18Medium.copyWith(color: Colors.black),
                 ),
               ),
             ],

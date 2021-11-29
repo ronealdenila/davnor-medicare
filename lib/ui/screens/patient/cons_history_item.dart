@@ -10,7 +10,7 @@ import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 
 class ConsHistoryItemScreen extends StatelessWidget {
-  static ConsHistoryController consHController = Get.find();
+  final ConsHistoryController consHController = Get.find();
   final ConsultationHistoryModel consData =
       Get.arguments as ConsultationHistoryModel;
 
@@ -30,10 +30,9 @@ class ConsHistoryItemScreen extends StatelessWidget {
                   ),
                   child: getPhoto(consData)),
               horizontalSpace15,
-              SizedBox(
-                width: 190,
+              Expanded(
                 child: Text(
-                  'Dr. ${consHController.getDoctorFullName(consData)}',
+                  'Dr. ${consHController.getDoctorFullName(consData)} asdf vgdse scs',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: subtitle18Medium.copyWith(color: Colors.black),

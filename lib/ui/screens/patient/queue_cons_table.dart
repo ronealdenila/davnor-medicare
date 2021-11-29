@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:flutter/material.dart';

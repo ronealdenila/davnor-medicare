@@ -115,39 +115,41 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                       ),
                     ),
                     verticalSpace10,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: CustomTextFormField(
-                            controller: controller.ageController,
-                            labelText: 'consform3'.tr,
-                            validator: Validator().number,
-                            keyboardType: TextInputType.number,
-                            //* for improvement: pwede ta pag click sa done
-                            //* magsubmit na ang form
-                            textInputAction: TextInputAction.done,
-                            onChanged: (value) {
-                              return;
-                            },
-                            onSaved: (value) =>
-                                controller.ageController.text = value!,
+                    SizedBox(
+                      width: Get.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: CustomTextFormField(
+                              controller: controller.ageController,
+                              labelText: 'consform3'.tr,
+                              validator: Validator().number,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                              onChanged: (value) {
+                                return;
+                              },
+                              onSaved: (value) =>
+                                  controller.ageController.text = value!,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 160,
-                          child: CustomButton(
-                            onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                await controller.nextButton();
-                              }
-                            },
-                            text: 'consform4'.tr,
-                            buttonColor: verySoftBlueColor,
+                          Spacer(),
+                          Expanded(
+                            flex: 5,
+                            child: CustomButton(
+                              onTap: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await controller.nextButton();
+                                }
+                              },
+                              text: 'consform4'.tr,
+                              buttonColor: verySoftBlueColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

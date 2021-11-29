@@ -126,9 +126,6 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> submitConsultRequest() async {
-    if (kIsWeb) {
-      await initCategoryForWeb();
-    }
     if (statusList[statusIndex.value].consSlot! == 0) {
       showErrorDialog(
           errorTitle: 'ERROR!',
@@ -137,11 +134,61 @@ class ConsRequestController extends GetxController {
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
-      if (kIsWeb) {
-        await uploadLabResultsWeb();
+
+      await uploadLabResults();
+
+      await assignValues();
+      await firestore
+          .collection('cons_request')
+          .doc(generatedConsID.value)
+          .set({
+        'consID': generatedConsID.value,
+        'patientId': auth.currentUser!.uid,
+        'fullName': fullName,
+        'age': ageController.text,
+        'category': categoryID.value,
+        'dateRqstd': FieldValue.serverTimestamp(),
+        'description': descriptionController.text,
+        'isFollowUp': isFollowUp.value ? true : false,
+        'imgs': imageUrls.value,
+      });
+
+      //Generate Cons Queue
+      final lastNum = statusList[statusIndex.value].qLastNum! + 1;
+      if (lastNum < 10) {
+        generatedCode.value = 'C0$lastNum';
       } else {
-        await uploadLabResults();
+        generatedCode.value = 'C$lastNum';
       }
+
+      await addToConsQueueCollection();
+      await updateStatus(); //update patient status and cons status
+
+      dismissDialog();
+      await clearControllers();
+      await showDialog();
+      log.i('submitConsultRequest | Consultation Submit Succesfully');
+    } else {
+      showErrorDialog(
+          errorTitle: 'Sorry, there are no slot available for now',
+          errorDescription: 'Please try again next time');
+      log.i('submitConsultRequest | Consultation Submit Failed');
+    }
+  }
+
+  Future<void> submitConsultRequestWeb() async {
+    await initCategoryForWeb();
+
+    if (statusList[statusIndex.value].consSlot! == 0) {
+      showErrorDialog(
+          errorTitle: 'ERROR!',
+          errorDescription:
+              'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
+    } else if (hasAvailableSlot()) {
+      showLoading();
+      generatedConsID.value = uuid.v4();
+      await uploadLabResultsWeb();
+
       await assignValues();
       await firestore
           .collection('cons_request')

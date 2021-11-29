@@ -81,7 +81,6 @@ void showConfirmationDialog({
   Function()? onNoTap,
 }) {
   Get.dialog(
-    //TODO(R): Refactor so that it wil be on widget folder
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 0,
@@ -120,17 +119,20 @@ void showConfirmationDialog({
                 ),
                 verticalSpace10,
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    DialogButton(
-                      buttonText: 'dialogbtn1'.tr,
-                      onTap: onYesTap,
+                    Expanded(
+                      child: DialogButton(
+                        buttonText: 'dialogbtn1'.tr,
+                        onTap: onYesTap,
+                      ),
                     ),
                     horizontalSpace5,
-                    DialogButton(
-                      buttonText: 'dialogbtn01'.tr,
-                      onTap: onNoTap,
+                    Expanded(
+                      child: DialogButton(
+                        buttonText: 'dialogbtn01'.tr,
+                        onTap: onNoTap,
+                      ),
                     ),
                   ],
                 ),
@@ -147,8 +149,11 @@ void showConfirmationDialog({
                 child: CircleAvatar(
                   radius: 10,
                   backgroundColor: const Color(0xFFE3E6E8),
-                  child: Icon(Icons.close, color: neutralColor[100],
-                  size: 16,),
+                  child: Icon(
+                    Icons.close,
+                    color: neutralColor[100],
+                    size: 16,
+                  ),
                 ),
               ),
             ),

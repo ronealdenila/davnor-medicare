@@ -8,7 +8,7 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:get/get.dart';
 
 class PatientConsHistoryInfoScreen extends StatelessWidget {
-  static ConsHistoryController consHCont = Get.find();
+  final ConsHistoryController consHCont = Get.find();
   final ConsultationHistoryModel consData =
       Get.arguments as ConsultationHistoryModel;
 

@@ -46,14 +46,12 @@ class LiveChatScreen extends StatelessWidget {
                 ),
                 child: getPhoto(consData)),
             horizontalSpace10,
-            Flexible(
-              child: SizedBox(
-                child: Text(
-                  'Dr. ${liveCont.getDoctorFullName(consData)}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: subtitle18Medium.copyWith(color: Colors.black),
-                ),
+            Expanded(
+              child: Text(
+                'Dr. ${liveCont.getDoctorFullName(consData)}',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: subtitle18Medium.copyWith(color: Colors.black),
               ),
             ),
           ],

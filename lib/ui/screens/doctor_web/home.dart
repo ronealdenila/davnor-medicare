@@ -15,7 +15,6 @@ import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
-import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';

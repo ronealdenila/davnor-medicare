@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -85,7 +84,7 @@ class ResponsiveView extends GetResponsiveView {
           displayProfile(),
           verticalSpace18,
           Text(
-             'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
+            'Dr. ${fetchedData!.firstName} ${fetchedData!.lastName}',
             style: body20Bold,
           ),
           verticalSpace10,
@@ -139,121 +138,119 @@ class ResponsiveView extends GetResponsiveView {
               ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 7,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: infoColor,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Icon(
-                      Icons.perm_contact_calendar,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          'DEPARTMENT',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        DmText.subtitle18Medium(fetchedData!.department),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 7,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: infoColor,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Icon(
-                      Icons.perm_contact_calendar,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          'CLINIC HOURS',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        DmText.subtitle18Medium(fetchedData!.clinicHours),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        verticalSpace25,
-        ElevatedButton.icon(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) => changePasswordDialog(context));
-          },
-          icon: const Icon(
-            Icons.lock,
-            color: Colors.white,
-            size: 20,
-          ),
-          style: ElevatedButton.styleFrom(
-              elevation: 5,
-              primary: infoColor,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 35, vertical: 20),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+            child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              )),
-          label: Text('Change Password'),
-        ),
-          
-
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 7,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: infoColor,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.perm_contact_calendar,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Text(
+                            'DEPARTMENT',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          DmText.subtitle18Medium(fetchedData!.department),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 7,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: infoColor,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.perm_contact_calendar,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Text(
+                            'CLINIC HOURS',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          DmText.subtitle18Medium(fetchedData!.clinicHours),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          verticalSpace25,
+          ElevatedButton.icon(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => changePasswordDialog(context));
+            },
+            icon: const Icon(
+              Icons.lock,
+              color: Colors.white,
+              size: 20,
+            ),
+            style: ElevatedButton.styleFrom(
+                elevation: 5,
+                primary: infoColor,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )),
+            label: Text('Change Password'),
+          ),
         ],
       ),
     );

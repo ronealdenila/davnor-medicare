@@ -38,7 +38,6 @@ class DoctorFunctions {
         for (int i = currentSlot; i < currentLength; i++) {
           await removeConsultations(consRequests.consultations[i].consID!,
               consRequests.consultations[i].patientId!);
-          //delete cons + notify na nag offline ang doctor
         }
       }
     });

@@ -1,6 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -317,14 +316,12 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget textTitle() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 50
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text('Edit Doctor Details',
+            Text('Edit Doctor Details',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             horizontalSpace80,
             IconButton(

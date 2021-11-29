@@ -49,17 +49,11 @@ import 'package:davnor_medicare/ui/screens/patient_web/live_cons.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_details.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_history.dart';
-import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/for_approval_list.dart';
 import 'package:davnor_medicare/ui/screens/pswd_head/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/accepted_ma_req.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/home.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_history_item.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/ma_req_list.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_item.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/on_progress_req_list.dart';
-import 'package:davnor_medicare/ui/screens/pswd_p/releasing_area_item.dart';
 import 'package:davnor_medicare/ui/screens/splash.dart';
 import 'package:get/get.dart';
 

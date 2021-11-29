@@ -89,7 +89,7 @@ class NotificationCard extends StatelessWidget {
       );
     }
     return CircleAvatar(
-      radius: 25,
+      radius: 20,
       foregroundImage: NetworkImage(notif.photo!),
       backgroundImage: AssetImage(blankProfile),
     );

@@ -17,7 +17,6 @@ class DialogButton extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         primary: dialogButtonColor,
-        fixedSize: const Size(138, 48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),

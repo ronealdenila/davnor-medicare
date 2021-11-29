@@ -80,13 +80,11 @@ class LiveChatController extends GetxController {
       dismissDialog();
     } else {
       if (chatController.text.isEmpty) {
-        dismissDialog();
         Get.snackbar('No message', 'Please write a message',
             snackPosition: SnackPosition.BOTTOM);
       } else {
         await sendMessage(chatController.text);
         await clearMessage();
-        dismissDialog();
       }
     }
   }

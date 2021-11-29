@@ -374,8 +374,7 @@ class LocalString extends Translations {
           'conshistory': 'Consultation History',
           'cons1': 'Buwan',
           'cons2': 'Araw',
-          'conslog':
-              'Mangyaring maghintay, kumukuha ng record...',
+          'conslog': 'Mangyaring maghintay, kumukuha ng record...',
           'conslog1': 'Wala kang history ng konsultasyon',
           'conslog2': 'Maghanap ayon sa petsa',
           'conslog3': 'Walang konsultasyon',
@@ -403,6 +402,7 @@ class LocalString extends Translations {
           'mahistory1': 'Impormasyon ng Pasyente',
           'mah3': 'Pangalan ng Pasysente',
           'mah4': 'Edad ng Pasyente',
+          'ma4': 'SAAN MAKAKAKUHA',
           'mah5': 'Address',
           'mah6': 'Kasarian',
           'mah7': 'Pumili  ng uri',

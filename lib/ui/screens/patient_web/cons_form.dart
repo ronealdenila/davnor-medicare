@@ -200,7 +200,7 @@ class ResponsiveBody extends GetResponsiveView {
               child: CustomButton(
                 onTap: () async {
                   if (_formKey.currentState!.validate()) {
-                    await consController.submitConsultRequest();
+                    await consController.submitConsultRequestWeb();
                   }
                 },
                 text: 'consform19'.tr,

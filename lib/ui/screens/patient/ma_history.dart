@@ -4,7 +4,6 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';

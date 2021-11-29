@@ -10,8 +10,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 
 class DocConsHistoryScreen extends StatelessWidget {
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController());
+  final ConsHistoryController consHController = Get.find();
 
   @override
   Widget build(BuildContext context) {

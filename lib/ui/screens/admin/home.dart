@@ -4,7 +4,6 @@ import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_registration_controller.dart';
-import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';

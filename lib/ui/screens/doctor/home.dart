@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
@@ -34,6 +35,8 @@ class DoctorHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   final ProfileController profileController = Get.put(ProfileController());
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
@@ -406,12 +409,12 @@ class DoctorHomeScreen extends StatelessWidget {
     }).then((value) async {
       await func.updateSlot(total);
       dismissDialog();
-      print('Changed status');
       count.value = 1;
-    }).catchError((error) {
-      showErrorDialog(
-          errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
     });
+    // .catchError((error) {
+    //   showErrorDialog(
+    //       errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
+    // });
   }
 
   Widget detailsDialogCons1() {
@@ -461,6 +464,7 @@ class DoctorHomeScreen extends StatelessWidget {
                             dismissDialog();
                             count.value = 1;
                           }).catchError((error) {
+                            // TO CHECK IF UNSAY NA ERROR
                             showErrorDialog(
                                 errorTitle: 'ERROR!',
                                 errorDescription: 'Something went wrong');

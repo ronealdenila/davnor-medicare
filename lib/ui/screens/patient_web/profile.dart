@@ -5,7 +5,6 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
-import 'package:davnor_medicare/ui/screens/patient/verification.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';

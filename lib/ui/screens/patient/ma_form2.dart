@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -10,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
