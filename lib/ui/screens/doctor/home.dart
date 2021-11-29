@@ -41,6 +41,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +136,16 @@ class DoctorHomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          verticalSpace50,
+                          verticalSpace35,
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: SizedBox(
                                 width: Get.width,
                                 child: Obx(() => actionCards(context))),
                           ),
                           verticalSpace35,
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 25),
+                            padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
                               'Consultation Requests',
                               style: body16SemiBold,
@@ -169,21 +170,30 @@ class DoctorHomeScreen extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
           }
-
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
-          }
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return CircleAvatar(
+            return const CircleAvatar(
               radius: 50,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.grey,
             );
           }
+          final data = snapshot.data!.data() as Map<String, dynamic>;
           return CircleAvatar(
             radius: 50,
             foregroundImage: NetworkImage(data['profileImage']),
-            backgroundColor: Colors.transparent,
+            onForegroundImageError: (_, __) {
+              errorPhoto.value = true;
+            },
+            child: Obx(
+              () => errorPhoto.value
+                  ? Text(
+                      '${fetchedData!.firstName![0]} ${fetchedData!.lastName![0]}',
+                      style: subtitle18Bold,
+                    )
+                  : SizedBox(
+                      height: 0,
+                      width: 0,
+                    ),
+            ),
           );
         });
   }
@@ -594,7 +604,7 @@ class DoctorHomeScreen extends StatelessWidget {
       return const Center(child: Text('No consultation request at the moment'));
     }
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       shrinkWrap: true,
       itemCount: consRequests.consultations.length,
       itemBuilder: (context, index) {

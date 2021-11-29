@@ -31,7 +31,7 @@ class DocConsHistoryScreen extends StatelessWidget {
                     verticalSpace20,
                     const Text('Consultation History', style: title24BoldWhite),
                     verticalSpace20,
-                    Row(children: [
+                    Wrap(runSpacing: 8, children: [
                       SizedBox(
                         height: 50,
                         width: Get.width * .5,
@@ -132,7 +132,7 @@ class DocConsHistoryScreen extends StatelessWidget {
       );
     }
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shrinkWrap: true,
       itemCount: consHController.consHistory.length,
       itemBuilder: (context, index) {

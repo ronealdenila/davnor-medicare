@@ -344,7 +344,6 @@ class AuthController extends GetxController {
         case 'admin':
           await Future.delayed(const Duration(seconds: 3),
               () => Get.offAllNamed(Routes.ADMIN_HOME));
-          //await navigateWithDelay(Get.offAllNamed(Routes.ADMIN_HOME));
           break;
         default:
           await Get.defaultDialog(title: 'Error Occured');

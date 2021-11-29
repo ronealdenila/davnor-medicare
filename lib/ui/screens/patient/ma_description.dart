@@ -131,21 +131,23 @@ class MADescriptionScreen extends StatelessWidget {
                               textAlign: TextAlign.left,
                               style: caption12SemiBold),
                         ]),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Text('Cut-off: 9:30 am & Releasing: 12:30 pm',
-                                textAlign: TextAlign.left,
-                                style: caption12Regular),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text('Cut-off: 1:30 pm & Releasing: 4:30 pm',
-                                textAlign: TextAlign.left,
-                                style: caption12Regular),
-                          ]),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text('Cut-off: 9:30 am & Releasing: 12:30 pm',
+                                  textAlign: TextAlign.left,
+                                  style: caption12Regular),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text('Cut-off: 1:30 pm & Releasing: 4:30 pm',
+                                  textAlign: TextAlign.left,
+                                  style: caption12Regular),
+                            ]),
+                      ),
                     ),
                   ],
                 ),

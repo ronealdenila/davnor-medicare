@@ -44,7 +44,6 @@ class QueueConsScreen extends StatelessWidget {
               ),
               child: Container(
                 width: screenWidth(context),
-                height: 260,
                 decoration: BoxDecoration(
                   color: verySoftBlueColor[80],
                   borderRadius: BorderRadius.circular(10),
@@ -90,33 +89,35 @@ class QueueConsScreen extends StatelessWidget {
                       onTap: () {
                         Get.to(() => QueueConsTableScreen());
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'maqueue3'.tr,
-                            style: subtitle18RegularWhite,
-                          ),
-                          horizontalSpace5,
-                          Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(24),
+                      child: Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'maqueue3'.tr,
+                              style: subtitle18RegularWhite,
                             ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.arrow_forward_outlined,
-                                size: 20,
-                                color: Colors.white,
+                            horizontalSpace5,
+                            Container(
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.arrow_forward_outlined,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     //Specialty

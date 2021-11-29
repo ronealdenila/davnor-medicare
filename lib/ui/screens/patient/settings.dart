@@ -37,59 +37,62 @@ class SettingScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-             
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text('Settings', style: subtitle20Bold),
               ),
               verticalSpace20,
-              InkWell(
-                onTap: () {
-                  buildLanguageDialog(context);
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        horizontalSpace20,
-                        SizedBox(
-                            width: 50,
-                            child: const Icon(
-                              Icons.translate_outlined,
-                              size: 25,
-                            )),
-                        const Text(
-                          'Change Language',
-                          style: subtitle20Medium,
-                        ),
-                      ]),
+              Flexible(
+                child: InkWell(
+                  onTap: () {
+                    buildLanguageDialog(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          horizontalSpace20,
+                          SizedBox(
+                              width: 50,
+                              child: const Icon(
+                                Icons.translate_outlined,
+                                size: 25,
+                              )),
+                          const Text(
+                            'Change Language',
+                            style: subtitle18Medium,
+                          ),
+                        ]),
+                  ),
                 ),
               ),
               verticalSpace10,
-              InkWell(
-                onTap: () {
-                  Get.to(() => AppInfoScreen());
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        horizontalSpace20,
-                        SizedBox(
-                            width: 50,
-                            child: const Icon(
-                              Icons.info_outline_rounded,
-                              size: 25,
-                            )),
-                        const Text(
-                          'App Info',
-                          style: subtitle20Medium,
-                        ),
-                      ]),
+              Flexible(
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => AppInfoScreen());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          horizontalSpace20,
+                          SizedBox(
+                              width: 50,
+                              child: const Icon(
+                                Icons.info_outline_rounded,
+                                size: 25,
+                              )),
+                          const Text(
+                            'App Info',
+                            style: subtitle18Medium,
+                          ),
+                        ]),
+                  ),
                 ),
               ),
             ]),

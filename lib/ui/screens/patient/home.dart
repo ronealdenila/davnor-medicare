@@ -37,6 +37,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
   static AppController appController = Get.find();
   static AuthController authController = Get.find();
   static ArticleController articleService = Get.find();
@@ -50,8 +52,6 @@ class PatientHomeScreen extends StatelessWidget {
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
   final ProfileController profileController = Get.put(ProfileController());
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class PatientHomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -21,154 +21,156 @@ class LiveConsInfoScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         backgroundColor: Colors.white,
-        body: Column(children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Color(0xFFCBD4E1),
-                ),
-              ),
-            ),
-            child: Column(children: <Widget>[
-              verticalSpace15,
-              Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Color(0xFFCBD4E1),
                   ),
-                  child: getPhoto(consData)),
-              verticalSpace15,
-              Text(
-                liveCont.getPatientName(consData),
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-                style: subtitle18Medium,
-                textAlign: TextAlign.center,
-              ),
-              verticalSpace25
-            ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace35,
-                const Text('Actions',
-                    textAlign: TextAlign.left, style: body16Regular),
-                verticalSpace20,
-                InkWell(
-                  onTap: () {
-                    confirmationDialog();
-                  },
-                  child: const Text('End Consultation',
-                      textAlign: TextAlign.left, style: subtitle18Medium),
                 ),
+              ),
+              child: Column(children: <Widget>[
                 verticalSpace15,
-                InkWell(
-                  onTap: () {
-                    print('clicked');
-                    showDialog(
-                        context: context,
-                        builder: (context) => skipDialog(consData));
-                  },
-                  child: SizedBox(
-                    width: Get.width,
-                    child: const Text('Skip Consultation',
+                Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: getPhoto(consData)),
+                verticalSpace15,
+                Text(
+                  liveCont.getPatientName(consData),
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: subtitle18Medium,
+                  textAlign: TextAlign.center,
+                ),
+                verticalSpace25
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalSpace35,
+                  const Text('Actions',
+                      textAlign: TextAlign.left, style: body16Regular),
+                  verticalSpace20,
+                  InkWell(
+                    onTap: () {
+                      confirmationDialog();
+                    },
+                    child: const Text('End Consultation',
                         textAlign: TextAlign.left, style: subtitle18Medium),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Text('Consultation Info',
-                    textAlign: TextAlign.left,
-                    style:
-                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
-                verticalSpace20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
+                  verticalSpace15,
+                  InkWell(
+                    onTap: () {
+                      print('clicked');
+                      showDialog(
+                          context: context,
+                          builder: (context) => skipDialog(consData));
+                    },
+                    child: SizedBox(
+                      width: Get.width,
+                      child: const Text('Skip Consultation',
+                          textAlign: TextAlign.left, style: subtitle18Medium),
                     ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text(consData.fullName!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Age of Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text(consData.age!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Date Requested',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text(
-                          liveCont.convertTimeStamp(consData.dateRqstd!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Started',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: Get.width - 230,
-                      child: Text(
-                          liveCont.convertTimeStamp(consData.dateConsStart!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Text('Consultation Info',
+                      textAlign: TextAlign.left,
+                      style: body16Regular.copyWith(
+                          color: const Color(0xFF727F8D))),
+                  verticalSpace20,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: Get.width - 230,
+                        child: Text(consData.fullName!,
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Age of Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: Get.width - 230,
+                        child: Text(consData.age!,
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Date Requested',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: Get.width - 230,
+                        child: Text(
+                            liveCont.convertTimeStamp(consData.dateRqstd!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Consultation Started',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: Get.width - 230,
+                        child: Text(
+                            liveCont.convertTimeStamp(consData.dateConsStart!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

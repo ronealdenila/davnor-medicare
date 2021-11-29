@@ -48,7 +48,8 @@ class ConsHistoryScreen extends StatelessWidget {
                           consHController.showDialog(context);
                         }
                       },
-                      child: Row(
+                      child: Wrap(
+                        runSpacing: 8,
                         children: [
                           Card(
                             elevation: 6,
@@ -143,7 +144,7 @@ class ConsHistoryScreen extends StatelessWidget {
       );
     }
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shrinkWrap: true,
       itemCount: consHController.consHistory.length,
       itemBuilder: (context, index) {

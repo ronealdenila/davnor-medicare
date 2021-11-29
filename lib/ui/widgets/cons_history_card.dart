@@ -51,7 +51,7 @@ class ConsultationHistoryCard extends StatelessWidget {
                           child: getPhoto(consHistory!)),
                     ),
                     horizontalSpace20,
-                    SizedBox(
+                    Flexible(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
