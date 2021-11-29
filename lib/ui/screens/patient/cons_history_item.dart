@@ -32,7 +32,7 @@ class ConsHistoryItemScreen extends StatelessWidget {
               horizontalSpace15,
               Expanded(
                 child: Text(
-                  'Dr. ${consHController.getDoctorFullName(consData)} asdf vgdse scs',
+                  'Dr. ${consHController.getDoctorFullName(consData)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: subtitle18Medium.copyWith(color: Colors.black),
