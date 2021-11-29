@@ -184,13 +184,13 @@ class MADescriptionScreen extends StatelessWidget {
                 );
               } else {
                 showErrorDialog(
-                    errorTitle: 'Sorry were cut off already.',
-                    errorDescription: 'Please try again next time.');
+                    errorTitle: 'errordialog2'.tr,
+                    errorDescription: 'errordialog3'.tr);
               }
             } else {
               showErrorDialog(
-                  errorTitle: 'Sorry MA has no fund for now.',
-                  errorDescription: 'Please try again next time');
+                  errorTitle: 'errordialog4'.tr,
+                  errorDescription: 'errordialog3'.tr);
             }
           } else {
             showErrorDialog(
