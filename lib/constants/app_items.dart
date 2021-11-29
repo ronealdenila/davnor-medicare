@@ -22,22 +22,22 @@ final discomfortData = [
       iconPath: heartburnIcon,
       title: 'Heartburn or GERD',
       specialist: 'Gastroenterologist',
-      categoryID: 'category25'),
+      categoryID: 'category1'),
   Category(
       iconPath: vomitingIcon,
       title: 'Nausea or Vomiting', //
       specialist: 'Gastroenterologist',
-      categoryID: 'category25'),
+      categoryID: 'category1'),
   Category(
       iconPath: diarrheaIcon,
       title: 'Diarrhea or Constipation', //
       specialist: 'Gastroenterologist',
-      categoryID: 'category25'),
+      categoryID: 'category1'),
   Category(
       iconPath: abdominalpainIcon,
       title: 'Ulcer or Abdonimal Pain', //
       specialist: 'Gastroenterologist',
-      categoryID: 'category25'),
+      categoryID: 'category1'),
   Category(
       iconPath: sinusitisIcon,
       title: 'Sinusitis', //
@@ -62,7 +62,7 @@ final discomfortData = [
       iconPath: diabetesIcon,
       title: 'Diabetes', //
       specialist: 'Diabetologist',
-      categoryID: 'category23'),
+      categoryID: 'category12'),
   Category(
       iconPath: asthma,
       title: 'Asthma', //

@@ -19,73 +19,74 @@ class MACard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Card(
-            elevation: 9,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Container(
-              height: 95,
-              width: Get.width,
-              decoration: BoxDecoration(
-                color: Colors.white,
+    return Flexible(
+      child: Column(
+        children: [
+          InkWell(
+            onTap: onTap,
+            child: Card(
+              elevation: 9,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 75,
-                      height: 75,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          maImage,
-                          fit: BoxFit.cover,
+              child: Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 75,
+                        height: 75,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            maImage,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    horizontalSpace10,
-                    SizedBox(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            maHController
-                                .convertTimeStamp(maHistory!.dateClaimed!),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: body16SemiBold,
-                          ),
-                          verticalSpace5,
-                          const Text(
-                            'Medicine Worth',
-                            style: caption12RegularNeutral,
-                          ),
-                          verticalSpace5,
-                          Text(
-                            'Php ${maHistory!.medWorth}',
-                            style: caption12Medium,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ],
+                      horizontalSpace10,
+                      SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              maHController
+                                  .convertTimeStamp(maHistory!.dateClaimed!),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: body16SemiBold,
+                            ),
+                            verticalSpace5,
+                            const Text(
+                              'Medicine Worth',
+                              style: caption12RegularNeutral,
+                            ),
+                            verticalSpace5,
+                            Text(
+                              'Php ${maHistory!.medWorth}',
+                              style: caption12Medium,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        verticalSpace15,
-      ],
+          verticalSpace15,
+        ],
+      ),
     );
   }
 }

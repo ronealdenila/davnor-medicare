@@ -24,8 +24,11 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final DoctorFunctions func = DoctorFunctions();
   final ConsultationsController consRequests =
@@ -35,8 +38,6 @@ class DoctorHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   final ProfileController profileController = Get.put(ProfileController());
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
@@ -116,7 +117,9 @@ class DoctorHomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Obx(() => doctorStatus()),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Obx(() => doctorStatus())),
                           verticalSpace10,
                         ]),
                   ),
@@ -174,13 +177,13 @@ class DoctorHomeScreen extends StatelessWidget {
           if (data['profileImage'] == '') {
             return CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage(doctorDefault),
+              backgroundColor: Colors.transparent,
             );
           }
           return CircleAvatar(
             radius: 50,
             foregroundImage: NetworkImage(data['profileImage']),
-            backgroundImage: AssetImage(doctorDefault),
+            backgroundColor: Colors.transparent,
           );
         });
   }
@@ -281,19 +284,10 @@ class DoctorHomeScreen extends StatelessWidget {
 
   Widget doctorStatus() {
     if (!stats.isLoading.value) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text(
-            stats.doctorStatus[0].numToAccomodate != 0
-                ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
-                : '',
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
           Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
@@ -311,6 +305,16 @@ class DoctorHomeScreen extends StatelessWidget {
                   color: verySoftBlueColor,
                 ),
               ),
+            ),
+          ),
+          Text(
+            stats.doctorStatus[0].numToAccomodate != 0
+                ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} ${stats.doctorStatus[0].numToAccomodate! > 1 ? 'patients' : 'patient'}'
+                : '',
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.white,
             ),
           ),
         ],

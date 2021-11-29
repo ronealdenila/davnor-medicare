@@ -74,7 +74,7 @@ class PatientHomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -200,7 +200,6 @@ class PatientHomeScreen extends StatelessWidget {
             text: 'action2'.tr,
             color: verySoftOrange[60],
             secondaryColor: verySoftOrangeCustomColor,
-            //Note: Has weird transition
             onTap: () => Get.to(
               () => MADescriptionScreen(),
             ),

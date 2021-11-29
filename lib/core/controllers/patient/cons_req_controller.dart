@@ -178,53 +178,56 @@ class ConsRequestController extends GetxController {
 
   Future<void> submitConsultRequestWeb() async {
     await initCategoryForWeb();
-
-    if (statusList[statusIndex.value].consSlot! == 0) {
-      showErrorDialog(
-          errorTitle: 'ERROR!',
-          errorDescription:
-              'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
-    } else if (hasAvailableSlot()) {
-      showLoading();
-      generatedConsID.value = uuid.v4();
-      await uploadLabResultsWeb();
-
-      await assignValues();
-      await firestore
-          .collection('cons_request')
-          .doc(generatedConsID.value)
-          .set({
-        'consID': generatedConsID.value,
-        'patientId': auth.currentUser!.uid,
-        'fullName': fullName,
-        'age': ageController.text,
-        'category': categoryID.value,
-        'dateRqstd': FieldValue.serverTimestamp(),
-        'description': descriptionController.text,
-        'isFollowUp': isFollowUp.value ? true : false,
-        'imgs': imageUrls.value,
-      });
-
-      //Generate Cons Queue
-      final lastNum = statusList[statusIndex.value].qLastNum! + 1;
-      if (lastNum < 10) {
-        generatedCode.value = 'C0$lastNum';
-      } else {
-        generatedCode.value = 'C$lastNum';
-      }
-
-      await addToConsQueueCollection();
-      await updateStatus(); //update patient status and cons status
-
-      dismissDialog();
-      await clearControllers();
-      await showDialog();
-      log.i('submitConsultRequest | Consultation Submit Succesfully');
+    if (categoryID.value == '') {
+      print('ERROR: cannot fetch the category');
     } else {
-      showErrorDialog(
-          errorTitle: 'Sorry, there are no slot available for now',
-          errorDescription: 'Please try again next time');
-      log.i('submitConsultRequest | Consultation Submit Failed');
+      if (statusList[statusIndex.value].consSlot! == 0) {
+        showErrorDialog(
+            errorTitle: 'ERROR!',
+            errorDescription:
+                'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
+      } else if (hasAvailableSlot()) {
+        showLoading();
+        generatedConsID.value = uuid.v4();
+        await uploadLabResultsWeb();
+
+        await assignValues();
+        await firestore
+            .collection('cons_request')
+            .doc(generatedConsID.value)
+            .set({
+          'consID': generatedConsID.value,
+          'patientId': auth.currentUser!.uid,
+          'fullName': fullName,
+          'age': ageController.text,
+          'category': categoryID.value,
+          'dateRqstd': FieldValue.serverTimestamp(),
+          'description': descriptionController.text,
+          'isFollowUp': isFollowUp.value ? true : false,
+          'imgs': imageUrls.value,
+        });
+
+        //Generate Cons Queue
+        final lastNum = statusList[statusIndex.value].qLastNum! + 1;
+        if (lastNum < 10) {
+          generatedCode.value = 'C0$lastNum';
+        } else {
+          generatedCode.value = 'C$lastNum';
+        }
+
+        await addToConsQueueCollection();
+        await updateStatus(); //update patient status and cons status
+
+        dismissDialog();
+        await clearControllers();
+        await showDialog();
+        log.i('submitConsultRequest | Consultation Submit Succesfully');
+      } else {
+        showErrorDialog(
+            errorTitle: 'Sorry, there are no slot available for now',
+            errorDescription: 'Please try again next time');
+        log.i('submitConsultRequest | Consultation Submit Failed');
+      }
     }
   }
 
@@ -308,8 +311,12 @@ class ConsRequestController extends GetxController {
     } else {
       categoryID.value = categoryHolder.value;
     }
-    log.wtf('Final: ${categoryID.value} is selected');
-    await Get.to(() => ConsForm2Screen());
+    if (categoryID.value == '') {
+      print('ERROR: cannot fetch the category');
+    } else {
+      log.wtf('Final: ${categoryID.value} is selected');
+      await Get.to(() => ConsForm2Screen());
+    }
   }
 
   Future<void> initCategoryForWeb() async {
@@ -318,7 +325,6 @@ class ConsRequestController extends GetxController {
     } else {
       categoryID.value = categoryHolder.value;
     }
-    log.wtf('Final: ${categoryID.value} is selected');
   }
 
   Future<void> getconsultationCategory(String specialistD) async {
@@ -329,14 +335,10 @@ class ConsRequestController extends GetxController {
     for (var i = 0; i < statusList.length; i++) {
       if (statusList[i].deptName == dept &&
           statusList[i].title == specialistD) {
-        print('found on index $i');
         statusIndex.value = i;
         categoryID.value = statusList[i].categoryID!;
         return;
       }
-    }
-    if (categoryID.value == '') {
-      print('CATEGORY NOT FOUND');
     }
   }
 

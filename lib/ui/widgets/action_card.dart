@@ -35,14 +35,16 @@ class ActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: Text(
-                  text,
-                  style: kIsWeb
-                      ? subtitle20Bold.copyWith(color: Colors.white)
-                      : body14SemiBoldWhite,
+              Flexible(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  child: Text(
+                    text,
+                    style: kIsWeb
+                        ? subtitle20Bold.copyWith(color: Colors.white)
+                        : body14SemiBoldWhite,
+                  ),
                 ),
               ),
               Align(

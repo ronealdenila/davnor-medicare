@@ -28,7 +28,7 @@ class MAHistoryScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -159,7 +159,7 @@ class MAHistoryScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 shrinkWrap: true,
                 itemCount: maHController.maHistoryList.length,
                 itemBuilder: (context, index) {
