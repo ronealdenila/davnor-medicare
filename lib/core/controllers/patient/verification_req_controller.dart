@@ -150,7 +150,11 @@ class VerificationController extends GetxController {
       dialogCaption: dialog6Caption,
       onConfirmTap: () {
         dismissDialog();
-        Get.back();
+        if (kIsWeb) {
+//tO DO: navigation cont go back
+        } else {
+          Get.back();
+        }
       },
     );
   }

@@ -103,7 +103,7 @@ class ConsHistoryScreen extends StatelessWidget {
             verticalSpace25,
             Expanded(
               child: Container(
-                width: screenWidth(context),
+                width: Get.width,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

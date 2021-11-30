@@ -42,8 +42,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -63,8 +63,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -84,8 +84,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -105,8 +105,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -126,8 +126,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -160,8 +160,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -181,8 +181,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -202,8 +202,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -223,8 +223,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,
@@ -246,8 +246,8 @@ class MAHistoryInfoScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace20,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Wrap(
+                            runSpacing: 8,
                             children: [
                               SizedBox(
                                 width: 160,

@@ -66,8 +66,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                     style:
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     SizedBox(
                       width: 170,
@@ -85,8 +85,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     SizedBox(
                       width: 170,
@@ -104,8 +104,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     SizedBox(
                       width: 170,
@@ -123,8 +123,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     SizedBox(
                       width: 170,
@@ -143,8 +143,8 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     SizedBox(
                       width: 170,

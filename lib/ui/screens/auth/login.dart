@@ -22,25 +22,26 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Row(children: <Widget>[
-      if (isDesktop(context) || isTab(context))
-        Expanded(
-          flex: 1,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * .2,
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(davnormedicare, fit: BoxFit.fill),
-          ),
+        body: (isDesktop(context) || isTab(context))
+            ? webVersion(context)
+            : phoneVersion(context));
+  }
+
+  Widget webVersion(BuildContext context) {
+    return SingleChildScrollView(
+        child: Row(children: <Widget>[
+      Expanded(
+        flex: 1,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * .2,
+          height: MediaQuery.of(context).size.height,
+          child: Image.asset(davnormedicare, fit: BoxFit.fill),
         ),
+      ),
       Expanded(
         child: Column(
-          crossAxisAlignment: !isMobile(context)
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            if (isMobile(context))
-              Image.asset(davnormedicare, fit: BoxFit.fill),
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
@@ -144,7 +145,7 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
-    ])));
+    ]));
   }
 
   Widget phoneVersion(BuildContext context) {

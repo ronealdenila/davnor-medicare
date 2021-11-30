@@ -58,8 +58,8 @@ class HistoryInfoScreen extends StatelessWidget {
                     style:
                         body16Regular.copyWith(color: const Color(0xFF727F8D))),
                 verticalSpace20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -74,8 +74,8 @@ class HistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -93,8 +93,8 @@ class HistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -113,8 +113,8 @@ class HistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     const SizedBox(
                       width: 170,
@@ -133,8 +133,8 @@ class HistoryInfoScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace15,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  runSpacing: 8,
                   children: [
                     const SizedBox(
                       width: 170,
