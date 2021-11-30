@@ -325,7 +325,13 @@ class ResponsiveView extends GetResponsiveView {
   Widget textTitle() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-      child: Row(
+      child: Column(
+       crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(onPressed: () {}, 
+            icon: Icon(Icons.arrow_back_outlined,
+            size: 30,)),
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -339,6 +345,9 @@ class ResponsiveView extends GetResponsiveView {
                 },
                 icon: const Icon(Icons.edit_outlined))
           ]),
+
+          ]),
+      
     );
   }
 }
