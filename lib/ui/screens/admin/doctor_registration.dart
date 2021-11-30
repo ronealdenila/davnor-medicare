@@ -163,6 +163,7 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                                 child: DmButton.outline(
                                   title: 'Cancel',
                                   onTap: () {
+                                    _formKey.currentState!.reset();
                                     navigationController.goBack();
                                   },
                                 ),

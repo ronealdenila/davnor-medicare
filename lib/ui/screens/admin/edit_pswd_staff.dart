@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -27,28 +28,7 @@ class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.model) : super(alwaysUseBuilder: false);
   final PswdModel model;
   final RxBool errorPhoto = false.obs;
-
-  @override
-  Widget phone() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              Column(
-                children: <Widget>[
-                  horizontalSpace20,
-                  editInfoofPSWDStaff(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons()
-            ]),
-          )
-        ],
-      );
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget tablet() => Column(
@@ -250,30 +230,30 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget textTitle() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 50
-        ),
-      child: Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(onPressed: () {}, 
-            icon: Icon(Icons.arrow_back_outlined,
-            size: 30,)),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Edit PSWD Staff Details',
-                textAlign: TextAlign.left, style: title29BoldNeutral80),
-            horizontalSpace80,
-            IconButton(
-                iconSize: 30,
-                onPressed: () {
-                  controller.enableEditing.value = true;
-                },
-                icon: const Icon(Icons.edit_outlined))
-          ]),
-          ])
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          IconButton(
+              onPressed: () {
+                navigationController.goBack();
+              },
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Edit PSWD Staff Details',
+                    textAlign: TextAlign.left, style: title29BoldNeutral80),
+                horizontalSpace80,
+                IconButton(
+                    iconSize: 30,
+                    onPressed: () {
+                      controller.enableEditing.value = true;
+                    },
+                    icon: const Icon(Icons.edit_outlined))
+              ]),
+        ]));
   }
 }

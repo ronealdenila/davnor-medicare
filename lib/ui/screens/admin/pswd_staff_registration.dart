@@ -135,6 +135,7 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                                 child: DmButton.outline(
                                   title: 'Cancel',
                                   onTap: () {
+                                    formKey.currentState!.reset();
                                     navigationController.goBack();
                                   },
                                 ),

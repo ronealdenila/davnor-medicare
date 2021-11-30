@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
   final ForVerificationController vf = Get.put(ForVerificationController());
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,14 @@ class VerificationReqListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(onPressed: () {}, 
-            icon: Icon(Icons.arrow_back_outlined,
-            size: 30,)),
-
+            IconButton(
+                onPressed: () {
+                  navigationController.goBack();
+                },
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 30,
+                )),
             Text('Users to be Verified',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             verticalSpace50,

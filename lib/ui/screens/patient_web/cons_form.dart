@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -31,6 +32,7 @@ class ResponsiveBody extends GetResponsiveView {
   final BuildContext context;
   final ConsRequestController consController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget? builder() {
@@ -49,9 +51,14 @@ class ResponsiveBody extends GetResponsiveView {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(onPressed: () {}, 
-                    icon: Icon(Icons.arrow_back_outlined,
-                    size: 30,)),
+                    IconButton(
+                        onPressed: () {
+                          navigationController.goBack();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_outlined,
+                          size: 30,
+                        )),
                     verticalSpace5,
                     Text(
                       'consform'.tr,

@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -31,6 +32,8 @@ class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.model) : super(alwaysUseBuilder: false);
   final DoctorModel model;
   final RxBool errorPhoto = false.obs;
+  final NavigationController navigationController = Get.find();
+
   @override
   Widget phone() => Column(
         children: [
@@ -325,29 +328,30 @@ class ResponsiveView extends GetResponsiveView {
   Widget textTitle() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-      child: Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(onPressed: () {}, 
-            icon: Icon(Icons.arrow_back_outlined,
-            size: 30,)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        IconButton(
+            onPressed: () {
+              navigationController.goBack();
+            },
+            icon: Icon(
+              Icons.arrow_back_outlined,
+              size: 30,
+            )),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Edit Doctor Details',
-                textAlign: TextAlign.left, style: title29BoldNeutral80),
-            horizontalSpace80,
-            IconButton(
-                iconSize: 30,
-                onPressed: () {
-                  controller.enableEditing.value = true;
-                },
-                icon: const Icon(Icons.edit_outlined))
-          ]),
-
-          ]),
-      
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Edit Doctor Details',
+                  textAlign: TextAlign.left, style: title29BoldNeutral80),
+              horizontalSpace80,
+              IconButton(
+                  iconSize: 30,
+                  onPressed: () {
+                    controller.enableEditing.value = true;
+                  },
+                  icon: const Icon(Icons.edit_outlined))
+            ]),
+      ]),
     );
   }
 }
