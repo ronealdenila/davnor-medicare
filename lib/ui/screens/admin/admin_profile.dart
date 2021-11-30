@@ -77,48 +77,58 @@ class ResponsiveView extends GetResponsiveView {
       );
 
   Widget admProfile(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
-        children: [
-          verticalSpace50,
-          displayProfile(),
-          verticalSpace18,
-          Text(
-            '${fetchedData!.firstName} ${fetchedData!.lastName}',
-            style: body20Bold,
-          ),
-          verticalSpace10,
-          Text(
-            fetchedData!.email!,
-            style: body18Regular,
-          ),
-          verticalSpace50,
-          ElevatedButton.icon(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => changePassword(context));
-            },
-            icon: const Icon(
-              Icons.lock,
-              color: Colors.white,
-              size: 20,
-            ),
-            style: ElevatedButton.styleFrom(
-                elevation: 5,
-                primary: infoColor,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35, vertical: 17),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                )),
-            label: Text('Change Password'.tr),
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(onPressed: () {}, 
+            icon: Icon(Icons.arrow_back_outlined,
+            size: 30,)),
+            Center(
+              child: Column(
+                children: [
+                  verticalSpace50,
+                  displayProfile(),
+                  verticalSpace18,
+                  Text(
+                    '${fetchedData!.firstName} ${fetchedData!.lastName}',
+                    style: body20Bold,
+                  ),
+                  verticalSpace10,
+                  Text(
+                    fetchedData!.email!,
+                    style: body18Regular,
+                  ),
+                  verticalSpace50,
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => changePassword(context));
+                    },
+                    icon: const Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        elevation: 5,
+                        primary: infoColor,
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 35, vertical: 17),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        )),
+                    label: Text('Change Password'.tr),
           )
         ],
       ),
+    )
+          ])
     );
   }
 

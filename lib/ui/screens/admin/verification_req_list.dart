@@ -19,6 +19,10 @@ class VerificationReqListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            IconButton(onPressed: () {}, 
+            icon: Icon(Icons.arrow_back_outlined,
+            size: 30,)),
+
             Text('Users to be Verified',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             verticalSpace50,

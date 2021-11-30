@@ -26,6 +26,9 @@ class QueueConsTableWebScreen extends StatelessWidget {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                IconButton(onPressed: () {}, 
+                                icon: Icon(Icons.arrow_back_outlined,
+                                size: 30,)),
                                 Text(
                                   'maqueue1'.tr,
                                   style: subtitle18Medium,

@@ -49,6 +49,10 @@ class ResponsiveBody extends GetResponsiveView {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    IconButton(onPressed: () {}, 
+                    icon: Icon(Icons.arrow_back_outlined,
+                    size: 30,)),
+                    verticalSpace5,
                     Text(
                       'consform'.tr,
                       style: title32Regular,
