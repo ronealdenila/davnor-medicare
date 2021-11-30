@@ -26,6 +26,8 @@ class ResponsiveBody extends GetResponsiveView {
   final AttachedPhotosController controller = Get.find();
   final ConsHistoryController consHController = Get.find();
   final RxInt selectedIndex = 0.obs;
+  final RxBool errorPhoto = false.obs;
+  final RxBool errorPhoto2 = false.obs;
 
   @override
   Widget? builder() {
@@ -423,31 +425,43 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationHistoryModel model) {
-    if (consHController.getDoctorProfile(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(doctorDefault),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
-      backgroundImage: AssetImage(doctorDefault),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consHController.getDoctorFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    if (consHController.getDoctorProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(doctorDefault),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
-      backgroundImage: AssetImage(doctorDefault),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(consHController.getDoctorProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto2.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto2.value
+              ? Text(
+                  '${consHController.getDoctorFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget RequestsInfoView() {

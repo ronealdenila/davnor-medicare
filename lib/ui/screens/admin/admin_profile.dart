@@ -30,6 +30,7 @@ class ResponsiveView extends GetResponsiveView {
   static AuthController authController = Get.find();
   final fetchedData = authController.adminModel.value;
   final ProfileController profileController = Get.put(ProfileController());
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget phone() => Column(
@@ -126,52 +127,38 @@ class ResponsiveView extends GetResponsiveView {
     return StreamBuilder<DocumentSnapshot>(
         stream: profileController.getProfileAdmin(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircleAvatar(
+              radius: 115,
+              backgroundColor: Colors.grey,
+            );
+          }
           if (snapshot.hasError || !snapshot.hasData) {
             return CircleAvatar(
               radius: 115,
               backgroundImage: AssetImage(blankProfile),
             );
           }
+
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 115,
-                  backgroundImage: AssetImage(blankProfile),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            //upload and change profile photo
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
-            );
-          }
           return Stack(children: [
             CircleAvatar(
               radius: 115,
               foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(blankProfile),
+              onForegroundImageError: (_, __) {
+                errorPhoto.value = true;
+              },
+              child: Obx(
+                () => errorPhoto.value
+                    ? Text(
+                        '${fetchedData!.firstName![0]}',
+                        style: title24Bold,
+                      )
+                    : SizedBox(
+                        height: 0,
+                        width: 0,
+                      ),
+              ),
             ),
             Positioned(
                 bottom: 0,

@@ -24,7 +24,7 @@ class PatientProfileWebScreen extends StatelessWidget {
       Get.put(VerificationController());
   final fetchedData = authController.patientModel.value;
   final NavigationController navigationController = Get.find();
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -129,7 +129,7 @@ class PatientProfileWebScreen extends StatelessWidget {
             return Stack(
               children: [
                 CircleAvatar(
-                  radius: 80,
+                  radius: 50,
                   backgroundImage: AssetImage(blankProfile),
                 ),
                 Positioned(
@@ -158,46 +158,33 @@ class PatientProfileWebScreen extends StatelessWidget {
               ],
             );
           }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.grey,
+            );
+          }
+
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 80,
-                  backgroundImage: AssetImage(blankProfile),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
-            );
-          }
+
           return Stack(children: [
             CircleAvatar(
-              radius: 80,
-              foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(blankProfile),
-            ),
+                radius: 50,
+                foregroundImage: NetworkImage(data['profileImage']),
+                onForegroundImageError: (_, __) {
+                  errorPhoto.value = true;
+                },
+                child: Obx(
+                  () => errorPhoto.value
+                      ? Text(
+                          '${fetchedData!.firstName![0]}',
+                          style: subtitle18Bold,
+                        )
+                      : SizedBox(
+                          height: 0,
+                          width: 0,
+                        ),
+                )),
             Positioned(
                 bottom: 0,
                 right: 05,

@@ -52,7 +52,7 @@ class PatientHomeScreen extends StatelessWidget {
   final NavigationController navigationController =
       Get.put(NavigationController(), permanent: true);
   final ProfileController profileController = Get.put(ProfileController());
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);
@@ -137,19 +137,29 @@ class PatientHomeScreen extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
-          }
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return CircleAvatar(
+            return const CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage(blankProfile),
+              backgroundColor: Colors.grey,
             );
           }
+          final data = snapshot.data!.data() as Map<String, dynamic>;
           return CircleAvatar(
             radius: 50,
             foregroundImage: NetworkImage(data['profileImage']),
-            backgroundImage: AssetImage(blankProfile),
+            onForegroundImageError: (_, __) {
+              errorPhoto.value = true;
+            },
+            child: Obx(
+              () => errorPhoto.value
+                  ? Text(
+                      '${fetchedData!.firstName![0]}',
+                      style: subtitle18Bold,
+                    )
+                  : SizedBox(
+                      height: 0,
+                      width: 0,
+                    ),
+            ),
           );
         });
   }

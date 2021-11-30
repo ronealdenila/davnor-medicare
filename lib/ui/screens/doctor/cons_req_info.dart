@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class ConsReqInfoScreen extends StatelessWidget {
   static ConsultationsController doctorHomeController = Get.find();
   final ConsultationModel consData = Get.arguments as ConsultationModel;
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -125,17 +125,23 @@ class ConsReqInfoScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (doctorHomeController.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage:
-          NetworkImage(doctorHomeController.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage:
+            NetworkImage(doctorHomeController.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${doctorHomeController.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }

@@ -15,6 +15,8 @@ class LiveConsInfoScreen extends StatelessWidget {
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   static LiveConsController liveCont = Get.find();
 
+  final RxBool errorPhoto = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -257,16 +259,22 @@ class LiveConsInfoScreen extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    if (liveCont.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${liveCont.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }

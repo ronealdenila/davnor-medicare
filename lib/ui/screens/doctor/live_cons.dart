@@ -28,7 +28,7 @@ class LiveConsultationScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
   final CallingPatientController callController =
       Get.put(CallingPatientController());
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -163,17 +163,23 @@ class LiveConsultationScreen extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    if (liveCont.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${liveCont.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget chatStack() {

@@ -16,7 +16,7 @@ class CallPatientScreen extends StatefulWidget {
 class _CallPatientScreenState extends State<CallPatientScreen> {
   final CallingPatientController callController = Get.find();
   final consInfo = Get.arguments;
-
+  final RxBool errorPhoto = false.obs;
   @override
   void initState() {
     callController.patientId.value = consInfo[0];
@@ -86,17 +86,23 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
   }
 
   Widget getPhoto(String img) {
-    if (img == '') {
-      return CircleAvatar(
-        radius: kIsWeb ? 120 : 80,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: kIsWeb ? 120 : 80,
-      foregroundImage: NetworkImage(img),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: kIsWeb ? 120 : 80,
+        foregroundImage: NetworkImage(img),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consInfo[3][0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }
 

@@ -11,7 +11,7 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
   final ConsHistoryController consHCont = Get.find();
   final ConsultationHistoryModel consData =
       Get.arguments as ConsultationHistoryModel;
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -170,16 +170,22 @@ class PatientConsHistoryInfoScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    if (consHCont.getDoctorProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(consHCont.getDoctorProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consHCont.getDoctorFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }

@@ -18,7 +18,7 @@ class ForVerificationCard extends StatelessWidget {
   final VerificationReqModel? verifiReq;
   final void Function()? onItemTap;
   final ForVerificationController vf = Get.find();
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -102,16 +102,22 @@ class ForVerificationCard extends StatelessWidget {
   }
 
   Widget getPhoto(VerificationReqModel model) {
-    if (vf.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 35,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 35,
-      foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 35,
+        foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${vf.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }

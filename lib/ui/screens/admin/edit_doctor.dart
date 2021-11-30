@@ -30,7 +30,7 @@ class EditDoctorScrenn extends StatelessWidget {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.model) : super(alwaysUseBuilder: false);
   final DoctorModel model;
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget phone() => Column(
         children: [
@@ -43,7 +43,7 @@ class ResponsiveView extends GetResponsiveView {
               Column(
                 children: <Widget>[
                   horizontalSpace20,
-                  editInfoofPSWDStaff(),
+                  editInfoDoc(),
                 ],
               ),
               verticalSpace25,
@@ -65,9 +65,9 @@ class ResponsiveView extends GetResponsiveView {
               verticalSpace25,
               Column(
                 children: <Widget>[
-                  userPSWDImage(),
+                  userDoctorImage(),
                   horizontalSpace25,
-                  editInfoofPSWDStaff(),
+                  editInfoDoc(),
                 ],
               ),
               verticalSpace25,
@@ -90,9 +90,9 @@ class ResponsiveView extends GetResponsiveView {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  userPSWDImage(),
+                  userDoctorImage(),
                   horizontalSpace25,
-                  editInfoofPSWDStaff(),
+                  editInfoDoc(),
                 ],
               ),
               verticalSpace15,
@@ -123,21 +123,29 @@ class ResponsiveView extends GetResponsiveView {
     );
   }
 
-  Widget userPSWDImage() {
-    if (controller.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 40,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
+  Widget userDoctorImage() {
     return CircleAvatar(
       radius: 40,
       foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
+      onForegroundImageError: (_, __) {
+        errorPhoto.value = true;
+      },
+      backgroundColor: Colors.grey,
+      child: Obx(
+        () => errorPhoto.value
+            ? Text(
+                '${model.firstName![0]}',
+                style: subtitle18Bold,
+              )
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
+      ),
     );
   }
 
-  Widget editInfoofPSWDStaff() {
+  Widget editInfoDoc() {
     controller.editFirstName.text = model.firstName!;
     controller.editLastName.text = model.lastName!;
     controller.editClinicHours.text = model.clinicHours!;

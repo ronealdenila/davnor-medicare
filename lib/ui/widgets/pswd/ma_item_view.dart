@@ -29,6 +29,7 @@ class PSWDItemView extends GetResponsiveView {
   final String status;
   final BuildContext context;
   final RxBool doneLoad = false.obs;
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget phone() => Column(
@@ -124,8 +125,8 @@ class PSWDItemView extends GetResponsiveView {
                       ),
                       onPressed: () async {
                         showErrorDialog(
-                          errorTitle: 'ERROR!',
-                          errorDescription: 'Something went wrong');
+                            errorTitle: 'ERROR!',
+                            errorDescription: 'Something went wrong');
                       },
                     );
                   }
@@ -138,8 +139,8 @@ class PSWDItemView extends GetResponsiveView {
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
                         showErrorDialog(
-                          errorTitle: 'ERROR!',
-                          errorDescription:
+                            errorTitle: 'ERROR!',
+                            errorDescription:
                                 'Patient is currently on a video call, please try again later');
                       } else {
                         await interviewPatient();
@@ -376,6 +377,26 @@ class PSWDItemView extends GetResponsiveView {
       height: 0,
     );
   }
+
+  Widget getPhoto(GeneralMARequestModel model) {
+    return CircleAvatar(
+        radius: 29,
+        foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${appController.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
+  }
 }
 
 Widget attachedPhotosDialog() {
@@ -490,19 +511,5 @@ Widget buildImage(int index) {
         return Image.asset(grayBlank, fit: BoxFit.cover);
       },
     ),
-  );
-}
-
-Widget getPhoto(GeneralMARequestModel model) {
-  if (appController.getProfilePhoto(model) == '') {
-    return CircleAvatar(
-      radius: 29,
-      backgroundImage: AssetImage(blankProfile),
-    );
-  }
-  return CircleAvatar(
-    radius: 29,
-    foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
-    backgroundImage: AssetImage(blankProfile),
   );
 }

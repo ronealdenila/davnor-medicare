@@ -29,7 +29,8 @@ class ResponsiveBody extends GetResponsiveView {
   final AttachedPhotosController controller = Get.find();
   final ConsHistoryController consHController = Get.find();
   final RxInt selectedIndex = 0.obs;
-
+  final RxBool errorPhoto = false.obs;
+  final RxBool errorPhoto2 = false.obs;
   @override
   Widget? builder() {
     if (screen.isDesktop) {
@@ -444,31 +445,43 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationHistoryModel model) {
-    if (consHController.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto2.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto2.value
+              ? Text(
+                  '${consHController.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    if (consHController.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consHController.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget RequestsInfoView() {

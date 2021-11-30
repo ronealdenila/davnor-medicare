@@ -16,15 +16,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 
-final AttachedPhotosController controller = Get.find();
-
 class ConsRequestItemScreen extends StatelessWidget {
   final ConsultationsController consRequests = Get.find();
   final ConsultationModel consData = Get.arguments as ConsultationModel;
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   final StatusController stats = Get.find();
-
+  final RxBool errorPhoto = false.obs;
+  final AttachedPhotosController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -184,17 +183,23 @@ class ConsRequestItemScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (consRequests.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consRequests.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget displayImages(BuildContext context) {
@@ -302,6 +307,7 @@ class ConsRequestItemScreen extends StatelessWidget {
 }
 
 Widget attachedPhotosDialog() {
+  final AttachedPhotosController controller = Get.find();
   return SimpleDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
@@ -404,6 +410,7 @@ Widget attachedPhotosDialog() {
 }
 
 Widget buildImage(int index) {
+  final AttachedPhotosController controller = Get.find();
   return Container(
     color: Colors.grey,
     child: Image.network(
