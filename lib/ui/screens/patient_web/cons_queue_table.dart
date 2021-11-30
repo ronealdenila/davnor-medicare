@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,8 @@ import 'package:get/get.dart';
 class QueueConsTableWebScreen extends StatelessWidget {
   final ConsQueueController cQController = Get.put(ConsQueueController());
   final StatusController stats = Get.find();
+  final RxString title = ''.obs;
+  final RxString department = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +63,7 @@ class QueueConsTableWebScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                returnTitleDept(),
                               ]),
                         ],
                       ),
@@ -125,5 +131,38 @@ class QueueConsTableWebScreen extends StatelessWidget {
 
   Widget noData() {
     return Text('queue5'.tr);
+  }
+
+  Widget returnTitleDept() {
+    return FutureBuilder(
+        future: fetchCategoryData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(department.value.toUpperCase(),
+                      style: subtitle18Regular), //Department
+                  verticalSpace5,
+                  Text(title.value,
+                      style: body16Medium.copyWith(color: neutralColor)),
+                ]);
+          }
+          return Text('Loading...',
+              style: body16Medium.copyWith(color: neutralColor));
+        });
+  }
+
+  Future<void> fetchCategoryData() async {
+    await firestore
+        .collection('cons_status')
+        .doc(stats.patientStatus[0].categoryID)
+        .get()
+        .then((DocumentSnapshot snap) {
+      if (snap.exists) {
+        title.value = snap['title'];
+        department.value = snap['deptName'];
+      }
+    });
   }
 }
