@@ -10,6 +10,7 @@ import 'package:davnor_medicare/ui/screens/patient_web/ma_form.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_history.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/ma_queue_table.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/profile.dart';
+import 'package:davnor_medicare/ui/screens/patient_web/verification_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +44,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(QueueConsTableWebScreen());
     case Routes.Q_MA_WEB:
       return _getPageRoute(QueueMATableWebScreen());
+    case Routes.VERIF_REQ_WEB:
+      return _getPageRoute(VerificationWebScreen());
     default:
       return _getPageRoute(const SizedBox());
   }

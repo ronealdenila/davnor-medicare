@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class DoctorProfileScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final ProfileController profileController = Get.find();
   final fetchedData = authController.doctorModel.value;
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -236,45 +237,25 @@ class DoctorProfileScreen extends StatelessWidget {
             return const Text('Loading');
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(doctorDefault),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            //upload and change profile photo
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
-            );
-          }
+
           return Stack(children: [
             CircleAvatar(
               radius: 50,
               foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(doctorDefault),
+              onForegroundImageError: (_, __) {
+                errorPhoto.value = true;
+              },
+              child: Obx(
+                () => errorPhoto.value
+                    ? Text(
+                        '${fetchedData!.firstName![0]} ${fetchedData!.lastName![0]}',
+                        style: subtitle18Bold,
+                      )
+                    : SizedBox(
+                        height: 0,
+                        width: 0,
+                      ),
+              ),
             ),
             Positioned(
                 bottom: 0,

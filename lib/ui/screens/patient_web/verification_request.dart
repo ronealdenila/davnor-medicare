@@ -11,88 +11,188 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class VerificationWebScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 80),
+        child: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: ResponsiveView(context)),
+        ),
+      ),
+    );
+  }
+}
+
+class ResponsiveView extends GetResponsiveView {
+  ResponsiveView(this.context) : super(alwaysUseBuilder: false);
+  final BuildContext context;
   static AuthController authController = Get.find();
   final VerificationController verificationController = Get.find();
   final fetchedData = authController.patientModel.value;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  Widget tablet() => Column(
+        children: [
+          Text(
+            'verification'.tr,
+            style: title24Bold,
+          ),
+          verticalSpace10,
+          Text(
+            'verifi1'.tr,
+            style: body14Regular,
+          ),
+          verticalSpace35,
+          Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 25,
             children: [
-              Text(
-                'verification'.tr,
-                style: title24Bold,
-              ),
-              verticalSpace10,
-              Text(
-                'verifi1'.tr,
-                style: body14Regular,
-              ),
-              verticalSpace35,
-              Text(
-                'verifi2'.tr,
-                style: body16Regular,
-              ),
-              verticalSpace10,
-              DottedBorder(
-                borderType: BorderType.RRect,
-                radius: const Radius.circular(12),
-                padding: const EdgeInsets.all(12),
-                dashPattern: const [8, 8, 8, 8],
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Container(
-                    width: Get.width,
-                    height: 150,
-                    color: neutralColor[10],
-                    child: Obx(getValidID),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  horizontalSpace35,
+                  Column(
+                    children: [
+                      Text(
+                        'verifi2'.tr,
+                        style: body16Regular,
+                      ),
+                      verticalSpace10,
+                      DottedBorder(
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(12),
+                        padding: const EdgeInsets.all(12),
+                        dashPattern: const [8, 8, 8, 8],
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          child: Container(
+                            width: 400,
+                            height: 150,
+                            color: neutralColor[10],
+                            child: Obx(getValidID),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                  horizontalSpace35,
+                ],
               ),
-              verticalSpace25,
-              Text(
-                'verifi3'.tr,
-                style: body16Regular,
-              ),
-              verticalSpace10,
-              DottedBorder(
-                borderType: BorderType.RRect,
-                radius: const Radius.circular(12),
-                padding: const EdgeInsets.all(12),
-                dashPattern: const [8, 8, 8, 8],
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Container(
-                    width: Get.width,
-                    height: 150,
-                    color: neutralColor[10],
-                    child: Obx(getValidIDWithSelfie),
+              Column(
+                children: [
+                  Text(
+                    'verifi3'.tr,
+                    style: body16Regular,
                   ),
-                ),
-              ),
-              verticalSpace25,
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: 211,
-                  child: CustomButton(
-                    onTap: verificationController.submitVerification,
-                    text: 'verifi5'.tr,
-                    buttonColor: verySoftBlueColor,
+                  verticalSpace10,
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(12),
+                    padding: const EdgeInsets.all(12),
+                    dashPattern: const [8, 8, 8, 8],
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      child: Container(
+                        width: 400,
+                        height: 150,
+                        color: neutralColor[10],
+                        child: Obx(getValidIDWithSelfie),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
+          verticalSpace25,
+          button()
+        ],
+      );
+
+  @override
+  Widget desktop() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'verification'.tr,
+            style: title24Bold,
+          ),
+          verticalSpace10,
+          Text(
+            'verifi1'.tr,
+            style: body14Regular,
+          ),
+          verticalSpace35,
+          SizedBox(
+            width: Get.width,
+            child: Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'verifi2'.tr,
+                      style: body16Regular,
+                    ),
+                    verticalSpace10,
+                    DottedBorder(
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(12),
+                      padding: const EdgeInsets.all(12),
+                      dashPattern: const [8, 8, 8, 8],
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                        child: Container(
+                          width: 400,
+                          height: 150,
+                          color: neutralColor[10],
+                          child: Obx(getValidID),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                horizontalSpace35,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'verifi3'.tr,
+                      style: body16Regular,
+                    ),
+                    verticalSpace10,
+                    DottedBorder(
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(12),
+                      padding: const EdgeInsets.all(12),
+                      dashPattern: const [8, 8, 8, 8],
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                        child: Container(
+                          width: 400,
+                          height: 150,
+                          color: neutralColor[10],
+                          child: Obx(getValidIDWithSelfie),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          verticalSpace25,
+          button(),
+        ],
+      );
 
   Widget getValidID() {
     if (verificationController.imgOfValidID.value == '') {
@@ -140,6 +240,20 @@ class VerificationWebScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget button() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: 211,
+        child: CustomButton(
+          onTap: verificationController.submitVerification,
+          text: 'verifi5'.tr,
+          buttonColor: verySoftBlueColor,
+        ),
       ),
     );
   }

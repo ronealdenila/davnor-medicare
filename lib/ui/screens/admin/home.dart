@@ -239,34 +239,43 @@ class ResponsiveView extends GetResponsiveView {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ActionCard(
-                                  text: 'Register a doctor',
-                                  onTap: () {
-                                    navigationController.navigateToWithBack(
-                                        Routes.DOCTOR_REGISTRATION);
-                                  },
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'Register a doctor',
+                                    onTap: () {
+                                      navigationController.navigateToWithBack(
+                                          Routes.DOCTOR_REGISTRATION);
+                                    },
+                                    color: verySoftMagenta[60],
+                                    secondaryColor: verySoftMagentaCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'Add a PSWD\nPersonnel',
-                                  onTap: () {
-                                    navigationController.navigateToWithBack(
-                                        Routes.PSWD_STAFF_REGISTRATION);
-                                  },
-                                  color: verySoftOrange[60],
-                                  secondaryColor: verySoftOrangeCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'Add a PSWD\nPersonnel',
+                                    onTap: () {
+                                      navigationController.navigateToWithBack(
+                                          Routes.PSWD_STAFF_REGISTRATION);
+                                    },
+                                    color: verySoftOrange[60],
+                                    secondaryColor: verySoftOrangeCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'Verify User',
-                                  onTap: () {
-                                    menuController.changeActiveItemTo(
-                                        'Verification Requests');
-                                    navigationController.navigateTo(
-                                        Routes.VERIFICATION_REQ_LIST);
-                                  },
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'Verify User',
+                                    onTap: () {
+                                      menuController.changeActiveItemTo(
+                                          'Verification Requests');
+                                      navigationController.navigateTo(
+                                          Routes.VERIFICATION_REQ_LIST);
+                                    },
+                                    color: verySoftRed[60],
+                                    secondaryColor: verySoftRedCustomColor,
+                                  ),
                                 ),
                               ],
                             ),
@@ -675,34 +684,43 @@ class ResponsiveView extends GetResponsiveView {
                       alignment: Alignment.centerLeft,
                       child: Column(
                         children: [
-                          ActionCard(
-                            text: 'Register a doctor',
-                            onTap: () {
-                              navigationController.navigateToWithBack(
-                                  Routes.DOCTOR_REGISTRATION);
-                            },
-                            color: verySoftMagenta[60],
-                            secondaryColor: verySoftMagentaCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'Register a doctor',
+                              onTap: () {
+                                navigationController.navigateToWithBack(
+                                    Routes.DOCTOR_REGISTRATION);
+                              },
+                              color: verySoftMagenta[60],
+                              secondaryColor: verySoftMagentaCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'Add a PSWD Personnel',
-                            onTap: () {
-                              navigationController.navigateToWithBack(
-                                  Routes.PSWD_STAFF_REGISTRATION);
-                            },
-                            color: verySoftOrange[60],
-                            secondaryColor: verySoftOrangeCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'Add a PSWD Personnel',
+                              onTap: () {
+                                navigationController.navigateToWithBack(
+                                    Routes.PSWD_STAFF_REGISTRATION);
+                              },
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'Verify User',
-                            onTap: () {
-                              menuController
-                                  .changeActiveItemTo('Verification Requests');
-                              navigationController
-                                  .navigateTo(Routes.VERIFICATION_REQ_LIST);
-                            },
-                            color: verySoftRed[60],
-                            secondaryColor: verySoftRedCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'Verify User',
+                              onTap: () {
+                                menuController.changeActiveItemTo(
+                                    'Verification Requests');
+                                navigationController
+                                    .navigateTo(Routes.VERIFICATION_REQ_LIST);
+                              },
+                              color: verySoftRed[60],
+                              secondaryColor: verySoftRedCustomColor,
+                            ),
                           ),
                         ],
                       ),

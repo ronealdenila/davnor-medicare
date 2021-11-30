@@ -173,6 +173,7 @@ class AuthController extends GetxController {
       'userType': 'patient',
     });
     await firestore.collection('patients').doc(_userID).set(<String, dynamic>{
+      'userID': _userID,
       'email': emailController.text.trim(),
       'firstName': firstNameController.text.trim(),
       'lastName': lastNameController.text.trim(),

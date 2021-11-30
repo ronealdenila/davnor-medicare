@@ -11,7 +11,6 @@ class ArticleCard extends StatelessWidget {
     required this.photoURL,
     required this.textStyleTitle,
     required this.textStyleContent,
-    required this.height,
     required this.onTap,
   }) : super(key: key);
 
@@ -20,7 +19,6 @@ class ArticleCard extends StatelessWidget {
   final String photoURL;
   final TextStyle textStyleTitle;
   final TextStyle textStyleContent;
-  final double height;
   final Function() onTap;
 
   @override
@@ -35,7 +33,6 @@ class ArticleCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Container(
-              height: height,
               width: screenWidth(context),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -65,7 +62,7 @@ class ArticleCard extends StatelessWidget {
                       ),
                     ),
                     horizontalSpace18,
-                    Expanded(
+                    Flexible(
                       child: SizedBox(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -74,17 +71,15 @@ class ArticleCard extends StatelessWidget {
                             Text(
                               title,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                              maxLines: 4,
                               style: textStyleTitle,
                             ),
                             verticalSpace10,
-                            Expanded(
-                              child: Text(
-                                content,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: textStyleContent,
-                              ),
+                            Text(
+                              content,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: textStyleContent,
                             ),
                           ],
                         ),

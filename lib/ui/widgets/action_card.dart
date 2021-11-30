@@ -26,7 +26,7 @@ class ActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          height: kIsWeb ? 150 : 107,
+          //height: kIsWeb ? 150 : 107,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(10),
@@ -35,16 +35,14 @@ class ActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                  child: Text(
-                    text,
-                    style: kIsWeb
-                        ? subtitle20Bold.copyWith(color: Colors.white)
-                        : body14SemiBoldWhite,
-                  ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                child: Text(
+                  text,
+                  style: kIsWeb
+                      ? subtitle20Bold.copyWith(color: Colors.white)
+                      : body14SemiBoldWhite,
                 ),
               ),
               Align(

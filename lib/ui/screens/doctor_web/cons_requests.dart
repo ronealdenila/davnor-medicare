@@ -32,6 +32,8 @@ class ResponsiveBody extends GetResponsiveView {
   final BuildContext context;
   final AttachedPhotosController controller = Get.find();
   final ConsultationsController consRequests = Get.find();
+  final RxBool errorPhoto = false.obs;
+  final RxBool errorPhoto2 = false.obs;
   //final ConsultationsController doctorHomeController = Get.find();
 
   @override
@@ -317,17 +319,23 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationModel model) {
-    if (consRequests.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto2.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto2.value
+              ? Text(
+                  '${consRequests.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget startConsultationButton(ConsultationModel consData, int index) {
@@ -517,17 +525,23 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (consRequests.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${consRequests.getFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget displayImages(BuildContext context, ConsultationModel consData) {

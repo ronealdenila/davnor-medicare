@@ -199,8 +199,9 @@ class DoctorHomeScreen extends StatelessWidget {
   }
 
   Widget actionCards(BuildContext context) {
-    if (!stats.isLoading.value) {
-      return Row(
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
@@ -209,14 +210,21 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftMagenta[60],
                 secondaryColor: verySoftMagentaCustomColor,
                 onTap: () {
-                  if (stats.doctorStatus[0].dStatus!) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => offlineDialog());
+                  if (stats.isLoading.value) {
+                    showErrorDialog(
+                        errorTitle: 'ERROR!',
+                        errorDescription:
+                            'Please wait while we are currently connecting to the server');
                   } else {
-                    showDialog(
-                        context: context,
-                        builder: (context) => detailsDialogCons1());
+                    if (stats.doctorStatus[0].dStatus!) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => offlineDialog());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (context) => detailsDialogCons1());
+                    }
                   }
                 }),
           ),
@@ -226,15 +234,22 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftOrange[60],
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
-                  if (stats.doctorStatus[0].dStatus!) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => detailsDialogCons2());
-                  } else {
+                  if (stats.isLoading.value) {
                     showErrorDialog(
-                        errorTitle: "Could not process your request",
+                        errorTitle: 'ERROR!',
                         errorDescription:
-                            "You can't make an additional when status is unavailable. Please make sure your status is available");
+                            'Please wait while we are currently connecting to the server');
+                  } else {
+                    if (stats.doctorStatus[0].dStatus!) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => detailsDialogCons2());
+                    } else {
+                      showErrorDialog(
+                          errorTitle: "Could not process your request",
+                          errorDescription:
+                              "You can't make an additional when status is unavailable. Please make sure your status is available");
+                    }
                   }
                 }),
           ),
@@ -246,50 +261,8 @@ class DoctorHomeScreen extends StatelessWidget {
                 onTap: () => Get.to(() => ArticleListScreen())),
           ),
         ],
-      );
-    } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ActionCard(
-                text: 'Change Status',
-                color: verySoftMagenta[60],
-                secondaryColor: verySoftMagentaCustomColor,
-                onTap: () {
-                  print(stats.isLoading.value);
-                  showErrorDialog(
-                      errorTitle: 'ERROR!',
-                      errorDescription:
-                          'Please wait while we are currently connecting to the server');
-                }),
-          ),
-          Expanded(
-            child: ActionCard(
-                text: 'Add More Patients to Examine',
-                color: verySoftOrange[60],
-                secondaryColor: verySoftOrangeCustomColor,
-                onTap: () {
-                  showErrorDialog(
-                      errorTitle: 'ERROR!',
-                      errorDescription:
-                          'Please wait while we are currently connecting to the server');
-                }),
-          ),
-          Expanded(
-              child: ActionCard(
-                  text: 'Read \nHealth Articles',
-                  color: verySoftRed[60],
-                  secondaryColor: verySoftRedCustomColor,
-                  onTap: () {
-                    showErrorDialog(
-                        errorTitle: 'ERROR!',
-                        errorDescription:
-                            'Please wait while we are currently connecting to the server');
-                  })),
-        ],
-      );
-    }
+      ),
+    );
   }
 
   Widget doctorStatus() {

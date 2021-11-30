@@ -31,6 +31,7 @@ class ResponsiveView extends GetResponsiveView {
   final BuildContext context;
   final VerificationReqModel vfModel;
   final ForVerificationController vf = Get.find();
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget phone() => Column(
@@ -373,16 +374,24 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget getPhoto(VerificationReqModel model) {
-    if (vf.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 40,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
       radius: 40,
       foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
+      onForegroundImageError: (_, __) {
+        errorPhoto.value = true;
+      },
+      backgroundColor: Colors.grey,
+      child: Obx(
+        () => errorPhoto.value
+            ? Text(
+                '${vf.getFirstName(model)[0]}',
+                style: subtitle18Bold,
+              )
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
+      ),
     );
   }
 

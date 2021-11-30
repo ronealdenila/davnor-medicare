@@ -1,6 +1,4 @@
 import 'package:davnor_medicare/constants/app_items.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -10,8 +8,6 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
-final PSWDStaffListController controller = Get.find();
 
 class EditPSWDStaffScrenn extends StatelessWidget {
   EditPSWDStaffScrenn({Key? key, required this.passedData}) : super(key: key);
@@ -30,6 +26,7 @@ class EditPSWDStaffScrenn extends StatelessWidget {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.model) : super(alwaysUseBuilder: false);
   final PswdModel model;
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget phone() => Column(
@@ -124,16 +121,24 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget userPSWDImage() {
-    if (controller.getProfilePhoto(model) == '') {
-      return CircleAvatar(
-        radius: 40,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
       radius: 40,
       foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
-      backgroundImage: AssetImage(blankProfile),
+      onForegroundImageError: (_, __) {
+        errorPhoto.value = true;
+      },
+      backgroundColor: Colors.grey,
+      child: Obx(
+        () => errorPhoto.value
+            ? Text(
+                '${model.firstName![0]}',
+                style: subtitle18Bold,
+              )
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
+      ),
     );
   }
 
@@ -258,7 +263,7 @@ class ResponsiveView extends GetResponsiveView {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text('Edit PSWD Staff Details',
+            Text('Edit PSWD Staff Details',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             horizontalSpace80,
             IconButton(

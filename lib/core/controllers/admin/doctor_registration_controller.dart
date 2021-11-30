@@ -21,6 +21,7 @@ class DoctorRegistrationController extends GetxController {
   final RxBool doneFetch = false.obs;
 
   Future<void> registerDoctor() async {
+    categoryID.value = '';
     await fetchCategories();
     if (categoryID.value == '') {
       showErrorDialog(
@@ -28,6 +29,7 @@ class DoctorRegistrationController extends GetxController {
           errorDescription:
               'Could not find the right category ID for this type of doctor.');
     } else {
+      print(categoryID.value);
       final app = await Firebase.initializeApp(
           name: 'secondary', options: Firebase.app().options);
       await FirebaseAuth.instanceFor(app: app)
@@ -39,7 +41,6 @@ class DoctorRegistrationController extends GetxController {
         final _userId = result.user!.uid;
         await _createDoctorUser(_userId);
       });
-
       await app.delete();
     }
   }

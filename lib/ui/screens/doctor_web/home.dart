@@ -187,7 +187,6 @@ Widget showArticles(BuildContext context) {
                 photoURL: articleService.articlesList[index].photoURL!,
                 textStyleTitle: caption12SemiBold,
                 textStyleContent: caption10RegularNeutral,
-                height: 115,
                 onTap: () {
                   urlLauncherService.launchURL(
                       '${articleService.articlesList[index].source}');
@@ -288,47 +287,58 @@ Widget tabletVersion(BuildContext context) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ActionCard(
-                          text: 'Change Status',
-                          color: verySoftMagenta[60],
-                          secondaryColor: verySoftMagentaCustomColor,
-                          onTap: () {
-                            if (stats.doctorStatus[0].dStatus!) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => offlineDialog());
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => detailsDialogCons1());
-                            }
-                          }),
-                      ActionCard(
-                          text: 'Add More \nPatients \nto Examine',
-                          color: verySoftOrange[60],
-                          secondaryColor: verySoftOrangeCustomColor,
-                          onTap: () {
-                            if (stats.doctorStatus[0].dStatus!) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => detailsDialogCons2(
-                                      stats.doctorStatus[0].numToAccomodate!));
-                            } else {
-                              showErrorDialog(
-                                  errorTitle: "Could not process your request",
-                                  errorDescription:
-                                      "You can't make an additional when status is unavailable. Please make sure your status is available");
-                            }
-                          }),
-                      ActionCard(
-                          text: 'View Consultation Requests',
-                          color: verySoftRed[60],
-                          secondaryColor: verySoftRedCustomColor,
-                          onTap: () {
-                            menuController.changeActiveItemTo('Dashboard');
-                            navigationController
-                                .navigateTo(Routes.DOC_WEB_HOME);
-                          }),
+                      SizedBox(
+                        height: 150,
+                        child: ActionCard(
+                            text: 'Change Status',
+                            color: verySoftMagenta[60],
+                            secondaryColor: verySoftMagentaCustomColor,
+                            onTap: () {
+                              if (stats.doctorStatus[0].dStatus!) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => offlineDialog());
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => detailsDialogCons1());
+                              }
+                            }),
+                      ),
+                      SizedBox(
+                        height: 150,
+                        child: ActionCard(
+                            text: 'Add More \nPatients \nto Examine',
+                            color: verySoftOrange[60],
+                            secondaryColor: verySoftOrangeCustomColor,
+                            onTap: () {
+                              if (stats.doctorStatus[0].dStatus!) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => detailsDialogCons2(
+                                        stats
+                                            .doctorStatus[0].numToAccomodate!));
+                              } else {
+                                showErrorDialog(
+                                    errorTitle:
+                                        "Could not process your request",
+                                    errorDescription:
+                                        "You can't make an additional when status is unavailable. Please make sure your status is available");
+                              }
+                            }),
+                      ),
+                      SizedBox(
+                        height: 150,
+                        child: ActionCard(
+                            text: 'View Consultation\nRequests',
+                            color: verySoftRed[60],
+                            secondaryColor: verySoftRedCustomColor,
+                            onTap: () {
+                              menuController.changeActiveItemTo('Dashboard');
+                              navigationController
+                                  .navigateTo(Routes.DOC_WEB_HOME);
+                            }),
+                      ),
                     ],
                   ),
                 ),
@@ -520,54 +530,62 @@ Widget desktopVersion(BuildContext context) {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ActionCard(
-                                  text: 'Change Status',
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
-                                  onTap: () {
-                                    if (stats.doctorStatus[0].dStatus!) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              offlineDialog());
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              detailsDialogCons1());
-                                    }
-                                  }),
-                              ActionCard(
-                                  text: 'Add More \nPatients \nto Examine',
-                                  color: verySoftOrange[60],
-                                  secondaryColor: verySoftOrangeCustomColor,
-                                  onTap: () {
-                                    if (stats.doctorStatus[0].dStatus!) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              detailsDialogCons2(stats
-                                                  .doctorStatus[0]
-                                                  .numToAccomodate!));
-                                    } else {
-                                      showErrorDialog(
-                                          errorTitle:
-                                              "Could not process your request",
-                                          errorDescription:
-                                              "You can't make an additional when status is unavailable. Please make sure your status is available");
-                                    }
-                                  }),
-                              ActionCard(
-                                  //TO DO: CHANGE THIS
-                                  text: 'View Consultation Requests',
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
-                                  onTap: () {
-                                    menuController
-                                        .changeActiveItemTo('Dashboard');
-                                    navigationController
-                                        .navigateTo(Routes.DOC_WEB_HOME);
-                                  }),
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                    text: 'Change Status',
+                                    color: verySoftMagenta[60],
+                                    secondaryColor: verySoftMagentaCustomColor,
+                                    onTap: () {
+                                      if (stats.doctorStatus[0].dStatus!) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                offlineDialog());
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                detailsDialogCons1());
+                                      }
+                                    }),
+                              ),
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                    text: 'Add More \nPatients \nto Examine',
+                                    color: verySoftOrange[60],
+                                    secondaryColor: verySoftOrangeCustomColor,
+                                    onTap: () {
+                                      if (stats.doctorStatus[0].dStatus!) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                detailsDialogCons2(stats
+                                                    .doctorStatus[0]
+                                                    .numToAccomodate!));
+                                      } else {
+                                        showErrorDialog(
+                                            errorTitle:
+                                                "Could not process your request",
+                                            errorDescription:
+                                                "You can't make an additional when status is unavailable. Please make sure your status is available");
+                                      }
+                                    }),
+                              ),
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                    text: 'View Consultation\nRequests',
+                                    color: verySoftRed[60],
+                                    secondaryColor: verySoftRedCustomColor,
+                                    onTap: () {
+                                      menuController
+                                          .changeActiveItemTo('Dashboard');
+                                      navigationController
+                                          .navigateTo(Routes.DOC_WEB_HOME);
+                                    }),
+                              ),
                             ],
                           ),
                         ),

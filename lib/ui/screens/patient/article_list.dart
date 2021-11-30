@@ -39,7 +39,6 @@ class ArticleListScreen extends StatelessWidget {
                           photoURL: articleList[index].photoURL!,
                           textStyleTitle: caption12SemiBold,
                           textStyleContent: caption10RegularNeutral,
-                          height: 115,
                           onTap: () {
                             goToArticleItemScreen(index);
                           });

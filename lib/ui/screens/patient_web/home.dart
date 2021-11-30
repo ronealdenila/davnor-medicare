@@ -318,82 +318,92 @@ class ResponsiveView extends GetResponsiveView {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: ActionCard(
-                text: 'action1'.tr,
-                color: verySoftMagenta[60],
-                secondaryColor: verySoftMagentaCustomColor,
-                onTap: () {
-                  if (stats.patientStatus[0].pStatus!) {
-                    if (stats.patientStatus[0].hasActiveQueueCons!) {
-                      showErrorDialog(
-                          errorTitle: 'action5'.tr,
-                          errorDescription: 'action6'.tr);
+              child: SizedBox(
+                height: 150,
+                child: ActionCard(
+                  text: 'action1'.tr,
+                  color: verySoftMagenta[60],
+                  secondaryColor: verySoftMagentaCustomColor,
+                  onTap: () {
+                    if (stats.patientStatus[0].pStatus!) {
+                      if (stats.patientStatus[0].hasActiveQueueCons!) {
+                        showErrorDialog(
+                            errorTitle: 'action5'.tr,
+                            errorDescription: 'action6'.tr);
+                      } else {
+                        showConfirmationDialog(
+                          dialogTitle: 'dialog1'.tr,
+                          dialogCaption: 'dialogsub1'.tr,
+                          onYesTap: () {
+                            dismissDialog();
+                            consController.isConsultForYou.value = true;
+                            navigationController.navigateToWithBack(
+                                Routes.PATIENT_WEB_CONS_FORM);
+                          },
+                          onNoTap: () {
+                            dismissDialog();
+                            consController.isConsultForYou.value = false;
+                            navigationController.navigateToWithBack(
+                                Routes.PATIENT_WEB_CONS_FORM);
+                          },
+                        );
+                      }
                     } else {
-                      showConfirmationDialog(
-                        dialogTitle: 'dialog1'.tr,
-                        dialogCaption: 'dialogsub1'.tr,
-                        onYesTap: () {
-                          dismissDialog();
-                          consController.isConsultForYou.value = true;
-                          navigationController
-                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
-                        },
-                        onNoTap: () {
-                          dismissDialog();
-                          consController.isConsultForYou.value = false;
-                          navigationController
-                              .navigateToWithBack(Routes.PATIENT_WEB_CONS_FORM);
-                        },
-                      );
+                      showErrorDialog(
+                          errorTitle: 'action7'.tr,
+                          errorDescription: 'action8'.tr);
                     }
-                  } else {
-                    showErrorDialog(
-                        errorTitle: 'action7'.tr,
-                        errorDescription: 'action8'.tr);
-                  }
-                },
+                  },
+                ),
               ),
             ),
             Expanded(
-              child: ActionCard(
-                  text: 'action2'.tr,
-                  color: verySoftOrange[60],
-                  secondaryColor: verySoftOrangeCustomColor,
-                  onTap: () {
-                    navigationController
-                        .navigateToWithBack(Routes.PATIENT_MA_DETAILS);
-                  }),
+              child: SizedBox(
+                height: 150,
+                child: ActionCard(
+                    text: 'action2'.tr,
+                    color: verySoftOrange[60],
+                    secondaryColor: verySoftOrangeCustomColor,
+                    onTap: () {
+                      navigationController
+                          .navigateToWithBack(Routes.PATIENT_MA_DETAILS);
+                    }),
+              ),
             ),
             Expanded(
-              child: ActionCard(
-                text: 'action3'.tr,
-                color: verySoftRed[60],
-                secondaryColor: verySoftRedCustomColor,
-                onTap: () {
-                  if (stats.patientStatus[0].pStatus!) {
-                    if (stats.patientStatus[0].hasActiveQueueCons! &&
-                        stats.patientStatus[0].hasActiveQueueMA!) {
-                      dismissDialog();
-                      showDialog(
-                          context: context,
-                          builder: (context) => selectQueueDialog());
-                    } else if (stats.patientStatus[0].hasActiveQueueCons!) {
-                      navigationController
-                          .navigateToWithBack(Routes.Q_CONS_WEB);
-                    } else if (stats.patientStatus[0].hasActiveQueueMA!) {
-                      dismissDialog();
-                      navigationController.navigateToWithBack(Routes.Q_MA_WEB);
+              child: SizedBox(
+                height: 150,
+                child: ActionCard(
+                  text: 'action3'.tr,
+                  color: verySoftRed[60],
+                  secondaryColor: verySoftRedCustomColor,
+                  onTap: () {
+                    if (stats.patientStatus[0].pStatus!) {
+                      if (stats.patientStatus[0].hasActiveQueueCons! &&
+                          stats.patientStatus[0].hasActiveQueueMA!) {
+                        dismissDialog();
+                        showDialog(
+                            context: context,
+                            builder: (context) => selectQueueDialog());
+                      } else if (stats.patientStatus[0].hasActiveQueueCons!) {
+                        navigationController
+                            .navigateToWithBack(Routes.Q_CONS_WEB);
+                      } else if (stats.patientStatus[0].hasActiveQueueMA!) {
+                        dismissDialog();
+                        navigationController
+                            .navigateToWithBack(Routes.Q_MA_WEB);
+                      } else {
+                        showErrorDialog(
+                            errorTitle: 'dialog3'.tr,
+                            errorDescription: 'dialogsub3'.tr);
+                      }
                     } else {
                       showErrorDialog(
-                          errorTitle: 'dialog3'.tr,
-                          errorDescription: 'dialogsub3'.tr);
+                          errorTitle: 'action7'.tr,
+                          errorDescription: 'action8'.tr);
                     }
-                  } else {
-                    showErrorDialog(
-                        errorTitle: 'action7'.tr,
-                        errorDescription: 'action8'.tr);
-                  }
-                },
+                  },
+                ),
               ),
             ),
           ],
@@ -479,89 +489,101 @@ class ResponsiveView extends GetResponsiveView {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ActionCard(
-                                  text: 'action1'.tr,
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
-                                  onTap: () {
-                                    if (stats.patientStatus[0].pStatus!) {
-                                      if (stats.patientStatus[0]
-                                          .hasActiveQueueCons!) {
-                                        showErrorDialog(
-                                            errorTitle: 'action5'.tr,
-                                            errorDescription: 'action6'.tr);
-                                      } else {
-                                        showConfirmationDialog(
-                                          dialogTitle: 'dialog1'.tr,
-                                          dialogCaption: 'dialogsub1'.tr,
-                                          onYesTap: () {
-                                            dismissDialog();
-                                            consController
-                                                .isConsultForYou.value = true;
-                                            navigationController
-                                                .navigateToWithBack(Routes
-                                                    .PATIENT_WEB_CONS_FORM);
-                                          },
-                                          onNoTap: () {
-                                            dismissDialog();
-                                            consController
-                                                .isConsultForYou.value = false;
-                                            navigationController
-                                                .navigateToWithBack(Routes
-                                                    .PATIENT_WEB_CONS_FORM);
-                                          },
-                                        );
-                                      }
-                                    } else {
-                                      showErrorDialog(
-                                          errorTitle: 'action7'.tr,
-                                          errorDescription: 'action8'.tr);
-                                    }
-                                  },
-                                ),
-                                ActionCard(
-                                    text: 'action2'.tr,
-                                    color: verySoftOrange[60],
-                                    secondaryColor: verySoftOrangeCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'action1'.tr,
+                                    color: verySoftMagenta[60],
+                                    secondaryColor: verySoftMagentaCustomColor,
                                     onTap: () {
-                                      navigationController.navigateToWithBack(
-                                          Routes.PATIENT_MA_DETAILS);
-                                    }),
-                                ActionCard(
-                                  text: 'action3'.tr,
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
-                                  onTap: () {
-                                    if (stats.patientStatus[0].pStatus!) {
-                                      if (stats.patientStatus[0]
-                                              .hasActiveQueueCons! &&
-                                          stats.patientStatus[0]
-                                              .hasActiveQueueMA!) {
-                                        dismissDialog();
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) =>
-                                                selectQueueDialog());
-                                      } else if (stats.patientStatus[0]
-                                          .hasActiveQueueCons!) {
-                                        navigationController.navigateToWithBack(
-                                            Routes.Q_CONS_WEB);
-                                      } else if (stats
-                                          .patientStatus[0].hasActiveQueueMA!) {
-                                        dismissDialog();
-                                        navigationController.navigateToWithBack(
-                                            Routes.Q_MA_WEB);
+                                      if (stats.patientStatus[0].pStatus!) {
+                                        if (stats.patientStatus[0]
+                                            .hasActiveQueueCons!) {
+                                          showErrorDialog(
+                                              errorTitle: 'action5'.tr,
+                                              errorDescription: 'action6'.tr);
+                                        } else {
+                                          showConfirmationDialog(
+                                            dialogTitle: 'dialog1'.tr,
+                                            dialogCaption: 'dialogsub1'.tr,
+                                            onYesTap: () {
+                                              dismissDialog();
+                                              consController
+                                                  .isConsultForYou.value = true;
+                                              navigationController
+                                                  .navigateToWithBack(Routes
+                                                      .PATIENT_WEB_CONS_FORM);
+                                            },
+                                            onNoTap: () {
+                                              dismissDialog();
+                                              consController.isConsultForYou
+                                                  .value = false;
+                                              navigationController
+                                                  .navigateToWithBack(Routes
+                                                      .PATIENT_WEB_CONS_FORM);
+                                            },
+                                          );
+                                        }
                                       } else {
                                         showErrorDialog(
-                                            errorTitle: 'dialog3'.tr,
-                                            errorDescription: 'dialogsub3'.tr);
+                                            errorTitle: 'action7'.tr,
+                                            errorDescription: 'action8'.tr);
                                       }
-                                    } else {
-                                      showErrorDialog(
-                                          errorTitle: 'action7'.tr,
-                                          errorDescription: 'action8'.tr);
-                                    }
-                                  },
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                      text: 'action2'.tr,
+                                      color: verySoftOrange[60],
+                                      secondaryColor: verySoftOrangeCustomColor,
+                                      onTap: () {
+                                        navigationController.navigateToWithBack(
+                                            Routes.PATIENT_MA_DETAILS);
+                                      }),
+                                ),
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'action3'.tr,
+                                    color: verySoftRed[60],
+                                    secondaryColor: verySoftRedCustomColor,
+                                    onTap: () {
+                                      if (stats.patientStatus[0].pStatus!) {
+                                        if (stats.patientStatus[0]
+                                                .hasActiveQueueCons! &&
+                                            stats.patientStatus[0]
+                                                .hasActiveQueueMA!) {
+                                          dismissDialog();
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  selectQueueDialog());
+                                        } else if (stats.patientStatus[0]
+                                            .hasActiveQueueCons!) {
+                                          navigationController
+                                              .navigateToWithBack(
+                                                  Routes.Q_CONS_WEB);
+                                        } else if (stats.patientStatus[0]
+                                            .hasActiveQueueMA!) {
+                                          dismissDialog();
+                                          navigationController
+                                              .navigateToWithBack(
+                                                  Routes.Q_MA_WEB);
+                                        } else {
+                                          showErrorDialog(
+                                              errorTitle: 'dialog3'.tr,
+                                              errorDescription:
+                                                  'dialogsub3'.tr);
+                                        }
+                                      } else {
+                                        showErrorDialog(
+                                            errorTitle: 'action7'.tr,
+                                            errorDescription: 'action8'.tr);
+                                      }
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -675,7 +697,6 @@ class ResponsiveView extends GetResponsiveView {
                   textStyleTitle: kIsWeb ? body16SemiBold : caption12SemiBold,
                   textStyleContent:
                       kIsWeb ? body14RegularNeutral : caption10RegularNeutral,
-                  height: 115,
                   onTap: () {
                     urlLauncherService.launchURL(
                         '${articleService.articlesList[index].source}');

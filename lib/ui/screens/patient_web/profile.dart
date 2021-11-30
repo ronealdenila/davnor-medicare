@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
@@ -21,7 +23,8 @@ class PatientProfileWebScreen extends StatelessWidget {
   final VerificationController verificationController =
       Get.put(VerificationController());
   final fetchedData = authController.patientModel.value;
-
+  final NavigationController navigationController = Get.find();
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,7 +46,7 @@ class PatientProfileWebScreen extends StatelessWidget {
                 ),
                 verticalSpace15,
                 SizedBox(
-                  width: Get.width * .2,
+                  width: Get.width * .5,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -66,8 +69,8 @@ class PatientProfileWebScreen extends StatelessWidget {
                               size: 24,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                          horizontalSpace10,
+                          Flexible(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -126,7 +129,7 @@ class PatientProfileWebScreen extends StatelessWidget {
             return Stack(
               children: [
                 CircleAvatar(
-                  radius: 80,
+                  radius: 50,
                   backgroundImage: AssetImage(blankProfile),
                 ),
                 Positioned(
@@ -137,7 +140,6 @@ class PatientProfileWebScreen extends StatelessWidget {
                         color: Colors.lightBlue,
                         child: InkWell(
                           onTap: () {
-                            //upload and change profile photo
                             profileController.selectProfileImage();
                           },
                           child: Padding(
@@ -156,47 +158,33 @@ class PatientProfileWebScreen extends StatelessWidget {
               ],
             );
           }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.grey,
+            );
+          }
+
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 80,
-                  backgroundImage: AssetImage(blankProfile),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            //upload and change profile photo
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
-            );
-          }
+
           return Stack(children: [
             CircleAvatar(
-              radius: 80,
-              foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(blankProfile),
-            ),
+                radius: 50,
+                foregroundImage: NetworkImage(data['profileImage']),
+                onForegroundImageError: (_, __) {
+                  errorPhoto.value = true;
+                },
+                child: Obx(
+                  () => errorPhoto.value
+                      ? Text(
+                          '${fetchedData!.firstName![0]}',
+                          style: subtitle18Bold,
+                        )
+                      : SizedBox(
+                          height: 0,
+                          width: 0,
+                        ),
+                )),
             Positioned(
                 bottom: 0,
                 right: 05,
@@ -251,8 +239,7 @@ class PatientProfileWebScreen extends StatelessWidget {
         }
         return TextButton(
             onPressed: () {
-              //TO DO: Verification Dialog
-              //Get.to(() => VerificationScreen());
+              navigationController.navigateToWithBack(Routes.VERIF_REQ_WEB);
             },
             child: Text(
               'profile1'.tr,

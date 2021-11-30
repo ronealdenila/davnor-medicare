@@ -50,7 +50,7 @@ abstract class Routes {
   static const PATIENT_WEB_MA_HISTORY = _Paths.PATIENT_WEB_MA_HISTORY;
   static const PATIENT_WEB_CONS_HISTORY = _Paths.PATIENT_WEB_CONS_HISTORY;
   static const PATIENT_WEB_PROFILE = _Paths.PATIENT_WEB_PROFILE;
-
+  static const VERIF_REQ_WEB = _Paths.VERIF_REQ_WEB;
   static const Q_MA_WEB = _Paths.Q_MA_WEB;
   static const Q_CONS_WEB = _Paths.Q_CONS_WEB;
 
@@ -145,7 +145,7 @@ abstract class _Paths {
   static const PATIENT_WEB_PROFILE = '/PATIENT_WEB_PROFILE';
   static const Q_MA_WEB = '/Q_MA_WEB';
   static const Q_CONS_WEB = '/Q_CONS_WEB';
-
+  static const VERIF_REQ_WEB = '/VERIF_REQ_WEB';
   static const DASHBOARD = '/dashboard';
   //Doctor
   static const DOCTOR_HOME = '/home';

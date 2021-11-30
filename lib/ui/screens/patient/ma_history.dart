@@ -28,7 +28,7 @@ class MAHistoryScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -49,7 +49,8 @@ class MAHistoryScreen extends StatelessWidget {
                           maHController.showDialog(context);
                         }
                       },
-                      child: Row(
+                      child: Wrap(
+                        runSpacing: 8,
                         children: [
                           Card(
                             elevation: 6,
@@ -147,28 +148,21 @@ class MAHistoryScreen extends StatelessWidget {
       shrinkWrap: true,
       itemCount: maHController.maHistoryList.length,
       itemBuilder: (context, index) {
-        return displayMAHistory(maHController.maHistoryList[index]);
+        return displayMAHistory(maHController.maHistoryList[index], index);
       },
     );
   }
 
-  Widget displayMAHistory(MAHistoryModel model) {
+  Widget displayMAHistory(MAHistoryModel model, int index) {
     return FutureBuilder(
         future: maHController.getMAHistoryForPatient(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                shrinkWrap: true,
-                itemCount: maHController.maHistoryList.length,
-                itemBuilder: (context, index) {
-                  return MACard(
-                      maHistory: maHController.maHistoryList[index],
-                      onTap: () {
-                        Get.to(() => MAHistoryInfoScreen(),
-                            arguments: maHController.maHistoryList[index]);
-                      });
+            return MACard(
+                maHistory: maHController.maHistoryList[index],
+                onTap: () {
+                  Get.to(() => MAHistoryInfoScreen(),
+                      arguments: maHController.maHistoryList[index]);
                 });
           }
           return loadingCardIndicator();

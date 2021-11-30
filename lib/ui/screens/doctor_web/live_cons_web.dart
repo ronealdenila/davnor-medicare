@@ -36,6 +36,8 @@ class LiveConsultationWeb extends StatelessWidget {
       Get.put(CallingPatientController());
   final ConsultationsController consRequests = Get.find();
   final DoctorMenuController menuController = Get.find();
+  final RxBool errorPhoto = false.obs;
+  final RxBool errorPhoto2 = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -372,17 +374,23 @@ class LiveConsultationWeb extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    if (liveCont.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${liveCont.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget chatStack() {
@@ -534,16 +542,22 @@ class LiveConsultationWeb extends StatelessWidget {
   }
 
   Widget getPhotoInfo(LiveConsultationModel model) {
-    if (liveCont.getPatientProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
-      backgroundImage: AssetImage(blankProfile),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto2.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto2.value
+              ? Text(
+                  '${liveCont.getPatientFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 }

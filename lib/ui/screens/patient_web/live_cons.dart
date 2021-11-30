@@ -17,6 +17,8 @@ class LiveConsWebScreen extends StatelessWidget {
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   static AuthController authController = Get.find();
   final fetchedData = authController.patientModel.value;
+  final RxBool errorPhoto = false.obs;
+  final RxBool errorPhoto2 = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -292,31 +294,43 @@ class LiveConsWebScreen extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    if (liveCont.getDoctorProfile(model) == '') {
-      return CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(doctorDefault),
-      );
-    }
     return CircleAvatar(
-      radius: 25,
-      foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-      backgroundImage: AssetImage(doctorDefault),
-    );
+        radius: 25,
+        foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto.value
+              ? Text(
+                  '${liveCont.getDoctorFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget getPhotoInfo(LiveConsultationModel model) {
-    if (liveCont.getDoctorProfile(model) == '') {
-      return CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage(doctorDefault),
-      );
-    }
     return CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-      backgroundImage: AssetImage(doctorDefault),
-    );
+        radius: 50,
+        foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
+        onForegroundImageError: (_, __) {
+          errorPhoto2.value = true;
+        },
+        backgroundColor: Colors.grey,
+        child: Obx(
+          () => errorPhoto2.value
+              ? Text(
+                  '${liveCont.getDoctorFirstName(model)[0]}',
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ));
   }
 
   Widget chatStack() {

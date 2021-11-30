@@ -1,6 +1,7 @@
 //User Model
 class PatientModel {
   PatientModel({
+    required this.userID,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -10,6 +11,7 @@ class PatientModel {
   });
 
   factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
+        userID: json['userID'] as String,
         email: json['email'] as String,
         firstName: json['firstName'] as String,
         lastName: json['lastName'] as String,
@@ -19,6 +21,7 @@ class PatientModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'userID': userID,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -27,6 +30,7 @@ class PatientModel {
         'validSelfie': validSelfie,
       };
 
+  final String? userID;
   final String? email;
   final String? firstName;
   final String? lastName;

@@ -384,52 +384,61 @@ class ResponsiveView extends GetResponsiveView {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ActionCard(
-                                  text: 'Change MA\nStatus',
-                                  onTap: () {
-                                    showConfirmationDialog(
-                                      dialogTitle: 'Changing MA Status',
-                                      dialogCaption:
-                                          'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
-                                      onYesTap: () async {
-                                        await changeIsCutOff();
-                                      },
-                                      onNoTap: () {
-                                        dismissDialog();
-                                      },
-                                    );
-                                  },
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'Change MA\nStatus',
+                                    onTap: () {
+                                      showConfirmationDialog(
+                                        dialogTitle: 'Changing MA Status',
+                                        dialogCaption:
+                                            'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                        onYesTap: () async {
+                                          await changeIsCutOff();
+                                        },
+                                        onNoTap: () {
+                                          dismissDialog();
+                                        },
+                                      );
+                                    },
+                                    color: verySoftMagenta[60],
+                                    secondaryColor: verySoftMagentaCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'Change PSWD \nFund Status',
-                                  onTap: () {
-                                    showConfirmationDialog(
-                                      dialogTitle: 'Changing PSWD MA Fund',
-                                      dialogCaption:
-                                          'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
-                                      onYesTap: () async {
-                                        await changeHasFunds();
-                                      },
-                                      onNoTap: () {
-                                        dismissDialog();
-                                      },
-                                    );
-                                  },
-                                  color: verySoftOrange[60],
-                                  secondaryColor: verySoftOrangeCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'Change PSWD \nFund Status',
+                                    onTap: () {
+                                      showConfirmationDialog(
+                                        dialogTitle: 'Changing PSWD MA Fund',
+                                        dialogCaption:
+                                            'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                        onYesTap: () async {
+                                          await changeHasFunds();
+                                        },
+                                        onNoTap: () {
+                                          dismissDialog();
+                                        },
+                                      );
+                                    },
+                                    color: verySoftOrange[60],
+                                    secondaryColor: verySoftOrangeCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'View MA History',
-                                  onTap: () {
-                                    menuController.changeActiveItemTo(
-                                        'Medical Assistance History');
-                                    navigationController
-                                        .navigateTo(Routes.MA_HISTORY_LIST);
-                                  },
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'View MA History',
+                                    onTap: () {
+                                      menuController.changeActiveItemTo(
+                                          'Medical Assistance History');
+                                      navigationController
+                                          .navigateTo(Routes.MA_HISTORY_LIST);
+                                    },
+                                    color: verySoftRed[60],
+                                    secondaryColor: verySoftRedCustomColor,
+                                  ),
                                 ),
                               ],
                             ),
@@ -882,52 +891,61 @@ class ResponsiveView extends GetResponsiveView {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ActionCard(
-                            text: 'Change MA Status',
-                            onTap: () {
-                              showConfirmationDialog(
-                                dialogTitle: 'Changing MA Status',
-                                dialogCaption:
-                                    'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
-                                onYesTap: () async {
-                                  await changeIsCutOff();
-                                },
-                                onNoTap: () {
-                                  dismissDialog();
-                                },
-                              );
-                            },
-                            color: verySoftMagenta[60],
-                            secondaryColor: verySoftMagentaCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'Change MA Status',
+                              onTap: () {
+                                showConfirmationDialog(
+                                  dialogTitle: 'Changing MA Status',
+                                  dialogCaption:
+                                      'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                  onYesTap: () async {
+                                    await changeIsCutOff();
+                                  },
+                                  onNoTap: () {
+                                    dismissDialog();
+                                  },
+                                );
+                              },
+                              color: verySoftMagenta[60],
+                              secondaryColor: verySoftMagentaCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'Change PSWD Fund Status',
-                            onTap: () {
-                              showConfirmationDialog(
-                                dialogTitle: 'Changing PSWD MA Fund',
-                                dialogCaption:
-                                    'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
-                                onYesTap: () async {
-                                  await changeHasFunds();
-                                },
-                                onNoTap: () {
-                                  dismissDialog();
-                                },
-                              );
-                            },
-                            color: verySoftOrange[60],
-                            secondaryColor: verySoftOrangeCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'Change PSWD Fund Status',
+                              onTap: () {
+                                showConfirmationDialog(
+                                  dialogTitle: 'Changing PSWD MA Fund',
+                                  dialogCaption:
+                                      'Select YES if you want to change the current status to its opposite. Otherwise, select NO',
+                                  onYesTap: () async {
+                                    await changeHasFunds();
+                                  },
+                                  onNoTap: () {
+                                    dismissDialog();
+                                  },
+                                );
+                              },
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'View MA History',
-                            onTap: () {
-                              menuController.changeActiveItemTo(
-                                  'Medical Assistance History');
-                              navigationController
-                                  .navigateTo(Routes.MA_HISTORY_LIST);
-                            },
-                            color: verySoftRed[60],
-                            secondaryColor: verySoftRedCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'View MA History',
+                              onTap: () {
+                                menuController.changeActiveItemTo(
+                                    'Medical Assistance History');
+                                navigationController
+                                    .navigateTo(Routes.MA_HISTORY_LIST);
+                              },
+                              color: verySoftRed[60],
+                              secondaryColor: verySoftRedCustomColor,
+                            ),
                           ),
                         ],
                       ),

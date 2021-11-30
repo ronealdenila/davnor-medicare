@@ -19,7 +19,7 @@ class PatientProfileScreen extends StatelessWidget {
   final VerificationController verificationController =
       Get.put(VerificationController());
   final fetchedData = authController.patientModel.value;
-
+  final RxBool errorPhoto = false.obs;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -149,48 +149,32 @@ class PatientProfileScreen extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading');
-          }
-          final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(blankProfile),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            //upload and change profile photo
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
+            return const CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.grey,
             );
           }
+
+          final data = snapshot.data!.data() as Map<String, dynamic>;
+
           return Stack(children: [
             CircleAvatar(
               radius: 50,
               foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(blankProfile),
+              onForegroundImageError: (_, __) {
+                errorPhoto.value = true;
+              },
+              child: Obx(
+                () => errorPhoto.value
+                    ? Text(
+                        '${fetchedData!.firstName![0]}',
+                        style: subtitle18Bold,
+                      )
+                    : SizedBox(
+                        height: 0,
+                        width: 0,
+                      ),
+              ),
             ),
             Positioned(
                 bottom: 0,
