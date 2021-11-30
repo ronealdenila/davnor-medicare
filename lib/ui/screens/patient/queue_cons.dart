@@ -74,10 +74,8 @@ class QueueConsScreen extends StatelessWidget {
                               Center(
                                 child: Obx(
                                   () => Text(
-                                    cQController.isLoading.value
-                                        ? ''
-                                        : cQController
-                                            .queueConsList[0].queueNum!,
+                                    cQController.isLoading.value ? '' : 'temp',
+                                    //TO DO: uncomment puhon -  cQController.queueConsList[0].queueNum!,
                                     style: title42BoldNeutral100,
                                   ),
                                 ),
@@ -91,33 +89,41 @@ class QueueConsScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(() => QueueConsTableScreen());
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'maqueue3'.tr,
-                              style: subtitle18RegularWhite,
-                            ),
-                            horizontalSpace5,
-                            Container(
-                              height: 24,
-                              width: 24,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.arrow_forward_outlined,
-                                  size: 20,
-                                  color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  '${'maqueue3'.tr}',
+                                  style: subtitle18RegularWhite,
+                                  textAlign: TextAlign.end,
                                 ),
                               ),
-                            ),
-                          ],
+                              horizontalSpace15,
+                              Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.arrow_forward_outlined,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       //Specialty

@@ -100,7 +100,7 @@ class PatientHomeScreen extends StatelessWidget {
                   style: body16SemiBold,
                 ),
                 verticalSpace10,
-                SizedBox(width: Get.width, child: ActionButtons()),
+                Container(width: Get.width, child: ActionButtons()),
                 verticalSpace25,
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -155,95 +155,100 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget ActionButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: ActionCard(
-            text: 'action1'.tr,
-            color: verySoftMagenta[60],
-            secondaryColor: verySoftMagentaCustomColor,
-            onTap: () {
-              if (stats.isLoading.value) {
-                showErrorDialog(
-                    errorTitle: 'ERROR!',
-                    errorDescription: 'errordialog1'.tr);
-              } else {
-                if (stats.patientStatus[0].pStatus!) {
-                  if (stats.patientStatus[0].hasActiveQueueCons!) {
-                    showErrorDialog(
-                        errorTitle: 'action5'.tr,
-                        errorDescription: 'action6'.tr);
-                  } else {
-                    showConfirmationDialog(
-                      dialogTitle: 'dialog1'.tr,
-                      dialogCaption: 'dialogsub1'.tr,
-                      onYesTap: () {
-                        consController.isConsultForYou.value = true;
-                        Get.to(() => ConsFormScreen());
-                      },
-                      onNoTap: () {
-                        consController.isConsultForYou.value = false;
-                        Get.to(() => ConsFormScreen());
-                      },
-                    );
-                  }
-                } else {
-                  showErrorDialog(
-                      errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
-                }
-              }
-            },
-          ),
-        ),
-        Expanded(
-          child: ActionCard(
-              text: 'action2'.tr,
-              color: verySoftOrange[60],
-              secondaryColor: verySoftOrangeCustomColor,
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ActionCard(
+              text: 'action1'.tr,
+              color: verySoftMagenta[60],
+              secondaryColor: verySoftMagentaCustomColor,
               onTap: () {
                 if (stats.isLoading.value) {
                   showErrorDialog(
                       errorTitle: 'ERROR!',
                       errorDescription: 'errordialog1'.tr);
                 } else {
-                  Get.to(() => MADescriptionScreen());
-                }
-              }),
-        ),
-        Expanded(
-          child: ActionCard(
-            text: 'action3'.tr,
-            color: verySoftRed[60],
-            secondaryColor: verySoftRedCustomColor,
-            onTap: () {
-              if (stats.isLoading.value) {
-                showErrorDialog(
-                    errorTitle: 'ERROR!',
-                    errorDescription: 'errordialog1'.tr);
-              } else {
-                if (stats.patientStatus[0].pStatus!) {
-                  if (stats.patientStatus[0].hasActiveQueueCons! &&
-                      stats.patientStatus[0].hasActiveQueueMA!) {
-                    Get.to(() => SelectQueueScreen());
-                  } else if (stats.patientStatus[0].hasActiveQueueCons!) {
-                    Get.to(() => QueueConsScreen());
-                  } else if (stats.patientStatus[0].hasActiveQueueMA!) {
-                    Get.to(() => QueueMAScreen());
+                  if (stats.patientStatus[0].pStatus!) {
+                    if (stats.patientStatus[0].hasActiveQueueCons!) {
+                      showErrorDialog(
+                          errorTitle: 'action5'.tr,
+                          errorDescription: 'action6'.tr);
+                    } else {
+                      showConfirmationDialog(
+                        dialogTitle: 'dialog1'.tr,
+                        dialogCaption: 'dialogsub1'.tr,
+                        onYesTap: () {
+                          consController.isConsultForYou.value = true;
+                          Get.to(() => ConsFormScreen());
+                        },
+                        onNoTap: () {
+                          consController.isConsultForYou.value = false;
+                          Get.to(() => ConsFormScreen());
+                        },
+                      );
+                    }
                   } else {
                     showErrorDialog(
-                        errorTitle: 'dialog3'.tr,
-                        errorDescription: 'dialogsub3'.tr);
+                        errorTitle: 'action7'.tr,
+                        errorDescription: 'action8'.tr);
                   }
-                } else {
-                  showErrorDialog(
-                      errorTitle: 'action7'.tr, errorDescription: 'action8'.tr);
                 }
-              }
-            },
+              },
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: ActionCard(
+                text: 'action2'.tr,
+                color: verySoftOrange[60],
+                secondaryColor: verySoftOrangeCustomColor,
+                onTap: () {
+                  if (stats.isLoading.value) {
+                    showErrorDialog(
+                        errorTitle: 'ERROR!',
+                        errorDescription: 'errordialog1'.tr);
+                  } else {
+                    Get.to(() => MADescriptionScreen());
+                  }
+                }),
+          ),
+          Expanded(
+            child: ActionCard(
+              text: 'action3'.tr,
+              color: verySoftRed[60],
+              secondaryColor: verySoftRedCustomColor,
+              onTap: () {
+                if (stats.isLoading.value) {
+                  showErrorDialog(
+                      errorTitle: 'ERROR!',
+                      errorDescription: 'errordialog1'.tr);
+                } else {
+                  if (stats.patientStatus[0].pStatus!) {
+                    if (stats.patientStatus[0].hasActiveQueueCons! &&
+                        stats.patientStatus[0].hasActiveQueueMA!) {
+                      Get.to(() => SelectQueueScreen());
+                    } else if (stats.patientStatus[0].hasActiveQueueCons!) {
+                      Get.to(() => QueueConsScreen());
+                    } else if (stats.patientStatus[0].hasActiveQueueMA!) {
+                      Get.to(() => QueueMAScreen());
+                    } else {
+                      showErrorDialog(
+                          errorTitle: 'dialog3'.tr,
+                          errorDescription: 'dialogsub3'.tr);
+                    }
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'action7'.tr,
+                        errorDescription: 'action8'.tr);
+                  }
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -319,7 +324,6 @@ class PatientHomeScreen extends StatelessWidget {
                 photoURL: articleList[index].photoURL!,
                 textStyleTitle: caption12SemiBold,
                 textStyleContent: caption10RegularNeutral,
-                height: 115,
                 onTap: () {
                   goToArticleItemScreen(index);
                 });

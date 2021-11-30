@@ -351,38 +351,47 @@ class ResponsiveView extends GetResponsiveView {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ActionCard(
-                                  text: 'View For \nApproval \nRequests',
-                                  onTap: () async {
-                                    menuController
-                                        .changeActiveItemTo('For Approval');
-                                    navigationController
-                                        .navigateTo(Routes.FOR_APPROVAL_LIST);
-                                  },
-                                  color: verySoftMagenta[60],
-                                  secondaryColor: verySoftMagentaCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'View For \nApproval \nRequests',
+                                    onTap: () async {
+                                      menuController
+                                          .changeActiveItemTo('For Approval');
+                                      navigationController
+                                          .navigateTo(Routes.FOR_APPROVAL_LIST);
+                                    },
+                                    color: verySoftMagenta[60],
+                                    secondaryColor: verySoftMagentaCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'View On \nProgress \nRequests',
-                                  onTap: () async {
-                                    menuController.changeActiveItemTo(
-                                        'On Progress Request');
-                                    navigationController.navigateTo(
-                                        Routes.ON_PROGRESS_REQ_LIST);
-                                  },
-                                  color: verySoftOrange[60],
-                                  secondaryColor: verySoftOrangeCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'View On \nProgress \nRequests',
+                                    onTap: () async {
+                                      menuController.changeActiveItemTo(
+                                          'On Progress Request');
+                                      navigationController.navigateTo(
+                                          Routes.ON_PROGRESS_REQ_LIST);
+                                    },
+                                    color: verySoftOrange[60],
+                                    secondaryColor: verySoftOrangeCustomColor,
+                                  ),
                                 ),
-                                ActionCard(
-                                  text: 'View MA History',
-                                  onTap: () {
-                                    menuController.changeActiveItemTo(
-                                        'Medical Assistance History');
-                                    navigationController
-                                        .navigateTo(Routes.MA_HISTORY_LIST);
-                                  },
-                                  color: verySoftRed[60],
-                                  secondaryColor: verySoftRedCustomColor,
+                                SizedBox(
+                                  height: 150,
+                                  child: ActionCard(
+                                    text: 'View MA History',
+                                    onTap: () {
+                                      menuController.changeActiveItemTo(
+                                          'Medical Assistance History');
+                                      navigationController
+                                          .navigateTo(Routes.MA_HISTORY_LIST);
+                                    },
+                                    color: verySoftRed[60],
+                                    secondaryColor: verySoftRedCustomColor,
+                                  ),
                                 ),
                               ],
                             ),
@@ -484,8 +493,10 @@ class ResponsiveView extends GetResponsiveView {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    DmText.body16Regular(
-                                                        'View MA Requests for Approval'),
+                                                    Flexible(
+                                                      child: DmText.body16Regular(
+                                                          'View MA Requests for Approval'),
+                                                    ),
                                                     const Icon(
                                                         Icons.chevron_right),
                                                   ],
@@ -833,37 +844,47 @@ class ResponsiveView extends GetResponsiveView {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ActionCard(
-                            text: 'View For Approval Requests',
-                            onTap: () async {
-                              menuController.changeActiveItemTo('For Approval');
-                              navigationController
-                                  .navigateTo(Routes.FOR_APPROVAL_LIST);
-                            },
-                            color: verySoftMagenta[60],
-                            secondaryColor: verySoftMagentaCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'View For Approval Requests',
+                              onTap: () async {
+                                menuController
+                                    .changeActiveItemTo('For Approval');
+                                navigationController
+                                    .navigateTo(Routes.FOR_APPROVAL_LIST);
+                              },
+                              color: verySoftMagenta[60],
+                              secondaryColor: verySoftMagentaCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'View On Progress Requests',
-                            onTap: () async {
-                              menuController
-                                  .changeActiveItemTo('On Progress Request');
-                              navigationController
-                                  .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
-                            },
-                            color: verySoftOrange[60],
-                            secondaryColor: verySoftOrangeCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'View On Progress Requests',
+                              onTap: () async {
+                                menuController
+                                    .changeActiveItemTo('On Progress Request');
+                                navigationController
+                                    .navigateTo(Routes.ON_PROGRESS_REQ_LIST);
+                              },
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                            ),
                           ),
-                          ActionCard(
-                            text: 'View MA History',
-                            onTap: () {
-                              menuController.changeActiveItemTo(
-                                  'Medical Assistance History');
-                              navigationController
-                                  .navigateTo(Routes.MA_HISTORY_LIST);
-                            },
-                            color: verySoftRed[60],
-                            secondaryColor: verySoftRedCustomColor,
+                          SizedBox(
+                            height: 150,
+                            child: ActionCard(
+                              text: 'View MA History',
+                              onTap: () {
+                                menuController.changeActiveItemTo(
+                                    'Medical Assistance History');
+                                navigationController
+                                    .navigateTo(Routes.MA_HISTORY_LIST);
+                              },
+                              color: verySoftRed[60],
+                              secondaryColor: verySoftRedCustomColor,
+                            ),
                           ),
                         ],
                       ),

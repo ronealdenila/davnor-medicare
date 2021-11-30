@@ -210,19 +210,20 @@ class LocalString extends Translations {
           'appinfo':
               'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people to connect efficiently to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
           //Dialog
-          'errordialog':'ERROR!',
-          'errordialog1':'Please wait while we are currently connecting to the server',
-          'errordialog2':'Sorry were cut off already.',
-          'errordialog3':'Please try again next time.',
-          'errordialog4':'Sorry MA has no fund for now.',
-          'errordialog5':'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.',
-          'errordialog6':'Sorry, there are no slot available for now',
-          'errordialog7':'Please dont leave any empty fields',
-          'errordialog8':'Some fields were missing',
-          'errordialog9':'Could not send request',
-          'errordialog10':'Sorry, it is already cut off.',
-          'errordialog11':'Please provide prescriptions.',
-
+          'errordialog': 'ERROR!',
+          'errordialog1':
+              'Please wait while we are currently connecting to the server',
+          'errordialog2': 'Sorry were cut off already.',
+          'errordialog3': 'Please try again next time.',
+          'errordialog4': 'Sorry MA has no fund for now.',
+          'errordialog5':
+              'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.',
+          'errordialog6': 'Sorry, there are no slot available for now',
+          'errordialog7': 'Please dont leave any empty fields',
+          'errordialog8': 'Some fields were missing',
+          'errordialog9': 'Could not send request',
+          'errordialog10': 'Sorry, it is already cut off.',
+          'errordialog11': 'Please provide prescriptions.',
         },
 
         //TAGALOG
@@ -437,19 +438,21 @@ class LocalString extends Translations {
           'appinfo':
               'Ang DavNor Medicare ay isang multiplatform-based na application na nag-aalok ng libreng online na konsultasyon at Medical Assistance mula sa PSWD. Nilalayon ng application na tulungan ang mga tao na kumonekta nang mahusay sa mga doktor nang halos magkaroon ng regular na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang application nang walang anumang problema. At panghuli, ang mga residente lamang ng Davao del Norte ang maaaring gumamit ng application.',
           //Dialog
-          'errordialog':'ERROR!',
-          'errordialog1':'Mangyaring maghintay habang kami ay kasalukuyang kumokonekta sa server',
-          'errordialog2':'Paumanhin giputol na',
-          'errordialog3':'Pakisubukang muli sa susunod.',
-          'errordialog4':'Paumanhin, walang pondo si MA sa ngayon.',
-          'errordialog5':'Paumanhin, kasalukuyang walang available na doktor na dalubhasa sa sakit na iyon. Subukang muli mamaya.',
-          'errordialog6':'Paumanhin, walang available na slot sa ngayon',
-          'errordialog7':'Mangyaring huwag mag-iwan ng anumang walang laman na mga patlang',
-          'errordialog8':'Ang ilang mga patlang ay nawawala',
-          'errordialog9':'Hindi maipadala ang mga kahilingan',
-          'errordialog10':'Paumanhin, naputol na ito.',
-          'errordialog11':'Mangyaring magbigay ng mga reseta.',
-
+          'errordialog': 'ERROR!',
+          'errordialog1':
+              'Mangyaring maghintay habang kami ay kasalukuyang kumokonekta sa server',
+          'errordialog2': 'Paumanhin giputol na',
+          'errordialog3': 'Pakisubukang muli sa susunod.',
+          'errordialog4': 'Paumanhin, walang pondo si MA sa ngayon.',
+          'errordialog5':
+              'Paumanhin, kasalukuyang walang available na doktor na dalubhasa sa sakit na iyon. Subukang muli mamaya.',
+          'errordialog6': 'Paumanhin, walang available na slot sa ngayon',
+          'errordialog7':
+              'Mangyaring huwag mag-iwan ng anumang walang laman na mga patlang',
+          'errordialog8': 'Ang ilang mga patlang ay nawawala',
+          'errordialog9': 'Hindi maipadala ang mga kahilingan',
+          'errordialog10': 'Paumanhin, naputol na ito.',
+          'errordialog11': 'Mangyaring magbigay ng mga reseta.',
         },
 
         //BISAYA
@@ -661,19 +664,21 @@ class LocalString extends Translations {
           'appinfo':
               'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Medical Assistance gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga makonektar sa epektibong paagi ngadto sa mga doktor nga halos adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug ang katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.',
           //Dialog
-          'errordialog':'ERROR!',
-          'errordialog1':'Palihug paghulat samtang nagkonektar kami karon sa server',
-          'errordialog2':'Pasensya nag cut off na.',
-          'errordialog3':'Palihug sulayi pag-usab sa sunod.',
-          'errordialog4':'Pasensya MA walay pundo sa pagkakaron.',
-          'errordialog5':'Pasensya, sa pagkakaron walay magamit nga doktor nga espesyalista sa maong sakit. Palihug sulayi pag-usab unya.',
-          'errordialog6':'Pasensya, wala’y puwang nga magamit karon',
-          'errordialog7':'Palihug ayaw biyai ang bisan unsang bakanteng mga uma',
-          'errordialog8':'Nawala ang ubang mga uma',
-          'errordialog9':'Dili makapadala og hangyo',
-          'errordialog10':'Pasensya nag cut off na.',
-          'errordialog11':'Palihug paghatag og mga reseta.',
-
+          'errordialog': 'ERROR!',
+          'errordialog1':
+              'Palihug paghulat samtang nagkonektar kami karon sa server',
+          'errordialog2': 'Pasensya nag cut off na.',
+          'errordialog3': 'Palihug sulayi pag-usab sa sunod.',
+          'errordialog4': 'Pasensya MA walay pundo sa pagkakaron.',
+          'errordialog5':
+              'Pasensya, sa pagkakaron walay magamit nga doktor nga espesyalista sa maong sakit. Palihug sulayi pag-usab unya.',
+          'errordialog6': 'Pasensya, wala’y puwang nga magamit karon',
+          'errordialog7':
+              'Palihug ayaw biyai ang bisan unsang bakanteng mga uma',
+          'errordialog8': 'Nawala ang ubang mga uma',
+          'errordialog9': 'Dili makapadala og hangyo',
+          'errordialog10': 'Pasensya nag cut off na.',
+          'errordialog11': 'Palihug paghatag og mga reseta.',
         }
       };
 }
