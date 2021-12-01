@@ -21,9 +21,12 @@ class DialogButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
         ),
       ),
-      child: Text(
-        buttonText!,
-        style: body14SemiBold,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          buttonText!,
+          style: body14SemiBold,
+        ),
       ),
     );
   }

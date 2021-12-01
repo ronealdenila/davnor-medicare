@@ -16,6 +16,7 @@ import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/shared/responsive.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
@@ -79,7 +80,8 @@ class PatientWebHomeScreen extends StatelessWidget {
     return IconButton(
       onPressed: () {
         showDialog(
-            context: context, builder: (context) => notificationDialog());
+            context: context,
+            builder: (context) => notificationDialog(context));
       },
       icon: const Icon(
         Icons.notifications_outlined,
@@ -98,7 +100,8 @@ class PatientWebHomeScreen extends StatelessWidget {
       child: IconButton(
         onPressed: () {
           showDialog(
-              context: context, builder: (context) => notificationDialog());
+              context: context,
+              builder: (context) => notificationDialog(context));
           resetBadge();
         },
         icon: const Icon(
@@ -109,7 +112,7 @@ class PatientWebHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget notificationDialog() {
+  Widget notificationDialog(BuildContext context) {
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: EdgeInsets.symmetric(
@@ -118,7 +121,7 @@ class PatientWebHomeScreen extends StatelessWidget {
         ),
         children: [
           SizedBox(
-              width: Get.width * .2,
+              width: isMobile(context) ? Get.width * .8 : Get.width * .2,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -272,9 +275,6 @@ class ResponsiveView extends GetResponsiveView {
   final ConsHistoryController consHController = Get.find();
 
   @override
-  Widget phone() => tabletVersion(context);
-
-  @override
   Widget tablet() => tabletVersion(context);
 
   @override
@@ -294,7 +294,7 @@ class ResponsiveView extends GetResponsiveView {
         margin: const EdgeInsets.all(25),
         padding: const EdgeInsets.all(25),
         width: Get.width,
-        height: Get.height * .2,
+        height: 200,
         decoration: const BoxDecoration(
           color: kcVerySoftBlueColor,
           borderRadius: BorderRadius.all(
@@ -384,7 +384,7 @@ class ResponsiveView extends GetResponsiveView {
                         dismissDialog();
                         showDialog(
                             context: context,
-                            builder: (context) => selectQueueDialog());
+                            builder: (context) => selectQueueDialog(context));
                       } else if (stats.patientStatus[0].hasActiveQueueCons!) {
                         navigationController
                             .navigateToWithBack(Routes.Q_CONS_WEB);
@@ -436,194 +436,185 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget desktopVersion(BuildContext context) {
     return SingleChildScrollView(
-        child: Container(
-            height: Get.height - 55,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: Text(
-                  'Dashboard',
-                  style: title32Bold,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(25),
-                padding: const EdgeInsets.all(25),
-                width: Get.width,
-                height: Get.height * .2,
-                decoration: const BoxDecoration(
-                  color: kcVerySoftBlueColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DmText.title42Bold(
-                      'Hello, ${fetchedData!.firstName}',
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 25),
+        child: Text(
+          'Dashboard',
+          style: title32Bold,
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
+        width: Get.width,
+        height: 200,
+        decoration: const BoxDecoration(
+          color: kcVerySoftBlueColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DmText.title42Bold(
+              'Hello, ${fetchedData!.firstName}',
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DmText.title24Medium(
-                            'homepage'.tr,
-                            color: neutralColor,
-                          ),
-                          verticalSpace15,
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                    text: 'action1'.tr,
-                                    color: verySoftMagenta[60],
-                                    secondaryColor: verySoftMagentaCustomColor,
-                                    onTap: () {
-                                      if (stats.patientStatus[0].pStatus!) {
-                                        if (stats.patientStatus[0]
-                                            .hasActiveQueueCons!) {
-                                          showErrorDialog(
-                                              errorTitle: 'action5'.tr,
-                                              errorDescription: 'action6'.tr);
-                                        } else {
-                                          showConfirmationDialog(
-                                            dialogTitle: 'dialog1'.tr,
-                                            dialogCaption: 'dialogsub1'.tr,
-                                            onYesTap: () {
-                                              dismissDialog();
-                                              consController
-                                                  .isConsultForYou.value = true;
-                                              navigationController
-                                                  .navigateToWithBack(Routes
-                                                      .PATIENT_WEB_CONS_FORM);
-                                            },
-                                            onNoTap: () {
-                                              dismissDialog();
-                                              consController.isConsultForYou
-                                                  .value = false;
-                                              navigationController
-                                                  .navigateToWithBack(Routes
-                                                      .PATIENT_WEB_CONS_FORM);
-                                            },
-                                          );
-                                        }
-                                      } else {
-                                        showErrorDialog(
-                                            errorTitle: 'action7'.tr,
-                                            errorDescription: 'action8'.tr);
-                                      }
+                  DmText.title24Medium(
+                    'homepage'.tr,
+                    color: neutralColor,
+                  ),
+                  verticalSpace15,
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 150,
+                          child: ActionCard(
+                            text: 'action1'.tr,
+                            color: verySoftMagenta[60],
+                            secondaryColor: verySoftMagentaCustomColor,
+                            onTap: () {
+                              if (stats.patientStatus[0].pStatus!) {
+                                if (stats
+                                    .patientStatus[0].hasActiveQueueCons!) {
+                                  showErrorDialog(
+                                      errorTitle: 'action5'.tr,
+                                      errorDescription: 'action6'.tr);
+                                } else {
+                                  showConfirmationDialog(
+                                    dialogTitle: 'dialog1'.tr,
+                                    dialogCaption: 'dialogsub1'.tr,
+                                    onYesTap: () {
+                                      dismissDialog();
+                                      consController.isConsultForYou.value =
+                                          true;
+                                      navigationController.navigateToWithBack(
+                                          Routes.PATIENT_WEB_CONS_FORM);
                                     },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                      text: 'action2'.tr,
-                                      color: verySoftOrange[60],
-                                      secondaryColor: verySoftOrangeCustomColor,
-                                      onTap: () {
-                                        navigationController.navigateToWithBack(
-                                            Routes.PATIENT_MA_DETAILS);
-                                      }),
-                                ),
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                    text: 'action3'.tr,
-                                    color: verySoftRed[60],
-                                    secondaryColor: verySoftRedCustomColor,
-                                    onTap: () {
-                                      if (stats.patientStatus[0].pStatus!) {
-                                        if (stats.patientStatus[0]
-                                                .hasActiveQueueCons! &&
-                                            stats.patientStatus[0]
-                                                .hasActiveQueueMA!) {
-                                          dismissDialog();
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  selectQueueDialog());
-                                        } else if (stats.patientStatus[0]
-                                            .hasActiveQueueCons!) {
-                                          navigationController
-                                              .navigateToWithBack(
-                                                  Routes.Q_CONS_WEB);
-                                        } else if (stats.patientStatus[0]
-                                            .hasActiveQueueMA!) {
-                                          dismissDialog();
-                                          navigationController
-                                              .navigateToWithBack(
-                                                  Routes.Q_MA_WEB);
-                                        } else {
-                                          showErrorDialog(
-                                              errorTitle: 'dialog3'.tr,
-                                              errorDescription:
-                                                  'dialogsub3'.tr);
-                                        }
-                                      } else {
-                                        showErrorDialog(
-                                            errorTitle: 'action7'.tr,
-                                            errorDescription: 'action8'.tr);
-                                      }
+                                    onNoTap: () {
+                                      dismissDialog();
+                                      consController.isConsultForYou.value =
+                                          false;
+                                      navigationController.navigateToWithBack(
+                                          Routes.PATIENT_WEB_CONS_FORM);
                                     },
-                                  ),
-                                ),
-                              ],
-                            ),
+                                  );
+                                }
+                              } else {
+                                showErrorDialog(
+                                    errorTitle: 'action7'.tr,
+                                    errorDescription: 'action8'.tr);
+                              }
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 150,
+                          child: ActionCard(
+                              text: 'action2'.tr,
+                              color: verySoftOrange[60],
+                              secondaryColor: verySoftOrangeCustomColor,
+                              onTap: () {
+                                navigationController.navigateToWithBack(
+                                    Routes.PATIENT_MA_DETAILS);
+                              }),
+                        ),
+                        SizedBox(
+                          height: 150,
+                          child: ActionCard(
+                            text: 'action3'.tr,
+                            color: verySoftRed[60],
+                            secondaryColor: verySoftRedCustomColor,
+                            onTap: () {
+                              if (stats.patientStatus[0].pStatus!) {
+                                if (stats
+                                        .patientStatus[0].hasActiveQueueCons! &&
+                                    stats.patientStatus[0].hasActiveQueueMA!) {
+                                  dismissDialog();
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          selectQueueDialog(context));
+                                } else if (stats
+                                    .patientStatus[0].hasActiveQueueCons!) {
+                                  navigationController
+                                      .navigateToWithBack(Routes.Q_CONS_WEB);
+                                } else if (stats
+                                    .patientStatus[0].hasActiveQueueMA!) {
+                                  dismissDialog();
+                                  navigationController
+                                      .navigateToWithBack(Routes.Q_MA_WEB);
+                                } else {
+                                  showErrorDialog(
+                                      errorTitle: 'dialog3'.tr,
+                                      errorDescription: 'dialogsub3'.tr);
+                                }
+                              } else {
+                                showErrorDialog(
+                                    errorTitle: 'action7'.tr,
+                                    errorDescription: 'action8'.tr);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                      flex: 7,
-                      child: Container(
-                        padding: const EdgeInsets.only(right: 25),
-                        width: Get.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                DmText.title24Medium(
-                                  'Article',
-                                  color: neutralColor,
-                                ),
-                              ],
-                            ),
-                            verticalSpace15,
-                            Container(
-                                height: 470,
-                                child: SingleChildScrollView(
-                                    child: Obx(() => showArticles(context)))),
-                          ],
-                        ),
-                      )),
                 ],
               ),
-            ])));
+            ),
+          ),
+          Expanded(
+              flex: 7,
+              child: Container(
+                padding: const EdgeInsets.only(right: 25),
+                width: Get.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        DmText.title24Medium(
+                          'Article',
+                          color: neutralColor,
+                        ),
+                      ],
+                    ),
+                    verticalSpace15,
+                    Container(
+                        height: 470,
+                        child: SingleChildScrollView(
+                            child: Obx(() => showArticles(context)))),
+                  ],
+                ),
+              )),
+        ],
+      ),
+    ]));
   }
 
-  Widget selectQueueDialog() {
+  Widget selectQueueDialog(BuildContext context) {
     return SimpleDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: EdgeInsets.zero,
@@ -636,7 +627,7 @@ class ResponsiveView extends GetResponsiveView {
                 Radius.circular(40),
               )),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          width: Get.width * .3,
+          width: isMobile(context) ? Get.width * .8 : Get.width * .4,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             verticalSpace20,

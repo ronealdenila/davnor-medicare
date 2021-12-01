@@ -19,80 +19,82 @@ class PSWDStaffListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('PSWD Staff List',
-                textAlign: TextAlign.left, style: title24BoldNeutral80),
-            verticalSpace50,
-            Wrap(
-              runSpacing: 10,
-              children: <Widget>[
-                SizedBox(
-                  width: 450,
-                  child: CustomTextFormField(
-                    controller: pListController.pswdFilter,
-                    labelText: 'Search name here...',
-                    validator: Validator().notEmpty,
-                    onChanged: (value) {
-                      return;
-                    },
-                    onSaved: (value) =>
-                        pListController.pswdFilter.text = value!,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                  width: 250,
-                  child: CustomDropdown(
-                    hintText: 'Select position',
-                    dropdownItems: positionDropdown,
-                    onChanged: (item) {
-                      pListController.position.value = item!.name;
-                    },
-                    onSaved: (Item? item) =>
-                        pListController.position.value = item!.name,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                    height: 52,
-                    child: ElevatedButton(
-                      child: Text('Search'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
-                      ),
-                      onPressed: () {
-                        pListController.filter(
-                            name: pListController.pswdFilter.text,
-                            title: pListController.position.value);
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('PSWD Staff List',
+                  textAlign: TextAlign.left, style: title24BoldNeutral80),
+              verticalSpace50,
+              Wrap(
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    width: 450,
+                    child: CustomTextFormField(
+                      controller: pListController.pswdFilter,
+                      labelText: 'Search name here...',
+                      validator: Validator().notEmpty,
+                      onChanged: (value) {
+                        return;
                       },
-                    )),
-                horizontalSpace10,
-                SizedBox(
-                    height: 52,
-                    child: ElevatedButton(
-                      child: Text('Remove Filter'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
-                      ),
-                      onPressed: () {
-                        pListController.pswdFilter.clear();
-                        pListController.position.value = 'All';
-                        pListController.pswdList
-                            .assignAll(pListController.filteredPswdList);
+                      onSaved: (value) =>
+                          pListController.pswdFilter.text = value!,
+                    ),
+                  ),
+                  horizontalSpace18,
+                  SizedBox(
+                    width: 250,
+                    child: CustomDropdown(
+                      hintText: 'Select position',
+                      dropdownItems: positionDropdown,
+                      onChanged: (item) {
+                        pListController.position.value = item!.name;
                       },
-                    )),
+                      onSaved: (Item? item) =>
+                          pListController.position.value = item!.name,
+                    ),
+                  ),
+                  horizontalSpace18,
+                  SizedBox(
+                      height: 52,
+                      child: ElevatedButton(
+                        child: Text('Search'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue[900],
+                        ),
+                        onPressed: () {
+                          pListController.filter(
+                              name: pListController.pswdFilter.text,
+                              title: pListController.position.value);
+                        },
+                      )),
+                  horizontalSpace10,
+                  SizedBox(
+                      height: 52,
+                      child: ElevatedButton(
+                        child: Text('Remove Filter'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue[900],
+                        ),
+                        onPressed: () {
+                          pListController.pswdFilter.clear();
+                          pListController.position.value = 'All';
+                          pListController.pswdList
+                              .assignAll(pListController.filteredPswdList);
+                        },
+                      )),
 
-                //IconButton(onPressed: (){}, icon: Ico)
-              ],
-            ),
-            verticalSpace25,
-            header(),
-            Obx(() => requestList(context))
-          ],
+                  //IconButton(onPressed: (){}, icon: Ico)
+                ],
+              ),
+              verticalSpace25,
+              header(),
+              Obx(() => requestList(context))
+            ],
+          ),
         ),
       ),
     );

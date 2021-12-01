@@ -31,9 +31,14 @@ class MADescriptionWebScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      IconButton(onPressed: () {}, 
-                      icon: Icon(Icons.arrow_back_outlined,
-                      size: 30,)),
+                      IconButton(
+                          onPressed: () {
+                            navigationController.goBack();
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_outlined,
+                            size: 30,
+                          )),
                       Text(
                         'Medical Assistance (MA)',
                         style: title40Medium,

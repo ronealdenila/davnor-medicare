@@ -35,75 +35,37 @@ class ResponsiveView extends GetResponsiveView {
   final NavigationController navigationController = Get.find();
 
   @override
-  Widget phone() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              Column(
-                children: <Widget>[
-                  horizontalSpace20,
-                  editInfoDoc(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons()
-            ]),
-          )
-        ],
-      );
+  Widget tablet() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        textTitle(),
+        verticalSpace25,
+        Column(
+          children: <Widget>[
+            userDoctorImage(),
+            horizontalSpace25,
+            editInfoDoc(),
+          ],
+        ),
+        verticalSpace25,
+        screenButtons(),
+      ]);
 
   @override
-  Widget tablet() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              verticalSpace25,
-              Column(
-                children: <Widget>[
-                  userDoctorImage(),
-                  horizontalSpace25,
-                  editInfoDoc(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons(),
-            ]),
-          )
-        ],
-      );
-
-  @override
-  Widget desktop() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: screen.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              verticalSpace25,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  userDoctorImage(),
-                  horizontalSpace25,
-                  editInfoDoc(),
-                ],
-              ),
-              verticalSpace15,
-              screenButtons(),
-            ]),
-          ),
-        ],
-      );
+  Widget desktop() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        textTitle(),
+        verticalSpace25,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            userDoctorImage(),
+            horizontalSpace25,
+            editInfoDoc(),
+          ],
+        ),
+        verticalSpace15,
+        screenButtons(),
+      ]);
 
   Widget screenButtons() {
     return Row(

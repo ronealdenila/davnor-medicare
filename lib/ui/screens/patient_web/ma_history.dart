@@ -142,10 +142,12 @@ class ResponsiveBody extends GetResponsiveView {
                 ),
                 height: Get.height,
                 width: Get.width * .7,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Obx(
-                    () => RequestsInfoView(),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Obx(
+                      () => RequestsInfoView(),
+                    ),
                   ),
                 )))
       ],

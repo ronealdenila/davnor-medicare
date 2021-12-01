@@ -239,14 +239,14 @@ class ResponsiveView extends GetResponsiveView {
   Widget desktopVersion() {
     return SingleChildScrollView(
       child: Container(
-        height: Get.height - 95,
+        height: 850,
         child: Column(
           children: [
             Container(
               margin: const EdgeInsets.all(25),
               padding: const EdgeInsets.all(25),
               width: Get.width,
-              height: Get.height * .2,
+              height: 200,
               decoration: const BoxDecoration(
                 color: kcVerySoftBlueColor,
                 borderRadius: BorderRadius.all(
@@ -348,8 +348,10 @@ class ResponsiveView extends GetResponsiveView {
                           ),
                           verticalSpace15,
                           Container(
+                            height: 482,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   height: 150,
@@ -419,7 +421,7 @@ class ResponsiveView extends GetResponsiveView {
                                       children: [
                                         Container(
                                           width: Get.width * .7,
-                                          height: 470,
+                                          height: 482,
                                           padding: const EdgeInsets.all(25),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
@@ -524,7 +526,7 @@ class ResponsiveView extends GetResponsiveView {
                                                 children: [
                                                   Expanded(
                                                     child: Container(
-                                                      height: Get.height * .35,
+                                                      height: 320,
                                                       decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -599,7 +601,7 @@ class ResponsiveView extends GetResponsiveView {
                                                   Expanded(
                                                     flex: 2,
                                                     child: Container(
-                                                      height: Get.height * .35,
+                                                      height: 320,
                                                       padding:
                                                           const EdgeInsets.only(
                                                               left: 30),
@@ -681,6 +683,7 @@ class ResponsiveView extends GetResponsiveView {
                                                 padding:
                                                     const EdgeInsets.all(25),
                                                 width: Get.width,
+                                                height: 140,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
@@ -742,7 +745,7 @@ class ResponsiveView extends GetResponsiveView {
           margin: const EdgeInsets.all(25),
           padding: const EdgeInsets.all(25),
           width: Get.width,
-          height: Get.height * .2,
+          height: 200,
           decoration: const BoxDecoration(
             color: kcVerySoftBlueColor,
             borderRadius: BorderRadius.all(
@@ -990,7 +993,7 @@ class ResponsiveView extends GetResponsiveView {
             children: [
               Expanded(
                 child: Container(
-                  height: Get.height * .35,
+                  height: 320,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -1017,8 +1020,7 @@ class ResponsiveView extends GetResponsiveView {
                       Obx(
                         () => AutoSizeText(
                           '${pListController.pswdList.length}',
-                          style:
-                              title130Bold.copyWith(color: kcVerySoftBlueColor),
+                          style: title90BoldBlue,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -1043,7 +1045,7 @@ class ResponsiveView extends GetResponsiveView {
               Expanded(
                 flex: 2,
                 child: Container(
-                  height: Get.height * .35,
+                  height: 320,
                   padding: const EdgeInsets.only(left: 30),
                   decoration: BoxDecoration(
                     color: Colors.white,

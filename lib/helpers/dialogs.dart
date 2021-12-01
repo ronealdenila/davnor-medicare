@@ -88,7 +88,7 @@ void showConfirmationDialog({
       child: Stack(
         children: <Widget>[
           Container(
-            width: Get.width * .8,
+            width: kIsWeb ? 400 : Get.width * .9,
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
             margin: const EdgeInsets.only(top: 13),
             decoration: BoxDecoration(

@@ -233,7 +233,7 @@ Widget tabletVersion(BuildContext context) {
       margin: const EdgeInsets.all(25),
       padding: const EdgeInsets.all(25),
       width: Get.width,
-      height: Get.height * .2,
+      height: 200,
       decoration: const BoxDecoration(
         color: kcVerySoftBlueColor,
         borderRadius: BorderRadius.all(
@@ -461,7 +461,7 @@ Widget desktopVersion(BuildContext context) {
   final fetchedData = authController.doctorModel.value;
   return SingleChildScrollView(
     child: Container(
-      height: Get.height - 55,
+      height: 850,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -476,7 +476,7 @@ Widget desktopVersion(BuildContext context) {
             margin: const EdgeInsets.all(25),
             padding: const EdgeInsets.all(25),
             width: Get.width,
-            height: Get.height * .2,
+            height: 200,
             decoration: const BoxDecoration(
               color: kcVerySoftBlueColor,
               borderRadius: BorderRadius.all(

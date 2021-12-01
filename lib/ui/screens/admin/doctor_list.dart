@@ -19,93 +19,96 @@ class DoctorListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Doctors List',
-                textAlign: TextAlign.left, style: title29BoldNeutral80),
-            verticalSpace50,
-            Wrap(
-              runSpacing: 10,
-              children: <Widget>[
-                SizedBox(
-                  width: 450,
-                  child: CustomTextFormField(
-                    controller: dListController.docFilter,
-                    labelText: 'Search doctor name here...',
-                    validator: Validator().notEmpty,
-                    onChanged: (value) {
-                      return;
-                    },
-                    onSaved: (value) => dListController.docFilter.text = value!,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                  width: 250,
-                  child: CustomDropdown(
-                    hintText: 'Select doctor title',
-                    dropdownItems: titleDropdown,
-                    onChanged: (Item? item) {
-                      dListController.title.value = item!.name;
-                    },
-                    onSaved: (Item? item) =>
-                        dListController.title.value = item!.name,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                  width: 300,
-                  child: CustomDropdown(
-                    hintText: 'Select doctor department',
-                    dropdownItems: deptDropdown,
-                    onChanged: (Item? item) {
-                      dListController.department.value = item!.name;
-                    },
-                    onSaved: (Item? item) =>
-                        dListController.department.value = item!.name,
-                  ),
-                ),
-                horizontalSpace18,
-                SizedBox(
-                    height: 52,
-                    child: ElevatedButton(
-                      child: Text('Search'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
-                      ),
-                      onPressed: () {
-                        dListController.filter(
-                            name: dListController.docFilter.text,
-                            title: dListController.title.value,
-                            dept: dListController.department.value);
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Doctors List',
+                  textAlign: TextAlign.left, style: title29BoldNeutral80),
+              verticalSpace50,
+              Wrap(
+                runSpacing: 10,
+                children: <Widget>[
+                  SizedBox(
+                    width: 450,
+                    child: CustomTextFormField(
+                      controller: dListController.docFilter,
+                      labelText: 'Search doctor name here...',
+                      validator: Validator().notEmpty,
+                      onChanged: (value) {
+                        return;
                       },
-                    )),
-                horizontalSpace10,
-                SizedBox(
-                    height: 52,
-                    child: ElevatedButton(
-                      child: Text('Remove Filter'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
-                      ),
-                      onPressed: () {
-                        dListController.docFilter.clear();
-                        dListController.title.value = '';
-                        dListController.department.value = '';
-                        dListController.doctorList
-                            .assignAll(dListController.filteredDoctorList);
+                      onSaved: (value) =>
+                          dListController.docFilter.text = value!,
+                    ),
+                  ),
+                  horizontalSpace18,
+                  SizedBox(
+                    width: 250,
+                    child: CustomDropdown(
+                      hintText: 'Select doctor title',
+                      dropdownItems: titleDropdown,
+                      onChanged: (Item? item) {
+                        dListController.title.value = item!.name;
                       },
-                    )),
-                //IconButton(onPressed: (){}, icon: Ico)
-              ],
-            ),
-            verticalSpace25,
-            header(),
-            Obx(() => requestList(context))
-          ],
+                      onSaved: (Item? item) =>
+                          dListController.title.value = item!.name,
+                    ),
+                  ),
+                  horizontalSpace18,
+                  SizedBox(
+                    width: 300,
+                    child: CustomDropdown(
+                      hintText: 'Select doctor department',
+                      dropdownItems: deptDropdown,
+                      onChanged: (Item? item) {
+                        dListController.department.value = item!.name;
+                      },
+                      onSaved: (Item? item) =>
+                          dListController.department.value = item!.name,
+                    ),
+                  ),
+                  horizontalSpace18,
+                  SizedBox(
+                      height: 52,
+                      child: ElevatedButton(
+                        child: Text('Search'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue[900],
+                        ),
+                        onPressed: () {
+                          dListController.filter(
+                              name: dListController.docFilter.text,
+                              title: dListController.title.value,
+                              dept: dListController.department.value);
+                        },
+                      )),
+                  horizontalSpace10,
+                  SizedBox(
+                      height: 52,
+                      child: ElevatedButton(
+                        child: Text('Remove Filter'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue[900],
+                        ),
+                        onPressed: () {
+                          dListController.docFilter.clear();
+                          dListController.title.value = '';
+                          dListController.department.value = '';
+                          dListController.doctorList
+                              .assignAll(dListController.filteredDoctorList);
+                        },
+                      )),
+                  //IconButton(onPressed: (){}, icon: Ico)
+                ],
+              ),
+              verticalSpace25,
+              header(),
+              Obx(() => requestList(context))
+            ],
+          ),
         ),
       ),
     );

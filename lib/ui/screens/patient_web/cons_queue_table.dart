@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_queue_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -13,6 +14,7 @@ class QueueConsTableWebScreen extends StatelessWidget {
   final StatusController stats = Get.find();
   final RxString title = ''.obs;
   final RxString department = ''.obs;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,14 @@ class QueueConsTableWebScreen extends StatelessWidget {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IconButton(onPressed: () {}, 
-                                icon: Icon(Icons.arrow_back_outlined,
-                                size: 30,)),
+                                IconButton(
+                                    onPressed: () {
+                                      navigationController.goBack();
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_outlined,
+                                      size: 30,
+                                    )),
                                 Text(
                                   'maqueue1'.tr,
                                   style: subtitle18Medium,

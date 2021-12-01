@@ -188,7 +188,7 @@ class ResponsiveView extends GetResponsiveView {
   Widget desktopVersion() {
     return SingleChildScrollView(
       child: Container(
-        height: Get.height,
+        height: 850,
         child: Column(
           children: [
             Container(
@@ -214,415 +214,410 @@ class ResponsiveView extends GetResponsiveView {
                 ],
               ),
             ),
-            Container(
-              child: Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            // color: Colors.blue,
-                            child: DmText.title24Medium(
-                              'Actions',
-                              color: neutralColor,
-                            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          // color: Colors.blue,
+                          child: DmText.title24Medium(
+                            'Actions',
+                            color: neutralColor,
                           ),
-                          verticalSpace15,
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                    text: 'Register a doctor',
-                                    onTap: () {
-                                      navigationController.navigateToWithBack(
-                                          Routes.DOCTOR_REGISTRATION);
-                                    },
-                                    color: verySoftMagenta[60],
-                                    secondaryColor: verySoftMagentaCustomColor,
-                                  ),
+                        ),
+                        verticalSpace15,
+                        Container(
+                          height: 482,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                  text: 'Register a doctor',
+                                  onTap: () {
+                                    navigationController.navigateToWithBack(
+                                        Routes.DOCTOR_REGISTRATION);
+                                  },
+                                  color: verySoftMagenta[60],
+                                  secondaryColor: verySoftMagentaCustomColor,
                                 ),
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                    text: 'Add a PSWD\nPersonnel',
-                                    onTap: () {
-                                      navigationController.navigateToWithBack(
-                                          Routes.PSWD_STAFF_REGISTRATION);
-                                    },
-                                    color: verySoftOrange[60],
-                                    secondaryColor: verySoftOrangeCustomColor,
-                                  ),
+                              ),
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                  text: 'Add a PSWD\nPersonnel',
+                                  onTap: () {
+                                    navigationController.navigateToWithBack(
+                                        Routes.PSWD_STAFF_REGISTRATION);
+                                  },
+                                  color: verySoftOrange[60],
+                                  secondaryColor: verySoftOrangeCustomColor,
                                 ),
-                                SizedBox(
-                                  height: 150,
-                                  child: ActionCard(
-                                    text: 'Verify User',
-                                    onTap: () {
-                                      menuController.changeActiveItemTo(
-                                          'Verification Requests');
-                                      navigationController.navigateTo(
-                                          Routes.VERIFICATION_REQ_LIST);
-                                    },
-                                    color: verySoftRed[60],
-                                    secondaryColor: verySoftRedCustomColor,
-                                  ),
+                              ),
+                              SizedBox(
+                                height: 150,
+                                child: ActionCard(
+                                  text: 'Verify User',
+                                  onTap: () {
+                                    menuController.changeActiveItemTo(
+                                        'Verification Requests');
+                                    navigationController.navigateTo(
+                                        Routes.VERIFICATION_REQ_LIST);
+                                  },
+                                  color: verySoftRed[60],
+                                  secondaryColor: verySoftRedCustomColor,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          verticalSpace25,
-                          DmText.title24Medium(
-                            'Davnor Medicare Data',
-                            color: kcNeutralColor,
-                          ),
-                          verticalSpace15,
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: Get.width * .7,
-                                          padding: const EdgeInsets.all(25),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(
-                                                    0.5), //color of shadow
-                                                spreadRadius: 5, //spread radius
-                                                blurRadius: 7, // blur radius
-                                                offset: const Offset(4,
-                                                    8), //  changes position of shadow
-                                              ),
-                                            ],
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text: 'As Of Now',
-                                                        style: title32Bold.copyWith(
-                                                            color:
-                                                                kcNeutralColor),
-                                                      ),
-                                                      TextSpan(
-                                                        text:
-                                                            '(${appController.dateNow})',
-                                                        style:
-                                                            subtitle18Regular,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              DmText.subtitle18Regular(
-                                                medicareDataSubtitle,
-                                              ),
-                                              verticalSpace20,
-                                              Align(
-                                                child: Obx(
-                                                  () => AutoSizeText(
-                                                    '${dListController.doctorList.length}',
-                                                    style: title130Bold.copyWith(
-                                                        color:
-                                                            kcVerySoftBlueColor),
-                                                    maxLines: 1,
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                child: DmText.title32Bold(
-                                                    'Doctors'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  menuController
-                                                      .changeActiveItemTo(
-                                                          'List Of Doctors');
-                                                  navigationController
-                                                      .navigateTo(
-                                                          Routes.DOCTOR_LIST);
-                                                },
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpace25,
+                        DmText.title24Medium(
+                          'Davnor Medicare Data',
+                          color: kcNeutralColor,
+                        ),
+                        verticalSpace15,
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 482,
+                                        width: Get.width * .7,
+                                        padding: const EdgeInsets.all(25),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(
+                                                  0.5), //color of shadow
+                                              spreadRadius: 5, //spread radius
+                                              blurRadius: 7, // blur radius
+                                              offset: const Offset(4,
+                                                  8), //  changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: RichText(
+                                                text: TextSpan(
                                                   children: [
-                                                    DmText.body16Regular(
-                                                        'View Doctors'),
-                                                    const Icon(
-                                                        Icons.chevron_right),
+                                                    TextSpan(
+                                                      text: 'As Of Now',
+                                                      style: title32Bold.copyWith(
+                                                          color:
+                                                              kcNeutralColor),
+                                                    ),
+                                                    TextSpan(
+                                                      text:
+                                                          '(${appController.dateNow})',
+                                                      style: subtitle18Regular,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            DmText.subtitle18Regular(
+                                              medicareDataSubtitle,
+                                            ),
+                                            verticalSpace20,
+                                            Align(
+                                              child: Obx(
+                                                () => AutoSizeText(
+                                                  '${dListController.doctorList.length}',
+                                                  style: title130Bold.copyWith(
+                                                      color:
+                                                          kcVerySoftBlueColor),
+                                                  maxLines: 1,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              child:
+                                                  DmText.title32Bold('Doctors'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                menuController
+                                                    .changeActiveItemTo(
+                                                        'List Of Doctors');
+                                                navigationController.navigateTo(
+                                                    Routes.DOCTOR_LIST);
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  DmText.body16Regular(
+                                                      'View Doctors'),
+                                                  const Icon(
+                                                      Icons.chevron_right),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          flex: 6,
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.5), //color of shadow
-                                                            spreadRadius:
-                                                                3, //spread radius
-                                                            blurRadius:
-                                                                4, // blur radius
-                                                            offset: const Offset(
-                                                                4,
-                                                                8), // position of shadow
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 25),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 6,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    height: 320,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.5), //color of shadow
+                                                          spreadRadius:
+                                                              3, //spread radius
+                                                          blurRadius:
+                                                              4, // blur radius
+                                                          offset: const Offset(
+                                                              4,
+                                                              8), // position of shadow
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        AutoSizeText(
+                                                          'The application has',
+                                                          style: body16Regular
+                                                              .copyWith(
+                                                            color:
+                                                                kcNeutralColor,
                                                           ),
-                                                        ],
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          AutoSizeText(
-                                                            'The application has',
-                                                            style: body16Regular
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        ),
+                                                        Obx(
+                                                          () => AutoSizeText(
+                                                            '${pListController.pswdList.length}',
+                                                            style: title130Bold
                                                                 .copyWith(
-                                                              color:
-                                                                  kcNeutralColor,
-                                                            ),
+                                                                    color:
+                                                                        kcVerySoftBlueColor),
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
                                                             maxLines: 1,
                                                           ),
-                                                          Obx(
-                                                            () => AutoSizeText(
-                                                              '${pListController.pswdList.length}',
-                                                              style: title130Bold
-                                                                  .copyWith(
-                                                                      color:
-                                                                          kcVerySoftBlueColor),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              maxLines: 1,
-                                                            ),
+                                                        ),
+                                                        DmText.subtitle20Medium(
+                                                          'PSWD Personnel',
+                                                        ),
+                                                        const AutoSizeText(
+                                                          cardSubtitle1,
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
                                                           ),
-                                                          DmText
-                                                              .subtitle20Medium(
-                                                            'PSWD Personnel',
-                                                          ),
-                                                          const AutoSizeText(
-                                                            cardSubtitle1,
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            maxLines: 2,
-                                                          ),
-                                                        ],
-                                                      ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                  horizontalSpace25,
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 30),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.5), //color of shadow
-                                                            spreadRadius:
-                                                                5, //spread radius
-                                                            blurRadius:
-                                                                7, // blur radius
-                                                            offset: const Offset(
-                                                                4,
-                                                                8), // / changes position of shadow
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: DmText
-                                                                .title24Medium(
-                                                              'VERIFIED \nUSERS',
-                                                              color:
-                                                                  neutralColor,
-                                                            ),
-                                                          ),
-                                                          StreamBuilder<
-                                                                  DocumentSnapshot>(
-                                                              stream: firestore
-                                                                  .collection(
-                                                                      'app_status')
-                                                                  .doc(
-                                                                      'verified_users')
-                                                                  .snapshots(),
-                                                              builder: (context,
-                                                                  snapshot) {
-                                                                if (!snapshot
-                                                                        .hasData ||
-                                                                    snapshot
-                                                                        .hasError) {
-                                                                  return Text(
-                                                                      '0');
-                                                                }
-                                                                final map = snapshot
-                                                                        .data!
-                                                                        .data()
-                                                                    as Map;
-                                                                return Text(
-                                                                  '${map['count']}',
-                                                                  style:
-                                                                      title90BoldBlue,
-                                                                );
-                                                              }),
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .bottomRight,
-                                                            child: TextButton(
-                                                              onPressed: () {
-                                                                menuController
-                                                                    .changeActiveItemTo(
-                                                                        'Verification Requests');
-                                                                navigationController
-                                                                    .navigateTo(
-                                                                        Routes
-                                                                            .VERIFICATION_REQ_LIST);
-                                                              },
-                                                              child: Wrap(
-                                                                  children: [
-                                                                    DmText
-                                                                        .body16Regular(
-                                                                      'See Verification Requests',
-                                                                    ),
-                                                                    const Icon(Icons
-                                                                        .chevron_right),
-                                                                  ]),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                ),
+                                                horizontalSpace25,
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    height: 320,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 30),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.5), //color of shadow
+                                                          spreadRadius:
+                                                              5, //spread radius
+                                                          blurRadius:
+                                                              7, // blur radius
+                                                          offset: const Offset(
+                                                              4,
+                                                              8), // / changes position of shadow
+                                                        ),
+                                                      ],
                                                     ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: DmText
+                                                              .title24Medium(
+                                                            'VERIFIED \nUSERS',
+                                                            color: neutralColor,
+                                                          ),
+                                                        ),
+                                                        StreamBuilder<
+                                                                DocumentSnapshot>(
+                                                            stream: firestore
+                                                                .collection(
+                                                                    'app_status')
+                                                                .doc(
+                                                                    'verified_users')
+                                                                .snapshots(),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              if (!snapshot
+                                                                      .hasData ||
+                                                                  snapshot
+                                                                      .hasError) {
+                                                                return Text(
+                                                                    '0');
+                                                              }
+                                                              final map =
+                                                                  snapshot.data!
+                                                                          .data()
+                                                                      as Map;
+                                                              return Text(
+                                                                '${map['count']}',
+                                                                style:
+                                                                    title90BoldBlue,
+                                                              );
+                                                            }),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomRight,
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              menuController
+                                                                  .changeActiveItemTo(
+                                                                      'Verification Requests');
+                                                              navigationController
+                                                                  .navigateTo(Routes
+                                                                      .VERIFICATION_REQ_LIST);
+                                                            },
+                                                            child:
+                                                                Wrap(children: [
+                                                              DmText
+                                                                  .body16Regular(
+                                                                'See Verification Requests',
+                                                              ),
+                                                              const Icon(Icons
+                                                                  .chevron_right),
+                                                            ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            verticalSpace20,
+                                            Container(
+                                              // color: Colors.green,
+                                              padding: const EdgeInsets.all(25),
+                                              width: Get.width,
+                                              height: 140,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(
+                                                        0.5), //color of shadow
+                                                    spreadRadius:
+                                                        5, //spread radius
+                                                    blurRadius:
+                                                        7, // blur radius
+                                                    offset: const Offset(4,
+                                                        8), //  changes position of shadow
                                                   ),
                                                 ],
                                               ),
-                                              verticalSpace20,
-                                              Container(
-                                                // color: Colors.green,
-                                                padding:
-                                                    const EdgeInsets.all(25),
-                                                width: Get.width,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(
-                                                              0.5), //color of shadow
-                                                      spreadRadius:
-                                                          5, //spread radius
-                                                      blurRadius:
-                                                          7, // blur radius
-                                                      offset: const Offset(4,
-                                                          8), //  changes position of shadow
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    DmText.title32Bold(
-                                                      'DavNor Medicare',
-                                                      color: kcNeutralColor,
-                                                    ),
-                                                    DmText.body16Regular(
-                                                      cardSubtitle2,
-                                                      color: kcNeutralColor,
-                                                    ),
-                                                  ],
-                                                ),
+                                              child: Column(
+                                                children: [
+                                                  DmText.title32Bold(
+                                                    'DavNor Medicare',
+                                                    color: kcNeutralColor,
+                                                  ),
+                                                  DmText.body16Regular(
+                                                    cardSubtitle2,
+                                                    color: kcNeutralColor,
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

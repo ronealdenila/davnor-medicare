@@ -97,163 +97,167 @@ class LiveConsultationWeb extends StatelessWidget {
 
   Widget RequestsInfoView(
       BuildContext context, LiveConsultationModel liveCons) {
-    return Column(children: <Widget>[
-      Container(
-        width: Get.width,
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Color(0xFFCBD4E1),
-            ),
-          ),
-        ),
-        child: Column(children: <Widget>[
-          verticalSpace15,
-          Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
+    return SingleChildScrollView(
+      child: Column(children: <Widget>[
+        Container(
+          width: Get.width,
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Color(0xFFCBD4E1),
               ),
-              child: getPhotoInfo(liveCons)),
-          verticalSpace15,
-          Text(
-            liveCont.getPatientName(liveCons),
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            style: subtitle18Medium,
-            textAlign: TextAlign.center,
-          ),
-          verticalSpace25
-        ]),
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          verticalSpace35,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: const Text('Actions',
-                textAlign: TextAlign.left, style: body16Regular),
-          ),
-          InkWell(
-            onTap: () {
-              confirmationDialog();
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              width: Get.width,
-              child: const Text('End Consultation',
-                  textAlign: TextAlign.left, style: subtitle18Medium),
             ),
           ),
-          InkWell(
-            onTap: () {
-              showDialog(
-                  context: context, builder: (context) => skipDialog(liveCons));
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              width: Get.width,
-              child: const Text('Skip Consultation',
-                  textAlign: TextAlign.left, style: subtitle18Medium),
+          child: Column(children: <Widget>[
+            verticalSpace15,
+            Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: getPhotoInfo(liveCons)),
+            verticalSpace15,
+            Text(
+              liveCont.getPatientName(liveCons),
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: subtitle18Medium,
+              textAlign: TextAlign.center,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Text('Consultation Info',
-                    textAlign: TextAlign.left,
-                    style:
-                        body16Regular.copyWith(color: const Color(0xFF727F8D))),
-                verticalSpace20,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text(liveCons.fullName!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Age of Patient',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text('${liveCons.age!}',
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Date Requested',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text(
-                          liveCont.convertTimeStamp(liveCons.dateRqstd!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-                verticalSpace15,
-                Wrap(
-                  runSpacing: 8,
-                  children: [
-                    const SizedBox(
-                      width: 170,
-                      child: Text('Consultation Started',
-                          textAlign: TextAlign.left, style: body14SemiBold),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text(
-                          liveCont.convertTimeStamp(liveCons.dateConsStart!),
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: body14Regular),
-                    ),
-                  ],
-                ),
-              ],
+            verticalSpace25
+          ]),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            verticalSpace35,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: const Text('Actions',
+                  textAlign: TextAlign.left, style: body16Regular),
             ),
-          ),
-        ],
-      ),
-    ]);
+            InkWell(
+              onTap: () {
+                confirmationDialog();
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                width: Get.width,
+                child: const Text('End Consultation',
+                    textAlign: TextAlign.left, style: subtitle18Medium),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => skipDialog(liveCons));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                width: Get.width,
+                child: const Text('Skip Consultation',
+                    textAlign: TextAlign.left, style: subtitle18Medium),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Consultation Info',
+                      textAlign: TextAlign.left,
+                      style: body16Regular.copyWith(
+                          color: const Color(0xFF727F8D))),
+                  verticalSpace20,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: Text(liveCons.fullName!,
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Age of Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: Text('${liveCons.age!}',
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Date Requested',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                            liveCont.convertTimeStamp(liveCons.dateRqstd!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Consultation Started',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                            liveCont.convertTimeStamp(liveCons.dateConsStart!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            verticalSpace15
+          ],
+        ),
+      ]),
+    );
   }
 
   Widget topHeaderRequestWeb() {
@@ -548,12 +552,11 @@ class LiveConsultationWeb extends StatelessWidget {
         onForegroundImageError: (_, __) {
           errorPhoto2.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: neutralColor,
         child: Obx(
           () => errorPhoto2.value
-              ? Text(
-                  '${liveCont.getPatientFirstName(model)[0]}',
-                )
+              ? Text('${liveCont.getPatientFirstName(model)[0]}',
+                  style: title24BoldWhite)
               : SizedBox(
                   height: 0,
                   width: 0,

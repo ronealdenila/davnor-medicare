@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -9,6 +10,8 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+
+final PSWDStaffListController controller = Get.find();
 
 class EditPSWDStaffScrenn extends StatelessWidget {
   EditPSWDStaffScrenn({Key? key, required this.passedData}) : super(key: key);
@@ -31,53 +34,37 @@ class ResponsiveView extends GetResponsiveView {
   final NavigationController navigationController = Get.find();
 
   @override
-  Widget tablet() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              verticalSpace25,
-              Column(
-                children: <Widget>[
-                  userPSWDImage(),
-                  horizontalSpace25,
-                  editInfoofPSWDStaff(),
-                ],
-              ),
-              verticalSpace25,
-              screenButtons(),
-            ]),
-          )
-        ],
-      );
+  Widget tablet() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        textTitle(),
+        verticalSpace25,
+        Column(
+          children: <Widget>[
+            userPSWDImage(),
+            horizontalSpace25,
+            editInfoofPSWDStaff(),
+          ],
+        ),
+        verticalSpace25,
+        screenButtons(),
+      ]);
 
   @override
-  Widget desktop() => Column(
-        children: [
-          SizedBox(
-            height: Get.height,
-            width: screen.width,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              textTitle(),
-              verticalSpace25,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  userPSWDImage(),
-                  horizontalSpace25,
-                  editInfoofPSWDStaff(),
-                ],
-              ),
-              verticalSpace15,
-              screenButtons(),
-            ]),
-          ),
-        ],
-      );
+  Widget desktop() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        textTitle(),
+        verticalSpace25,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            userPSWDImage(),
+            horizontalSpace25,
+            editInfoofPSWDStaff(),
+          ],
+        ),
+        verticalSpace15,
+        screenButtons(),
+      ]);
 
   Widget screenButtons() {
     return Row(

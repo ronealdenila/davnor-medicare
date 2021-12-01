@@ -58,7 +58,6 @@ class ResponsiveBody extends GetResponsiveView {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Container(
-                    width: 250,
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),

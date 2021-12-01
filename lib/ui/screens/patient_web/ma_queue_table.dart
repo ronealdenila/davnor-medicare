@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 class QueueMATableWebScreen extends StatelessWidget {
   final MAQueueController maQueueController = Get.put(MAQueueController());
   final StatusController stats = Get.find();
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,12 @@ class QueueMATableWebScreen extends StatelessWidget {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          IconButton(onPressed: () {}, 
-                          icon: Icon(Icons.arrow_back_outlined,
-                          size: 30,)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.arrow_back_outlined,
+                                size: 30,
+                              )),
                           Text(
                             'maqueue1'.tr,
                             style: subtitle18Medium,
