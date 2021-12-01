@@ -82,19 +82,33 @@ class ConsHistoryScreen extends StatelessWidget {
                             ),
                           ),
                           horizontalSpace10,
-                          SizedBox(
-                              height: 50,
-                              child: ElevatedButton(
-                                child: Icon(
-                                  Icons.refresh,
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: verySoftBlueColor[100],
-                                ),
-                                onPressed: () {
-                                  consHController.refresh();
-                                },
-                              )),
+                          Card(
+                            elevation: 6,
+                            child: SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                  child: Icon(
+                                    Icons.refresh,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: verySoftBlueColor[100],
+                                  ),
+                                  onPressed: () {
+                                    if (consHController.isLoading.value) {
+                                      showErrorDialog(
+                                          errorTitle: 'ERROR',
+                                          errorDescription: 'conslog'.tr);
+                                    } else if (consHController
+                                        .consHistory.isEmpty) {
+                                      showErrorDialog(
+                                          errorTitle: 'ERROR',
+                                          errorDescription: 'conslog1'.tr);
+                                    } else {
+                                      consHController.refresh();
+                                    }
+                                  },
+                                )),
+                          ),
                         ],
                       ),
                     ),

@@ -83,19 +83,33 @@ class MAHistoryScreen extends StatelessWidget {
                             ),
                           ),
                           horizontalSpace10,
-                          SizedBox(
-                              height: 50,
-                              child: ElevatedButton(
-                                child: Icon(
-                                  Icons.refresh,
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: verySoftBlueColor[100],
-                                ),
-                                onPressed: () {
-                                  maHController.refresh();
-                                },
-                              )),
+                          Card(
+                            elevation: 6,
+                            child: SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                  child: Icon(
+                                    Icons.refresh,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: verySoftBlueColor[100],
+                                  ),
+                                  onPressed: () {
+                                    if (maHController.isLoading.value) {
+                                      showErrorDialog(
+                                          errorTitle: 'ERROR',
+                                          errorDescription: 'mahrec1'.tr);
+                                    } else if (maHController
+                                        .maHistoryList.isEmpty) {
+                                      showErrorDialog(
+                                          errorTitle: 'ERROR',
+                                          errorDescription: 'mahrec2'.tr);
+                                    } else {
+                                      maHController.refresh();
+                                    }
+                                  },
+                                )),
+                          ),
                         ],
                       ),
                     ),

@@ -32,8 +32,8 @@ class CustomButton extends Container {
       padding: buttonPadding,
       child: Text(
         text!,
-        style: subtitle20Medium.copyWith(
-          fontSize: fontSize,
+        style: body16SemiBold.copyWith(
+          //fontSize: fontSize,
           color: Colors.white,
         ),
       ),
@@ -74,4 +74,3 @@ class PSWDButton extends StatelessWidget {
     );
   }
 }
-

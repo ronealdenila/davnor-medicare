@@ -228,7 +228,7 @@ appInfoDialog(BuildContext context) {
                           ]),
                       verticalSpace18,
                       const Text(
-                        'Splast screen animation from:',
+                        'Splash screen animation from:',
                         textAlign: TextAlign.left,
                         style: subtitle16Bold,
                       ),

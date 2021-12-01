@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_form.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -30,7 +31,7 @@ class MADescriptionScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -151,8 +152,9 @@ class MADescriptionScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                verticalSpace15,
                 Align(child: availMAButton()),
+                verticalSpace20
               ],
             ),
           ),
