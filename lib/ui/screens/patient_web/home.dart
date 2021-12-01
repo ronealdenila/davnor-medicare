@@ -34,21 +34,21 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class PatientWebHomeScreen extends StatelessWidget {
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
   static AppController appController = Get.find();
   final PatientMenuController menuController =
       Get.put(PatientMenuController(), permanent: true);
   final GlobalKey<ScaffoldState> scaffoldKeyP = GlobalKey();
-  final NavigationController navigationController = Get.find();
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
-  final ArticleController articleService = Get.put(ArticleController());
+  final ArticleController articleService =
+      Get.put(ArticleController()); //not perma
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
   final NotifController notifController =
       Get.put(NotifController(), permanent: true);
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
   final AuthController authController = Get.find();
 
   @override

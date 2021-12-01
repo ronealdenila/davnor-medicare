@@ -26,12 +26,11 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKeyPS = GlobalKey();
   final AttachedPhotosController pswdController =
-      Get.put(AttachedPhotosController());
-  final NavigationController navigationController =
-      Get.put(NavigationController());
+      Get.put(AttachedPhotosController(), permanent: true);
   final AppController appController = Get.find();
   final StatusController stats = Get.put(StatusController(), permanent: true);
-  final MenuController menuController = Get.put(MenuController());
+  final MenuController menuController =
+      Get.put(MenuController(), permanent: true);
   final ForApprovalController faController =
       Get.put(ForApprovalController(), permanent: true);
   final OnProgressReqController opController =

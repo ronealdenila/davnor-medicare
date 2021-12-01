@@ -26,14 +26,12 @@ import 'package:flutter/cupertino.dart';
 class AdminHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKeyA = GlobalKey();
   static AuthController authController = Get.find();
-  final NavigationController navigationController =
-      Get.put(NavigationController(), permanent: true);
   final AdminMenuController menuController =
       Get.put(AdminMenuController(), permanent: true);
   final DoctorRegistrationController doctorRegistrationController =
       Get.put(DoctorRegistrationController());
   final PSWDRegistrationController pswdRegistrationController =
-      Get.put(PSWDRegistrationController());
+      Get.put(PSWDRegistrationController(), permanent: true);
   final fetchedData = authController.adminModel.value;
   final PSWDStaffListController pListController =
       Get.put(PSWDStaffListController(), permanent: true);

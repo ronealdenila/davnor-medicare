@@ -138,7 +138,7 @@ class ReleasingMAController extends GetxController {
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       maHController.refreshPSWD();
-      goBack();
+      //goBack();
     }).catchError((onError) {
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no

@@ -279,6 +279,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
           faController.refresh();
+          dismissDialog();
         });
       },
       onNoTap: () {

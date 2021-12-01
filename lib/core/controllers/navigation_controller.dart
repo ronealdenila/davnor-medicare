@@ -5,7 +5,10 @@ class NavigationController extends GetxController {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   Future<void> navigateTo(String routeName) {
-    return navigatorKey.currentState!.pushReplacementNamed(routeName);
+    //return navigatorKey.currentState!.pushReplacementNamed(routeName);
+    //return navigatorKey.currentState!.pushNamedAndRemoveUntil(routeName, ModalRoute.withName('/'));
+    return navigatorKey.currentState!
+        .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false);
   }
 
   //PARA NAA PAY BACK

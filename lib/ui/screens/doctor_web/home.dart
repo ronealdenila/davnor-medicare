@@ -29,15 +29,13 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class DoctorWebHomeScreen extends StatelessWidget {
+  final ConsHistoryController consHController =
+      Get.put(ConsHistoryController(), permanent: true);
   final DoctorMenuController menuController =
       Get.put(DoctorMenuController(), permanent: true);
   final GlobalKey<ScaffoldState> scaffoldKeyD = GlobalKey();
-  final NavigationController navigationController =
-      Get.put(NavigationController(), permanent: true);
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
-  final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController(), permanent: true);
 
