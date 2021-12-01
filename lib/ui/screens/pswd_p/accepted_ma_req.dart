@@ -44,7 +44,7 @@ class AcceptedMARequestScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: PSWDButton(
                   onItemTap: () async {
-                    acceptedMA.transferToHead(model);
+                    await acceptedMA.transferToHead(model);
                   },
                   buttonText: 'Transfer for Head Approval',
                 ),

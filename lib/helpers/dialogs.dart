@@ -18,6 +18,7 @@ void showErrorDialog({
   String? errorDescription,
 }) {
   Get.defaultDialog(
+    barrierDismissible: false,
     title: errorTitle!,
     middleText: errorDescription!,
     textConfirm: 'Okay',
@@ -33,6 +34,7 @@ void showDefaultDialog({
   void Function()? onConfirmTap,
 }) {
   Get.defaultDialog(
+    barrierDismissible: false,
     radius: 8,
     titleStyle: title24Bold,
     titlePadding: const EdgeInsets.all(10),
@@ -57,6 +59,7 @@ void showDefaultDialogWithText({
   void Function()? onConfirmTap,
 }) {
   Get.defaultDialog(
+    barrierDismissible: false,
     radius: 8,
     titleStyle: title24Bold,
     titlePadding: const EdgeInsets.all(10),
@@ -161,6 +164,7 @@ void showConfirmationDialog({
         ],
       ),
     ),
+    barrierDismissible: false,
   );
 }
 

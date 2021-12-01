@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +17,8 @@ class AcceptedMAController extends GetxController {
   RxInt index = (-1).obs;
   RxBool isLoading = true.obs;
   RxInt indexOfLive = (-1).obs;
+  final NavigationController navigationController = Get.find();
+  final MenuController menuController = Get.find();
 
   @override
   void onReady() {
@@ -83,14 +88,22 @@ class AcceptedMAController extends GetxController {
   }
 
   Future<void> transferToHead(GeneralMARequestModel model) async {
+    showLoading();
     await firestore.collection('on_progress_ma').doc(model.maID).update({
       'isAccepted': false,
       'isTransferred': true,
     }).then((value) async {
       await deleteMAFromQueue(model.maID!);
       await updatePatientStatus(model.requesterID!);
-      //TO DO: notify patient if na accept ba iyang request
-      Get.back();
+      dismissDialog();
+      showDefaultDialog(
+          dialogTitle: 'Transferred',
+          dialogCaption: 'Successfully transfered to PSWD Program Head',
+          onConfirmTap: () {
+            dismissDialog();
+            menuController.changeActiveItemTo('MA Request');
+            navigationController.navigateTo(Routes.MA_REQ_LIST);
+          });
     }).catchError((onError) {
       showErrorDialog(
           errorTitle: 'ERROR', errorDescription: 'Something went wrong');

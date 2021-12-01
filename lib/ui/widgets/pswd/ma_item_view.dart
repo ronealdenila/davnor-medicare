@@ -15,13 +15,6 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final AttachedPhotosController controller = Get.find();
-final AuthController authController = Get.find();
-final AppController appController = Get.find();
-final fetchedData = authController.pswdModel.value;
-final CallingPatientController callController =
-    Get.put(CallingPatientController());
-
 class PSWDItemView extends GetResponsiveView {
   PSWDItemView(this.context, this.status, this.model)
       : super(alwaysUseBuilder: false);
@@ -30,6 +23,13 @@ class PSWDItemView extends GetResponsiveView {
   final BuildContext context;
   final RxBool doneLoad = false.obs;
   final RxBool errorPhoto = false.obs;
+
+  final AttachedPhotosController controller = Get.find();
+  static AuthController authController = Get.find();
+  final AppController appController = Get.find();
+  final fetchedData = authController.pswdModel.value;
+  final CallingPatientController callController =
+      Get.put(CallingPatientController(), permanent: true);
 
   @override
   Widget phone() => Column(
@@ -397,119 +397,119 @@ class PSWDItemView extends GetResponsiveView {
                 ),
         ));
   }
-}
 
-Widget attachedPhotosDialog() {
-  return SimpleDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-    contentPadding: EdgeInsets.zero,
-    titlePadding: EdgeInsets.zero,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: IconButton(
-              onPressed: controller.prevPhoto,
-              icon: const Icon(
-                Icons.arrow_back_ios_rounded,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 8,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              height: Get.height * .7,
-              width: Get.width * .7,
-              color: Colors.transparent,
-              child: Obx(
-                () => CarouselSlider.builder(
-                  carouselController: controller.crslController,
-                  itemCount: controller.fetchedImages.length - 1,
-                  itemBuilder: (context, index, realIndex) {
-                    return buildImage(index);
-                  },
-                  options: CarouselOptions(
-                      initialPage: controller.selectedIndex.value,
-                      viewportFraction: 1,
-                      height: double.infinity,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
-                      onPageChanged: (index, reason) =>
-                          controller.selectedIndex.value = index),
+  Widget attachedPhotosDialog() {
+    return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.zero,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconButton(
+                onPressed: controller.prevPhoto,
+                icon: const Icon(
+                  Icons.arrow_back_ios_rounded,
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: IconButton(
-              onPressed: controller.nextPhoto,
-              icon: const Icon(
-                Icons.arrow_forward_ios_rounded,
+            Expanded(
+              flex: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                height: Get.height * .7,
+                width: Get.width * .7,
+                color: Colors.transparent,
+                child: Obx(
+                  () => CarouselSlider.builder(
+                    carouselController: controller.crslController,
+                    itemCount: controller.fetchedImages.length - 1,
+                    itemBuilder: (context, index, realIndex) {
+                      return buildImage(index);
+                    },
+                    options: CarouselOptions(
+                        initialPage: controller.selectedIndex.value,
+                        viewportFraction: 1,
+                        height: double.infinity,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                        onPageChanged: (index, reason) =>
+                            controller.selectedIndex.value = index),
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 110,
-        width: Get.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
             Expanded(
-              child: Center(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.fetchedImages.length - 1,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Center(
-                        child: Obx(
-                          () => Container(
-                            padding: const EdgeInsets.all(6),
-                            color: index == controller.selectedIndex.value
-                                ? verySoftBlueColor
-                                : Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                controller.selectedIndex.value = index;
-                                controller.animateToSlide(index);
-                              },
-                              child: Image.network(
-                                controller.fetchedImages[index],
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(grayBlank,
-                                      fit: BoxFit.cover);
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
+              child: IconButton(
+                onPressed: controller.nextPhoto,
+                icon: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                ),
               ),
             ),
           ],
         ),
-      ),
-    ],
-  );
-}
+        SizedBox(
+          height: 110,
+          width: Get.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Center(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.fetchedImages.length - 1,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Center(
+                          child: Obx(
+                            () => Container(
+                              padding: const EdgeInsets.all(6),
+                              color: index == controller.selectedIndex.value
+                                  ? verySoftBlueColor
+                                  : Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  controller.selectedIndex.value = index;
+                                  controller.animateToSlide(index);
+                                },
+                                child: Image.network(
+                                  controller.fetchedImages[index],
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(grayBlank,
+                                        fit: BoxFit.cover);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
-Widget buildImage(int index) {
-  return Container(
-    color: Colors.grey,
-    child: Image.network(
-      controller.fetchedImages[index],
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.asset(grayBlank, fit: BoxFit.cover);
-      },
-    ),
-  );
+  Widget buildImage(int index) {
+    return Container(
+      color: Colors.grey,
+      child: Image.network(
+        controller.fetchedImages[index],
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(grayBlank, fit: BoxFit.cover);
+        },
+      ),
+    );
+  }
 }

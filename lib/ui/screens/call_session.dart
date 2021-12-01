@@ -12,14 +12,13 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-final AuthController authController = Get.find();
-
 class CallSessionScreen extends StatefulWidget {
   @override
   State<CallSessionScreen> createState() => _CallSessionScreenState();
 }
 
 class _CallSessionScreenState extends State<CallSessionScreen> {
+  final AuthController authController = Get.find();
   final consInfo = Get.arguments; //0 - patientId, 1 - channelId
   late RtcEngine _engine;
   late String tokenId;
