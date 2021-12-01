@@ -106,10 +106,12 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
       );
     }
     if (faController.forApprovalList.isEmpty && !faController.isLoading.value) {
-      return const Text(
-        'No MA request for approval at the moment',
-        textAlign: TextAlign.center,
-        style: body14Medium,
+      return Align(
+        alignment: Alignment.center,
+        child: const Text(
+          'No on progress MA request at the moment',
+          style: body14Medium,
+        ),
       );
     }
     firedOnce.value
@@ -278,6 +280,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
             .collection('on_progress_ma')
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
+          //TO DO: notify patient na approved na iyang request and wait nalang iinform when na pwede ma claim
           faController.refresh();
           dismissDialog();
         });

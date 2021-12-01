@@ -122,10 +122,12 @@ class MARequestListScreen extends StatelessWidget {
       );
     }
     if (maController.maRequests.isEmpty && !maController.isLoading.value) {
-      return const Text(
-        'No on progress MA request at the moment',
-        textAlign: TextAlign.center,
-        style: body14Medium,
+      return Align(
+        alignment: Alignment.center,
+        child: const Text(
+          'No on progress MA request at the moment',
+          style: body14Medium,
+        ),
       );
     }
     firedOnce.value

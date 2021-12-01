@@ -112,10 +112,12 @@ class ReleasingAreaListScreen extends StatelessWidget {
       );
     }
     if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
-      return const Text(
-        'No MA request for releasing at the moment',
-        textAlign: TextAlign.center,
-        style: body14Medium,
+      return Align(
+        alignment: Alignment.center,
+        child: const Text(
+          'No on progress MA request at the moment',
+          style: body14Medium,
+        ),
       );
     }
 

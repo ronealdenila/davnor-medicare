@@ -21,6 +21,14 @@ class ForApprovalController extends GetxController {
     forApprovalList.bindStream(getForApproval());
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   Stream<List<OnProgressMAModel>> getForApproval() {
     log.i('Accepted MA Controller | get Collection');
     return firestore

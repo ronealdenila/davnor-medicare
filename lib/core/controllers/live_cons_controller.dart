@@ -126,7 +126,6 @@ class LiveConsController extends GetxController {
       'dateConsStart': model.dateConsStart,
       'dateConsEnd': FieldValue.serverTimestamp(),
     }).then((value) async {
-      //TO THINK - NOTIF TO SUCCESS/DONE CONSULTATION??
       await deleteConsFromQueue(model.consID!);
       await removeFromLive(model.consID!);
       await updateDocStatus(fetchedData!.userID!);

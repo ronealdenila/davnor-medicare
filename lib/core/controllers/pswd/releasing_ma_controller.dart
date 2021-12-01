@@ -25,6 +25,14 @@ class ReleasingMAController extends GetxController {
     toRelease.bindStream(getToReleaseList());
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   Stream<List<OnProgressMAModel>> getToReleaseList() {
     log.i('To Release MA Controller | get Collection');
     return firestore

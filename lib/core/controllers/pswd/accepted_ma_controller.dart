@@ -89,7 +89,7 @@ class AcceptedMAController extends GetxController {
     }).then((value) async {
       await deleteMAFromQueue(model.maID!);
       await updatePatientStatus(model.requesterID!);
-      //TO THINK: if i notify pa si patient if na accept ba iyang request
+      //TO DO: notify patient if na accept ba iyang request
       Get.back();
     }).catchError((onError) {
       showErrorDialog(

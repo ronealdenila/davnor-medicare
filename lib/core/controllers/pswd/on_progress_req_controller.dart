@@ -27,6 +27,14 @@ class OnProgressReqController extends GetxController {
     onProgressList.bindStream(getOnProgressList());
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   Stream<List<OnProgressMAModel>> getOnProgressList() {
     log.i('On Progress MA Controller | get Collection');
     return firestore
@@ -37,6 +45,7 @@ class OnProgressReqController extends GetxController {
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
+        print('read 1 ${isLoading.value}');
         return OnProgressMAModel.fromJson(item.data());
       }).toList();
     });

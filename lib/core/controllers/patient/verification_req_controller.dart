@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/services/image_picker_service.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
@@ -151,7 +152,7 @@ class VerificationController extends GetxController {
       onConfirmTap: () {
         dismissDialog();
         if (kIsWeb) {
-//tO DO: navigation cont go back
+          navigationController.goBack();
         } else {
           Get.back();
         }

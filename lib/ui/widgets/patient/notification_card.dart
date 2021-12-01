@@ -6,14 +6,9 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:get/get.dart';
 
-//TO THINK: if clickable ba ang notification cards
 class NotificationCard extends StatelessWidget {
-  const NotificationCard({Key? key, required this.notif
-      //required this.onTap,
-      })
-      : super(key: key);
+  const NotificationCard({Key? key, required this.notif}) : super(key: key);
 
-  //final void Function()? onTap;
   final NotificationModel notif;
   static NotifController notifController = Get.find();
 

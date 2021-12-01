@@ -35,6 +35,14 @@ class MAReqListController extends GetxController {
     maRequests.bindStream(getMARequests());
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   Stream<List<MARequestModel>> getMARequests() {
     log.i('MA Requests List Controller | get Collection');
     return firestore

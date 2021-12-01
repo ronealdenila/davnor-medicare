@@ -106,12 +106,14 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
               height: 24, width: 24, child: CircularProgressIndicator()),
         ),
       );
-    }
-    if (opController.onProgressList.isEmpty && !opController.isLoading.value) {
-      return const Text(
-        'No on progress MA request at the moment',
-        textAlign: TextAlign.center,
-        style: body14Medium,
+    } else if (opController.onProgressList.isEmpty &&
+        !opController.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: const Text(
+          'No on progress MA request at the moment',
+          style: body14Medium,
+        ),
       );
     }
     firedOnce.value
