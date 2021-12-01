@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -26,6 +27,7 @@ class ResponsiveBody extends GetResponsiveView {
   final AttachedPhotosController controller = Get.find();
   final MAHistoryController maHController = Get.put(MAHistoryController());
   final RxInt selectedIndex = 0.obs;
+  final AppController appController = Get.find();
 
   @override
   Widget? builder() {
