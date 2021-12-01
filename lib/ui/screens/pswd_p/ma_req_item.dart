@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
+import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
@@ -19,6 +20,7 @@ class MARequestItemScreen extends StatelessWidget {
   final MAReqListController maController = Get.find();
   final StatusController stats = Get.find();
   final AttachedPhotosController pcontroller = Get.find();
+  final AcceptedMAController acceptedMA = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +69,24 @@ class MARequestItemScreen extends StatelessWidget {
             dialogCaption:
                 'Please select yes if you want to accept the request',
             onYesTap: () async {
-              if (stats.pswdPStatus.isEmpty && !stats.isPSLoading.value) {
-                await maController.acceptMA(model);
+              if (!acceptedMA.isLoading.value) {
+                if (acceptedMA.accMA.isNotEmpty) {
+                  if (acceptedMA.indexOfLive.value == -1) {
+                    await maController.acceptMA(model);
+                  } else {
+                    showErrorDialog(
+                        errorTitle:
+                            'It looks like you already accepted a request',
+                        errorDescription:
+                            'Please finish the accepted request first before accepting another');
+                  }
+                } else {
+                  await maController.acceptMA(model);
+                }
               } else {
                 showErrorDialog(
-                    errorTitle: 'It looks like you already accepted a request',
-                    errorDescription:
-                        'Please finish the accepted request first before accepting another');
+                    errorTitle: 'We are still fetching data...',
+                    errorDescription: 'Please try again later');
               }
             },
             onNoTap: () {
