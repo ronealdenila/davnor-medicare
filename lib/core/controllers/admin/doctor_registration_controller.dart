@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,11 @@ class DoctorRegistrationController extends GetxController {
   final RxBool doneFetch = false.obs;
 
   Future<void> registerDoctor() async {
+    showLoading();
     categoryID.value = '';
     await fetchCategories();
     if (categoryID.value == '') {
+      dismissDialog();
       showErrorDialog(
           errorTitle: 'Something went wrong',
           errorDescription:
@@ -38,10 +41,9 @@ class DoctorRegistrationController extends GetxController {
         password: '123456',
       )
           .then((result) async {
-        final _userId = result.user!.uid;
-        await _createDoctorUser(_userId);
+        await _createDoctorUser(result.user!.uid);
+        await app.delete();
       });
-      await app.delete();
     }
   }
 
@@ -65,9 +67,16 @@ class DoctorRegistrationController extends GetxController {
       },
     ).then((value) {
       addDoctorStatus(userID);
-      Get.defaultDialog(title: 'Doctor is successfully registered');
+      dismissDialog();
+      showErrorDialog(
+          errorTitle: 'Doctor is successfully registered',
+          errorDescription:
+              "Default password has been assign to the doctor's account");
     }).catchError((onError) {
-      Get.defaultDialog(title: 'Something went wrong');
+      dismissDialog();
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription: 'Could not register doctor');
     });
     _clearControllers();
   }
