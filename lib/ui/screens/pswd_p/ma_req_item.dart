@@ -53,12 +53,6 @@ class MARequestItemScreen extends StatelessWidget {
                     Icons.arrow_back_outlined,
                     size: 30,
                   )),
-              // TextButton(
-              //     onPressed: () {
-              //       maController.goBack();
-              //     },
-              //     child: Text('Back to MA Requests Table')),
-              PSWDItemView(context, 'request', model),
               screenButtons(context, model),
               verticalSpace35,
             ],

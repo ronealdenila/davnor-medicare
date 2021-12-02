@@ -43,7 +43,6 @@ class ArticleController extends GetxController {
     final CollectionReference articles = firestore.collection('articles');
     await articles.get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        print(doc.data());
         title = doc['title'] as String;
         content = doc['content'] as String;
         photoURL = doc['photoURL'] as String;

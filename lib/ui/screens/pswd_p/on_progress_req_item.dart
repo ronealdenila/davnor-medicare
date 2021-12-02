@@ -51,11 +51,6 @@ class OnProgressReqItemScreen extends StatelessWidget {
                     Icons.arrow_back_outlined,
                     size: 30,
                   )),
-              // TextButton(
-              //     onPressed: () {
-              //       opController.goBack();
-              //     },
-              //     child: Text('Back to on progressed Table')),
               PSWDItemView(context, 'approved', model),
               authController.userRole == 'pswd-h'
                   ? SizedBox(

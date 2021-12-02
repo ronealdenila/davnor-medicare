@@ -19,7 +19,6 @@ class VerificationController extends GetxController {
 
   static AuthController authController = Get.find();
   final ImagePickerService _imagePickerService = ImagePickerService();
-  final uuid = const Uuid();
   final String userID = auth.currentUser!.uid;
 
   final fetchedData = authController.patientModel.value;
@@ -43,8 +42,7 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadID(String filePathID) async {
-    final v4 = uuid.v4();
-    final ref = storageRef.child('user/$userID/Valid-ID-$v4$v4');
+    final ref = storageRef.child('user/$userID/Valid-ID');
     final uploadTask = ref.putFile(File(filePathID));
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -52,8 +50,7 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadIDS(String filePathIDS) async {
-    final v4 = uuid.v4();
-    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$v4$v4');
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie');
     final uploadTask = ref.putFile(File(filePathIDS));
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();
@@ -61,12 +58,11 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadIDWeb(XFile image) async {
-    final v4 = uuid.v4();
     final fileBytes = image.readAsBytes();
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
         customMetadata: {'picked-file-path': image.path});
-    final ref = storageRef.child('user/$userID/ID-$v4$v4');
+    final ref = storageRef.child('user/$userID/ID');
     final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       imgURL.value = await res.ref.getDownloadURL();
@@ -74,12 +70,11 @@ class VerificationController extends GetxController {
   }
 
   Future<void> uploadIDSDWeb(XFile image) async {
-    final v4 = uuid.v4();
     final fileBytes = image.readAsBytes();
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
         customMetadata: {'picked-file-path': image.path});
-    final ref = storageRef.child('user/$userID/Valid-ID-Selfie-$v4$v4');
+    final ref = storageRef.child('user/$userID/Valid-ID-Selfie');
     final uploadTask = ref.putData(await fileBytes, metadata);
     await uploadTask.then((res) async {
       imgURLselfie.value = await res.ref.getDownloadURL();

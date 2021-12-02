@@ -28,7 +28,9 @@ class QueueMATableWebScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                navigationController.goBack();
+                              },
                               icon: Icon(
                                 Icons.arrow_back_outlined,
                                 size: 30,

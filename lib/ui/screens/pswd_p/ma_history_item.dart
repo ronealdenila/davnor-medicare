@@ -53,11 +53,6 @@ class MAHistoryItemScreen extends StatelessWidget {
                     Icons.arrow_back_outlined,
                     size: 30,
                   )),
-              // TextButton(
-              //     onPressed: () {
-              //       navigationController.goBack();
-              //     },
-              //     child: Text('Back to MA History Table')),
               PSWDItemView(context, 'completed', model),
               verticalSpace35,
             ],

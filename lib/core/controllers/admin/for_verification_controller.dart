@@ -22,6 +22,7 @@ class ForVerificationController extends GetxController {
   TextEditingController reason = TextEditingController();
   RxBool accepted = false.obs;
   final NavigationController navigationController = Get.find();
+  RxBool isLoading = true.obs;
 
   @override
   void onReady() {
@@ -29,21 +30,25 @@ class ForVerificationController extends GetxController {
     verifReq.bindStream(assignListStream());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCollection() {
-    log.i('Admin Verification Request Controller | getList');
-    return firestore
-        .collection('to_verify')
-        .orderBy('dateRqstd', descending: false)
-        .snapshots();
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
   }
 
   Stream<List<VerificationReqModel>> assignListStream() {
-    log.i('Admin Verification Request Controller | assign');
-    return getCollection().map(
-      (query) => query.docs
-          .map((item) => VerificationReqModel.fromJson(item.data()))
-          .toList(),
-    );
+    log.i('Admin Verification Request Controller | getList');
+    return firestore
+        .collection('to_verify')
+        .orderBy('dateRqstd')
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        return VerificationReqModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
   String convertTimeStamp(Timestamp recordTime) {
@@ -115,9 +120,11 @@ class ForVerificationController extends GetxController {
       await removeVerificationReq(model.patientID!);
       await incrementVerifCount();
       dismissDialog();
+      dismissDialog();
       navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
       clearController();
     }).catchError((error) {
+      dismissDialog();
       dismissDialog();
       Get.snackbar(
         'Failed to verified user',
@@ -154,9 +161,11 @@ class ForVerificationController extends GetxController {
       await deletePhotos(model);
       await removeVerificationReq(model.patientID!);
       dismissDialog();
+      dismissDialog();
       navigationController.navigateTo(Routes.VERIFICATION_REQ_LIST);
       clearController();
     }).catchError((error) {
+      dismissDialog();
       dismissDialog();
       Get.snackbar(
         'Failed to decline user',
