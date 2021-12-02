@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 
 class DoctorConsHistoryItemScreen extends StatelessWidget {

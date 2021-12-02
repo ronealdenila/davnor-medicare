@@ -43,11 +43,19 @@ class OnProgressReqItemScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace50,
-              TextButton(
+              IconButton(
                   onPressed: () {
                     opController.goBack();
                   },
-                  child: Text('Back to on progressed Table')),
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              // TextButton(
+              //     onPressed: () {
+              //       opController.goBack();
+              //     },
+              //     child: Text('Back to on progressed Table')),
               PSWDItemView(context, 'approved', model),
               authController.userRole == 'pswd-h'
                   ? SizedBox(

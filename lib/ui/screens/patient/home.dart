@@ -28,7 +28,6 @@ import 'package:davnor_medicare/ui/screens/patient/select_queue_screen.dart';
 import 'package:davnor_medicare/ui/screens/patient/settings.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
 import 'package:davnor_medicare/ui/widgets/custom_drawer.dart';
@@ -41,7 +40,7 @@ class PatientHomeScreen extends StatelessWidget {
       Get.put(ConsHistoryController(), permanent: true);
   static AppController appController = Get.find();
   static AuthController authController = Get.find();
-  static ArticleController articleService = Get.find();
+  static ArticleController articleService = Get.put(ArticleController());
   final List<ArticleModel> articleList = articleService.articlesList;
   static ConsRequestController consController =
       Get.put(ConsRequestController());

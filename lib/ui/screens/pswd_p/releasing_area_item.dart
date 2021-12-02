@@ -43,11 +43,19 @@ class ReleasingAreaItemScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpace50,
-          TextButton(
+          IconButton(
               onPressed: () {
                 rlsController.goBack();
               },
-              child: Text('Back to Releasing List Table')),
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+          // TextButton(
+          //     onPressed: () {
+          //       rlsController.goBack();
+          //     },
+          //     child: Text('Back to Releasing List Table')),
           PSWDItemView(context, 'medReady', model),
           authController.userRole == 'pswd-h'
               ? SizedBox(

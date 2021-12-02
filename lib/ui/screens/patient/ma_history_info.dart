@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/ui/screens/photo_viewer.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
@@ -276,11 +277,10 @@ class MAHistoryInfoScreen extends StatelessWidget {
                   alignment: FractionalOffset.bottomLeft,
                   child: CustomButton(
                     onTap: () async {
+                      controller.fetchedImages.clear();
                       controller.splitFetchedImage(
-                          '${maHistoryItem.validID}>>>${maHistoryItem.prescriptions}>>>');
-                      showDialog(
-                          context: context,
-                          builder: (context) => attachedPhotosDialog());
+                          '${maHistoryItem.validID}>>>${maHistoryItem.prescriptions}');
+                      Get.to(() => PhotoViewerScreen());
                     },
                     text: 'mah14'.tr,
                     buttonColor: verySoftBlueColor,

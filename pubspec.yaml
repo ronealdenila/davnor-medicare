@@ -48,7 +48,7 @@ dependencies:
 
   # Lint
   very_good_analysis: ^2.4.0
-
+  
   # logger
   logger: ^1.0.0
 

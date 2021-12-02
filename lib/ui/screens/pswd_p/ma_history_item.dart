@@ -45,11 +45,19 @@ class MAHistoryItemScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace50,
-              TextButton(
+              IconButton(
                   onPressed: () {
                     navigationController.goBack();
                   },
-                  child: Text('Back to MA History Table')),
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              // TextButton(
+              //     onPressed: () {
+              //       navigationController.goBack();
+              //     },
+              //     child: Text('Back to MA History Table')),
               PSWDItemView(context, 'completed', model),
               verticalSpace35,
             ],

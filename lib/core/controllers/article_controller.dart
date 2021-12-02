@@ -22,39 +22,42 @@ class ArticleController extends GetxController {
   void onReady() {
     log.i('onReady | Article Service is ready');
     super.onReady();
-    _initArticleList();
+    getArticlesList();
   }
 
-  Future<void> _initArticleList() async {
-    log.i('_initArticleList | Initiliazing Articles');
-    await getArticlesList();
-    articlesList = getArticles();
-  }
+  // Future<void> _initArticleList() async {
+  //   log.i('_initArticleList | Initiliazing Articles');
+  //   await getArticlesList();
+  //   articlesList = getArticles();
 
-  List<ArticleModel> getArticles() {
-    log.i('getArticles | Returning Articles');
-    return articlesList;
-  }
+  //   print(articlesList.length);
+  // }
+
+  // List<ArticleModel> getArticles() {
+  //   log.i('getArticles | Returning Articles');
+  //   return articlesList;
+  // }
 
   Future<void> getArticlesList() async {
-    log.i('getArticlesList | Returning List of Articles');
+    log.i('getArticlesList | Raxaxaeturning List of Articles');
     final CollectionReference articles = firestore.collection('articles');
     await articles.get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
+        print(doc.data());
         title = doc['title'] as String;
         content = doc['content'] as String;
         photoURL = doc['photoURL'] as String;
         source = doc['source'] as String;
         short = doc['short'] as String;
-        _initArticle = ArticleModel(
+        articlesList.add(ArticleModel(
             title: title,
             content: content,
             photoURL: photoURL,
             source: source,
-            short: short);
-        articlesList.add(_initArticle);
+            short: short));
       });
     });
     doneLoading.value = true;
+    print('LENGTH: ${articlesList.length}');
   }
 }

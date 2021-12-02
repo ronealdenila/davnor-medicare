@@ -1,4 +1,3 @@
-import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
@@ -13,41 +12,31 @@ class ArticleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          toolbarHeight: 50,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Articles',
+          style: subtitle18Medium.copyWith(color: Colors.black),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            child: Column(
-              children: [
-                Text(
-                  'Articles',
-                  style: subtitle20Medium,
-                ),
-                verticalSpace15,
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: articleList.length,
-                    itemBuilder: (context, index) {
-                      return ArticleCard(
-                          title: articleList[index].title!,
-                          content: articleList[index].short!,
-                          photoURL: articleList[index].photoURL!,
-                          textStyleTitle: caption12SemiBold,
-                          textStyleContent: caption10RegularNeutral,
-                          onTap: () {
-                            goToArticleItemScreen(index);
-                          });
-                    }),
-              ],
-            ),
-          ),
-        ),
+        toolbarHeight: 50,
       ),
+      body: ListView.builder(
+          padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+          shrinkWrap: true,
+          itemCount: articleList.length,
+          itemBuilder: (context, index) {
+            return ArticleCard(
+                title: articleList[index].title!,
+                content: articleList[index].short!,
+                photoURL: articleList[index].photoURL!,
+                textStyleTitle: caption12SemiBold,
+                textStyleContent: caption10RegularNeutral,
+                onTap: () {
+                  goToArticleItemScreen(index);
+                });
+          }),
     );
   }
 

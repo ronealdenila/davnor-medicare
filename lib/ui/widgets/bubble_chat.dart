@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/ui/screens/photo_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -54,9 +55,15 @@ Widget displaySingleImage(ChatModel chat, BuildContext context) {
             ),
             child: InkWell(
               onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => attachedPhotoDialog(chat.message!));
+                controller.fetchedImages.clear();
+                if (kIsWeb) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => attachedPhotoDialog(chat.message!));
+                } else {
+                  controller.fetchedImages.add(chat.message!);
+                  Get.to(() => PhotoViewerScreen());
+                }
               },
               child: Image.network(
                 chat.message!,
@@ -110,12 +117,16 @@ Widget displayMultipleImages(
                 child: Center(
                     child: InkWell(
                   onTap: () {
+                    controller.fetchedImages.clear();
                     controller.fetchedImages.assignAll(displayImages);
                     controller.selectedIndex.value = index;
-                    print(controller.selectedIndex.value);
-                    showDialog(
-                        context: context,
-                        builder: (context) => attachedPhotosDialog());
+                    if (kIsWeb) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => attachedPhotosDialog());
+                    } else {
+                      Get.to(() => PhotoViewerScreen());
+                    }
                   },
                   child: Image.network(
                     displayImages[index],

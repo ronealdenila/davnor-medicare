@@ -1,4 +1,3 @@
-import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/ui/widgets/article_card.dart';
@@ -11,35 +10,24 @@ class ArticleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Articles',
+            style: subtitle18Medium.copyWith(color: Colors.black),
+          ),
           toolbarHeight: 50,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            child: Column(
-              children: [
-                const Text(
-                  'Articles',
-                  style: subtitle20Medium,
-                ),
-                verticalSpace15,
-                Obx(showArticles)
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+        body: Obx(showArticles));
   }
 
   Widget showArticles() {
     if (articleService.doneLoading.value &&
         articleService.articlesList.isNotEmpty) {
       return ListView.builder(
+          padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
           shrinkWrap: true,
           itemCount: articleService.articlesList.length,
           itemBuilder: (context, index) {

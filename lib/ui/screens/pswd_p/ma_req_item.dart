@@ -45,11 +45,19 @@ class MARequestItemScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace50,
-              TextButton(
+              IconButton(
                   onPressed: () {
                     maController.goBack();
                   },
-                  child: Text('Back to MA Requests Table')),
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              // TextButton(
+              //     onPressed: () {
+              //       maController.goBack();
+              //     },
+              //     child: Text('Back to MA Requests Table')),
               PSWDItemView(context, 'request', model),
               screenButtons(context, model),
               verticalSpace35,
