@@ -2,7 +2,6 @@ import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:get/get.dart';

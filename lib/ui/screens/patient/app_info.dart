@@ -89,8 +89,8 @@ class AppInfoScreen extends StatelessWidget {
                           Image.asset(
                             flaticon,
                             fit: BoxFit.fill,
-                            height: 60,
-                            width: 60,
+                            height: 50,
+                            width: 50,
                           ),
                           horizontalSpace10,
                           Column(
@@ -142,8 +142,8 @@ class AppInfoScreen extends StatelessWidget {
                               ]),
                         ]),
                     verticalSpace18,
-                     const Text(
-                      'Splast screen animation from:',
+                    const Text(
+                      'Splash screen animation from:',
                       textAlign: TextAlign.left,
                       style: subtitle16Bold,
                     ),
@@ -159,22 +159,21 @@ class AppInfoScreen extends StatelessWidget {
                             width: 50,
                           ),
                           horizontalSpace15,
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Lottie by: Abdul Latif',
-                              style: body14SemiBold),
-                          verticalSpace5,
-                          InkWell(
-                            onTap: () {
-                              _urlLauncherService.launchURL(
-                                  'https://lottiefiles.com');
-                            },
-                            child: Text(
-                                'https://lottiefiles.com',
-                                style: body16RegularUnderlineBlue),
-                          ),
-                        ])
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Lottie by: Abdul Latif',
+                                    style: body14SemiBold),
+                                verticalSpace5,
+                                InkWell(
+                                  onTap: () {
+                                    _urlLauncherService
+                                        .launchURL('https://lottiefiles.com');
+                                  },
+                                  child: Text('https://lottiefiles.com',
+                                      style: body16RegularUnderlineBlue),
+                                ),
+                              ])
                         ]),
                     verticalSpace15
                   ]),

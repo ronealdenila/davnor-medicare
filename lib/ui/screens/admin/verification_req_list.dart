@@ -1,7 +1,6 @@
 import 'package:davnor_medicare/core/controllers/admin/for_verification_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/for_verification_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';

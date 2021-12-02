@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 
 class LiveChatScreen extends StatelessWidget {
   static LiveConsController liveCont = Get.find();

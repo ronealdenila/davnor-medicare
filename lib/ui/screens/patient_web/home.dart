@@ -36,7 +36,7 @@ import 'package:flutter/cupertino.dart';
 class PatientWebHomeScreen extends StatelessWidget {
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
-  static AppController appController = Get.find();
+  final AppController appController = Get.find();
   final PatientMenuController menuController =
       Get.put(PatientMenuController(), permanent: true);
   final GlobalKey<ScaffoldState> scaffoldKeyP = GlobalKey();

@@ -3,8 +3,10 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/screens/auth/change_password.dart';
 import 'package:davnor_medicare/ui/screens/patient/verification.dart';
+import 'package:davnor_medicare/ui/screens/photo_viewer.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class PatientProfileScreen extends StatelessWidget {
+  final AttachedPhotosController controller = Get.find();
   static AuthController authController = Get.find();
   final ProfileController profileController = Get.find();
   final VerificationController verificationController =
@@ -275,10 +278,11 @@ class PatientProfileScreen extends StatelessWidget {
                           width: 120,
                           height: 120,
                           child: InkWell(
-                            onTap: () => showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    attachedPhotoDialog(data['validID'])),
+                            onTap: () {
+                              controller.fetchedImages.clear();
+                              controller.fetchedImages.add(data['validID']);
+                              Get.to(() => PhotoViewerScreen());
+                            },
                             child: Image.network(
                               data['validID'],
                               height: 106,
@@ -295,10 +299,11 @@ class PatientProfileScreen extends StatelessWidget {
                           width: 120,
                           height: 120,
                           child: InkWell(
-                            onTap: () => showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    attachedPhotoDialog(data['validSelfie'])),
+                            onTap: () {
+                              controller.fetchedImages.clear();
+                              controller.fetchedImages.add(data['validSelfie']);
+                              Get.to(() => PhotoViewerScreen());
+                            },
                             child: Image.network(
                               data['validSelfie'],
                               height: 106,

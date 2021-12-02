@@ -31,3 +31,33 @@ class DialogButton extends StatelessWidget {
     );
   }
 }
+
+class ErrorDialogButton extends StatelessWidget {
+  const ErrorDialogButton({
+    required this.buttonText,
+    this.onTap,
+  });
+
+  final String? buttonText;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        primary: dialogButtonColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Text(
+          buttonText!,
+          style: body14SemiBold,
+        ),
+      ),
+    );
+  }
+}

@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SizedBox(
-            width: kIsWeb ? Get.width * .2 : Get.width * .7,
+            width: kIsWeb ? Get.width * .5 : Get.width * .7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

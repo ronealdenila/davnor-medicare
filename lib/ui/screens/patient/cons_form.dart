@@ -151,6 +151,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                         ],
                       ),
                     ),
+                    verticalSpace10
                   ],
                 ),
               ),
@@ -181,22 +182,24 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
                 child: SizedBox(
                   height: 120,
                   width: 120,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 55,
-                        width: 55,
-                        child: Image.asset(
-                          discomfortData[index].iconPath!,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 55,
+                          width: 55,
+                          child: Image.asset(
+                            discomfortData[index].iconPath!,
+                          ),
                         ),
-                      ),
-                      verticalSpace5,
-                      Text(
-                        discomfortData[index].title!,
-                        style: body16Regular,
-                      ),
-                    ],
+                        verticalSpace5,
+                        Text(
+                          discomfortData[index].title!,
+                          style: body16Regular,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -42,11 +42,19 @@ class ForApprovalItemScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace50,
-              TextButton(
+              IconButton(
                   onPressed: () {
                     navigationController.goBack();
                   },
-                  child: Text('Back to For Approval Table')),
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              // TextButton(
+              //     onPressed: () {
+              //       navigationController.goBack();
+              //     },
+              //     child: Text('Back to For Approval Table')),
               PSWDItemView(context, 'transferred', model),
               screenButtons(),
               verticalSpace35,
