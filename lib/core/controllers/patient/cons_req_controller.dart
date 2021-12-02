@@ -130,7 +130,7 @@ class ConsRequestController extends GetxController {
       showErrorDialog(
           errorTitle: 'ERROR!',
           errorDescription:
-              'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
+              'errordialog5'.tr);
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
@@ -170,8 +170,8 @@ class ConsRequestController extends GetxController {
       log.i('submitConsultRequest | Consultation Submit Succesfully');
     } else {
       showErrorDialog(
-          errorTitle: 'Sorry, there are no slot available for now',
-          errorDescription: 'Please try again next time');
+          errorTitle: 'errordialog6'.tr,
+          errorDescription: 'errordialog3'.tr);
       log.i('submitConsultRequest | Consultation Submit Failed');
     }
   }
@@ -185,7 +185,7 @@ class ConsRequestController extends GetxController {
         showErrorDialog(
             errorTitle: 'ERROR!',
             errorDescription:
-                'Sorry, there are currently no available doctor that specialize in that illness. Please try again later.');
+                'errordialog5'.tr);
       } else if (hasAvailableSlot()) {
         showLoading();
         generatedConsID.value = uuid.v4();
@@ -224,8 +224,8 @@ class ConsRequestController extends GetxController {
         log.i('submitConsultRequest | Consultation Submit Succesfully');
       } else {
         showErrorDialog(
-            errorTitle: 'Sorry, there are no slot available for now',
-            errorDescription: 'Please try again next time');
+            errorTitle: 'errordialog6'.tr,
+            errorDescription: 'errordialog3'.tr);
         log.i('submitConsultRequest | Consultation Submit Failed');
       }
     }

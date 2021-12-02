@@ -227,7 +227,7 @@ Widget confirmProcess(PswdModel model) {
       ),
       children: [
         SizedBox(
-            width: Get.width * .4,
+            width: Get.width * .3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -245,12 +245,14 @@ Widget confirmProcess(PswdModel model) {
                 verticalSpace25,
                 Align(
                     alignment: Alignment.bottomCenter,
-                    child: TextButton(
-                        onPressed: () async {
-                          //TO CHECK
-                          await deleteUserInDocuments(model.userID!);
-                        },
-                        child: Text('Got it!'))),
+                    child: SizedBox(
+                      height: 67,
+                      width: 90,
+                      child: DmButton(
+                          title: 'Got it!',
+                          onTap: () async {
+                            await deleteUserInDocuments(model.userID!);
+                            }))),
                 verticalSpace15,
                 Text(
                   'By clicking this button, you are indicating that you have followed the process',

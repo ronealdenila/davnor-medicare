@@ -77,7 +77,18 @@ class ResponsiveView extends GetResponsiveView {
       );
 
   Widget profileDetails(BuildContext context) {
-    return Center(
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20,),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          IconButton(
+              onPressed: () {
+               // navigationController.goBack();
+              },
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+    Center(
       child: Column(
         children: [
           verticalSpace50,
@@ -253,6 +264,7 @@ class ResponsiveView extends GetResponsiveView {
           ),
         ],
       ),
+    )])
     );
   }
 

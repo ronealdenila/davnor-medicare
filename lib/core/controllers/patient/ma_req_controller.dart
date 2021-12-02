@@ -148,7 +148,7 @@ class MARequestController extends GetxController {
         dismissDialog();
         showErrorDialog(
             errorTitle: 'errordialog9'.tr,
-            errorDescription: 'Sorry, it is already cut off.');
+            errorDescription: 'errordialog10'.tr);
       }
     } else {
       dismissDialog();

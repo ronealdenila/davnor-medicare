@@ -30,7 +30,18 @@ class PatientProfileWebScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Center(
+          child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          IconButton(
+              onPressed: () {
+                navigationController.goBack();
+              },
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+          Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -116,8 +127,10 @@ class PatientProfileWebScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ]),
       ),
+        )
+      )
     );
   }
 

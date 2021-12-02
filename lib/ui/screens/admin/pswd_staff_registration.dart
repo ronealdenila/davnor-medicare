@@ -21,6 +21,12 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
               DmText.title42Bold(
                 'PSWD Staff Registration Form',
               ),
