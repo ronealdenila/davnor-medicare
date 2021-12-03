@@ -1,9 +1,11 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class ResponsiveView extends GetResponsiveView {
   final ForVerificationController vf = Get.find();
   final RxBool errorPhoto = false.obs;
   final NavigationController navigationController = Get.find();
+  final UrlLauncherService _urlLauncherService = UrlLauncherService();
 
   @override
   Widget phone() => Column(
@@ -356,6 +359,21 @@ class ResponsiveView extends GetResponsiveView {
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SizedBox(
+              width: 130,
+              child: ErrorDialogButton(
+                buttonText: 'Open Image',
+                onTap: () async {
+                  _urlLauncherService.launchURL(imgURL);
+                },
+              ),
+            ),
+          ),
+        ),
         Container(
           decoration: const BoxDecoration(
               color: Colors.transparent,

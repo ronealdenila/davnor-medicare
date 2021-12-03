@@ -29,7 +29,7 @@ class AdminHomeScreen extends StatelessWidget {
   final AdminMenuController menuController =
       Get.put(AdminMenuController(), permanent: true);
   final DoctorRegistrationController doctorRegistrationController =
-      Get.put(DoctorRegistrationController());
+      Get.put(DoctorRegistrationController(), permanent: true);
   final PSWDRegistrationController pswdRegistrationController =
       Get.put(PSWDRegistrationController(), permanent: true);
   final fetchedData = authController.adminModel.value;
@@ -176,6 +176,9 @@ class ResponsiveView extends GetResponsiveView {
   final fetchedData = authController.adminModel.value;
   final PSWDStaffListController pListController = Get.find();
   final DoctorListController dListController = Get.find();
+
+  @override
+  Widget phone() => phoneVersion();
 
   @override
   Widget tablet() => phoneVersion();

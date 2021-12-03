@@ -16,7 +16,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_queue_controller.dar
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';

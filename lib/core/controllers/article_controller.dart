@@ -8,7 +8,6 @@ class ArticleController extends GetxController {
   final log = getLogger('Article Service');
 
   List<ArticleModel> articlesList = [];
-  late ArticleModel _initArticle;
   RxBool doneLoading = false.obs;
   RxBool doneReturn = false.obs;
 

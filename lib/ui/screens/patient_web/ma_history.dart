@@ -2,9 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -457,6 +458,21 @@ class ResponsiveBody extends GetResponsiveView {
       contentPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
       children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SizedBox(
+              width: 130,
+              child: ErrorDialogButton(
+                buttonText: 'Open Image',
+                onTap: () async {
+                  await controller.launchOpenImage();
+                },
+              ),
+            ),
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -566,49 +582,3 @@ class ResponsiveBody extends GetResponsiveView {
     );
   }
 }
-// class PSWDItemView extends GetResponsiveView {
-//   PSWDItemView(this.context, this.model) : super(alwaysUseBuilder: false);
-//   final MAHistoryModel model;
-//   final BuildContext context;
-//   final AttachedPhotosController controller = Get.find();
-//   @override
-//   Widget phone() => Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           verticalSpace35,
-//           displayPatientInfo(),
-//           verticalSpace35,
-//           attachedPhotos(),
-//           verticalSpace35,
-//         ],
-//       );
-
-//   @override
-//   Widget tablet() => Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           verticalSpace35,
-//           displayPatientInfo(),
-//           verticalSpace35,
-//           attachedPhotos(),
-//           verticalSpace35,
-//         ],
-//       );
-
-//   @override
-//   Widget desktop() => Column(
-//         children: [
-//           verticalSpace35,
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               displayPatientInfo(),
-//               attachedPhotos(),
-//             ],
-//           ),
-//           verticalSpace35,
-//         ],
-//       );
-
-  
-//}

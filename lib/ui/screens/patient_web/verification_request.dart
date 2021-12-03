@@ -34,6 +34,86 @@ class ResponsiveView extends GetResponsiveView {
   final fetchedData = authController.patientModel.value;
 
   @override
+  Widget phone() => Column(
+        children: [
+          Text(
+            'verification'.tr,
+            style: title24Bold,
+          ),
+          verticalSpace10,
+          Text(
+            'verifi1'.tr,
+            style: body14Regular,
+          ),
+          verticalSpace35,
+          Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 25,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  horizontalSpace35,
+                  Column(
+                    children: [
+                      Text(
+                        'verifi2'.tr,
+                        style: body16Regular,
+                      ),
+                      verticalSpace10,
+                      DottedBorder(
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(12),
+                        padding: const EdgeInsets.all(12),
+                        dashPattern: const [8, 8, 8, 8],
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          child: Container(
+                            width: 400,
+                            height: 150,
+                            color: neutralColor[10],
+                            child: Obx(getValidID),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  horizontalSpace35,
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    'verifi3'.tr,
+                    style: body16Regular,
+                  ),
+                  verticalSpace10,
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(12),
+                    padding: const EdgeInsets.all(12),
+                    dashPattern: const [8, 8, 8, 8],
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      child: Container(
+                        width: 400,
+                        height: 150,
+                        color: neutralColor[10],
+                        child: Obx(getValidIDWithSelfie),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          verticalSpace25,
+          button()
+        ],
+      );
+
+  @override
   Widget tablet() => Column(
         children: [
           Text(

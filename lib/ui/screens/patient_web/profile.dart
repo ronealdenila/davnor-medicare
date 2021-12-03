@@ -5,11 +5,13 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/verification_req_controller.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/auth/form_input_field_with_icon.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +27,13 @@ class PatientProfileWebScreen extends StatelessWidget {
   final fetchedData = authController.patientModel.value;
   final NavigationController navigationController = Get.find();
   final RxBool errorPhoto = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
+        child: Scaffold(
+            body: SingleChildScrollView(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           IconButton(
@@ -129,9 +132,7 @@ class PatientProfileWebScreen extends StatelessWidget {
           ),
         ]),
       ),
-        )
-      )
-    );
+    )));
   }
 
   Widget displayProfile() {
@@ -147,7 +148,7 @@ class PatientProfileWebScreen extends StatelessWidget {
                 ),
                 Positioned(
                     bottom: 0,
-                    right: 05,
+                    right: 5,
                     child: ClipOval(
                       child: Material(
                         color: Colors.lightBlue,
@@ -161,7 +162,7 @@ class PatientProfileWebScreen extends StatelessWidget {
                               child: Icon(
                                 Icons.add_photo_alternate_rounded,
                                 color: Colors.white,
-                                size: 50,
+                                size: 25,
                               ),
                             ),
                           ),
@@ -200,7 +201,7 @@ class PatientProfileWebScreen extends StatelessWidget {
                 )),
             Positioned(
                 bottom: 0,
-                right: 05,
+                right: 5,
                 child: ClipOval(
                   child: Material(
                     color: Colors.lightBlue,
@@ -214,7 +215,7 @@ class PatientProfileWebScreen extends StatelessWidget {
                           child: Icon(
                             Icons.add_photo_alternate_rounded,
                             color: Colors.white,
-                            size: 50,
+                            size: 25,
                           ),
                         ),
                       ),
@@ -343,11 +344,27 @@ class PatientProfileWebScreen extends StatelessWidget {
 }
 
 Widget attachedPhotoDialog(String imgURL) {
+  final UrlLauncherService _urlLauncherService = UrlLauncherService();
   return SimpleDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [
+      Align(
+        alignment: Alignment.topRight,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SizedBox(
+            width: 130,
+            child: ErrorDialogButton(
+              buttonText: 'Open Image',
+              onTap: () async {
+                _urlLauncherService.launchURL(imgURL);
+              },
+            ),
+          ),
+        ),
+      ),
       Container(
         decoration: const BoxDecoration(
             color: Colors.transparent,

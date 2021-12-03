@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,17 +54,30 @@ class PhotoViewerScreen extends StatelessWidget {
               ],
             ),
             Positioned(
-              left: 8,
-              top: 20,
-              child: GestureDetector(
-                onTap: Get.back,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Icon(
-                    Icons.arrow_back_outlined,
-                    color: neutralColor[100],
-                    size: 30,
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: Get.back,
+                      child: Icon(
+                        Icons.arrow_back_outlined,
+                        color: neutralColor[100],
+                        size: 30,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        await controller.downloadImage();
+                      },
+                      child: Icon(
+                        Icons.download_outlined,
+                        color: neutralColor[100],
+                        size: 35,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

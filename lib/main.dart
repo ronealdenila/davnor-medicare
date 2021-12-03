@@ -3,6 +3,8 @@ import 'package:davnor_medicare/core/controllers/bindings/all_controller_binding
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// ignore: import_of_legacy_library_into_null_safety
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +18,8 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //await FirebaseAppCheck.instance
-  //.activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
+  // await FirebaseAppCheck.instance
+  //     .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(MyApp());
 }

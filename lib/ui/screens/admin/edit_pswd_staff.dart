@@ -34,6 +34,22 @@ class ResponsiveView extends GetResponsiveView {
   final NavigationController navigationController = Get.find();
 
   @override
+  Widget phone() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        textTitle(),
+        verticalSpace25,
+        Column(
+          children: <Widget>[
+            userPSWDImage(),
+            horizontalSpace25,
+            editInfoofPSWDStaff(),
+          ],
+        ),
+        verticalSpace25,
+        screenButtons(),
+      ]);
+
+  @override
   Widget tablet() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         textTitle(),

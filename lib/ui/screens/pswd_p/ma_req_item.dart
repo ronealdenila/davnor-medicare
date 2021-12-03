@@ -1,6 +1,6 @@
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
@@ -53,6 +53,7 @@ class MARequestItemScreen extends StatelessWidget {
                     Icons.arrow_back_outlined,
                     size: 30,
                   )),
+              PSWDItemView(context, 'request', model),
               screenButtons(context, model),
               verticalSpace35,
             ],

@@ -189,7 +189,7 @@ class ResponsiveView extends GetResponsiveView {
                           child: Icon(
                             Icons.add_photo_alternate_rounded,
                             color: Colors.white,
-                            size: 50,
+                            size: 25,
                           ),
                         ),
                       ),

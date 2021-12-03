@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/core/controllers/pswd/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/ui/screens/photo_viewer.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -15,6 +17,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 
 final AttachedPhotosController controller = Get.find();
 final double bubbleChatSize = kIsWeb ? .3 : .7;
+final UrlLauncherService _urlLauncherService = UrlLauncherService();
 
 Widget bubbleChat(ChatModel chat, BuildContext context) {
   if (chat.message!.startsWith('https://firebasestorage.googleapis.com/')) {
@@ -188,6 +191,21 @@ Widget attachedPhotosDialog() {
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [
+      Align(
+        alignment: Alignment.topRight,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SizedBox(
+            width: 130,
+            child: ErrorDialogButton(
+              buttonText: 'Open Image',
+              onTap: () async {
+                await controller.launchOpenImage();
+              },
+            ),
+          ),
+        ),
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -303,6 +321,21 @@ Widget attachedPhotoDialog(String imgURL) {
     contentPadding: EdgeInsets.zero,
     titlePadding: EdgeInsets.zero,
     children: [
+      Align(
+        alignment: Alignment.topRight,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SizedBox(
+            width: 130,
+            child: ErrorDialogButton(
+              buttonText: 'Open Image',
+              onTap: () async {
+                _urlLauncherService.launchURL(imgURL);
+              },
+            ),
+          ),
+        ),
+      ),
       Container(
         decoration: const BoxDecoration(
             color: Colors.transparent,

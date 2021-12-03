@@ -44,7 +44,7 @@ class PatientWebHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final ArticleController articleService =
-      Get.put(ArticleController()); //not perma
+      Get.put(ArticleController(), permanent: true);
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
   final NotifController notifController =
@@ -273,6 +273,9 @@ class ResponsiveView extends GetResponsiveView {
   final LiveConsController liveCont = Get.find();
   final StatusController stats = Get.find();
   final ConsHistoryController consHController = Get.find();
+
+  @override
+  Widget phone() => tabletVersion(context);
 
   @override
   Widget tablet() => tabletVersion(context);
