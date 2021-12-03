@@ -28,7 +28,6 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_messaging: ^11.1.0
   firebase_analytics: ^8.3.4
-  firebase_app_check: ^0.0.2+3
 
   #lottie
   lottie: ^1.2.1

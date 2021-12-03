@@ -54,12 +54,13 @@ class AppController {
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
         Map data = documentSnapshot.data() as Map;
+        final deviceToken = data['deviceToken'];
         print('Token: ${data['deviceToken']}');
         if (data['deviceToken'] != '') {
           const postUrl = 'https://fcm.googleapis.com/fcm/send';
           final data = {
             'notification': {'title': title, 'body': message},
-            'to': sendTo
+            'to': deviceToken
           };
 
           final headers = {

@@ -86,7 +86,6 @@ class ConsRequestController extends GetxController {
   Future<void> uploadLabResults() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
-      //fileName.value = images[i].path.split('/').last;
       final ref = storageRef.child(
           'Cons_Request/$userID/cons_req/${generatedConsID.value}/Pr-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
@@ -128,9 +127,7 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequest() async {
     if (statusList[statusIndex.value].consSlot! == 0) {
       showErrorDialog(
-          errorTitle: 'ERROR!',
-          errorDescription:
-              'errordialog5'.tr);
+          errorTitle: 'ERROR!', errorDescription: 'errordialog5'.tr);
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
@@ -170,8 +167,7 @@ class ConsRequestController extends GetxController {
       log.i('submitConsultRequest | Consultation Submit Succesfully');
     } else {
       showErrorDialog(
-          errorTitle: 'errordialog6'.tr,
-          errorDescription: 'errordialog3'.tr);
+          errorTitle: 'errordialog6'.tr, errorDescription: 'errordialog3'.tr);
       log.i('submitConsultRequest | Consultation Submit Failed');
     }
   }
@@ -183,9 +179,7 @@ class ConsRequestController extends GetxController {
     } else {
       if (statusList[statusIndex.value].consSlot! == 0) {
         showErrorDialog(
-            errorTitle: 'ERROR!',
-            errorDescription:
-                'errordialog5'.tr);
+            errorTitle: 'ERROR!', errorDescription: 'errordialog5'.tr);
       } else if (hasAvailableSlot()) {
         showLoading();
         generatedConsID.value = uuid.v4();
@@ -224,8 +218,7 @@ class ConsRequestController extends GetxController {
         log.i('submitConsultRequest | Consultation Submit Succesfully');
       } else {
         showErrorDialog(
-            errorTitle: 'errordialog6'.tr,
-            errorDescription: 'errordialog3'.tr);
+            errorTitle: 'errordialog6'.tr, errorDescription: 'errordialog3'.tr);
         log.i('submitConsultRequest | Consultation Submit Failed');
       }
     }
@@ -328,13 +321,17 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> getconsultationCategory(String specialistD) async {
+    print('$specialistD');
     final ageInput = ageController.text == '' ? '0' : ageController.text;
     final parseAge = int.parse(ageInput);
     assert(parseAge is int);
     final dept = parseAge >= 18 ? 'Family Department' : 'Pediatrics Department';
+    print(statusList.length);
     for (var i = 0; i < statusList.length; i++) {
+      print('${statusList[i].deptName} -- ${statusList[i].title}');
       if (statusList[i].deptName == dept &&
           statusList[i].title == specialistD) {
+        print('match');
         statusIndex.value = i;
         categoryID.value = statusList[i].categoryID!;
         return;

@@ -7,7 +7,6 @@ import 'package:davnor_medicare/core/controllers/article_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
-import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
@@ -36,22 +35,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  final ConsRequestController consController = Get.put(ConsRequestController());
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
-  static AppController appController = Get.find();
+  final AppController appController = Get.find();
   static AuthController authController = Get.find();
-  static ArticleController articleService = Get.put(ArticleController());
+  static ArticleController articleService =
+      Get.put(ArticleController(), permanent: true);
   final List<ArticleModel> articleList = articleService.articlesList;
-  static ConsRequestController consController =
-      Get.put(ConsRequestController());
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
-  final NavigationController navigationController =
-      Get.put(NavigationController(), permanent: true);
   final ProfileController profileController = Get.put(ProfileController());
   final RxBool errorPhoto = false.obs;
+
   @override
   Widget build(BuildContext context) {
     appController.initLocalNotif(context);

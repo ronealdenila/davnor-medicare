@@ -1,12 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PhotoViewerScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
+  final UrlLauncherService _urlLauncherService = UrlLauncherService();
 
   @override
   Widget build(BuildContext context) {
@@ -16,36 +19,34 @@ class PhotoViewerScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                GestureDetector(
-                  onHorizontalDragEnd: (DragEndDetails details) {
-                    if (details.primaryVelocity! > 0) {
-                      controller.prevPhoto();
-                    } else if (details.primaryVelocity! < 0) {
-                      controller.nextPhoto();
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    height: controller.fetchedImages.length == 1
-                        ? Get.height - 24
-                        : Get.height - 85,
-                    width: Get.width,
-                    color: Colors.grey,
-                    child: Obx(
-                      () => CarouselSlider.builder(
-                        carouselController: controller.crslController,
-                        itemCount: controller.fetchedImages.length,
-                        itemBuilder: (context, index, realIndex) {
-                          return buildImage(index);
-                        },
-                        options: CarouselOptions(
-                            initialPage: controller.selectedIndex.value,
-                            viewportFraction: 1,
-                            height: double.infinity,
-                            enlargeCenterPage: true,
-                            enableInfiniteScroll: false,
-                            onPageChanged: (index, reason) =>
-                                controller.selectedIndex.value = index),
+                Expanded(
+                  child: GestureDetector(
+                    onHorizontalDragEnd: (DragEndDetails details) {
+                      if (details.primaryVelocity! > 0) {
+                        controller.prevPhoto();
+                      } else if (details.primaryVelocity! < 0) {
+                        controller.nextPhoto();
+                      }
+                    },
+                    child: Container(
+                      width: Get.width,
+                      color: Colors.grey,
+                      child: Obx(
+                        () => CarouselSlider.builder(
+                          carouselController: controller.crslController,
+                          itemCount: controller.fetchedImages.length,
+                          itemBuilder: (context, index, realIndex) {
+                            return buildImage(index);
+                          },
+                          options: CarouselOptions(
+                              initialPage: controller.selectedIndex.value,
+                              viewportFraction: 1,
+                              height: double.infinity,
+                              enlargeCenterPage: true,
+                              enableInfiniteScroll: false,
+                              onPageChanged: (index, reason) =>
+                                  controller.selectedIndex.value = index),
+                        ),
                       ),
                     ),
                   ),
@@ -67,14 +68,18 @@ class PhotoViewerScreen extends StatelessWidget {
                         size: 30,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await controller.downloadImage();
-                      },
-                      child: Icon(
-                        Icons.download_outlined,
-                        color: neutralColor[100],
-                        size: 35,
+                    SizedBox(
+                      width: 130,
+                      child: ErrorDialogButton(
+                        buttonText: 'Open Image',
+                        onTap: () async {
+                          if (controller.fetchedImages.length == 1) {
+                            _urlLauncherService
+                                .launchURL(controller.fetchedImages[0]);
+                          } else {
+                            await controller.launchOpenImage();
+                          }
+                        },
                       ),
                     ),
                   ],

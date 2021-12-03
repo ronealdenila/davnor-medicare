@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
@@ -26,13 +23,13 @@ class AttachedPhotosController extends GetxController {
 
   void prevPhoto() => crslController.previousPage();
 
-  Future<void> downloadImage() async {
-    final ref = storage.refFromURL(fetchedImages[selectedIndex.value]);
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    File downloadToFile = File('${appDocDir.path}/${ref.name}');
-    print('${downloadToFile}');
-    await storage.ref('${ref.fullPath}').writeToFile(downloadToFile);
-  }
+  // Future<void> downloadImage() async {
+  //   final ref = storage.refFromURL(fetchedImages[selectedIndex.value]);
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   File downloadToFile = File('${appDocDir.path}/${ref.name}');
+  //   print('${downloadToFile}');
+  //   await storage.ref('${ref.fullPath}').writeToFile(downloadToFile);
+  // }
 
   Future<void> launchOpenImage() async {
     _urlLauncherService.launchURL(fetchedImages[selectedIndex.value]);

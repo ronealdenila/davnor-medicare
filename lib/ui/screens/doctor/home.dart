@@ -139,8 +139,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: SizedBox(
-                                width: Get.width,
-                                child: Obx(() => actionCards(context))),
+                                width: Get.width, child: actionCards(context)),
                           ),
                           verticalSpace35,
                           const Padding(

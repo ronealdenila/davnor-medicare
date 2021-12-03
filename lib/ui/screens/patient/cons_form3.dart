@@ -12,7 +12,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class ConsForm3Screen extends GetView<ConsRequestController> {
+class ConsForm3Screen extends StatelessWidget {
+  final ConsRequestController consController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +60,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                   width: 211,
                   child: CustomButton(
                     onTap: () async {
-                      await controller.submitConsultRequest();
+                      await consController.submitConsultRequest();
                     },
                     text: 'consform19'.tr,
                     buttonColor: verySoftBlueColor,
@@ -74,10 +75,10 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
   }
 
   Widget getPrescriptionAndLabResults() {
-    final images = controller.images;
+    final images = consController.images;
     if (images.isEmpty) {
       return InkWell(
-        onTap: controller.pickForFollowUpImagess,
+        onTap: consController.pickForFollowUpImagess,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: Column(
@@ -106,7 +107,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
         crossAxisSpacing: 10,
         crossAxisCount: 3,
         children: List.generate(images.length + 1, (index) {
-          if (index == controller.images.length) {
+          if (index == consController.images.length) {
             return Center(
               child: IconButton(
                 icon: const Icon(
@@ -114,7 +115,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                 ),
                 color: verySoftBlueColor[100],
                 iconSize: 45,
-                onPressed: controller.pickForFollowUpImagess,
+                onPressed: consController.pickForFollowUpImagess,
               ),
             );
           }
@@ -136,7 +137,7 @@ class ConsForm3Screen extends GetView<ConsRequestController> {
                 top: 5,
                 child: InkWell(
                   onTap: () {
-                    controller.images.remove(images[index]);
+                    consController.images.remove(images[index]);
                   },
                   child: const Icon(
                     Icons.remove_circle,

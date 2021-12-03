@@ -257,6 +257,9 @@ class PatientProfileScreen extends StatelessWidget {
             width: 0,
           );
         }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Loading');
+        }
         final data = snapshot.data!.data() as Map<String, dynamic>;
         return Visibility(
           visible: data['validID'] != '' && data['validSelfie'] != '',

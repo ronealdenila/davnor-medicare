@@ -8,8 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConsForm2Screen extends GetView<ConsRequestController> {
+class ConsForm2Screen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ConsRequestController consController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
               ),
               verticalSpace18,
               TextFormField(
-                  controller: controller.descriptionController,
+                  controller: consController.descriptionController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'This is a required field';
@@ -63,18 +64,18 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
                     return;
                   },
                   onSaved: (value) {
-                    controller.descriptionController.text = value!;
+                    consController.descriptionController.text = value!;
                   }),
               verticalSpace18,
               Visibility(
-                visible: controller.isFollowUp.value,
+                visible: consController.isFollowUp.value,
                 child: Align(
                   child: SizedBox(
                     width: 211,
                     child: CustomButton(
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
-                          await controller.submitConsultRequest();
+                          await consController.submitConsultRequest();
                         }
                       },
                       text: 'consform14'.tr,
@@ -85,7 +86,7 @@ class ConsForm2Screen extends GetView<ConsRequestController> {
               ),
               verticalSpace25,
               Visibility(
-                visible: !controller.isFollowUp.value,
+                visible: !consController.isFollowUp.value,
                 child: Expanded(
                   child: Align(
                     alignment: FractionalOffset.bottomRight,

@@ -56,6 +56,5 @@ class ArticleController extends GetxController {
       });
     });
     doneLoading.value = true;
-    print('LENGTH: ${articlesList.length}');
   }
 }

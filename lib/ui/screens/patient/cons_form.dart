@@ -11,12 +11,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConsFormScreen extends GetView<ConsRequestController> {
+class ConsFormScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final ConsRequestController consController = Get.find();
   @override
   Widget build(BuildContext context) {
-    Get.put(ConsRequestController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -61,9 +60,9 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                               style: body16Regular,
                             ),
                             value: true,
-                            groupValue: controller.isFollowUp.value,
+                            groupValue: consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                controller.isFollowUp.value = value!,
+                                consController.isFollowUp.value = value!,
                           ),
                         ),
                         Expanded(
@@ -74,9 +73,9 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                               style: body16Regular,
                             ),
                             value: false,
-                            groupValue: controller.isFollowUp.value,
+                            groupValue: consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                controller.isFollowUp.value = value!,
+                                consController.isFollowUp.value = value!,
                           ),
                         ),
                       ],
@@ -88,30 +87,30 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: !controller.isConsultForYou.value,
+                      visible: !consController.isConsultForYou.value,
                       child: CustomTextFormField(
-                        controller: controller.firstNameController,
+                        controller: consController.firstNameController,
                         labelText: 'consform8'.tr,
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
                         },
                         onSaved: (value) =>
-                            controller.firstNameController.text = value!,
+                            consController.firstNameController.text = value!,
                       ),
                     ),
                     verticalSpace10,
                     Visibility(
-                      visible: !controller.isConsultForYou.value,
+                      visible: !consController.isConsultForYou.value,
                       child: CustomTextFormField(
-                        controller: controller.lastNameController,
+                        controller: consController.lastNameController,
                         labelText: 'consform9'.tr,
                         validator: Validator().notEmpty,
                         onChanged: (value) {
                           return;
                         },
                         onSaved: (value) =>
-                            controller.lastNameController.text = value!,
+                            consController.lastNameController.text = value!,
                       ),
                     ),
                     verticalSpace10,
@@ -123,7 +122,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                           Expanded(
                             flex: 4,
                             child: CustomTextFormField(
-                              controller: controller.ageController,
+                              controller: consController.ageController,
                               labelText: 'consform3'.tr,
                               validator: Validator().number,
                               keyboardType: TextInputType.number,
@@ -132,7 +131,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                                 return;
                               },
                               onSaved: (value) =>
-                                  controller.ageController.text = value!,
+                                  consController.ageController.text = value!,
                             ),
                           ),
                           Spacer(),
@@ -141,7 +140,7 @@ class ConsFormScreen extends GetView<ConsRequestController> {
                             child: CustomButton(
                               onTap: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await controller.nextButton();
+                                  await consController.nextButton();
                                 }
                               },
                               text: 'consform4'.tr,
