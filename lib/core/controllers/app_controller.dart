@@ -48,10 +48,13 @@ class AppController {
     await firestore
         .collection('patients')
         .doc(sendTo)
+        .collection('status')
+        .doc('value')
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
         Map data = documentSnapshot.data() as Map;
+        print('Token: ${data['deviceToken']}');
         if (data['deviceToken'] != '') {
           const postUrl = 'https://fcm.googleapis.com/fcm/send';
           final data = {

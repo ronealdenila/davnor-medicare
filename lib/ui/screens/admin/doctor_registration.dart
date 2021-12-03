@@ -21,11 +21,13 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back_outlined,
-                size: 30,
-              )),
+                  onPressed: () {
+                    navigationController.goBack();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
               DmText.title42Bold(
                 'Doctor Registration Form',
               ),

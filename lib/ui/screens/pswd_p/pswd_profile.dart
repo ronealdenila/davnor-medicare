@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
@@ -30,6 +31,7 @@ class ResponsiveView extends GetResponsiveView {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final ProfileController profileController = Get.put(ProfileController());
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget phone() => Column(
@@ -78,60 +80,59 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget profileDetails(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          IconButton(
-              onPressed: () {
-               // navigationController.goBack();
-              },
-              icon: Icon(
-                Icons.arrow_back_outlined,
-                size: 30,
-              )),
-    Center(
-      child: Column(
-        children: [
-          verticalSpace50,
-          displayProfile(),
-          verticalSpace18,
-          Text(
-            '${fetchedData!.firstName} ${fetchedData!.lastName}',
-            style: body20Bold,
-          ),
-          verticalSpace10,
-          Text(
-            fetchedData!.email!,
-            style: body18Regular,
-          ),
-          verticalSpace50,
-          ElevatedButton.icon(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        IconButton(
             onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => changePasswordDialog(context));
+              navigationController.goBack();
             },
-            icon: const Icon(
-              Icons.lock,
-              color: Colors.white,
-              size: 20,
+            icon: Icon(
+              Icons.arrow_back_outlined,
+              size: 30,
+            )),
+        Center(
+            child: Column(
+          children: [
+            verticalSpace50,
+            displayProfile(),
+            verticalSpace18,
+            Text(
+              '${fetchedData!.firstName} ${fetchedData!.lastName}',
+              style: body20Bold,
             ),
-            style: ElevatedButton.styleFrom(
-                elevation: 5,
-                primary: infoColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 35, vertical: 17),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                )),
-            label: Text('Change Password'.tr),
-          )
-        ],
-      )
-    )
-        ]),
+            verticalSpace10,
+            Text(
+              fetchedData!.email!,
+              style: body18Regular,
+            ),
+            verticalSpace50,
+            ElevatedButton.icon(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => changePasswordDialog(context));
+              },
+              icon: const Icon(
+                Icons.lock,
+                color: Colors.white,
+                size: 20,
+              ),
+              style: ElevatedButton.styleFrom(
+                  elevation: 5,
+                  primary: infoColor,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 35, vertical: 17),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  )),
+              label: Text('Change Password'.tr),
+            )
+          ],
+        ))
+      ]),
     );
   }
 

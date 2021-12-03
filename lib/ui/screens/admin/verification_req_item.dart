@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -32,6 +33,7 @@ class ResponsiveView extends GetResponsiveView {
   final VerificationReqModel vfModel;
   final ForVerificationController vf = Get.find();
   final RxBool errorPhoto = false.obs;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget phone() => Column(
@@ -40,6 +42,14 @@ class ResponsiveView extends GetResponsiveView {
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              IconButton(
+                  onPressed: () {
+                    navigationController.goBack();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
               userInfo(),
               Column(
                 children: <Widget>[
@@ -153,10 +163,6 @@ class ResponsiveView extends GetResponsiveView {
                     if (value!.isEmpty) {
                       return 'This is a required field';
                     }
-                    //! if we want to validate na dapat taas ang words
-                    // if (value.length < 10) {
-                    //   return 'Description must be at least 10 words';
-                    // }
                   },
                   decoration: const InputDecoration(
                     labelText: 'Enter the reason here',

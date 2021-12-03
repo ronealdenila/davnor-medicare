@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  final ForVerificationController vf = Get.put(ForVerificationController());
+  final ForVerificationController vf =
+      Get.put(ForVerificationController(), permanent: true);
   final NavigationController navigationController = Get.find();
 
   @override
@@ -20,48 +21,49 @@ class VerificationReqListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-                onPressed: () {
-                  navigationController.goBack();
-                },
-                icon: Icon(
-                  Icons.arrow_back_outlined,
-                  size: 30,
-                )),
             Text('Users to be Verified',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             verticalSpace50,
-            requestList()
+            Obx(() => requestList(context))
           ],
         ),
       ),
     );
   }
 
-  Widget requestList() {
-    return StreamBuilder(
-        stream: vf.getCollection(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (vf.verifReq.isNotEmpty) {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: vf.verifReq.length,
-                  itemBuilder: (context, index) {
-                    return ForVerificationCard(
-                        verifiReq: vf.verifReq[index],
-                        onItemTap: () {
-                          navigationController.navigateToWithArgs(
-                              Routes.VERIFICATION_REQ_ITEM,
-                              arguments: vf.verifReq[index]);
-                        });
-                  });
-            } else {
-              return const Text('No verification request at the moment');
-            }
-          }
-          return const SizedBox(
-              width: 20, height: 20, child: CircularProgressIndicator());
-        });
+  Widget requestList(BuildContext context) {
+    if (vf.isLoading.value) {
+      return Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: const SizedBox(
+              height: 24, width: 24, child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    if (vf.verifReq.isEmpty && !vf.isLoading.value) {
+      return const Text(
+        'No verification request at the moment',
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: vf.verifReq.length,
+          itemBuilder: (context, index) {
+            return ForVerificationCard(
+                verifiReq: vf.verifReq[index],
+                onItemTap: () {
+                  navigationController.navigateToWithArgs(
+                      Routes.VERIFICATION_REQ_ITEM,
+                      arguments: vf.verifReq[index]);
+                });
+          }),
+    );
   }
 }
