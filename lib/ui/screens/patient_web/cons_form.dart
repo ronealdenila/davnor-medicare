@@ -362,7 +362,7 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: 170,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: discomfortData.length,
@@ -375,8 +375,8 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
               child: InkWell(
                 onTap: () => consController.toggleSingleCardSelection(index),
                 child: SizedBox(
-                  height: 120,
-                  width: 120,
+                  height: 170,
+                  width: 170,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
