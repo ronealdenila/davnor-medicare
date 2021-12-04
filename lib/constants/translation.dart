@@ -211,7 +211,6 @@ class LocalString extends Translations {
           'appinfo':
               'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people to connect efficiently to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
           //Dialog
-          'errordialog': 'ERROR!',
           'errordialog1':
               'Please wait while we are currently connecting to the server',
           'errordialog2': 'Sorry were cut off already.',
@@ -255,7 +254,6 @@ class LocalString extends Translations {
           'icons13': 'Food Allergy',
           'icons14': 'Sore Throat',
           'icons15': 'Pneumonia'
-          
         },
 
         //TAGALOG
@@ -471,7 +469,6 @@ class LocalString extends Translations {
           'appinfo':
               'Ang DavNor Medicare ay isang multiplatform-based na application na nag-aalok ng libreng online na konsultasyon at Medical Assistance mula sa PSWD. Nilalayon ng application na tulungan ang mga tao na kumonekta nang mahusay sa mga doktor nang halos magkaroon ng regular na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang application nang walang anumang problema. At panghuli, ang mga residente lamang ng Davao del Norte ang maaaring gumamit ng application.',
           //Dialog
-          'errordialog': 'ERROR!',
           'errordialog1':
               'Mangyaring maghintay habang kami ay kasalukuyang kumokonekta sa server',
           'errordialog2': 'Paumanhin nag cut-off na',
@@ -502,21 +499,20 @@ class LocalString extends Translations {
           'menu5': 'Mag Log out',
           //icons
           'icons1': 'Sakit sa tenga',
-           'icons2': 'Heartburn o GERD',
-           'icons3': 'Pagduduwal o Pagsusuka',
-           'icons4': 'Pagtatae o Pagdumi',
-           'icons5': 'Ulcer o Pananakit ng Tiyan',
-           'icons6': 'Sinusitis',
-           'icons7': 'Sipon o Ubo',
-           'icons8': 'Hypertension',
-           'icons9': 'Sakit sa likod',
-           'icons10': 'Conjunctivitis',
-           'icons11': 'Diabetes',
-           'icons12': 'Hika',
-           'icons13': 'Allergy sa Pagkain',
-           'icons14': 'sakit sa lalamunan ',
-           'icons15': 'pulmonya' 
-  
+          'icons2': 'Heartburn o GERD',
+          'icons3': 'Pagduduwal o Pagsusuka',
+          'icons4': 'Pagtatae o Pagdumi',
+          'icons5': 'Ulcer o Pananakit ng Tiyan',
+          'icons6': 'Sinusitis',
+          'icons7': 'Sipon o Ubo',
+          'icons8': 'Hypertension',
+          'icons9': 'Sakit sa likod',
+          'icons10': 'Conjunctivitis',
+          'icons11': 'Diabetes',
+          'icons12': 'Hika',
+          'icons13': 'Allergy sa Pagkain',
+          'icons14': 'Sakit sa lalamunan ',
+          'icons15': 'Pulmonya'
         },
 
         //BISAYA
@@ -533,7 +529,7 @@ class LocalString extends Translations {
           'action8': 'Palihug i-verify una ang imong account sa imong profile',
           'action9': 'Wala ka karon nga konsultasyon',
           'action10': 'Palihug hangyo og konsultasyon una',
-          'action11': 'Pasensya wala kay live consultation', 
+          'action11': 'Pasensya wala kay live consultation',
 
           //dialog1
           'dialog1': 'Para nimu ang konsulta?',
@@ -730,7 +726,6 @@ class LocalString extends Translations {
           'appinfo':
               'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Medical Assistance gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga makonektar sa epektibong paagi ngadto sa mga doktor nga halos adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug ang katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.',
           //Dialog
-          'errordialog': 'ERROR!',
           'errordialog1':
               'Palihug paghulat samtang nagkonektar kami karon sa server',
           'errordialog2': 'Pasensya nag cut off na.',
@@ -774,8 +769,7 @@ class LocalString extends Translations {
           'icons12': 'Asma',
           'icons13': 'Allergy sa Pagkaon',
           'icons14': 'Sakit nga tutunlan',
-          'icons15': 'Pneumonia' 
-
+          'icons15': 'Pneumonia'
         }
       };
 }
