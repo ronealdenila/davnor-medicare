@@ -79,7 +79,6 @@ class CustomDialog extends StatelessWidget {
               alignment: Alignment.topRight,
               child: CircleAvatar(
                 radius: 14,
-                //TO BE REGISTERED ON APP COLOR
                 backgroundColor: const Color(0xFFE3E6E8),
                 child: Icon(Icons.close, color: neutralColor[100]),
               ),

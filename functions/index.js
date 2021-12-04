@@ -71,15 +71,15 @@ exports.resetConsRequest = functions.pubsub.schedule("0 4 * 2 *")
           });
     });
 
-exports.resetConsStatus = functions.pubsub.schedule("0 4 * 2 *")
+exports.resetConsStatus = functions.pubsub.schedule("0 4 * * *")
     .timeZone("Asia/Singapore")
     .onRun(()=>{
       const promises = [];
       return database.collection("cons_status").get()
           .then((querySnapshot) =>{
             querySnapshot.forEach((document) =>{
-              promises.push(document.ref.update({"consSlot": 0,
-                "consRqstd": 0, "qLastNum": 0}));
+              promises.push(document.ref.update({"consSlot": parseInt(0),
+                "consRqstd": parseInt(0), "qLastNum": parseInt(0)}));
             });
             return Promise.all(promises);
           })
@@ -89,7 +89,7 @@ exports.resetConsStatus = functions.pubsub.schedule("0 4 * 2 *")
           });
     });
 
-exports.resetDocAsOffline = functions.pubsub.schedule("0 4 * 2 *")
+exports.resetDocAsOffline = functions.pubsub.schedule("0 4 * * *")
     .timeZone("Asia/Singapore")
     .onRun(()=>{
       const promises = [];
@@ -107,7 +107,7 @@ exports.resetDocAsOffline = functions.pubsub.schedule("0 4 * 2 *")
           });
     });
 
-exports.resetPatientConsStatus = functions.pubsub.schedule("0 4 * 2 *")
+exports.resetPatientConsStatus = functions.pubsub.schedule("0 4 * * *")
     .timeZone("Asia/Singapore")
     .onRun(()=>{
       const promises = [];
@@ -149,7 +149,7 @@ exports.resetPSWDMAStatus = functions.pubsub.schedule("0 4 * * *")
     .timeZone("Asia/Singapore")
     .onRun((context)=>{
       database.doc("pswd_status/status").update({"isCutOff": true,
-        "maRequested": 0, "qLastNum": 0});
+        "maRequested": parseInt(0), "qLastNum": parseInt(0)});
       return console.log("TEST IF NAG RUN BAG 4AM Reset Done Running");
     });
 

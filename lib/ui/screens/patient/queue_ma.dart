@@ -78,8 +78,12 @@ class QueueMAScreen extends StatelessWidget {
                                   () => Text(
                                     maQueueController.isLoading.value
                                         ? ''
-                                        : 'temp',
-                                    //TO DO: uncomment puhon -  maQueueController.queueMAList[0].queueNum!,
+                                        : maQueueController
+                                                    .queueMAList.length ==
+                                                0
+                                            ? 'MA0'
+                                            : maQueueController
+                                                .queueMAList[0].queueNum!,
                                     style: title42BoldNeutral100,
                                   ),
                                 ),
@@ -103,6 +107,7 @@ class QueueMAScreen extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   'maqueue3'.tr,
+                                  textAlign: TextAlign.end,
                                   style: subtitle18RegularWhite,
                                 ),
                               ),

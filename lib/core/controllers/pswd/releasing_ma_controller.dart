@@ -63,7 +63,6 @@ class ReleasingMAController extends GetxController {
 
     //filter for name only
     if (name != '') {
-      print('NAME');
       for (var i = 0; i < toRelease.length; i++) {
         if (toRelease[i].fullName!.toLowerCase().contains(name.toLowerCase())) {
           filteredList.add(toRelease[i]);
@@ -103,7 +102,9 @@ class ReleasingMAController extends GetxController {
     }).catchError((onError) {
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      //TO DO: Error Dialog ----> something went wrong
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription: 'Unable to update request. Please try again later');
     });
   }
 
@@ -150,7 +151,9 @@ class ReleasingMAController extends GetxController {
     }).catchError((onError) {
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
-      //TO DO: Error Dialog ----> something went wrong
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription: 'Unable to update request. Please try again later');
     });
   }
 }

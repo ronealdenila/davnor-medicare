@@ -322,8 +322,7 @@ class AuthController extends GetxController {
           break;
         default:
           dismissDialog();
-          showErrorDialog(
-              errorTitle: 'ERROR!',
+          showSimpleErrorDialog(
               errorDescription:
                   'Sorry, we could not fetch your data.\nPlease contact davnor.medicare@gmail.com');
       }

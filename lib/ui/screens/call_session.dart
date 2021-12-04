@@ -249,7 +249,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   Future<bool> _onBackPressed() {
-    print('Either you reject the call or accept');
+    print(
+        'title = Cannot go back, desc = You have to either you reject the call or accept'); //TO DO: Error Dialog + translate
     return false as Future<bool>;
   }
 }

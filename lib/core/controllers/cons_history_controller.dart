@@ -162,7 +162,6 @@ class ConsHistoryController extends GetxController {
     if (!kIsWeb) {
       chatHistory.clear();
     }
-    log.i(model.consID);
     await firestore
         .collection('chat')
         .doc(model.consID)

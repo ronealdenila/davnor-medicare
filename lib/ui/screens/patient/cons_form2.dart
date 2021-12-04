@@ -44,10 +44,6 @@ class ConsForm2Screen extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'This is a required field';
                     }
-                    //! if we want to validate na dapat taas ang words
-                    // if (value.length < 10) {
-                    //   return 'Description must be at least 10 words';
-                    // }
                   },
                   decoration: InputDecoration(
                     labelText: 'consformlabel'.tr,

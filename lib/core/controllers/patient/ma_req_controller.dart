@@ -91,7 +91,7 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      log.i('Please provide valid ID');
+      log.i('Please provide valid ID'); //TO DO: Error Dialog + translate
     }
   }
 
@@ -102,9 +102,7 @@ class MARequestController extends GetxController {
         lastNameController.text == '' ||
         ageController.text == '' ||
         addressController.text == '') {
-      showErrorDialog(
-          errorTitle: 'ERROR!',
-          errorDescription: 'errordialog7'.tr);
+      showSimpleErrorDialog(errorDescription: 'errordialog7'.tr);
     } else {
       await Get.to(() => MAForm2Screen());
     }
@@ -127,13 +125,12 @@ class MARequestController extends GetxController {
           ageController.text == '' ||
           addressController.text == '') {
         showErrorDialog(
-            errorTitle: 'errordialog8'.tr,
-            errorDescription: 'errordialog7'.tr);
+            errorTitle: 'errordialog8'.tr, errorDescription: 'errordialog7'.tr);
       } else {
         await requestMAButton();
       }
     } else {
-      log.i('Please provide valid ID');
+      log.i('Please provide valid ID'); //TO DO: Error Dialog + translate
     }
   }
 
@@ -152,9 +149,7 @@ class MARequestController extends GetxController {
       }
     } else {
       dismissDialog();
-      showErrorDialog(
-          errorTitle: 'ERROR! ',
-          errorDescription: 'errordialog10'.tr);
+      showSimpleErrorDialog(errorDescription: 'errordialog10'.tr);
     }
   }
 
@@ -258,8 +253,6 @@ class MARequestController extends GetxController {
 
     await addToMAQueueCollection();
     await updateStatus();
-
-    await showAllData(); //FOR TESTING ONLY
     await clearControllers();
 
     dismissDialog();
@@ -325,15 +318,6 @@ class MARequestController extends GetxController {
         }
       },
     );
-  }
-
-  Future<void> showAllData() async {
-    //FOR TESTING ONLY
-    log.i('Full Name: ${firstNameController.text} ${lastNameController.text}');
-    log.i('Age: ${ageController.text}, Address: ${addressController.text}');
-    log.i('Gender: ${gender.value}, Patient Type: ${type.value}');
-    log.i('Document ID: ${generatedMAID.value}');
-    log.i('Generated Queue Number: ${generatedCode.value}');
   }
 
   Future<void> clearControllers() async {

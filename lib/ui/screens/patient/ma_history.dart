@@ -58,7 +58,8 @@ class MAHistoryScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Container(
-                              width: 220,
+                              width: 250,
+                              padding: EdgeInsets.only(right: 10),
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -82,7 +83,6 @@ class MAHistoryScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          horizontalSpace10,
                           Card(
                             elevation: 6,
                             child: SizedBox(
@@ -100,7 +100,9 @@ class MAHistoryScreen extends StatelessWidget {
                                           errorTitle: 'ERROR',
                                           errorDescription: 'mahrec1'.tr);
                                     } else if (maHController
-                                        .maHistoryList.isEmpty) {
+                                            .maHistoryList.isEmpty &&
+                                        maHController
+                                            .filteredListforP.isEmpty) {
                                       showErrorDialog(
                                           errorTitle: 'ERROR',
                                           errorDescription: 'mahrec2'.tr);
@@ -150,9 +152,20 @@ class MAHistoryScreen extends StatelessWidget {
         ),
       );
     }
-    if (maHController.maHistoryList.isEmpty && !maHController.isLoading.value) {
+    if (maHController.maHistoryList.isEmpty &&
+        !maHController.isLoading.value &&
+        maHController.filteredListforP.isEmpty) {
       return Text(
         'mahrec'.tr,
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    if (maHController.maHistoryList.isEmpty &&
+        !maHController.isLoading.value &&
+        maHController.filteredListforP.isNotEmpty) {
+      return Text(
+        'No result found', //TRANSLATE
         textAlign: TextAlign.center,
         style: body14Medium,
       );

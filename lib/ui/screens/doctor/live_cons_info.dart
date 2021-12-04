@@ -71,7 +71,6 @@ class LiveConsInfoScreen extends StatelessWidget {
                   verticalSpace15,
                   InkWell(
                     onTap: () {
-                      print('clicked');
                       showDialog(
                           context: context,
                           builder: (context) => skipDialog(consData));
@@ -215,10 +214,6 @@ class LiveConsInfoScreen extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'This is a required field';
                     }
-                    //! if we want to validate na dapat taas ang words
-                    // if (value.length < 10) {
-                    //   return 'Description must be at least 10 words';
-                    // }
                   },
                   decoration: const InputDecoration(
                     labelText: 'Enter the reason here',
@@ -248,7 +243,6 @@ class LiveConsInfoScreen extends StatelessWidget {
                           consData.patientID!,
                         );
                       },
-                      //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
                       text: 'Submit')),
             ],
           ),

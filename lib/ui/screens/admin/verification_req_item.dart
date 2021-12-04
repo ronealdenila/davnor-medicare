@@ -418,11 +418,4 @@ class ResponsiveView extends GetResponsiveView {
       ),
     );
   }
-
-  //TO DO: Add download button for web (attached photos) / ZOOM
-  // Future downloadFile(Reference ref) async {
-  //   final dir = await getApplicationDocumentsDirectory();
-  //   final file = File('${dir.path}/${ref.name}');
-  //   await ref.writeToFile(file);
-  // }
 }

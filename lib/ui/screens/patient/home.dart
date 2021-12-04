@@ -35,14 +35,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientHomeScreen extends StatelessWidget {
+  static ArticleController articleService =
+      Get.put(ArticleController(), permanent: true);
+
+  final List<ArticleModel> articleList = articleService.articlesList;
   final ConsRequestController consController = Get.put(ConsRequestController());
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
   final AppController appController = Get.find();
   static AuthController authController = Get.find();
-  static ArticleController articleService =
-      Get.put(ArticleController(), permanent: true);
-  final List<ArticleModel> articleList = articleService.articlesList;
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
@@ -174,9 +175,7 @@ class PatientHomeScreen extends StatelessWidget {
               secondaryColor: verySoftMagentaCustomColor,
               onTap: () {
                 if (stats.isLoading.value) {
-                  showErrorDialog(
-                      errorTitle: 'ERROR!',
-                      errorDescription: 'errordialog1'.tr);
+                  showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                 } else {
                   if (stats.patientStatus[0].pStatus!) {
                     if (stats.patientStatus[0].hasActiveQueueCons!) {
@@ -213,9 +212,7 @@ class PatientHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
                   if (stats.isLoading.value) {
-                    showErrorDialog(
-                        errorTitle: 'ERROR!',
-                        errorDescription: 'errordialog1'.tr);
+                    showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                   } else {
                     Get.to(() => MADescriptionScreen());
                   }
@@ -228,9 +225,7 @@ class PatientHomeScreen extends StatelessWidget {
               secondaryColor: verySoftRedCustomColor,
               onTap: () {
                 if (stats.isLoading.value) {
-                  showErrorDialog(
-                      errorTitle: 'ERROR!',
-                      errorDescription: 'errordialog1'.tr);
+                  showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                 } else {
                   if (stats.patientStatus[0].pStatus!) {
                     if (stats.patientStatus[0].hasActiveQueueCons! &&

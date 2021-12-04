@@ -16,7 +16,7 @@ import 'package:intl/intl.dart';
 
 class MAReqListController extends GetxController {
   final log = getLogger('MA Requests List Controller');
-  static AppController appController = Get.find();
+  final AppController appController = Get.find();
   final NavigationController navigationController = Get.find();
   final TextEditingController reason = TextEditingController();
   RxList<MARequestModel> maRequests = RxList<MARequestModel>([]);
@@ -142,12 +142,43 @@ class MAReqListController extends GetxController {
       'medWorth': '',
       'pharmacy': '',
     }).then((value) async {
-      //TO DO: NOTIF PATIENT TO STANDBY and PREPARE FOR AN INTERVIEW?? (undecided yet)
+      await sendNotificationAccepted(model.requesterID!);
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       menuController.changeActiveItemTo('Dashboard');
       navigationController.navigateTo(Routes.DASHBOARD);
+    });
+  }
+
+  Future<void> sendNotificationAccepted(String uid) async {
+    final action = ' has accepted your ';
+    final title = 'The pswd personnel${action}Medical Assistance(MA) Request';
+    final message =
+        'Please standby and get ready for an interview through video call';
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+      'photo': maLogoURL,
+      'from': 'The pswd personnel',
+      'action': action,
+      'subject': 'MA Request',
+      'message': message,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+
+    await appController.sendNotificationViaFCM(title, message, uid);
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('status')
+        .doc('value')
+        .update({
+      'notifBadge': FieldValue.increment(1),
     });
   }
 

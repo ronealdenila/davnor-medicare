@@ -898,8 +898,7 @@ Future<void> goOffline() async {
     print('Changed status');
     count.value = 1;
   }).catchError((error) {
-    showErrorDialog(
-        errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
+    showSimpleErrorDialog(errorDescription: 'Something went wrong');
   });
 }
 
@@ -953,8 +952,7 @@ Widget detailsDialogCons1() {
                           print('Changed status');
                           count.value = 1;
                         }).catchError((error) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR!',
+                          showSimpleErrorDialog(
                               errorDescription: 'Something went wrong');
                         });
                       },
@@ -1030,8 +1028,7 @@ Widget detailsDialogCons2(int currentCount) {
                           dismissDialog();
                           countAdd.value = 1;
                         }).catchError((error) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR!',
+                          showSimpleErrorDialog(
                               errorDescription: 'Something went wrong');
                         });
                       },

@@ -24,7 +24,6 @@ class AdminSideMenu extends GetView<AdminMenuController> {
                 .map((item) => AdminSideMenuItem(
                     itemName: item.name,
                     onTap: () {
-                      print('${item.name} - ${item.route}');
                       if (!controller.isActive(item.name!)!) {
                         controller.changeActiveItemTo(item.name);
                         navigationController.navigateTo(item.route!);

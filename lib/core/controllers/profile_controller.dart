@@ -99,8 +99,7 @@ class ProfileController extends GetxController {
         break;
       default:
         dismissDialog();
-        showErrorDialog(
-            errorTitle: 'ERROR!',
+        showSimpleErrorDialog(
             errorDescription:
                 'Sorry, an error occured while updating your profile photo');
     }

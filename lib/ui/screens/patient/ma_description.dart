@@ -136,6 +136,7 @@ class MADescriptionScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                         child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const <Widget>[
                               Text('Cut-off: 9:30 am & Releasing: 12:30 pm',

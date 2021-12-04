@@ -162,7 +162,6 @@ class ResponsiveView extends GetResponsiveView {
                         color: Colors.lightBlue,
                         child: InkWell(
                           onTap: () {
-                            //upload and change profile photo
                             profileController.selectProfileImage();
                           },
                           child: Padding(

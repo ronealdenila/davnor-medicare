@@ -126,8 +126,7 @@ class ConsRequestController extends GetxController {
 
   Future<void> submitConsultRequest() async {
     if (statusList[statusIndex.value].consSlot! == 0) {
-      showErrorDialog(
-          errorTitle: 'ERROR!', errorDescription: 'errordialog5'.tr);
+      showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
     } else if (hasAvailableSlot()) {
       showLoading();
       generatedConsID.value = uuid.v4();
@@ -175,11 +174,11 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequestWeb() async {
     await initCategoryForWeb();
     if (categoryID.value == '') {
-      print('ERROR: cannot fetch the category');
+      showSimpleErrorDialog(
+          errorDescription: 'Cannot fetch the category'); //TRANSLATE
     } else {
       if (statusList[statusIndex.value].consSlot! == 0) {
-        showErrorDialog(
-            errorTitle: 'ERROR!', errorDescription: 'errordialog5'.tr);
+        showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
       } else if (hasAvailableSlot()) {
         showLoading();
         generatedConsID.value = uuid.v4();
@@ -305,7 +304,8 @@ class ConsRequestController extends GetxController {
       categoryID.value = categoryHolder.value;
     }
     if (categoryID.value == '') {
-      print('ERROR: cannot fetch the category');
+      print(
+          'ERROR: cannot fetch the category'); //TO DO: Error Dialog + translate
     } else {
       log.wtf('Final: ${categoryID.value} is selected');
       await Get.to(() => ConsForm2Screen());
@@ -321,17 +321,13 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> getconsultationCategory(String specialistD) async {
-    print('$specialistD');
     final ageInput = ageController.text == '' ? '0' : ageController.text;
     final parseAge = int.parse(ageInput);
     assert(parseAge is int);
     final dept = parseAge >= 18 ? 'Family Department' : 'Pediatrics Department';
-    print(statusList.length);
     for (var i = 0; i < statusList.length; i++) {
-      print('${statusList[i].deptName} -- ${statusList[i].title}');
       if (statusList[i].deptName == dept &&
           statusList[i].title == specialistD) {
-        print('match');
         statusIndex.value = i;
         categoryID.value = statusList[i].categoryID!;
         return;
