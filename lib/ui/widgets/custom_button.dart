@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends Container {
@@ -60,7 +61,8 @@ class PSWDButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+          padding:
+              EdgeInsets.symmetric(vertical: kIsWeb ? 25 : 15, horizontal: 40),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: verySoftOrange[60],

@@ -59,7 +59,7 @@ class ResponsiveBody extends GetResponsiveView {
                           Icons.arrow_back_outlined,
                           size: 30,
                         )),
-                    verticalSpace5,
+                    verticalSpace25,
                     Text(
                       'consform'.tr,
                       style: title32Regular,
@@ -362,7 +362,7 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 128,
+      height: 130,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: discomfortData.length,
@@ -375,10 +375,11 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
               child: InkWell(
                 onTap: () => consController.toggleSingleCardSelection(index),
                 child: SizedBox(
-                  height: 170,
-                  width: 170,
+                  height: 130,
+                  width: 130,
                   child: SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(

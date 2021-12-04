@@ -35,8 +35,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientHomeScreen extends StatelessWidget {
-  static ArticleController articleService =
-      Get.put(ArticleController(), permanent: true);
+  static ArticleController articleService = Get.find();
   final ConsRequestController consController = Get.put(ConsRequestController());
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
