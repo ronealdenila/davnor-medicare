@@ -362,7 +362,7 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 170,
+      height: 128,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: discomfortData.length,
