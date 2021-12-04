@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -249,8 +250,10 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   Future<bool> _onBackPressed() {
-    print(
-        'title = Cannot go back, desc = You have to either you reject the call or accept'); //TO DO: Error Dialog + translate
+    showErrorDialog(
+      errorTitle:'errordialog'.tr ,
+      errorDescription: 'errordialog14'.tr
+    );
     return false as Future<bool>;
   }
 }

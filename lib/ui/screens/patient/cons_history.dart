@@ -163,7 +163,7 @@ class ConsHistoryScreen extends StatelessWidget {
         !consHController.isLoading.value &&
         consHController.filteredListforP.isNotEmpty) {
       return Text(
-        'No result found', //TRANSLATE
+        'errordialog15'.tr,
         textAlign: TextAlign.center,
         style: body14Medium,
       );

@@ -165,7 +165,7 @@ class MAHistoryScreen extends StatelessWidget {
         !maHController.isLoading.value &&
         maHController.filteredListforP.isNotEmpty) {
       return Text(
-        'No result found', //TRANSLATE
+        'errordialog15'.tr, 
         textAlign: TextAlign.center,
         style: body14Medium,
       );

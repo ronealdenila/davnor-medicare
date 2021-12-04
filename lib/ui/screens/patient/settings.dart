@@ -40,7 +40,8 @@ class SettingScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text('setting'.tr, style: subtitle20Bold),
+                child: Text('setting'.tr, 
+                style: subtitle20Bold),
               ),
               verticalSpace20,
               Flexible(

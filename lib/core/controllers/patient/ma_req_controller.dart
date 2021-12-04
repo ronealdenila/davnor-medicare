@@ -91,7 +91,11 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      log.i('Please provide valid ID'); //TO DO: Error Dialog + translate
+      showErrorDialog(
+        errorTitle: 'errordialog',
+        errorDescription: 'errordialog13'.tr
+      );
+      
     }
   }
 
@@ -130,7 +134,10 @@ class MARequestController extends GetxController {
         await requestMAButton();
       }
     } else {
-      log.i('Please provide valid ID'); //TO DO: Error Dialog + translate
+       showErrorDialog(
+        errorTitle: 'errordialog',
+        errorDescription: 'errordialog13'.tr
+      );
     }
   }
 
