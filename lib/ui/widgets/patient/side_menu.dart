@@ -42,9 +42,9 @@ class PatientSideMenu extends GetView<PatientMenuController> {
                       if (item.name == 'Live Consultation' &&
                           liveCont.liveCons.isEmpty) {
                         showErrorDialog(
-                            errorTitle: 'Sorry you have no live consultation',
+                            errorTitle: 'action11'.tr,
                             errorDescription:
-                                'Please request consultation first');
+                                'action10'.tr);
                       } else if (item.name == 'Change Language') {
                         buildLanguageDialog(context);
                       } else if (item.name == 'App Info') {

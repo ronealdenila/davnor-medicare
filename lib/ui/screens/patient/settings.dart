@@ -19,6 +19,7 @@ class SettingScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.chevron_left),
+          iconSize: 30.0,
           onPressed: () {
             Get.back();
           },
@@ -39,7 +40,7 @@ class SettingScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text('Settings', style: subtitle20Bold),
+                child: Text('setting'.tr, style: subtitle20Bold),
               ),
               verticalSpace20,
               Flexible(
@@ -60,8 +61,8 @@ class SettingScreen extends StatelessWidget {
                                 Icons.translate_outlined,
                                 size: 25,
                               )),
-                          const Text(
-                            'Change Language',
+                           Text(
+                            'setting1'.tr,
                             style: subtitle18Medium,
                           ),
                         ]),
@@ -87,8 +88,8 @@ class SettingScreen extends StatelessWidget {
                                 Icons.info_outline_rounded,
                                 size: 25,
                               )),
-                          const Text(
-                            'App Info',
+                           Text(
+                            'setting2'.tr,
                             style: subtitle18Medium,
                           ),
                         ]),
@@ -105,7 +106,7 @@ class SettingScreen extends StatelessWidget {
         context: context,
         builder: (builder) {
           return AlertDialog(
-            title: Text('Choose Your Language'),
+            title: Text('setting3'.tr),
             content: Container(
               width: double.maxFinite,
               child: ListView.separated(

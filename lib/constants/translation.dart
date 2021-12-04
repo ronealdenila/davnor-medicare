@@ -17,6 +17,7 @@ class LocalString extends Translations {
           'action8': 'Please verify your account first in your profile',
           'action9': 'You have no current consultation',
           'action10': 'Please request consultation first',
+          'action11': 'Sorry you have no live consultation',
           //dialog1
           'dialog1': 'Is the consultation for you?',
           'dialogsub1':
@@ -224,6 +225,33 @@ class LocalString extends Translations {
           'errordialog9': 'Could not send request',
           'errordialog10': 'Sorry, it is already cut off.',
           'errordialog11': 'Please provide prescriptions.',
+          //menu
+          'setting': 'Settings',
+          'setting1': 'Change Language',
+          'setting2': 'App Info',
+          'setting3': 'Choose Your Language',
+          'menu1': 'Profile',
+          'menu2': 'Current Consultation',
+          'menu3': 'Consultation History',
+          'menu4': 'Medical Assistance History',
+          'menu5': 'Log out',
+          //icons
+          'icons1': 'Earache',
+          'icons2': 'Heartburn or GERD',
+          'icons3': 'Nausea or Vomiting',
+          'icons4': 'Diarrhea or Constipation',
+          'icons5': 'Ulcer or Abdonimal Pain',
+          'icons6': 'Sinusitis',
+          'icons7': 'Cold or Cough',
+          'icons8': 'Hypertension',
+          'icons9': 'Back Pain',
+          'icons10': 'Conjunctivitis',
+          'icons11': 'Diabetes',
+          'icons12': 'Asthma',
+          'icons13': 'Food Allergy',
+          'icons14': 'Sore Throat',
+          'icons15': 'Pneumonia'
+          
         },
 
         //TAGALOG
@@ -241,6 +269,7 @@ class LocalString extends Translations {
           'action8': 'Paki-verify muna ang iyong account sa iyong profile',
           'action9': 'Wala kang kasalukuyang konsultasyon',
           'action10': 'Mangyaring humiling ng konsultasyon muna',
+          'action11': 'Sorry you have no live consultation',
           //dialog1
           'dialog1': 'Ang konsulta ba ay para sa iyo?',
           'dialogsub1':
@@ -441,7 +470,7 @@ class LocalString extends Translations {
           'errordialog': 'ERROR!',
           'errordialog1':
               'Mangyaring maghintay habang kami ay kasalukuyang kumokonekta sa server',
-          'errordialog2': 'Paumanhin giputol na',
+          'errordialog2': 'Paumanhin nag cut-off na',
           'errordialog3': 'Pakisubukang muli sa susunod.',
           'errordialog4': 'Paumanhin, walang pondo si MA sa ngayon.',
           'errordialog5':
@@ -453,6 +482,33 @@ class LocalString extends Translations {
           'errordialog9': 'Hindi maipadala ang mga kahilingan',
           'errordialog10': 'Paumanhin, naputol na ito.',
           'errordialog11': 'Mangyaring magbigay ng mga reseta.',
+          //menu
+          'setting': 'Mga seting',
+          'Setting1': 'Baguhin ang Wika',
+          'setting2': 'App Info',
+          'setting3': 'Piliin ang Iyong Wika ',
+          'menu1': 'Profile',
+          'menu2': 'Kasalukuyang Konsultasyon',
+          'menu3': 'Konsultasyon History',
+          'menu4': 'Medical Assistance History',
+          'menu5': 'Mag Log out',
+          //icons
+          'icons1': 'Sakit sa tenga',
+           'icons2': 'Heartburn o GERD',
+           'icons3': 'Pagduduwal o Pagsusuka',
+           'icons4': 'Pagtatae o Pagdumi',
+           'icons5': 'Ulcer o Pananakit ng Tiyan',
+           'icons6': 'Sinusitis',
+           'icons7': 'Sipon o Ubo',
+           'icons8': 'Hypertension',
+           'icons9': 'Sakit sa likod',
+           'icons10': 'Conjunctivitis',
+           'icons11': 'Diabetes',
+           'icons12': 'Hika',
+           'icons13': 'Allergy sa Pagkain',
+           'icons14': 'sakit sa lalamunan ',
+           'icons15': 'pulmonya' 
+  
         },
 
         //BISAYA
@@ -469,6 +525,8 @@ class LocalString extends Translations {
           'action8': 'Palihug i-verify una ang imong account sa imong profile',
           'action9': 'Wala ka karon nga konsultasyon',
           'action10': 'Palihug hangyo og konsultasyon una',
+          'action11': 'Pasensya wala kay live consultation', 
+
           //dialog1
           'dialog1': 'Para nimu ang konsulta?',
           'dialogsub1':
@@ -679,6 +737,33 @@ class LocalString extends Translations {
           'errordialog9': 'Dili makapadala og hangyo',
           'errordialog10': 'Pasensya nag cut off na.',
           'errordialog11': 'Palihug paghatag og mga reseta.',
+          //menu
+          'setting': 'setting',
+          'setting1': 'Usba ang Pinulongan',
+          'setting2': 'App Info',
+          'setting3': 'Pilia ang Imong Pinulongan ',
+          'menu1': 'Profile',
+          'menu2': 'Karon nga Konsultasyon',
+          'menu3': 'History sa Konsultasyon',
+          'menu4': 'History sa Tabang Medikal',
+          'menu5': 'Mag Log out',
+          //icons
+          'icons1': 'Sakit sa dalunggan',
+          'icons2': 'Heartburn o GERD',
+          'icons3': 'Kasukaon o Pagsuka',
+          'icons4': 'Diarrhea o Constipation',
+          'icons5': 'Ulser o Sakit sa tiyan',
+          'icons6': 'Sinusitis',
+          'icons7': 'Sipon o Ubo',
+          'icons8': 'Hypertension',
+          'icons9': 'Sakit sa likod',
+          'icons10': 'Conjunctivitis',
+          'icons11': 'Diabetes',
+          'icons12': 'Asma',
+          'icons13': 'Allergy sa Pagkaon',
+          'icons14': 'Sakit nga tutunlan',
+          'icons15': 'Pneumonia' 
+
         }
       };
 }
