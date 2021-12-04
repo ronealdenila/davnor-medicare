@@ -2,7 +2,6 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/menu_item_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class Item {
   const Item(this.name);
