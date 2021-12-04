@@ -2,7 +2,6 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/models/category_model.dart';
 import 'package:davnor_medicare/core/models/menu_item_model.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class Item {
   const Item(this.name);
@@ -17,68 +16,68 @@ class ItemNum {
 final discomfortData = [
   Category(
       iconPath: earacheIcon,
-      title: 'icons1'.tr, //
+      title: 'Earache', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: heartburnIcon,
-      title: 'icons2'.tr,
+      title: 'Heartburn or GERD',
       specialist: 'Gastroenterologist',
       categoryID: 'category1'),
   Category(
       iconPath: vomitingIcon,
-      title: 'icons3'.tr, //
+      title: 'Nausea or Vomiting', //
       specialist: 'Gastroenterologist',
       categoryID: 'category1'),
   Category(
       iconPath: diarrheaIcon,
-      title: 'icons4'.tr, //
+      title: 'Diarrhea or Constipation', //
       specialist: 'Gastroenterologist',
       categoryID: 'category1'),
   Category(
       iconPath: abdominalpainIcon,
-      title: 'icons5'.tr, //
+      title: 'Ulcer or Abdonimal Pain', //
       specialist: 'Gastroenterologist',
       categoryID: 'category1'),
   Category(
       iconPath: sinusitisIcon,
-      title: 'icons6'.tr, //
+      title: 'Sinusitis', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: coughIcon,
-      title: 'icons7'.tr, //
+      title: 'Cold or Cough', //
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
       iconPath: hypertensionIcon,
-      title: 'icons8'.tr, //
+      title: 'Hypertension', //
       specialist: 'Nephrologist'), //pedia or family department
   Category(
       iconPath: backpainIcon,
-      title: 'icons9'.tr, //
+      title: 'Back Pain', //
       specialist: 'Orthopedist'), //pedia or family department
   Category(
       iconPath: conjunctivitisIcon,
-      title: 'icons10'.tr, //
+      title: 'Conjunctivitis', //
       specialist: 'Ophthalmologist'), //pedia or family department
   Category(
       iconPath: diabetesIcon,
-      title: 'icons11'.tr, //
+      title: 'Diabetes', //
       specialist: 'Diabetologist',
       categoryID: 'category12'),
   Category(
       iconPath: asthma,
-      title: 'icons12'.tr, //
+      title: 'Asthma', //
       specialist: 'Pulmonologist'), //pedia or family department
   Category(
       iconPath: foodallergyIcon,
-      title: 'icons13'.tr, //
+      title: 'Food Allergy', //
       specialist: 'Immunologist'), //pedia or family department
   Category(
       iconPath: sorethroatIcon,
-      title: 'icons14'.tr, //
+      title: 'Sore Throat', //
       specialist: 'Otolaryngologist (ENT)'), //pedia or family department
   Category(
       iconPath: pneomoniaIcon,
-      title: 'icons15'.tr, //
+      title: 'Pneumonia', //
       specialist: 'Pulmonologist'), //pedia or family department
 ];
 
