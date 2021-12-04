@@ -175,7 +175,7 @@ class ConsRequestController extends GetxController {
     await initCategoryForWeb();
     if (categoryID.value == '') {
       showSimpleErrorDialog(
-          errorDescription: 'Cannot fetch the category'); //TRANSLATE
+          errorDescription: 'errordialog12'.tr); //TRANSLATE
     } else {
       if (statusList[statusIndex.value].consSlot! == 0) {
         showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
@@ -304,8 +304,11 @@ class ConsRequestController extends GetxController {
       categoryID.value = categoryHolder.value;
     }
     if (categoryID.value == '') {
-      print(
-          'ERROR: cannot fetch the category'); //TO DO: Error Dialog + translate
+      showErrorDialog(
+        errorTitle: 'errordialog'.tr,
+        errorDescription: 'errordialog12'.tr
+      );
+      
     } else {
       log.wtf('Final: ${categoryID.value} is selected');
       await Get.to(() => ConsForm2Screen());

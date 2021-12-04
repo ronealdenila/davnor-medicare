@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,8 +81,10 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
   }
 
   Future<bool> _onBackPressed() {
-    print(
-        'title = Cannot go back, desc = You have to either you reject the call or accept'); //TO DO: Error Dialog + translate
+    showErrorDialog(
+      errorTitle:'errordialog'.tr ,
+      errorDescription: 'errordialog14'.tr
+    );
     return false as Future<bool>;
   }
 

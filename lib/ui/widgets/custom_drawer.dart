@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -39,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile'), //TRANSLATE
+            title: Text('menu1'.tr),
             onTap: onProfileTap,
           ),
           const Divider(),
@@ -47,27 +48,27 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: Text(forDoctorDrawer
                 ? 'On-Progress Consultation'
-                : 'Current Consultation'), //TRANSLATE - KINING IKADUHA LANG I
+                : 'menu2'.tr),
             onTap: onCurrentConsultTap,
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('Consultation History'), //TRANSLATE
+            title: Text('menu3'.tr), 
             onTap: onConsultHisoryTap,
           ),
           if (!forDoctorDrawer) const Divider(),
           if (!forDoctorDrawer)
             ListTile(
               leading: const Icon(Icons.document_scanner),
-              title: const Text('Medical Assistance History'), //TRANSLATE
+              title:  Text('menu4'.tr),
               onTap: onMedicalHistoryTap,
             ),
           if (!forDoctorDrawer) const Divider(),
           if (!forDoctorDrawer)
             ListTile(
               leading: const Icon(Icons.settings_outlined),
-              title: const Text('Settings'), //TRANSLATE
+              title:  Text('setting'.tr),
               onTap: onSettingsTap,
             ),
           const Divider(),
@@ -78,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
                   : FractionalOffset.bottomCenter,
               child: ListTile(
                 leading: const Icon(Icons.logout),
-                title: const Text('Logout'), //TRANSLATE
+                title: Text('menu5'.tr),
                 onTap: onLogoutTap,
               ),
             ),
