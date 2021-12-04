@@ -81,10 +81,8 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
   }
 
   Future<bool> _onBackPressed() {
-    showErrorDialog(
-      errorTitle:'errordialog'.tr ,
-      errorDescription: 'errordialog14'.tr
-    );
+    showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
+
     return false as Future<bool>;
   }
 

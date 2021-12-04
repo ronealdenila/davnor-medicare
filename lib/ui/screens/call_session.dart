@@ -250,10 +250,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   Future<bool> _onBackPressed() {
-    showErrorDialog(
-      errorTitle:'errordialog'.tr ,
-      errorDescription: 'errordialog14'.tr
-    );
+    showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
+
     return false as Future<bool>;
   }
 }

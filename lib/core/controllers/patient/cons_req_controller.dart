@@ -174,8 +174,7 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequestWeb() async {
     await initCategoryForWeb();
     if (categoryID.value == '') {
-      showSimpleErrorDialog(
-          errorDescription: 'errordialog12'.tr); //TRANSLATE
+      showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
     } else {
       if (statusList[statusIndex.value].consSlot! == 0) {
         showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
@@ -304,11 +303,7 @@ class ConsRequestController extends GetxController {
       categoryID.value = categoryHolder.value;
     }
     if (categoryID.value == '') {
-      showErrorDialog(
-        errorTitle: 'errordialog'.tr,
-        errorDescription: 'errordialog12'.tr
-      );
-      
+      showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
     } else {
       log.wtf('Final: ${categoryID.value} is selected');
       await Get.to(() => ConsForm2Screen());

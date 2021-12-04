@@ -91,11 +91,7 @@ class MARequestController extends GetxController {
     if (hasIDSelected()) {
       await checkEmptyFields();
     } else {
-      showErrorDialog(
-        errorTitle: 'errordialog',
-        errorDescription: 'errordialog13'.tr
-      );
-      
+      showSimpleErrorDialog(errorDescription: 'errordialog13'.tr);
     }
   }
 
@@ -134,10 +130,7 @@ class MARequestController extends GetxController {
         await requestMAButton();
       }
     } else {
-       showErrorDialog(
-        errorTitle: 'errordialog',
-        errorDescription: 'errordialog13'.tr
-      );
+      showSimpleErrorDialog(errorDescription: 'errordialog13'.tr);
     }
   }
 
