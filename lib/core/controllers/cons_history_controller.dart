@@ -197,9 +197,11 @@ class ConsHistoryController extends GetxController {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         color: Colors.white,
-        height: kIsWeb ? Get.height * 0.32 : Get.height * .45,
-        width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
+        //height: kIsWeb ? Get.height * 0.32 : Get.height * .5,
+        width: kIsWeb ? Get.width * 0.20 : Get.width,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SfDateRangePicker(

@@ -37,13 +37,12 @@ import 'package:get/get.dart';
 class PatientHomeScreen extends StatelessWidget {
   static ArticleController articleService =
       Get.put(ArticleController(), permanent: true);
-
-  final List<ArticleModel> articleList = articleService.articlesList;
   final ConsRequestController consController = Get.put(ConsRequestController());
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
   final AppController appController = Get.find();
   static AuthController authController = Get.find();
+  final List<ArticleModel> articleList = articleService.articlesList;
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);

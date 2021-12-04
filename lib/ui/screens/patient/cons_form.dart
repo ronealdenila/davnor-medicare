@@ -162,7 +162,9 @@ class ConsFormScreen extends StatelessWidget {
   }
 }
 
-class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
+class DiscomfortCategoryWidget extends StatelessWidget {
+  final ConsRequestController consController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -173,11 +175,11 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
         itemBuilder: (ctx, index) {
           return Obx(
             () => Card(
-              color: controller.selectedIndex.value == index
+              color: consController.selectedIndex.value == index
                   ? verySoftBlueColor[10]
                   : Colors.white,
               child: InkWell(
-                onTap: () => controller.toggleSingleCardSelection(index),
+                onTap: () => consController.toggleSingleCardSelection(index),
                 child: SizedBox(
                   height: 120,
                   width: 120,

@@ -85,20 +85,22 @@ class DoctorProfileScreen extends StatelessWidget {
                             size: 24,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const Text(
-                                'SPECIALTY',
-                                style: TextStyle(
-                                  fontSize: 14,
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                const Text(
+                                  'SPECIALTY',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              verticalSpace5,
-                              DmText.subtitle18Medium(fetchedData!.title),
-                            ],
+                                verticalSpace5,
+                                DmText.subtitle18Medium(fetchedData!.title),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -130,19 +132,22 @@ class DoctorProfileScreen extends StatelessWidget {
                             size: 24,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const Text(
-                                'DEPARTMENT',
-                                style: TextStyle(
-                                  fontSize: 14,
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                const Text(
+                                  'DEPARTMENT',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              DmText.subtitle18Medium(fetchedData!.department),
-                            ],
+                                DmText.subtitle18Medium(
+                                    fetchedData!.department),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -174,19 +179,22 @@ class DoctorProfileScreen extends StatelessWidget {
                             size: 24,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const Text(
-                                'CLINIC HOURS',
-                                style: TextStyle(
-                                  fontSize: 14,
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(18, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                const Text(
+                                  'CLINIC HOURS',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              DmText.subtitle18Medium(fetchedData!.clinicHours),
-                            ],
+                                DmText.subtitle18Medium(
+                                    fetchedData!.clinicHours),
+                              ],
+                            ),
                           ),
                         ),
                       ],

@@ -19,6 +19,7 @@ class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
   final AppController appController = Get.put(AppController());
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -38,6 +39,7 @@ class AuthController extends GetxController {
   String? userRole;
   bool? userSignedOut = false;
   RxBool? isObscureText = true.obs;
+  RxBool? isObscureText2 = true.obs;
   RxBool? isObscureCurrentPW = true.obs;
   RxBool? isObscureNewPW = true.obs;
   RxBool isCheckboxChecked = false.obs;
@@ -184,6 +186,9 @@ class AuthController extends GetxController {
       await addPatientStatus(_userID);
       await addIncomingCallStatus(_userID);
       dismissDialog();
+      if (!kIsWeb) {
+        await Get.offAll(() => LoginScreen());
+      }
     });
   }
 
@@ -260,6 +265,7 @@ class AuthController extends GetxController {
     firstNameController.clear();
     lastNameController.clear();
     confirmPassController.clear();
+    _formKey.currentState!.reset();
   }
 
   Future<void> _changePasswordSuccess() async {
@@ -414,6 +420,10 @@ class AuthController extends GetxController {
 
   void togglePasswordVisibility() {
     appController.toggleTextVisibility(isObscureText!);
+  }
+
+  void togglePasswordCVisibility() {
+    appController.toggleTextVisibility(isObscureText2!);
   }
 
   void toggleCurrentPasswordVisibility() {

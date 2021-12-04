@@ -29,10 +29,10 @@ class AllControllerBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.lazyPut<ArticleController>(() => ArticleController());
     Get.put<NavigationController>(NavigationController(), permanent: true);
     Get.lazyPut<AppController>(() => AppController());
     Get.lazyPut<StatusController>(() => StatusController());
+    Get.lazyPut<ArticleController>(() => ArticleController());
     Get.lazyPut<AttachedPhotosController>(() => AttachedPhotosController());
 
     //patient

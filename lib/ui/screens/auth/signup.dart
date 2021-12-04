@@ -23,9 +23,9 @@ class SignupScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          //color: Colors.white,
-          body: SingleChildScrollView(
-              child: Row(children: <Widget>[
+      //color: Colors.white,
+      body: SingleChildScrollView(
+          child: Row(children: <Widget>[
         if (isDesktop(context) || isTab(context))
           Expanded(
             child: SizedBox(
@@ -47,13 +47,12 @@ class SignupScreen extends GetView<AuthController> {
                     left: 5,
                     top: 20,
                     child: IconButton(
-                      icon: Icon(
-                        Icons.chevron_left,
-                        size: 65,
-                      ),
-                      onPressed: Get.back,
-                      color: Colors.blueGrey
-                    ),
+                        icon: Icon(
+                          Icons.chevron_left,
+                          size: 65,
+                        ),
+                        onPressed: Get.back,
+                        color: Colors.blueGrey),
                   ),
                 ]),
               Card(
@@ -118,54 +117,71 @@ class SignupScreen extends GetView<AuthController> {
                                   controller.emailController.text = value!,
                             ),
                             verticalSpace10,
-                            Obx(
-                              () => FormInputFieldWithIcon(
-                                controller: controller.passwordController,
-                                iconPrefix: Icons.lock,
-                                suffixIcon: IconButton(
-                                  onPressed:
-                                      controller.togglePasswordVisibility,
-                                  icon: Icon(
-                                    controller.isObscureText!.value
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                            SizedBox(
+                              width: Get.width,
+                              child: Obx(
+                                () => FormInputFieldWithIcon(
+                                  controller: controller.passwordController,
+                                  iconPrefix: Icons.lock,
+                                  suffixIcon: IconButton(
+                                    onPressed:
+                                        controller.togglePasswordVisibility,
+                                    icon: Icon(
+                                      controller.isObscureText!.value
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
                                   ),
+                                  labelText: 'Password',
+                                  validator: Validator().password,
+                                  obscureText: controller.isObscureText!.value,
+                                  onChanged: (value) {
+                                    return;
+                                  },
+                                  onSaved: (value) => controller
+                                      .passwordController.text = value!,
+                                  maxLines: 1,
                                 ),
-                                labelText: 'Password',
-                                validator: Validator().password,
-                                obscureText: controller.isObscureText!.value,
-                                onChanged: (value) {
-                                  return;
-                                },
-                                onSaved: (value) =>
-                                    controller.passwordController.text = value!,
-                                maxLines: 1,
                               ),
                             ),
                             verticalSpace10,
-                            FormInputFieldWithIcon(
-                              controller: controller.confirmPassController,
-                              iconPrefix: Icons.lock,
-                              labelText: 'Confirm Password',
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'This is a required field';
-                                }
-                                if (value !=
-                                    controller.passwordController.text) {
-                                  return 'Password does not match';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              obscureText: controller.isObscureText!.value,
-                              onChanged: (value) {
-                                return;
-                              },
-                              onSaved: (value) => controller
-                                  .confirmPassController.text = value!,
-                              maxLines: 1,
-                              textInputAction: TextInputAction.done,
+                            SizedBox(
+                              width: Get.width,
+                              child: Obx(
+                                () => FormInputFieldWithIcon(
+                                  controller: controller.confirmPassController,
+                                  iconPrefix: Icons.lock,
+                                  suffixIcon: IconButton(
+                                    onPressed:
+                                        controller.togglePasswordCVisibility,
+                                    icon: Icon(
+                                      controller.isObscureText2!.value
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                  ),
+                                  labelText: 'Confirm Password',
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'This is a required field';
+                                    }
+                                    if (value !=
+                                        controller.passwordController.text) {
+                                      return 'Password does not match';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  obscureText: controller.isObscureText2!.value,
+                                  onChanged: (value) {
+                                    return;
+                                  },
+                                  onSaved: (value) => controller
+                                      .confirmPassController.text = value!,
+                                  maxLines: 1,
+                                  textInputAction: TextInputAction.done,
+                                ),
+                              ),
                             ),
                             CheckboxFormField(
                               title: BottomTextWidget(

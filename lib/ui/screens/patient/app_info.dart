@@ -66,20 +66,22 @@ class AppInfoScreen extends StatelessWidget {
                             width: 50,
                           ),
                           horizontalSpace10,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Icons8', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://icons8.com');
-                                  },
-                                  child: Text('https://icons8.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
+                          Flexible(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Icons8', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://icons8.com');
+                                    },
+                                    child: Text('https://icons8.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ),
                         ]),
                     verticalSpace5,
                     Row(
@@ -93,20 +95,22 @@ class AppInfoScreen extends StatelessWidget {
                             width: 50,
                           ),
                           horizontalSpace10,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Flaticon', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://www.flaticon.com');
-                                  },
-                                  child: Text('https://www.flaticon.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
+                          Flexible(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Flaticon', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService.launchURL(
+                                          'https://www.flaticon.com');
+                                    },
+                                    child: Text('https://www.flaticon.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ),
                         ]),
                     verticalSpace18,
                     const Text(
@@ -126,20 +130,22 @@ class AppInfoScreen extends StatelessWidget {
                             width: 50,
                           ),
                           horizontalSpace15,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Freepik', style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://www.freepik.com');
-                                  },
-                                  child: Text('https://www.freepik.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ]),
+                          Flexible(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Freepik', style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://www.freepik.com');
+                                    },
+                                    child: Text('https://www.freepik.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          ),
                         ]),
                     verticalSpace18,
                     const Text(
@@ -159,21 +165,23 @@ class AppInfoScreen extends StatelessWidget {
                             width: 50,
                           ),
                           horizontalSpace15,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Lottie by: Abdul Latif',
-                                    style: body14SemiBold),
-                                verticalSpace5,
-                                InkWell(
-                                  onTap: () {
-                                    _urlLauncherService
-                                        .launchURL('https://lottiefiles.com');
-                                  },
-                                  child: Text('https://lottiefiles.com',
-                                      style: body16RegularUnderlineBlue),
-                                ),
-                              ])
+                          Flexible(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Lottie by: Abdul Latif',
+                                      style: body14SemiBold),
+                                  verticalSpace5,
+                                  InkWell(
+                                    onTap: () {
+                                      _urlLauncherService
+                                          .launchURL('https://lottiefiles.com');
+                                    },
+                                    child: Text('https://lottiefiles.com',
+                                        style: body16RegularUnderlineBlue),
+                                  ),
+                                ]),
+                          )
                         ]),
                     verticalSpace15
                   ]),

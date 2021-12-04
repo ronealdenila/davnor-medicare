@@ -43,57 +43,57 @@ class SettingScreen extends StatelessWidget {
                 child: Text('setting'.tr, style: subtitle20Bold),
               ),
               verticalSpace20,
-              Flexible(
-                child: InkWell(
-                  onTap: () {
-                    buildLanguageDialog(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          horizontalSpace20,
-                          SizedBox(
-                              width: 50,
-                              child: const Icon(
-                                Icons.translate_outlined,
-                                size: 25,
-                              )),
-                           Text(
+              InkWell(
+                onTap: () {
+                  buildLanguageDialog(context);
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        horizontalSpace20,
+                        SizedBox(
+                            width: 50,
+                            child: const Icon(
+                              Icons.translate_outlined,
+                              size: 25,
+                            )),
+                        Flexible(
+                          child: Text(
                             'setting1'.tr,
                             style: subtitle18Medium,
                           ),
-                        ]),
-                  ),
+                        ),
+                      ]),
                 ),
               ),
               verticalSpace10,
-              Flexible(
-                child: InkWell(
-                  onTap: () {
-                    Get.to(() => AppInfoScreen());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          horizontalSpace20,
-                          SizedBox(
-                              width: 50,
-                              child: const Icon(
-                                Icons.info_outline_rounded,
-                                size: 25,
-                              )),
-                           Text(
+              InkWell(
+                onTap: () {
+                  Get.to(() => AppInfoScreen());
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        horizontalSpace20,
+                        SizedBox(
+                            width: 50,
+                            child: const Icon(
+                              Icons.info_outline_rounded,
+                              size: 25,
+                            )),
+                        Flexible(
+                          child: Text(
                             'setting2'.tr,
                             style: subtitle18Medium,
                           ),
-                        ]),
-                  ),
+                        ),
+                      ]),
                 ),
               ),
             ]),
