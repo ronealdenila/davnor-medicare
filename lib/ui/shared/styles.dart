@@ -163,6 +163,12 @@ const TextStyle subtitle20Regular = TextStyle(
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
 );
+TextStyle subtitle24MediumNeutral = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+  color: neutralColor[60],
+);
 
 const TextStyle subtitle18BoldWhite = TextStyle(
     fontSize: 18,
@@ -359,6 +365,34 @@ const TextStyle caption16Regular = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle caption18Medium = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+);
+const TextStyle caption16RegularNeutral = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: customNeutralColor,
+);
+const TextStyle caption16Medium = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+);
+const TextStyle caption16SemiBold = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  height: 1.5,
+);
+const TextStyle caption14SemiBold = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  height: 1.5,
+);
 const TextStyle caption12SemiBold = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w600,
@@ -384,7 +418,12 @@ const TextStyle caption12RegularNeutral = TextStyle(
   fontFamily: 'Inter',
   color: customNeutralColor,
 );
-
+const TextStyle caption14RegularNeutral = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: customNeutralColor,
+);
 const TextStyle caption10Regular = TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.w400,

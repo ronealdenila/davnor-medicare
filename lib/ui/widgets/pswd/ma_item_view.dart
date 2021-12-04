@@ -98,12 +98,12 @@ class PSWDItemView extends GetResponsiveView {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
               appController.getFullName(model),
-              style: subtitle18Bold,
+              style: subtitle20Bold,
             ),
             verticalSpace5,
             const Text(
               'Request Person ',
-              style: caption12Medium,
+              style: caption16Medium,
             ),
           ]),
           horizontalSpace20,
@@ -153,7 +153,7 @@ class PSWDItemView extends GetResponsiveView {
       verticalSpace25,
       Text(
         "Patient's Infomation",
-        style: subtitle18MediumNeutral,
+        style: subtitle24MediumNeutral,
       ),
       verticalSpace15,
       Row(
@@ -161,9 +161,10 @@ class PSWDItemView extends GetResponsiveView {
           const SizedBox(
             width: 120,
             child: Text('Patient Name',
-                textAlign: TextAlign.left, style: caption12Medium),
+                textAlign: TextAlign.left, style: caption18Medium),
           ),
-          Text(model.fullName!, style: caption12RegularNeutral),
+          horizontalSpace15,
+          Text(model.fullName!, style: caption16RegularNeutral),
         ],
       ),
       verticalSpace15,
@@ -172,8 +173,9 @@ class PSWDItemView extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Patient Age',
-                  textAlign: TextAlign.left, style: caption12Medium)),
-          Text(model.age!, style: caption12RegularNeutral),
+                  textAlign: TextAlign.left, style: caption18Medium)),
+           horizontalSpace15,
+          Text(model.age!, style: caption16RegularNeutral),
         ],
       ),
       verticalSpace15,
@@ -182,8 +184,9 @@ class PSWDItemView extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Address',
-                  textAlign: TextAlign.left, style: caption12Medium)),
-          Text(model.address!, style: caption12RegularNeutral),
+                  textAlign: TextAlign.left, style: caption18Medium)),
+           horizontalSpace15,
+          Text(model.address!, style: caption16RegularNeutral),
         ],
       ),
       verticalSpace15,
@@ -192,8 +195,9 @@ class PSWDItemView extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Gender',
-                  textAlign: TextAlign.left, style: caption12Medium)),
-          Text(model.gender!, style: caption12RegularNeutral),
+                  textAlign: TextAlign.left, style: caption18Medium)),
+           horizontalSpace15,
+          Text(model.gender!, style: caption16RegularNeutral),
         ],
       ),
       verticalSpace15,
@@ -202,9 +206,10 @@ class PSWDItemView extends GetResponsiveView {
           const SizedBox(
             width: 120,
             child: Text('Patient Type',
-                textAlign: TextAlign.left, style: caption12Medium),
+                textAlign: TextAlign.left, style: caption18Medium),
           ),
-          Text(model.type!, style: caption12RegularNeutral),
+           horizontalSpace15,
+          Text(model.type!, style: caption16RegularNeutral),
         ],
       ),
       Visibility(visible: status != 'request', child: medicalAssistanceInfo())
@@ -226,9 +231,10 @@ class PSWDItemView extends GetResponsiveView {
             const SizedBox(
               width: 120,
               child: Text('Received by',
-                  textAlign: TextAlign.left, style: caption12Medium),
+                  textAlign: TextAlign.left, style: caption18Medium),
             ),
-            Text(model.receivedBy!, style: caption12RegularNeutral),
+             horizontalSpace15,
+            Text(model.receivedBy!, style: caption16RegularNeutral),
           ],
         ),
         Visibility(
@@ -242,8 +248,9 @@ class PSWDItemView extends GetResponsiveView {
                   const SizedBox(
                       width: 120,
                       child: Text('Pharmacy',
-                          textAlign: TextAlign.left, style: caption12Medium)),
-                  Text(model.pharmacy!, style: caption12RegularNeutral),
+                          textAlign: TextAlign.left, style: caption18Medium)),
+                   horizontalSpace15,
+                  Text(model.pharmacy!, style: caption16RegularNeutral),
                 ],
               ),
               verticalSpace15,
@@ -252,8 +259,9 @@ class PSWDItemView extends GetResponsiveView {
                   const SizedBox(
                       width: 120,
                       child: Text('Medicine Worth',
-                          textAlign: TextAlign.left, style: caption12Medium)),
-                  Text('Php ${model.medWorth}', style: caption12RegularNeutral),
+                          textAlign: TextAlign.left, style: caption18Medium)),
+                   horizontalSpace15,
+                  Text('Php ${model.medWorth}', style: caption16RegularNeutral),
                 ],
               ),
             ],
@@ -292,7 +300,7 @@ class PSWDItemView extends GetResponsiveView {
             width: 310,
             child: Text(
               'Attached Photos',
-              style: caption12RegularNeutral,
+              style: caption16RegularNeutral,
             ),
           ),
           verticalSpace20,
@@ -337,13 +345,13 @@ class PSWDItemView extends GetResponsiveView {
               width: 120,
               child: Text(
                 'Date Requested',
-                style: caption12SemiBold,
+                style: caption16SemiBold,
               ),
             ),
             horizontalSpace15,
             Text(
               appController.convertTimeStamp(model.dateRqstd!),
-              style: caption12RegularNeutral,
+              style: caption16RegularNeutral,
             ),
           ]),
           verticalSpace10,
@@ -354,7 +362,7 @@ class PSWDItemView extends GetResponsiveView {
                 width: 120,
                 child: Text(
                   'Date MA Claimed',
-                  style: caption12SemiBold,
+                  style: caption16SemiBold,
                 ),
               ),
               horizontalSpace15,
@@ -368,7 +376,7 @@ class PSWDItemView extends GetResponsiveView {
     if (status == 'completed') {
       return Text(
         appController.convertTimeStamp(model.dateClaimed!),
-        style: caption12RegularNeutral,
+        style: caption16RegularNeutral,
       );
     }
     return const SizedBox(
