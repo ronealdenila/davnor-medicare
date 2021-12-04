@@ -194,7 +194,7 @@ class DiscomfortCategoryWidget extends GetView<ConsRequestController> {
                         ),
                         verticalSpace5,
                         Text(
-                          discomfortData[index].title!,
+                          '${discomfortData[index].title!}'.tr,
                           style: body16Regular,
                         ),
                       ],
