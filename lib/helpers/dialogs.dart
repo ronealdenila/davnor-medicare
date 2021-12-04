@@ -13,20 +13,6 @@ void showLoading() {
       barrierDismissible: false);
 }
 
-// void showErrorDialog({
-//   String? errorTitle,
-//   String? errorDescription,
-// }) {
-//   Get.defaultDialog(
-//     barrierDismissible: false,
-//     title: errorTitle!,
-//     middleText: errorDescription!,
-//     textConfirm: 'Okay',
-//     confirmTextColor: Colors.white,
-//     onConfirm: Get.back,
-//   );
-// }
-
 void showErrorDialog({
   String? errorTitle,
   String? errorDescription,
@@ -57,6 +43,54 @@ void showErrorDialog({
               style: title24Bold,
               textAlign: TextAlign.center,
             ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                errorDescription!,
+                style: body16SemiBold.copyWith(color: neutralColor[60]),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            verticalSpace10,
+            SizedBox(
+              width: 130,
+              child: ErrorDialogButton(
+                buttonText: 'Got it!',
+                onTap: Get.back,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false,
+  );
+}
+
+void showSimpleErrorDialog({
+  String? errorDescription,
+}) {
+  Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: kIsWeb ? 400 : Get.width * .9,
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
+        margin: const EdgeInsets.only(top: 13),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              color: Colors.black26,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(

@@ -195,7 +195,6 @@ class LiveConsController extends GetxController {
   Future<void> skipConsultation(String consID, String patientID) async {
     showLoading();
     await deleteConsFromQueue(consID);
-    //TO DO - del storage folder
     await removeFromLive(consID);
     await removeFromChat(consID);
     await updatePatientStatus(patientID);

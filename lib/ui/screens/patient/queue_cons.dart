@@ -74,8 +74,12 @@ class QueueConsScreen extends StatelessWidget {
                               Center(
                                 child: Obx(
                                   () => Text(
-                                    cQController.isLoading.value ? '' : 'temp',
-                                    //TO DO: uncomment puhon -  cQController.queueConsList[0].queueNum!,
+                                    cQController.isLoading.value
+                                        ? ''
+                                        : cQController.queueConsList.length == 0
+                                            ? 'C00'
+                                            : cQController
+                                                .queueConsList[0].queueNum!,
                                     style: title42BoldNeutral100,
                                   ),
                                 ),
@@ -155,8 +159,11 @@ class QueueConsScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Column(children: [
-              Text(department.value.toUpperCase(),
-                  style: subtitle20BoldWhite), //Department
+              Text(
+                department.value.toUpperCase(),
+                style: subtitle20BoldWhite,
+                textAlign: TextAlign.center,
+              ), //Department
               verticalSpace5,
               Text(title.value, style: subtitle18RegularWhite),
             ]);

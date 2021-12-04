@@ -24,19 +24,6 @@ class ArticleController extends GetxController {
     getArticlesList();
   }
 
-  // Future<void> _initArticleList() async {
-  //   log.i('_initArticleList | Initiliazing Articles');
-  //   await getArticlesList();
-  //   articlesList = getArticles();
-
-  //   print(articlesList.length);
-  // }
-
-  // List<ArticleModel> getArticles() {
-  //   log.i('getArticles | Returning Articles');
-  //   return articlesList;
-  // }
-
   Future<void> getArticlesList() async {
     log.i('getArticlesList | Raxaxaeturning List of Articles');
     final CollectionReference articles = firestore.collection('articles');

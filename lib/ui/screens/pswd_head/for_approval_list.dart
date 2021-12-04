@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/constants/app_strings.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
@@ -16,6 +19,7 @@ import 'package:get/get.dart';
 class ForApprovalListScreen extends GetView<ForApprovalController> {
   final ForApprovalController faController = Get.find();
   final RxBool firedOnce = false.obs;
+  final AppController appController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +258,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                   horizontalSpace15,
                   InkWell(
                     onTap: () {
-                      confirmationDialog(model.maID!);
+                      confirmationDialog(model.maID!, model.requesterID!);
                     },
                     child: Text(
                       'Approve',
@@ -270,7 +274,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
     );
   }
 
-  void confirmationDialog(String maID) {
+  void confirmationDialog(String maID, String uid) {
     return showConfirmationDialog(
       dialogTitle: 'Are you sure?',
       dialogCaption:
@@ -280,7 +284,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
             .collection('on_progress_ma')
             .doc(maID)
             .update({'isApproved': true, 'isTransferred': false}).then((value) {
-          //TO DO: notify patient na approved na iyang request and wait nalang iinform when na pwede ma claim
+          sendNotification(uid);
           faController.refresh();
           dismissDialog();
         });
@@ -289,5 +293,36 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
         dismissDialog();
       },
     );
+  }
+
+  Future<void> sendNotification(String uid) async {
+    final action = ' has approved your ';
+    final title = 'The pswd head${action}Medical Assistance(MA) Request';
+    final message =
+        'We are now processing your MA request and will notify you when you can claim the assistance. Thank you';
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+      'photo': maLogoURL,
+      'from': 'The pswd personnel',
+      'action': action,
+      'subject': 'MA Request',
+      'message': message,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+
+    await appController.sendNotificationViaFCM(title, message, uid);
+
+    await firestore
+        .collection('patients')
+        .doc(uid)
+        .collection('status')
+        .doc('value')
+        .update({
+      'notifBadge': FieldValue.increment(1),
+    });
   }
 }

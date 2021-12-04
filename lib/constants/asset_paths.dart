@@ -1,8 +1,7 @@
 const String imageAssetRoot = 'assets/images/';
 
 final String patientHomeHeader = _getImagePath('home_samp.png');
-final String maImage =
-    _getImagePath('ma_image.png'); //TO BE CHANGE: katong gihimo ni H
+final String maImage = _getImagePath('ma_image.png');
 final String blankProfile = _getImagePath('blank_profile.png');
 final String grayBlank = _getImagePath('gray_blank.jpg');
 final String icons8 = _getImagePath('icons8.png');
@@ -29,7 +28,6 @@ final String asthma = _getImagePath('asthma.png');
 final String foodallergyIcon = _getImagePath('foodallergy.png');
 final String sorethroatIcon = _getImagePath('sore_throat.png');
 final String pneomoniaIcon = _getImagePath('pneumonia.png');
-
 
 String _getImagePath(String fileName) {
   return imageAssetRoot + fileName;

@@ -310,8 +310,7 @@ class LiveConsultationWeb extends StatelessWidget {
                         size: 30,
                       ),
                       onPressed: () async {
-                        showErrorDialog(
-                            errorTitle: 'ERROR!',
+                        showSimpleErrorDialog(
                             errorDescription: 'Something went wrong');
                       },
                     );
@@ -324,8 +323,7 @@ class LiveConsultationWeb extends StatelessWidget {
                     ),
                     onPressed: () async {
                       if (data['patientJoined'] && data['otherJoined']) {
-                        showErrorDialog(
-                            errorTitle: 'ERROR!',
+                        showSimpleErrorDialog(
                             errorDescription:
                                 'Patient is currently on a video call, please try again later');
                       } else {
@@ -498,10 +496,6 @@ class LiveConsultationWeb extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'This is a required field';
                     }
-                    //! if we want to validate na dapat taas ang words
-                    // if (value.length < 10) {
-                    //   return 'Description must be at least 10 words';
-                    // }
                   },
                   decoration: const InputDecoration(
                     labelText: 'Enter the reason here',
@@ -535,7 +529,6 @@ class LiveConsultationWeb extends StatelessWidget {
                         navigationController.navigateTo(Routes.DOC_WEB_HOME);
                         consRequests.selectedIndex.value = 0;
                       },
-                      //'Cons_Request/${consData.patientID!}/cons_req/${consData.consID!}/'),
                       text: 'Submit')),
             ],
           ),

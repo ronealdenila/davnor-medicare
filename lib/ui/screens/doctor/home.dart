@@ -209,8 +209,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftMagentaCustomColor,
                 onTap: () {
                   if (stats.isLoading.value) {
-                    showErrorDialog(
-                        errorTitle: 'ERROR!',
+                    showSimpleErrorDialog(
                         errorDescription:
                             'Please wait while we are currently connecting to the server');
                   } else {
@@ -233,8 +232,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
                   if (stats.isLoading.value) {
-                    showErrorDialog(
-                        errorTitle: 'ERROR!',
+                    showSimpleErrorDialog(
                         errorDescription:
                             'Please wait while we are currently connecting to the server');
                   } else {
@@ -396,10 +394,6 @@ class DoctorHomeScreen extends StatelessWidget {
       dismissDialog();
       count.value = 1;
     });
-    // .catchError((error) {
-    //   showErrorDialog(
-    //       errorTitle: 'ERROR!', errorDescription: 'Something went wrong');
-    // });
   }
 
   Widget detailsDialogCons1() {
@@ -449,9 +443,7 @@ class DoctorHomeScreen extends StatelessWidget {
                             dismissDialog();
                             count.value = 1;
                           }).catchError((error) {
-                            // TO CHECK IF UNSAY NA ERROR
-                            showErrorDialog(
-                                errorTitle: 'ERROR!',
+                            showSimpleErrorDialog(
                                 errorDescription: 'Something went wrong');
                           });
                         },
@@ -521,8 +513,7 @@ class DoctorHomeScreen extends StatelessWidget {
                             });
                             countAdd.value = 1;
                           }).catchError((error) {
-                            showErrorDialog(
-                                errorTitle: 'ERROR!',
+                            showSimpleErrorDialog(
                                 errorDescription: 'Something went wrong');
                           });
                         },

@@ -56,7 +56,8 @@ class ConsHistoryScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Container(
-                              width: 220,
+                              padding: EdgeInsets.only(right: 10),
+                              width: 250,
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -80,7 +81,6 @@ class ConsHistoryScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          horizontalSpace10,
                           Card(
                             elevation: 6,
                             child: SizedBox(
@@ -98,7 +98,9 @@ class ConsHistoryScreen extends StatelessWidget {
                                           errorTitle: 'ERROR',
                                           errorDescription: 'conslog'.tr);
                                     } else if (consHController
-                                        .consHistory.isEmpty) {
+                                            .consHistory.isEmpty &&
+                                        consHController
+                                            .filteredListforP.isEmpty) {
                                       showErrorDialog(
                                           errorTitle: 'ERROR',
                                           errorDescription: 'conslog1'.tr);
@@ -149,9 +151,19 @@ class ConsHistoryScreen extends StatelessWidget {
       );
     }
     if (consHController.consHistory.isEmpty &&
-        !consHController.isLoading.value) {
+        !consHController.isLoading.value &&
+        consHController.filteredListforP.isEmpty) {
       return Text(
         'conslog3'.tr,
+        textAlign: TextAlign.center,
+        style: body14Medium,
+      );
+    }
+    if (consHController.consHistory.isEmpty &&
+        !consHController.isLoading.value &&
+        consHController.filteredListforP.isNotEmpty) {
+      return Text(
+        'No result found', //TRANSLATE
         textAlign: TextAlign.center,
         style: body14Medium,
       );

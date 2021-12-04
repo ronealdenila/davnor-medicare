@@ -45,7 +45,6 @@ class OnProgressReqController extends GetxController {
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
-        print('read 1 ${isLoading.value}');
         return OnProgressMAModel.fromJson(item.data());
       }).toList();
     });
@@ -97,14 +96,16 @@ class OnProgressReqController extends GetxController {
     }).catchError((onError) {
       dismissDialog();
       dismissDialog();
-      //TO DO: Error Dialog ---> something went wrong
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription: 'Unable to update request. Please try again later');
     });
   }
 
   Future<void> sendNotification(String uid) async {
     final action = ' is ready ';
     final title = 'MA${action}to be claimed';
-    final message = 'You can now claim you MA in the PSWD Office';
+    final message = 'You can now claim your MA in the PSWD Office';
 
     await firestore
         .collection('patients')

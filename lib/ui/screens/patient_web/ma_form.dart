@@ -87,8 +87,6 @@ class ResponsiveBody extends GetResponsiveView {
                         verticalSpace10,
                         Visibility(
                           visible: !ma.isMAForYou.value,
-                          //CustomFormField was created for patient global widget
-                          //please utilize it.
                           child: TextFormField(
                             controller: ma.firstNameController,
                             decoration: InputDecoration(

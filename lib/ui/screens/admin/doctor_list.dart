@@ -258,7 +258,6 @@ class DoctorListScreen extends StatelessWidget {
                     horizontalSpace15,
                     InkWell(
                       onTap: () {
-                        //TO CHECK
                         showConfirmationDialog(
                           dialogTitle: 'Are you sure?',
                           dialogCaption:
