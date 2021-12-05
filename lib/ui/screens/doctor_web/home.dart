@@ -945,7 +945,7 @@ Widget detailsDialogCons1() {
                               .collection('cons_status')
                               .doc(fetchedData.categoryID!)
                               .update({
-                            'consSlot': FieldValue.increment(count.value)
+                            'consSlot': FieldValue.increment(count.value) as int
                           });
                           dismissDialog();
                           print('Changed status');
@@ -1022,7 +1022,8 @@ Widget detailsDialogCons2(int currentCount) {
                               .collection('cons_status')
                               .doc(fetchedData.categoryID!)
                               .update({
-                            'consSlot': FieldValue.increment(countAdd.value)
+                            'consSlot':
+                                FieldValue.increment(countAdd.value) as int
                           });
                           dismissDialog();
                           countAdd.value = 1;

@@ -90,20 +90,31 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                verticalSpace10,
-                SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      child: Icon(
+                verticalSpace15,
+                InkWell(
+                  onTap: () {
+                    consHController.refreshD();
+                  },
+                  child: Card(
+                    elevation: 6,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: verySoftBlueColor[100],
+                      ),
+                      child: const Icon(
                         Icons.refresh,
+                        color: Colors.white,
+                        size: 30,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        primary: verySoftBlueColor[100],
-                      ),
-                      onPressed: () {
-                        consHController.refreshD();
-                      },
-                    )),
+                    ),
+                  ),
+                ),
               ],
             ),
           ]),

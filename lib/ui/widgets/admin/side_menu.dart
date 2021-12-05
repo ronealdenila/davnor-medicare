@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/ui/screens/admin/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,10 +17,15 @@ class AdminSideMenu extends GetView<AdminMenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Image.asset(
-              logo,
-              fit: BoxFit.contain,
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.asset(
+                logo,
+                fit: BoxFit.contain,
+              ),
             ),
+            verticalSpace50,
             ...adminSideMenuItemRoutes
                 .map((item) => AdminSideMenuItem(
                     itemName: item.name,

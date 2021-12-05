@@ -31,10 +31,15 @@ class PatientSideMenu extends GetView<PatientMenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Image.asset(
-              logo,
-              fit: BoxFit.contain,
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.asset(
+                logo,
+                fit: BoxFit.contain,
+              ),
             ),
+            verticalSpace50,
             ...patientSideMenuItemRoutes
                 .map((item) => PatientSideMenuItem(
                     itemName: item.name,
@@ -43,8 +48,7 @@ class PatientSideMenu extends GetView<PatientMenuController> {
                           liveCont.liveCons.isEmpty) {
                         showErrorDialog(
                             errorTitle: 'action11'.tr,
-                            errorDescription:
-                                'action10'.tr);
+                            errorDescription: 'action10'.tr);
                       } else if (item.name == 'Change Language') {
                         buildLanguageDialog(context);
                       } else if (item.name == 'App Info') {
@@ -110,13 +114,19 @@ appInfoDialog(BuildContext context) {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      verticalSpace20,
                       Align(
                         alignment: Alignment.center,
-                        child: Image.asset(
-                          logo,
-                          fit: BoxFit.cover,
+                        child: SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: Image.asset(
+                            logo,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
+                      verticalSpace35,
                       Text(
                         'appinfo'.tr,
                         textAlign: TextAlign.justify,

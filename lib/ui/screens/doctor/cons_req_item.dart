@@ -136,7 +136,8 @@ class ConsRequestItemScreen extends StatelessWidget {
                       errorDescription:
                           'Please make sure to end your accepted consultation first before starting new one');
                 } else {
-                  if (consRequests.mobileIndex.value == 0) {
+                  if (consRequests.mobileIndex.value == 0 ||
+                      consData.isSenior!) {
                     if (stats.doctorStatus[0].numToAccomodate! >
                         stats.doctorStatus[0].accomodated!) {
                       consRequests.startConsultation(consData);
@@ -151,7 +152,7 @@ class ConsRequestItemScreen extends StatelessWidget {
                     showErrorDialog(
                         errorTitle: 'Please select the first request',
                         errorDescription:
-                            'You are not allowed to accept request that are not the first one');
+                            'You are not allowed to accept request that are not the first one. Senior lane (colored orange) is an exception.');
                   }
                 }
               } else {

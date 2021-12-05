@@ -489,7 +489,7 @@ class LocalString extends Translations {
           'errordialog15': 'Walang nakitang resulta',
           //menu
           'setting': 'Mga setting',
-          'Setting1': 'Baguhin ang Wika',
+          'setting1': 'Baguhin ang Wika',
           'setting2': 'Impormasyon ng Aplikasyon',
           'setting3': 'Piliin ang Iyong Wika ',
           'menu1': 'Profile',

@@ -6,6 +6,7 @@ import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +21,15 @@ class DoctorSideMenu extends GetView<DoctorMenuController> {
       child: ListView(
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Image.asset(
-              logo,
-              fit: BoxFit.contain,
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.asset(
+                logo,
+                fit: BoxFit.contain,
+              ),
             ),
+            verticalSpace50,
             ...doctorSideMenuItemRoutes
                 .map((item) => DoctorSideMenuItem(
                     itemName: item.name,

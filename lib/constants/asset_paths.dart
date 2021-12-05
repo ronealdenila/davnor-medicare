@@ -8,7 +8,7 @@ final String icons8 = _getImagePath('icons8.png');
 final String flaticon = _getImagePath('flaticon.png');
 final String freepik = _getImagePath('freepik.png');
 final String doctorDefault = _getImagePath('doctor_pic.png');
-final String logo = _getImagePath('davnormedicare.png');
+final String logo = _getImagePath('app_logo.png');
 final String davnormedicare = _getImagePath('davnormedicare_cover.jpg');
 final String lottiefile = _getImagePath('lottie.PNG');
 

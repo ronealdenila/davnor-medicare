@@ -13,6 +13,7 @@ class ConsultationModel {
     this.description,
     this.isFollowUp,
     this.imgs,
+    this.isSenior,
   });
 
   factory ConsultationModel.fromJson(Map<String, dynamic> json) =>
@@ -25,6 +26,7 @@ class ConsultationModel {
         dateRqstd: json['dateRqstd'] as Timestamp,
         description: json['description'] as String,
         isFollowUp: json['isFollowUp'] as bool,
+        isSenior: json['isSenior'] as bool,
         imgs: json['imgs'] as String,
       );
 
@@ -38,6 +40,7 @@ class ConsultationModel {
         'description': description,
         'isFollowUp': isFollowUp,
         'imgs': imgs,
+        'isSenior': isSenior,
       };
   String? consID;
   String? patientId;
@@ -47,6 +50,7 @@ class ConsultationModel {
   Timestamp? dateRqstd;
   String? description;
   bool? isFollowUp;
+  bool? isSenior;
   String? imgs;
   Rxn<PatientModel> data = Rxn<PatientModel>();
 }

@@ -180,8 +180,6 @@ class MAFormScreen extends StatelessWidget {
                 ),
               ),
               verticalSpace10,
-              //To be achieved: next button must be pinned on bottom right
-              //sa current code wala siya na pin
               Align(
                 alignment: FractionalOffset.bottomRight,
                 child: SizedBox(

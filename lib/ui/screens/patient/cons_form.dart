@@ -5,6 +5,7 @@ import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,23 +135,39 @@ class ConsFormScreen extends StatelessWidget {
                                   consController.ageController.text = value!,
                             ),
                           ),
-                          Spacer(),
                           Expanded(
-                            flex: 5,
-                            child: CustomButton(
-                              onTap: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  await consController.nextButton();
-                                }
-                              },
-                              text: 'consform4'.tr,
-                              buttonColor: verySoftBlueColor,
-                            ),
-                          ),
+                              flex: 5,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: CustomDropdown(
+                                  hintText: 'Type', //TRANSLATE
+                                  dropdownItems: cSenior,
+                                  onChanged: (Item? item) =>
+                                      consController.typeP.value = item!.name,
+                                  onSaved: (Item? item) =>
+                                      consController.typeP.value = item!.name,
+                                ),
+                              )),
                         ],
                       ),
                     ),
-                    verticalSpace10
+                    verticalSpace10,
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: SizedBox(
+                        width: Get.width * .45,
+                        child: CustomButton(
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              await consController.nextButton();
+                            }
+                          },
+                          text: 'consform4'.tr,
+                          buttonColor: verySoftBlueColor,
+                        ),
+                      ),
+                    ),
+                    verticalSpace15,
                   ],
                 ),
               ),

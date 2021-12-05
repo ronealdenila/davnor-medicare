@@ -42,6 +42,7 @@ class ConsRequestController extends GetxController {
   RxBool isConsultForYou = true.obs;
   RxInt selectedIndex = 0.obs;
   RxString categoryID = ''.obs;
+  RxString typeP = ''.obs;
 
   //Cons Form 2
   RxBool isFollowUp = true.obs;
@@ -147,6 +148,7 @@ class ConsRequestController extends GetxController {
         'description': descriptionController.text,
         'isFollowUp': isFollowUp.value ? true : false,
         'imgs': imageUrls.value,
+        'isSenior': typeP.value == 'Senior' ? true : false
       });
 
       //Generate Cons Queue
@@ -172,52 +174,60 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> submitConsultRequestWeb() async {
-    await initCategoryForWeb();
-    if (categoryID.value == '') {
-      showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
+    if (typeP.value == '') {
+      showSimpleErrorDialog(
+          errorDescription:
+              'Please make sure to select patient type'); //TRANSLATE
     } else {
-      if (statusList[statusIndex.value].consSlot! == 0) {
-        showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
-      } else if (hasAvailableSlot()) {
-        showLoading();
-        generatedConsID.value = uuid.v4();
-        await uploadLabResultsWeb();
-
-        await assignValues();
-        await firestore
-            .collection('cons_request')
-            .doc(generatedConsID.value)
-            .set({
-          'consID': generatedConsID.value,
-          'patientId': auth.currentUser!.uid,
-          'fullName': fullName,
-          'age': ageController.text,
-          'category': categoryID.value,
-          'dateRqstd': FieldValue.serverTimestamp(),
-          'description': descriptionController.text,
-          'isFollowUp': isFollowUp.value ? true : false,
-          'imgs': imageUrls.value,
-        });
-
-        //Generate Cons Queue
-        final lastNum = statusList[statusIndex.value].qLastNum! + 1;
-        if (lastNum < 10) {
-          generatedCode.value = 'C0$lastNum';
-        } else {
-          generatedCode.value = 'C$lastNum';
-        }
-
-        await addToConsQueueCollection();
-        await updateStatus(); //update patient status and cons status
-
-        dismissDialog();
-        await clearControllers();
-        await showDialog();
-        log.i('submitConsultRequest | Consultation Submit Succesfully');
+      await initCategoryForWeb();
+      if (categoryID.value == '') {
+        showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
       } else {
-        showErrorDialog(
-            errorTitle: 'errordialog6'.tr, errorDescription: 'errordialog3'.tr);
-        log.i('submitConsultRequest | Consultation Submit Failed');
+        if (statusList[statusIndex.value].consSlot! == 0) {
+          showSimpleErrorDialog(errorDescription: 'errordialog5'.tr);
+        } else if (hasAvailableSlot()) {
+          showLoading();
+          generatedConsID.value = uuid.v4();
+          await uploadLabResultsWeb();
+
+          await assignValues();
+          await firestore
+              .collection('cons_request')
+              .doc(generatedConsID.value)
+              .set({
+            'consID': generatedConsID.value,
+            'patientId': auth.currentUser!.uid,
+            'fullName': fullName,
+            'age': ageController.text,
+            'category': categoryID.value,
+            'dateRqstd': FieldValue.serverTimestamp(),
+            'description': descriptionController.text,
+            'isFollowUp': isFollowUp.value ? true : false,
+            'imgs': imageUrls.value,
+            'isSenior': typeP.value == 'Senior' ? true : false
+          });
+
+          //Generate Cons Queue
+          final lastNum = statusList[statusIndex.value].qLastNum! + 1;
+          if (lastNum < 10) {
+            generatedCode.value = 'C0$lastNum';
+          } else {
+            generatedCode.value = 'C$lastNum';
+          }
+
+          await addToConsQueueCollection();
+          await updateStatus(); //update patient status and cons status
+
+          dismissDialog();
+          await clearControllers();
+          await showDialog();
+          log.i('submitConsultRequest | Consultation Submit Succesfully');
+        } else {
+          showErrorDialog(
+              errorTitle: 'errordialog6'.tr,
+              errorDescription: 'errordialog3'.tr);
+          log.i('submitConsultRequest | Consultation Submit Failed');
+        }
       }
     }
   }
@@ -253,8 +263,8 @@ class ConsRequestController extends GetxController {
         .collection('cons_status')
         .doc(categoryID.value)
         .update({
-          'qLastNum': FieldValue.increment(1),
-          'consRqstd': FieldValue.increment(1)
+          'qLastNum': FieldValue.increment(1) as int,
+          'consRqstd': FieldValue.increment(1) as int
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));
@@ -297,16 +307,22 @@ class ConsRequestController extends GetxController {
   }
 
   Future<void> nextButton() async {
-    if (categoryHolder == '') {
-      await getconsultationCategory(specialistD.value);
+    if (typeP.value == '') {
+      showSimpleErrorDialog(
+          errorDescription:
+              'Please make sure to select patient type'); //TRANSLATE
     } else {
-      categoryID.value = categoryHolder.value;
-    }
-    if (categoryID.value == '') {
-      showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
-    } else {
-      log.wtf('Final: ${categoryID.value} is selected');
-      await Get.to(() => ConsForm2Screen());
+      if (categoryHolder == '') {
+        await getconsultationCategory(specialistD.value);
+      } else {
+        categoryID.value = categoryHolder.value;
+      }
+      if (categoryID.value == '') {
+        showSimpleErrorDialog(errorDescription: 'errordialog12'.tr);
+      } else {
+        log.wtf('Final: ${categoryID.value} is selected');
+        await Get.to(() => ConsForm2Screen());
+      }
     }
   }
 

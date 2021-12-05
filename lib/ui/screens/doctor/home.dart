@@ -3,11 +3,13 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
+import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
+import 'package:davnor_medicare/ui/screens/doctor/cons_list.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_req_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/consultation_card.dart';
@@ -26,17 +28,20 @@ import 'package:davnor_medicare/ui/screens/doctor/article_list.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
+  final DoctorMenuController menuController = Get.put(DoctorMenuController(),
+      permanent: true); //unused for mobile but added
+  final ConsultationsController consRequests =
+      Get.put(ConsultationsController(), permanent: true);
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final DoctorFunctions func = DoctorFunctions();
-  final ConsultationsController consRequests =
-      Get.put(ConsultationsController());
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
-  final ProfileController profileController = Get.put(ProfileController());
+  final ProfileController profileController =
+      Get.put(ProfileController(), permanent: true);
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals
@@ -142,11 +147,32 @@ class DoctorHomeScreen extends StatelessWidget {
                                 width: Get.width, child: actionCards(context)),
                           ),
                           verticalSpace35,
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Text(
-                              'Consultation Requests',
-                              style: body16SemiBold,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Consultation Requests',
+                                  style: body16SemiBold,
+                                ),
+                                Obx(
+                                  () => Visibility(
+                                    visible:
+                                        consRequests.consultations.length != 0,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.to(() => ConsultationListScreen());
+                                      },
+                                      child: Text(
+                                        'See all',
+                                        style: body14RegularNeutral,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           verticalSpace18,
@@ -438,7 +464,8 @@ class DoctorHomeScreen extends StatelessWidget {
                                 .collection('cons_status')
                                 .doc(fetchedData!.categoryID!)
                                 .update({
-                              'consSlot': FieldValue.increment(count.value)
+                              'consSlot':
+                                  FieldValue.increment(count.value) as int
                             });
                             dismissDialog();
                             count.value = 1;
@@ -509,7 +536,8 @@ class DoctorHomeScreen extends StatelessWidget {
                                 .collection('cons_status')
                                 .doc(fetchedData!.categoryID!)
                                 .update({
-                              'consSlot': FieldValue.increment(countAdd.value)
+                              'consSlot':
+                                  FieldValue.increment(countAdd.value) as int
                             });
                             countAdd.value = 1;
                           }).catchError((error) {

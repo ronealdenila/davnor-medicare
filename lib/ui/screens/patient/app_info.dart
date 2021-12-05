@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,9 +15,12 @@ class AppInfoScreen extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.chevron_left),
+                icon: Icon(
+                  Icons.chevron_left,
+                  size: 40,
+                ),
                 onPressed: Get.back,
-                color: Colors.black,
+                color: Colors.black87,
               ),
             ),
             backgroundColor: Colors.white,
@@ -26,13 +30,19 @@ class AppInfoScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    verticalSpace10,
                     Align(
                       alignment: Alignment.center,
-                      child: Image.asset(
-                        logo,
-                        fit: BoxFit.cover,
+                      child: SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Image.asset(
+                          logo,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+                    verticalSpace18,
                     Text(
                       'appinfo'.tr,
                       textAlign: TextAlign.justify,

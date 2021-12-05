@@ -86,6 +86,11 @@ final List<Item> gender = <Item>[
   const Item('Male'),
 ];
 
+final List<Item> cSenior = <Item>[
+  const Item('None'),
+  const Item('Senior'),
+];
+
 final List<Item> department = <Item>[
   const Item('Pediatrics Department'),
   const Item('Family Department'),

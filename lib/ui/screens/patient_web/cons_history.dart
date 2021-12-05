@@ -39,24 +39,23 @@ class ResponsiveBody extends GetResponsiveView {
             child: Text('conshistory'.tr, style: title24BoldWhite),
           ),
           verticalSpace5,
-          Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  if (consHController.isLoading.value) {
-                    print('conslog'.tr);
-                  } else if (consHController.consHistory.isEmpty) {
-                    print('conslog1'.tr);
-                  } else {
-                    consHController.showDialog(context);
-                  }
-                },
-                child: Card(
-                  elevation: 6,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    if (consHController.isLoading.value) {
+                      print('conslog'.tr);
+                    } else if (consHController.consHistory.isEmpty) {
+                      print('conslog1'.tr);
+                    } else {
+                      consHController.showDialog(context);
+                      selectedIndex.value = 0;
+                    }
+                  },
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -79,22 +78,22 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-              ),
-              verticalSpace10,
-              SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
-                    child: Icon(
-                      Icons.refresh,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: verySoftBlueColor[100],
-                    ),
-                    onPressed: () {
-                      consHController.refresh();
-                    },
-                  )),
-            ],
+                verticalSpace10,
+                SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      child: Icon(
+                        Icons.refresh,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor[100],
+                      ),
+                      onPressed: () {
+                        consHController.refresh();
+                      },
+                    )),
+              ],
+            ),
           ),
           verticalSpace10,
           Flexible(child: DesktopScreen()),
@@ -117,33 +116,27 @@ class ResponsiveBody extends GetResponsiveView {
               consHController.showDialog(context);
             }
           },
-          child: Card(
-            elevation: 6,
-            shape: RoundedRectangleBorder(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 50,
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
+              color: verySoftBlueColor[100],
             ),
-            child: Container(
-              width: 170,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: verySoftBlueColor[100],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'conslog2'.tr,
-                    style: body14Medium.copyWith(color: Colors.white),
-                  ),
-                  horizontalSpace5,
-                  const Icon(
-                    Icons.calendar_today,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'conslog2'.tr,
+                  style: body14Medium.copyWith(color: Colors.white),
+                ),
+                horizontalSpace5,
+                const Icon(
+                  Icons.calendar_today,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ],
             ),
           ),
         ),

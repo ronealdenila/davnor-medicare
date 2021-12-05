@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignupScreen extends GetView<AuthController> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class SignupScreen extends GetView<AuthController> {
                 margin: const EdgeInsets.all(20),
                 elevation: 3,
                 child: Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Center(
@@ -205,7 +205,7 @@ class SignupScreen extends GetView<AuthController> {
                             ),
                             CustomButton(
                               onTap: () async {
-                                if (_formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   await controller.registerPatient(context);
                                 }
                               },

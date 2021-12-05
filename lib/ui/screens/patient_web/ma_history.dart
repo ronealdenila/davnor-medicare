@@ -54,7 +54,7 @@ class ResponsiveBody extends GetResponsiveView {
                 }
               },
               child: Container(
-                width: 265,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),

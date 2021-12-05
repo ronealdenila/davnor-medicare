@@ -11,6 +11,7 @@ import 'package:davnor_medicare/ui/screens/auth/login.dart';
 import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,47 +78,52 @@ class AuthController extends GetxController {
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    try {
-      showLoading();
-      await auth.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      await _clearControllers();
-    } catch (e) {
-      print(e);
-      dismissDialog();
-      Get.snackbar(
-        'Error logging in',
-        'Please check your email and password',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    if (await appController.checkInternet()) {
+      try {
+        showLoading();
+        await auth.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        await clearControllers();
+      } catch (e) {
+        print(e);
+        dismissDialog();
+        Get.snackbar(
+          'Error logging in',
+          'Please check your email and password',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } else {
+      showSimpleErrorDialog(errorDescription: 'No internet connection');
     }
   }
 
   Future<void> registerPatient(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    try {
+    if (await appController.checkInternet()) {
       showLoading();
-      await auth
+      final app = await Firebase.initializeApp(
+          name: 'tempApp', options: Firebase.app().options);
+      await FirebaseAuth.instanceFor(app: app)
           .createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       )
-          .then(
-        (result) async {
-          final _userID = auth.currentUser!.uid;
-          await _createPatientUser(_userID);
-        },
-      );
-      await _clearControllers();
-    } on FirebaseAuthException catch (e) {
-      dismissDialog();
-      Get.snackbar(
-        'Error creating account',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+          .then((result) async {
+        await _createPatientUser(result.user!.uid, context);
+      }).onError((error, stackTrace) async {
+        dismissDialog();
+        Get.snackbar(
+          'Error creating account',
+          error.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      });
+      await app.delete();
+    } else {
+      showSimpleErrorDialog(errorDescription: 'No internet connection');
     }
   }
 
@@ -170,7 +176,7 @@ class AuthController extends GetxController {
     });
   }
 
-  Future<void> _createPatientUser(String _userID) async {
+  Future<void> _createPatientUser(String _userID, BuildContext context) async {
     await firestore.collection('users').doc(_userID).set(<String, dynamic>{
       'userType': 'patient',
     });
@@ -186,9 +192,7 @@ class AuthController extends GetxController {
       await addPatientStatus(_userID);
       await addIncomingCallStatus(_userID);
       dismissDialog();
-      if (!kIsWeb) {
-        await Get.offAll(() => LoginScreen());
-      }
+      signInWithEmailAndPassword(context);
     });
   }
 
@@ -258,7 +262,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> _clearControllers() async {
+  Future<void> clearControllers() async {
     log.i('_clearControllers | User Input on authentication is cleared');
     emailController.clear();
     passwordController.clear();

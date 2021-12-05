@@ -34,7 +34,7 @@ class ConsultationCard extends StatelessWidget {
               height: 95,
               width: screenWidth(context),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: consReq!.isSenior! ? verySoftOrange : Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(

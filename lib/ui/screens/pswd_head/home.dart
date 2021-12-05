@@ -284,8 +284,8 @@ class ResponsiveView extends GetResponsiveView {
                                     ? Text('Loading..')
                                     : DmText.subtitle20Medium(
                                         stats.pswdPStatus[0].isCutOff!
-                                            ? 'Ready to Accept Request'
-                                            : 'Cut Off',
+                                            ? 'Cut Off'
+                                            : 'Ready to Accept Request',
                                         color: neutralColor[60],
                                       ),
                               ),

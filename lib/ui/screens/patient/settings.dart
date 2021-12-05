@@ -19,11 +19,11 @@ class SettingScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.chevron_left),
-          iconSize: 30.0,
+          iconSize: 40,
           onPressed: () {
             Get.back();
           },
-          color: Colors.black,
+          color: Colors.black87,
         ),
       ),
       body: Padding(
@@ -31,17 +31,23 @@ class SettingScreen extends StatelessWidget {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              verticalSpace20,
               Align(
                 alignment: Alignment.center,
-                child: Image.asset(
-                  logo,
-                  fit: BoxFit.contain,
+                child: SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: Image.asset(
+                    logo,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
+              verticalSpace50,
+              verticalSpace20,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text('setting'.tr, 
-                style: subtitle20Bold),
+                child: Text('setting'.tr, style: subtitle20Bold),
               ),
               verticalSpace20,
               InkWell(

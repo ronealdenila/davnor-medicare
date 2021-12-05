@@ -18,12 +18,14 @@ class ConsultationsController extends GetxController {
 
   static AppController appController = Get.find();
   RxList<ConsultationModel> consultations = RxList<ConsultationModel>([]);
+  RxList<ConsultationModel> filteredList = RxList<ConsultationModel>([]);
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   RxBool isLoading = true.obs;
   RxBool isLoadingPatientData = true.obs;
   final RxInt selectedIndex = 0.obs;
   final RxInt mobileIndex = 0.obs;
+  final RxBool checked = false.obs;
   final DoctorMenuController menuController = Get.find();
   final NavigationController navigationController = Get.find();
 
@@ -54,6 +56,22 @@ class ConsultationsController extends GetxController {
         return ConsultationModel.fromJson(item.data());
       }).toList();
     });
+  }
+
+  void refresh() {
+    selectedIndex.value = 0;
+    filteredList.clear();
+    filteredList.assignAll(consultations);
+  }
+
+  void filter() {
+    selectedIndex.value = 0;
+    filteredList.clear();
+    for (var i = 0; i < consultations.length; i++) {
+      if (consultations[i].isSenior!) {
+        filteredList.add(consultations[i]);
+      }
+    }
   }
 
   Future<void> startConsultation(ConsultationModel consData) async {
