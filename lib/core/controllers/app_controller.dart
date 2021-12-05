@@ -11,7 +11,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 
 class AppController {
@@ -21,10 +20,6 @@ class AppController {
   final String _dateNow = DateFormat.yMMMMd().format(DateTime.now());
 
   String get dateNow => _dateNow;
-
-  Future<bool> checkInternet() async {
-    return await InternetConnectionChecker().hasConnection;
-  }
 
   bool toggleTextVisibility(RxBool isObscureText) {
     log.i('toggleTextVisibility | Toggle Text Visibility');

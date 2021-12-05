@@ -78,53 +78,46 @@ class AuthController extends GetxController {
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    if (await appController.checkInternet()) {
-      try {
-        showLoading();
-        await auth.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        await clearControllers();
-      } catch (e) {
-        print(e);
-        dismissDialog();
-        Get.snackbar(
-          'Error logging in',
-          'Please check your email and password',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } else {
-      showSimpleErrorDialog(errorDescription: 'No internet connection');
+
+    try {
+      showLoading();
+      await auth.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      await clearControllers();
+    } catch (e) {
+      print(e);
+      dismissDialog();
+      Get.snackbar(
+        'Error logging in',
+        'Please check your email and password',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
   Future<void> registerPatient(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    if (await appController.checkInternet()) {
-      showLoading();
-      final app = await Firebase.initializeApp(
-          name: 'tempApp', options: Firebase.app().options);
-      await FirebaseAuth.instanceFor(app: app)
-          .createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      )
-          .then((result) async {
-        await _createPatientUser(result.user!.uid, context);
-      }).onError((error, stackTrace) async {
-        dismissDialog();
-        Get.snackbar(
-          'Error creating account',
-          error.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      });
-      await app.delete();
-    } else {
-      showSimpleErrorDialog(errorDescription: 'No internet connection');
-    }
+    showLoading();
+    final app = await Firebase.initializeApp(
+        name: 'tempApp', options: Firebase.app().options);
+    await FirebaseAuth.instanceFor(app: app)
+        .createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    )
+        .then((result) async {
+      await _createPatientUser(result.user!.uid, context);
+    }).onError((error, stackTrace) async {
+      dismissDialog();
+      Get.snackbar(
+        'Error creating account',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    });
+    await app.delete();
   }
 
   Future<void> sendPasswordResetEmail(BuildContext context) async {
