@@ -418,12 +418,7 @@ const TextStyle caption12RegularNeutral = TextStyle(
   fontFamily: 'Inter',
   color: customNeutralColor,
 );
-const TextStyle caption14RegularNeutral = TextStyle(
-  fontSize: 14,
-  fontWeight: FontWeight.w400,
-  fontFamily: 'Inter',
-  color: customNeutralColor,
-);
+
 const TextStyle caption10Regular = TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.w400,
