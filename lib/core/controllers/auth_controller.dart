@@ -19,7 +19,6 @@ class AuthController extends GetxController {
   final log = getLogger('Auth Controller');
   final AppController appController = Get.put(AppController());
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -86,6 +85,7 @@ class AuthController extends GetxController {
       );
       await _clearControllers();
     } catch (e) {
+      print(e);
       dismissDialog();
       Get.snackbar(
         'Error logging in',
@@ -265,7 +265,6 @@ class AuthController extends GetxController {
     firstNameController.clear();
     lastNameController.clear();
     confirmPassController.clear();
-    _formKey.currentState!.reset();
   }
 
   Future<void> _changePasswordSuccess() async {

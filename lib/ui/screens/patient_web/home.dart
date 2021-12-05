@@ -43,8 +43,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
-  final ArticleController articleService =
-      Get.put(ArticleController(), permanent: true);
+  final ArticleController articleService = Get.find();
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
   final NotifController notifController =

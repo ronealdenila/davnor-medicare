@@ -6,8 +6,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/doctor/article_item.dart';
 
 class ArticleListScreen extends StatelessWidget {
-  static ArticleController articleService =
-      Get.put(ArticleController(), permanent: true);
+  static ArticleController articleService = Get.find();
 
   @override
   Widget build(BuildContext context) {
