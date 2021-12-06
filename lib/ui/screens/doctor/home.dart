@@ -464,7 +464,9 @@ class DoctorHomeScreen extends StatelessWidget {
                                 .collection('cons_status')
                                 .doc(fetchedData!.categoryID!)
                                 .update({
-                              'consSlot': FieldValue.increment(count.value)
+                              'consSlot': int.parse(
+                                  (FieldValue.increment(count.value))
+                                      .toString())
                             });
                             dismissDialog();
                             count.value = 1;
@@ -535,7 +537,9 @@ class DoctorHomeScreen extends StatelessWidget {
                                 .collection('cons_status')
                                 .doc(fetchedData!.categoryID!)
                                 .update({
-                              'consSlot': FieldValue.increment(countAdd.value)
+                              'consSlot': int.parse(
+                                  (FieldValue.increment(countAdd.value))
+                                      .toString())
                             });
                             countAdd.value = 1;
                           }).catchError((error) {
