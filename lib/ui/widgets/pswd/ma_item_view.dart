@@ -393,11 +393,12 @@ class PSWDItemView extends GetResponsiveView {
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor,
         child: Obx(
           () => errorPhoto.value
               ? Text(
                   '${appController.getFirstName(model)[0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,

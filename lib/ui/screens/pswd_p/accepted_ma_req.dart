@@ -39,6 +39,7 @@ class AcceptedMARequestScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
+              verticalSpace50,
               PSWDItemView(context, 'accepted', model),
               Align(
                 alignment: Alignment.bottomRight,

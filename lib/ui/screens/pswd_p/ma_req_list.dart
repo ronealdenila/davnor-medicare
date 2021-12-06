@@ -17,7 +17,7 @@ class MARequestListScreen extends StatelessWidget {
   final MAReqListController maController = Get.find();
   final RxBool firedOnce = false.obs;
   final NavigationController navigationController = Get.find();
-
+  final MenuController menuController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +27,7 @@ class MARequestListScreen extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            MenuController.to.activeItem.value,
+            menuController.activeItem.value,
             style: title29BoldNeutral80,
           ),
         ),

@@ -31,13 +31,13 @@ class PSWDPersonnelHome extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKeyPSH = GlobalKey();
+  final MenuController menuController =
+      Get.put(MenuController(), permanent: true);
   final AcceptedMAController acceptedMA =
       Get.put(AcceptedMAController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final AttachedPhotosController pcontroller =
       Get.put(AttachedPhotosController(), permanent: true);
-  final MenuController menuController =
-      Get.put(MenuController(), permanent: true);
   final MAReqListController maController =
       Get.put(MAReqListController(), permanent: true);
   final OnProgressReqController opController =

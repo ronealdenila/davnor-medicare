@@ -18,9 +18,8 @@ class DoctorFunctions {
     await firestore
         .collection('cons_status')
         .doc(fetchedData!.categoryID!)
-        .update({
-      'consSlot': int.parse((FieldValue.increment((toLess * (-1)))).toString())
-    }).then((value) async {
+        .update({'consSlot': FieldValue.increment((toLess * (-1)))}).then(
+            (value) async {
       int currentLength = consRequests.consultations.length;
 
       await firestore

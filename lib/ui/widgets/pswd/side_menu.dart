@@ -46,6 +46,7 @@ class PswdPSideMenu extends GetView<MenuController> {
 
 class PswdHeadSideMenu extends GetView<MenuController> {
   final NavigationController navigationController = Get.find();
+  final MenuController menuController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,8 +67,8 @@ class PswdHeadSideMenu extends GetView<MenuController> {
                 .map((item) => PswdHeadSideMenuItem(
                     itemName: item.name,
                     onTap: () {
-                      if (!controller.isActive(item.name!)!) {
-                        controller.changeActiveItemTo(item.name);
+                      if (!menuController.isActive(item.name!)!) {
+                        menuController.changeActiveItemTo(item.name);
                         navigationController.navigateTo(item.route!);
                       }
                     }))

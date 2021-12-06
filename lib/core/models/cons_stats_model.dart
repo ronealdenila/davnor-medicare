@@ -13,9 +13,9 @@ class ConsStatusModel {
         categoryID: json['categoryID'] as String,
         deptName: json['deptName'] as String,
         title: json['title'] as String,
-        consRqstd: json['consRqstd'] as int,
-        consSlot: json['consSlot'] as int,
-        qLastNum: json['qLastNum'] as int,
+        consRqstd: json['consRqstd'] as dynamic,
+        consSlot: json['consSlot'] as dynamic,
+        qLastNum: json['qLastNum'] as dynamic,
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,7 +30,7 @@ class ConsStatusModel {
   String? categoryID;
   String? deptName;
   String? title;
-  int? consRqstd;
-  int? consSlot;
-  int? qLastNum;
+  dynamic consRqstd;
+  dynamic consSlot;
+  dynamic qLastNum;
 }

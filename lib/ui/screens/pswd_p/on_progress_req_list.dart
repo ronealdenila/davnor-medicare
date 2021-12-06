@@ -18,6 +18,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
       Get.put(OnProgressReqController());
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
+  final MenuController menuController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            MenuController.to.activeItem.value,
+            menuController.activeItem.value,
             style: title29BoldNeutral80,
           ),
         ),

@@ -279,16 +279,15 @@ class AuthController extends GetxController {
         case 'pswd-p':
         case 'pswd-h':
           await _initializePSWDModel();
-          if (pswdModel.value!.disabled! == false) {
-            await checkAppRestriction(userRole);
-          } else {
-            //CHANGE TO ERROR DIALOG
-            Get.defaultDialog(
-              title:
-                  'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com',
-            );
-          }
+
           await checkAppRestriction(userRole);
+
+          //await signOut();
+          // showSimpleErrorDialog(
+          //   errorDescription:
+          //       'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com',
+          // );
+
           break;
         case 'admin':
           await _initializeAdminModel();
@@ -296,20 +295,15 @@ class AuthController extends GetxController {
           break;
         case 'doctor':
           await _initializeDoctorModel();
-          if (doctorModel.value!.disabled! == false) {
-            if (kIsWeb) {
-              await Future.delayed(const Duration(seconds: 3),
-                  () => Get.offAllNamed(Routes.DOC_WEB_HOME));
-            } else {
-              await Future.delayed(const Duration(seconds: 3),
-                  () => Get.offAll(() => DoctorHomeScreen()));
-            }
+
+          if (kIsWeb) {
+            await Future.delayed(const Duration(seconds: 3),
+                () => Get.offAllNamed(Routes.DOC_WEB_HOME));
           } else {
-            //CHANGE TO ERROR DIALOG
-            Get.defaultDialog(
-                title:
-                    'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com');
+            await Future.delayed(const Duration(seconds: 3),
+                () => Get.offAll(() => DoctorHomeScreen()));
           }
+
           break;
         case 'patient':
           await resetCallStatus(auth.currentUser!.uid);

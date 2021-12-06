@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 class MAHistoryList extends StatelessWidget {
   final MAHistoryController hController = Get.put(MAHistoryController());
   final NavigationController navigationController = Get.find();
+  final MenuController menuController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class MAHistoryList extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            MenuController.to.activeItem.value,
+            menuController.activeItem.value,
             style: title29BoldNeutral80,
           ),
         ),

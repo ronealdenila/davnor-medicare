@@ -18,7 +18,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
   final ReleasingMAController rlsController = Get.put(ReleasingMAController());
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
-
+  final MenuController menuController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +28,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            MenuController.to.activeItem.value,
+            menuController.activeItem.value,
             style: title29BoldNeutral80,
           ),
         ),
