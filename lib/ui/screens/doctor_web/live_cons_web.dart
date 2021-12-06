@@ -24,19 +24,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class LiveConsultationWeb extends StatelessWidget {
+class LiveConsultationWeb extends StatefulWidget {
+  static AuthController authController = Get.find();
+
+  @override
+  State<LiveConsultationWeb> createState() => _LiveConsultationWebState();
+}
+
+class _LiveConsultationWebState extends State<LiveConsultationWeb> {
   final AttachedPhotosController controller = Get.find();
   final ConsHistoryController consHController = Get.find();
-  static LiveConsController liveCont = Get.find();
+  final LiveConsController liveCont = Get.find();
   final LiveChatController liveChatCont = Get.put(LiveChatController());
-  static AuthController authController = Get.find();
-  final fetchedData = authController.doctorModel.value;
+  final fetchedData = LiveConsultationWeb.authController.doctorModel.value;
   final CallingPatientController callController =
       Get.put(CallingPatientController());
   final ConsultationsController consRequests = Get.find();
   final DoctorMenuController menuController = Get.find();
   final RxBool errorPhoto = false.obs;
   final RxBool errorPhoto2 = false.obs;
+
+  @override
+  void initState() {
+    liveCont.doneFetching.value = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -345,23 +357,25 @@ class LiveConsultationWeb extends StatelessWidget {
       children: [
         topHeaderRequestWeb(),
         Expanded(
-            child: StreamBuilder(
-                stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
+            child: FutureBuilder(
+                future: liveChatCont.resetLiveChat(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    return ListView.builder(
-                      reverse: true,
-                      padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-                      shrinkWrap: true,
-                      itemCount: liveChatCont.liveChat.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            bubbleChat(liveChatCont.liveChat[index], context),
-                            verticalSpace15
-                          ],
-                        );
-                      },
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Obx(
+                      () => ListView.builder(
+                        reverse: true,
+                        padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                        shrinkWrap: true,
+                        itemCount: liveChatCont.liveChat.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              bubbleChat(liveChatCont.liveChat[index], context),
+                              verticalSpace15
+                            ],
+                          );
+                        },
+                      ),
                     );
                   }
                   return const Text('Loading ..');
@@ -381,11 +395,12 @@ class LiveConsultationWeb extends StatelessWidget {
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor,
         child: Obx(
           () => errorPhoto.value
               ? Text(
                   '${liveCont.getPatientFirstName(model)[0]}',
+                  style: title24Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,
@@ -544,11 +559,11 @@ class LiveConsultationWeb extends StatelessWidget {
         onForegroundImageError: (_, __) {
           errorPhoto2.value = true;
         },
-        backgroundColor: neutralColor,
+        backgroundColor: verySoftBlueColor,
         child: Obx(
           () => errorPhoto2.value
               ? Text('${liveCont.getPatientFirstName(model)[0]}',
-                  style: title24BoldWhite)
+                  style: title36Regular.copyWith(color: Colors.white))
               : SizedBox(
                   height: 0,
                   width: 0,
