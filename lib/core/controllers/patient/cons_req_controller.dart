@@ -263,8 +263,8 @@ class ConsRequestController extends GetxController {
         .collection('cons_status')
         .doc(categoryID.value)
         .update({
-          'qLastNum': FieldValue.increment(1) as int,
-          'consRqstd': FieldValue.increment(1) as int
+          'qLastNum': FieldValue.increment(1),
+          'consRqstd': FieldValue.increment(1)
         })
         .then((value) => log.i('Status Updated'))
         .catchError((error) => log.i('Failed to update status: $error'));
