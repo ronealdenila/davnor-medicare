@@ -41,8 +41,13 @@ class LiveChatController extends GetxController {
   final RxString photoURL = ''.obs;
 
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
+    liveChat.bindStream(assignLiveChat(consData));
+  }
+
+  Future<void> resetLiveChat() async {
+    liveChat.clear();
     liveChat.bindStream(assignLiveChat(consData));
   }
 
