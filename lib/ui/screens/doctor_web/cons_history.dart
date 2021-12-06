@@ -33,7 +33,7 @@ class ResponsiveBody extends GetResponsiveView {
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
   final _scrollController3 = ScrollController();
-  final RxBool firedOnce = false.obs;
+  final RxBool doneLoad = false.obs;
 
   @override
   Widget? builder() {
@@ -299,6 +299,7 @@ class ResponsiveBody extends GetResponsiveView {
       removeTop: true,
       child: ListView.builder(
         controller: _scrollController2,
+        addAutomaticKeepAlives: true,
         shrinkWrap: true,
         itemCount: consHController.consHistory.length,
         itemBuilder: (context, index) {
@@ -321,9 +322,8 @@ class ResponsiveBody extends GetResponsiveView {
               child: ConsultationHistoryCardWeb(
                 consHistory: model,
                 onItemTap: () {
+                  doneLoad.value = false;
                   selectedIndex.value = index;
-
-                  firedOnce.value = false;
                   consHController.chatHistory.clear();
                 },
               ),
@@ -344,9 +344,36 @@ class ResponsiveBody extends GetResponsiveView {
         consHController.consHistory.isEmpty) {
       return Container();
     }
+    if (doneLoad.value) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          screen.isDesktop
+              ? topHeaderRequest(
+                  consHController.consHistory[selectedIndex.value])
+              : topHeaderRequestWeb(
+                  consHController.consHistory[selectedIndex.value]),
+          Expanded(
+              child: ListView.builder(
+            controller: _scrollController3,
+            reverse: true,
+            padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
+            shrinkWrap: true,
+            itemCount: consHController.chatHistory.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  bubbleChat(consHController.chatHistory[index], context),
+                  verticalSpace15
+                ],
+              );
+            },
+          )),
+        ],
+      );
+    }
 
-    firedOnce.value = true;
-    print(selectedIndex.value);
+    doneLoad.value = true;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -355,39 +382,35 @@ class ResponsiveBody extends GetResponsiveView {
             : topHeaderRequestWeb(
                 consHController.consHistory[selectedIndex.value]),
         Expanded(
-          child: Obx(() => firedOnce.value == false
-              ? FutureBuilder(
-                  future: consHController.getChatHistory(
-                      consHController.consHistory[selectedIndex.value]),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return ListView.builder(
-                        controller: _scrollController3,
-                        reverse: true,
-                        padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
-                        shrinkWrap: true,
-                        itemCount: consHController.chatHistory.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              bubbleChat(
-                                  consHController.chatHistory[index], context),
-                              verticalSpace15
-                            ],
-                          );
-                        },
+          child: FutureBuilder(
+              future: consHController.getChatHistory(
+                  consHController.consHistory[selectedIndex.value]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return ListView.builder(
+                    addAutomaticKeepAlives: true,
+                    controller: _scrollController3,
+                    reverse: true,
+                    padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
+                    shrinkWrap: true,
+                    itemCount: consHController.chatHistory.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          bubbleChat(
+                              consHController.chatHistory[index], context),
+                          verticalSpace15
+                        ],
                       );
-                    }
-                    return Center(
-                        child: Container(
-                            width: 30,
-                            height: 30,
-                            child: CircularProgressIndicator()));
-                  })
-              : SizedBox(
-                  width: 0,
-                  height: 0,
-                )),
+                    },
+                  );
+                }
+                return Center(
+                    child: Container(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator()));
+              }),
         ),
       ],
     );
