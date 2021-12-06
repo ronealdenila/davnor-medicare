@@ -461,11 +461,12 @@ class ResponsiveBody extends GetResponsiveView {
         onForegroundImageError: (_, __) {
           errorPhoto2.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor[100],
         child: Obx(
           () => errorPhoto2.value
               ? Text(
                   '${consHController.getPatientFirstName(model)[0]}',
+                  style: body20Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,
@@ -481,11 +482,12 @@ class ResponsiveBody extends GetResponsiveView {
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor[100],
         child: Obx(
           () => errorPhoto.value
               ? Text(
                   '${consHController.getPatientFirstName(model)[0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,

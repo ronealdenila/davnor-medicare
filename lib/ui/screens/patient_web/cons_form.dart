@@ -7,6 +7,7 @@ import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
+import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -139,22 +140,37 @@ class ResponsiveBody extends GetResponsiveView {
                       ),
                     ),
                     verticalSpace10,
-                    SizedBox(
-                      width: 160,
-                      child: CustomTextFormField(
-                        controller: consController.ageController,
-                        labelText: 'consform3'.tr,
-                        validator: Validator().number,
-                        keyboardType: TextInputType.number,
-                        //* for improvement: pwede ta pag click sa done
-                        //* magsubmit na ang form
-                        textInputAction: TextInputAction.done,
-                        onChanged: (value) {
-                          return;
-                        },
-                        onSaved: (value) =>
-                            consController.ageController.text = value!,
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: CustomTextFormField(
+                            controller: consController.ageController,
+                            labelText: 'consform3'.tr,
+                            validator: Validator().number,
+                            keyboardType: TextInputType.number,
+                            //* for improvement: pwede ta pag click sa done
+                            //* magsubmit na ang form
+                            textInputAction: TextInputAction.done,
+                            onChanged: (value) {
+                              return;
+                            },
+                            onSaved: (value) =>
+                                consController.ageController.text = value!,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 160,
+                          child: CustomDropdown(
+                            hintText: 'Type', //TRANSLATE
+                            dropdownItems: cSenior,
+                            onChanged: (Item? item) =>
+                                consController.typeP.value = item!.name,
+                            onSaved: (Item? item) =>
+                                consController.typeP.value = item!.name,
+                          ),
+                        ),
+                      ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

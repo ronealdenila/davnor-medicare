@@ -61,6 +61,7 @@ class PSWDItemView extends GetResponsiveView {
         children: [
           verticalSpace35,
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               displayPatientInfo(),
@@ -153,13 +154,13 @@ class PSWDItemView extends GetResponsiveView {
       verticalSpace25,
       Text(
         "Patient's Infomation",
-        style: subtitle24MediumNeutral,
+        style: subtitle18MediumNeutral,
       ),
       verticalSpace15,
       Row(
         children: [
           const SizedBox(
-            width: 120,
+            width: 170,
             child: Text('Patient Name',
                 textAlign: TextAlign.left, style: caption18Medium),
           ),
@@ -171,10 +172,10 @@ class PSWDItemView extends GetResponsiveView {
       Row(
         children: [
           const SizedBox(
-              width: 120,
+              width: 170,
               child: Text('Patient Age',
                   textAlign: TextAlign.left, style: caption18Medium)),
-           horizontalSpace15,
+          horizontalSpace15,
           Text(model.age!, style: caption16RegularNeutral),
         ],
       ),
@@ -182,10 +183,10 @@ class PSWDItemView extends GetResponsiveView {
       Row(
         children: [
           const SizedBox(
-              width: 120,
+              width: 170,
               child: Text('Address',
                   textAlign: TextAlign.left, style: caption18Medium)),
-           horizontalSpace15,
+          horizontalSpace15,
           Text(model.address!, style: caption16RegularNeutral),
         ],
       ),
@@ -193,10 +194,10 @@ class PSWDItemView extends GetResponsiveView {
       Row(
         children: [
           const SizedBox(
-              width: 120,
+              width: 170,
               child: Text('Gender',
                   textAlign: TextAlign.left, style: caption18Medium)),
-           horizontalSpace15,
+          horizontalSpace15,
           Text(model.gender!, style: caption16RegularNeutral),
         ],
       ),
@@ -204,11 +205,11 @@ class PSWDItemView extends GetResponsiveView {
       Row(
         children: [
           const SizedBox(
-            width: 120,
+            width: 170,
             child: Text('Patient Type',
                 textAlign: TextAlign.left, style: caption18Medium),
           ),
-           horizontalSpace15,
+          horizontalSpace15,
           Text(model.type!, style: caption16RegularNeutral),
         ],
       ),
@@ -229,11 +230,11 @@ class PSWDItemView extends GetResponsiveView {
         Row(
           children: [
             const SizedBox(
-              width: 120,
+              width: 170,
               child: Text('Received by',
                   textAlign: TextAlign.left, style: caption18Medium),
             ),
-             horizontalSpace15,
+            horizontalSpace15,
             Text(model.receivedBy!, style: caption16RegularNeutral),
           ],
         ),
@@ -246,10 +247,10 @@ class PSWDItemView extends GetResponsiveView {
               Row(
                 children: [
                   const SizedBox(
-                      width: 120,
+                      width: 170,
                       child: Text('Pharmacy',
                           textAlign: TextAlign.left, style: caption18Medium)),
-                   horizontalSpace15,
+                  horizontalSpace15,
                   Text(model.pharmacy!, style: caption16RegularNeutral),
                 ],
               ),
@@ -257,10 +258,10 @@ class PSWDItemView extends GetResponsiveView {
               Row(
                 children: [
                   const SizedBox(
-                      width: 120,
+                      width: 170,
                       child: Text('Medicine Worth',
                           textAlign: TextAlign.left, style: caption18Medium)),
-                   horizontalSpace15,
+                  horizontalSpace15,
                   Text('Php ${model.medWorth}', style: caption16RegularNeutral),
                 ],
               ),
@@ -342,7 +343,7 @@ class PSWDItemView extends GetResponsiveView {
           verticalSpace20,
           Row(children: [
             const SizedBox(
-              width: 120,
+              width: 170,
               child: Text(
                 'Date Requested',
                 style: caption16SemiBold,
@@ -359,7 +360,7 @@ class PSWDItemView extends GetResponsiveView {
             visible: status == 'completed',
             child: Row(children: [
               const SizedBox(
-                width: 120,
+                width: 170,
                 child: Text(
                   'Date MA Claimed',
                   style: caption16SemiBold,
@@ -387,7 +388,7 @@ class PSWDItemView extends GetResponsiveView {
 
   Widget getPhoto(GeneralMARequestModel model) {
     return CircleAvatar(
-        radius: 29,
+        radius: 35,
         foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;

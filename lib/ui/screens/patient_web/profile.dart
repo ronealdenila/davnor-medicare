@@ -173,9 +173,9 @@ class PatientProfileWebScreen extends StatelessWidget {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircleAvatar(
+            return CircleAvatar(
               radius: 50,
-              backgroundColor: Colors.grey,
+              backgroundColor: verySoftBlueColor[100],
             );
           }
 
@@ -188,11 +188,12 @@ class PatientProfileWebScreen extends StatelessWidget {
                 onForegroundImageError: (_, __) {
                   errorPhoto.value = true;
                 },
+                backgroundColor: verySoftBlueColor[100],
                 child: Obx(
                   () => errorPhoto.value
                       ? Text(
                           '${fetchedData!.firstName![0]}',
-                          style: subtitle18Bold,
+                          style: title36Regular.copyWith(color: Colors.white),
                         )
                       : SizedBox(
                           height: 0,

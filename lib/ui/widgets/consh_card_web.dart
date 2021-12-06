@@ -2,7 +2,6 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,7 @@ import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 
 class ConsultationHistoryCardWeb extends StatelessWidget {
-  const ConsultationHistoryCardWeb({
+  ConsultationHistoryCardWeb({
     required this.consHistory,
     this.onItemTap,
   });
@@ -19,6 +18,7 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
   final void Function()? onItemTap;
   static ConsHistoryController consHCont = Get.find();
   static AuthController authController = Get.find();
+  final ConsHistoryController consHController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -95,32 +95,70 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
 
   Widget forPatientHistory(ConsultationHistoryModel model) {
     if (model.doc.value == null) {
-      return Image.asset(doctorDefault, fit: BoxFit.cover);
+      return Container(
+        color: verySoftBlueColor[100],
+        child: Center(
+          child: Text('${consHController.getDoctorFirstName(model)[0]}',
+              style: title24Regular.copyWith(color: Colors.white)),
+        ),
+      );
     }
     if (model.doc.value!.profileImage! == '') {
-      return Image.asset(doctorDefault, fit: BoxFit.cover);
+      return Container(
+        color: verySoftBlueColor[100],
+        child: Center(
+          child: Text('${consHController.getDoctorFirstName(model)[0]}',
+              style: title24Regular.copyWith(color: Colors.white)),
+        ),
+      );
     }
     return Image.network(
       model.doc.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(doctorDefault, fit: BoxFit.cover);
+        return Container(
+          color: verySoftBlueColor[100],
+          child: Center(
+            child: Text('${consHController.getDoctorFirstName(model)[0]}',
+                style: title24Regular.copyWith(color: Colors.white)),
+          ),
+        );
       },
     );
   }
 
   Widget forDoctorHistory(ConsultationHistoryModel model) {
     if (model.patient.value == null) {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
+      return Container(
+        color: verySoftBlueColor[100],
+        child: Center(
+          child: Text('${consHController.getPatientFirstName(model)[0]}',
+              style: title24Regular.copyWith(color: Colors.white)),
+        ),
+      ); //Image.asset(blankProfile, fit: BoxFit.cover);
     }
     if (model.patient.value!.profileImage! == '') {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
+      return Container(
+        color: verySoftBlueColor[100],
+        child: Center(
+          child: Text('${consHController.getPatientFirstName(model)[0]}',
+              style: title24Regular.copyWith(color: Colors.white)),
+        ),
+      ); //Image.asset(blankProfile, fit: BoxFit.cover);
     }
     return Image.network(
       model.patient.value!.profileImage!,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(blankProfile, fit: BoxFit.cover);
+        return Container(
+          color: verySoftBlueColor[100],
+          child: Center(
+            child: Text(
+              '${consHController.getPatientFirstName(model)[0]}',
+              style: title24Regular.copyWith(color: Colors.white),
+            ),
+          ),
+        ); //Image.asset(blankProfile, fit: BoxFit.cover);
       },
     );
   }

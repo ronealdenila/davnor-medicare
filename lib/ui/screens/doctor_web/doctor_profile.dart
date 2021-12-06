@@ -280,9 +280,9 @@ class ResponsiveView extends GetResponsiveView {
         stream: profileController.getProfileDoctor(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircleAvatar(
+            return CircleAvatar(
               radius: 115,
-              backgroundColor: Colors.grey,
+              backgroundColor: verySoftBlueColor[100],
             );
           }
 
@@ -301,11 +301,12 @@ class ResponsiveView extends GetResponsiveView {
               onForegroundImageError: (_, __) {
                 errorPhoto.value = true;
               },
+              backgroundColor: verySoftBlueColor[100],
               child: Obx(
                 () => errorPhoto.value
                     ? Text(
                         '${fetchedData!.firstName![0]}',
-                        style: subtitle18Bold,
+                        style: title36Regular.copyWith(color: Colors.white),
                       )
                     : SizedBox(
                         height: 0,

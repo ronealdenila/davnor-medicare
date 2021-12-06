@@ -128,7 +128,7 @@ class ReleasingMAController extends GetxController {
         .doc(model.maID)
         .set(<String, dynamic>{
       'maID': model.maID,
-      'patientId': model.requesterID,
+      'requesterID': model.requesterID,
       'fullName': model.fullName,
       'age': model.age,
       'address': model.address,

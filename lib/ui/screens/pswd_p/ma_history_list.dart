@@ -65,7 +65,7 @@ class MAHistoryList extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     hController.filter(
@@ -83,7 +83,7 @@ class MAHistoryList extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Remove Filter'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     hController.searchKeyword.clear();

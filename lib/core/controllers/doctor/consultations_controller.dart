@@ -9,6 +9,7 @@ import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/doctor/live_cons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -82,10 +83,10 @@ class ConsultationsController extends GetxController {
     await updateDocStatus();
     dismissDialog();
     if (kIsWeb) {
-      menuController.changeActiveItemTo('Dashboard');
-      navigationController.navigateTo(Routes.DOC_WEB_HOME);
+      menuController.changeActiveItemTo('Live Consultation');
+      navigationController.navigateTo(Routes.LIVE_CONS_WEB);
     } else {
-      Get.back();
+      Get.off(() => LiveConsultationScreen());
     }
   }
 
