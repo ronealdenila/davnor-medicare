@@ -36,12 +36,9 @@ class ConsHistoryScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (consHController.isLoading.value) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR',
-                              errorDescription: 'conslog'.tr);
+                          showSimpleErrorDialog(errorDescription: 'conslog'.tr);
                         } else if (consHController.consHistory.isEmpty) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR',
+                          showSimpleErrorDialog(
                               errorDescription: 'conslog1'.tr);
                         } else {
                           consHController.showDialog(context);
@@ -94,15 +91,13 @@ class ConsHistoryScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     if (consHController.isLoading.value) {
-                                      showErrorDialog(
-                                          errorTitle: 'ERROR',
+                                      showSimpleErrorDialog(
                                           errorDescription: 'conslog'.tr);
                                     } else if (consHController
                                             .consHistory.isEmpty &&
                                         consHController
                                             .filteredListforP.isEmpty) {
-                                      showErrorDialog(
-                                          errorTitle: 'ERROR',
+                                      showSimpleErrorDialog(
                                           errorDescription: 'conslog1'.tr);
                                     } else {
                                       consHController.refresh();

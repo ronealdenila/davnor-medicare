@@ -171,7 +171,7 @@ class PatientProfileScreen extends StatelessWidget {
                 () => errorPhoto.value
                     ? Text(
                         '${fetchedData!.firstName![0]}',
-                        style: subtitle18Bold,
+                        style: title34Regular.copyWith(color: Colors.white),
                       )
                     : SizedBox(
                         height: 0,

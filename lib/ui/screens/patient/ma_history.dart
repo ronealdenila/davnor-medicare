@@ -38,13 +38,9 @@ class MAHistoryScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (maHController.isLoading.value) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR',
-                              errorDescription: 'mahrec1'.tr);
+                          showSimpleErrorDialog(errorDescription: 'mahrec1'.tr);
                         } else if (maHController.maHistoryList.isEmpty) {
-                          showErrorDialog(
-                              errorTitle: 'ERROR',
-                              errorDescription: 'mahrec2'.tr);
+                          showSimpleErrorDialog(errorDescription: 'mahrec2'.tr);
                         } else {
                           maHController.showDialog(context);
                         }
@@ -96,15 +92,13 @@ class MAHistoryScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     if (maHController.isLoading.value) {
-                                      showErrorDialog(
-                                          errorTitle: 'ERROR',
+                                      showSimpleErrorDialog(
                                           errorDescription: 'mahrec1'.tr);
                                     } else if (maHController
                                             .maHistoryList.isEmpty &&
                                         maHController
                                             .filteredListforP.isEmpty) {
-                                      showErrorDialog(
-                                          errorTitle: 'ERROR',
+                                      showSimpleErrorDialog(
                                           errorDescription: 'mahrec2'.tr);
                                     } else {
                                       maHController.refresh();
@@ -165,7 +159,7 @@ class MAHistoryScreen extends StatelessWidget {
         !maHController.isLoading.value &&
         maHController.filteredListforP.isNotEmpty) {
       return Text(
-        'errordialog15'.tr, 
+        'errordialog15'.tr,
         textAlign: TextAlign.center,
         style: body14Medium,
       );
