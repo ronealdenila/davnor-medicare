@@ -159,6 +159,7 @@ class ResponsiveBody extends GetResponsiveView {
                                 consController.ageController.text = value!,
                           ),
                         ),
+                        horizontalSpace10,
                         SizedBox(
                           width: 160,
                           child: CustomDropdown(
