@@ -96,9 +96,11 @@ class LiveChatController extends GetxController {
 
   Future<void> sendButtonWeb() async {
     if (isPhotoAttachClicked.value && images.isNotEmpty) {
+      showLoading();
       await uploadImagesWeb();
       await sendMessage(listPhotoURL.value);
       await clearImages();
+      dismissDialog();
     } else {
       if (chatController.text.isEmpty) {
         Get.snackbar('No message', 'Please write a message',
@@ -116,9 +118,9 @@ class LiveChatController extends GetxController {
         .doc(consData.consID)
         .collection('messages')
         .add({
+      'dateCreated': FieldValue.serverTimestamp(),
       'senderID': auth.currentUser!.uid,
       'message': message,
-      'dateCreated': FieldValue.serverTimestamp(),
     });
   }
 

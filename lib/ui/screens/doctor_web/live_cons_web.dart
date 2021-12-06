@@ -8,6 +8,7 @@ import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
@@ -357,25 +358,35 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       children: [
         topHeaderRequestWeb(),
         Expanded(
-            child: FutureBuilder(
-                future: liveChatCont.resetLiveChat(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return Obx(
-                      () => ListView.builder(
-                        reverse: true,
-                        padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-                        shrinkWrap: true,
-                        itemCount: liveChatCont.liveChat.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              bubbleChat(liveChatCont.liveChat[index], context),
-                              verticalSpace15
-                            ],
+            child: StreamBuilder<QuerySnapshot>(
+                stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    return ListView(
+                      reverse: true,
+                      padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                      shrinkWrap: true,
+                      children: snapshot.data!.docs.map((item) {
+                        Map<String, dynamic> data =
+                            item.data()! as Map<String, dynamic>;
+                        if (data['dateCreated'] == null) {
+                          return SizedBox(
+                            width: 0,
+                            height: 0,
                           );
-                        },
-                      ),
+                        }
+                        ChatModel model = ChatModel.fromJson(
+                            item.data()! as Map<String, dynamic>);
+                        return Column(
+                          children: [
+                            bubbleChat(model, context),
+                            verticalSpace15
+                          ],
+                        );
+                      }).toList(),
                     );
                   }
                   return const Text('Loading ..');
