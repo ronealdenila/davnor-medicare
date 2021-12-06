@@ -63,7 +63,7 @@ class MARequestListScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     maController.filter(
@@ -78,7 +78,7 @@ class MARequestListScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Remove Filter'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     maController.maFilter.clear();
@@ -95,7 +95,7 @@ class MARequestListScreen extends StatelessWidget {
                     Icons.refresh,
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     maController.refresh();

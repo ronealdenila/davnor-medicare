@@ -53,7 +53,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     faController.filter(
@@ -67,7 +67,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                 child: ElevatedButton(
                   child: Text('Remove Filter'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     faController.type.value = 'All';
@@ -83,7 +83,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                     Icons.refresh,
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     faController.refresh();

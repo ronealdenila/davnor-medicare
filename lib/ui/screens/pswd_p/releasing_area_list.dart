@@ -54,7 +54,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     rlsController.filter(
@@ -68,7 +68,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Remove Filter'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     rlsController.rlsFilter.clear();
@@ -84,7 +84,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
                     Icons.refresh,
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     rlsController.refresh();

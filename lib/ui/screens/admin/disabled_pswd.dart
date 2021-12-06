@@ -2,6 +2,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -45,7 +46,7 @@ class DisabledPSWDStaffScreen extends StatelessWidget {
                     child: ElevatedButton(
                       child: Text('Search'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
+                        primary: verySoftBlueColor,
                       ),
                       onPressed: () {
                         dListController.filter(
@@ -59,7 +60,7 @@ class DisabledPSWDStaffScreen extends StatelessWidget {
                     child: ElevatedButton(
                       child: Text('Remove Filter'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[900],
+                        primary: verySoftBlueColor,
                       ),
                       onPressed: () {
                         dListController.filterKey.clear();
@@ -246,12 +247,12 @@ Widget confirmProcess(PswdModel model) {
                 Align(
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(
-                      height: 67,
-                      width: 90,
-                      child: DmButton(
-                          title: 'Got it!',
-                          onTap: () async {
-                            await deleteUserInDocuments(model.userID!);
+                        height: 67,
+                        width: 90,
+                        child: DmButton(
+                            title: 'Got it!',
+                            onTap: () async {
+                              await deleteUserInDocuments(model.userID!);
                             }))),
                 verticalSpace15,
                 Text(

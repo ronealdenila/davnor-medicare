@@ -5,6 +5,7 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_text_form_field.dart';
@@ -76,7 +77,7 @@ class DoctorListScreen extends StatelessWidget {
                       child: ElevatedButton(
                         child: Text('Search'),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blue[900],
+                          primary: verySoftBlueColor,
                         ),
                         onPressed: () {
                           dListController.filter(
@@ -91,7 +92,7 @@ class DoctorListScreen extends StatelessWidget {
                       child: ElevatedButton(
                         child: Text('Remove Filter'),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blue[900],
+                          primary: verySoftBlueColor,
                         ),
                         onPressed: () {
                           dListController.docFilter.clear();

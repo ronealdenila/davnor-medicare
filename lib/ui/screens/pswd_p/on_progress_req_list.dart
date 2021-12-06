@@ -51,7 +51,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                 child: ElevatedButton(
                   child: Text('Search'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     opController.filter(
@@ -65,7 +65,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                 child: ElevatedButton(
                   child: Text('Remove Filter'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     opController.type.value = 'All';
@@ -81,7 +81,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                     Icons.refresh,
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[900],
+                    primary: verySoftBlueColor,
                   ),
                   onPressed: () {
                     opController.refresh();
