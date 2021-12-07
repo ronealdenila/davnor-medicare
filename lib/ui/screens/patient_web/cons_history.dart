@@ -27,6 +27,10 @@ class ResponsiveBody extends GetResponsiveView {
   final RxInt selectedIndex = 0.obs;
   final RxBool errorPhoto = false.obs;
   final RxBool errorPhoto2 = false.obs;
+  final _scrollController1 = ScrollController();
+  final _scrollController2 = ScrollController();
+  final _scrollController3 = ScrollController();
+  final RxBool doneLoad = false.obs;
 
   @override
   Widget? builder() {
@@ -255,6 +259,7 @@ class ResponsiveBody extends GetResponsiveView {
       context: context,
       removeTop: true,
       child: ListView.builder(
+        controller: _scrollController1,
         shrinkWrap: true,
         itemCount: consHController.consHistory.length,
         itemBuilder: (context, index) {
@@ -299,6 +304,37 @@ class ResponsiveBody extends GetResponsiveView {
       return Container();
     }
     print(selectedIndex.value);
+
+    if (doneLoad.value) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          screen.isDesktop
+              ? topHeaderRequest(
+                  consHController.consHistory[selectedIndex.value])
+              : topHeaderRequestWeb(
+                  consHController.consHistory[selectedIndex.value]),
+          Expanded(
+              child: ListView.builder(
+            controller: _scrollController2,
+            reverse: true,
+            padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
+            shrinkWrap: true,
+            itemCount: consHController.chatHistory.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  bubbleChat(consHController.chatHistory[index], context),
+                  verticalSpace15
+                ],
+              );
+            },
+          )),
+        ],
+      );
+    }
+
+    doneLoad.value = true;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -313,6 +349,7 @@ class ResponsiveBody extends GetResponsiveView {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
+                    controller: _scrollController2,
                     reverse: true,
                     padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
                     shrinkWrap: true,
@@ -463,6 +500,7 @@ class ResponsiveBody extends GetResponsiveView {
       return Container();
     }
     return SingleChildScrollView(
+      controller: _scrollController3,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
           Widget>[
         Container(

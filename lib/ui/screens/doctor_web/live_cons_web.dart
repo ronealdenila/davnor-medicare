@@ -44,6 +44,8 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
   final DoctorMenuController menuController = Get.find();
   final RxBool errorPhoto = false.obs;
   final RxBool errorPhoto2 = false.obs;
+  final _scrollController1 = ScrollController();
+  final _scrollController2 = ScrollController();
 
   @override
   void initState() {
@@ -110,6 +112,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
   Widget RequestsInfoView(
       BuildContext context, LiveConsultationModel liveCons) {
     return SingleChildScrollView(
+      controller: _scrollController2,
       child: Column(children: <Widget>[
         Container(
           width: Get.width,
@@ -366,6 +369,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
                   }
                   if (snapshot.connectionState == ConnectionState.active) {
                     return ListView(
+                      controller: _scrollController1,
                       reverse: true,
                       padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                       shrinkWrap: true,

@@ -8,7 +8,6 @@ import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -18,6 +17,7 @@ class LiveChatScreen extends StatelessWidget {
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   final RxBool errorPhoto = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -114,33 +114,6 @@ class LiveChatScreen extends StatelessWidget {
               alignment: FractionalOffset.bottomCenter,
               child: chatStack(),
             ),
-            // Expanded(
-            //     child: StreamBuilder(
-            //         stream: liveChatCont.getLiveChatMessages(consData),
-            //         builder: (context, snapshot) {
-            //           if (snapshot.connectionState == ConnectionState.active) {
-            //             return ListView.builder(
-            //               reverse: true,
-            //               padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-            //               shrinkWrap: true,
-            //               itemCount: liveChatCont.liveChat.length,
-            //               itemBuilder: (context, index) {
-            //                 return Column(
-            //                   children: [
-            //                     bubbleChat(
-            //                         liveChatCont.liveChat[index], context),
-            //                     verticalSpace15
-            //                   ],
-            //                 );
-            //               },
-            //             );
-            //           }
-            //           return const Center(child: Text('Loading ..'));
-            //         })),
-            // Align(
-            //   alignment: FractionalOffset.bottomCenter,
-            //   child: chatStack(),
-            // ),
           ],
         ),
       ),

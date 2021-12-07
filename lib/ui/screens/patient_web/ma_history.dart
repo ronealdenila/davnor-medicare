@@ -28,6 +28,9 @@ class ResponsiveBody extends GetResponsiveView {
   final MAHistoryController maHController = Get.put(MAHistoryController());
   final RxInt selectedIndex = 0.obs;
   final AppController appController = Get.find();
+  final _scrollController1 = ScrollController();
+  final _scrollController2 = ScrollController();
+  final RxBool doneLoad = false.obs;
 
   @override
   Widget? builder() {
@@ -145,6 +148,7 @@ class ResponsiveBody extends GetResponsiveView {
                 height: Get.height,
                 width: Get.width * .7,
                 child: SingleChildScrollView(
+                  controller: _scrollController2,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Obx(
@@ -174,11 +178,11 @@ class ResponsiveBody extends GetResponsiveView {
         style: body14Medium,
       );
     }
-
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
+        controller: _scrollController1,
         shrinkWrap: true,
         itemCount: maHController.maHistoryList.length,
         itemBuilder: (context, index) {

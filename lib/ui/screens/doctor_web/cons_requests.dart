@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
-import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
@@ -33,6 +32,9 @@ class ResponsiveBody extends GetResponsiveView {
   final RxBool errorPhoto = false.obs;
   final RxBool errorPhoto2 = false.obs;
   final RxBool firedOnce = false.obs;
+  final _scrollController1 = ScrollController();
+  final _scrollController2 = ScrollController();
+  final _scrollController3 = ScrollController();
 
   @override
   Widget? builder() {
@@ -229,6 +231,7 @@ class ResponsiveBody extends GetResponsiveView {
       context: context,
       removeTop: true,
       child: ListView.builder(
+        controller: _scrollController1,
         shrinkWrap: true,
         itemCount: consRequests.filteredList.length,
         itemBuilder: (context, index) {
@@ -284,6 +287,7 @@ class ResponsiveBody extends GetResponsiveView {
                 consRequests.consultations[consRequests.selectedIndex.value]),
         Expanded(
           child: ListView(
+            controller: _scrollController2,
             padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
             shrinkWrap: true,
             children: [
@@ -512,6 +516,7 @@ class ResponsiveBody extends GetResponsiveView {
       return SizedBox();
     }
     return SingleChildScrollView(
+      controller: _scrollController3,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
