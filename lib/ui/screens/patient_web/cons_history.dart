@@ -55,6 +55,7 @@ class ResponsiveBody extends GetResponsiveView {
                     }
                   },
                   child: Container(
+                    margin: EdgeInsets.only(right: 10),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     height: 50,
                     decoration: BoxDecoration(
@@ -78,7 +79,6 @@ class ResponsiveBody extends GetResponsiveView {
                     ),
                   ),
                 ),
-                verticalSpace10,
                 SizedBox(
                     height: 50,
                     child: ElevatedButton(

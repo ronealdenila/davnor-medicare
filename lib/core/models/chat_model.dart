@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ChatModel {
   ChatModel({
     this.senderID,
@@ -10,7 +8,7 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
         senderID: json['senderID'] as String,
         message: json['message'] as String,
-        dateCreated: json['dateCreated'] as Timestamp,
+        dateCreated: json['dateCreated'] as dynamic,
       );
 
   Map<String, dynamic> toJson() => {
@@ -21,5 +19,5 @@ class ChatModel {
 
   String? senderID;
   String? message;
-  Timestamp? dateCreated;
+  dynamic dateCreated;
 }

@@ -46,11 +46,6 @@ class LiveChatController extends GetxController {
     liveChat.bindStream(assignLiveChat(consData));
   }
 
-  Future<void> resetLiveChat() async {
-    liveChat.clear();
-    liveChat.bindStream(assignLiveChat(consData));
-  }
-
   Stream<QuerySnapshot<Map<String, dynamic>>> getLiveChatMessages(
       LiveConsultationModel model) {
     log.i('get Live Chat Messages');
@@ -139,8 +134,8 @@ class LiveChatController extends GetxController {
   Future<void> uploadImage() async {
     final img = image.value;
     final v4 = uuid.v4();
-    final ref =
-        storageRef.child('Consultation/${consData.consID}/Cam-Ph-$v4$v4');
+    final ref = storageRef.child(
+        'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/Cam-Ph-$v4$v4');
     final uploadTask = ref.putFile(File(img));
     await uploadTask.then((res) async {
       photoURL.value = await res.ref.getDownloadURL();
@@ -150,8 +145,8 @@ class LiveChatController extends GetxController {
   Future<void> uploadImages() async {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
-      final ref =
-          storageRef.child('Consultation/${consData.consID}/$i-Ph-$v4$v4');
+      final ref = storageRef.child(
+          'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/$i-Ph-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
@@ -165,8 +160,8 @@ class LiveChatController extends GetxController {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
       final fileBytes = images[i].readAsBytes();
-      final ref =
-          storageRef.child('Consultation/${consData.consID}/$i-Ph-$v4$v4');
+      final ref = storageRef.child(
+          'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/$i-Ph-$v4$v4');
       final metadata = firebase_storage.SettableMetadata(
           contentType: 'image/jpeg',
           customMetadata: {'picked-file-path': images[i].path});

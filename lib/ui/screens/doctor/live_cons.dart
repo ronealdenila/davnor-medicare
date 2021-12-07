@@ -5,6 +5,7 @@ import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
@@ -127,24 +128,36 @@ class LiveConsultationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: StreamBuilder(
-                    stream: liveChatCont.getLiveChatMessages(consData),
-                    builder: (context, snapshot) {
+                child: StreamBuilder<QuerySnapshot>(
+                    stream:
+                        liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
                       if (snapshot.connectionState == ConnectionState.active) {
-                        return ListView.builder(
+                        return ListView(
                           reverse: true,
                           padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                           shrinkWrap: true,
-                          itemCount: liveChatCont.liveChat.length,
-                          itemBuilder: (context, index) {
+                          children: snapshot.data!.docs.map((item) {
+                            Map<String, dynamic> data =
+                                item.data()! as Map<String, dynamic>;
+                            if (data['dateCreated'] == null) {
+                              return SizedBox(
+                                width: 0,
+                                height: 0,
+                              );
+                            }
+                            ChatModel model = ChatModel.fromJson(
+                                item.data()! as Map<String, dynamic>);
                             return Column(
                               children: [
-                                bubbleChat(
-                                    liveChatCont.liveChat[index], context),
+                                bubbleChat(model, context),
                                 verticalSpace15
                               ],
                             );
-                          },
+                          }).toList(),
                         );
                       }
                       return const Text('Loading ..');
@@ -153,6 +166,33 @@ class LiveConsultationScreen extends StatelessWidget {
               alignment: FractionalOffset.bottomCenter,
               child: chatStack(),
             ),
+            // Expanded(
+            //     child: StreamBuilder(
+            //         stream: liveChatCont.getLiveChatMessages(consData),
+            //         builder: (context, snapshot) {
+            //           if (snapshot.connectionState == ConnectionState.active) {
+            //             return ListView.builder(
+            //               reverse: true,
+            //               padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+            //               shrinkWrap: true,
+            //               itemCount: liveChatCont.liveChat.length,
+            //               itemBuilder: (context, index) {
+            //                 return Column(
+            //                   children: [
+            //                     bubbleChat(
+            //                         liveChatCont.liveChat[index], context),
+            //                     verticalSpace15
+            //                   ],
+            //                 );
+            //               },
+            //             );
+            //           }
+            //           return const Text('Loading ..');
+            //         })),
+            // Align(
+            //   alignment: FractionalOffset.bottomCenter,
+            //   child: chatStack(),
+            // ),
           ],
         ),
       ),

@@ -446,11 +446,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
                     color: kcInfoColor,
                   ),
                   onPressed: () {
-                    if (kIsWeb) {
-                      liveChatCont.sendButtonWeb();
-                    } else {
-                      liveChatCont.sendButton();
-                    }
+                    liveChatCont.sendButtonWeb();
                   }),
             ],
           ),
