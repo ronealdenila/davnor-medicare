@@ -7,6 +7,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/doctor/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -132,10 +133,12 @@ class LiveConsController extends GetxController {
       await updatePatientStatus(model.patientID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
+      consHController.refresh();
       if (!kIsWeb) {
-        consHController.refresh();
         Get.back(); //back to Live Screen Info
         Get.back(); //
+      } else {
+        Get.offAll(() => DoctorHomeScreen());
       }
     });
   }
@@ -203,8 +206,10 @@ class LiveConsController extends GetxController {
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
     if (!kIsWeb) {
-      Get.back(); //back to Live Screen Info
+      Get.back(); //back to Live Screen end
       Get.back(); //
+    } else {
+      Get.offAll(() => DoctorHomeScreen());
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
@@ -31,6 +32,7 @@ class ConsultationsController extends GetxController {
   final DoctorMenuController menuController = Get.find();
   final NavigationController navigationController = Get.find();
   //final LiveChatController liveChatCont = Get.find();
+  final LiveConsController liveCont = Get.find();
 
   @override
   void onReady() {
@@ -83,12 +85,17 @@ class ConsultationsController extends GetxController {
     await moveToLive(consData);
     await sendNotification(consData.patientId!);
     await updateDocStatus();
-    dismissDialog();
+
     if (kIsWeb) {
+      dismissDialog();
       menuController.changeActiveItemTo('Live Consultation');
       navigationController.navigateTo(Routes.LIVE_CONS_WEB);
     } else {
-      Get.off(() => LiveConsultationScreen());
+      await Future.delayed(const Duration(seconds: 3), () {
+        dismissDialog();
+        Get.off(() => LiveConsultationScreen(),
+            arguments: liveCont.liveCons[0]);
+      });
     }
   }
 
