@@ -250,11 +250,7 @@ class LiveConsultationScreen extends StatelessWidget {
                   color: kcInfoColor,
                 ),
                 onPressed: () {
-                  if (kIsWeb) {
-                    liveChatCont.sendButtonWeb();
-                  } else {
-                    liveChatCont.sendButton();
-                  }
+                  liveChatCont.sendButton();
                 },
               ),
             ],
