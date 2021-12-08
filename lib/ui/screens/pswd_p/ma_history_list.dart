@@ -128,24 +128,16 @@ class MAHistoryList extends StatelessWidget {
 
   Widget requestList(BuildContext context) {
     if (hController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: const SizedBox(
-              height: 24, width: 24, child: CircularProgressIndicator()),
-        ),
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
       );
     }
     if (hController.maHistoryList.isEmpty && hController.isLoading.value) {
-      return Padding(
-        padding: const EdgeInsets.all(30),
-        child: Align(
-          alignment: Alignment.center,
-          child: const Text(
-            'No Record of MA History',
-            style: body14Medium,
-          ),
+      return Center(
+        child: const Text(
+          'No Record of MA History',
+          style: body14Medium,
         ),
       );
     }

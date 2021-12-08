@@ -112,24 +112,16 @@ class MARequestListScreen extends StatelessWidget {
 
   requestList(BuildContext context) {
     if (maController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: const SizedBox(
-              height: 24, width: 24, child: CircularProgressIndicator()),
-        ),
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
       );
     }
     if (maController.maRequests.isEmpty && !maController.isLoading.value) {
-      return Padding(
-        padding: const EdgeInsets.all(30),
-        child: Align(
-          alignment: Alignment.center,
-          child: const Text(
-            'No MA request at the moment',
-            style: body14Medium,
-          ),
+      return Center(
+        child: const Text(
+          'No MA request at the moment',
+          style: body14Medium,
         ),
       );
     }

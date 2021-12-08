@@ -103,24 +103,16 @@ class ReleasingAreaListScreen extends StatelessWidget {
 
   Widget requestList(BuildContext context) {
     if (rlsController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: const SizedBox(
-              height: 24, width: 24, child: CircularProgressIndicator()),
-        ),
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
       );
     }
     if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
-      return Padding(
-        padding: const EdgeInsets.all(30),
-        child: Align(
-          alignment: Alignment.center,
-          child: const Text(
-            'No MA request that are ready to release at the moment',
-            style: body14Medium,
-          ),
+      return Center(
+        child: const Text(
+          'No MA request that are ready to release at the moment',
+          style: body14Medium,
         ),
       );
     }
