@@ -26,7 +26,6 @@ class MAReqListController extends GetxController {
   RxBool isLoading = true.obs;
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
-
   final MenuController menuController = Get.find();
 
   @override
