@@ -28,10 +28,13 @@ class AcceptedMAController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
     ever(accMA, (value) {
       checkIfPersonnelHasAccepted();
     });
-    super.onInit();
   }
 
   Stream<List<OnProgressMAModel>> getAcceptedMA() {
