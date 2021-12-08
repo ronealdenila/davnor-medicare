@@ -121,7 +121,7 @@ class MAHistoryList extends StatelessWidget {
         ),
         verticalSpace25,
         header(),
-        Obx(() => requestList(context))
+        Flexible(child: Obx(() => requestList(context)))
       ],
     );
   }
@@ -138,11 +138,14 @@ class MAHistoryList extends StatelessWidget {
       );
     }
     if (hController.maHistoryList.isEmpty && hController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: const Text(
-          'No on progress MA request at the moment',
-          style: body14Medium,
+      return Padding(
+        padding: const EdgeInsets.all(30),
+        child: Align(
+          alignment: Alignment.center,
+          child: const Text(
+            'No Record of MA History',
+            style: body14Medium,
+          ),
         ),
       );
     }

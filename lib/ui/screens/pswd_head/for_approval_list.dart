@@ -110,11 +110,14 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
       );
     }
     if (faController.forApprovalList.isEmpty && !faController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: const Text(
-          'No on progress MA request at the moment',
-          style: body14Medium,
+      return Padding(
+        padding: const EdgeInsets.all(30),
+        child: Align(
+          alignment: Alignment.center,
+          child: const Text(
+            'No for approval request at the moment',
+            style: body14Medium,
+          ),
         ),
       );
     }

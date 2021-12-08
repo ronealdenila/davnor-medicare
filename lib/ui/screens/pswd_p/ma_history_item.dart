@@ -31,6 +31,7 @@ class MAHistoryItemScreen extends StatelessWidget {
         prescriptions: passedData.prescriptions,
         validID: passedData.validID,
         receivedBy: passedData.receivedBy,
+        receiverID: passedData.receiverID,
         dateRqstd: passedData.dateRqstd,
         pharmacy: passedData.pharmacy,
         medWorth: passedData.medWorth,

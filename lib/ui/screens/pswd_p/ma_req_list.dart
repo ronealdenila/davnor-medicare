@@ -105,7 +105,7 @@ class MARequestListScreen extends StatelessWidget {
         ),
         verticalSpace25,
         header(),
-        Obx(() => requestList(context))
+        Flexible(child: Obx(() => requestList(context)))
       ],
     );
   }
@@ -122,11 +122,14 @@ class MARequestListScreen extends StatelessWidget {
       );
     }
     if (maController.maRequests.isEmpty && !maController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: const Text(
-          'No on progress MA request at the moment',
-          style: body14Medium,
+      return Padding(
+        padding: const EdgeInsets.all(30),
+        child: Align(
+          alignment: Alignment.center,
+          child: const Text(
+            'No MA request at the moment',
+            style: body14Medium,
+          ),
         ),
       );
     }

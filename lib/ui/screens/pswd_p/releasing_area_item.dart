@@ -34,6 +34,7 @@ class ReleasingAreaItemScreen extends StatelessWidget {
       validID: passedData.validID,
       dateRqstd: passedData.dateRqstd,
       receivedBy: passedData.receivedBy,
+      receiverID: passedData.receiverID,
       pharmacy: passedData.pharmacy,
       medWorth: passedData.medWorth,
     );

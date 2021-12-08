@@ -96,7 +96,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
         ),
         verticalSpace25,
         header(),
-        Obx(() => requestList(context))
+        Flexible(child: Obx(() => requestList(context)))
       ],
     );
   }
@@ -118,7 +118,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
         child: Align(
           alignment: Alignment.center,
           child: const Text(
-            'No on progress MA request at the moment',
+            'No MA request that are ready to release at the moment',
             style: body14Medium,
           ),
         ),

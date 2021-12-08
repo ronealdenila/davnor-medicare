@@ -134,7 +134,7 @@ class MAReqListController extends GetxController {
       'validID': model.validID,
       'isTransferred': false,
       'receivedBy': fetchedData!.firstName,
-      'receiverID': auth.currentUser!.uid,
+      'receiverID': fetchedData!.userID,
       'isAccepted': true,
       'isApproved': false,
       'isMedReady': false,

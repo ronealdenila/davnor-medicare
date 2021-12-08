@@ -31,6 +31,7 @@ class OnProgressReqItemScreen extends StatelessWidget {
         type: passedData.type,
         prescriptions: passedData.prescriptions,
         receivedBy: passedData.receivedBy,
+        receiverID: passedData.receiverID,
         validID: passedData.validID,
         dateRqstd: passedData.dateRqstd);
 
