@@ -39,44 +39,47 @@ class ReleasingAreaItemScreen extends StatelessWidget {
     );
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          verticalSpace50,
-          IconButton(
-              onPressed: () {
-                rlsController.goBack();
-              },
-              icon: Icon(
-                Icons.arrow_back_outlined,
-                size: 30,
-              )),
-          PSWDItemView(context, 'medReady', model),
-          authController.userRole == 'pswd-h'
-              ? SizedBox(
-                  width: 0,
-                  height: 0,
-                )
-              : Align(
-                  alignment: Alignment.bottomRight,
-                  child: PSWDButton(
-                    onItemTap: () {
-                      showConfirmationDialog(
-                        dialogTitle: dialogpswdTitle,
-                        dialogCaption: dialogpswdCaption,
-                        onYesTap: () async {
-                          await rlsController.transfferToHistory(model);
-                        },
-                        onNoTap: () {
-                          dismissDialog();
-                        },
-                      );
-                    },
-                    buttonText: 'Claimed',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            verticalSpace50,
+            IconButton(
+                onPressed: () {
+                  rlsController.goBack();
+                },
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 30,
+                )),
+            PSWDItemView(context, 'medReady', model),
+            authController.userRole == 'pswd-h'
+                ? SizedBox(
+                    width: 0,
+                    height: 0,
+                  )
+                : Align(
+                    alignment: Alignment.bottomRight,
+                    child: PSWDButton(
+                      onItemTap: () {
+                        showConfirmationDialog(
+                          dialogTitle: dialogpswdTitle,
+                          dialogCaption: dialogpswdCaption,
+                          onYesTap: () async {
+                            await rlsController.transfferToHistory(model);
+                          },
+                          onNoTap: () {
+                            dismissDialog();
+                          },
+                        );
+                      },
+                      buttonText: 'Claimed',
+                    ),
                   ),
-                ),
-          verticalSpace35,
-        ],
+            verticalSpace35,
+          ],
+        ),
       ),
     );
   }

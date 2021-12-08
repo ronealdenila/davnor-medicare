@@ -19,6 +19,7 @@ class ReleasingAreaListScreen extends StatelessWidget {
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
   final MenuController menuController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -112,11 +113,14 @@ class ReleasingAreaListScreen extends StatelessWidget {
       );
     }
     if (rlsController.toRelease.isEmpty && !rlsController.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: const Text(
-          'No on progress MA request at the moment',
-          style: body14Medium,
+      return Padding(
+        padding: const EdgeInsets.all(30),
+        child: Align(
+          alignment: Alignment.center,
+          child: const Text(
+            'No on progress MA request at the moment',
+            style: body14Medium,
+          ),
         ),
       );
     }

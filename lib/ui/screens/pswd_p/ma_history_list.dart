@@ -94,6 +94,20 @@ class MAHistoryList extends StatelessWidget {
                   },
                 )),
             horizontalSpace18,
+            SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  child: Icon(
+                    Icons.refresh,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: verySoftBlueColor,
+                  ),
+                  onPressed: () {
+                    hController.refreshPSWD();
+                  },
+                )),
+            horizontalSpace18,
             Container(
               child: IconButton(
                 icon: Icon(Icons.calendar_today),
