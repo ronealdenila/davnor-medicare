@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
               children: [
                 Lottie.asset('assets/splash-animation.json', repeat: true),
                 Text(
-                  'Davnor MediCare',
+                  'DavNor MediCare',
                   style: kIsWeb ? title24Regular : body16Regular,
                 )
               ],

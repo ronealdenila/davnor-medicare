@@ -34,6 +34,7 @@ class PSWDRegistrationController extends GetxController {
     log.i('Saving pswd data on id: $userID');
     await firestore.collection('users').doc(userID).set(<String, dynamic>{
       'userType': position.value == 'Head' ? 'pswd-h' : 'pswd-p',
+      'disabled': false
     });
 
     await firestore.collection('pswd_personnel').doc(userID).set(

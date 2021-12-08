@@ -45,7 +45,7 @@ class MAFormScreen extends StatelessWidget {
                 child: TextFormField(
                     controller: ma.firstNameController,
                     decoration: InputDecoration(
-                      labelText: 'maform4'.tr,
+                      labelText: 'maform1'.tr,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),

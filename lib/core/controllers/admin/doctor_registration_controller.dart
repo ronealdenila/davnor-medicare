@@ -48,9 +48,10 @@ class DoctorRegistrationController extends GetxController {
 
   Future<void> _createDoctorUser(String userID) async {
     log.i('Saving doctor data on id: $userID');
-    await firestore.collection('users').doc(userID).set(<String, dynamic>{
-      'userType': 'doctor',
-    });
+    await firestore
+        .collection('users')
+        .doc(userID)
+        .set(<String, dynamic>{'userType': 'doctor', 'disabled': false});
     await firestore.collection('doctors').doc(userID).set(
       <String, dynamic>{
         'categoryID': categoryID.value,

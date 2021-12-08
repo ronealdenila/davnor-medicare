@@ -57,7 +57,7 @@ class ConsultationHistoryCardWeb extends StatelessWidget {
                             children: [
                               Text(
                                 (authController.userRole! == 'patient')
-                                    ? consHCont.getDoctorFullName(consHistory)
+                                    ? 'Dr. ${consHCont.getDoctorFullName(consHistory)}'
                                     : consHistory.fullName!,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,

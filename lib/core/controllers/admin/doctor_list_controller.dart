@@ -53,14 +53,13 @@ class DoctorListController extends GetxController {
         .collection('doctors')
         .doc(uid)
         .update({'disabled': true}).then(
-      (value) {
+      (value) async {
+        await firestore.collection('users').doc(uid).update({'disabled': true});
         dListController.reloadAfter();
-        //Dialog success
         Get.defaultDialog(title: 'Successfuly disabled Doctor');
       },
     ).catchError(
       (error) {
-        //Dialog error
         Get.defaultDialog(title: 'Error Occured! Doctor not disabled');
       },
     );

@@ -49,12 +49,11 @@ class PSWDStaffListController extends GetxController {
     await firestore
         .collection('pswd_personnel')
         .doc(uid)
-        .update({'disabled': true}).then((value) {
+        .update({'disabled': true}).then((value) async {
+      await firestore.collection('users').doc(uid).update({'disabled': true});
       dListController.reloadAfter();
-      //Dialog success
       Get.defaultDialog(title: 'Successfuly disabled PSWDStaff');
     }).catchError((error) {
-      //Dialog error
       Get.defaultDialog(title: 'Error Occured! PSWD Staff not disabled');
     });
   }

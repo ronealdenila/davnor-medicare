@@ -61,7 +61,7 @@ class MAHistoryController extends GetxController {
     return firestore
         .collection('ma_history')
         .where('requesterID', isEqualTo: auth.currentUser!.uid)
-        .orderBy('dateClaimed')
+        .orderBy('dateClaimed', descending: true)
         .get()
         .then(
           (query) => query.docs
@@ -72,7 +72,11 @@ class MAHistoryController extends GetxController {
 
   Future<List<MAHistoryModel>> getMAHistoryForPSWD() async {
     log.i('Get MA History for PSWD Personnel - ${auth.currentUser!.uid}');
-    return firestore.collection('ma_history').orderBy('dateClaimed').get().then(
+    return firestore
+        .collection('ma_history')
+        .orderBy('dateClaimed', descending: true)
+        .get()
+        .then(
           (query) => query.docs
               .map((item) => MAHistoryModel.fromJson(item.data()))
               .toList(),

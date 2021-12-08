@@ -67,8 +67,13 @@ void showErrorDialog({
   );
 }
 
+void getBack() {
+  Get.back();
+}
+
 void showSimpleErrorDialog({
   String? errorDescription,
+  void Function()? onTapFunc = getBack,
 }) {
   Get.dialog(
     Dialog(
@@ -103,8 +108,8 @@ void showSimpleErrorDialog({
             SizedBox(
               width: 130,
               child: ErrorDialogButton(
-                buttonText: 'Got it!',
-                onTap: Get.back,
+                buttonText: 'btnTextError'.tr,
+                onTap: onTapFunc,
               ),
             ),
           ],

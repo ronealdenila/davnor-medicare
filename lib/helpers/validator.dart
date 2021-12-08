@@ -8,7 +8,7 @@ class Validator {
     const pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
     final regex = RegExp(pattern);
     if (!regex.hasMatch(value!)) {
-      return 'Please enter a valid email address';
+      return 'validatorEmail'.tr;
     } else {
       return null;
     }
@@ -18,17 +18,7 @@ class Validator {
     const pattern = r'^.{6,}$';
     final regex = RegExp(pattern);
     if (!regex.hasMatch(value!)) {
-      return 'Password must be at least 6 characters';
-    } else {
-      return null;
-    }
-  }
-
-  String? name(String? value) {
-    const pattern = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
-    final regex = RegExp(pattern);
-    if (!regex.hasMatch(value!)) {
-      return 'Please enter a name';
+      return 'validatorPW'.tr;
     } else {
       return null;
     }
@@ -40,24 +30,14 @@ class Validator {
     }
     bool isNum = double.tryParse(value) != null;
     if (!isNum) {
-      return 'Enter a number';
+      return 'validatorNum'.tr;
     }
     return null;
   }
 
-  String? amount(String? value) {
-    const pattern = r'^\d+$';
-    final regex = RegExp(pattern);
-    if (!regex.hasMatch(value!)) {
-      return 'validator.amount'.tr;
-    } else {
-      return null;
-    }
-  }
-
   String? notEmpty(String? value) {
     if (value == '') {
-      return 'This is a required field';
+      return 'validatorEmpty'.tr;
     } else {
       return null;
     }

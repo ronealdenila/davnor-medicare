@@ -56,7 +56,7 @@ class ConsHistoryController extends GetxController {
     return firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
-        .orderBy('dateConsEnd')
+        .orderBy('dateConsEnd', descending: true)
         .get()
         .then(
           (query) => query.docs
@@ -74,7 +74,7 @@ class ConsHistoryController extends GetxController {
     return firestore
         .collection('cons_history')
         .where('docID', isEqualTo: auth.currentUser!.uid)
-        .orderBy('dateConsEnd')
+        .orderBy('dateConsEnd', descending: true)
         .get()
         .then(
           (query) => query.docs

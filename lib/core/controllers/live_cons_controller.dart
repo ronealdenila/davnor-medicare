@@ -135,9 +135,6 @@ class LiveConsController extends GetxController {
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
       consHController.refresh();
       if (!kIsWeb) {
-        Get.back(); //back to Live Screen Info
-        Get.back(); //
-      } else {
         Get.offAll(() => DoctorHomeScreen());
       }
     });
@@ -206,9 +203,6 @@ class LiveConsController extends GetxController {
     dismissDialog(); //dismissLoading
     dismissDialog(); //then dismiss dialog for reason
     if (!kIsWeb) {
-      Get.back(); //back to Live Screen end
-      Get.back(); //
-    } else {
       Get.offAll(() => DoctorHomeScreen());
     }
   }

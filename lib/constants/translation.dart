@@ -5,6 +5,13 @@ class LocalString extends Translations {
   Map<String, Map<String, String>> get keys => {
         //ENGLISH
         'english_US': {
+          //Validators
+          'validatorEmpty': 'This is a required field',
+          'validatorEmail': 'Please enter a valid email address',
+          'validatorPW': 'Password must be at least 6 characters',
+          'validatorNum': 'Enter a number',
+          //ErrorDiag
+          'btnTextError': 'Got it!',
           'homepage': 'How can we help you?',
           'action1': 'Request Consultation',
           'action2': 'Request Medical Assistance',
@@ -96,7 +103,7 @@ class LocalString extends Translations {
           'details4': 'Select Type',
           'details5': 'Next',
           //MA Form
-          'maform ': 'Patients Information',
+          'maform': 'Patients Information',
           'maform1': 'First Name',
           'maform2': 'Last Name',
           'maform3': 'Address',
@@ -226,7 +233,7 @@ class LocalString extends Translations {
           'errordialog11': 'Please provide prescriptions.',
           'errordialog12': 'Cannot fetch the category',
           'errordialog13': 'Please provide valid ID',
-          'errordialog14': 'title = Cannot go back, desc = You have to either you reject the call or accept',
+          'errordialog14': 'You have to either you reject the call or accept',
           'errordialog15': 'No result found',
           //menu
           'setting': 'Settings',
@@ -258,6 +265,13 @@ class LocalString extends Translations {
 
         //TAGALOG
         'tagalog_ph': {
+          //Validators
+          'validatorEmpty': 'Kinakailangan',
+          'validatorEmail': 'Magbigay ng tamang email address',
+          'validatorPW': 'Magbigay ng atleast 6 letters na password',
+          'validatorNum': 'Dapat numero',
+          //ErrorDiag
+          'btnTextError': 'Nakuha',
           'homepage': 'Paano namin kayo matutulungan?',
           'action1': 'Humiling ng konsulta',
           'action2': 'Humiling ng Tulong Medikal',
@@ -350,9 +364,9 @@ class LocalString extends Translations {
           'details4': 'Piliin ang uri',
           'details5': 'Susunod',
           //MA Form
-          'maform ': 'Impormasyon ng pasyente',
+          'maform': 'Impormasyon ng pasyente',
           'maform1': 'Unang Pangalan',
-          'maform2': 'Apelyedo',
+          'maform2': 'Apelyido',
           'maform3': 'Address',
           'maform4': 'Edad',
           'maform5': 'Kasarian',
@@ -417,7 +431,7 @@ class LocalString extends Translations {
           'queue9': 'sunod',
           'queue5': 'Walang queue',
           //Cons History
-          'conshistory': 'Consultation History',
+          'conshistory': 'Mga Nakaraang Konsultasyon',
           'cons1': 'Buwan',
           'cons2': 'Araw',
           'conslog': 'Mangyaring maghintay, kumukuha ng record...',
@@ -438,12 +452,12 @@ class LocalString extends Translations {
           'chat3': 'Kailan humiling',
           'chat4': 'Nagsimula ang Konsulta',
           //MA History
-          'mahistory': 'Medical Assistance History',
+          'mahistory': 'Mga Nakaraang Tulong Medikal',
           'mah1': 'Buwan',
           'mah2': 'Araw',
           'mahrec': 'Wala kang rekord ng Medical Assistance (MA)',
           'mahrec1': 'Mangyaring maghintay, kumukuha ng record...',
-          'mahrec2': 'Wala kang history sa MA',
+          'mahrec2': 'Wala kang karaang rekord sa MA',
           //MA History Info
           'mahistory1': 'Impormasyon ng Pasyente',
           'mah3': 'Pangalan ng Pasysente',
@@ -485,7 +499,7 @@ class LocalString extends Translations {
           'errordialog11': 'Mangyaring magbigay ng mga reseta.',
           'errordialog12': 'Hindi makuha ang kategorya',
           'errordialog13': 'Mangyaring magbigay ng wastong ID',
-          'errordialog14': 'title = Hindi na makakabalik, desc = Kailangan mong tanggihan ang tawag o tanggapin',
+          'errordialog14': 'Kailangan mong tanggihan ang tawag o tanggapin',
           'errordialog15': 'Walang nakitang resulta',
           //menu
           'setting': 'Mga setting',
@@ -494,8 +508,8 @@ class LocalString extends Translations {
           'setting3': 'Piliin ang Iyong Wika ',
           'menu1': 'Profile',
           'menu2': 'Kasalukuyang Konsultasyon',
-          'menu3': 'Konsultasyon History',
-          'menu4': 'Medical Assistance History',
+          'menu3': 'Nakaraang Konsultasyon',
+          'menu4': 'Nakaraang Tulong Medikal',
           'menu5': 'Mag Log out',
           //icons
           'icons1': 'Sakit sa tenga',
@@ -517,6 +531,13 @@ class LocalString extends Translations {
 
         //BISAYA
         'bisaya_ph': {
+          //Validators
+          'validatorEmpty': 'Kinahanglan',
+          'validatorEmail': 'Kinahanglag tama na email address',
+          'validatorPW': 'Pinakagamay ang 6 letters na password',
+          'validatorNum': 'Numero dapat',
+          //ErrorDiag
+          'btnTextError': 'Nasabtan',
           'homepage': 'Unsa man amo matabang nimo?',
           'action1': 'Mangayog konsulta',
           'action2': 'Mag-request ug tabang medikal',
@@ -609,7 +630,7 @@ class LocalString extends Translations {
           'details4': 'Piliin ang uri',
           'details5': 'Sunod',
           //MA Form
-          'maform ': 'Impormasyon sa pasyente',
+          'maform': 'Impormasyon sa pasyente',
           'maform1': 'Unang Pangalan',
           'maform2': 'Apelyido',
           'maform3': 'Address',
@@ -675,7 +696,7 @@ class LocalString extends Translations {
           'queue9': 'Sunod',
           'queue5': 'Walay queue',
           //Cons History
-          'conshistory': 'Consultation History',
+          'conshistory': 'Mga Karaang Konsultasyon',
           'cons1': 'Bulan',
           'cons2': 'Adlaw',
           'conslog': 'Palihug paghulat, nagkuha pag  rekord...',
@@ -696,12 +717,12 @@ class LocalString extends Translations {
           'chat3': 'Kanus-a nangayo',
           'chat4': 'Kanus-a nag sugod ang konsulta',
           //MA History
-          'mahistory': 'Medical Assistance History',
+          'mahistory': 'Mga Karaang Tabang Medikal',
           'mah1': 'Bulan',
           'mah2': 'Adlaw',
           'mahrec': 'Wala kay rekord sa Medical Assistance (MA)',
           'mahrec1': 'Palihug paghulat, nagakuha pag rekord...',
-          'mahrec2': 'Wala kay history sa MA',
+          'mahrec2': 'Wala kay karaang rekord sa MA',
           //MA History Info
           'mahistory1': 'Impormasyon sa Pasyente',
           'mah3': 'Pangalan sa Pasyente',
@@ -735,24 +756,24 @@ class LocalString extends Translations {
               'Pasensya, sa pagkakaron walay magamit nga doktor nga espesyalista sa maong sakit. Palihug sulayi pag-usab unya.',
           'errordialog6': 'Pasensya, wala’y puwang nga magamit karon',
           'errordialog7':
-              'Palihug ayaw biyai ang bisan unsang bakanteng mga uma',
+              'Palihug fill-upi ang tanan. Ayaw kalimte ang kasarian ug uri',
           'errordialog8': 'Nawala ang ubang mga uma',
           'errordialog9': 'Dili makapadala og hangyo',
           'errordialog10': 'Pasensya nag cut off na.',
           'errordialog11': 'Palihug paghatag og mga reseta.',
           'errordialog12': 'Dili makuha ang kategorya',
           'errordialog13': 'Palihug paghatag ug balido nga ID',
-          'errordialog14': 'title = Dili na makabalik, desc = Kinahanglang isalikway nimo ang tawag o dawaton',
+          'errordialog14': 'Kinahanglang isalikway nimo ang tawag o dawaton',
           'errordialog15': 'Walang nakitang resulta',
           //menu
           'setting': 'Settings',
-          'setting1': 'Usba ang Pinulongan',
+          'setting1': 'Ilisan ang Pinulongan',
           'setting2': 'Impormasyon sa aplikasyon',
           'setting3': 'Pilia ang Imong Pinulongan ',
           'menu1': 'Profile',
           'menu2': 'Karon nga Konsultasyon',
-          'menu3': 'History sa Konsultasyon',
-          'menu4': 'History sa Tabang Medikal',
+          'menu3': 'Karaang Konsultasyon',
+          'menu4': 'Karaang Tabang Medikal',
           'menu5': 'Mag Log out',
           //icons
           'icons1': 'Sakit sa dalunggan',

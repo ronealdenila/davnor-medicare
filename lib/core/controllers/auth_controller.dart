@@ -37,6 +37,8 @@ class AuthController extends GetxController {
   Rxn<User> firebaseUser = Rxn<User>();
 
   String? userRole;
+  RxBool isDisabled = false.obs;
+
   bool? userSignedOut = false;
   RxBool? isObscureText = true.obs;
   RxBool? isObscureText2 = true.obs;
@@ -58,7 +60,7 @@ class AuthController extends GetxController {
     super.onReady();
   }
 
-  Stream<User?> get user => auth.idTokenChanges();
+  Stream<User?> get user => auth.authStateChanges();
 
   Future<void> _setInitialScreen(_firebaseUser) async {
     if (_firebaseUser == null) {
@@ -78,7 +80,6 @@ class AuthController extends GetxController {
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
     FocusScope.of(context).unfocus();
-
     try {
       showLoading();
       await auth.signInWithEmailAndPassword(
@@ -170,9 +171,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> _createPatientUser(String _userID, BuildContext context) async {
-    await firestore.collection('users').doc(_userID).set(<String, dynamic>{
-      'userType': 'patient',
-    });
+    await firestore
+        .collection('users')
+        .doc(_userID)
+        .set(<String, dynamic>{'userType': 'patient', 'disabled': false});
     await firestore.collection('patients').doc(_userID).set(<String, dynamic>{
       'userID': _userID,
       'email': emailController.text.trim(),
@@ -231,11 +233,25 @@ class AuthController extends GetxController {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userRole = documentSnapshot['userType'] as String;
-          log.i('getUserRole | The current user has user role of $userRole');
+          isDisabled.value = documentSnapshot['disabled'] as bool;
+          log.i(
+              'getUserRole | The current user has user role of $userRole +  disabled: isDisabled.value');
         }
       },
     );
-    await checkUserPlatform();
+    if (isDisabled.value) {
+      dismissDialog();
+      showSimpleErrorDialog(
+        errorDescription:
+            'Your account has been disabled. Please contact us at address davnor.medicare@gmail.com',
+        onTapFunc: () async {
+          await signOut();
+          dismissDialog();
+        },
+      );
+    } else {
+      await checkUserPlatform();
+    }
   }
 
   Future<void> signOut() async {
@@ -281,12 +297,6 @@ class AuthController extends GetxController {
           await _initializePSWDModel();
 
           await checkAppRestriction(userRole);
-
-          //await signOut();
-          // showSimpleErrorDialog(
-          //   errorDescription:
-          //       'Your account has been disabled. Please contact this email address davnor.medicare@gmail.com',
-          // );
 
           break;
         case 'admin':
