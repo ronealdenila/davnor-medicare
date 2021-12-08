@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
 import 'package:davnor_medicare/core/models/med_assistance_model.dart';
+import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -280,8 +281,10 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
   }
 
   Widget detailsDialogMA(OnProgressMAModel model) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final _pharmacyController = TextEditingController();
     final _worthController = TextEditingController();
+
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding:
@@ -289,61 +292,71 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
         children: [
           SizedBox(
               width: 590,
-              child: Column(
-                children: [
-                  const Text(
-                    'To Complete the Details for the Medical Assistance',
-                    textAlign: TextAlign.center,
-                    style: title32Regular,
-                  ),
-                  verticalSpace50,
-                  SizedBox(
-                    width: 360,
-                    height: 60,
-                    child: TextFormField(
-                      controller: _pharmacyController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name of Pharmacy',
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const Text(
+                      'To Complete the Details for the Medical Assistance',
+                      textAlign: TextAlign.center,
+                      style: title32Regular,
+                    ),
+                    verticalSpace50,
+                    SizedBox(
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        controller: _pharmacyController,
+                        validator: Validator().notEmpty,
+                        decoration: const InputDecoration(
+                          labelText: 'Name of Pharmacy',
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
                           ),
                         ),
+                        maxLines: 10,
+                        keyboardType: TextInputType.multiline,
                       ),
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
                     ),
-                  ),
-                  verticalSpace25,
-                  SizedBox(
-                    width: 360,
-                    height: 60,
-                    child: TextFormField(
-                      controller: _worthController,
-                      decoration: const InputDecoration(
-                        labelText: 'Worth of Medicine',
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
+                    verticalSpace25,
+                    SizedBox(
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        controller: _worthController,
+                        decoration: const InputDecoration(
+                          labelText: 'Worth of Medicine',
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
                           ),
                         ),
+                        maxLines: 10,
+                        keyboardType: TextInputType.multiline,
+                        validator: Validator().notEmpty,
                       ),
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
                     ),
-                  ),
-                  verticalSpace25,
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: PSWDButton(
-                          onItemTap: () async {
-                            await opController.toBeReleased(
-                                model.maID!, model.requesterID!);
-                          },
-                          buttonText: 'Submit')),
-                ],
+                    verticalSpace25,
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: PSWDButton(
+                            onItemTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                await opController.toBeReleasedFromList(
+                                    model.maID!, model.requesterID!);
+                                _formKey.currentState!.reset();
+                                _pharmacyController.clear();
+                                _worthController.clear();
+                              }
+                            },
+                            buttonText: 'Submit')),
+                  ],
+                ),
               ))
         ]);
   }

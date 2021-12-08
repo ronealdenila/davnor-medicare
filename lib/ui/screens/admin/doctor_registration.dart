@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Column(

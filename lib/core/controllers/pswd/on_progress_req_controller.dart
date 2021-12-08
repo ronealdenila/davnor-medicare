@@ -102,6 +102,29 @@ class OnProgressReqController extends GetxController {
     });
   }
 
+  Future<void> toBeReleasedFromList(String maID, String requesterID) async {
+    showLoading();
+    await firestore.collection('on_progress_ma').doc(maID).update({
+      'isMedReady': true,
+      'isApproved': false,
+      'medWorth': worthController.text,
+      'pharmacy': pharmacyController.text
+    }).then((value) {
+      sendNotification(requesterID);
+      dismissDialog();
+      dismissDialog();
+      worthController.clear();
+      pharmacyController.clear();
+      //goBack();
+    }).catchError((onError) {
+      dismissDialog();
+      dismissDialog();
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription: 'Unable to update request. Please try again later');
+    });
+  }
+
   Future<void> sendNotification(String uid) async {
     final action = ' is ready ';
     final title = 'MA${action}to be claimed';

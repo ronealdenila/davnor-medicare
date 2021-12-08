@@ -77,6 +77,8 @@ class OnProgressReqItemScreen extends StatelessWidget {
   }
 
   Widget detailsDialogMA() {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding:
@@ -84,66 +86,74 @@ class OnProgressReqItemScreen extends StatelessWidget {
         children: [
           SizedBox(
               width: 590,
-              child: Column(
-                children: [
-                  const Text(
-                    'To Complete the Details for the Medical Assistance',
-                    textAlign: TextAlign.center,
-                    style: title32Regular,
-                  ),
-                  verticalSpace50,
-                  SizedBox(
-                    width: 360,
-                    height: 60,
-                    child: TextFormField(
-                      controller: opController.pharmacyController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name of Pharmacy',
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const Text(
+                      'To Complete the Details for the Medical Assistance',
+                      textAlign: TextAlign.center,
+                      style: title32Regular,
+                    ),
+                    verticalSpace50,
+                    SizedBox(
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        controller: opController.pharmacyController,
+                        decoration: const InputDecoration(
+                          labelText: 'Name of Pharmacy',
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
                           ),
                         ),
+                        maxLines: 10,
+                        keyboardType: TextInputType.multiline,
                       ),
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
                     ),
-                  ),
-                  verticalSpace25,
-                  SizedBox(
-                    width: 360,
-                    height: 60,
-                    child: TextFormField(
-                      controller: opController.worthController,
-                      decoration: const InputDecoration(
-                        labelText: 'Worth of Medicine',
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
+                    verticalSpace25,
+                    SizedBox(
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        controller: opController.worthController,
+                        decoration: const InputDecoration(
+                          labelText: 'Worth of Medicine',
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
                           ),
                         ),
+                        maxLines: 10,
+                        keyboardType: TextInputType.multiline,
                       ),
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
                     ),
-                  ),
-                  verticalSpace25,
-                  authController.userRole == 'pswd-h'
-                      ? SizedBox(
-                          width: 0,
-                          height: 0,
-                        )
-                      : Align(
-                          alignment: Alignment.bottomCenter,
-                          child: PSWDButton(
-                              onItemTap: () async {
-                                await opController.toBeReleased(
-                                    model.maID!, model.requesterID!);
-                              },
-                              buttonText: 'Submit')),
-                ],
+                    verticalSpace25,
+                    authController.userRole == 'pswd-h'
+                        ? SizedBox(
+                            width: 0,
+                            height: 0,
+                          )
+                        : Align(
+                            alignment: Alignment.bottomCenter,
+                            child: PSWDButton(
+                                onItemTap: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    await opController.toBeReleasedFromList(
+                                        model.maID!, model.requesterID!);
+                                    _formKey.currentState!.reset();
+                                    opController.pharmacyController.clear();
+                                    opController.worthController.clear();
+                                  }
+                                },
+                                buttonText: 'Submit')),
+                  ],
+                ),
               ))
         ]);
   }

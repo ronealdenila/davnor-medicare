@@ -164,14 +164,6 @@ final List<Item> typeDropdown = <Item>[
   const Item('Indigenous People (IP)'),
 ];
 
-List<MenuItem> pswdPSideMenuItemRoutes = [
-  MenuItem('Dashboard', Routes.DASHBOARD),
-  MenuItem('MA Request', Routes.MA_REQ_LIST),
-  MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
-  MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
-  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
-];
-
 List<MenuItem> adminSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.DASHBOARD),
   MenuItem('List Of Doctors', Routes.DOCTOR_LIST),
@@ -195,6 +187,14 @@ List<MenuItem> doctorSideMenuItemRoutes = [
   MenuItem('Consultation Requests', Routes.CONS_REQ_WEB),
   MenuItem('Live Consultation', Routes.LIVE_CONS_WEB),
   MenuItem('Consultation History', Routes.CONS_HISTORY_WEB),
+];
+
+List<MenuItem> pswdPSideMenuItemRoutes = [
+  MenuItem('Dashboard', Routes.DASHBOARD),
+  MenuItem('MA Request', Routes.MA_REQ_LIST),
+  MenuItem('On Progress Request', Routes.ON_PROGRESS_REQ_LIST),
+  MenuItem('Releasing Area', Routes.RELEASING_AREA_LIST),
+  MenuItem('Medical Assistance History', Routes.MA_HISTORY_LIST),
 ];
 
 List<MenuItem> pswdHeadSideMenuItemRoutes = [
