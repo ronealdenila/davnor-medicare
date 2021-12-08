@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-final PSWDStaffListController controller = Get.find();
-
 class EditPSWDStaffScrenn extends StatelessWidget {
   EditPSWDStaffScrenn({Key? key, required this.passedData}) : super(key: key);
   final PswdModel passedData;
+  final PSWDStaffListController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

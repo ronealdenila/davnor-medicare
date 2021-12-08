@@ -16,10 +16,11 @@ class OnProgressReqController extends GetxController {
   final pharmacyController = TextEditingController();
   final worthController = TextEditingController();
   final NavigationController navigationController = Get.find();
-  RxList<OnProgressMAModel> onProgressList = RxList<OnProgressMAModel>([]);
+  final RxList<OnProgressMAModel> onProgressList =
+      RxList<OnProgressMAModel>([]);
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
   final RxString type = ''.obs;
-  RxBool isLoading = true.obs;
+  final RxBool isLoading = true.obs;
 
   @override
   void onReady() {

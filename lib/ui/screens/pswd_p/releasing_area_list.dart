@@ -124,17 +124,12 @@ class ReleasingAreaListScreen extends StatelessWidget {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: rlsController.filteredList.length,
-              itemBuilder: (context, index) {
-                return customTableRow(rlsController.filteredList[index]);
-              }),
-        ),
-      ),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: rlsController.filteredList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(rlsController.filteredList[index]);
+          }),
     );
   }
 

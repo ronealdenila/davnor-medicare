@@ -19,11 +19,11 @@ class MAReqListController extends GetxController {
   final AppController appController = Get.find();
   final NavigationController navigationController = Get.find();
   final TextEditingController reason = TextEditingController();
-  RxList<MARequestModel> maRequests = RxList<MARequestModel>([]);
+  final RxList<MARequestModel> maRequests = RxList<MARequestModel>([]);
   final RxList<MARequestModel> filteredList = RxList<MARequestModel>();
   final TextEditingController maFilter = TextEditingController();
   final RxString type = ''.obs;
-  RxBool isLoading = true.obs;
+  final RxBool isLoading = true.obs;
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final MenuController menuController = Get.find();

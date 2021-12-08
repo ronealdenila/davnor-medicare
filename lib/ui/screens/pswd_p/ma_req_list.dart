@@ -18,6 +18,7 @@ class MARequestListScreen extends StatelessWidget {
   final RxBool firedOnce = false.obs;
   final NavigationController navigationController = Get.find();
   final MenuController menuController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -132,17 +133,12 @@ class MARequestListScreen extends StatelessWidget {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: maController.filteredList.length,
-              itemBuilder: (context, index) {
-                return customTableRow(maController.filteredList[index]);
-              }),
-        ),
-      ),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: maController.filteredList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(maController.filteredList[index]);
+          }),
     );
   }
 

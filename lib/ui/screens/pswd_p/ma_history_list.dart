@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MAHistoryList extends StatelessWidget {
-  final MAHistoryController hController = Get.put(MAHistoryController());
+  final MAHistoryController hController = Get.find();
   final NavigationController navigationController = Get.find();
   final MenuController menuController = Get.find();
 

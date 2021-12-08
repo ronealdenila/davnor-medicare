@@ -9,11 +9,12 @@ import 'package:intl/intl.dart';
 class ForApprovalController extends GetxController {
   final log = getLogger('For Approval MA Controller');
 
-  RxList<OnProgressMAModel> forApprovalList = RxList<OnProgressMAModel>([]);
+  final RxList<OnProgressMAModel> forApprovalList =
+      RxList<OnProgressMAModel>([]);
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
   final RxString reason = ''.obs;
   final RxString type = ''.obs;
-  RxBool isLoading = true.obs;
+  final RxBool isLoading = true.obs;
 
   @override
   void onReady() {

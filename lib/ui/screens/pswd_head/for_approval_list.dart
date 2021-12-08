@@ -120,17 +120,12 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: faController.filteredList.length,
-              itemBuilder: (context, index) {
-                return customTableRow(faController.filteredList[index]);
-              }),
-        ),
-      ),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: faController.filteredList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(faController.filteredList[index]);
+          }),
     );
   }
 

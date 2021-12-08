@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PswdPSideMenu extends GetView<MenuController> {
+  final MenuController menuController = Get.find();
   final NavigationController navigationController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,8 @@ class PswdPSideMenu extends GetView<MenuController> {
                 .map((item) => PswdPSideMenuItem(
                     itemName: item.name,
                     onTap: () {
-                      if (!controller.isActive(item.name!)!) {
-                        controller.changeActiveItemTo(item.name);
+                      if (!menuController.isActive(item.name!)!) {
+                        menuController.changeActiveItemTo(item.name);
                         navigationController.navigateTo(item.route!);
                       }
                     }))

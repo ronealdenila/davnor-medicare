@@ -4,6 +4,7 @@ import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
@@ -40,6 +41,8 @@ class PSWDPersonnelHome extends StatelessWidget {
       Get.put(AttachedPhotosController(), permanent: true);
   final MAReqListController maController =
       Get.put(MAReqListController(), permanent: true);
+  final MAHistoryController hController =
+      Get.put(MAHistoryController(), permanent: true);
   final OnProgressReqController opController =
       Get.put(OnProgressReqController(), permanent: true);
   final PSWDStaffListController pListController =

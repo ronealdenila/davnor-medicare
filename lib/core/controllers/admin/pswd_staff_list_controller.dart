@@ -25,7 +25,7 @@ class PSWDStaffListController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    log.i('onReady | DoctorListController');
+    log.i('onReady | PSWDStaffListController');
     getPSWDStaffs().then((value) {
       pswdList.value = value;
       filteredPswdList.assignAll(pswdList);

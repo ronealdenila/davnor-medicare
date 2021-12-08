@@ -15,8 +15,7 @@ import 'package:get/get.dart';
 import 'package:davnor_medicare/ui/screens/pswd_p/helpers/local_navigator.dart';
 
 class OnProgressReqListScreen extends GetView<OnProgressReqController> {
-  final OnProgressReqController opController =
-      Get.put(OnProgressReqController());
+  final OnProgressReqController opController = Get.find();
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
   final MenuController menuController = Get.find();
@@ -120,18 +119,12 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: opController.filteredList.length,
-              itemBuilder: (context, index) {
-                return customTableRow(
-                    opController.filteredList[index], context);
-              }),
-        ),
-      ),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: opController.filteredList.length,
+          itemBuilder: (context, index) {
+            return customTableRow(opController.filteredList[index], context);
+          }),
     );
   }
 

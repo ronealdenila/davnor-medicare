@@ -8,15 +8,13 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-NavigationController navigationController = Get.find();
-
 class MAHistoryItemScreen extends StatelessWidget {
   MAHistoryItemScreen({Key? key, required this.passedData}) : super(key: key);
   final MAHistoryModel passedData;
   final AttachedPhotosController pcontroller = Get.find();
-
   final MAHistoryController hController = Get.find();
   late final GeneralMARequestModel model;
+  final NavigationController navigationController = Get.find();
 
   @override
   Widget build(BuildContext context) {

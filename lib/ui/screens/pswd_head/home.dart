@@ -5,7 +5,9 @@ import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controlle
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/for_approval_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
@@ -25,14 +27,16 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final GlobalKey<ScaffoldState> scaffoldKeyPS = GlobalKey();
+  final MenuController menuController =
+      Get.put(MenuController(), permanent: true);
   final AttachedPhotosController pswdController =
       Get.put(AttachedPhotosController(), permanent: true);
   final AppController appController = Get.find();
   final StatusController stats = Get.put(StatusController(), permanent: true);
-  final MenuController menuController =
-      Get.put(MenuController(), permanent: true);
   final ForApprovalController faController =
       Get.put(ForApprovalController(), permanent: true);
+  final MAHistoryController hController =
+      Get.put(MAHistoryController(), permanent: true);
   final OnProgressReqController opController =
       Get.put(OnProgressReqController(), permanent: true);
   final PSWDStaffListController pListController =
