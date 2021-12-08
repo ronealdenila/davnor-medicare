@@ -30,14 +30,14 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 class DoctorHomeScreen extends StatelessWidget {
   final DoctorMenuController menuController = Get.put(DoctorMenuController(),
       permanent: true); //unused for mobile but added
-  final ConsultationsController consRequests =
-      Get.put(ConsultationsController(), permanent: true);
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
-  final StatusController stats = Get.put(StatusController(), permanent: true);
-  final DoctorFunctions func = DoctorFunctions();
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
+  final ConsultationsController consRequests =
+      Get.put(ConsultationsController(), permanent: true);
+  final StatusController stats = Get.put(StatusController(), permanent: true);
+  final DoctorFunctions func = DoctorFunctions();
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
   final ProfileController profileController =

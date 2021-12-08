@@ -14,7 +14,7 @@ class DoctorFunctions {
   final AppController appController = Get.find();
 
   Future<void> updateSlot(int toLess) async {
-    int currentSlot = 0;
+    dynamic currentSlot = 0;
     await firestore
         .collection('cons_status')
         .doc(fetchedData!.categoryID!)
