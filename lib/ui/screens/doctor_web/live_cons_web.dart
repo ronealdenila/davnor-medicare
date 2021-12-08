@@ -46,6 +46,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
   final RxBool errorPhoto2 = false.obs;
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -504,59 +505,66 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       children: [
         SizedBox(
           width: kIsWeb ? Get.width * .45 : Get.width * .7,
-          child: Column(
-            children: [
-              Text(
-                'To inform the patient',
-                style: kIsWeb ? title32Regular : title20Regular,
-              ),
-              verticalSpace10,
-              const Text(
-                'Please specify the reason',
-                style: body14Regular,
-              ),
-              kIsWeb ? verticalSpace50 : verticalSpace25,
-              TextFormField(
-                  controller: liveCont.reason,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'This is a required field';
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Enter the reason here',
-                    alignLabelWithHint: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                Text(
+                  'To inform the patient',
+                  style: kIsWeb ? title32Regular : title20Regular,
+                ),
+                verticalSpace10,
+                const Text(
+                  'Please specify the reason',
+                  style: body14Regular,
+                ),
+                kIsWeb ? verticalSpace50 : verticalSpace25,
+                TextFormField(
+                    controller: liveCont.reason,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'This is a required field';
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Enter the reason here',
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
                       ),
                     ),
-                  ),
-                  maxLines: 10,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: (value) {
-                    return;
-                  },
-                  onSaved: (value) {
-                    liveCont.reason.text = value!;
-                  }),
-              kIsWeb ? verticalSpace25 : verticalSpace15,
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: CustomButton(
-                      buttonColor: verySoftBlueColor,
-                      onTap: () async {
-                        await liveCont.skipConsultation(
-                          consData.consID!,
-                          consData.patientID!,
-                        );
-
-                        menuController.changeActiveItemTo('Dashboard');
-                        navigationController.navigateTo(Routes.DOC_WEB_HOME);
-                        consRequests.selectedIndex.value = 0;
-                      },
-                      text: 'Submit')),
-            ],
+                    maxLines: 10,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (value) {
+                      return;
+                    },
+                    onSaved: (value) {
+                      liveCont.reason.text = value!;
+                    }),
+                kIsWeb ? verticalSpace25 : verticalSpace15,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CustomButton(
+                        buttonColor: verySoftBlueColor,
+                        onTap: () async {
+                          if (formKey.currentState!.validate()) {
+                            await liveCont.skipConsultation(
+                              consData.consID!,
+                              consData.patientID!,
+                            );
+                            formKey.currentState!.reset();
+                            liveCont.reason.clear();
+                            menuController.changeActiveItemTo('Dashboard');
+                            navigationController
+                                .navigateTo(Routes.DOC_WEB_HOME);
+                            consRequests.selectedIndex.value = 0;
+                          }
+                        },
+                        text: 'Submit')),
+              ],
+            ),
           ),
         )
       ],

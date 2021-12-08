@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   final AuthController authController = Get.find();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
