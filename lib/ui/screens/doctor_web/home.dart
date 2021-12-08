@@ -39,6 +39,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController(), permanent: true);
+  final StatusController stats = Get.put(StatusController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +100,31 @@ class DoctorWebHomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> goOffline() async {
+    final AuthController authController = Get.find();
+    final fetchedData = authController.doctorModel.value;
+    final DoctorFunctions func = DoctorFunctions();
+
+    final total = stats.doctorStatus[0].numToAccomodate! -
+        stats.doctorStatus[0].accomodated!;
+    await firestore
+        .collection('doctors')
+        .doc(fetchedData!.userID!)
+        .collection('status')
+        .doc('value')
+        .update({
+      'accomodated': 0,
+      'numToAccomodate': 0,
+      'dStatus': false
+    }).then((value) async {
+      await func.updateSlot(total);
+      dismissDialog();
+      count.value = 1;
+    }).catchError((error) {
+      showSimpleErrorDialog(errorDescription: 'Something went wrong');
+    });
+  }
 }
 
 class ResponsiveBody extends GetResponsiveView {
@@ -146,7 +172,6 @@ class ResponsiveLeading extends GetResponsiveView {
   }
 }
 
-final StatusController stats = Get.put(StatusController(), permanent: true);
 final RxInt count = 1.obs;
 final RxInt countAdd = 1.obs; //for additionals
 
@@ -171,6 +196,9 @@ class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.context) : super(alwaysUseBuilder: false);
   final ArticleController articleService = Get.find();
   final BuildContext context;
+  final StatusController stats = Get.find();
+  final RxInt count = 1.obs;
+  final RxInt countAdd = 1.obs; //for additionals
 
   @override
   Widget phone() => tabletVersion(context);
@@ -712,6 +740,393 @@ class ResponsiveView extends GetResponsiveView {
       ),
     );
   }
+
+  //OBX
+  Widget doctorStatus() {
+    if (!stats.isLoading.value) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                stats.doctorStatus[0].dStatus!
+                    ? 'Available for Consultation'
+                    : 'Unavailable',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  color: verySoftBlueColor,
+                ),
+              ),
+            ),
+          ),
+          Text(
+            stats.doctorStatus[0].numToAccomodate != 0
+                ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
+                : '',
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return loadingDoctorStats();
+    }
+  }
+
+  Widget loadingDoctorStats() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          elevation: 5,
+          child: const Padding(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              'Loading..',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: verySoftBlueColor,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+//DIALOGS
+  Widget offlineDialog() {
+    return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        children: [
+          SizedBox(
+              width: Get.width * .3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Change Status',
+                    textAlign: TextAlign.center,
+                    style: title24Bold,
+                  ),
+                  verticalSpace15,
+                  const Text(
+                    'It looks like you want to change your status from available to unavailable',
+                    textAlign: TextAlign.center,
+                    style: body16Regular,
+                  ),
+                  verticalSpace20,
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await goOffline();
+                        },
+                        child: Text(
+                          'GO OFFLINE NOW',
+                          style: body16Regular,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15),
+                          ),
+                        ),
+                      )),
+                  verticalSpace15,
+                  Text(
+                    'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
+                    textAlign: TextAlign.center,
+                    style: body14RegularNeutral,
+                  ),
+                ],
+              ))
+        ]);
+  }
+
+  Future<void> goOffline() async {
+    final AuthController authController = Get.find();
+    final fetchedData = authController.doctorModel.value;
+    final DoctorFunctions func = DoctorFunctions();
+
+    final total = stats.doctorStatus[0].numToAccomodate! -
+        stats.doctorStatus[0].accomodated!;
+    await firestore
+        .collection('doctors')
+        .doc(fetchedData!.userID!)
+        .collection('status')
+        .doc('value')
+        .update({
+      'accomodated': 0,
+      'numToAccomodate': 0,
+      'dStatus': false
+    }).then((value) async {
+      await func.updateSlot(total);
+      dismissDialog();
+      count.value = 1;
+    }).catchError((error) {
+      showSimpleErrorDialog(errorDescription: 'Something went wrong');
+    });
+  }
+
+  Widget detailsDialogCons1() {
+    final AuthController authController = Get.find();
+    final fetchedData = authController.doctorModel.value;
+    return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        children: [
+          SizedBox(
+              width: Get.width * .3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Change Status',
+                    textAlign: TextAlign.center,
+                    style: title24Bold,
+                  ),
+                  verticalSpace15,
+                  const Text(
+                    'Please state the number of patient you want to accomodate',
+                    textAlign: TextAlign.center,
+                    style: subtitle18Regular,
+                  ),
+                  verticalSpace25,
+                  counter(),
+                  verticalSpace20,
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({
+                            'accomodated': 0,
+                            'numToAccomodate': count.value,
+                            'dStatus': true
+                          }).then((value) async {
+                            await firestore
+                                .collection('cons_status')
+                                .doc(fetchedData.categoryID!)
+                                .update({
+                              'consSlot': FieldValue.increment(count.value)
+                            });
+                            dismissDialog();
+                            count.value = 1;
+                          }).catchError((error) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'Something went wrong');
+                          });
+                        },
+                        child: Text(
+                          'Ready for Consultation',
+                          style: body16Regular,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      )),
+                  verticalSpace15,
+                  Text(
+                    'By clicking this button your status will be available and you will be able to receive consultation requests',
+                    textAlign: TextAlign.center,
+                    style: body14RegularNeutral,
+                  ),
+                ],
+              ))
+        ]);
+  }
+
+  Widget detailsDialogCons2(int currentCount) {
+    final AuthController authController = Get.find();
+    final fetchedData = authController.doctorModel.value;
+    return SimpleDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        children: [
+          SizedBox(
+              width: Get.width * .2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Add more patient to examine',
+                    textAlign: TextAlign.center,
+                    style: title24Bold,
+                  ),
+                  verticalSpace15,
+                  const Text(
+                    'Please input the value of how many patients you want to add to examine.',
+                    textAlign: TextAlign.center,
+                    style: subtitle18Regular,
+                  ),
+                  verticalSpace25,
+                  counterAddittional(),
+                  verticalSpace20,
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await firestore
+                              .collection('doctors')
+                              .doc(fetchedData!.userID!)
+                              .collection('status')
+                              .doc('value')
+                              .update({
+                            'numToAccomodate':
+                                FieldValue.increment(countAdd.value)
+                          }).then((value) async {
+                            await firestore
+                                .collection('cons_status')
+                                .doc(fetchedData.categoryID!)
+                                .update({
+                              'consSlot': FieldValue.increment(countAdd.value)
+                            });
+                            dismissDialog();
+                            countAdd.value = 1;
+                          }).catchError((error) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'Something went wrong');
+                          });
+                        },
+                        child: Text(
+                          'Add count',
+                          style: body16Regular,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          primary: Color(0xFF0280FD),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                          ),
+                        ),
+                      )),
+                ],
+              ))
+        ]);
+  }
+
+//FUNCTIONS
+  Widget counter() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      ElevatedButton(
+        onPressed: () {
+          if (count.value != 1) {
+            count.value = count.value - 1;
+          }
+        },
+        child: Icon(
+          Icons.expand_more,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFF0280FD),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(15),
+          ),
+        ),
+      ),
+      SizedBox(
+        width: 60,
+        child: Obx(
+          () => Text(
+            '${count.value}',
+            textAlign: TextAlign.center,
+            style: subtitle18Bold,
+          ),
+        ),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          count.value = count.value + 1;
+        },
+        child: Icon(
+          Icons.expand_less_rounded,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFF0280FD),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(15),
+          ),
+        ),
+      )
+    ]);
+  }
+
+  Widget counterAddittional() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      ElevatedButton(
+        onPressed: () {
+          if (countAdd.value != 1) {
+            countAdd.value = countAdd.value - 1;
+          }
+        },
+        child: Icon(
+          Icons.expand_more,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFF0280FD),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(15),
+          ),
+        ),
+      ),
+      SizedBox(
+        width: 60,
+        child: Obx(
+          () => Text(
+            '${countAdd.value}',
+            textAlign: TextAlign.center,
+            style: subtitle18Bold,
+          ),
+        ),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          countAdd.value = countAdd.value + 1;
+        },
+        child: Icon(
+          Icons.expand_less_rounded,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFF0280FD),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(15),
+          ),
+        ),
+      )
+    ]);
+  }
 }
 
 class DoctorSideMenuItem extends GetView<DoctorMenuController> {
@@ -755,385 +1170,4 @@ class DoctorSideMenuItem extends GetView<DoctorMenuController> {
       ),
     );
   }
-}
-
-//OBX
-Widget doctorStatus() {
-  if (!stats.isLoading.value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          elevation: 5,
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              stats.doctorStatus[0].dStatus!
-                  ? 'Available for Consultation'
-                  : 'Unavailable',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
-                color: verySoftBlueColor,
-              ),
-            ),
-          ),
-        ),
-        Text(
-          stats.doctorStatus[0].numToAccomodate != 0
-              ? '${stats.doctorStatus[0].accomodated} out of ${stats.doctorStatus[0].numToAccomodate} patients'
-              : '',
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 15,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  } else {
-    return loadingDoctorStats();
-  }
-}
-
-Widget loadingDoctorStats() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: <Widget>[
-      Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        elevation: 5,
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'Loading..',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: verySoftBlueColor,
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-//DIALOGS
-Widget offlineDialog() {
-  return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-      children: [
-        SizedBox(
-            width: Get.width * .3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Change Status',
-                  textAlign: TextAlign.center,
-                  style: title24Bold,
-                ),
-                verticalSpace15,
-                const Text(
-                  'It looks like you want to change your status from available to unavailable',
-                  textAlign: TextAlign.center,
-                  style: body16Regular,
-                ),
-                verticalSpace20,
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await goOffline();
-                      },
-                      child: Text(
-                        'GO OFFLINE NOW',
-                        style: body16Regular,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                        primary: Color(0xFF0280FD),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15),
-                        ),
-                      ),
-                    )),
-                verticalSpace15,
-                Text(
-                  'By clicking this button your status will be unavailable and you will not be able to receive any new consultation requests any more',
-                  textAlign: TextAlign.center,
-                  style: body14RegularNeutral,
-                ),
-              ],
-            ))
-      ]);
-}
-
-Future<void> goOffline() async {
-  final AuthController authController = Get.find();
-  final fetchedData = authController.doctorModel.value;
-  final DoctorFunctions func = DoctorFunctions();
-
-  final total = stats.doctorStatus[0].numToAccomodate! -
-      stats.doctorStatus[0].accomodated!;
-  await firestore
-      .collection('doctors')
-      .doc(fetchedData!.userID!)
-      .collection('status')
-      .doc('value')
-      .update({'accomodated': 0, 'numToAccomodate': 0, 'dStatus': false}).then(
-          (value) async {
-    await func.updateSlot(total);
-    dismissDialog();
-    count.value = 1;
-  }).catchError((error) {
-    showSimpleErrorDialog(errorDescription: 'Something went wrong');
-  });
-}
-
-Widget detailsDialogCons1() {
-  final AuthController authController = Get.find();
-  final fetchedData = authController.doctorModel.value;
-  return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-      children: [
-        SizedBox(
-            width: Get.width * .3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Change Status',
-                  textAlign: TextAlign.center,
-                  style: title24Bold,
-                ),
-                verticalSpace15,
-                const Text(
-                  'Please state the number of patient you want to accomodate',
-                  textAlign: TextAlign.center,
-                  style: subtitle18Regular,
-                ),
-                verticalSpace25,
-                counter(),
-                verticalSpace20,
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await firestore
-                            .collection('doctors')
-                            .doc(fetchedData!.userID!)
-                            .collection('status')
-                            .doc('value')
-                            .update({
-                          'accomodated': 0,
-                          'numToAccomodate': count.value,
-                          'dStatus': true
-                        }).then((value) async {
-                          await firestore
-                              .collection('cons_status')
-                              .doc(fetchedData.categoryID!)
-                              .update({
-                            'consSlot': FieldValue.increment(count.value)
-                          });
-                          dismissDialog();
-                          count.value = 1;
-                        }).catchError((error) {
-                          showSimpleErrorDialog(
-                              errorDescription: 'Something went wrong');
-                        });
-                      },
-                      child: Text(
-                        'Ready for Consultation',
-                        style: body16Regular,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        primary: Color(0xFF0280FD),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18),
-                        ),
-                      ),
-                    )),
-                verticalSpace15,
-                Text(
-                  'By clicking this button your status will be available and you will be able to receive consultation requests',
-                  textAlign: TextAlign.center,
-                  style: body14RegularNeutral,
-                ),
-              ],
-            ))
-      ]);
-}
-
-Widget detailsDialogCons2(int currentCount) {
-  final AuthController authController = Get.find();
-  final fetchedData = authController.doctorModel.value;
-  return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-      children: [
-        SizedBox(
-            width: Get.width * .2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Add more patient to examine',
-                  textAlign: TextAlign.center,
-                  style: title24Bold,
-                ),
-                verticalSpace15,
-                const Text(
-                  'Please input the value of how many patients you want to add to examine.',
-                  textAlign: TextAlign.center,
-                  style: subtitle18Regular,
-                ),
-                verticalSpace25,
-                counterAddittional(),
-                verticalSpace20,
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await firestore
-                            .collection('doctors')
-                            .doc(fetchedData!.userID!)
-                            .collection('status')
-                            .doc('value')
-                            .update({
-                          'numToAccomodate':
-                              FieldValue.increment(countAdd.value)
-                        }).then((value) async {
-                          await firestore
-                              .collection('cons_status')
-                              .doc(fetchedData.categoryID!)
-                              .update({
-                            'consSlot': FieldValue.increment(countAdd.value)
-                          });
-                          dismissDialog();
-                          countAdd.value = 1;
-                        }).catchError((error) {
-                          showSimpleErrorDialog(
-                              errorDescription: 'Something went wrong');
-                        });
-                      },
-                      child: Text(
-                        'Add count',
-                        style: body16Regular,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        primary: Color(0xFF0280FD),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18),
-                        ),
-                      ),
-                    )),
-              ],
-            ))
-      ]);
-}
-
-//FUNCTIONS
-Widget counter() {
-  return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-    ElevatedButton(
-      onPressed: () {
-        if (count.value != 1) {
-          count.value = count.value - 1;
-        }
-      },
-      child: Icon(
-        Icons.expand_more,
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Color(0xFF0280FD),
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(15),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: 60,
-      child: Obx(
-        () => Text(
-          '${count.value}',
-          textAlign: TextAlign.center,
-          style: subtitle18Bold,
-        ),
-      ),
-    ),
-    ElevatedButton(
-      onPressed: () {
-        count.value = count.value + 1;
-      },
-      child: Icon(
-        Icons.expand_less_rounded,
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Color(0xFF0280FD),
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(15),
-        ),
-      ),
-    )
-  ]);
-}
-
-Widget counterAddittional() {
-  return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-    ElevatedButton(
-      onPressed: () {
-        if (countAdd.value != 1) {
-          countAdd.value = countAdd.value - 1;
-        }
-      },
-      child: Icon(
-        Icons.expand_more,
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Color(0xFF0280FD),
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(15),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: 60,
-      child: Obx(
-        () => Text(
-          '${countAdd.value}',
-          textAlign: TextAlign.center,
-          style: subtitle18Bold,
-        ),
-      ),
-    ),
-    ElevatedButton(
-      onPressed: () {
-        countAdd.value = countAdd.value + 1;
-      },
-      child: Icon(
-        Icons.expand_less_rounded,
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Color(0xFF0280FD),
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(15),
-        ),
-      ),
-    )
-  ]);
 }

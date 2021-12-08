@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/home.dart';
@@ -35,6 +36,7 @@ class ResponsiveBody extends GetResponsiveView {
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
   final _scrollController3 = ScrollController();
+  final StatusController stats = Get.find();
 
   @override
   Widget? builder() {

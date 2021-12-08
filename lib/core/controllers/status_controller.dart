@@ -39,11 +39,6 @@ class StatusController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    patientStatus.clear();
-    doctorStatus.clear();
-    pswdPStatus.clear();
-    incCall.clear();
-
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
         if (!isCallStatsLoading.value) {
