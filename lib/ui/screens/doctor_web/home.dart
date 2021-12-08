@@ -894,7 +894,6 @@ Future<void> goOffline() async {
           (value) async {
     await func.updateSlot(total);
     dismissDialog();
-    print('Changed status');
     count.value = 1;
   }).catchError((error) {
     showSimpleErrorDialog(errorDescription: 'Something went wrong');
@@ -948,7 +947,6 @@ Widget detailsDialogCons1() {
                             'consSlot': FieldValue.increment(count.value)
                           });
                           dismissDialog();
-                          print('Changed status');
                           count.value = 1;
                         }).catchError((error) {
                           showSimpleErrorDialog(

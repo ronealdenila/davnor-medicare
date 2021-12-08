@@ -235,7 +235,7 @@ class AuthController extends GetxController {
           userRole = documentSnapshot['userType'] as String;
           isDisabled.value = documentSnapshot['disabled'] as bool;
           log.i(
-              'getUserRole | The current user has user role of $userRole +  disabled: isDisabled.value');
+              'getUserRole | The current user has user role of $userRole +  disabled: ${isDisabled.value}');
         }
       },
     );
