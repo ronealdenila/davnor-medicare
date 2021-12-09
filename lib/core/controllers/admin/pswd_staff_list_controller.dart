@@ -47,6 +47,7 @@ class PSWDStaffListController extends GetxController {
     return firestore
         .collection('pswd_personnel')
         .where('disabled', isEqualTo: false)
+        .orderBy('lastName')
         .get()
         .then(
           (query) => query.docs
@@ -69,7 +70,7 @@ class PSWDStaffListController extends GetxController {
   }
 
   Future<void> updatePSWD(PswdModel model) async {
-    showErrorDialog();
+    showLoading();
     await firestore.collection('pswd_personnel').doc(model.userID).update({
       'firstName':
           editFirstName.text == '' ? model.firstName : editFirstName.text,

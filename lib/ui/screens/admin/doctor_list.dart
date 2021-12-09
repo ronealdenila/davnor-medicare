@@ -25,7 +25,7 @@ class DoctorListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -122,13 +122,14 @@ class DoctorListScreen extends StatelessWidget {
 
   Widget requestList(BuildContext context) {
     if (dListController.isLoading.value) {
-      return const SizedBox(
-          height: 24, width: 24, child: CircularProgressIndicator());
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      );
     }
     if (dListController.doctorList.isEmpty &&
         !dListController.isLoading.value) {
-      return Padding(
-        padding: const EdgeInsets.all(20),
+      return Center(
         child: const Text(
           'No doctors',
           textAlign: TextAlign.center,

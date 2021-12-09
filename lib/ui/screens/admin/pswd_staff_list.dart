@@ -24,7 +24,7 @@ class PSWDStaffListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,11 +106,13 @@ class PSWDStaffListScreen extends StatelessWidget {
 
   Widget requestList(BuildContext context) {
     if (pListController.isLoading.value) {
-      return const SizedBox(
-          height: 24, width: 24, child: CircularProgressIndicator());
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      );
     }
     if (pListController.pswdList.isEmpty && pListController.isLoading.value) {
-      return const Text('No PSWD Staff');
+      return Center(child: const Text('No PSWD Staff'));
     }
     return MediaQuery.removePadding(
       context: context,

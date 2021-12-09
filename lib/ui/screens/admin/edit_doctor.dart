@@ -92,14 +92,14 @@ class ResponsiveView extends GetResponsiveView {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         AdminButton(
-          onItemTap: () async {
-            await dListController.updateDoctor(model);
+          onItemTap: () {
+            dListController.updateDoctor(model);
           },
           buttonText: 'Save',
         ),
         horizontalSpace40,
         AdminButton(
-          onItemTap: () async {
+          onItemTap: () {
             dListController.enableEditing.value = false;
           },
           buttonText: 'Cancel',

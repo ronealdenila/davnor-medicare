@@ -50,6 +50,7 @@ class DoctorListController extends GetxController {
     return firestore
         .collection('doctors')
         .where('disabled', isEqualTo: false)
+        .orderBy('lastName')
         .get()
         .then(
           (query) => query.docs
@@ -86,7 +87,7 @@ class DoctorListController extends GetxController {
           editDepartment.value == '' ? model.department : editDepartment.value,
       'clinicHours': editClinicHours.value == ''
           ? model.clinicHours
-          : editClinicHours.value,
+          : editClinicHours.text,
     }).then((value) {
       dismissDialog();
       Get.defaultDialog(
