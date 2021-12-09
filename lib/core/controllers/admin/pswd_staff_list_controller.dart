@@ -1,7 +1,9 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,7 @@ class PSWDStaffListController extends GetxController {
   final log = getLogger('PSWD Staff List Controller');
   final DisabledStaffsController dListController =
       Get.put(DisabledStaffsController());
+  final NavigationController navigationController = Get.find();
 
   final RxList<PswdModel> pswdList = RxList<PswdModel>();
   final RxList<PswdModel> filteredPswdList = RxList<PswdModel>();
@@ -66,29 +69,34 @@ class PSWDStaffListController extends GetxController {
   }
 
   Future<void> updatePSWD(PswdModel model) async {
-    await firestore
-        .collection('pswd_personnel')
-        .doc(model.userID)
-        .update({
-          'firstName':
-              editFirstName.text == '' ? model.firstName : editFirstName.text,
-          'lastName':
-              editLastName.text == '' ? model.lastName : editLastName.text,
-          'position':
-              editPosition.value == '' ? model.position : editPosition.value,
-        })
-        .then(
-          (value) => {
-            //Dialog success
-            Get.defaultDialog(title: 'Successfuly updated PSWD')
-          },
-        )
-        .catchError(
-          (error) => {
-            //Dialog error
-            Get.defaultDialog(title: 'Error Occured! Unable to update PSWD')
-          },
-        );
+    showErrorDialog();
+    await firestore.collection('pswd_personnel').doc(model.userID).update({
+      'firstName':
+          editFirstName.text == '' ? model.firstName : editFirstName.text,
+      'lastName': editLastName.text == '' ? model.lastName : editLastName.text,
+      'position':
+          editPosition.value == '' ? model.position : editPosition.value,
+    }).then(
+      (value) {
+        dismissDialog();
+        Get.defaultDialog(
+            title: 'PSWD Staff is successfully updated',
+            middleText: "Please make sure to check the updated details",
+            onConfirm: navigateToList);
+      },
+    ).catchError(
+      (error) {
+        dismissDialog();
+        showSimpleErrorDialog(
+            errorDescription: 'Error Occured! Unable to update PSWD');
+      },
+    );
+  }
+
+  Future<void> navigateToList() async {
+    dismissDialog();
+    await refetchList();
+    return navigationController.navigatorKey.currentState!.pop();
   }
 
   String getProfilePhoto(PswdModel model) {

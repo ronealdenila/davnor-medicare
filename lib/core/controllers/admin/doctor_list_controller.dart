@@ -1,7 +1,9 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_doctors_controller.dart';
+import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,7 @@ class DoctorListController extends GetxController {
   final DisabledDoctorsController dListController =
       Get.put(DisabledDoctorsController());
 
+  final NavigationController navigationController = Get.find();
   final RxList<DoctorModel> doctorList = RxList<DoctorModel>();
   final RxList<DoctorModel> filteredDoctorList = RxList<DoctorModel>();
   final TextEditingController docFilter = TextEditingController();
@@ -73,34 +76,36 @@ class DoctorListController extends GetxController {
   }
 
   Future<void> updateDoctor(DoctorModel model) async {
-    await firestore
-        .collection('doctors')
-        .doc(model.userID)
-        .update({
-          'firstName':
-              editFirstName.text == '' ? model.firstName : editFirstName.text,
-          'lastName':
-              editLastName.text == '' ? model.lastName : editLastName.text,
-          'title': editTitle.value == '' ? model.title : editTitle.value,
-          'department': editDepartment.value == ''
-              ? model.department
-              : editDepartment.value,
-          'clinicHours': editClinicHours.value == ''
-              ? model.clinicHours
-              : editClinicHours.value,
-        })
-        .then(
-          (value) => {
-            //Dialog success
-            Get.defaultDialog(title: 'Successfuly updated Doctor')
-          },
-        )
-        .catchError(
-          (error) => {
-            //Dialog error
-            Get.defaultDialog(title: 'Error Occured! Unable to update doctor')
-          },
-        );
+    showLoading();
+    await firestore.collection('doctors').doc(model.userID).update({
+      'firstName':
+          editFirstName.text == '' ? model.firstName : editFirstName.text,
+      'lastName': editLastName.text == '' ? model.lastName : editLastName.text,
+      'title': editTitle.value == '' ? model.title : editTitle.value,
+      'department':
+          editDepartment.value == '' ? model.department : editDepartment.value,
+      'clinicHours': editClinicHours.value == ''
+          ? model.clinicHours
+          : editClinicHours.value,
+    }).then((value) {
+      dismissDialog();
+      Get.defaultDialog(
+          title: 'Doctor is successfully updated',
+          middleText: "Please make sure to check the updated details",
+          onConfirm: navigateToList);
+    }).catchError(
+      (error) {
+        dismissDialog();
+        showSimpleErrorDialog(
+            errorDescription: 'Error Occured! Unable to update doctor');
+      },
+    );
+  }
+
+  Future<void> navigateToList() async {
+    dismissDialog();
+    await refetchList();
+    return navigationController.navigatorKey.currentState!.pop();
   }
 
   String getProfilePhoto(DoctorModel model) {

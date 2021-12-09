@@ -93,7 +93,7 @@ class ResponsiveView extends GetResponsiveView {
       children: [
         AdminButton(
           onItemTap: () async {
-            dListController.updateDoctor(model);
+            await dListController.updateDoctor(model);
           },
           buttonText: 'Save',
         ),
