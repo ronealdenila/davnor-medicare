@@ -28,15 +28,15 @@ class AdminHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final AdminMenuController menuController =
       Get.put(AdminMenuController(), permanent: true);
+  final DoctorListController dListController =
+      Get.put(DoctorListController(), permanent: true);
   final DoctorRegistrationController doctorRegistrationController =
       Get.put(DoctorRegistrationController(), permanent: true);
+  final PSWDStaffListController pListController =
+      Get.put(PSWDStaffListController(), permanent: true);
   final PSWDRegistrationController pswdRegistrationController =
       Get.put(PSWDRegistrationController(), permanent: true);
   final fetchedData = authController.adminModel.value;
-  final PSWDStaffListController pListController =
-      Get.put(PSWDStaffListController(), permanent: true);
-  final DoctorListController dListController =
-      Get.put(DoctorListController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

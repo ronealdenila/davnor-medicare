@@ -89,6 +89,7 @@ class OnProgressReqController extends GetxController {
       'pharmacy': pharmacyController.text
     }).then((value) {
       sendNotification(requesterID);
+      refresh();
       dismissDialog();
       dismissDialog();
       worthController.clear();
@@ -113,6 +114,7 @@ class OnProgressReqController extends GetxController {
       'pharmacy': pharmacyController.text
     }).then((value) {
       sendNotification(requesterID);
+      refresh();
       dismissDialog();
       dismissDialog();
       fKey.currentState!.reset();
