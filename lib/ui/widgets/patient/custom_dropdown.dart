@@ -7,11 +7,13 @@ class CustomDropdown extends StatefulWidget {
     required this.dropdownItems,
     required this.onChanged,
     required this.onSaved,
+    required this.givenKey,
   });
   final String? hintText;
   final List<Item>? dropdownItems;
   final void Function(Item?)? onChanged;
   final void Function(Item?)? onSaved;
+  final GlobalKey<FormFieldState> givenKey;
 
   @override
   State createState() => CustomDropdownState();
@@ -32,6 +34,7 @@ class CustomDropdownState extends State<CustomDropdown> {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         child: DropdownButtonFormField<Item>(
+          key: widget.givenKey,
           decoration: const InputDecoration(enabledBorder: InputBorder.none),
           isExpanded: true,
           value: selectedItem,

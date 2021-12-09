@@ -169,7 +169,6 @@ class AdminDashboardScreen extends GetView<AdminMenuController> {
 class ResponsiveView extends GetResponsiveView {
   ResponsiveView(this.context) : super(alwaysUseBuilder: false);
   final BuildContext context;
-
   final AdminMenuController menuController = Get.find();
   final AppController appController = Get.find();
   static AuthController authController = Get.find();

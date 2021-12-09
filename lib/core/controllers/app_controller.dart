@@ -113,4 +113,8 @@ class AppController {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);
   }
+
+  void resetDropDown(GlobalKey<FormFieldState> key) {
+    key.currentState!.reset();
+  }
 }

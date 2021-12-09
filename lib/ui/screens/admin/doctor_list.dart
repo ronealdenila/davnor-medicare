@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -15,101 +16,105 @@ import 'package:get/get.dart';
 
 class DoctorListScreen extends StatelessWidget {
   final DoctorListController dListController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> dpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> dpKey2 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Doctors List',
-                  textAlign: TextAlign.left, style: title29BoldNeutral80),
-              verticalSpace50,
-              Wrap(
-                runSpacing: 10,
-                children: <Widget>[
-                  SizedBox(
-                    width: 450,
-                    child: CustomTextFormField(
-                      controller: dListController.docFilter,
-                      labelText: 'Search doctor name here...',
-                      validator: Validator().notEmpty,
-                      onChanged: (value) {
-                        return;
-                      },
-                      onSaved: (value) =>
-                          dListController.docFilter.text = value!,
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Doctors List',
+                textAlign: TextAlign.left, style: title29BoldNeutral80),
+            verticalSpace50,
+            Wrap(
+              runSpacing: 10,
+              children: <Widget>[
+                SizedBox(
+                  width: 450,
+                  child: CustomTextFormField(
+                    controller: dListController.docFilter,
+                    labelText: 'Search doctor name here...',
+                    validator: Validator().notEmpty,
+                    onChanged: (value) {
+                      return;
+                    },
+                    onSaved: (value) => dListController.docFilter.text = value!,
                   ),
-                  horizontalSpace18,
-                  SizedBox(
-                    width: 250,
-                    child: CustomDropdown(
-                      hintText: 'Select doctor title',
-                      dropdownItems: titleDropdown,
-                      onChanged: (Item? item) {
-                        dListController.title.value = item!.name;
-                      },
-                      onSaved: (Item? item) =>
-                          dListController.title.value = item!.name,
-                    ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                  width: 250,
+                  child: CustomDropdown(
+                    hintText: 'Select doctor title',
+                    dropdownItems: titleDropdown,
+                    givenKey: dpKey1,
+                    onChanged: (Item? item) {
+                      dListController.title.value = item!.name;
+                    },
+                    onSaved: (Item? item) =>
+                        dListController.title.value = item!.name,
                   ),
-                  horizontalSpace18,
-                  SizedBox(
-                    width: 300,
-                    child: CustomDropdown(
-                      hintText: 'Select doctor department',
-                      dropdownItems: deptDropdown,
-                      onChanged: (Item? item) {
-                        dListController.department.value = item!.name;
-                      },
-                      onSaved: (Item? item) =>
-                          dListController.department.value = item!.name,
-                    ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                  width: 300,
+                  child: CustomDropdown(
+                    hintText: 'Select doctor department',
+                    dropdownItems: deptDropdown,
+                    givenKey: dpKey2,
+                    onChanged: (Item? item) {
+                      dListController.department.value = item!.name;
+                    },
+                    onSaved: (Item? item) =>
+                        dListController.department.value = item!.name,
                   ),
-                  horizontalSpace18,
-                  SizedBox(
-                      height: 52,
-                      child: ElevatedButton(
-                        child: Text('Search'),
-                        style: ElevatedButton.styleFrom(
-                          primary: verySoftBlueColor,
-                        ),
-                        onPressed: () {
-                          dListController.filter(
-                              name: dListController.docFilter.text,
-                              title: dListController.title.value,
-                              dept: dListController.department.value);
-                        },
-                      )),
-                  horizontalSpace10,
-                  SizedBox(
-                      height: 52,
-                      child: ElevatedButton(
-                        child: Text('Remove Filter'),
-                        style: ElevatedButton.styleFrom(
-                          primary: verySoftBlueColor,
-                        ),
-                        onPressed: () {
-                          dListController.docFilter.clear();
-                          dListController.title.value = '';
-                          dListController.department.value = '';
-                          dListController.doctorList
-                              .assignAll(dListController.filteredDoctorList);
-                        },
-                      )),
-                  //IconButton(onPressed: (){}, icon: Ico)
-                ],
-              ),
-              verticalSpace25,
-              header(),
-              Obx(() => requestList(context))
-            ],
-          ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Search'),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor,
+                      ),
+                      onPressed: () {
+                        dListController.filter(
+                            name: dListController.docFilter.text,
+                            title: dListController.title.value,
+                            dept: dListController.department.value);
+                      },
+                    )),
+                horizontalSpace10,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor,
+                      ),
+                      onPressed: () {
+                        dListController.docFilter.clear();
+                        dListController.title.value = '';
+                        dListController.department.value = '';
+                        appController.resetDropDown(dpKey1);
+                        appController.resetDropDown(dpKey2);
+                        dListController.doctorList
+                            .assignAll(dListController.filteredDoctorList);
+                      },
+                    )),
+                //IconButton(onPressed: (){}, icon: Ico)
+              ],
+            ),
+            verticalSpace25,
+            header(),
+            Flexible(child: Obx(() => requestList(context)))
+          ],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -15,87 +16,89 @@ import 'package:get/get.dart';
 
 class PSWDStaffListScreen extends StatelessWidget {
   final PSWDStaffListController pListController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> psdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('PSWD Staff List',
-                  textAlign: TextAlign.left, style: title24BoldNeutral80),
-              verticalSpace50,
-              Wrap(
-                runSpacing: 10,
-                children: <Widget>[
-                  SizedBox(
-                    width: 450,
-                    child: CustomTextFormField(
-                      controller: pListController.pswdFilter,
-                      labelText: 'Search name here...',
-                      validator: Validator().notEmpty,
-                      onChanged: (value) {
-                        return;
-                      },
-                      onSaved: (value) =>
-                          pListController.pswdFilter.text = value!,
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('PSWD Staff List',
+                textAlign: TextAlign.left, style: title24BoldNeutral80),
+            verticalSpace50,
+            Wrap(
+              runSpacing: 10,
+              children: <Widget>[
+                SizedBox(
+                  width: 450,
+                  child: CustomTextFormField(
+                    controller: pListController.pswdFilter,
+                    labelText: 'Search name here...',
+                    validator: Validator().notEmpty,
+                    onChanged: (value) {
+                      return;
+                    },
+                    onSaved: (value) =>
+                        pListController.pswdFilter.text = value!,
                   ),
-                  horizontalSpace18,
-                  SizedBox(
-                    width: 250,
-                    child: CustomDropdown(
-                      hintText: 'Select position',
-                      dropdownItems: positionDropdown,
-                      onChanged: (item) {
-                        pListController.position.value = item!.name;
-                      },
-                      onSaved: (Item? item) =>
-                          pListController.position.value = item!.name,
-                    ),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                  width: 250,
+                  child: CustomDropdown(
+                    givenKey: psdpKey1,
+                    hintText: 'Select position',
+                    dropdownItems: positionDropdown,
+                    onChanged: (item) {
+                      pListController.position.value = item!.name;
+                    },
+                    onSaved: (Item? item) =>
+                        pListController.position.value = item!.name,
                   ),
-                  horizontalSpace18,
-                  SizedBox(
-                      height: 52,
-                      child: ElevatedButton(
-                        child: Text('Search'),
-                        style: ElevatedButton.styleFrom(
-                          primary: verySoftBlueColor,
-                        ),
-                        onPressed: () {
-                          pListController.filter(
-                              name: pListController.pswdFilter.text,
-                              title: pListController.position.value);
-                        },
-                      )),
-                  horizontalSpace10,
-                  SizedBox(
-                      height: 52,
-                      child: ElevatedButton(
-                        child: Text('Remove Filter'),
-                        style: ElevatedButton.styleFrom(
-                          primary: verySoftBlueColor,
-                        ),
-                        onPressed: () {
-                          pListController.pswdFilter.clear();
-                          pListController.position.value = 'All';
-                          pListController.pswdList
-                              .assignAll(pListController.filteredPswdList);
-                        },
-                      )),
+                ),
+                horizontalSpace18,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Search'),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor,
+                      ),
+                      onPressed: () {
+                        pListController.filter(
+                            name: pListController.pswdFilter.text,
+                            title: pListController.position.value);
+                      },
+                    )),
+                horizontalSpace10,
+                SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      child: Text('Remove Filter'),
+                      style: ElevatedButton.styleFrom(
+                        primary: verySoftBlueColor,
+                      ),
+                      onPressed: () {
+                        pListController.pswdFilter.clear();
+                        pListController.position.value = 'All';
+                        appController.resetDropDown(psdpKey1);
+                        pListController.pswdList
+                            .assignAll(pListController.filteredPswdList);
+                      },
+                    )),
 
-                  //IconButton(onPressed: (){}, icon: Ico)
-                ],
-              ),
-              verticalSpace25,
-              header(),
-              Obx(() => requestList(context))
-            ],
-          ),
+                //IconButton(onPressed: (){}, icon: Ico)
+              ],
+            ),
+            verticalSpace25,
+            header(),
+            Flexible(child: Obx(() => requestList(context)))
+          ],
         ),
       ),
     );
