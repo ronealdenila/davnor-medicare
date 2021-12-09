@@ -32,55 +32,57 @@ class MAHistoryController extends GetxController {
     log.i('onReady | MA History Controller');
     if (authController.userRole == 'pswd-h' ||
         authController.userRole == 'pswd-p') {
-      getMAHistoryForPSWD().then((value) {
-        maHistoryList.value = value;
-        filteredListforPSWD.assignAll(maHistoryList);
-        isLoading.value = false;
-      });
+      maHistoryList.bindStream(getMAHistoryForPSWD());
     } else if (authController.userRole == 'patient') {
-      getMAHistoryForPatient().then((value) {
-        maHistoryList.value = value;
-        filteredListforP.assignAll(maHistoryList);
-        isLoading.value = false;
-      });
+      maHistoryList.bindStream(getMAHistoryForPatient());
     }
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
   void refresh() {
-    maHistoryList.clear();
-    maHistoryList.assignAll(filteredListforP);
+    filteredListforP.clear();
+    filteredListforP.assignAll(maHistoryList);
   }
 
   void refreshPSWD() {
-    maHistoryList.clear();
-    maHistoryList.assignAll(filteredListforPSWD);
+    filteredListforPSWD.clear();
+    filteredListforPSWD.assignAll(maHistoryList);
   }
 
-  Future<List<MAHistoryModel>> getMAHistoryForPatient() async {
+  Stream<List<MAHistoryModel>> getMAHistoryForPatient() {
     log.i('Get MA History for Patient - ${auth.currentUser!.uid}');
     return firestore
         .collection('ma_history')
         .where('requesterID', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateClaimed', descending: true)
-        .get()
-        .then(
-          (query) => query.docs
-              .map((item) => MAHistoryModel.fromJson(item.data()))
-              .toList(),
-        );
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return MAHistoryModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
-  Future<List<MAHistoryModel>> getMAHistoryForPSWD() async {
+  Stream<List<MAHistoryModel>> getMAHistoryForPSWD() {
     log.i('Get MA History for PSWD Personnel - ${auth.currentUser!.uid}');
     return firestore
         .collection('ma_history')
         .orderBy('dateClaimed', descending: true)
-        .get()
-        .then(
-          (query) => query.docs
-              .map((item) => MAHistoryModel.fromJson(item.data()))
-              .toList(),
-        );
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return MAHistoryModel.fromJson(item.data());
+      }).toList();
+    });
   }
 
   String convertTimeStamp(Timestamp recordTime) {
@@ -121,16 +123,16 @@ class MAHistoryController extends GetxController {
   }
 
   filter({required String name, required bool last30days}) {
-    maHistoryList.clear();
+    filteredListforPSWD.clear();
 
     //filter for name only
     if (name != '' && !last30days) {
-      for (var i = 0; i < filteredListforPSWD.length; i++) {
-        if (filteredListforPSWD[i]
+      for (var i = 0; i < maHistoryList.length; i++) {
+        if (maHistoryList[i]
             .fullName!
             .toLowerCase()
             .contains(name.toLowerCase())) {
-          maHistoryList.add(filteredListforPSWD[i]);
+          filteredListforPSWD.add(maHistoryList[i]);
         }
       }
     }
@@ -143,27 +145,27 @@ class MAHistoryController extends GetxController {
     //filter for both
     else if (name != '' && last30days) {
       print('BOTH');
-      for (var i = 0; i < filteredListforPSWD.length; i++) {
-        if ((filteredListforPSWD[i]
+      for (var i = 0; i < maHistoryList.length; i++) {
+        if ((maHistoryList[i]
                 .fullName!
                 .toLowerCase()
                 .contains(name.toLowerCase())) &&
-            readTimestamp(filteredListforPSWD[i].dateClaimed!.seconds) <= 30) {
-          maHistoryList.add(filteredListforPSWD[i]);
+            readTimestamp(maHistoryList[i].dateClaimed!.seconds) <= 30) {
+          filteredListforPSWD.add(maHistoryList[i]);
         }
       }
     }
 
     //show all
     else if (name == '' && !last30days) {
-      maHistoryList.assignAll(filteredListforPSWD);
+      filteredListforPSWD.assignAll(maHistoryList);
     }
   }
 
   filterLast30Days() {
-    for (var i = 0; i < filteredListforPSWD.length; i++) {
-      if (readTimestamp(filteredListforPSWD[i].dateClaimed!.seconds) <= 30) {
-        maHistoryList.add(filteredListforPSWD[i]);
+    for (var i = 0; i < maHistoryList.length; i++) {
+      if (readTimestamp(maHistoryList[i].dateClaimed!.seconds) <= 30) {
+        filteredListforPSWD.add(maHistoryList[i]);
       }
     }
   }
@@ -221,16 +223,16 @@ class MAHistoryController extends GetxController {
   }
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    maHistoryList.clear();
+    filteredListforP.clear(); //p
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    print(filteredListforP.length);
-    for (var i = 0; i < filteredListforP.length; i++) {
+    print(maHistoryList.length);
+    for (var i = 0; i < maHistoryList.length; i++) {
       String dateConstant =
-          filteredListforP[i].dateClaimed!.toDate().month.toString() +
+          maHistoryList[i].dateClaimed!.toDate().month.toString() +
               " - " +
-              filteredListforP[i].dateClaimed!.toDate().day.toString() +
+              maHistoryList[i].dateClaimed!.toDate().day.toString() +
               " - " +
-              filteredListforP[i].dateClaimed!.toDate().year.toString();
+              maHistoryList[i].dateClaimed!.toDate().year.toString();
 
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
@@ -243,23 +245,23 @@ class MAHistoryController extends GetxController {
           " dateSelected  " +
           dateSelected);
       if (dateConstant == dateSelected) {
-        maHistoryList.add(filteredListforP[i]);
+        filteredListforP.add(maHistoryList[i]);
       }
     }
     Get.back();
   }
 
   void onSelectionChangedPSWD(DateRangePickerSelectionChangedArgs args) {
-    maHistoryList.clear();
+    filteredListforPSWD.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    print(filteredListforPSWD.length);
-    for (var a = 0; a < filteredListforPSWD.length; a++) {
+    print(maHistoryList.length);
+    for (var a = 0; a < maHistoryList.length; a++) {
       String dateConstant =
-          filteredListforPSWD[a].dateClaimed!.toDate().month.toString() +
+          maHistoryList[a].dateClaimed!.toDate().month.toString() +
               " - " +
-              filteredListforPSWD[a].dateClaimed!.toDate().day.toString() +
+              maHistoryList[a].dateClaimed!.toDate().day.toString() +
               " - " +
-              filteredListforPSWD[a].dateClaimed!.toDate().year.toString();
+              maHistoryList[a].dateClaimed!.toDate().year.toString();
 
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
@@ -272,7 +274,7 @@ class MAHistoryController extends GetxController {
           " dateSelected  " +
           dateSelected);
       if (dateConstant == dateSelected) {
-        maHistoryList.add(filteredListforPSWD[a]);
+        filteredListforPSWD.add(maHistoryList[a]);
       }
     }
     Get.back();

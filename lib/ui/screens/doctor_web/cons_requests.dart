@@ -225,19 +225,19 @@ class ResponsiveBody extends GetResponsiveView {
         textAlign: TextAlign.center,
       );
     }
-    firedOnce.value
-        ? null
-        : consRequests.filteredList.assignAll(consRequests.consultations);
-    firedOnce.value = true;
+    // firedOnce.value
+    //     ? null
+    //     : consRequests.filteredList.assignAll(consRequests.consultations);
+    // firedOnce.value = true;
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
         controller: _scrollController1,
         shrinkWrap: true,
-        itemCount: consRequests.filteredList.length,
+        itemCount: consRequests.consultations.length,
         itemBuilder: (context, index) {
-          return displayConsultations(consRequests.filteredList[index], index);
+          return displayConsultations(consRequests.consultations[index], index);
         },
       ),
     );

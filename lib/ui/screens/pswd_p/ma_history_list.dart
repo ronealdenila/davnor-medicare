@@ -20,6 +20,7 @@ class MAHistoryList extends StatelessWidget {
   final MenuController menuController = Get.find();
   final AppController appController = Get.find();
   final GlobalKey<FormFieldState> mahdpKey1 = GlobalKey<FormFieldState>();
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +95,8 @@ class MAHistoryList extends StatelessWidget {
                     hController.searchKeyword.clear();
                     hController.last30DaysDropDown.value = 'All';
                     appController.resetDropDown(mahdpKey1);
-                    hController.maHistoryList
-                        .assignAll(hController.filteredListforPSWD);
+                    hController.filteredListforPSWD
+                        .assignAll(hController.maHistoryList);
                   },
                 )),
             horizontalSpace18,
@@ -149,14 +150,18 @@ class MAHistoryList extends StatelessWidget {
         ),
       );
     }
+    firedOnce.value
+        ? null
+        : hController.filteredListforPSWD.assignAll(hController.maHistoryList);
+    firedOnce.value = true;
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: hController.maHistoryList.length,
+          itemCount: hController.filteredListforPSWD.length,
           itemBuilder: (context, index) {
-            return customTableRow(hController.maHistoryList[index]);
+            return customTableRow(hController.filteredListforPSWD[index]);
           }),
     );
   }

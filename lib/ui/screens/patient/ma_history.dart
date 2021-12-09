@@ -4,7 +4,6 @@ import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:get/get.dart';
 
 class MAHistoryScreen extends StatelessWidget {
   final MAHistoryController maHController = Get.put(MAHistoryController());
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -164,29 +164,22 @@ class MAHistoryScreen extends StatelessWidget {
         style: body14Medium,
       );
     }
+    firedOnce.value
+        ? null
+        : maHController.filteredListforP.assignAll(maHController.maHistoryList);
+    firedOnce.value = true;
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       shrinkWrap: true,
-      itemCount: maHController.maHistoryList.length,
+      itemCount: maHController.filteredListforP.length,
       itemBuilder: (context, index) {
-        return displayMAHistory(maHController.maHistoryList[index], index);
+        return MACard(
+            maHistory: maHController.filteredListforP[index],
+            onTap: () {
+              Get.to(() => MAHistoryInfoScreen(),
+                  arguments: maHController.filteredListforP[index]);
+            });
       },
     );
-  }
-
-  Widget displayMAHistory(MAHistoryModel model, int index) {
-    return FutureBuilder(
-        future: maHController.getMAHistoryForPatient(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return MACard(
-                maHistory: maHController.maHistoryList[index],
-                onTap: () {
-                  Get.to(() => MAHistoryInfoScreen(),
-                      arguments: maHController.maHistoryList[index]);
-                });
-          }
-          return loadingCardIndicator();
-        });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
@@ -50,9 +51,9 @@ class ResponsiveBody extends GetResponsiveView {
                 InkWell(
                   onTap: () {
                     if (consHController.isLoading.value) {
-                      print('conslog'.tr);
+                      showSimpleErrorDialog(errorDescription: 'conslog'.tr);
                     } else if (consHController.consHistory.isEmpty) {
-                      print('conslog1'.tr);
+                      showSimpleErrorDialog(errorDescription: 'conslog1'.tr);
                     } else {
                       consHController.showDialog(context);
                       selectedIndex.value = 0;
@@ -113,9 +114,9 @@ class ResponsiveBody extends GetResponsiveView {
         InkWell(
           onTap: () {
             if (consHController.isLoading.value) {
-              print('conslog'.tr);
+              showSimpleErrorDialog(errorDescription: 'conslog'.tr);
             } else if (consHController.consHistory.isEmpty) {
-              print('conslog1'.tr);
+              showSimpleErrorDialog(errorDescription: 'conslog1'.tr);
             } else {
               consHController.showDialog(context);
             }
@@ -282,6 +283,7 @@ class ResponsiveBody extends GetResponsiveView {
               child: ConsultationHistoryCardWeb(
                 consHistory: model,
                 onItemTap: () {
+                  doneLoad.value = false;
                   selectedIndex.value = index;
                   consHController.chatHistory.clear();
                 },
@@ -304,7 +306,6 @@ class ResponsiveBody extends GetResponsiveView {
       return Container();
     }
     print(selectedIndex.value);
-
     if (doneLoad.value) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -343,35 +344,35 @@ class ResponsiveBody extends GetResponsiveView {
             : topHeaderRequestWeb(
                 consHController.consHistory[selectedIndex.value]),
         Expanded(
-          child: Obx(() => FutureBuilder(
-              future: consHController.getChatHistory(
-                  consHController.consHistory[selectedIndex.value]),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return ListView.builder(
-                    controller: _scrollController2,
-                    reverse: true,
-                    padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
-                    shrinkWrap: true,
-                    itemCount: consHController.chatHistory.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          bubbleChat(
-                              consHController.chatHistory[index], context),
-                          verticalSpace15
-                        ],
-                      );
-                    },
-                  );
-                }
-                return Center(
-                    child: Container(
-                        width: 30,
-                        height: 30,
-                        child: CircularProgressIndicator()));
-              })),
-        ),
+            child: FutureBuilder(
+                future: consHController.getChatHistory(
+                    consHController.consHistory[selectedIndex.value]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                      addAutomaticKeepAlives: true,
+                      controller: _scrollController2,
+                      reverse: true,
+                      padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
+                      shrinkWrap: true,
+                      itemCount: consHController.chatHistory.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            bubbleChat(
+                                consHController.chatHistory[index], context),
+                            verticalSpace15
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  return Center(
+                      child: Container(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator()));
+                })),
       ],
     );
   }
@@ -459,11 +460,12 @@ class ResponsiveBody extends GetResponsiveView {
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor[100],
         child: Obx(
           () => errorPhoto.value
               ? Text(
                   '${consHController.getDoctorFirstName(model)[0]}',
+                  style: body20Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,
@@ -479,11 +481,12 @@ class ResponsiveBody extends GetResponsiveView {
         onForegroundImageError: (_, __) {
           errorPhoto2.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor[100],
         child: Obx(
           () => errorPhoto2.value
               ? Text(
                   '${consHController.getDoctorFirstName(model)[0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,

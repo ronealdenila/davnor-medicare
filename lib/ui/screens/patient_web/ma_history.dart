@@ -31,6 +31,7 @@ class ResponsiveBody extends GetResponsiveView {
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
   final RxBool doneLoad = false.obs;
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget? builder() {
@@ -85,15 +86,7 @@ class ResponsiveBody extends GetResponsiveView {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    maHController.isLoading.value = true;
-                    maHController.maHistoryList.clear();
-                    //FETCH NEW DATA
-                    maHController.getMAHistoryForPatient().then((value) {
-                      maHController.maHistoryList.value = value;
-                      maHController.filteredListforP
-                          .assignAll(maHController.maHistoryList);
-                      maHController.isLoading.value = false;
-                    });
+                    maHController.refresh();
                   },
                   child: Text(
                     'Reload',
@@ -178,16 +171,21 @@ class ResponsiveBody extends GetResponsiveView {
         style: body14Medium,
       );
     }
+
+    firedOnce.value
+        ? null
+        : maHController.filteredListforP.assignAll(maHController.maHistoryList);
+    firedOnce.value = true;
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
         controller: _scrollController1,
         shrinkWrap: true,
-        itemCount: maHController.maHistoryList.length,
+        itemCount: maHController.filteredListforP.length,
         itemBuilder: (context, index) {
           return MACard(
-              maHistory: maHController.maHistoryList[index],
+              maHistory: maHController.filteredListforP[index],
               onTap: () {
                 selectedIndex.value = index;
               });
