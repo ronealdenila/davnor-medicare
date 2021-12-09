@@ -40,6 +40,14 @@ class AcceptedMARequestScreen extends StatelessWidget {
           child: Column(
             children: [
               verticalSpace50,
+              IconButton(
+                  onPressed: () {
+                    acceptedMA.goBack();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
               PSWDItemView(context, 'accepted', model),
               Align(
                 alignment: Alignment.bottomRight,

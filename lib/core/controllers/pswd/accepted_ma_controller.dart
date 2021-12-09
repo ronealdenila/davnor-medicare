@@ -52,6 +52,10 @@ class AcceptedMAController extends GetxController {
     });
   }
 
+  void goBack() {
+    return navigationController.navigatorKey.currentState!.pop();
+  }
+
   String convertTimeStamp(Timestamp recordTime) {
     final dt = recordTime.toDate();
     return DateFormat.yMMMd().add_jm().format(dt);

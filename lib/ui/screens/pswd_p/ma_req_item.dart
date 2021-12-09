@@ -76,14 +76,15 @@ class MARequestItemScreen extends StatelessWidget {
                 if (acceptedMA.accMA.isNotEmpty) {
                   if (acceptedMA.indexOfLive.value == -1) {
                     if (maController.maRequests[0].maID != model.maID) {
+                      dismissDialog();
                       showSimpleErrorDialog(
                           errorDescription:
                               'Please accomodate those who requested first. Thank you');
                     } else {
                       await maController.acceptMA(model);
-                      maController.refresh();
                     }
                   } else {
+                    dismissDialog();
                     showErrorDialog(
                         errorTitle:
                             'It looks like you already accepted a request',
@@ -92,15 +93,16 @@ class MARequestItemScreen extends StatelessWidget {
                   }
                 } else {
                   if (maController.maRequests[0].maID != model.maID) {
+                    dismissDialog();
                     showSimpleErrorDialog(
                         errorDescription:
                             'Please accomodate those who requested first. Thank you');
                   } else {
                     await maController.acceptMA(model);
-                    maController.refresh();
                   }
                 }
               } else {
+                dismissDialog();
                 showErrorDialog(
                     errorTitle: 'We are still fetching data...',
                     errorDescription: 'Please try again later');

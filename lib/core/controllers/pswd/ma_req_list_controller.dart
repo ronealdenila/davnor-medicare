@@ -145,6 +145,7 @@ class MAReqListController extends GetxController {
       await deleteMA(model.maID!);
       dismissDialog(); //dismissLoading
       dismissDialog(); //then dismiss dialog for are your sure? yes/no
+      refresh();
       menuController.changeActiveItemTo('Dashboard');
       navigationController.navigateTo(Routes.DASHBOARD);
     });

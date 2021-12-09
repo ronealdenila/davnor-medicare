@@ -313,7 +313,12 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget showArticles() {
-    if (articleService.doneLoading.value) {
+    if (articleService.doneLoading.value &&
+        articleService.articlesList.isEmpty) {
+      return Center(child: Text('No health articles found'));
+    }
+    if (articleService.doneLoading.value &&
+        articleService.articlesList.isNotEmpty) {
       return ListView.builder(
           shrinkWrap: true,
           itemCount: 3,
