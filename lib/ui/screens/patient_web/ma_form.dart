@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -31,6 +32,9 @@ class ResponsiveBody extends GetResponsiveView {
   static MARequestController ma = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final NavigationController navigationController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> mafdpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> mafdpKey2 = GlobalKey<FormFieldState>();
 
   @override
   Widget? builder() {
@@ -148,6 +152,7 @@ class ResponsiveBody extends GetResponsiveView {
                         Align(
                           alignment: FractionalOffset.centerLeft,
                           child: CustomDropdown(
+                            givenKey: mafdpKey1,
                             hintText: 'maform6'.tr,
                             dropdownItems: type,
                             onChanged: (Item? item) =>
@@ -186,6 +191,7 @@ class ResponsiveBody extends GetResponsiveView {
                               child: SizedBox(
                                 height: 70,
                                 child: CustomDropdown(
+                                  givenKey: mafdpKey2,
                                   hintText: 'maform5'.tr,
                                   dropdownItems: gender,
                                   onChanged: (Item? item) =>
@@ -281,6 +287,8 @@ class ResponsiveBody extends GetResponsiveView {
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         await ma.webMARequest();
+                        appController.resetDropDown(mafdpKey1);
+                        appController.resetDropDown(mafdpKey2);
                       }
                     },
                     text: 'maform13'.tr,

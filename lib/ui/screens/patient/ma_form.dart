@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/widgets/custom_button.dart';
@@ -18,6 +19,9 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 class MAFormScreen extends StatelessWidget {
   static MARequestController ma = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> mafdpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> mafdpKey2 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +128,7 @@ class MAFormScreen extends StatelessWidget {
                       child: SizedBox(
                         height: 70,
                         child: CustomDropdown(
+                          givenKey: mafdpKey1,
                           hintText: 'maform5'.tr,
                           dropdownItems: gender,
                           onChanged: (Item? item) =>
@@ -142,6 +147,7 @@ class MAFormScreen extends StatelessWidget {
                   width: screenWidth(context),
                   height: 60,
                   child: CustomDropdown(
+                    givenKey: mafdpKey2,
                     hintText: 'maform6'.tr,
                     dropdownItems: type,
                     onChanged: (Item? item) => ma.type.value = item!.name,

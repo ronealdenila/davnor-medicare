@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/on_progress_req_controller.dart';
@@ -19,6 +20,8 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
   final AuthController authController = Get.find();
   final RxBool firedOnce = false.obs;
   final MenuController menuController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> oprdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
             SizedBox(
               width: 280,
               child: CustomDropdown(
+                givenKey: oprdpKey1,
                 hintText: 'Filter patient type',
                 dropdownItems: typeDropdown,
                 onChanged: (Item? item) => opController.type.value = item!.name,
@@ -70,6 +74,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                   ),
                   onPressed: () {
                     opController.type.value = 'All';
+                    appController.resetDropDown(oprdpKey1);
                     opController.filteredList
                         .assignAll(opController.onProgressList);
                   },
@@ -85,6 +90,8 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                     primary: verySoftBlueColor,
                   ),
                   onPressed: () {
+                    opController.type.value = 'All';
+                    appController.resetDropDown(oprdpKey1);
                     opController.refresh();
                   },
                 )),

@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -16,6 +17,8 @@ final DoctorListController controller = Get.find();
 class EditDoctorScrenn extends StatelessWidget {
   EditDoctorScrenn({Key? key, required this.passedData}) : super(key: key);
   final DoctorModel passedData;
+  final AppController appController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +35,8 @@ class ResponsiveView extends GetResponsiveView {
   final DoctorModel model;
   final RxBool errorPhoto = false.obs;
   final NavigationController navigationController = Get.find();
+  final GlobalKey<FormFieldState> eddpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> eddpKey2 = GlobalKey<FormFieldState>();
 
   @override
   Widget phone() =>
@@ -219,6 +224,7 @@ class ResponsiveView extends GetResponsiveView {
             width: 340,
             height: 90,
             child: CustomDropdown(
+              givenKey: eddpKey1,
               hintText: 'Select title',
               dropdownItems: title,
               onChanged: (item) {
@@ -261,6 +267,7 @@ class ResponsiveView extends GetResponsiveView {
             width: 340,
             height: 90,
             child: CustomDropdown(
+              givenKey: eddpKey2,
               hintText: 'Select department',
               dropdownItems: department,
               onChanged: (item) {

@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
@@ -17,6 +18,8 @@ class MAHistoryList extends StatelessWidget {
   final MAHistoryController hController = Get.find();
   final NavigationController navigationController = Get.find();
   final MenuController menuController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> mahdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,7 @@ class MAHistoryList extends StatelessWidget {
             SizedBox(
               width: 150,
               child: CustomDropdown(
+                givenKey: mahdpKey1,
                 hintText: 'All',
                 dropdownItems: pswdfilterDropdown,
                 onChanged: (Item? item) {
@@ -89,6 +93,7 @@ class MAHistoryList extends StatelessWidget {
                   onPressed: () {
                     hController.searchKeyword.clear();
                     hController.last30DaysDropDown.value = 'All';
+                    appController.resetDropDown(mahdpKey1);
                     hController.maHistoryList
                         .assignAll(hController.filteredListforPSWD);
                   },
@@ -104,6 +109,9 @@ class MAHistoryList extends StatelessWidget {
                     primary: verySoftBlueColor,
                   ),
                   onPressed: () {
+                    hController.searchKeyword.clear();
+                    hController.last30DaysDropDown.value = 'All';
+                    appController.resetDropDown(mahdpKey1);
                     hController.refreshPSWD();
                   },
                 )),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/patient/cons_req_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -34,6 +35,8 @@ class ResponsiveBody extends GetResponsiveView {
   final ConsRequestController consController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final NavigationController navigationController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> cofdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget? builder() {
@@ -163,6 +166,7 @@ class ResponsiveBody extends GetResponsiveView {
                         SizedBox(
                           width: 160,
                           child: CustomDropdown(
+                            givenKey: cofdpKey1,
                             hintText: 'Type', //TRANSLATE
                             dropdownItems: cSenior,
                             onChanged: (Item? item) =>
@@ -229,6 +233,7 @@ class ResponsiveBody extends GetResponsiveView {
                 onTap: () async {
                   if (_formKey.currentState!.validate()) {
                     await consController.submitConsultRequestWeb();
+                    appController.resetDropDown(cofdpKey1);
                   }
                 },
                 text: 'consform19'.tr,

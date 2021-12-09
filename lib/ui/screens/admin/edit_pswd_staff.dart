@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
@@ -32,6 +33,7 @@ class ResponsiveView extends GetResponsiveView {
   final PswdModel model;
   final RxBool errorPhoto = false.obs;
   final NavigationController navigationController = Get.find();
+  final GlobalKey<FormFieldState> epdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget phone() =>
@@ -217,6 +219,7 @@ class ResponsiveView extends GetResponsiveView {
             width: 340,
             height: 90,
             child: CustomDropdown(
+              givenKey: epdpKey1,
               hintText: 'Select position',
               dropdownItems: position,
               onChanged: (item) {

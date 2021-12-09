@@ -1,4 +1,5 @@
 import 'package:davnor_medicare/constants/app_items.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/ma_req_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/pswd/menu_controller.dart';
@@ -18,6 +19,8 @@ class MARequestListScreen extends StatelessWidget {
   final RxBool firedOnce = false.obs;
   final NavigationController navigationController = Get.find();
   final MenuController menuController = Get.find();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> mardpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,7 @@ class MARequestListScreen extends StatelessWidget {
             SizedBox(
               width: 280,
               child: CustomDropdown(
+                givenKey: mardpKey1,
                 hintText: 'Filter patient type',
                 dropdownItems: typeDropdown,
                 onChanged: (Item? item) => maController.type.value = item!.name,
@@ -84,6 +88,7 @@ class MARequestListScreen extends StatelessWidget {
                   onPressed: () {
                     maController.maFilter.clear();
                     maController.type.value = 'All';
+                    appController.resetDropDown(mardpKey1);
                     maController.filteredList
                         .assignAll(maController.maRequests);
                   },
@@ -99,6 +104,9 @@ class MARequestListScreen extends StatelessWidget {
                     primary: verySoftBlueColor,
                   ),
                   onPressed: () {
+                    maController.maFilter.clear();
+                    maController.type.value = 'All';
+                    appController.resetDropDown(mardpKey1);
                     maController.refresh();
                   },
                 )),

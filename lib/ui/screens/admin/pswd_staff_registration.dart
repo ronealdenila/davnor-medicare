@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_registration_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 
 class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> psrdpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +114,7 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                               ),
                               verticalSpace15,
                               CustomDropdown(
+                                givenKey: psrdpKey1,
                                 hintText: 'Choose',
                                 dropdownItems: position,
                                 onChanged: (Item? item) =>
@@ -134,6 +138,8 @@ class PSWDStaffRegistrationScreen extends GetView<PSWDRegistrationController> {
                                     onTap: () async {
                                       if (formKey.currentState!.validate()) {
                                         await controller.registerPSWD();
+                                        formKey.currentState!.reset();
+                                        appController.resetDropDown(psrdpKey1);
                                       }
                                     }),
                               ),

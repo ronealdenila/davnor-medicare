@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/doctor_registration_controller.dart';
+import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -9,6 +10,9 @@ import 'package:get/get.dart';
 
 class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> drdpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> drdpKey2 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +115,7 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                               ),
                               verticalSpace15,
                               CustomDropdown(
+                                givenKey: drdpKey1,
                                 hintText: 'Choose',
                                 dropdownItems: title,
                                 onChanged: (Item? item) =>
@@ -127,6 +132,7 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                               ),
                               verticalSpace15,
                               CustomDropdown(
+                                givenKey: drdpKey2,
                                 hintText:
                                     'Which department(s) do you belong to?',
                                 dropdownItems: department,
@@ -163,6 +169,9 @@ class DoctorRegistrationScreen extends GetView<DoctorRegistrationController> {
                                     onTap: () async {
                                       if (_formKey.currentState!.validate()) {
                                         await controller.registerDoctor();
+                                        _formKey.currentState!.reset();
+                                        appController.resetDropDown(drdpKey1);
+                                        appController.resetDropDown(drdpKey2);
                                       }
                                     }),
                               ),

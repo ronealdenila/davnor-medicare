@@ -15,6 +15,9 @@ import 'package:get/get.dart';
 class ConsFormScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ConsRequestController consController = Get.find();
+  final GlobalKey<FormFieldState> psdpKey1 = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> cofdpKey1 = GlobalKey<FormFieldState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -140,6 +143,7 @@ class ConsFormScreen extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: CustomDropdown(
+                                  givenKey: cofdpKey1,
                                   hintText: 'Type', //TRANSLATE
                                   dropdownItems: cSenior,
                                   onChanged: (Item? item) =>

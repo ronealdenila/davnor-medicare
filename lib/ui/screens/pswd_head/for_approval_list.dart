@@ -20,6 +20,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
   final ForApprovalController faController = Get.find();
   final RxBool firedOnce = false.obs;
   final AppController appController = Get.find();
+  final GlobalKey<FormFieldState> fadpKey1 = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
             SizedBox(
               width: 280,
               child: CustomDropdown(
+                givenKey: fadpKey1,
                 hintText: 'Filter patient type',
                 dropdownItems: typeDropdown,
                 onChanged: (Item? item) => faController.type.value = item!.name,
@@ -71,6 +73,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                   ),
                   onPressed: () {
                     faController.type.value = 'All';
+                    appController.resetDropDown(fadpKey1);
                     faController.filteredList
                         .assignAll(faController.forApprovalList);
                   },
@@ -86,6 +89,8 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
                     primary: verySoftBlueColor,
                   ),
                   onPressed: () {
+                    faController.type.value = 'All';
+                    appController.resetDropDown(fadpKey1);
                     faController.refresh();
                   },
                 )),
