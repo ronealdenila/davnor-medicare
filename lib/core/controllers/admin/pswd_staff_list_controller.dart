@@ -33,6 +33,13 @@ class PSWDStaffListController extends GetxController {
     });
   }
 
+  Future<void> refetchList() async {
+    await getPSWDStaffs().then((value) {
+      pswdList.value = value;
+      filteredPswdList.assignAll(pswdList);
+    });
+  }
+
   Future<List<PswdModel>> getPSWDStaffs() async {
     return firestore
         .collection('pswd_personnel')

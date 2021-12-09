@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
@@ -15,6 +16,7 @@ class PSWDRegistrationController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  final PSWDStaffListController pListController = Get.find();
 
   final RxString position = ''.obs;
 
@@ -71,8 +73,9 @@ class PSWDRegistrationController extends GetxController {
     lastNameController.clear();
   }
 
-  void navigateToList() {
+  Future<void> navigateToList() async {
     dismissDialog();
+    await pListController.refetchList();
     menuController.changeActiveItemTo('List of PSWD Personnel');
     navigationController.navigateTo(Routes.PSWD_STAFF_LIST);
   }

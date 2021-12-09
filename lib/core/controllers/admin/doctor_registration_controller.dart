@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -17,6 +18,7 @@ class DoctorRegistrationController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController clinicHours = TextEditingController();
+  final DoctorListController dListController = Get.find();
 
   final RxString title = ''.obs;
   final RxString department = ''.obs;
@@ -121,8 +123,9 @@ class DoctorRegistrationController extends GetxController {
     lastNameController.clear();
   }
 
-  void navigateToList() {
+  Future<void> navigateToList() async {
     dismissDialog();
+    await dListController.refetchList();
     menuController.changeActiveItemTo('List Of Doctors');
     navigationController.navigateTo(Routes.DOCTOR_LIST);
   }

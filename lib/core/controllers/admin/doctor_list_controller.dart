@@ -36,6 +36,13 @@ class DoctorListController extends GetxController {
     });
   }
 
+  Future<void> refetchList() async {
+    await getDoctors().then((value) {
+      doctorList.value = value;
+      filteredDoctorList.assignAll(doctorList);
+    });
+  }
+
   Future<List<DoctorModel>> getDoctors() async {
     return firestore
         .collection('doctors')
