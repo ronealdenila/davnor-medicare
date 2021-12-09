@@ -24,7 +24,7 @@ class VerificationReqListScreen extends StatelessWidget {
             Text('Users to be Verified',
                 textAlign: TextAlign.left, style: title29BoldNeutral80),
             verticalSpace50,
-            Obx(() => requestList(context))
+            Flexible(child: Obx(() => requestList(context)))
           ],
         ),
       ),

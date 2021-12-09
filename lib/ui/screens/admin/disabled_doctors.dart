@@ -72,7 +72,7 @@ class DisabledDoctorListScreen extends StatelessWidget {
             ),
             verticalSpace25,
             header(),
-            Obx(() => requestList(context))
+            Flexible(child: Obx(() => requestList(context)))
           ],
         ),
       ),
@@ -81,17 +81,16 @@ class DisabledDoctorListScreen extends StatelessWidget {
 
   Widget requestList(BuildContext context) {
     if (dListController.isLoading.value) {
-      return const SizedBox(
-          height: 24, width: 24, child: CircularProgressIndicator());
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      );
     }
     if (dListController.disabledList.isEmpty &&
         !dListController.isLoading.value) {
       return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: const Text(
-            'No disabled doctor',
-          ),
+        child: const Text(
+          'No disabled doctor',
         ),
       );
     }
@@ -113,7 +112,7 @@ class DisabledDoctorListScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF063373),
+        color: verySoftBlueColor,
       ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

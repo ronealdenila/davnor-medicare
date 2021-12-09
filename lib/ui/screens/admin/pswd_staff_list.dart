@@ -130,7 +130,7 @@ class PSWDStaffListScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF063373),
+        color: verySoftBlueColor,
       ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,6 +193,7 @@ class PSWDStaffListScreen extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
+                        pListController.enableEditing.value = false;
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_PSWD_STAFF,
                             arguments: model);

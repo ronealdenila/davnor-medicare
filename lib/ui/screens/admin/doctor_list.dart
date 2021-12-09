@@ -153,7 +153,7 @@ class DoctorListScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF063373),
+        color: verySoftBlueColor,
       ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,6 +238,7 @@ class DoctorListScreen extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
+                        dListController.enableEditing.value = false;
                         navigationController.navigateToWithArgs(
                             Routes.EDIT_DOCTOR,
                             arguments: model);

@@ -107,11 +107,12 @@ class ForVerificationCard extends StatelessWidget {
         onForegroundImageError: (_, __) {
           errorPhoto.value = true;
         },
-        backgroundColor: Colors.grey,
+        backgroundColor: verySoftBlueColor[100],
         child: Obx(
           () => errorPhoto.value
               ? Text(
                   '${vf.getFirstName(model)[0]}',
+                  style: title24Regular.copyWith(color: Colors.white),
                 )
               : SizedBox(
                   height: 0,

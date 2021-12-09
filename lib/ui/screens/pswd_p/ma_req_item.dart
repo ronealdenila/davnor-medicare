@@ -75,7 +75,14 @@ class MARequestItemScreen extends StatelessWidget {
               if (!acceptedMA.isLoading.value) {
                 if (acceptedMA.accMA.isNotEmpty) {
                   if (acceptedMA.indexOfLive.value == -1) {
-                    await maController.acceptMA(model);
+                    if (maController.maRequests[0].maID != model.maID) {
+                      showSimpleErrorDialog(
+                          errorDescription:
+                              'Please accomodate those who requested first. Thank you');
+                    } else {
+                      await maController.acceptMA(model);
+                      maController.refresh();
+                    }
                   } else {
                     showErrorDialog(
                         errorTitle:
@@ -84,7 +91,14 @@ class MARequestItemScreen extends StatelessWidget {
                             'Please finish the accepted request first before accepting another');
                   }
                 } else {
-                  await maController.acceptMA(model);
+                  if (maController.maRequests[0].maID != model.maID) {
+                    showSimpleErrorDialog(
+                        errorDescription:
+                            'Please accomodate those who requested first. Thank you');
+                  } else {
+                    await maController.acceptMA(model);
+                    maController.refresh();
+                  }
                 }
               } else {
                 showErrorDialog(

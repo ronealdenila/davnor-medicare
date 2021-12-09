@@ -1,9 +1,9 @@
 import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
-import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/admin/custom_button.dart';
 import 'package:davnor_medicare/ui/widgets/patient/custom_dropdown.dart';
@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 class EditPSWDStaffScrenn extends StatelessWidget {
   EditPSWDStaffScrenn({Key? key, required this.passedData}) : super(key: key);
   final PswdModel passedData;
-  final PSWDStaffListController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,12 @@ class EditPSWDStaffScrenn extends StatelessWidget {
 }
 
 class ResponsiveView extends GetResponsiveView {
-  ResponsiveView(this.model) : super(alwaysUseBuilder: false);
+  ResponsiveView(this.model);
   final PswdModel model;
   final RxBool errorPhoto = false.obs;
   final NavigationController navigationController = Get.find();
   final GlobalKey<FormFieldState> epdpKey1 = GlobalKey<FormFieldState>();
+  final PSWDStaffListController pListController = Get.find();
 
   @override
   Widget phone() =>
@@ -90,14 +90,14 @@ class ResponsiveView extends GetResponsiveView {
       children: [
         AdminButton(
           onItemTap: () async {
-            await controller.updatePSWD(model);
+            await pListController.updatePSWD(model);
           },
           buttonText: 'Save',
         ),
         horizontalSpace40,
         AdminButton(
           onItemTap: () async {
-            controller.enableEditing.value = false;
+            pListController.enableEditing.value = false;
           },
           buttonText: 'Cancel',
         ),
@@ -108,16 +108,16 @@ class ResponsiveView extends GetResponsiveView {
   Widget userPSWDImage() {
     return CircleAvatar(
       radius: 40,
-      foregroundImage: NetworkImage(controller.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(pListController.getProfilePhoto(model)),
       onForegroundImageError: (_, __) {
         errorPhoto.value = true;
       },
-      backgroundColor: Colors.grey,
+      backgroundColor: verySoftBlueColor[100],
       child: Obx(
         () => errorPhoto.value
             ? Text(
                 '${model.firstName![0]}',
-                style: subtitle18Bold,
+                style: title24Regular.copyWith(color: Colors.white),
               )
             : SizedBox(
                 height: 0,
@@ -128,9 +128,10 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget editInfoofPSWDStaff() {
-    controller.editLastName.text = model.lastName!;
-    controller.editFirstName.text = model.firstName!;
-    controller.editPosition.value = model.position!;
+    pListController.editLastName.text = model.lastName!;
+    pListController.editFirstName.text = model.firstName!;
+    pListController.editPosition.value = model.position!;
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       verticalSpace15,
       const Text(
@@ -143,8 +144,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
-            controller: controller.editLastName,
-            enabled: controller.enableEditing.value,
+            controller: pListController.editLastName,
+            enabled: pListController.enableEditing.value,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -156,7 +157,7 @@ class ResponsiveView extends GetResponsiveView {
             onChanged: (value) {
               return;
             },
-            onSaved: (value) => controller.editLastName.text = value!,
+            onSaved: (value) => pListController.editLastName.text = value!,
           ),
         ),
       ),
@@ -170,8 +171,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
-            controller: controller.editFirstName,
-            enabled: controller.enableEditing.value,
+            controller: pListController.editFirstName,
+            enabled: pListController.enableEditing.value,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -183,7 +184,7 @@ class ResponsiveView extends GetResponsiveView {
             onChanged: (value) {
               return;
             },
-            onSaved: (value) => controller.editFirstName.text = value!,
+            onSaved: (value) => pListController.editFirstName.text = value!,
           ),
         ),
       ),
@@ -191,30 +192,35 @@ class ResponsiveView extends GetResponsiveView {
         'Position',
         style: body14Medium,
       ),
-      verticalSpace10,
       Obx(
         () => SizedBox(
-          width: controller.enableEditing.value ? 0 : 340,
-          height: controller.enableEditing.value ? 0 : 90,
+          width: pListController.enableEditing.value ? 0 : 340,
+          height: pListController.enableEditing.value ? 0 : 90,
           child: Visibility(
-            visible: !controller.enableEditing.value,
-            child: TextFormField(
-              initialValue: model.position,
-              enabled: false,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+            visible: !pListController.enableEditing.value,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpace10,
+                TextFormField(
+                  initialValue: model.position,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
       ),
       Obx(
         () => Visibility(
-          visible: controller.enableEditing.value,
+          visible: pListController.enableEditing.value,
           child: SizedBox(
             width: 340,
             height: 90,
@@ -223,10 +229,10 @@ class ResponsiveView extends GetResponsiveView {
               hintText: 'Select position',
               dropdownItems: position,
               onChanged: (item) {
-                controller.editPosition.value = item!.name;
+                pListController.editPosition.value = item!.name;
               },
               onSaved: (Item? item) =>
-                  controller.editPosition.value = item!.name,
+                  pListController.editPosition.value = item!.name,
             ),
           ),
         ),
@@ -246,19 +252,25 @@ class ResponsiveView extends GetResponsiveView {
                 Icons.arrow_back_outlined,
                 size: 30,
               )),
+          verticalSpace35,
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Edit PSWD Staff Details',
                     textAlign: TextAlign.left, style: title29BoldNeutral80),
-                horizontalSpace80,
-                IconButton(
-                    iconSize: 30,
-                    onPressed: () {
-                      controller.enableEditing.value = true;
-                    },
-                    icon: const Icon(Icons.edit_outlined))
+                horizontalSpace10,
+                Obx(
+                  () => IconButton(
+                      iconSize: 30,
+                      onPressed: () {
+                        pListController.enableEditing.value =
+                            !pListController.enableEditing.value;
+                      },
+                      icon: pListController.enableEditing.value
+                          ? Icon(Icons.cancel_outlined)
+                          : Icon(Icons.edit_outlined)),
+                )
               ]),
         ]));
   }

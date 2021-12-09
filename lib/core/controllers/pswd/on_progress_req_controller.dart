@@ -103,7 +103,8 @@ class OnProgressReqController extends GetxController {
     });
   }
 
-  Future<void> toBeReleasedFromList(String maID, String requesterID) async {
+  Future<void> toBeReleasedFromList(
+      String maID, String requesterID, GlobalKey<FormState> fKey) async {
     showLoading();
     await firestore.collection('on_progress_ma').doc(maID).update({
       'isMedReady': true,
@@ -114,6 +115,7 @@ class OnProgressReqController extends GetxController {
       sendNotification(requesterID);
       dismissDialog();
       dismissDialog();
+      fKey.currentState!.reset();
       worthController.clear();
       pharmacyController.clear();
       //goBack();

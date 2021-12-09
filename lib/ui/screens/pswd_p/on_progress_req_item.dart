@@ -146,10 +146,9 @@ class OnProgressReqItemScreen extends StatelessWidget {
                                 onItemTap: () async {
                                   if (_formKey.currentState!.validate()) {
                                     await opController.toBeReleasedFromList(
-                                        model.maID!, model.requesterID!);
-                                    _formKey.currentState!.reset();
-                                    opController.pharmacyController.clear();
-                                    opController.worthController.clear();
+                                        model.maID!,
+                                        model.requesterID!,
+                                        _formKey);
                                   }
                                 },
                                 buttonText: 'Submit')),

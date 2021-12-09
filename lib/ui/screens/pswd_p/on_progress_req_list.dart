@@ -277,8 +277,6 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
 
   Widget detailsDialogMA(OnProgressMAModel model) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final _pharmacyController = TextEditingController();
-    final _worthController = TextEditingController();
 
     return SimpleDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -301,7 +299,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                       width: 360,
                       height: 60,
                       child: TextFormField(
-                        controller: _pharmacyController,
+                        controller: opController.pharmacyController,
                         validator: Validator().notEmpty,
                         decoration: const InputDecoration(
                           labelText: 'Name of Pharmacy',
@@ -321,7 +319,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                       width: 360,
                       height: 60,
                       child: TextFormField(
-                        controller: _worthController,
+                        controller: opController.worthController,
                         decoration: const InputDecoration(
                           labelText: 'Worth of Medicine',
                           alignLabelWithHint: true,
@@ -343,10 +341,7 @@ class OnProgressReqListScreen extends GetView<OnProgressReqController> {
                             onItemTap: () async {
                               if (_formKey.currentState!.validate()) {
                                 await opController.toBeReleasedFromList(
-                                    model.maID!, model.requesterID!);
-                                _formKey.currentState!.reset();
-                                _pharmacyController.clear();
-                                _worthController.clear();
+                                    model.maID!, model.requesterID!, _formKey);
                               }
                             },
                             buttonText: 'Submit')),

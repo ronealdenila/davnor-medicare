@@ -17,6 +17,7 @@ class VerificationReqItemScreen extends StatelessWidget {
   VerificationReqItemScreen({Key? key, required this.passedData})
       : super(key: key);
   final VerificationReqModel passedData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -404,12 +405,12 @@ class ResponsiveView extends GetResponsiveView {
       onForegroundImageError: (_, __) {
         errorPhoto.value = true;
       },
-      backgroundColor: Colors.grey,
+      backgroundColor: verySoftBlueColor[100],
       child: Obx(
         () => errorPhoto.value
             ? Text(
                 '${vf.getFirstName(model)[0]}',
-                style: subtitle18Bold,
+                style: title24Regular.copyWith(color: Colors.white),
               )
             : SizedBox(
                 height: 0,
