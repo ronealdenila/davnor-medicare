@@ -11,6 +11,8 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 
 class ConsHistoryScreen extends StatelessWidget {
   final ConsHistoryController consHController = Get.find();
+  final RxBool firedOnce = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -163,12 +165,19 @@ class ConsHistoryScreen extends StatelessWidget {
         style: body14Medium,
       );
     }
+
+    firedOnce.value
+        ? null
+        : consHController.filteredListforP
+            .assignAll(consHController.consHistory);
+    firedOnce.value = true;
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shrinkWrap: true,
-      itemCount: consHController.consHistory.length,
+      itemCount: consHController.filteredListforP.length,
       itemBuilder: (context, index) {
-        return displayConsHistory(consHController.consHistory[index]);
+        return displayConsHistory(consHController.filteredListforP[index]);
       },
     );
   }

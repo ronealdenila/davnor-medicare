@@ -1,3 +1,4 @@
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/dcons_history_item.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
@@ -11,6 +12,7 @@ import 'package:davnor_medicare/ui/widgets/cons_history_card.dart';
 
 class DocConsHistoryScreen extends StatelessWidget {
   final ConsHistoryController consHController = Get.find();
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +63,17 @@ class DocConsHistoryScreen extends StatelessWidget {
                       horizontalSpace10,
                       InkWell(
                         onTap: () {
-                          print(consHController.searchKeyword.text);
-                          consHController.filterForDoctor(
-                              name: consHController.searchKeyword.text);
+                          if (consHController.isLoading.value) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'conslog'.tr);
+                          } else if (consHController.consHistory.isEmpty) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'conslog1'.tr);
+                          } else {
+                            print(consHController.searchKeyword.text);
+                            consHController.filterForDoctor(
+                                name: consHController.searchKeyword.text);
+                          }
                         },
                         child: Card(
                           elevation: 6,
@@ -84,6 +94,33 @@ class DocConsHistoryScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ),
+                      verticalSpace15,
+                      Card(
+                        elevation: 6,
+                        child: SizedBox(
+                            height: 50,
+                            child: ElevatedButton(
+                              child: Icon(
+                                Icons.refresh,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: verySoftBlueColor[100],
+                              ),
+                              onPressed: () {
+                                if (consHController.isLoading.value) {
+                                  showSimpleErrorDialog(
+                                      errorDescription: 'conslog'.tr);
+                                } else if (consHController
+                                        .consHistory.isEmpty &&
+                                    consHController.filteredListforP.isEmpty) {
+                                  showSimpleErrorDialog(
+                                      errorDescription: 'conslog1'.tr);
+                                } else {
+                                  consHController.refreshD();
+                                }
+                              },
+                            )),
                       ),
                     ]),
                   ]),
@@ -131,12 +168,18 @@ class DocConsHistoryScreen extends StatelessWidget {
         style: body14Medium,
       );
     }
+    firedOnce.value
+        ? null
+        : consHController.filteredListforDoc
+            .assignAll(consHController.consHistory);
+    firedOnce.value = true;
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shrinkWrap: true,
-      itemCount: consHController.consHistory.length,
+      itemCount: consHController.filteredListforDoc.length,
       itemBuilder: (context, index) {
-        return displayConsHistory(consHController.consHistory[index], index);
+        return displayConsHistory(
+            consHController.filteredListforDoc[index], index);
       },
     );
   }

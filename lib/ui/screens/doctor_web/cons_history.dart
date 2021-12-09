@@ -34,6 +34,7 @@ class ResponsiveBody extends GetResponsiveView {
   final _scrollController2 = ScrollController();
   final _scrollController3 = ScrollController();
   final RxBool doneLoad = false.obs;
+  final RxBool firedOnce = false.obs;
 
   @override
   Widget? builder() {
@@ -294,6 +295,11 @@ class ResponsiveBody extends GetResponsiveView {
         style: body14Medium,
       );
     }
+    firedOnce.value
+        ? null
+        : consHController.filteredListforDoc
+            .assignAll(consHController.consHistory);
+    firedOnce.value = true;
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -301,9 +307,10 @@ class ResponsiveBody extends GetResponsiveView {
         controller: _scrollController2,
         addAutomaticKeepAlives: true,
         shrinkWrap: true,
-        itemCount: consHController.consHistory.length,
+        itemCount: consHController.filteredListforDoc.length,
         itemBuilder: (context, index) {
-          return displayConsHistory(consHController.consHistory[index], index);
+          return displayConsHistory(
+              consHController.filteredListforDoc[index], index);
         },
       ),
     );

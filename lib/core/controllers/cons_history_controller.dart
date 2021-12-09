@@ -37,64 +37,58 @@ class ConsHistoryController extends GetxController {
     super.onReady();
     log.i('onReady | Cons History');
     if (authController.userRole == 'doctor') {
-      getConsHistoryForDoctor().then((value) {
-        consHistory.value = value;
-        filteredListforDoc.assignAll(consHistory);
-        isLoading.value = false;
-      });
+      consHistory.bindStream(getConsHistoryForDoctor());
     } else if (authController.userRole == 'patient') {
-      getConsHistoryForPatient().then((value) {
-        consHistory.value = value;
-        filteredListforP.assignAll(consHistory);
-        isLoading.value = false;
-      });
+      consHistory.bindStream(getConsHistoryForPatient());
     }
   }
 
-  Future<List<ConsultationHistoryModel>> getConsHistoryForPatient() async {
+  @override
+  void onInit() {
+    super.onInit();
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading.value = false;
+    });
+  }
+
+  Stream<List<ConsultationHistoryModel>> getConsHistoryForPatient() {
     log.i('Get Cons History for Patient - ${auth.currentUser!.uid}');
     return firestore
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateConsEnd', descending: true)
-        .get()
-        .then(
-          (query) => query.docs
-              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
-              .toList(),
-        )
-        .catchError((onError) {
-      print(onError);
-      isLoading.value = false;
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return ConsultationHistoryModel.fromJson(item.data());
+      }).toList();
     });
   }
 
-  Future<List<ConsultationHistoryModel>> getConsHistoryForDoctor() async {
+  Stream<List<ConsultationHistoryModel>> getConsHistoryForDoctor() {
     log.i('Get Cons History for Doctor - ${auth.currentUser!.uid}');
     return firestore
         .collection('cons_history')
         .where('docID', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateConsEnd', descending: true)
-        .get()
-        .then(
-          (query) => query.docs
-              .map((item) => ConsultationHistoryModel.fromJson(item.data()))
-              .toList(),
-        )
-        .catchError((onError) {
-      print(onError);
-      isLoading.value = false;
+        .snapshots()
+        .map((query) {
+      return query.docs.map((item) {
+        isLoading.value = false;
+        return ConsultationHistoryModel.fromJson(item.data());
+      }).toList();
     });
   }
 
   void refresh() {
-    consHistory.clear();
-    consHistory.assignAll(filteredListforP);
+    filteredListforP.clear();
+    filteredListforP.assignAll(consHistory);
   }
 
   void refreshD() {
-    consHistory.clear();
-    consHistory.assignAll(filteredListforDoc);
+    filteredListforDoc.clear();
+    filteredListforDoc.assignAll(consHistory);
   }
 
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
@@ -177,17 +171,16 @@ class ConsHistoryController extends GetxController {
   }
 
   filterForDoctor({required String name}) {
-    filteredListforDoc.assignAll(consHistory);
-    consHistory.clear();
+    filteredListforDoc.clear();
 
     //filter for name of patient only
     if (name != '') {
-      for (var i = 0; i < filteredListforDoc.length; i++) {
-        if (filteredListforDoc[i]
+      for (var i = 0; i < consHistory.length; i++) {
+        if (consHistory[i]
             .fullName!
             .toLowerCase()
             .contains(name.toLowerCase())) {
-          consHistory.add(filteredListforDoc[i]);
+          filteredListforDoc.add(consHistory[i]);
         }
       }
     }
@@ -228,15 +221,15 @@ class ConsHistoryController extends GetxController {
   }
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    consHistory.clear();
+    filteredListforP.clear();
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
-    for (var i = 0; i < filteredListforP.length; i++) {
+    for (var i = 0; i < consHistory.length; i++) {
       String dateConstant =
-          filteredListforP[i].dateConsEnd!.toDate().month.toString() +
+          consHistory[i].dateConsEnd!.toDate().month.toString() +
               " - " +
-              filteredListforP[i].dateConsEnd!.toDate().day.toString() +
+              consHistory[i].dateConsEnd!.toDate().day.toString() +
               " - " +
-              filteredListforP[i].dateConsEnd!.toDate().year.toString();
+              consHistory[i].dateConsEnd!.toDate().year.toString();
 
       String dateSelected = myTimeStamp.toDate().month.toString() +
           " - " +
@@ -249,7 +242,7 @@ class ConsHistoryController extends GetxController {
           " dateSelected  " +
           dateSelected);
       if (dateConstant == dateSelected) {
-        consHistory.add(filteredListforP[i]);
+        filteredListforP.add(consHistory[i]);
       }
     }
     Get.back();
