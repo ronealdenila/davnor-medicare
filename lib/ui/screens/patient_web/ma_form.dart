@@ -29,7 +29,7 @@ class MAFormWebScreen extends StatelessWidget {
 class ResponsiveBody extends GetResponsiveView {
   ResponsiveBody(this.context);
   final BuildContext context;
-  static MARequestController ma = Get.find();
+  final MARequestController ma = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final NavigationController navigationController = Get.find();
   final AppController appController = Get.find();

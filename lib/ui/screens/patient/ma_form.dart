@@ -17,7 +17,7 @@ import 'package:davnor_medicare/constants/app_items.dart';
 import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart';
 
 class MAFormScreen extends StatelessWidget {
-  static MARequestController ma = Get.find();
+  final MARequestController ma = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AppController appController = Get.find();
   final GlobalKey<FormFieldState> mafdpKey1 = GlobalKey<FormFieldState>();

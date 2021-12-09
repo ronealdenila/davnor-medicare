@@ -1,5 +1,9 @@
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +11,7 @@ import 'package:get/get.dart';
 
 class PSWDRegistrationController extends GetxController {
   final log = getLogger('PSWD Registration Controller');
-
+  final AdminMenuController menuController = Get.find();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -15,6 +19,7 @@ class PSWDRegistrationController extends GetxController {
   final RxString position = ''.obs;
 
   Future<void> registerPSWD() async {
+    showLoading();
     final app = await Firebase.initializeApp(
         name: 'secondary', options: Firebase.app().options);
     await FirebaseAuth.instanceFor(app: app)
@@ -23,11 +28,9 @@ class PSWDRegistrationController extends GetxController {
       password: '123456',
     )
         .then((result) async {
-      final _userId = result.user!.uid;
-      await _createPSWDUser(_userId);
+      await _createPSWDUser(result.user!.uid);
+      await app.delete();
     });
-
-    await app.delete();
   }
 
   Future<void> _createPSWDUser(String userID) async {
@@ -48,8 +51,13 @@ class PSWDRegistrationController extends GetxController {
         'disabled': false
       },
     ).then((value) {
-      Get.defaultDialog(title: 'Doctor is successfully registered');
+      dismissDialog();
+      Get.defaultDialog(
+          title: 'PSWD Staff is successfully registered',
+          middleText: "Default password has been assign to the staff's account",
+          onConfirm: navigateToList);
     }).catchError((onError) {
+      dismissDialog();
       Get.defaultDialog(title: 'Something went wrong');
     });
 
@@ -61,5 +69,11 @@ class PSWDRegistrationController extends GetxController {
     emailController.clear();
     firstNameController.clear();
     lastNameController.clear();
+  }
+
+  void navigateToList() {
+    dismissDialog();
+    menuController.changeActiveItemTo('List of PSWD Personnel');
+    navigationController.navigateTo(Routes.PSWD_STAFF_LIST);
   }
 }

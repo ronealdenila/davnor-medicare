@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/admin/menu_controller.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/admin/helpers/local_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +12,7 @@ import 'package:get/get.dart';
 
 class DoctorRegistrationController extends GetxController {
   final log = getLogger('Doctor Registration Controller');
-
+  final AdminMenuController menuController = Get.find();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -68,15 +71,15 @@ class DoctorRegistrationController extends GetxController {
     ).then((value) {
       addDoctorStatus(userID);
       dismissDialog();
-      showErrorDialog(
-          errorTitle: 'Doctor is successfully registered',
-          errorDescription:
-              "Default password has been assign to the doctor's account");
+      Get.defaultDialog(
+          title: 'Doctor is successfully registered',
+          middleText:
+              "Default password has been assign to the doctor's account",
+          onConfirm: navigateToList);
     }).catchError((onError) {
       dismissDialog();
-      showErrorDialog(
-          errorTitle: 'Something went wrong',
-          errorDescription: 'Could not register doctor');
+      showSimpleErrorDialog(
+          errorDescription: 'Something went wrong. Could not register doctor');
     });
     _clearControllers();
   }
@@ -116,5 +119,11 @@ class DoctorRegistrationController extends GetxController {
     emailController.clear();
     firstNameController.clear();
     lastNameController.clear();
+  }
+
+  void navigateToList() {
+    dismissDialog();
+    menuController.changeActiveItemTo('List Of Doctors');
+    navigationController.navigateTo(Routes.DOCTOR_LIST);
   }
 }

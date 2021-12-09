@@ -15,7 +15,7 @@ import 'package:davnor_medicare/core/controllers/patient/ma_req_controller.dart'
 import 'package:get/get.dart';
 
 class MADescriptionScreen extends StatelessWidget {
-  final MARequestController controller = Get.put(MARequestController());
+  final MARequestController ma = Get.put(MARequestController());
   final StatusController stats = Get.find();
 
   @override
@@ -175,12 +175,12 @@ class MADescriptionScreen extends StatelessWidget {
                   dialogTitle: 'dialog2'.tr,
                   dialogCaption: 'dialogsub2'.tr,
                   onYesTap: () {
-                    controller.isMAForYou.value = true;
+                    ma.isMAForYou.value = true;
                     dismissDialog();
                     Get.to(() => MAFormScreen());
                   },
                   onNoTap: () {
-                    controller.isMAForYou.value = false;
+                    ma.isMAForYou.value = false;
                     dismissDialog();
                     Get.to(() => MAFormScreen());
                   },
