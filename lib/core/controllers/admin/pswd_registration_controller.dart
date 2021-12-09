@@ -31,8 +31,8 @@ class PSWDRegistrationController extends GetxController {
     )
         .then((result) async {
       await _createPSWDUser(result.user!.uid);
-      await app.delete();
     });
+    await app.delete();
   }
 
   Future<void> _createPSWDUser(String userID) async {

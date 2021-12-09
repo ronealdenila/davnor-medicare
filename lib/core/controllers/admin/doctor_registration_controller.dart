@@ -46,8 +46,8 @@ class DoctorRegistrationController extends GetxController {
       )
           .then((result) async {
         await _createDoctorUser(result.user!.uid);
-        await app.delete();
       });
+      await app.delete();
     }
   }
 
