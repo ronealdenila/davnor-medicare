@@ -13,11 +13,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class LiveChatScreen extends StatelessWidget {
-  static LiveConsController liveCont = Get.find();
+class LiveChatScreen extends StatefulWidget {
+  @override
+  State<LiveChatScreen> createState() => _LiveChatScreenState();
+}
+
+class _LiveChatScreenState extends State<LiveChatScreen> {
   final LiveConsultationModel consData = Get.arguments as LiveConsultationModel;
   final LiveChatController liveChatCont = Get.put(LiveChatController());
-  final RxBool errorPhoto = false.obs;
+  final LiveConsController liveCont = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    ever(liveCont.liveCons, (value) {
+      if (liveCont.liveCons.isEmpty) {
+        Get.back();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

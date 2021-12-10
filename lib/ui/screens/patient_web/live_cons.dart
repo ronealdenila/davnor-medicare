@@ -1,8 +1,11 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/patient/menu_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/patient_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
@@ -19,6 +22,7 @@ class LiveConsWebScreen extends StatefulWidget {
 }
 
 class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
+  final PatientMenuController menuController = Get.find();
   static AuthController authController = Get.find();
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   final fetchedData = authController.patientModel.value;
@@ -30,8 +34,14 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
 
   @override
   void initState() {
-    liveCont.doneFetching.value = false;
     super.initState();
+    liveCont.doneFetching.value = false;
+    ever(liveCont.liveCons, (value) {
+      if (liveCont.liveCons.isEmpty) {
+        menuController.changeActiveItemTo('Dashboard');
+        navigationController.navigateTo(Routes.PATIENT_WEB_HOME);
+      }
+    });
   }
 
   @override
