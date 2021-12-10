@@ -28,7 +28,7 @@ class AdminHomeScreen extends StatelessWidget {
   static AuthController authController = Get.find();
   final AdminMenuController menuController =
       Get.put(AdminMenuController(), permanent: true);
-  final DoctorListController dListController =
+  final DoctorListController docListController =
       Get.put(DoctorListController(), permanent: true);
   final DoctorRegistrationController doctorRegistrationController =
       Get.put(DoctorRegistrationController(), permanent: true);
@@ -174,7 +174,7 @@ class ResponsiveView extends GetResponsiveView {
   static AuthController authController = Get.find();
   final fetchedData = authController.adminModel.value;
   final PSWDStaffListController pListController = Get.find();
-  final DoctorListController dListController = Get.find();
+  final DoctorListController docListController = Get.find();
 
   @override
   Widget phone() => phoneVersion();
@@ -349,7 +349,7 @@ class ResponsiveView extends GetResponsiveView {
                                             Align(
                                               child: Obx(
                                                 () => AutoSizeText(
-                                                  '${dListController.doctorList.length}',
+                                                  '${docListController.doctorList.length}',
                                                   style: title130Bold.copyWith(
                                                       color:
                                                           kcVerySoftBlueColor),
@@ -774,7 +774,7 @@ class ResponsiveView extends GetResponsiveView {
                           Align(
                             child: Obx(
                               () => AutoSizeText(
-                                '${dListController.doctorList.length}',
+                                '${docListController.doctorList.length}',
                                 style: title130Bold.copyWith(
                                     color: kcVerySoftBlueColor),
                                 maxLines: 1,

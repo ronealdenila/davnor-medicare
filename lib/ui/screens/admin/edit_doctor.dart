@@ -36,7 +36,7 @@ class ResponsiveView extends GetResponsiveView {
   final NavigationController navigationController = Get.find();
   final GlobalKey<FormFieldState> eddpKey1 = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> eddpKey2 = GlobalKey<FormFieldState>();
-  final DoctorListController dListController = Get.find();
+  final DoctorListController docListController = Get.find();
 
   @override
   Widget phone() =>
@@ -93,14 +93,14 @@ class ResponsiveView extends GetResponsiveView {
       children: [
         AdminButton(
           onItemTap: () {
-            dListController.updateDoctor(model);
+            docListController.updateDoctor(model);
           },
           buttonText: 'Save',
         ),
         horizontalSpace40,
         AdminButton(
           onItemTap: () {
-            dListController.enableEditing.value = false;
+            docListController.enableEditing.value = false;
           },
           buttonText: 'Cancel',
         ),
@@ -111,7 +111,7 @@ class ResponsiveView extends GetResponsiveView {
   Widget userDoctorImage() {
     return CircleAvatar(
       radius: 40,
-      foregroundImage: NetworkImage(dListController.getProfilePhoto(model)),
+      foregroundImage: NetworkImage(docListController.getProfilePhoto(model)),
       onForegroundImageError: (_, __) {
         errorPhoto.value = true;
       },
@@ -131,11 +131,11 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget editInfoDoc() {
-    dListController.editFirstName.text = model.firstName!;
-    dListController.editLastName.text = model.lastName!;
-    dListController.editClinicHours.text = model.clinicHours!;
-    dListController.editTitle.value = model.title!;
-    dListController.editDepartment.value = model.department!;
+    docListController.editFirstName.text = model.firstName!;
+    docListController.editLastName.text = model.lastName!;
+    docListController.editClinicHours.text = model.clinicHours!;
+    docListController.editTitle.value = model.title!;
+    docListController.editDepartment.value = model.department!;
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       verticalSpace15,
@@ -149,8 +149,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
-            controller: dListController.editLastName,
-            enabled: dListController.enableEditing.value,
+            controller: docListController.editLastName,
+            enabled: docListController.enableEditing.value,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -162,7 +162,7 @@ class ResponsiveView extends GetResponsiveView {
             onChanged: (value) {
               return;
             },
-            onSaved: (value) => dListController.editLastName.text = value!,
+            onSaved: (value) => docListController.editLastName.text = value!,
           ),
         ),
       ),
@@ -176,8 +176,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
-            controller: dListController.editFirstName,
-            enabled: dListController.enableEditing.value,
+            controller: docListController.editFirstName,
+            enabled: docListController.enableEditing.value,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -189,7 +189,7 @@ class ResponsiveView extends GetResponsiveView {
             onChanged: (value) {
               return;
             },
-            onSaved: (value) => dListController.editFirstName.text = value!,
+            onSaved: (value) => docListController.editFirstName.text = value!,
           ),
         ),
       ),
@@ -199,10 +199,10 @@ class ResponsiveView extends GetResponsiveView {
       ),
       Obx(
         () => SizedBox(
-          width: dListController.enableEditing.value ? 0 : 340,
-          height: dListController.enableEditing.value ? 0 : 90,
+          width: docListController.enableEditing.value ? 0 : 340,
+          height: docListController.enableEditing.value ? 0 : 90,
           child: Visibility(
-            visible: !dListController.enableEditing.value,
+            visible: !docListController.enableEditing.value,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -225,7 +225,7 @@ class ResponsiveView extends GetResponsiveView {
       ),
       Obx(
         () => Visibility(
-          visible: dListController.enableEditing.value,
+          visible: docListController.enableEditing.value,
           child: SizedBox(
             width: 340,
             height: 90,
@@ -234,10 +234,10 @@ class ResponsiveView extends GetResponsiveView {
               hintText: 'Select title',
               dropdownItems: title,
               onChanged: (item) {
-                dListController.editTitle.value = item!.name;
+                docListController.editTitle.value = item!.name;
               },
               onSaved: (Item? item) =>
-                  dListController.editTitle.value = item!.name,
+                  docListController.editTitle.value = item!.name,
             ),
           ),
         ),
@@ -248,10 +248,10 @@ class ResponsiveView extends GetResponsiveView {
       ),
       Obx(
         () => SizedBox(
-          width: dListController.enableEditing.value ? 0 : 340,
-          height: dListController.enableEditing.value ? 0 : 90,
+          width: docListController.enableEditing.value ? 0 : 340,
+          height: docListController.enableEditing.value ? 0 : 90,
           child: Visibility(
-            visible: !dListController.enableEditing.value,
+            visible: !docListController.enableEditing.value,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -274,7 +274,7 @@ class ResponsiveView extends GetResponsiveView {
       ),
       Obx(
         () => Visibility(
-          visible: dListController.enableEditing.value,
+          visible: docListController.enableEditing.value,
           child: SizedBox(
             width: 340,
             height: 90,
@@ -283,10 +283,10 @@ class ResponsiveView extends GetResponsiveView {
               hintText: 'Select department',
               dropdownItems: department,
               onChanged: (item) {
-                dListController.editDepartment.value = item!.name;
+                docListController.editDepartment.value = item!.name;
               },
               onSaved: (Item? item) =>
-                  dListController.editDepartment.value = item!.name,
+                  docListController.editDepartment.value = item!.name,
             ),
           ),
         ),
@@ -301,8 +301,8 @@ class ResponsiveView extends GetResponsiveView {
         height: 90,
         child: Obx(
           () => TextFormField(
-            controller: dListController.editClinicHours,
-            enabled: dListController.enableEditing.value,
+            controller: docListController.editClinicHours,
+            enabled: docListController.enableEditing.value,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -314,7 +314,7 @@ class ResponsiveView extends GetResponsiveView {
             onChanged: (value) {
               return;
             },
-            onSaved: (value) => dListController.editClinicHours.text = value!,
+            onSaved: (value) => docListController.editClinicHours.text = value!,
           ),
         ),
       ),
@@ -345,10 +345,10 @@ class ResponsiveView extends GetResponsiveView {
                 () => IconButton(
                     iconSize: 30,
                     onPressed: () {
-                      dListController.enableEditing.value =
-                          !dListController.enableEditing.value;
+                      docListController.enableEditing.value =
+                          !docListController.enableEditing.value;
                     },
-                    icon: dListController.enableEditing.value
+                    icon: docListController.enableEditing.value
                         ? Icon(Icons.cancel_outlined)
                         : Icon(Icons.edit_outlined)),
               )

@@ -69,6 +69,29 @@ class PSWDStaffListController extends GetxController {
     });
   }
 
+  Future<void> enablePSWDStaff(String uid) async {
+    await firestore
+        .collection('pswd_personnel')
+        .doc(uid)
+        .update({'disabled': false}).then(
+      (value) async {
+        await firestore
+            .collection('users')
+            .doc(uid)
+            .update({'disabled': false});
+        dListController.reloadAfter();
+        Get.defaultDialog(
+            title: 'PSWD Staff is successfully enabled',
+            middleText: "Please make sure to check app pswd staffs",
+            onConfirm: navigateToList);
+      },
+    ).catchError(
+      (error) {
+        Get.defaultDialog(title: 'Error Occured! Staff not enabled');
+      },
+    );
+  }
+
   Future<void> updatePSWD(PswdModel model) async {
     showLoading();
     await firestore.collection('pswd_personnel').doc(model.userID).update({

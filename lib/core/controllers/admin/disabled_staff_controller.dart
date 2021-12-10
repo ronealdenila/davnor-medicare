@@ -16,14 +16,14 @@ class DisabledStaffsController extends GetxController {
   void onReady() {
     super.onReady();
     log.i('onReady | Disabled PSWD Staff Controller');
-    getDoctors().then((value) {
+    getPSWDStaff().then((value) {
       disabledList.value = value;
       filteredDisabledList.assignAll(disabledList);
       isLoading.value = false;
     });
   }
 
-  Future<List<PswdModel>> getDoctors() async {
+  Future<List<PswdModel>> getPSWDStaff() async {
     return firestore
         .collection('pswd_personnel')
         .where('disabled', isEqualTo: true)
@@ -35,9 +35,11 @@ class DisabledStaffsController extends GetxController {
         );
   }
 
-  void reloadAfter() {
-    disabledList.clear();
-    disabledList.assignAll(filteredDisabledList);
+  Future<void> reloadAfter() async {
+    await getPSWDStaff().then((value) {
+      disabledList.value = value;
+      filteredDisabledList.assignAll(disabledList);
+    });
   }
 
   filter({required String name}) {

@@ -1,6 +1,8 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_doctors_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/doctor_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -10,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DisabledDoctorListScreen extends StatelessWidget {
-  static DisabledDoctorsController dListController =
-      Get.put(DisabledDoctorsController());
+  final DoctorListController docListController = Get.find();
+  final DisabledDoctorsController dListController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +197,22 @@ class DisabledDoctorListScreen extends StatelessWidget {
                 child: Wrap(
                   runSpacing: 8,
                   children: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        showConfirmationDialog(
+                            dialogTitle: 'Are you sure?',
+                            dialogCaption:
+                                "By clicking YES, you are agreeing to enable the staff's account",
+                            onYesTap: () =>
+                                docListController.enableDoctor(model.userID!),
+                            onNoTap: () => dismissDialog());
+                      },
+                      child: Text(
+                        'Enable',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                    horizontalSpace15,
                     InkWell(
                       onTap: () {
                         showDialog(

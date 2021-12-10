@@ -76,6 +76,29 @@ class DoctorListController extends GetxController {
     );
   }
 
+  Future<void> enableDoctor(String uid) async {
+    await firestore
+        .collection('doctors')
+        .doc(uid)
+        .update({'disabled': false}).then(
+      (value) async {
+        await firestore
+            .collection('users')
+            .doc(uid)
+            .update({'disabled': false});
+        dListController.reloadAfter();
+        Get.defaultDialog(
+            title: 'Doctor is successfully enabled',
+            middleText: "Please make sure to check app doctors",
+            onConfirm: navigateToList);
+      },
+    ).catchError(
+      (error) {
+        Get.defaultDialog(title: 'Error Occured! Doctor not enabled');
+      },
+    );
+  }
+
   Future<void> updateDoctor(DoctorModel model) async {
     showLoading();
     await firestore.collection('doctors').doc(model.userID).update({

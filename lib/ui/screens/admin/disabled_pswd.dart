@@ -1,6 +1,8 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_staff_controller.dart';
+import 'package:davnor_medicare/core/controllers/admin/pswd_staff_list_controller.dart';
 import 'package:davnor_medicare/core/models/user_model.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/helpers/validator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -10,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DisabledPSWDStaffScreen extends StatelessWidget {
-  static DisabledStaffsController dListController =
-      Get.put(DisabledStaffsController());
+  final PSWDStaffListController pListController = Get.find();
+  final DisabledStaffsController dListController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +199,22 @@ class DisabledPSWDStaffScreen extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
+                        showConfirmationDialog(
+                            dialogTitle: 'Are you sure?',
+                            dialogCaption:
+                                "By clicking YES, you are agreeing to enable the staff's account",
+                            onYesTap: () =>
+                                pListController.enablePSWDStaff(model.userID!),
+                            onNoTap: () => dismissDialog());
+                      },
+                      child: Text(
+                        'Enable',
+                        style: body16RegularUnderlineBlue,
+                      ),
+                    ),
+                    horizontalSpace15,
+                    InkWell(
+                      onTap: () {
                         showDialog(
                             context: context,
                             builder: (context) => confirmProcess(model));
@@ -206,7 +224,6 @@ class DisabledPSWDStaffScreen extends StatelessWidget {
                         style: body16RegularUnderlineBlue,
                       ),
                     ),
-                    horizontalSpace15,
                   ],
                 ),
               ),
