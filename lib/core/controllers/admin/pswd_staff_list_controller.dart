@@ -64,6 +64,7 @@ class PSWDStaffListController extends GetxController {
         .doc(uid)
         .update({'disabled': true}).then((value) async {
       await firestore.collection('users').doc(uid).update({'disabled': true});
+      await refetchList();
       await dListController.reloadAfter();
       Get.defaultDialog(title: 'Successfuly disabled PSWDStaff');
     });
