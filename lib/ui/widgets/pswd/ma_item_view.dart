@@ -391,7 +391,7 @@ class PSWDItemView extends GetResponsiveView {
       borderRadius: BorderRadius.circular(80),
       child: Image.network(
         appController.getProfilePhoto(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 80,
         width: 80,
         errorBuilder: (context, error, stackTrace) {

@@ -467,7 +467,7 @@ class ResponsiveBody extends GetResponsiveView {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         consHController.getDoctorProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 15,
         width: 15,
         errorBuilder: (context, error, stackTrace) {
@@ -491,7 +491,7 @@ class ResponsiveBody extends GetResponsiveView {
       borderRadius: BorderRadius.circular(30),
       child: Image.network(
         consHController.getDoctorProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 30,
         width: 30,
         errorBuilder: (context, error, stackTrace) {

@@ -113,7 +113,7 @@ class ResponsiveView extends GetResponsiveView {
       borderRadius: BorderRadius.circular(40),
       child: Image.network(
         docListController.getProfilePhoto(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 40,
         width: 40,
         errorBuilder: (context, error, stackTrace) {

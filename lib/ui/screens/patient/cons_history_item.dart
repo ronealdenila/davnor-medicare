@@ -96,7 +96,7 @@ class ConsHistoryItemScreen extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         consHController.getDoctorProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 15,
         width: 15,
         errorBuilder: (context, error, stackTrace) {

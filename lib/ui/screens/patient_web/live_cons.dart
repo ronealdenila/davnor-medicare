@@ -354,7 +354,7 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         liveCont.getDoctorProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 15,
         width: 15,
         errorBuilder: (context, error, stackTrace) {
@@ -378,7 +378,7 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
       borderRadius: BorderRadius.circular(30),
       child: Image.network(
         liveCont.getDoctorProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 30,
         width: 30,
         errorBuilder: (context, error, stackTrace) {

@@ -94,7 +94,7 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
       ),
       child: Image.network(
         img,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: kIsWeb ? 100 : 60,
         width: kIsWeb ? 100 : 60,
         errorBuilder: (context, error, stackTrace) {

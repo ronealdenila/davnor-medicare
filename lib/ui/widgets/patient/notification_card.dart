@@ -82,7 +82,7 @@ class NotificationCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
         notif.photo!,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 20,
         width: 20,
         errorBuilder: (context, error, stackTrace) {

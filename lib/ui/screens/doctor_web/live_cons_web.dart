@@ -409,7 +409,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         liveCont.getPatientProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 15,
         width: 15,
         errorBuilder: (context, error, stackTrace) {
@@ -579,7 +579,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       borderRadius: BorderRadius.circular(30),
       child: Image.network(
         liveCont.getPatientProfile(model),
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
         height: 30,
         width: 30,
         errorBuilder: (context, error, stackTrace) {
