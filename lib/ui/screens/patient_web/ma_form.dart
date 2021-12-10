@@ -29,7 +29,8 @@ class MAFormWebScreen extends StatelessWidget {
 class ResponsiveBody extends GetResponsiveView {
   ResponsiveBody(this.context);
   final BuildContext context;
-  final MARequestController ma = Get.find();
+  final MARequestController ma =
+      Get.put(MARequestController(), permanent: true);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final NavigationController navigationController = Get.find();
   final AppController appController = Get.find();
@@ -64,7 +65,7 @@ class ResponsiveBody extends GetResponsiveView {
                             )),
                         verticalSpace5,
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Flexible(
@@ -72,18 +73,6 @@ class ResponsiveBody extends GetResponsiveView {
                                   child: Text(
                                     'details'.tr,
                                     style: subtitle20Medium,
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: SizedBox(
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Icon(
-                                      Icons.info,
-                                      size: 28,
-                                      color: verySoftBlueColor[10],
-                                    ),
                                   ),
                                 ),
                               ),

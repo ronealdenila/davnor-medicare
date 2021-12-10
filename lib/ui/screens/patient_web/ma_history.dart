@@ -6,7 +6,7 @@ import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
-import 'package:davnor_medicare/ui/widgets/patient/ma_card.dart';
+import 'package:davnor_medicare/ui/widgets/patient/mah_card_web.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,10 +124,7 @@ class ResponsiveBody extends GetResponsiveView {
                     color: Color(0xFFCBD4E1),
                   ),
                 )),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Obx(() => RequestsListView()),
-                ))),
+                child: Obx(() => RequestsListView()))),
         Expanded(
             flex: 7,
             child: Container(
@@ -184,11 +181,16 @@ class ResponsiveBody extends GetResponsiveView {
         shrinkWrap: true,
         itemCount: maHController.filteredListforP.length,
         itemBuilder: (context, index) {
-          return MACard(
-              maHistory: maHController.filteredListforP[index],
-              onTap: () {
-                selectedIndex.value = index;
-              });
+          return Obx(() => Container(
+                color: selectedIndex.value == index
+                    ? verySoftOrange
+                    : Colors.white,
+                child: MAHistoryWCard(
+                    maHistory: maHController.filteredListforP[index],
+                    onTap: () {
+                      selectedIndex.value = index;
+                    }),
+              ));
         },
       ),
     );
@@ -367,7 +369,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget attachedPhotos() {
     controller.splitFetchedImage(
-        '${maHController.maHistoryList[selectedIndex.value].validID}>>>${maHController.maHistoryList[selectedIndex.value].prescriptions}>>>');
+        '${maHController.maHistoryList[selectedIndex.value].validID}>>>${maHController.maHistoryList[selectedIndex.value].prescriptions}');
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
