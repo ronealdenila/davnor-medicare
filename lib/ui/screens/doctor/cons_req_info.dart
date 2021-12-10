@@ -126,21 +126,21 @@ class ConsReqInfoScreen extends StatelessWidget {
 
   Widget getPhoto(ConsultationModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(45),
       child: Image.network(
         doctorHomeController.getProfilePhoto(model),
         fit: BoxFit.cover,
-        height: 30,
-        width: 30,
+        height: 45,
+        width: 45,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 30,
-              width: 30,
+              height: 45,
+              width: 45,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
                   '${doctorHomeController.getFirstName(model)[0]}',
-                  style: title36Regular.copyWith(color: Colors.white),
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
               ));
         },

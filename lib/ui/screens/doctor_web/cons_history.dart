@@ -502,16 +502,16 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget getPhotoHeader(ConsultationHistoryModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(50),
       child: Image.network(
         consHController.getPatientProfile(model),
         fit: BoxFit.cover,
-        height: 15,
-        width: 15,
+        height: 50,
+        width: 50,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 15,
-              width: 15,
+              height: 50,
+              width: 50,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
@@ -526,16 +526,16 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget getPhoto(ConsultationHistoryModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(100),
       child: Image.network(
         consHController.getPatientProfile(model),
         fit: BoxFit.cover,
-        height: 30,
-        width: 30,
+        height: 100,
+        width: 100,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 30,
-              width: 30,
+              height: 100,
+              width: 100,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(

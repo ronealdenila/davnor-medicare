@@ -93,7 +93,7 @@ class NotificationCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   'DM',
-                  style: title36Regular.copyWith(color: Colors.white),
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
               ));
         },

@@ -175,16 +175,16 @@ class LiveConsultationScreen extends StatelessWidget {
 
   Widget getPhoto(LiveConsultationModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(45),
       child: Image.network(
         liveCont.getPatientProfile(model),
         fit: BoxFit.cover,
-        height: 15,
-        width: 15,
+        height: 45,
+        width: 45,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 15,
-              width: 15,
+              height: 45,
+              width: 45,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(

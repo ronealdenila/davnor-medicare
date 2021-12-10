@@ -116,7 +116,7 @@ class ForVerificationCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   '${vf.getFirstName(model)[0]}',
-                  style: title36Regular.copyWith(color: Colors.white),
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
               ));
         },
