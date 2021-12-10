@@ -102,16 +102,16 @@ class ForVerificationCard extends StatelessWidget {
 
   Widget getPhoto(VerificationReqModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(55),
       child: Image.network(
         vf.getProfilePhoto(model),
         fit: BoxFit.cover,
-        height: 30,
-        width: 30,
+        height: 55,
+        width: 55,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 30,
-              width: 30,
+              height: 55,
+              width: 55,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(

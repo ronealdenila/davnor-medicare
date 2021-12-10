@@ -221,7 +221,7 @@ class ResponsiveBody extends GetResponsiveView {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         "Patient's Infomation",
-        style: subtitle18MediumNeutral,
+        style: subtitle20MediumNeutral,
       ),
       verticalSpace15,
       Row(
@@ -230,12 +230,12 @@ class ResponsiveBody extends GetResponsiveView {
           const SizedBox(
             width: 120,
             child: Text('Patient Name',
-                textAlign: TextAlign.left, style: caption12Medium),
+                textAlign: TextAlign.left, style: caption15Medium),
           ),
           Flexible(
             child: Text(
                 maHController.maHistoryList[selectedIndex.value].fullName!,
-                style: caption12RegularNeutral),
+                style: caption15RegularNeutral),
           ),
         ],
       ),
@@ -246,10 +246,10 @@ class ResponsiveBody extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Patient Age',
-                  textAlign: TextAlign.left, style: caption12Medium)),
+                  textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
             child: Text(maHController.maHistoryList[selectedIndex.value].age!,
-                style: caption12RegularNeutral),
+                style: caption15RegularNeutral),
           ),
         ],
       ),
@@ -260,11 +260,11 @@ class ResponsiveBody extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Address',
-                  textAlign: TextAlign.left, style: caption12Medium)),
+                  textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
             child: Text(
                 maHController.maHistoryList[selectedIndex.value].address!,
-                style: caption12RegularNeutral),
+                style: caption15RegularNeutral),
           ),
         ],
       ),
@@ -275,11 +275,11 @@ class ResponsiveBody extends GetResponsiveView {
           const SizedBox(
               width: 120,
               child: Text('Gender',
-                  textAlign: TextAlign.left, style: caption12Medium)),
+                  textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
             child: Text(
                 maHController.maHistoryList[selectedIndex.value].gender!,
-                style: caption12RegularNeutral),
+                style: caption15RegularNeutral),
           ),
         ],
       ),
@@ -290,11 +290,11 @@ class ResponsiveBody extends GetResponsiveView {
           const SizedBox(
             width: 120,
             child: Text('Patient Type',
-                textAlign: TextAlign.left, style: caption12Medium),
+                textAlign: TextAlign.left, style: caption15Medium),
           ),
           Flexible(
             child: Text(maHController.maHistoryList[selectedIndex.value].type!,
-                style: caption12RegularNeutral),
+                style: caption15RegularNeutral),
           ),
         ],
       ),
@@ -309,7 +309,7 @@ class ResponsiveBody extends GetResponsiveView {
         verticalSpace35,
         Text(
           'MA Request Infomation',
-          style: subtitle18MediumNeutral,
+          style: subtitle20MediumNeutral,
         ),
         verticalSpace15,
         Row(
@@ -318,12 +318,12 @@ class ResponsiveBody extends GetResponsiveView {
             const SizedBox(
               width: 120,
               child: Text('Received by',
-                  textAlign: TextAlign.left, style: caption12Medium),
+                  textAlign: TextAlign.left, style: caption15Medium),
             ),
             Flexible(
               child: Text(
                   maHController.maHistoryList[selectedIndex.value].receivedBy!,
-                  style: caption12RegularNeutral),
+                  style: caption15RegularNeutral),
             ),
           ],
         ),
@@ -337,12 +337,12 @@ class ResponsiveBody extends GetResponsiveView {
                 const SizedBox(
                     width: 120,
                     child: Text('Pharmacy',
-                        textAlign: TextAlign.left, style: caption12Medium)),
+                        textAlign: TextAlign.left, style: caption15Medium)),
                 Flexible(
                   child: Text(
                       maHController
                           .maHistoryList[selectedIndex.value].pharmacy!,
-                      style: caption12RegularNeutral),
+                      style: caption15RegularNeutral),
                 ),
               ],
             ),
@@ -353,11 +353,11 @@ class ResponsiveBody extends GetResponsiveView {
                 const SizedBox(
                     width: 120,
                     child: Text('Medicine Worth',
-                        textAlign: TextAlign.left, style: caption12Medium)),
+                        textAlign: TextAlign.left, style: caption15Medium)),
                 Flexible(
                   child: Text(
                       'Php ${maHController.maHistoryList[selectedIndex.value].medWorth}',
-                      style: caption12RegularNeutral),
+                      style: caption15RegularNeutral),
                 ),
               ],
             ),
@@ -423,33 +423,33 @@ class ResponsiveBody extends GetResponsiveView {
               width: 120,
               child: Text(
                 'Date Requested',
-                style: caption12SemiBold,
+                style: caption15SemiBold,
               ),
             ),
-            horizontalSpace15,
+            horizontalSpace20,
             Flexible(
               child: Text(
                 appController.convertTimeStamp(maHController
                     .maHistoryList[selectedIndex.value].dateRqstd!),
-                style: caption12RegularNeutral,
+                style: caption15RegularNeutral,
               ),
             ),
           ]),
           verticalSpace10,
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const SizedBox(
-              width: 120,
+              width: 130,
               child: Text(
                 'Date MA Claimed',
-                style: caption12SemiBold,
+                style: caption15SemiBold,
               ),
             ),
-            horizontalSpace15,
+            horizontalSpace10,
             Flexible(
               child: Text(
                 appController.convertTimeStamp(maHController
                     .maHistoryList[selectedIndex.value].dateClaimed!),
-                style: caption12RegularNeutral,
+                style: caption15RegularNeutral,
               ),
             )
           ]),

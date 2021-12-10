@@ -142,10 +142,10 @@ class ResponsiveView extends GetResponsiveView {
         builder: (context, snapshot) {
           if (snapshot.hasError || !snapshot.hasData) {
             return ClipRRect(
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(115),
                 child: Container(
-                    height: 40,
-                    width: 40,
+                    height: 115,
+                    width: 115,
                     color: verySoftBlueColor[100],
                     child: Center(
                       child: Text(
@@ -157,15 +157,15 @@ class ResponsiveView extends GetResponsiveView {
           final data = snapshot.data!.data() as Map<String, dynamic>;
           return Stack(children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(120),
               child: Image.network(
                 data['profileImage'],
-                height: 40,
-                width: 40,
+                height: 120,
+                width: 120,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                      height: 40,
-                      width: 40,
+                      height: 120,
+                      width: 120,
                       color: verySoftBlueColor[100],
                       child: Center(
                         child: Text(

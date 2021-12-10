@@ -110,16 +110,16 @@ class ResponsiveView extends GetResponsiveView {
 
   Widget userDoctorImage() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(40),
+      borderRadius: BorderRadius.circular(90),
       child: Image.network(
         docListController.getProfilePhoto(model),
         fit: BoxFit.cover,
-        height: 40,
-        width: 40,
+        height: 90,
+        width: 90,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 40,
-              width: 40,
+              height: 90,
+              width: 90,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(

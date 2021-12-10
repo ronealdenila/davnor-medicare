@@ -188,7 +188,7 @@ class MADescriptionWebScreen extends StatelessWidget {
       },
       text: 'ma10'.tr,
       buttonColor: verySoftBlueColor,
-      fontSize: 28,
+      fontSize: 90,
     );
   }
 }

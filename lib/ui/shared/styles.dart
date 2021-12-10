@@ -163,6 +163,12 @@ const TextStyle subtitle20Regular = TextStyle(
   fontWeight: FontWeight.w400,
   fontFamily: 'Inter',
 );
+TextStyle subtitle20MediumNeutral = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
+  color: neutralColor[60],
+);
 TextStyle subtitle24MediumNeutral = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w500,
@@ -387,6 +393,12 @@ const TextStyle caption16SemiBold = TextStyle(
   fontFamily: 'Inter',
   height: 1.5,
 );
+const TextStyle caption15SemiBold = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Inter',
+  height: 1.5,
+);
 const TextStyle caption14SemiBold = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
@@ -398,6 +410,19 @@ const TextStyle caption12SemiBold = TextStyle(
   fontWeight: FontWeight.w600,
   fontFamily: 'Inter',
   height: 1.5,
+);
+
+const TextStyle caption15RegularNeutral = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.w400,
+  fontFamily: 'Inter',
+  color: customNeutralColor,
+);
+
+const TextStyle caption15Medium = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Inter',
 );
 
 const TextStyle caption12Medium = TextStyle(

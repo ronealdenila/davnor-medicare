@@ -296,15 +296,15 @@ class ResponsiveView extends GetResponsiveView {
 
           return Stack(children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(80),
+              borderRadius: BorderRadius.circular(120),
               child: Image.network(
                 data['profileImage'],
-                height: 80,
-                width: 80,
+                height: 120,
+                width: 120,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                      height: 80,
-                      width: 80,
+                      height: 120,
+                      width: 120,
                       color: verySoftBlueColor[100],
                       child: Center(
                         child: Text(

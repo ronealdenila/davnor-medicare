@@ -28,7 +28,7 @@ class NotificationCard extends StatelessWidget {
                 Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(60),
                     ),
                     child: getPhoto()),
                 Flexible(
@@ -79,16 +79,16 @@ class NotificationCard extends StatelessWidget {
 
   Widget getPhoto() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(55),
       child: Image.network(
         notif.photo!,
         fit: BoxFit.cover,
-        height: 20,
-        width: 20,
+        height: 60,
+        width: 60,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 20,
-              width: 20,
+              height: 60,
+              width: 60,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
