@@ -36,6 +36,8 @@ class DisabledStaffsController extends GetxController {
   }
 
   Future<void> reloadAfter() async {
+    disabledList.clear();
+    filteredDisabledList.clear();
     await getPSWDStaff().then((value) {
       disabledList.value = value;
       filteredDisabledList.assignAll(disabledList);

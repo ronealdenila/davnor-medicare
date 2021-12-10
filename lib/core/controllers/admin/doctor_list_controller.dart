@@ -40,6 +40,8 @@ class DoctorListController extends GetxController {
   }
 
   Future<void> refetchList() async {
+    doctorList.clear();
+    filteredDoctorList.clear();
     await getDoctors().then((value) {
       doctorList.value = value;
       filteredDoctorList.assignAll(doctorList);

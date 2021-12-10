@@ -36,6 +36,8 @@ class DisabledDoctorsController extends GetxController {
   }
 
   Future<void> reloadAfter() async {
+    disabledList.clear();
+    filteredDisabledList.clear();
     await getDoctors().then((value) {
       disabledList.value = value;
       filteredDisabledList.assignAll(disabledList);

@@ -37,6 +37,8 @@ class PSWDStaffListController extends GetxController {
   }
 
   Future<void> refetchList() async {
+    pswdList.clear();
+    filteredPswdList.clear();
     await getPSWDStaffs().then((value) {
       pswdList.value = value;
       filteredPswdList.assignAll(pswdList);
