@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/admin/disabled_doctors_controller.dart';
 import 'package:davnor_medicare/core/controllers/navigation_controller.dart';
@@ -19,6 +20,7 @@ class DoctorListController extends GetxController {
   final RxBool isLoading = true.obs;
   final RxString title = ''.obs;
   final RxString department = ''.obs;
+  final RxString categoryID = ''.obs;
 
   //Edit
   final TextEditingController editFirstName = TextEditingController();
@@ -93,31 +95,64 @@ class DoctorListController extends GetxController {
     );
   }
 
+  Future<void> fetchCategories(DoctorModel model) async {
+    String? tName = editTitle.value == '' ? model.title : editTitle.value;
+    String? dept =
+        editDepartment.value == '' ? model.department : editDepartment.value;
+    await firestore
+        .collection('cons_status')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        if (doc['title'] as String == tName &&
+            doc['deptName'] as String == dept) {
+          categoryID.value = doc['categoryID'];
+          return;
+        }
+      });
+    });
+  }
+
   Future<void> updateDoctor(DoctorModel model) async {
     showLoading();
-    await firestore.collection('doctors').doc(model.userID).update({
-      'firstName':
-          editFirstName.text == '' ? model.firstName : editFirstName.text,
-      'lastName': editLastName.text == '' ? model.lastName : editLastName.text,
-      'title': editTitle.value == '' ? model.title : editTitle.value,
-      'department':
-          editDepartment.value == '' ? model.department : editDepartment.value,
-      'clinicHours': editClinicHours.value == ''
-          ? model.clinicHours
-          : editClinicHours.text,
-    }).then((value) {
+    categoryID.value = model.categoryID!;
+    if (editDepartment.value != '' || editTitle.value != '') {
+      await fetchCategories(model);
+    }
+    if (categoryID.value == '') {
       dismissDialog();
-      Get.defaultDialog(
-          title: 'Doctor is successfully updated',
-          middleText: "Please make sure to check the updated details",
-          onConfirm: navigateToList);
-    }).catchError(
-      (error) {
+      showErrorDialog(
+          errorTitle: 'Something went wrong',
+          errorDescription:
+              'Could not find the right category ID for this type of doctor.');
+    } else {
+      await firestore.collection('doctors').doc(model.userID).update({
+        'categoryID': categoryID.value,
+        'firstName':
+            editFirstName.text == '' ? model.firstName : editFirstName.text,
+        'lastName':
+            editLastName.text == '' ? model.lastName : editLastName.text,
+        'title': editTitle.value == '' ? model.title : editTitle.value,
+        'department': editDepartment.value == ''
+            ? model.department
+            : editDepartment.value,
+        'clinicHours': editClinicHours.value == ''
+            ? model.clinicHours
+            : editClinicHours.text,
+      }).then((value) {
         dismissDialog();
-        showSimpleErrorDialog(
-            errorDescription: 'Error Occured! Unable to update doctor');
-      },
-    );
+        Get.defaultDialog(
+            title: 'Doctor is successfully updated',
+            middleText: "Please make sure to check the updated details",
+            onConfirm: navigateToList);
+      }).catchError(
+        (error) {
+          dismissDialog();
+          showSimpleErrorDialog(
+              errorDescription: 'Error Occured! Unable to update doctor');
+        },
+      );
+    }
   }
 
   Future<void> navigateToList() async {
