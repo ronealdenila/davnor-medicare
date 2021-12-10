@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/screens/patient/live_chat_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -28,7 +29,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
     super.initState();
     ever(liveCont.liveCons, (value) {
       if (liveCont.liveCons.isEmpty) {
-        Get.back();
+        Get.offAll(() => PatientHomeScreen());
       }
     });
   }
