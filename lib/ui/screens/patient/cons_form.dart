@@ -64,9 +64,9 @@ class ConsFormScreen extends StatelessWidget {
                               style: body16Regular,
                             ),
                             value: true,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: !consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                consController.isFollowUp.value = !value!,
                           ),
                         ),
                         Expanded(
@@ -77,9 +77,9 @@ class ConsFormScreen extends StatelessWidget {
                               style: body16Regular,
                             ),
                             value: false,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: !consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                consController.isFollowUp.value = !value!,
                           ),
                         ),
                       ],

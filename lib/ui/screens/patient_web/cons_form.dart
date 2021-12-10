@@ -88,9 +88,9 @@ class ResponsiveBody extends GetResponsiveView {
                               style: body16Regular,
                             ),
                             value: true,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: !consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                consController.isFollowUp.value = !value!,
                           ),
                         ),
                         SizedBox(
@@ -102,9 +102,9 @@ class ResponsiveBody extends GetResponsiveView {
                               style: body16Regular,
                             ),
                             value: false,
-                            groupValue: consController.isFollowUp.value,
+                            groupValue: !consController.isFollowUp.value,
                             onChanged: (bool? value) =>
-                                consController.isFollowUp.value = value!,
+                                consController.isFollowUp.value = !value!,
                           ),
                         ),
                       ],
@@ -247,7 +247,7 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget forFollowUp() {
-    if (consController.isFollowUp.value) {
+    if (!consController.isFollowUp.value) {
       return Container(
         width: 0,
         height: 0,

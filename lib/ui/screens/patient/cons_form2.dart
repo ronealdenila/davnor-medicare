@@ -64,7 +64,7 @@ class ConsForm2Screen extends StatelessWidget {
                   }),
               verticalSpace18,
               Visibility(
-                visible: consController.isFollowUp.value,
+                visible: !consController.isFollowUp.value,
                 child: Align(
                   child: SizedBox(
                     width: 211,
@@ -82,7 +82,7 @@ class ConsForm2Screen extends StatelessWidget {
               ),
               verticalSpace25,
               Visibility(
-                visible: !consController.isFollowUp.value,
+                visible: consController.isFollowUp.value,
                 child: Expanded(
                   child: Align(
                     alignment: FractionalOffset.bottomRight,

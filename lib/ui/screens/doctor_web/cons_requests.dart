@@ -297,10 +297,12 @@ class ResponsiveBody extends GetResponsiveView {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         screen.isDesktop
-            ? topHeaderRequest(
-                consRequests.consultations[consRequests.selectedIndex.value])
-            : topHeaderRequestWeb(
-                consRequests.consultations[consRequests.selectedIndex.value]),
+            ? topHeaderRequest(consRequests.showFilteredResult.value
+                ? consRequests.filteredList[consRequests.selectedIndex.value]
+                : consRequests.consultations[consRequests.selectedIndex.value])
+            : topHeaderRequestWeb(consRequests.showFilteredResult.value
+                ? consRequests.filteredList[consRequests.selectedIndex.value]
+                : consRequests.consultations[consRequests.selectedIndex.value]),
         Expanded(
           child: ListView(
             controller: _scrollController2,
@@ -533,120 +535,137 @@ class ResponsiveBody extends GetResponsiveView {
     }
     return SingleChildScrollView(
       controller: _scrollController3,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Color(0xFFCBD4E1),
-                  ),
-                ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+          Widget>[
+        Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Color(0xFFCBD4E1),
               ),
-              width: Get.width,
-              child: Column(children: <Widget>[
-                verticalSpace15,
-                Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: getPhoto(consRequests
-                        .consultations[consRequests.selectedIndex.value])),
-                verticalSpace20,
-                Text(
-                  consRequests.getFullName(consRequests
-                      .consultations[consRequests.selectedIndex.value]),
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                  style: subtitle18Medium,
-                  textAlign: TextAlign.center,
-                ),
-                verticalSpace25
-              ]),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          width: Get.width,
+          child: Column(children: <Widget>[
+            verticalSpace15,
+            Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: getPhoto(consRequests.showFilteredResult.value
+                    ? consRequests
+                        .filteredList[consRequests.selectedIndex.value]
+                    : consRequests
+                        .consultations[consRequests.selectedIndex.value])),
+            verticalSpace20,
+            Text(
+              consRequests.getFullName(consRequests.showFilteredResult.value
+                  ? consRequests.filteredList[consRequests.selectedIndex.value]
+                  : consRequests
+                      .consultations[consRequests.selectedIndex.value]),
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: subtitle18Medium,
+              textAlign: TextAlign.center,
+            ),
+            verticalSpace25
+          ]),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalSpace35,
+              Text('Consultation Info',
+                  textAlign: TextAlign.left,
+                  style:
+                      body16Regular.copyWith(color: const Color(0xFF727F8D))),
+              verticalSpace20,
+              Wrap(
+                runSpacing: 8,
                 children: [
-                  verticalSpace35,
-                  Text('Consultation Info',
-                      textAlign: TextAlign.left,
-                      style: body16Regular.copyWith(
-                          color: const Color(0xFF727F8D))),
-                  verticalSpace20,
-                  Wrap(
-                    runSpacing: 8,
-                    children: [
-                      const SizedBox(
-                        width: 170,
-                        child: Text('Patient',
-                            textAlign: TextAlign.left, style: body14SemiBold),
-                      ),
-                      SizedBox(
-                        width: 170,
-                        child: Text(
-                            consRequests
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Patient',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consRequests.showFilteredResult.value
+                            ? consRequests
+                                .filteredList[consRequests.selectedIndex.value]
+                                .fullName!
+                            : consRequests
                                 .consultations[consRequests.selectedIndex.value]
                                 .fullName!,
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: body14Regular),
-                      ),
-                    ],
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
                   ),
-                  verticalSpace15,
-                  Wrap(
-                    runSpacing: 8,
-                    children: [
-                      const SizedBox(
-                        width: 170,
-                        child: Text('Age of Patient',
-                            textAlign: TextAlign.left, style: body14SemiBold),
-                      ),
-                      SizedBox(
-                        width: 170,
-                        child: Text(
-                            consRequests
-                                .consultations[consRequests.selectedIndex.value]
-                                .age!,
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: body14Regular),
-                      ),
-                    ],
-                  ),
-                  verticalSpace15,
-                  Wrap(
-                    runSpacing: 8,
-                    children: [
-                      const SizedBox(
-                        width: 170,
-                        child: Text('Date Requested',
-                            textAlign: TextAlign.left, style: body14SemiBold),
-                      ),
-                      SizedBox(
-                        width: 170,
-                        child: Text(
-                            consRequests.convertTimeStamp(consRequests
-                                .consultations[consRequests.selectedIndex.value]
-                                .dateRqstd!),
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: body14Regular),
-                      ),
-                    ],
-                  ),
-                  verticalSpace15,
                 ],
               ),
-            ),
-          ]),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Age of Patient',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consRequests.showFilteredResult.value
+                            ? consRequests
+                                .filteredList[consRequests.selectedIndex.value]
+                                .age!
+                            : consRequests
+                                .consultations[consRequests.selectedIndex.value]
+                                .age!,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+              verticalSpace15,
+              Wrap(
+                runSpacing: 8,
+                children: [
+                  const SizedBox(
+                    width: 170,
+                    child: Text('Date Requested',
+                        textAlign: TextAlign.left, style: body14SemiBold),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                        consRequests.convertTimeStamp(consRequests
+                                .showFilteredResult.value
+                            ? consRequests
+                                .filteredList[consRequests.selectedIndex.value]
+                                .dateRqstd!
+                            : consRequests
+                                .consultations[consRequests.selectedIndex.value]
+                                .dateRqstd!),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        style: body14Regular),
+                  ),
+                ],
+              ),
+              verticalSpace15,
+            ],
+          ),
+        ),
+      ]),
     );
   }
 

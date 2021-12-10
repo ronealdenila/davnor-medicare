@@ -45,7 +45,7 @@ class ConsRequestController extends GetxController {
   RxString typeP = ''.obs;
 
   //Cons Form 2
-  RxBool isFollowUp = true.obs;
+  RxBool isFollowUp = false.obs;
   String? selectedDiscomfort;
 
   //Cons Form 3
@@ -146,7 +146,7 @@ class ConsRequestController extends GetxController {
         'category': categoryID.value,
         'dateRqstd': FieldValue.serverTimestamp(),
         'description': descriptionController.text,
-        'isFollowUp': isFollowUp.value ? true : false,
+        'isFollowUp': isFollowUp.value,
         'imgs': imageUrls.value,
         'isSenior': typeP.value == 'Senior' ? true : false
       });
@@ -202,7 +202,7 @@ class ConsRequestController extends GetxController {
             'category': categoryID.value,
             'dateRqstd': FieldValue.serverTimestamp(),
             'description': descriptionController.text,
-            'isFollowUp': isFollowUp.value ? true : false,
+            'isFollowUp': isFollowUp.value,
             'imgs': imageUrls.value,
             'isSenior': typeP.value == 'Senior' ? true : false
           });
