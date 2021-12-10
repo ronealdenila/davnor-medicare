@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VerificationReqListScreen extends StatelessWidget {
-  final ForVerificationController vf =
-      Get.put(ForVerificationController(), permanent: true);
+  final ForVerificationController vf = Get.find();
   final NavigationController navigationController = Get.find();
 
   @override

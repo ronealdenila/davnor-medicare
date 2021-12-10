@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         initialBinding: AllControllerBinding(),
         translations: LocalString(),
         locale: Locale('english', 'US'),
-        title: 'Flutter Demo',
+        title: 'DavNor MediCare',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           fontFamily: 'Inter',

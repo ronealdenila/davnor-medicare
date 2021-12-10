@@ -70,7 +70,7 @@ class DoctorListController extends GetxController {
         await firestore.collection('users').doc(uid).update({'disabled': true});
         await refetchList();
         await dListController.reloadAfter();
-        Get.defaultDialog(title: 'Successfuly disabled Doctor');
+        showSimpleErrorDialog(errorDescription: 'Successfuly disabled Doctor');
       },
     );
   }

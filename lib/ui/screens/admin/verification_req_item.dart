@@ -46,6 +46,7 @@ class ResponsiveView extends GetResponsiveView {
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              verticalSpace50,
               IconButton(
                   onPressed: () {
                     navigationController.goBack();
@@ -54,6 +55,7 @@ class ResponsiveView extends GetResponsiveView {
                     Icons.arrow_back_outlined,
                     size: 30,
                   )),
+              verticalSpace20,
               userInfo(),
               Column(
                 children: <Widget>[
@@ -76,6 +78,16 @@ class ResponsiveView extends GetResponsiveView {
             width: Get.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              verticalSpace50,
+              IconButton(
+                  onPressed: () {
+                    navigationController.goBack();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              verticalSpace20,
               userInfo(),
               Column(
                 children: <Widget>[
@@ -99,6 +111,16 @@ class ResponsiveView extends GetResponsiveView {
             width: screen.width,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              verticalSpace50,
+              IconButton(
+                  onPressed: () {
+                    navigationController.goBack();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 30,
+                  )),
+              verticalSpace20,
               userInfo(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

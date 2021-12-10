@@ -1,5 +1,4 @@
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
-import 'package:davnor_medicare/core/models/med_assistance_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/patient/ma_history_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
