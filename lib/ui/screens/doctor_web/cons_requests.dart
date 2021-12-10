@@ -329,10 +329,15 @@ class ResponsiveBody extends GetResponsiveView {
                               ),
                             ),
                             child: Text(
-                              consRequests
-                                  .consultations[
-                                      consRequests.selectedIndex.value]
-                                  .description!,
+                              consRequests.showFilteredResult.value
+                                  ? consRequests
+                                      .filteredList[
+                                          consRequests.selectedIndex.value]
+                                      .description!
+                                  : consRequests
+                                      .consultations[
+                                          consRequests.selectedIndex.value]
+                                      .description!,
                               style: body16Medium.copyWith(
                                   height: 1.4, color: Colors.white),
                             )),
@@ -342,8 +347,11 @@ class ResponsiveBody extends GetResponsiveView {
                   verticalSpace15,
                   displayImages(
                       context,
-                      consRequests
-                          .consultations[consRequests.selectedIndex.value]),
+                      consRequests.showFilteredResult.value
+                          ? consRequests
+                              .filteredList[consRequests.selectedIndex.value]
+                          : consRequests
+                              .consultations[consRequests.selectedIndex.value]),
                 ],
               ),
             ],
