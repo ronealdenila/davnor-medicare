@@ -197,6 +197,7 @@ class LiveConsController extends GetxController {
     await deleteConsFromQueue(consID);
     await removeFromLive(consID);
     await removeFromChat(consID);
+    await updateSlot();
     await updatePatientStatus(patientID);
     await sendNotification(patientID);
     await updateDocStatusSkip(fetchedData!.userID!);
@@ -205,6 +206,13 @@ class LiveConsController extends GetxController {
     if (!kIsWeb) {
       Get.offAll(() => DoctorHomeScreen());
     }
+  }
+
+  Future<void> updateSlot() async {
+    await firestore
+        .collection('cons_status')
+        .doc(fetchedData!.categoryID!)
+        .update({'consSlot': FieldValue.increment(1)});
   }
 
   Future<void> updateDocStatusSkip(String docID) async {
