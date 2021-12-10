@@ -62,10 +62,8 @@ class PSWDStaffListController extends GetxController {
         .doc(uid)
         .update({'disabled': true}).then((value) async {
       await firestore.collection('users').doc(uid).update({'disabled': true});
-      dListController.reloadAfter();
+      await dListController.reloadAfter();
       Get.defaultDialog(title: 'Successfuly disabled PSWDStaff');
-    }).catchError((error) {
-      Get.defaultDialog(title: 'Error Occured! PSWD Staff not disabled');
     });
   }
 
@@ -79,15 +77,10 @@ class PSWDStaffListController extends GetxController {
             .collection('users')
             .doc(uid)
             .update({'disabled': false});
-        dListController.reloadAfter();
-        Get.defaultDialog(
-            title: 'PSWD Staff is successfully enabled',
-            middleText: "Please make sure to check app pswd staffs",
-            onConfirm: navigateToList);
-      },
-    ).catchError(
-      (error) {
-        Get.defaultDialog(title: 'Error Occured! Staff not enabled');
+        await dListController.reloadAfter();
+        await refetchList();
+        showSimpleErrorDialog(
+            errorDescription: 'PSWD Staff is successfully enabled');
       },
     );
   }
