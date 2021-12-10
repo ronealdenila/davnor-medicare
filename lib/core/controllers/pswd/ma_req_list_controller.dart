@@ -27,6 +27,7 @@ class MAReqListController extends GetxController {
   static AuthController authController = Get.find();
   final fetchedData = authController.pswdModel.value;
   final MenuController menuController = Get.find();
+  final RxBool showFilteredResult = false.obs;
 
   @override
   void onReady() {
@@ -62,8 +63,9 @@ class MAReqListController extends GetxController {
   }
 
   void refresh() {
-    filteredList.clear();
-    filteredList.assignAll(maRequests);
+    showFilteredResult.value = false;
+    // filteredList.clear();
+    // filteredList.assignAll(maRequests);
   }
 
   void filter({required String name, required String type}) {
@@ -110,6 +112,7 @@ class MAReqListController extends GetxController {
       print('ALL');
       filteredList.assignAll(maRequests);
     }
+    showFilteredResult.value = true;
   }
 
   void goBack() {

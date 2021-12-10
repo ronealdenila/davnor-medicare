@@ -121,8 +121,6 @@ class DoctorWebHomeScreen extends StatelessWidget {
       await func.updateSlot(total);
       dismissDialog();
       count.value = 1;
-    }).catchError((error) {
-      showSimpleErrorDialog(errorDescription: 'Something went wrong');
     });
   }
 }

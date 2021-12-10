@@ -44,7 +44,7 @@ class ResponsiveBody extends GetResponsiveView {
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
           child: DmText.title24Bold(
-            'Consultation History',
+            'Consultation Requests',
             color: kcNeutralColor[80],
           ),
         ),
@@ -62,7 +62,7 @@ class ResponsiveBody extends GetResponsiveView {
                     if (value == true) {
                       consRequests.filter();
                     } else {
-                      consRequests.refresh();
+                      consRequests.showFilteredResult.value = false;
                     }
                   },
                 ),
@@ -83,7 +83,7 @@ class ResponsiveBody extends GetResponsiveView {
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 50, bottom: 5),
             child: DmText.title24Bold(
-              'Consultation History',
+              'Consultation Requests',
               color: kcNeutralColor[80],
             ),
           ),
@@ -101,7 +101,7 @@ class ResponsiveBody extends GetResponsiveView {
                       if (value == true) {
                         consRequests.filter();
                       } else {
-                        consRequests.refresh();
+                        consRequests.showFilteredResult.value = false;
                       }
                     },
                   ),
@@ -209,25 +209,40 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget RequestsListView() {
     if (consRequests.isLoading.value) {
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: const SizedBox(
-              height: 24, width: 24, child: CircularProgressIndicator()),
+      return Center(
+        child: Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: const SizedBox(
+                height: 24, width: 24, child: CircularProgressIndicator()),
+          ),
         ),
       );
     }
     if (consRequests.consultations.isEmpty && !consRequests.isLoading.value) {
-      return Text(
-        'No consultation request at the moment',
-        textAlign: TextAlign.center,
+      return Center(
+        child: Text(
+          'No consultation request at the moment',
+          textAlign: TextAlign.center,
+        ),
       );
     }
-    // firedOnce.value
-    //     ? null
-    //     : consRequests.filteredList.assignAll(consRequests.consultations);
-    // firedOnce.value = true;
+    if (consRequests.showFilteredResult.value) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+          controller: _scrollController1,
+          shrinkWrap: true,
+          itemCount: consRequests.filteredList.length,
+          itemBuilder: (context, index) {
+            return displayConsultations(
+                consRequests.filteredList[index], index);
+          },
+        ),
+      );
+    }
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,

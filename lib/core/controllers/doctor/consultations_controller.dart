@@ -28,6 +28,8 @@ class ConsultationsController extends GetxController {
   final RxInt selectedIndex = 0.obs;
   final RxInt mobileIndex = 0.obs;
   final RxBool checked = false.obs;
+
+  final RxBool showFilteredResult = false.obs;
   final DoctorMenuController menuController = Get.find();
   final NavigationController navigationController = Get.find();
   //final LiveChatController liveChatCont = Get.find();
@@ -62,11 +64,11 @@ class ConsultationsController extends GetxController {
     });
   }
 
-  void refresh() {
-    selectedIndex.value = 0;
-    filteredList.clear();
-    filteredList.assignAll(consultations);
-  }
+  // void refresh() {
+  //   selectedIndex.value = 0;
+  //   filteredList.clear();
+  //   filteredList.assignAll(consultations);
+  // }
 
   void filter() {
     selectedIndex.value = 0;
@@ -76,6 +78,7 @@ class ConsultationsController extends GetxController {
         filteredList.add(consultations[i]);
       }
     }
+    showFilteredResult.value = true;
   }
 
   Future<void> startConsultation(ConsultationModel consData) async {

@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 
 class MARequestListScreen extends StatelessWidget {
   final MAReqListController maController = Get.find();
-  final RxBool firedOnce = false.obs;
   final NavigationController navigationController = Get.find();
   final MenuController menuController = Get.find();
   final AppController appController = Get.find();
@@ -89,24 +88,6 @@ class MARequestListScreen extends StatelessWidget {
                     maController.maFilter.clear();
                     maController.type.value = 'All';
                     appController.resetDropDown(mardpKey1);
-                    maController.filteredList
-                        .assignAll(maController.maRequests);
-                  },
-                )),
-            horizontalSpace18,
-            SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  child: Icon(
-                    Icons.refresh,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: verySoftBlueColor,
-                  ),
-                  onPressed: () {
-                    maController.maFilter.clear();
-                    maController.type.value = 'All';
-                    appController.resetDropDown(mardpKey1);
                     maController.refresh();
                   },
                 )),
@@ -134,18 +115,26 @@ class MARequestListScreen extends StatelessWidget {
         ),
       );
     }
-    firedOnce.value
-        ? null
-        : maController.filteredList.assignAll(maController.maRequests);
-    firedOnce.value = true;
+    if (maController.showFilteredResult.value) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: maController.filteredList.length,
+            itemBuilder: (context, index) {
+              return customTableRow(maController.filteredList[index]);
+            }),
+      );
+    }
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: maController.filteredList.length,
+          itemCount: maController.maRequests.length,
           itemBuilder: (context, index) {
-            return customTableRow(maController.filteredList[index]);
+            return customTableRow(maController.maRequests[index]);
           }),
     );
   }
