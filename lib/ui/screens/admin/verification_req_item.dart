@@ -286,6 +286,12 @@ class ResponsiveView extends GetResponsiveView {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
         const Text('FOR ACCOUNT VERIFICATION',
             textAlign: TextAlign.left, style: title24Bold),
         verticalSpace35,
