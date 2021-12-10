@@ -37,7 +37,7 @@ class ConsultationListScreen extends StatelessWidget {
                         if (value == true) {
                           consRequests.filter();
                         } else {
-                          consRequests.refresh();
+                          consRequests.showFilteredResult.value = false;
                         }
                       },
                     ),
@@ -68,19 +68,31 @@ class ConsultationListScreen extends StatelessWidget {
     if (consRequests.consultations.isEmpty && !consRequests.isLoading.value) {
       return const Center(child: Text('No consultation request at the moment'));
     }
-    firedOnce.value
-        ? null
-        : consRequests.filteredList.assignAll(consRequests.consultations);
-    firedOnce.value = true;
+    if (consRequests.showFilteredResult.value) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          shrinkWrap: true,
+          itemCount: consRequests.filteredList.length,
+          itemBuilder: (context, index) {
+            return displayConsultations(
+                consRequests.filteredList[index], index);
+          },
+        ),
+      );
+    }
+
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         shrinkWrap: true,
-        itemCount: consRequests.filteredList.length,
+        itemCount: consRequests.consultations.length,
         itemBuilder: (context, index) {
-          return displayConsultations(consRequests.filteredList[index], index);
+          return displayConsultations(consRequests.consultations[index], index);
         },
       ),
     );

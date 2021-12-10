@@ -34,7 +34,7 @@ class PhotoViewerScreen extends StatelessWidget {
                       child: Obx(
                         () => CarouselSlider.builder(
                           carouselController: controller.crslController,
-                          itemCount: controller.fetchedImages.length,
+                          itemCount: controller.fetchedImages.length - 1,
                           itemBuilder: (context, index, realIndex) {
                             return buildImage(index);
                           },
@@ -122,7 +122,7 @@ class PhotoViewerScreen extends StatelessWidget {
             child: Center(
               child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.fetchedImages.length,
+                  itemCount: controller.fetchedImages.length - 1,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return Center(

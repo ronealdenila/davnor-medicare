@@ -4,7 +4,6 @@ import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:get/get.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -28,7 +27,7 @@ class NotificationCard extends StatelessWidget {
                 Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(50),
                     ),
                     child: getPhoto()),
                 Flexible(
@@ -79,16 +78,16 @@ class NotificationCard extends StatelessWidget {
 
   Widget getPhoto() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(50),
       child: Image.network(
         notif.photo!,
         fit: BoxFit.cover,
-        height: 20,
-        width: 20,
+        height: 50,
+        width: 50,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 20,
-              width: 20,
+              height: 50,
+              width: 50,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
