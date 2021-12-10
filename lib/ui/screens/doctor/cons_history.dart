@@ -34,8 +34,8 @@ class DocConsHistoryScreen extends StatelessWidget {
                     const Text('Consultation History', style: title24BoldWhite),
                     verticalSpace20,
                     Wrap(runSpacing: 8, children: [
-                      SizedBox(
-                        height: 50,
+                      Container(
+                        padding: EdgeInsets.only(top: 5),
                         width: Get.width * .5,
                         child: TextFormField(
                           controller: consHController.searchKeyword,
@@ -66,13 +66,12 @@ class DocConsHistoryScreen extends StatelessWidget {
                           if (consHController.isLoading.value) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog'.tr);
-                          } else if (consHController.consHistory.isEmpty) {
+                          } else if (consHController.consHistory.isEmpty &&
+                              consHController.filteredListforP.isEmpty) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog1'.tr);
                           } else {
-                            print(consHController.searchKeyword.text);
-                            consHController.filterForDoctor(
-                                name: consHController.searchKeyword.text);
+                            consHController.refreshD();
                           }
                         },
                         child: Card(
@@ -96,31 +95,39 @@ class DocConsHistoryScreen extends StatelessWidget {
                         ),
                       ),
                       verticalSpace15,
-                      Card(
-                        elevation: 6,
-                        child: SizedBox(
+                      InkWell(
+                        onTap: () {
+                          if (consHController.isLoading.value) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'conslog'.tr);
+                          } else if (consHController.consHistory.isEmpty) {
+                            showSimpleErrorDialog(
+                                errorDescription: 'conslog1'.tr);
+                          } else {
+                            print(consHController.searchKeyword.text);
+                            consHController.filterForDoctor(
+                                name: consHController.searchKeyword.text);
+                          }
+                        },
+                        child: Card(
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 50,
                             height: 50,
-                            child: ElevatedButton(
-                              child: Icon(
-                                Icons.refresh,
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: verySoftBlueColor[100],
-                              ),
-                              onPressed: () {
-                                if (consHController.isLoading.value) {
-                                  showSimpleErrorDialog(
-                                      errorDescription: 'conslog'.tr);
-                                } else if (consHController
-                                        .consHistory.isEmpty &&
-                                    consHController.filteredListforP.isEmpty) {
-                                  showSimpleErrorDialog(
-                                      errorDescription: 'conslog1'.tr);
-                                } else {
-                                  consHController.refreshD();
-                                }
-                              },
-                            )),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: verySoftBlueColor[100],
+                            ),
+                            child: const Icon(
+                              Icons.refresh,
+                              color: Colors.white,
+                              size: 35,
+                            ),
+                          ),
+                        ),
                       ),
                     ]),
                   ]),

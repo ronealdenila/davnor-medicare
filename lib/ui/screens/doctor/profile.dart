@@ -247,15 +247,16 @@ class DoctorProfileScreen extends StatelessWidget {
 
           return Stack(children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(110),
               child: Image.network(
                 data['profileImage'],
-                height: 40,
-                width: 40,
+                fit: BoxFit.cover,
+                height: 110,
+                width: 110,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                      height: 40,
-                      width: 40,
+                      height: 110,
+                      width: 110,
                       color: verySoftBlueColor[100],
                       child: Center(
                         child: Text(

@@ -3,7 +3,6 @@ import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/ui_helpers.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
-import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:get/get.dart';
@@ -88,14 +87,20 @@ class ConsultationCard extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    if (docConsController.getProfilePhoto(model) == '') {
-      return Image.asset(blankProfile, fit: BoxFit.cover);
-    }
     return Image.network(
       docConsController.getProfilePhoto(model),
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(blankProfile, fit: BoxFit.cover);
+        return Container(
+            height: 75,
+            width: 75,
+            color: verySoftBlueColor[100],
+            child: Center(
+              child: Text(
+                '${model.fullName![0]}',
+                style: title24Regular.copyWith(color: Colors.white),
+              ),
+            ));
       },
     );
   }

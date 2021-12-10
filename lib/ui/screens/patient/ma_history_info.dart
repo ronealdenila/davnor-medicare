@@ -277,6 +277,7 @@ class MAHistoryInfoScreen extends StatelessWidget {
                   alignment: FractionalOffset.bottomLeft,
                   child: CustomButton(
                     onTap: () async {
+                      controller.selectedIndex.value = 0;
                       controller.fetchedImages.clear();
                       controller.splitFetchedImage(
                           '${maHistoryItem.validID}>>>${maHistoryItem.prescriptions}');

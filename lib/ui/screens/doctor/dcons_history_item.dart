@@ -28,7 +28,7 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
               Card(
                   elevation: 3,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(55),
                   ),
                   child: getPhoto(consData)),
               horizontalSpace15,
@@ -93,16 +93,16 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
 
   Widget getPhoto(ConsultationHistoryModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(45),
+      borderRadius: BorderRadius.circular(55),
       child: Image.network(
         consHController.getPatientProfile(model),
         fit: BoxFit.cover,
-        height: 45,
-        width: 45,
+        height: 55,
+        width: 55,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 45,
-              width: 45,
+              height: 55,
+              width: 55,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(

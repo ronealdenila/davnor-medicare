@@ -140,15 +140,16 @@ class PatientHomeScreen extends StatelessWidget {
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
           return ClipRRect(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(80),
             child: Image.network(
               data['profileImage'],
-              height: 30,
-              width: 30,
+              fit: BoxFit.cover,
+              height: 80,
+              width: 80,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                    height: 30,
-                    width: 30,
+                    height: 80,
+                    width: 80,
                     color: verySoftBlueColor[100],
                     child: Center(
                       child: Text(
