@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,23 +88,29 @@ class _CallPatientScreenState extends State<CallPatientScreen> {
   }
 
   Widget getPhoto(String img) {
-    return CircleAvatar(
-        radius: kIsWeb ? 120 : 80,
-        foregroundImage: NetworkImage(img),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        kIsWeb ? 100 : 60,
+      ),
+      child: Image.network(
+        img,
+        fit: BoxFit.fitWidth,
+        height: kIsWeb ? 100 : 60,
+        width: kIsWeb ? 100 : 60,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: kIsWeb ? 120 : 80,
+              width: kIsWeb ? 120 : 80,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consInfo[3][0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title36Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 }
 

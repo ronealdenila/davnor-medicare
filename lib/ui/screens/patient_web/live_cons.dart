@@ -3,6 +3,7 @@ import 'package:davnor_medicare/core/controllers/live_chat_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/bubble_chat.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
@@ -349,43 +350,51 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        liveCont.getDoctorProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 15,
+        width: 15,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 15,
+              width: 15,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${liveCont.getDoctorFirstName(model)[0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget getPhotoInfo(LiveConsultationModel model) {
-    return CircleAvatar(
-        radius: 50,
-        foregroundImage: NetworkImage(liveCont.getDoctorProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto2.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto2.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.network(
+        liveCont.getDoctorProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 30,
+        width: 30,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 30,
+              width: 30,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${liveCont.getDoctorFirstName(model)[0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title36Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget chatStack() {

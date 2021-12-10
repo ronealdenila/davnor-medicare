@@ -101,23 +101,26 @@ class ForVerificationCard extends StatelessWidget {
   }
 
   Widget getPhoto(VerificationReqModel model) {
-    return CircleAvatar(
-        radius: 35,
-        foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: verySoftBlueColor[100],
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.network(
+        vf.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 30,
+        width: 30,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 30,
+              width: 30,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${vf.getFirstName(model)[0]}',
-                  style: title24Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title36Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 }

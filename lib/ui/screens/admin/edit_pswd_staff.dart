@@ -106,23 +106,25 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget userPSWDImage() {
-    return CircleAvatar(
-      radius: 40,
-      foregroundImage: NetworkImage(pListController.getProfilePhoto(model)),
-      onForegroundImageError: (_, __) {
-        errorPhoto.value = true;
-      },
-      backgroundColor: verySoftBlueColor[100],
-      child: Obx(
-        () => errorPhoto.value
-            ? Text(
-                '${model.firstName![0]}',
-                style: title24Regular.copyWith(color: Colors.white),
-              )
-            : SizedBox(
-                height: 0,
-                width: 0,
-              ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(40),
+      child: Image.network(
+        pListController.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 40,
+        width: 40,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 40,
+              width: 40,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
+                  '${model.firstName![0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
+                ),
+              ));
+        },
       ),
     );
   }

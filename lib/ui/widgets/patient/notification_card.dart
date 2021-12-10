@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/controllers/patient/notif_controller.dart';
 import 'package:davnor_medicare/core/models/notification_model.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -77,16 +78,26 @@ class NotificationCard extends StatelessWidget {
   }
 
   Widget getPhoto() {
-    if (notif.photo == '') {
-      return CircleAvatar(
-        radius: 20,
-        backgroundImage: AssetImage(blankProfile),
-      );
-    }
-    return CircleAvatar(
-      radius: 20,
-      foregroundImage: NetworkImage(notif.photo!),
-      backgroundImage: AssetImage(blankProfile),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Image.network(
+        notif.photo!,
+        fit: BoxFit.fitWidth,
+        height: 20,
+        width: 20,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 20,
+              width: 20,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
+                  'DM',
+                  style: title36Regular.copyWith(color: Colors.white),
+                ),
+              ));
+        },
+      ),
     );
   }
 }

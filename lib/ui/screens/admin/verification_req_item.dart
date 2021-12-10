@@ -35,7 +35,6 @@ class ResponsiveView extends GetResponsiveView {
   final BuildContext context;
   final VerificationReqModel vfModel;
   final ForVerificationController vf = Get.find();
-  final RxBool errorPhoto = false.obs;
   final NavigationController navigationController = Get.find();
   final UrlLauncherService _urlLauncherService = UrlLauncherService();
 
@@ -421,23 +420,25 @@ class ResponsiveView extends GetResponsiveView {
   }
 
   Widget getPhoto(VerificationReqModel model) {
-    return CircleAvatar(
-      radius: 40,
-      foregroundImage: NetworkImage(vf.getProfilePhoto(model)),
-      onForegroundImageError: (_, __) {
-        errorPhoto.value = true;
-      },
-      backgroundColor: verySoftBlueColor[100],
-      child: Obx(
-        () => errorPhoto.value
-            ? Text(
-                '${vf.getFirstName(model)[0]}',
-                style: title24Regular.copyWith(color: Colors.white),
-              )
-            : SizedBox(
-                height: 0,
-                width: 0,
-              ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(80),
+      child: Image.network(
+        vf.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 80,
+        width: 80,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 80,
+              width: 80,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
+                  '${vf.getFirstName(model)[0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
+                ),
+              ));
+        },
       ),
     );
   }

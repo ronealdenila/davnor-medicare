@@ -184,23 +184,27 @@ class ConsRequestItemScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        consRequests.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 15,
+        width: 15,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 15,
+              width: 15,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consRequests.getFirstName(model)[0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget displayImages(BuildContext context) {

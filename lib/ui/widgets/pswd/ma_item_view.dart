@@ -387,24 +387,27 @@ class PSWDItemView extends GetResponsiveView {
   }
 
   Widget getPhoto(GeneralMARequestModel model) {
-    return CircleAvatar(
-        radius: 35,
-        foregroundImage: NetworkImage(appController.getProfilePhoto(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: verySoftBlueColor,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(80),
+      child: Image.network(
+        appController.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 80,
+        width: 80,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 80,
+              width: 80,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${appController.getFirstName(model)[0]}',
                   style: title36Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget attachedPhotosDialog() {

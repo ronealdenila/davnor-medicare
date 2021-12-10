@@ -246,22 +246,24 @@ class DoctorProfileScreen extends StatelessWidget {
           final data = snapshot.data!.data() as Map<String, dynamic>;
 
           return Stack(children: [
-            CircleAvatar(
-              radius: 50,
-              foregroundImage: NetworkImage(data['profileImage']),
-              onForegroundImageError: (_, __) {
-                errorPhoto.value = true;
-              },
-              child: Obx(
-                () => errorPhoto.value
-                    ? Text(
-                        '${fetchedData!.firstName![0]} ${fetchedData!.lastName![0]}',
-                        style: subtitle18Bold,
-                      )
-                    : SizedBox(
-                        height: 0,
-                        width: 0,
-                      ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.network(
+                data['profileImage'],
+                height: 40,
+                width: 40,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                      height: 40,
+                      width: 40,
+                      color: verySoftBlueColor[100],
+                      child: Center(
+                        child: Text(
+                          '${fetchedData!.firstName![0]}',
+                          style: title36Regular.copyWith(color: Colors.white),
+                        ),
+                      ));
+                },
               ),
             ),
             Positioned(

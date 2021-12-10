@@ -501,45 +501,51 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationHistoryModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto2.value = true;
-        },
-        backgroundColor: verySoftBlueColor[100],
-        child: Obx(
-          () => errorPhoto2.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        consHController.getPatientProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 15,
+        width: 15,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 15,
+              width: 15,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consHController.getPatientFirstName(model)[0]}',
-                  style: body20Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    return CircleAvatar(
-        radius: 50,
-        foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: verySoftBlueColor[100],
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.network(
+        consHController.getPatientProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 30,
+        width: 30,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 30,
+              width: 30,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consHController.getPatientFirstName(model)[0]}',
                   style: title36Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget RequestsInfoView() {

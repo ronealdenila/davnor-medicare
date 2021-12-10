@@ -135,26 +135,28 @@ class PatientHomeScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircleAvatar(
               radius: 50,
-              backgroundColor: Colors.grey,
+              backgroundColor: verySoftBlueColor,
             );
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          return CircleAvatar(
-            radius: 50,
-            foregroundImage: NetworkImage(data['profileImage']),
-            onForegroundImageError: (_, __) {
-              errorPhoto.value = true;
-            },
-            child: Obx(
-              () => errorPhoto.value
-                  ? Text(
-                      '${fetchedData!.firstName![0]}',
-                      style: title34Regular.copyWith(color: Colors.white),
-                    )
-                  : SizedBox(
-                      height: 0,
-                      width: 0,
-                    ),
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.network(
+              data['profileImage'],
+              height: 30,
+              width: 30,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                    height: 30,
+                    width: 30,
+                    color: verySoftBlueColor[100],
+                    child: Center(
+                      child: Text(
+                        '${fetchedData!.firstName![0]}',
+                        style: title36Regular.copyWith(color: Colors.white),
+                      ),
+                    ));
+              },
             ),
           );
         });

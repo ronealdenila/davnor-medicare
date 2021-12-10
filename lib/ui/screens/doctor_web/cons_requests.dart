@@ -448,24 +448,27 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhotoHeader(ConsultationModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto2.value = true;
-        },
-        backgroundColor: verySoftBlueColor[100],
-        child: Obx(
-          () => errorPhoto2.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.network(
+        consRequests.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 30,
+        width: 30,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 30,
+              width: 30,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consRequests.getFirstName(model)[0]}',
-                  style: body20Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title36Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget startConsultationButton(ConsultationModel consData, int index) {
@@ -678,24 +681,27 @@ class ResponsiveBody extends GetResponsiveView {
   }
 
   Widget getPhoto(ConsultationModel model) {
-    return CircleAvatar(
-        radius: 50,
-        foregroundImage: NetworkImage(consRequests.getProfilePhoto(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: verySoftBlueColor[100],
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.network(
+        consRequests.getProfilePhoto(model),
+        fit: BoxFit.fitWidth,
+        height: 30,
+        width: 30,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 30,
+              width: 30,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consRequests.getFirstName(model)[0]}',
                   style: title36Regular.copyWith(color: Colors.white),
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget displayImages(BuildContext context, ConsultationModel consData) {

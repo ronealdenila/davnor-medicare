@@ -1,5 +1,6 @@
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history_info.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/material.dart';
@@ -91,22 +92,26 @@ class DoctorConsHistoryItemScreen extends StatelessWidget {
   }
 
   Widget getPhoto(ConsultationHistoryModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(consHController.getPatientProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        consHController.getPatientProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 15,
+        width: 15,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 15,
+              width: 15,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${consHController.getPatientFirstName(model)[0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 }

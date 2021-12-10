@@ -10,6 +10,7 @@ import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/chat_input.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -173,23 +174,27 @@ class LiveConsultationScreen extends StatelessWidget {
   }
 
   Widget getPhoto(LiveConsultationModel model) {
-    return CircleAvatar(
-        radius: 25,
-        foregroundImage: NetworkImage(liveCont.getPatientProfile(model)),
-        onForegroundImageError: (_, __) {
-          errorPhoto.value = true;
-        },
-        backgroundColor: Colors.grey,
-        child: Obx(
-          () => errorPhoto.value
-              ? Text(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        liveCont.getPatientProfile(model),
+        fit: BoxFit.fitWidth,
+        height: 15,
+        width: 15,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: 15,
+              width: 15,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
                   '${liveCont.getPatientFirstName(model)[0]}',
-                )
-              : SizedBox(
-                  height: 0,
-                  width: 0,
+                  style: title24Regular.copyWith(color: Colors.white),
                 ),
-        ));
+              ));
+        },
+      ),
+    );
   }
 
   Widget chatStack() {

@@ -141,50 +141,40 @@ class ResponsiveView extends GetResponsiveView {
         stream: profileController.getProfilePSWD(),
         builder: (context, snapshot) {
           if (snapshot.hasError || !snapshot.hasData) {
-            return CircleAvatar(
-              radius: 115,
-              backgroundImage: AssetImage(blankProfile),
-            );
+            return ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: Container(
+                    height: 40,
+                    width: 40,
+                    color: verySoftBlueColor[100],
+                    child: Center(
+                      child: Text(
+                        '${fetchedData!.firstName![0]}',
+                        style: title36Regular.copyWith(color: Colors.white),
+                      ),
+                    )));
           }
           final data = snapshot.data!.data() as Map<String, dynamic>;
-          if (data['profileImage'] == '') {
-            return Stack(
-              children: [
-                CircleAvatar(
-                  radius: 115,
-                  backgroundImage: AssetImage(blankProfile),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 05,
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.lightBlue,
-                        child: InkWell(
-                          onTap: () {
-                            profileController.selectProfileImage();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              ],
-            );
-          }
           return Stack(children: [
-            CircleAvatar(
-              radius: 115,
-              foregroundImage: NetworkImage(data['profileImage']),
-              backgroundImage: AssetImage(blankProfile),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.network(
+                data['profileImage'],
+                height: 40,
+                width: 40,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                      height: 40,
+                      width: 40,
+                      color: verySoftBlueColor[100],
+                      child: Center(
+                        child: Text(
+                          '${fetchedData!.firstName![0]}',
+                          style: title36Regular.copyWith(color: Colors.white),
+                        ),
+                      ));
+                },
+              ),
             ),
             Positioned(
                 bottom: 0,
