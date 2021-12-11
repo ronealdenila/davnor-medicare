@@ -26,8 +26,6 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
   static AuthController authController = Get.find();
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   final fetchedData = authController.patientModel.value;
-  final RxBool errorPhoto = false.obs;
-  final RxBool errorPhoto2 = false.obs;
   final LiveConsController liveCont = Get.find();
   final _scrollController1 = ScrollController();
   final _scrollController2 = ScrollController();
@@ -296,22 +294,13 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
                     return Text('Something went wrong');
-                  }
-                  if (snapshot.connectionState == ConnectionState.active) {
+                  } else if (snapshot.hasData) {
                     return ListView(
                       controller: _scrollController1,
                       reverse: true,
                       padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                       shrinkWrap: true,
                       children: snapshot.data!.docs.map((item) {
-                        Map<String, dynamic> data =
-                            item.data()! as Map<String, dynamic>;
-                        if (data['dateCreated'] == null) {
-                          return SizedBox(
-                            width: 0,
-                            height: 0,
-                          );
-                        }
                         ChatModel model = ChatModel.fromJson(
                             item.data()! as Map<String, dynamic>);
                         return Column(
@@ -329,32 +318,6 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
           alignment: FractionalOffset.bottomCenter,
           child: chatStack(),
         ),
-        // Expanded(
-        //     child: StreamBuilder(
-        //         stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
-        //         builder: (context, snapshot) {
-        //           if (snapshot.connectionState == ConnectionState.active) {
-        //             return ListView.builder(
-        //               reverse: true,
-        //               padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-        //               shrinkWrap: true,
-        //               itemCount: liveChatCont.liveChat.length,
-        //               itemBuilder: (context, index) {
-        //                 return Column(
-        //                   children: [
-        //                     bubbleChat(liveChatCont.liveChat[index], context),
-        //                     verticalSpace15
-        //                   ],
-        //                 );
-        //               },
-        //             );
-        //           }
-        //           return const Text('Loading ..');
-        //         })),
-        // Align(
-        //   alignment: FractionalOffset.bottomCenter,
-        //   child: chatStack(),
-        // ),
       ],
     );
   }

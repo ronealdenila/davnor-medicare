@@ -24,7 +24,7 @@ class MAQueueController extends GetxController {
     return firestore
         .collection('ma_queue')
         .orderBy('dateCreated')
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

@@ -28,7 +28,6 @@ class LiveConsultationScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
   final CallingPatientController callController =
       Get.put(CallingPatientController());
-  final RxBool errorPhoto = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -130,26 +129,16 @@ class LiveConsultationScreen extends StatelessWidget {
           children: [
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream:
-                        liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
+                    stream: liveChatCont.getLiveChatMessages(consData),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
                         return Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.active) {
+                      } else if (snapshot.hasData) {
                         return ListView(
                           reverse: true,
                           padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                           shrinkWrap: true,
                           children: snapshot.data!.docs.map((item) {
-                            Map<String, dynamic> data =
-                                item.data()! as Map<String, dynamic>;
-                            if (data['dateCreated'] == null) {
-                              return SizedBox(
-                                width: 0,
-                                height: 0,
-                              );
-                            }
                             ChatModel model = ChatModel.fromJson(
                                 item.data()! as Map<String, dynamic>);
                             return Column(

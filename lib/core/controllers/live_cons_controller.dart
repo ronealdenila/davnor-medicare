@@ -36,7 +36,7 @@ class LiveConsController extends GetxController {
       return firestore
           .collection('live_cons')
           .where('docID', isEqualTo: auth.currentUser!.uid)
-          .snapshots()
+          .snapshots(includeMetadataChanges: true)
           .map((query) {
         return query.docs.map((item) {
           isLoading.value = false;

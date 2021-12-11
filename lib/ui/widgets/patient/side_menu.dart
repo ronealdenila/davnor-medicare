@@ -42,16 +42,18 @@ class PatientSideMenu extends GetView<PatientMenuController> {
             verticalSpace50,
             ...patientSideMenuItemRoutes
                 .map((item) => PatientSideMenuItem(
-                    itemName: item.name,
+                    itemName: '${item.name}'.tr,
                     onTap: () {
-                      if (item.name == 'Live Consultation' &&
-                          liveCont.liveCons.isEmpty) {
+                      if (item.name == 'menu2' && liveCont.liveCons.isEmpty) {
+                        //Live Consultation
                         showErrorDialog(
                             errorTitle: 'action11'.tr,
                             errorDescription: 'action10'.tr);
-                      } else if (item.name == 'Change Language') {
+                      } else if (item.name == 'setting1') {
+                        //Change Language
                         buildLanguageDialog(context);
-                      } else if (item.name == 'App Info') {
+                      } else if (item.name == 'setting2') {
+                        //App Info
                         appInfoDialog(context);
                       } else {
                         if (!controller.isActive(item.name!)!) {
@@ -72,7 +74,7 @@ class PatientSideMenu extends GetView<PatientMenuController> {
         context: context,
         builder: (builder) {
           return AlertDialog(
-            title: Text('Choose Your Language'),
+            title: Text('setting3'.tr),
             content: Container(
               width: Get.width * .2,
               child: ListView.separated(

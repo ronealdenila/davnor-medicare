@@ -29,15 +29,21 @@ class PatientMenuController extends GetxController {
     switch (itemName) {
       case 'Dashboard':
         return _customIcon(Icons.dashboard_outlined, itemName);
-      case 'Consultation Requests':
-        return _customIcon(Icons.group_outlined, itemName);
       case 'Consultation History':
+      case 'Nakaraang Konsultasyon':
+      case 'Karaang Konsultasyon':
         return _customIcon(Icons.history_outlined, itemName);
-      case 'Live Consultation':
+      case 'Current Consultation':
+      case 'Kasalukuyang Konsultasyon':
+      case 'Karon nga Konsultasyon':
         return _customIcon(Icons.chat_bubble_outline, itemName);
       case 'Change Language':
+      case 'Baguhin ang Wika':
+      case 'Ilisan ang Pinulongan':
         return _customIcon(Icons.translate_outlined, itemName);
       case 'App Info':
+      case 'Impormasyon ng Aplikasyon':
+      case 'Impormasyon sa aplikasyon':
         return _customIcon(Icons.info_outline_rounded, itemName);
       default:
         return _customIcon(Icons.history_outlined, itemName);

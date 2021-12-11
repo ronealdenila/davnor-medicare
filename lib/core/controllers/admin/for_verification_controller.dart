@@ -43,7 +43,7 @@ class ForVerificationController extends GetxController {
     return firestore
         .collection('to_verify')
         .orderBy('dateRqstd')
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((query) {
       return query.docs.map((item) {
         return VerificationReqModel.fromJson(item.data());

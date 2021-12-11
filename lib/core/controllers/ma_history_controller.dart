@@ -62,7 +62,7 @@ class MAHistoryController extends GetxController {
         .collection('ma_history')
         .where('requesterID', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateClaimed', descending: true)
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
@@ -76,7 +76,7 @@ class MAHistoryController extends GetxController {
     return firestore
         .collection('ma_history')
         .orderBy('dateClaimed', descending: true)
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

@@ -365,24 +365,15 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
             child: StreamBuilder<QuerySnapshot>(
                 stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
+                  if (snapshot.hasError || !snapshot.hasData) {
                     return Text('Something went wrong');
-                  }
-                  if (snapshot.connectionState == ConnectionState.active) {
+                  } else if (snapshot.hasData) {
                     return ListView(
                       controller: _scrollController1,
                       reverse: true,
                       padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                       shrinkWrap: true,
                       children: snapshot.data!.docs.map((item) {
-                        Map<String, dynamic> data =
-                            item.data()! as Map<String, dynamic>;
-                        if (data['dateCreated'] == null) {
-                          return SizedBox(
-                            width: 0,
-                            height: 0,
-                          );
-                        }
                         ChatModel model = ChatModel.fromJson(
                             item.data()! as Map<String, dynamic>);
                         return Column(

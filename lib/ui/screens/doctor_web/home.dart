@@ -118,7 +118,11 @@ class DoctorWebHomeScreen extends StatelessWidget {
       'numToAccomodate': 0,
       'dStatus': false
     }).then((value) async {
-      await func.updateSlot(total);
+      if (stats.statusList[0].consSlot >= total) {
+        await func.updateSlot(total);
+      } else {
+        await func.updateSlot(0);
+      }
       dismissDialog();
       count.value = 1;
     });
@@ -878,11 +882,13 @@ class ResponsiveView extends GetResponsiveView {
       'numToAccomodate': 0,
       'dStatus': false
     }).then((value) async {
-      await func.updateSlot(total);
+      if (stats.statusList[0].consSlot >= total) {
+        await func.updateSlot(total);
+      } else {
+        await func.updateSlot(0);
+      }
       dismissDialog();
       count.value = 1;
-    }).catchError((error) {
-      showSimpleErrorDialog(errorDescription: 'Something went wrong');
     });
   }
 

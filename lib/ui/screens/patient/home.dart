@@ -36,7 +36,8 @@ import 'package:get/get.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   static ArticleController articleService = Get.find();
-  final ConsRequestController consController = Get.put(ConsRequestController());
+  final ConsRequestController consController =
+      Get.put(ConsRequestController(), permanent: true);
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
   final AppController appController = Get.find();
@@ -47,7 +48,6 @@ class PatientHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final StatusController stats = Get.put(StatusController(), permanent: true);
   final ProfileController profileController = Get.put(ProfileController());
-  final RxBool errorPhoto = false.obs;
 
   @override
   Widget build(BuildContext context) {

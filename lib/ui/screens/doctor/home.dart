@@ -409,6 +409,7 @@ class DoctorHomeScreen extends StatelessWidget {
   Future<void> goOffline() async {
     final total = stats.doctorStatus[0].numToAccomodate! -
         stats.doctorStatus[0].accomodated!;
+
     await firestore
         .collection('doctors')
         .doc(fetchedData!.userID!)
@@ -419,7 +420,11 @@ class DoctorHomeScreen extends StatelessWidget {
       'numToAccomodate': 0,
       'dStatus': false
     }).then((value) async {
-      await func.updateSlot(total);
+      if (stats.statusList[0].consSlot >= total) {
+        await func.updateSlot(total);
+      } else {
+        await func.updateSlot(0);
+      }
       dismissDialog();
       count.value = 1;
     });

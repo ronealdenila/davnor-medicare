@@ -26,7 +26,7 @@ class NotifController extends GetxController {
         .doc(auth.currentUser!.uid)
         .collection('notifications')
         .orderBy('createdAt', descending: true)
-        .snapshots();
+        .snapshots(includeMetadataChanges: true);
   }
 
   Stream<List<NotificationModel>> assignListStream() {
