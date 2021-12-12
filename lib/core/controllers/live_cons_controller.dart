@@ -73,6 +73,7 @@ class LiveConsController extends GetxController {
         .doc(model.docID)
         .get()
         .then((doc) => DoctorModel.fromJson(doc.data()!));
+    doneFetching.value = true;
   }
 
   String getPatientProfile(LiveConsultationModel model) {
