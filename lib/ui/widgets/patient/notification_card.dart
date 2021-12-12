@@ -85,13 +85,14 @@ class NotificationCard extends StatelessWidget {
         height: 60,
         width: 60,
         errorBuilder: (context, error, stackTrace) {
+          var firstLetter = '${notif.from}'.split(" ");
           return Container(
               height: 60,
               width: 60,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
-                  'DM',
+                  '${firstLetter[1][0]}',
                   style: title24Regular.copyWith(color: Colors.white),
                 ),
               ));

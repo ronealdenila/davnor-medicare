@@ -93,7 +93,7 @@ class DoctorFunctions {
         .add({
       'photo': appLogoURL,
       'from': 'DavNor MediCare Application',
-      'action': 'has deleted your',
+      'action': ' has deleted your ',
       'subject': 'Consultation Request',
       'message': message,
       'createdAt': Timestamp.fromDate(DateTime.now()),
