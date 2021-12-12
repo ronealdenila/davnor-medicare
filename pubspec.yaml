@@ -51,9 +51,6 @@ dependencies:
   # logger
   logger: ^1.0.0
 
-  #path provider
-  path_provider: ^2.0.7
-
   # Url launcher
   url_launcher: ^6.0.9
 
