@@ -19,7 +19,7 @@ dependencies:
     git: https://github.com/ronealdenila/davnor-medicare-ui.git
 
   # Service provider
-  get: ^4.3.8
+  get: ^4.6.1
 
   # Firebase SDK
   firebase_auth: ^3.1.4
