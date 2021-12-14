@@ -3,6 +3,7 @@ import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/ma_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';
@@ -49,9 +50,9 @@ class ResponsiveBody extends GetResponsiveView {
             InkWell(
               onTap: () {
                 if (maHController.isLoading.value) {
-                  print('conslog'.tr);
+                  showSimpleErrorDialog(errorDescription: 'conslog'.tr);
                 } else if (maHController.maHistoryList.isEmpty) {
-                  print('conslog1'.tr);
+                  showSimpleErrorDialog(errorDescription: 'conslog1'.tr);
                 } else {
                   maHController.showDialog(context);
                   selectedIndex.value = 0;

@@ -1,6 +1,7 @@
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -98,7 +99,8 @@ class IncomingCallScreen extends StatelessWidget {
   }
 
   Future<bool> _onBackPressed() {
-    print('Either you reject the call or accept');
+    showSimpleErrorDialog(
+        errorDescription: 'Either you reject the call or accept');
     return false as Future<bool>;
   }
 

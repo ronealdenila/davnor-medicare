@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
@@ -50,15 +51,23 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     setState(() {
       tokenId = data["token"];
     });
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
-          _joinChannel();
-          isLoading = false;
-        }));
+    Future.delayed(const Duration(seconds: 1))
+        .then((value) => setState(() {
+              _joinChannel();
+              isLoading = false;
+            }))
+        .catchError((onError) {
+      showSimpleErrorDialog(
+          onTapFunc: leaveSuccess,
+          errorDescription: 'Something went wrong: ${onError}');
+    });
   }
 
   _initEngine() async {
     if (defaultTargetPlatform == TargetPlatform.android) {
       await [Permission.microphone, Permission.camera].request();
+    } else {
+      window.navigator.getUserMedia(audio: true, video: true);
     }
 
     _engine = await RtcEngine.createWithContext(

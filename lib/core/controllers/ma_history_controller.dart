@@ -144,7 +144,6 @@ class MAHistoryController extends GetxController {
 
     //filter for both
     else if (name != '' && last30days) {
-      print('BOTH');
       for (var i = 0; i < maHistoryList.length; i++) {
         if ((maHistoryList[i]
                 .fullName!

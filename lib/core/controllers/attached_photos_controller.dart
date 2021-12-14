@@ -23,14 +23,6 @@ class AttachedPhotosController extends GetxController {
 
   void prevPhoto() => crslController.previousPage();
 
-  // Future<void> downloadImage() async {
-  //   final ref = storage.refFromURL(fetchedImages[selectedIndex.value]);
-  //   Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   File downloadToFile = File('${appDocDir.path}/${ref.name}');
-  //   print('${downloadToFile}');
-  //   await storage.ref('${ref.fullPath}').writeToFile(downloadToFile);
-  // }
-
   Future<void> launchOpenImage() async {
     _urlLauncherService.launchURL(fetchedImages[selectedIndex.value]);
   }
