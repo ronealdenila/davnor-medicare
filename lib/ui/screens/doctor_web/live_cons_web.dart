@@ -39,7 +39,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
   final LiveChatController liveChatCont = Get.put(LiveChatController());
   final fetchedData = LiveConsultationWeb.authController.doctorModel.value;
   final CallingPatientController callController =
-      Get.put(CallingPatientController());
+      Get.put(CallingPatientController(), permanent: true);
   final ConsultationsController consRequests = Get.find();
   final DoctorMenuController menuController = Get.find();
   final RxBool errorPhoto = false.obs;
@@ -366,7 +366,12 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
                 stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError || !snapshot.hasData) {
-                    return Text('Something went wrong');
+                    return const Center(
+                        child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(),
+                    ));
                   } else if (snapshot.hasData) {
                     return ListView(
                       controller: _scrollController1,
@@ -385,7 +390,12 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
                       }).toList(),
                     );
                   }
-                  return const Text('Loading ..');
+                  return const Center(
+                      child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(),
+                  ));
                 })),
         Align(
           alignment: FractionalOffset.bottomCenter,

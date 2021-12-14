@@ -132,7 +132,12 @@ class LiveConsultationScreen extends StatelessWidget {
                     stream: liveChatCont.getLiveChatMessages(consData),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
-                        return Text('Something went wrong');
+                        return const Center(
+                            child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(),
+                        ));
                       } else if (snapshot.hasData) {
                         return ListView(
                           reverse: true,
@@ -150,7 +155,12 @@ class LiveConsultationScreen extends StatelessWidget {
                           }).toList(),
                         );
                       }
-                      return const Text('Loading ..');
+                      return const Center(
+                          child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(),
+                      ));
                     })),
             Align(
               alignment: FractionalOffset.bottomCenter,

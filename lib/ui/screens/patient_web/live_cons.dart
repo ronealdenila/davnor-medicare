@@ -294,7 +294,12 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
                 stream: liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong');
+                    return const Center(
+                        child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(),
+                    ));
                   } else if (snapshot.hasData) {
                     return ListView(
                       controller: _scrollController1,
@@ -313,7 +318,12 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
                       }).toList(),
                     );
                   }
-                  return const Text('Loading ..');
+                  return const Center(
+                      child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(),
+                  ));
                 })),
         Align(
           alignment: FractionalOffset.bottomCenter,
