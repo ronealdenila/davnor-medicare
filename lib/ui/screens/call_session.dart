@@ -64,7 +64,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   _initEngine() async {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (!kIsWeb) {
       await [Permission.microphone, Permission.camera].request();
     } else {
       window.navigator.getUserMedia(audio: true, video: true);
