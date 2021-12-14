@@ -15,6 +15,7 @@ class CallingPatientController extends GetxController {
   RxBool isLoading = true.obs;
   RxString patientId = ''.obs;
   RxString channelId = ''.obs;
+  RxBool atCallSession = false.obs;
 
   @override
   void onInit() {
@@ -26,9 +27,15 @@ class CallingPatientController extends GetxController {
         showRejectedCallDialog();
       } else if (incCall[0].patientJoined! &&
           incCall[0].from! == authController.userRole) {
-        print('Calling Patient');
+        atCallSession.value = true;
         Get.to(() => CallSessionScreen(),
             arguments: [patientId.value, channelId.value]);
+      } else if (!incCall[0].isCalling! &&
+          incCall[0].from! == authController.userRole &&
+          atCallSession.value) {
+        Get.back();
+        Get.back();
+        atCallSession.value = false;
       }
     });
   }

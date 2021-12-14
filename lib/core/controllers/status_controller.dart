@@ -19,6 +19,7 @@ class StatusController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isCallStatsLoading = true.obs;
   RxBool isPSLoading = true.obs;
+  RxBool atCallSession = false.obs;
 
   @override
   void onReady() {
@@ -46,7 +47,11 @@ class StatusController extends GetxController {
       if (authController.userRole == 'patient') {
         if (!isCallStatsLoading.value) {
           if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
+            atCallSession.value = true;
             Get.to(() => IncomingCallScreen());
+          } else if (!incCall[0].isCalling! && atCallSession.value) {
+            Get.back();
+            Get.back();
           }
         }
       }
