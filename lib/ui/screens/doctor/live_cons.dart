@@ -28,6 +28,7 @@ class LiveConsultationScreen extends StatelessWidget {
   final AttachedPhotosController controller = Get.find();
   final CallingPatientController callController =
       Get.put(CallingPatientController());
+  final RxBool errorPhoto = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -129,21 +130,26 @@ class LiveConsultationScreen extends StatelessWidget {
           children: [
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: liveChatCont.getLiveChatMessages(consData),
+                    stream:
+                        liveChatCont.getLiveChatMessages(liveCont.liveCons[0]),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
-                        return const Center(
-                            child: SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(),
-                        ));
-                      } else if (snapshot.hasData) {
+                        return Text('Something went wrong');
+                      }
+                      if (snapshot.connectionState == ConnectionState.active) {
                         return ListView(
                           reverse: true,
                           padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
                           shrinkWrap: true,
                           children: snapshot.data!.docs.map((item) {
+                            Map<String, dynamic> data =
+                                item.data()! as Map<String, dynamic>;
+                            if (data['dateCreated'] == null) {
+                              return SizedBox(
+                                width: 0,
+                                height: 0,
+                              );
+                            }
                             ChatModel model = ChatModel.fromJson(
                                 item.data()! as Map<String, dynamic>);
                             return Column(
