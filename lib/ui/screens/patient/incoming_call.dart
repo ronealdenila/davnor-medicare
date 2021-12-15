@@ -99,8 +99,7 @@ class IncomingCallScreen extends StatelessWidget {
   }
 
   Future<bool> _onBackPressed() {
-    showSimpleErrorDialog(
-        errorDescription: 'Either you reject the call or accept');
+    showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
     return false as Future<bool>;
   }
 

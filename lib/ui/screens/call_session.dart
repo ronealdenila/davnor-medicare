@@ -22,10 +22,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   final consInfo = Get.arguments; //0 - patientId, 1 - channelId
   late RtcEngine _engine;
   late String tokenId;
-  bool isJoined = false,
-      switchCamera = true,
-      switchRender = true,
-      isLoading = true;
+  bool switchCamera = true, switchRender = true;
+  RxBool isJoined = false.obs, isLoading = true.obs;
   List<int> remoteUid = [];
 
   @override
@@ -51,7 +49,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
           _joinChannel();
-          isLoading = false;
+          isLoading.value = false;
         }));
   }
 
@@ -79,7 +77,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         if (authController.userRole != 'patient') {
           otherJoinedSuccess();
         }
-        isJoined = true;
+        isJoined.value = true;
       },
       userJoined: (uid, elapsed) {
         print('userJoined  ${uid} ${elapsed}');
@@ -97,7 +95,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
       leaveChannel: (stats) {
         print('leaveChannel ${stats.toJson()}');
         leaveSuccess();
-        isJoined = false;
+        isJoined.value = false;
         remoteUid.clear();
       },
     ));
@@ -136,7 +134,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         child: Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
-                child: isLoading
+                child: isLoading.value
                     ? Center(
                         child: SizedBox(
                             height: kIsWeb ? 35 : 24,
