@@ -256,10 +256,9 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
         width: Get.width,
         height: 80,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Spacer(),
             Row(
               children: [
                 Card(
@@ -335,16 +334,16 @@ class _LiveConsWebScreenState extends State<LiveConsWebScreen> {
 
   Widget getPhoto(LiveConsultationModel model) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(100),
       child: Image.network(
         liveCont.getDoctorProfile(model),
         fit: BoxFit.cover,
-        height: 50,
-        width: 50,
+        height: 100,
+        width: 100,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-              height: 50,
-              width: 50,
+              height: 100,
+              width: 100,
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
