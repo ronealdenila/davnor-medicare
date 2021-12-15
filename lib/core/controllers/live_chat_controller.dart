@@ -16,8 +16,9 @@ import 'package:uuid/uuid.dart';
 class LiveChatController extends GetxController {
   final log = getLogger('Doctor Home Consultations Controller');
 
-  final LiveConsController liveCont = Get.find();
+  static LiveConsController liveConsController = Get.find();
   final ImagePickerService _imagePicker = ImagePickerService();
+  final LiveConsultationModel consData = liveConsController.liveCons[0];
   RxList<ChatModel> liveChat = RxList<ChatModel>([]);
 
   //content if chat checker - to control what should be uploaded
@@ -39,11 +40,11 @@ class LiveChatController extends GetxController {
   final RxString image = ''.obs;
   final RxString photoURL = ''.obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   liveChat.bindStream(assignLiveChat(consData));
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    liveChat.bindStream(assignLiveChat(consData));
+  }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getLiveChatMessages(
       LiveConsultationModel model) {
@@ -53,7 +54,7 @@ class LiveChatController extends GetxController {
         .doc(model.consID)
         .collection('messages')
         .orderBy('dateCreated', descending: true)
-        .snapshots(includeMetadataChanges: true);
+        .snapshots();
   }
 
   Stream<List<ChatModel>> assignLiveChat(LiveConsultationModel model) {
@@ -109,7 +110,7 @@ class LiveChatController extends GetxController {
   Future<void> sendMessage(String message) async {
     await firestore
         .collection('chat')
-        .doc(liveCont.liveCons[0].consID)
+        .doc(consData.consID)
         .collection('messages')
         .add({
       'dateCreated': FieldValue.serverTimestamp(),
@@ -134,7 +135,7 @@ class LiveChatController extends GetxController {
     final img = image.value;
     final v4 = uuid.v4();
     final ref = storageRef.child(
-        'Cons_Request/${auth.currentUser!.uid}/${liveCont.liveCons[0].consID}/Cam-Ph-$v4$v4');
+        'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/Cam-Ph-$v4$v4');
     final uploadTask = ref.putFile(File(img));
     await uploadTask.then((res) async {
       photoURL.value = await res.ref.getDownloadURL();
@@ -145,7 +146,7 @@ class LiveChatController extends GetxController {
     for (var i = 0; i < images.length; i++) {
       final v4 = uuid.v4();
       final ref = storageRef.child(
-          'Cons_Request/${auth.currentUser!.uid}/${liveCont.liveCons[0].consID}/$i-Ph-$v4$v4');
+          'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/$i-Ph-$v4$v4');
       await ref.putFile(File(images[i].path)).whenComplete(() async {
         await ref.getDownloadURL().then((value) {
           listPhotoURL.value += '$value>>>';
@@ -160,7 +161,7 @@ class LiveChatController extends GetxController {
       final v4 = uuid.v4();
       final fileBytes = images[i].readAsBytes();
       final ref = storageRef.child(
-          'Cons_Request/${auth.currentUser!.uid}/${liveCont.liveCons[0].consID}/$i-Ph-$v4$v4');
+          'Cons_Request/${auth.currentUser!.uid}/${consData.consID}/$i-Ph-$v4$v4');
       final metadata = firebase_storage.SettableMetadata(
           contentType: 'image/jpeg',
           customMetadata: {'picked-file-path': images[i].path});

@@ -55,7 +55,7 @@ class ConsultationsController extends GetxController {
         .collection('cons_request')
         .where('category', isEqualTo: fetchedData!.categoryID)
         .orderBy('dateRqstd')
-        .snapshots(includeMetadataChanges: true)
+        .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

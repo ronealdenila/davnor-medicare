@@ -1,6 +1,5 @@
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/models/cons_stats_model.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/ui/screens/patient/incoming_call.dart';
@@ -10,12 +9,11 @@ import 'package:get/get.dart';
 class StatusController extends GetxController {
   final log = getLogger('Status Controller');
 
-  final AuthController authController = Get.find();
+  static AuthController authController = Get.find();
   RxList<PatientStatusModel> patientStatus = RxList<PatientStatusModel>([]);
   RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
   RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
   RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
-  RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>(); //doc
   RxBool isLoading = true.obs;
   RxBool isCallStatsLoading = true.obs;
   RxBool isPSLoading = true.obs;
@@ -33,7 +31,6 @@ class StatusController extends GetxController {
       incCall.bindStream(getCallStatus());
     } else if (authController.userRole == 'doctor') {
       doctorStatus.bindStream(getDStatus());
-      statusList.bindStream(getStatus());
     } else if (authController.userRole == 'pswd-p' ||
         authController.userRole == 'pswd-h') {
       pswdPStatus.bindStream(getMAStatus());
@@ -114,20 +111,6 @@ class StatusController extends GetxController {
         return DoctorStatusModel.fromJson(item.data());
       }).toList();
     });
-  }
-
-  Stream<List<ConsStatusModel>> getStatus() {
-    log.i('GETTING CONS SLOT STATS FOR DOCTOR');
-    return firestore
-        .collection('cons_status')
-        .where('categoryID',
-            isEqualTo: authController.doctorModel.value!.categoryID)
-        .snapshots()
-        .map(
-          (query) => query.docs
-              .map((item) => ConsStatusModel.fromJson(item.data()))
-              .toList(),
-        );
   }
 
   Stream<List<PSWDStatusModel>> getMAStatus() {

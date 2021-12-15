@@ -48,7 +48,7 @@ class MAReqListController extends GetxController {
     return firestore
         .collection('ma_request')
         .orderBy('date_rqstd')
-        .snapshots(includeMetadataChanges: true)
+        .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

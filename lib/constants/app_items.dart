@@ -175,11 +175,11 @@ List<MenuItem> adminSideMenuItemRoutes = [
 
 List<MenuItem> patientSideMenuItemRoutes = [
   MenuItem('Dashboard', Routes.PATIENT_WEB_HOME),
-  MenuItem('menu2', Routes.PATIENT_WEB_LIVE_CONS), //Live-Current Consultation
-  MenuItem('menu3', Routes.PATIENT_WEB_CONS_HISTORY), //Consultation History
-  MenuItem('menu4', Routes.PATIENT_WEB_MA_HISTORY), //Medical Assistance History
-  MenuItem('setting1', Routes.CONS_HISTORY_WEB), //Change Language
-  MenuItem('setting2', Routes.MA_HISTORY_LIST), //App Info
+  MenuItem('Live Consultation', Routes.PATIENT_WEB_LIVE_CONS),
+  MenuItem('Consultation History', Routes.PATIENT_WEB_CONS_HISTORY),
+  MenuItem('Medical Assistance History', Routes.PATIENT_WEB_MA_HISTORY),
+  MenuItem('Change Language', Routes.CONS_HISTORY_WEB),
+  MenuItem('App Info', Routes.MA_HISTORY_LIST),
 ];
 
 List<MenuItem> doctorSideMenuItemRoutes = [

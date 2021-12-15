@@ -57,7 +57,7 @@ class ConsHistoryController extends GetxController {
         .collection('cons_history')
         .where('patientId', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateConsEnd', descending: true)
-        .snapshots(includeMetadataChanges: true)
+        .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
@@ -72,7 +72,7 @@ class ConsHistoryController extends GetxController {
         .collection('cons_history')
         .where('docID', isEqualTo: auth.currentUser!.uid)
         .orderBy('dateConsEnd', descending: true)
-        .snapshots(includeMetadataChanges: true)
+        .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

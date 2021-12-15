@@ -24,7 +24,7 @@ class ConsQueueController extends GetxController {
         .collection('cons_queue')
         .where('categoryID', isEqualTo: stats.patientStatus[0].categoryID)
         .orderBy('dateCreated')
-        .snapshots(includeMetadataChanges: true)
+        .snapshots()
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;

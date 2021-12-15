@@ -216,7 +216,7 @@ class LocalString extends Translations {
           'notif': 'You have no notifications',
           //appinfo
           'appinfo':
-              'DavNor MediCare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people to connect efficiently to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
+              'DavNor Medicare is a multiplatform-based application that offers free online consultation and Medical Assistance from PSWD. The application intends to help people to connect efficiently to the doctors virtually to have a regular checkup and receive free medicine. It has a feature of translation such as English, Tagalog, and Bisaya to help them use the application without any trouble. And lastly, only the residents of Davao del Norte can use the application.',
           //Dialog
           'errordialog1':
               'Please wait while we are currently connecting to the server',
@@ -481,7 +481,7 @@ class LocalString extends Translations {
           'notif': 'Wala kang abiso',
           //appinfo
           'appinfo':
-              'Ang DavNor MediCare ay isang multiplatform-based na application na nag-aalok ng libreng online na konsultasyon at Medical Assistance mula sa PSWD. Nilalayon ng application na tulungan ang mga tao na kumonekta nang mahusay sa mga doktor nang halos magkaroon ng regular na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang application nang walang anumang problema. At panghuli, ang mga residente lamang ng Davao del Norte ang maaaring gumamit ng application.',
+              'Ang DavNor Medicare ay isang multiplatform-based na application na nag-aalok ng libreng online na konsultasyon at Medical Assistance mula sa PSWD. Nilalayon ng application na tulungan ang mga tao na kumonekta nang mahusay sa mga doktor nang halos magkaroon ng regular na checkup at makatanggap ng libreng gamot. Mayroon itong tampok ng pagsasalin tulad ng English, Tagalog, at Bisaya upang matulungan silang gamitin ang application nang walang anumang problema. At panghuli, ang mga residente lamang ng Davao del Norte ang maaaring gumamit ng application.',
           //Dialog
           'errordialog1':
               'Mangyaring maghintay habang kami ay kasalukuyang kumokonekta sa server',
@@ -512,7 +512,7 @@ class LocalString extends Translations {
           'menu4': 'Nakaraang Tulong Medikal',
           'menu5': 'Mag Log out',
           //icons
-          'icons1': 'Sakit sa Tenga',
+          'icons1': 'Sakit sa tenga',
           'icons2': 'Heartburn o GERD',
           'icons3': 'Pagduduwal o Pagsusuka',
           'icons4': 'Pagtatae o Pagdumi',
@@ -520,12 +520,12 @@ class LocalString extends Translations {
           'icons6': 'Sinusitis',
           'icons7': 'Sipon o Ubo',
           'icons8': 'Hypertension',
-          'icons9': 'Sakit sa Likod',
+          'icons9': 'Sakit sa likod',
           'icons10': 'Conjunctivitis',
           'icons11': 'Diabetes',
           'icons12': 'Hika',
           'icons13': 'Allergy sa Pagkain',
-          'icons14': 'Sakit sa Lalamunan ',
+          'icons14': 'Sakit sa lalamunan ',
           'icons15': 'Pulmonya'
         },
 
@@ -745,7 +745,7 @@ class LocalString extends Translations {
           'notif': 'Wala kay nadawat na pahibalo',
           //appinfo
           'appinfo':
-              'Ang DavNor MediCare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Medical Assistance gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga makonektar sa epektibong paagi ngadto sa mga doktor nga halos adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug ang katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.',
+              'Ang DavNor Medicare usa ka multiplatform-based nga aplikasyon nga nagtanyag ug libreng online nga konsultasyon ug Medical Assistance gikan sa PSWD. Ang aplikasyon nagtinguha sa pagtabang sa mga tawo nga makonektar sa epektibong paagi ngadto sa mga doktor nga halos adunay regular nga pagsusi ug makadawat ug libreng tambal. Kini adunay bahin sa paghubad sama sa English, Tagalog, ug Bisaya aron matabangan sila sa paggamit sa aplikasyon nga wala’y kasamok. Ug ang katapusan, ang mga residente ra sa Davao del Norte ang makagamit sa aplikasyon.',
           //Dialog
           'errordialog1':
               'Palihug paghulat samtang nagkonektar kami karon sa server',
@@ -754,7 +754,7 @@ class LocalString extends Translations {
           'errordialog4': 'Pasensya MA walay pundo sa pagkakaron.',
           'errordialog5':
               'Pasensya, sa pagkakaron walay magamit nga doktor nga espesyalista sa maong sakit. Palihug sulayi pag-usab unya.',
-          'errordialog6': 'Pasensya, wala\u{0027}y puwang nga magamit karon',
+          'errordialog6': 'Pasensya, wala’y puwang nga magamit karon',
           'errordialog7':
               'Palihug fill-upi ang tanan. Ayaw kalimte ang kasarian ug uri',
           'errordialog8': 'Nawala ang ubang mga uma',
@@ -768,7 +768,7 @@ class LocalString extends Translations {
           //menu
           'setting': 'Settings',
           'setting1': 'Ilisan ang Pinulongan',
-          'setting2': 'Impormasyon sa Aplikasyon',
+          'setting2': 'Impormasyon sa aplikasyon',
           'setting3': 'Pilia ang Imong Pinulongan ',
           'menu1': 'Profile',
           'menu2': 'Karon nga Konsultasyon',
@@ -776,20 +776,20 @@ class LocalString extends Translations {
           'menu4': 'Karaang Tabang Medikal',
           'menu5': 'Mag Log out',
           //icons
-          'icons1': 'Sakit sa Dalunggan',
+          'icons1': 'Sakit sa dalunggan',
           'icons2': 'Heartburn o GERD',
           'icons3': 'Kasukaon o Pagsuka',
           'icons4': 'Diarrhea o Constipation',
-          'icons5': 'Ulser o Sakit sa Tiyan',
+          'icons5': 'Ulser o Sakit sa tiyan',
           'icons6': 'Sinusitis',
           'icons7': 'Sipon o Ubo',
           'icons8': 'Hypertension',
-          'icons9': 'Sakit sa Likod',
+          'icons9': 'Sakit sa likod',
           'icons10': 'Conjunctivitis',
           'icons11': 'Diabetes',
           'icons12': 'Asma',
           'icons13': 'Allergy sa Pagkaon',
-          'icons14': 'Sakit nga Tutunlan',
+          'icons14': 'Sakit nga tutunlan',
           'icons15': 'Pneumonia'
         }
       };
