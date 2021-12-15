@@ -292,7 +292,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
 
   Future<void> sendNotification(String uid) async {
     final action = ' has approved your ';
-    final title = 'The PSWD Head${action}Medical Assistance(MA) Request';
+    final title = 'The pswd head${action}Medical Assistance(MA) Request';
     final message =
         'We are now processing your MA request and will notify you when you can claim the assistance. Thank you';
 
@@ -302,7 +302,7 @@ class ForApprovalListScreen extends GetView<ForApprovalController> {
         .collection('notifications')
         .add({
       'photo': maLogoURL,
-      'from': 'The PSWD Head',
+      'from': 'The pswd personnel',
       'action': action,
       'subject': 'MA Request',
       'message': message,

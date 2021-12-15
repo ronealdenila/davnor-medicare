@@ -156,7 +156,7 @@ class MAReqListController extends GetxController {
 
   Future<void> sendNotificationAccepted(String uid) async {
     final action = ' has accepted your ';
-    final title = 'The PSWD Staff${action}Medical Assistance(MA) Request';
+    final title = 'The pswd personnel${action}Medical Assistance(MA) Request';
     final message =
         'Please standby and get ready for an interview through video call';
 
@@ -166,7 +166,7 @@ class MAReqListController extends GetxController {
         .collection('notifications')
         .add({
       'photo': maLogoURL,
-      'from': 'The PSWD Staff',
+      'from': 'The pswd personnel',
       'action': action,
       'subject': 'MA Request',
       'message': message,
@@ -226,7 +226,7 @@ class MAReqListController extends GetxController {
 
   Future<void> addNotification(String uid) async {
     final action = ' has denied your ';
-    final title = 'The PSWD Staff${action}Medical Assistance(MA) Request';
+    final title = 'The pswd personnel${action}Medical Assistance(MA) Request';
     final message = '"${reason.text}"';
 
     await firestore
@@ -235,7 +235,7 @@ class MAReqListController extends GetxController {
         .collection('notifications')
         .add({
       'photo': maLogoURL,
-      'from': 'The PSWD Staff',
+      'from': 'The pswd personnel',
       'action': action,
       'subject': 'MA Request',
       'message': message,
