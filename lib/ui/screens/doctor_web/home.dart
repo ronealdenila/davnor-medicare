@@ -14,6 +14,7 @@ import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/action_card.dart';
@@ -361,9 +362,10 @@ class ResponsiveView extends GetResponsiveView {
                               color: verySoftRed[60],
                               secondaryColor: verySoftRedCustomColor,
                               onTap: () {
-                                menuController.changeActiveItemTo('Dashboard');
-                                navigationController
-                                    .navigateTo(Routes.DOC_WEB_HOME);
+                                Get.to(() => CallSessionScreen());
+                                // menuController.changeActiveItemTo('Dashboard');
+                                // navigationController
+                                //     .navigateTo(Routes.DOC_WEB_HOME);
                               }),
                         ),
                       ],

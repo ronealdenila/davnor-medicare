@@ -16,9 +16,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   final emailText = TextEditingController(text: "fake@email.com");
   final iosAppBarRGBAColor =
       TextEditingController(text: "#0080FF80"); //transparent blue
-  bool? isAudioOnly = true;
-  bool? isAudioMuted = true;
-  bool? isVideoMuted = true;
 
   @override
   void initState() {
@@ -149,31 +146,6 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
           SizedBox(
             height: 14.0,
           ),
-          CheckboxListTile(
-            title: Text("Audio Only"),
-            value: isAudioOnly,
-            onChanged: _onAudioOnlyChanged,
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          CheckboxListTile(
-            title: Text("Audio Muted"),
-            value: isAudioMuted,
-            onChanged: _onAudioMutedChanged,
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          CheckboxListTile(
-            title: Text("Video Muted"),
-            value: isVideoMuted,
-            onChanged: _onVideoMutedChanged,
-          ),
-          Divider(
-            height: 48.0,
-            thickness: 2.0,
-          ),
           SizedBox(
             height: 64.0,
             width: double.maxFinite,
@@ -198,25 +170,8 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     );
   }
 
-  _onAudioOnlyChanged(bool? value) {
-    setState(() {
-      isAudioOnly = value;
-    });
-  }
-
-  _onAudioMutedChanged(bool? value) {
-    setState(() {
-      isAudioMuted = value;
-    });
-  }
-
-  _onVideoMutedChanged(bool? value) {
-    setState(() {
-      isVideoMuted = value;
-    });
-  }
-
   _joinMeeting() async {
+    print('clicked join');
     String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
 
     // Enable or disable any feature flag here
@@ -231,48 +186,47 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         // Disable ConnectionService usage on Android to avoid issues (see README)
         featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
       }
-      // Define meetings options here
-      var options = JitsiMeetingOptions(room: roomText.text)
-        ..serverURL = serverUrl
-        ..subject = subjectText.text
-        ..userDisplayName = nameText.text
-        ..userEmail = emailText.text
-        ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
-        ..audioOnly = isAudioOnly
-        ..audioMuted = isAudioMuted
-        ..videoMuted = isVideoMuted
-        ..featureFlags.addAll(featureFlags)
-        ..webOptions = {
-          "roomName": roomText.text,
-          "width": "100%",
-          "height": "100%",
-          "enableWelcomePage": false,
-          "chromeExtensionBanner": null,
-          "userInfo": {"displayName": nameText.text}
-        };
+    } // Define meetings options here
+    var options = JitsiMeetingOptions(room: roomText.text)
+      ..serverURL = serverUrl
+      ..subject = subjectText.text
+      ..userDisplayName = nameText.text
+      ..userEmail = emailText.text
+      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
+      ..audioOnly = false
+      ..audioMuted = false
+      ..videoMuted = false
+      ..featureFlags.addAll(featureFlags)
+      ..webOptions = {
+        "roomName": roomText.text,
+        "width": "100%",
+        "height": "100%",
+        "enableWelcomePage": false,
+        "chromeExtensionBanner": null,
+        "userInfo": {"displayName": nameText.text}
+      };
 
-      debugPrint("JitsiMeetingOptions: $options");
-      await JitsiMeet.joinMeeting(
-        options,
-        listener: JitsiMeetingListener(
-            onConferenceWillJoin: (message) {
-              debugPrint("${options.room} will join with message: $message");
-            },
-            onConferenceJoined: (message) {
-              debugPrint("${options.room} joined with message: $message");
-            },
-            onConferenceTerminated: (message) {
-              debugPrint("${options.room} terminated with message: $message");
-            },
-            genericListeners: [
-              JitsiGenericListener(
-                  eventName: 'readyToClose',
-                  callback: (dynamic message) {
-                    debugPrint("readyToClose callback");
-                  }),
-            ]),
-      );
-    }
+    debugPrint("JitsiMeetingOptions: $options");
+    await JitsiMeet.joinMeeting(
+      options,
+      listener: JitsiMeetingListener(
+          onConferenceWillJoin: (message) {
+            debugPrint("${options.room} will join with message: $message");
+          },
+          onConferenceJoined: (message) {
+            debugPrint("${options.room} joined with message: $message");
+          },
+          onConferenceTerminated: (message) {
+            debugPrint("${options.room} terminated with message: $message");
+          },
+          genericListeners: [
+            JitsiGenericListener(
+                eventName: 'readyToClose',
+                callback: (dynamic message) {
+                  debugPrint("readyToClose callback");
+                }),
+          ]),
+    );
   }
 
   void _onConferenceWillJoin(message) {
