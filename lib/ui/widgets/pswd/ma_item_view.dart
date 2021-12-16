@@ -8,7 +8,7 @@ import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart
 import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart';
 import 'package:davnor_medicare/core/models/general_ma_req_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/doctor/calling.dart';
+import 'package:davnor_medicare/ui/screens/calling.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare/ui/widgets/patient/dialog_button.dart';

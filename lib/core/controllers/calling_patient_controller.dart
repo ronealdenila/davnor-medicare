@@ -3,7 +3,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/call_session.dart';
+import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:get/get.dart';
 
 final AuthController authController = Get.find();
