@@ -10,7 +10,7 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/foundation.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'dart:html';
 
 class CallSessionScreen extends StatefulWidget {
   @override
@@ -54,9 +54,7 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
   }
 
   _initEngine() async {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await [Permission.microphone, Permission.camera].request();
-    }
+    await window.navigator.getUserMedia(audio: true, video: true);
 
     _engine = await RtcEngine.createWithContext(
         RtcEngineContext('369277470acc4438b3622bf48f4b0b7d'));
