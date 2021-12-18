@@ -33,6 +33,7 @@ class _Meeting2State extends State<Meeting2> {
   void initState() {
     super.initState();
     JitsiMeet.closeMeeting();
+    callController.bindToList(acceptedMA.accMA[0].requesterID!);
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,

@@ -20,7 +20,6 @@ class IncomingCallScreen extends StatefulWidget {
 class _IncomingCallScreenState extends State<IncomingCallScreen> {
   static AuthController authController = Get.find();
   final StatusController stats = Get.find();
-  final LiveConsController liveCont = Get.find();
   final serverText = TextEditingController();
   final nameText =
       '${authController.patientModel.value!.firstName!} ${authController.patientModel.value!.lastName!}';
@@ -256,7 +255,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
         featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
       }
     } // Define meetings options here
-    var options = JitsiMeetingOptions(room: liveCont.liveCons[0].consID!)
+    var options = JitsiMeetingOptions(room: stats.incCall[0].channelId!)
       ..serverURL = serverUrl
       ..subject = "Virtual Consultation"
       ..userDisplayName = nameText
@@ -265,7 +264,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
       ..videoMuted = false
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": liveCont.liveCons[0].consID!,
+        "roomName": stats.incCall[0].channelId!,
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
@@ -307,7 +306,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
 
   void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
-    await endCall(liveCont.liveCons[0].patientID!);
+    await endCall(auth.currentUser!.uid);
     Get.back();
     JitsiMeet.closeMeeting();
   }
