@@ -3,7 +3,7 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/cons_stats_model.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
-import 'package:davnor_medicare/ui/screens/incoming_call2.dart';
+import 'package:davnor_medicare/ui/screens/incoming_call.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +48,7 @@ class StatusController extends GetxController {
         if (!isCallStatsLoading.value) {
           if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
             atCallSession.value = true;
-            Get.to(() => IncomingCallPatientScreen2());
+            Get.to(() => IncomingCallScreen());
           } else if (!incCall[0].isCalling! && atCallSession.value) {
             atCallSession.value = false;
             Get.back();

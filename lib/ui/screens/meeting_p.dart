@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
-import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/core/controllers/pswd/accepted_ma_controller.dart';
+import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -13,33 +13,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
-class Meeting extends StatefulWidget {
+class Meeting2 extends StatefulWidget {
   @override
-  _MeetingState createState() => _MeetingState();
+  _Meeting2State createState() => _Meeting2State();
 }
 
-class _MeetingState extends State<Meeting> {
-  final AuthController authController = Get.find();
+class _Meeting2State extends State<Meeting2> {
+  static AuthController authController = Get.find();
   final serverText = TextEditingController();
   final subjectText = TextEditingController(text: "Virtual Consultation");
-  final RxString name = "".obs;
+  final name =
+      '${authController.pswdModel.value!.firstName!} ${authController.pswdModel.value!.lastName!}';
   final CallingPatientController callController =
       Get.put(CallingPatientController(), permanent: true);
-  final LiveConsController liveCont = Get.find();
+  final AcceptedMAController acceptedMA = Get.find();
   final RxBool doneLoad = false.obs;
 
   @override
   void initState() {
     super.initState();
     JitsiMeet.closeMeeting();
-    callController.bindToList(liveCont.liveCons[0].patientID!);
-    if (authController.userRole == 'doctor') {
-      name.value =
-          '${authController.doctorModel.value!.firstName!} ${authController.doctorModel.value!.lastName!}';
-    } else {
-      name.value =
-          '${authController.pswdModel.value!.firstName!} ${authController.pswdModel.value!.lastName!}';
-    }
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
@@ -72,46 +65,50 @@ class _MeetingState extends State<Meeting> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ),
-          child: Center(
-            child: kIsWeb
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: width * 0.30,
-                        child: meetConfig(),
-                      ),
-                      Container(
-                          width: width * 0.60,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                                color: Colors.white54,
-                                child: SizedBox(
-                                  width: width * 0.60 * 0.70,
-                                  height: width * 0.60 * 0.70,
-                                  child: JitsiMeetConferencing(
-                                    extraJS: [
-                                      // extraJs setup example
-                                      '<script>function echo(){console.log("echo!!!")};</script>',
-                                      '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                    ],
-                                  ),
-                                )),
-                          ))
-                    ],
-                  )
-                : meetConfig(),
-          ),
-        ),
-      ),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+          body: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
+              child: Center(
+                child: kIsWeb
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: width * 0.30,
+                            child: meetConfig(),
+                          ),
+                          Container(
+                              width: width * 0.60,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                    color: Colors.white54,
+                                    child: SizedBox(
+                                      width: width * 0.60 * 0.70,
+                                      height: width * 0.60 * 0.70,
+                                      child: JitsiMeetConferencing(
+                                        extraJS: [
+                                          // extraJs setup example
+                                          '<script>function echo(){console.log("echo!!!")};</script>',
+                                          '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                                        ],
+                                      ),
+                                    )),
+                              ))
+                        ],
+                      )
+                    : meetConfig(),
+              ))),
     );
+  }
+
+  Future<bool> _onBackPressed() {
+    showSimpleErrorDialog(errorDescription: "Please end the call first");
+    return false as Future<bool>;
   }
 
   Widget meetConfig() {
@@ -166,33 +163,23 @@ class _MeetingState extends State<Meeting> {
       FeatureFlagEnum.MEETING_PASSWORD_ENABLED: false,
       FeatureFlagEnum.CALENDAR_ENABLED: false,
     };
-    if (!kIsWeb) {
-      // Here is an example, disabling features for each platform
-      if (Platform.isAndroid) {
-        // Disable ConnectionService usage on Android to avoid issues (see README)
-        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
-      } else if (Platform.isIOS) {
-        // Disable PIP on iOS as it looks weird
-        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
-      }
-    }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: liveCont.liveCons[0].consID!)
+    var options = JitsiMeetingOptions(room: acceptedMA.accMA[0].maID!)
       ..serverURL = serverUrl
       ..subject = "Virtual Consultation"
-      ..userDisplayName = name.value
+      ..userDisplayName = name
       ..audioOnly = false
       ..audioMuted = false
       ..videoMuted = false
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": liveCont.liveCons[0].consID!,
+        "roomName": acceptedMA.accMA[0].maID!,
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
         " prejoinPageEnabled": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": name.value}
+        "userInfo": {"displayName": name}
       };
 
     debugPrint("JitsiMeetingOptions: $options");
@@ -231,7 +218,7 @@ class _MeetingState extends State<Meeting> {
 
   void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
-    await endCall(liveCont.liveCons[0].patientID!);
+    await endCall(acceptedMA.accMA[0].requesterID!);
     Get.back();
     JitsiMeet.closeMeeting();
   }
@@ -257,7 +244,7 @@ class _MeetingState extends State<Meeting> {
               color: verySoftBlueColor[100],
               child: Center(
                 child: Text(
-                  '${liveCont.liveCons[0].fullName![0]}',
+                  '${acceptedMA.accMA[0].fullName![0]}',
                   style: title36Regular.copyWith(color: Colors.white),
                 ),
               ));

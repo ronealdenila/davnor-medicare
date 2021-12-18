@@ -1,8 +1,8 @@
-import 'package:davnor_medicare/constants/asset_paths.dart';
-import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
+import 'package:davnor_medicare/constants/asset_paths.dart';
+import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
@@ -12,20 +12,18 @@ import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'dart:io' show Platform;
 
-class IncomingCallPatientScreen2 extends StatefulWidget {
+class IncomingCallScreen extends StatefulWidget {
   @override
-  State<IncomingCallPatientScreen2> createState() =>
-      _IncomingCallPatientScreenState2();
+  State<IncomingCallScreen> createState() => _IncomingCallScreenState();
 }
 
-class _IncomingCallPatientScreenState2
-    extends State<IncomingCallPatientScreen2> {
+class _IncomingCallScreenState extends State<IncomingCallScreen> {
   static AuthController authController = Get.find();
   final StatusController stats = Get.find();
   final LiveConsController liveCont = Get.find();
   final serverText = TextEditingController();
-  final nameText = authController.patientModel.value!.email!;
-  final emailText = authController.patientModel.value!.email!;
+  final nameText =
+      '${authController.patientModel.value!.firstName!} ${authController.patientModel.value!.lastName!}';
   final RxBool callAccepted = false.obs;
 
   @override
@@ -40,7 +38,6 @@ class _IncomingCallPatientScreenState2
         onError: _onError));
     ever(stats.incCall, (value) {
       if (!stats.incCall[0].isCalling!) {
-        Get.back();
         JitsiMeet.closeMeeting();
       }
     });
@@ -98,7 +95,8 @@ class _IncomingCallPatientScreenState2
 
   Future<bool> _onBackPressed() {
     if (callAccepted.value) {
-      print('Please end the call first'); //TRANSLATE
+      showSimpleErrorDialog(
+          errorDescription: "Please end the call first"); //TRANSLATE
     } else {
       showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
     }
@@ -112,7 +110,7 @@ class _IncomingCallPatientScreenState2
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: kIsWeb ? 250 : 80,
+            radius: 80,
             backgroundImage: AssetImage(
                 stats.incCall[0].from == 'doctor' ? doctorDefault : maImage),
           ),
@@ -181,65 +179,22 @@ class _IncomingCallPatientScreenState2
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CircleAvatar(
-          radius: kIsWeb ? 250 : 80,
-          backgroundImage: AssetImage(
-              stats.incCall[0].from == 'doctor' ? doctorDefault : maImage),
+        Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: 130,
+            height: 130,
+            child: Image.asset(
+              logo,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-        verticalSpace35,
+        verticalSpace20,
         Text(
-          '${stats.incCall[0].callerName}',
-          style: subtitle18Medium,
-        ),
-        verticalSpace5,
-        Text(
-          'is calling....',
+          'Virtual Consultation',
           style: body16Regular,
         ),
-        verticalSpace50,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await acceptCall();
-                  },
-                  child:
-                      Icon(Icons.call_rounded, color: Colors.white, size: 40),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12),
-                    primary: Color(0xFF11d87b),
-                  ),
-                ),
-                verticalSpace5,
-                Text('Accept')
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await rejectCall(); //clear data except from
-                  },
-                  child:
-                      Icon(Icons.close_rounded, color: Colors.white, size: 40),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12),
-                    primary: Colors.red,
-                  ),
-                ),
-                verticalSpace5,
-                Text('Reject'),
-              ],
-            )
-          ],
-        )
       ],
     ));
   }
@@ -305,13 +260,12 @@ class _IncomingCallPatientScreenState2
       ..serverURL = serverUrl
       ..subject = "Virtual Consultation"
       ..userDisplayName = nameText
-      ..userEmail = emailText
       ..audioOnly = false
       ..audioMuted = false
       ..videoMuted = false
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": "Virtual Consultation",
+        "roomName": liveCont.liveCons[0].consID!,
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
