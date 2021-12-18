@@ -13,7 +13,6 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'dart:io' show Platform;
 
 class IncomingCallPatientScreen2 extends StatefulWidget {
-  //PATIENT
   @override
   State<IncomingCallPatientScreen2> createState() =>
       _IncomingCallPatientScreenState2();
@@ -22,8 +21,8 @@ class IncomingCallPatientScreen2 extends StatefulWidget {
 class _IncomingCallPatientScreenState2
     extends State<IncomingCallPatientScreen2> {
   static AuthController authController = Get.find();
-  final LiveConsController liveCont = Get.find();
   final StatusController stats = Get.find();
+  final LiveConsController liveCont = Get.find();
   final serverText = TextEditingController();
   final nameText = authController.patientModel.value!.email!;
   final emailText = authController.patientModel.value!.email!;
@@ -32,11 +31,19 @@ class _IncomingCallPatientScreenState2
   @override
   void initState() {
     super.initState();
+    JitsiMeet.closeMeeting();
+    callAccepted.value = false;
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
         onError: _onError));
+    ever(stats.incCall, (value) {
+      if (!stats.incCall[0].isCalling!) {
+        Get.back();
+        JitsiMeet.closeMeeting();
+      }
+    });
   }
 
   @override
@@ -50,13 +57,6 @@ class _IncomingCallPatientScreenState2
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Incoming Call',
-            style: subtitle18Medium.copyWith(color: Colors.black),
-          ),
-        ),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
@@ -67,7 +67,8 @@ class _IncomingCallPatientScreenState2
                   children: [
                     Container(
                       width: Get.width * 0.30,
-                      child: meetConfig(),
+                      child: Obx(() =>
+                          callAccepted.value ? webConfig() : meetConfig()),
                     ),
                     Container(
                         width: Get.width * 0.60,
@@ -174,6 +175,75 @@ class _IncomingCallPatientScreenState2
     );
   }
 
+  Widget webConfig() {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: kIsWeb ? 250 : 80,
+          backgroundImage: AssetImage(
+              stats.incCall[0].from == 'doctor' ? doctorDefault : maImage),
+        ),
+        verticalSpace35,
+        Text(
+          '${stats.incCall[0].callerName}',
+          style: subtitle18Medium,
+        ),
+        verticalSpace5,
+        Text(
+          'is calling....',
+          style: body16Regular,
+        ),
+        verticalSpace50,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await acceptCall();
+                  },
+                  child:
+                      Icon(Icons.call_rounded, color: Colors.white, size: 40),
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(12),
+                    primary: Color(0xFF11d87b),
+                  ),
+                ),
+                verticalSpace5,
+                Text('Accept')
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await rejectCall(); //clear data except from
+                  },
+                  child:
+                      Icon(Icons.close_rounded, color: Colors.white, size: 40),
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(12),
+                    primary: Colors.red,
+                  ),
+                ),
+                verticalSpace5,
+                Text('Reject'),
+              ],
+            )
+          ],
+        )
+      ],
+    ));
+  }
+
   Future<void> acceptCall() async {
     await firestore
         .collection('patients')
@@ -261,6 +331,7 @@ class _IncomingCallPatientScreenState2
           },
           onConferenceTerminated: (message) {
             debugPrint("${options.room} terminated with message: $message");
+            _onConferenceTerminated(message);
           },
           genericListeners: [
             JitsiGenericListener(
@@ -283,6 +354,7 @@ class _IncomingCallPatientScreenState2
   void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
     await endCall(liveCont.liveCons[0].patientID!);
+    Get.back();
     JitsiMeet.closeMeeting();
   }
 
@@ -299,8 +371,7 @@ class _IncomingCallPatientScreenState2
       'otherJoined': false,
       'channelId': '',
       'callerName': '',
-      'from': ''
-    }).then((value) => Get.back());
+    });
   }
 
   _onError(error) {

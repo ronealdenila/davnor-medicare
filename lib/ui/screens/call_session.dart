@@ -31,6 +31,7 @@ class _MeetingState extends State<Meeting> {
   @override
   void initState() {
     super.initState();
+    JitsiMeet.closeMeeting();
     callController.bindToList(liveCont.liveCons[0].patientID!);
     if (authController.userRole == 'doctor') {
       name.value =
@@ -54,6 +55,10 @@ class _MeetingState extends State<Meeting> {
         Get.back();
         callController.showRejectedCallDialog();
         JitsiMeet.closeMeeting();
+      } else if (!callController.incCall[0].isCalling! &&
+          callController.incCall[0].from! == authController.userRole) {
+        Get.back();
+        JitsiMeet.closeMeeting();
       }
     });
   }
@@ -73,35 +78,37 @@ class _MeetingState extends State<Meeting> {
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
           ),
-          child: kIsWeb
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: width * 0.30,
-                      child: meetConfig(),
-                    ),
-                    Container(
-                        width: width * 0.60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                              color: Colors.white54,
-                              child: SizedBox(
-                                width: width * 0.60 * 0.70,
-                                height: width * 0.60 * 0.70,
-                                child: JitsiMeetConferencing(
-                                  extraJS: [
-                                    // extraJs setup example
-                                    '<script>function echo(){console.log("echo!!!")};</script>',
-                                    '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                  ],
-                                ),
-                              )),
-                        ))
-                  ],
-                )
-              : meetConfig(),
+          child: Center(
+            child: kIsWeb
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: width * 0.30,
+                        child: meetConfig(),
+                      ),
+                      Container(
+                          width: width * 0.60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                                color: Colors.white54,
+                                child: SizedBox(
+                                  width: width * 0.60 * 0.70,
+                                  height: width * 0.60 * 0.70,
+                                  child: JitsiMeetConferencing(
+                                    extraJS: [
+                                      // extraJs setup example
+                                      '<script>function echo(){console.log("echo!!!")};</script>',
+                                      '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                                    ],
+                                  ),
+                                )),
+                          ))
+                    ],
+                  )
+                : meetConfig(),
+          ),
         ),
       ),
     );

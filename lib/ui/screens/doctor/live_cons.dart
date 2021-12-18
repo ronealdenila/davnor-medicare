@@ -8,7 +8,7 @@ import 'package:davnor_medicare/core/controllers/attached_photos_controller.dart
 import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/calling.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/screens/doctor/live_cons_info.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -249,11 +249,6 @@ class LiveConsultationScreen extends StatelessWidget {
       'didReject': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
-              consData.patientID,
-              consData.consID,
-              consData.patient.value!.profileImage,
-              liveCont.getPatientName(consData)
-            ]));
+    }).then((value) => Get.to(() => Meeting()));
   }
 }
