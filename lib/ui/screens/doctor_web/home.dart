@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/core/controllers/app_controller.dart';
 import 'package:davnor_medicare/core/controllers/article_controller.dart';
-import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
 import 'package:davnor_medicare/core/controllers/cons_history_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/consultations_controller.dart';
 import 'package:davnor_medicare/core/controllers/doctor/doctor_functions.dart';
@@ -14,6 +13,7 @@ import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/services/url_launcher_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
 import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -33,6 +33,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
   final ConsHistoryController consHController =
       Get.put(ConsHistoryController(), permanent: true);
   final ArticleController articleService = Get.find();
+  final AuthController authController = Get.find();
   final DoctorMenuController menuController =
       Get.put(DoctorMenuController(), permanent: true);
   final GlobalKey<ScaffoldState> scaffoldKeyD = GlobalKey();
@@ -298,7 +299,7 @@ class ResponsiveView extends GetResponsiveView {
           Expanded(
             flex: 2,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -362,7 +363,7 @@ class ResponsiveView extends GetResponsiveView {
                               color: verySoftRed[60],
                               secondaryColor: verySoftRedCustomColor,
                               onTap: () {
-                                Get.to(() => CallSessionScreen());
+                                Get.to(() => Meeting());
                                 // menuController.changeActiveItemTo('Dashboard');
                                 // navigationController
                                 //     .navigateTo(Routes.DOC_WEB_HOME);
@@ -546,6 +547,7 @@ class ResponsiveView extends GetResponsiveView {
                       margin: const EdgeInsets.all(25),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             alignment: Alignment.centerLeft,
@@ -610,10 +612,11 @@ class ResponsiveView extends GetResponsiveView {
                                       color: verySoftRed[60],
                                       secondaryColor: verySoftRedCustomColor,
                                       onTap: () {
-                                        menuController
-                                            .changeActiveItemTo('Dashboard');
-                                        navigationController
-                                            .navigateTo(Routes.DOC_WEB_HOME);
+                                        Get.to(() => Meeting());
+                                        // menuController
+                                        //     .changeActiveItemTo('Dashboard');
+                                        // navigationController
+                                        //     .navigateTo(Routes.DOC_WEB_HOME);
                                       }),
                                 ),
                               ],

@@ -12,7 +12,8 @@ import 'package:davnor_medicare/core/models/chat_model.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
 import 'package:davnor_medicare/routes/app_pages.dart';
-import 'package:davnor_medicare/ui/screens/calling.dart';
+import 'package:davnor_medicare/ui/screens/call_session.dart';
+import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:davnor_medicare/ui/screens/doctor_web/helpers/local_navigator.dart';
 import 'package:davnor_medicare/ui/shared/app_colors.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
@@ -476,12 +477,13 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       'didReject': false,
       'channelId': liveCont.liveCons[0].consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    }).then((value) => Get.to(() => CallPatientScreen(), arguments: [
-              liveCont.liveCons[0].patientID,
-              liveCont.liveCons[0].consID,
-              liveCont.liveCons[0].patient.value!.profileImage,
-              liveCont.getPatientName(liveCont.liveCons[0])
-            ]));
+    }).then((value) => Get.to(() => Meeting()));
+    //CallPatientScreen(), arguments: [
+    //           liveCont.liveCons[0].patientID,
+    //           liveCont.liveCons[0].consID,
+    //           liveCont.liveCons[0].patient.value!.profileImage,
+    //           liveCont.getPatientName(liveCont.liveCons[0])
+    //         ]));
   }
 
   void confirmationDialog() {

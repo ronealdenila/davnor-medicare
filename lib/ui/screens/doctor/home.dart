@@ -8,7 +8,6 @@ import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/consultation_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_history.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_list.dart';
 import 'package:davnor_medicare/ui/screens/doctor/cons_req_item.dart';
@@ -284,8 +283,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 text: 'Read \nHealth Articles',
                 color: verySoftRed[60],
                 secondaryColor: verySoftRedCustomColor,
-                onTap: () => Get.to(() =>
-                    CallSessionScreen())), //Get.to(() => ArticleListScreen())),
+                onTap: () => Get.to(() => ArticleListScreen())),
           ),
         ],
       ),

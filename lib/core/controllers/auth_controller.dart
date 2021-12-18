@@ -295,9 +295,7 @@ class AuthController extends GetxController {
         case 'pswd-p':
         case 'pswd-h':
           await _initializePSWDModel();
-
           await checkAppRestriction(userRole);
-
           break;
         case 'admin':
           await _initializeAdminModel();
@@ -305,7 +303,6 @@ class AuthController extends GetxController {
           break;
         case 'doctor':
           await _initializeDoctorModel();
-
           if (kIsWeb) {
             await Future.delayed(const Duration(seconds: 3),
                 () => Get.offAllNamed(Routes.DOC_WEB_HOME));

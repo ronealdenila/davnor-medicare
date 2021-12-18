@@ -3,42 +3,17 @@ import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:get/get.dart';
-
-final AuthController authController = Get.find();
 
 class CallingPatientController extends GetxController {
   final log = getLogger('Status Controller');
+  final AuthController authController = Get.find();
   RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
   RxBool isAlertboxOpened = false.obs;
   RxBool isLoading = true.obs;
   RxString patientId = ''.obs;
   RxString channelId = ''.obs;
   RxBool atCallSession = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    ever(incCall, (value) {
-      if (incCall[0].didReject! &&
-          incCall[0].from! == authController.userRole) {
-        Get.back();
-        showRejectedCallDialog();
-      } else if (incCall[0].patientJoined! &&
-          incCall[0].from! == authController.userRole) {
-        atCallSession.value = true;
-        Get.to(() => CallSessionScreen(),
-            arguments: [patientId.value, channelId.value]);
-      } else if (!incCall[0].isCalling! &&
-          incCall[0].from! == authController.userRole &&
-          atCallSession.value) {
-        Get.back();
-        Get.back();
-        atCallSession.value = false;
-      }
-    });
-  }
 
   void showRejectedCallDialog() {
     showDefaultDialog(

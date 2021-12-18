@@ -1,5 +1,13 @@
+import 'package:davnor_medicare/constants/firebase.dart';
+import 'package:davnor_medicare/core/controllers/auth_controller.dart';
+import 'package:davnor_medicare/core/controllers/calling_patient_controller.dart';
+import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
+import 'package:davnor_medicare/ui/shared/app_colors.dart';
+import 'package:davnor_medicare/ui/shared/styles.dart';
+import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'dart:io' show Platform;
 
@@ -9,22 +17,37 @@ class CallSessionScreen extends StatefulWidget {
 }
 
 class _CallSessionScreenState extends State<CallSessionScreen> {
+  final AuthController authController = Get.find();
   final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom");
-  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
-  final nameText = TextEditingController(text: "Plugin Test User");
-  final emailText = TextEditingController(text: "fake@email.com");
-  final iosAppBarRGBAColor =
-      TextEditingController(text: "#0080FF80"); //transparent blue
+  final subjectText = TextEditingController(text: "Virtual Consultation");
+  final RxString name = "".obs;
+  final CallingPatientController callController = Get.find();
+  final LiveConsController liveCont = Get.find();
+  final RxBool doneLoad = false.obs;
 
   @override
   void initState() {
     super.initState();
+    callController.bindToList(liveCont.liveCons[0].patientID!);
+    if (authController.userRole == 'doctor') {
+      name.value =
+          '${authController.doctorModel.value!.firstName!} ${authController.doctorModel.value!.lastName!}';
+    } else {
+      name.value =
+          '${authController.pswdModel.value!.firstName!} ${authController.pswdModel.value!.lastName!}';
+    }
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
         onError: _onError));
+    ever(callController.incCall, (value) {
+      if (!callController.isLoading.value) {
+        if (callController.incCall[0].patientJoined!) {
+          _joinMeeting();
+        }
+      }
+    });
   }
 
   @override
@@ -35,143 +58,93 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
           ),
-          child: kIsWeb
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: width * 0.30,
-                      child: meetConfig(),
-                    ),
-                    Container(
-                        width: width * 0.60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                              color: Colors.white54,
-                              child: SizedBox(
-                                width: width * 0.60 * 0.70,
-                                height: width * 0.60 * 0.70,
-                                child: JitsiMeetConferencing(
-                                  extraJS: [
-                                    // extraJs setup example
-                                    '<script>function echo(){console.log("echo!!!")};</script>',
-                                    '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                  ],
-                                ),
-                              )),
-                        ))
-                  ],
-                )
-              : meetConfig(),
+          child: kIsWeb ? Obx(() => webMeet()) : meetConfig(),
         ),
       ),
     );
   }
 
+  Widget webMeet() {
+    if (callController.isLoading.value) {
+      return Center(
+        child: const SizedBox(
+            height: 24, width: 24, child: CircularProgressIndicator()),
+      );
+    } else if (!callController.incCall[0].patientJoined! &&
+        !callController.isLoading.value) {
+      return meetConfig();
+    }
+    return Container(
+        width: Get.width,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+              color: Colors.white54,
+              child: SizedBox(
+                width: Get.width * 0.70,
+                height: Get.width * 0.70,
+                child: JitsiMeetConferencing(
+                  extraJS: [
+                    // extraJs setup example
+                    '<script>function echo(){console.log("echo!!!")};</script>',
+                    '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                  ],
+                ),
+              )),
+        ));
+  }
+
   Widget meetConfig() {
-    return SingleChildScrollView(
+    return Center(
       child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 16.0,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // getPhoto(liveCont.liveCons[0].patient.value!.profileImage!),
+          verticalSpace35,
+          Text(
+            'Calling...',
+            style: subtitle20Regular,
           ),
-          TextField(
-            controller: serverText,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Server URL",
-                hintText: "Hint: Leave empty for meet.jitsi.si"),
+          verticalSpace15,
+          // Text(
+          //   '${liveCont.liveCons[0].patient.value!.firstName!} ${liveCont.liveCons[0].patient.value!.lastName!}',
+          //   style: subtitle18Medium,
+          // ),
+          verticalSpace5,
+          Text(
+            '(Patient)',
+            style: body16Regular,
           ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: roomText,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Room",
+          verticalSpace50,
+          ElevatedButton(
+            onPressed: () async {
+              await endCall(liveCont.liveCons[0].patientID!);
+              Get.back();
+              JitsiMeet.closeMeeting();
+            },
+            child: Icon(Icons.close_rounded, color: Colors.white, size: 40),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(12),
+              primary: Colors.red,
             ),
           ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: subjectText,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Subject",
-            ),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: nameText,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Display Name",
-            ),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: emailText,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Email",
-            ),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: iosAppBarRGBAColor,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "AppBar Color(IOS only)",
-                hintText: "Hint: This HAS to be in HEX RGBA format"),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          SizedBox(
-            height: 64.0,
-            width: double.maxFinite,
-            child: ElevatedButton(
-              onPressed: () {
-                _joinMeeting();
-              },
-              child: Text(
-                "Join Meeting",
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.blue)),
-            ),
-          ),
-          SizedBox(
-            height: 48.0,
-          ),
+          verticalSpace5,
+          Text('Cancel Call'),
         ],
       ),
     );
   }
 
   _joinMeeting() async {
-    print('clicked join');
+    print('joining..');
     String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
 
     // Enable or disable any feature flag here
@@ -187,23 +160,21 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
         featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
       }
     } // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText.text)
+    var options = JitsiMeetingOptions(room: liveCont.liveCons[0].consID!)
       ..serverURL = serverUrl
-      ..subject = subjectText.text
-      ..userDisplayName = nameText.text
-      ..userEmail = emailText.text
-      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
+      ..subject = "Virtual Consultation"
+      ..userDisplayName = name.value
       ..audioOnly = false
       ..audioMuted = false
       ..videoMuted = false
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": roomText.text,
+        "roomName": "Virtual Consultation",
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": nameText.text}
+        "userInfo": {"displayName": name.value}
       };
 
     debugPrint("JitsiMeetingOptions: $options");
@@ -237,11 +208,57 @@ class _CallSessionScreenState extends State<CallSessionScreen> {
     debugPrint("_onConferenceJoined broadcasted with message: $message");
   }
 
-  void _onConferenceTerminated(message) {
+  void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
+    await endCall(liveCont.liveCons[0].patientID!);
+    Get.back();
+    JitsiMeet.closeMeeting();
   }
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
+  }
+
+  Widget getPhoto(String img) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        kIsWeb ? 100 : 60,
+      ),
+      child: Image.network(
+        img,
+        fit: BoxFit.cover,
+        height: kIsWeb ? 100 : 60,
+        width: kIsWeb ? 100 : 60,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+              height: kIsWeb ? 120 : 80,
+              width: kIsWeb ? 120 : 80,
+              color: verySoftBlueColor[100],
+              child: Center(
+                child: Text(
+                  '${liveCont.liveCons[0].fullName![0]}',
+                  style: title36Regular.copyWith(color: Colors.white),
+                ),
+              ));
+        },
+      ),
+    );
+  }
+
+  Future<void> endCall(String patientId) async {
+    await firestore
+        .collection('patients')
+        .doc(patientId)
+        .collection('incomingCall')
+        .doc('value')
+        .update({
+      'isCalling': false,
+      'didReject': false,
+      'patientJoined': false,
+      'otherJoined': false,
+      'channelId': '',
+      'callerName': '',
+      'from': ''
+    });
   }
 }

@@ -12,7 +12,6 @@ import 'package:davnor_medicare/core/controllers/profile_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/core/models/article_model.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/call_session2.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_item.dart';
 import 'package:davnor_medicare/ui/screens/patient/article_list.dart';
 import 'package:davnor_medicare/ui/screens/patient/cons_form.dart';
@@ -226,29 +225,28 @@ class PatientHomeScreen extends StatelessWidget {
               color: verySoftRed[60],
               secondaryColor: verySoftRedCustomColor,
               onTap: () {
-                Get.to(() => CallSessionScreen());
-                // if (stats.isLoading.value) {
-                //   showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
-                // } else {
-                //   if (stats.patientStatus[0].pStatus!) {
-                //     if (stats.patientStatus[0].hasActiveQueueCons! &&
-                //         stats.patientStatus[0].hasActiveQueueMA!) {
-                //       Get.to(() => SelectQueueScreen());
-                //     } else if (stats.patientStatus[0].hasActiveQueueCons!) {
-                //       Get.to(() => QueueConsScreen());
-                //     } else if (stats.patientStatus[0].hasActiveQueueMA!) {
-                //       Get.to(() => QueueMAScreen());
-                //     } else {
-                //       showErrorDialog(
-                //           errorTitle: 'dialog3'.tr,
-                //           errorDescription: 'dialogsub3'.tr);
-                //     }
-                //   } else {
-                //     showErrorDialog(
-                //         errorTitle: 'action7'.tr,
-                //         errorDescription: 'action8'.tr);
-                //   }
-                // }
+                if (stats.isLoading.value) {
+                  showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
+                } else {
+                  if (stats.patientStatus[0].pStatus!) {
+                    if (stats.patientStatus[0].hasActiveQueueCons! &&
+                        stats.patientStatus[0].hasActiveQueueMA!) {
+                      Get.to(() => SelectQueueScreen());
+                    } else if (stats.patientStatus[0].hasActiveQueueCons!) {
+                      Get.to(() => QueueConsScreen());
+                    } else if (stats.patientStatus[0].hasActiveQueueMA!) {
+                      Get.to(() => QueueMAScreen());
+                    } else {
+                      showErrorDialog(
+                          errorTitle: 'dialog3'.tr,
+                          errorDescription: 'dialogsub3'.tr);
+                    }
+                  } else {
+                    showErrorDialog(
+                        errorTitle: 'action7'.tr,
+                        errorDescription: 'action8'.tr);
+                  }
+                }
               },
             ),
           ),
