@@ -506,6 +506,7 @@ class LocalString extends Translations {
           'errordialog14': 'Kailangan mong tanggihan ang tawag o tanggapin',
           'errordialog15': 'Walang nakitang resulta',
           'errordialog16': 'Pakitiyak na pumili ng uri ng pasyente',
+          'errordialog17': 'Mangayaring tapusin muna ang tawag',
           //menu
           'setting': 'Mga setting',
           'setting1': 'Baguhin ang Wika',
@@ -533,7 +534,7 @@ class LocalString extends Translations {
           'icons14': 'Sakit sa Lalamunan ',
           'icons15': 'Pulmonya',
           //dropdown
-          'dropdown': 'Uri',
+          'dropdown': 'Anong uri',
         },
 
         //BISAYA
@@ -773,6 +774,8 @@ class LocalString extends Translations {
           'errordialog14': 'Kinahanglang isalikway nimo ang tawag o dawaton',
           'errordialog15': 'Walang nakitang resulta',
           'errordialog16': 'Palihug siguroha ang pagpili sa uri sa pasyente',
+          'errordialog17': 'Palihug tapusa una and tawag',
+
           //menu
           'setting': 'Settings',
           'setting1': 'Ilisan ang Pinulongan',
@@ -800,7 +803,7 @@ class LocalString extends Translations {
           'icons14': 'Sakit nga Tutunlan',
           'icons15': 'Pneumonia',
           //dropdown
-          'dropdown': 'Uri'
+          'dropdown': 'Anong uri'
         }
       };
 }
