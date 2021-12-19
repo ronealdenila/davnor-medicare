@@ -39,7 +39,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController(), permanent: true);
-  final StatusController stats = Get.put(StatusController(), permanent: true);
+  final StatusController stats = Get.put(StatusController());
 
   @override
   Widget build(BuildContext context) {
@@ -423,7 +423,7 @@ class ResponsiveView extends GetResponsiveView {
                               Align(
                                 child: Obx(
                                   () => AutoSizeText(
-                                    stats.isLoading.value
+                                    stats.isLoadingD.value
                                         ? '0'
                                         : '${stats.doctorStatus[0].overall!}',
                                     style: title130Bold.copyWith(
@@ -672,7 +672,7 @@ class ResponsiveView extends GetResponsiveView {
                                       Align(
                                         child: Obx(
                                           () => AutoSizeText(
-                                            stats.isLoading.value
+                                            stats.isLoadingD.value
                                                 ? '0'
                                                 : '${stats.doctorStatus[0].overall!}',
                                             style: title130Bold.copyWith(
@@ -746,7 +746,7 @@ class ResponsiveView extends GetResponsiveView {
 
   //OBX
   Widget doctorStatus() {
-    if (!stats.isLoading.value) {
+    if (!stats.isLoadingD.value) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,

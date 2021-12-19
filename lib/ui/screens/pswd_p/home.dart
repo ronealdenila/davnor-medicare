@@ -36,7 +36,7 @@ class PSWDPersonnelHome extends StatelessWidget {
       Get.put(MenuController(), permanent: true);
   final AcceptedMAController acceptedMA =
       Get.put(AcceptedMAController(), permanent: true);
-  final StatusController stats = Get.put(StatusController(), permanent: true);
+  final StatusController stats = Get.put(StatusController());
   final AttachedPhotosController pcontroller =
       Get.put(AttachedPhotosController(), permanent: true);
   final MAReqListController maController =

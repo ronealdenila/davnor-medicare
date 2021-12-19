@@ -144,7 +144,7 @@ class ConsFormScreen extends StatelessWidget {
                                 padding: EdgeInsets.only(left: 10),
                                 child: CustomDropdown(
                                   givenKey: cofdpKey1,
-                                  hintText: 'dropdown'.tr, //TRANSLATE
+                                  hintText: 'dropdown'.tr,
                                   dropdownItems: cSenior,
                                   onChanged: (Item? item) =>
                                       consController.typeP.value = item!.name,

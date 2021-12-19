@@ -17,7 +17,8 @@ class StatusController extends GetxController {
   final RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
   final RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
   final RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>(); //doc
-  final RxBool isLoading = true.obs;
+  final RxBool isLoadingP = true.obs;
+  final RxBool isLoadingD = true.obs;
   final RxBool isCallStatsLoading = true.obs;
   final RxBool isPSLoading = true.obs;
   final RxBool atCallSession = false.obs;
@@ -25,7 +26,7 @@ class StatusController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    log.i('Status Controller');
+    log.i('On Ready Status Controller');
     if (authController.userRole == 'patient') {
       if (!kIsWeb) {
         setDeviceToken();
@@ -47,7 +48,6 @@ class StatusController extends GetxController {
     super.onInit();
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
-        print('object');
         if (!isCallStatsLoading.value) {
           if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
             atCallSession.value = true;
@@ -87,7 +87,7 @@ class StatusController extends GetxController {
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
-        isLoading.value = false;
+        isLoadingP.value = false;
         return PatientStatusModel.fromJson(item.data());
       }).toList();
     });
@@ -117,7 +117,8 @@ class StatusController extends GetxController {
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
-        isLoading.value = false;
+        isLoadingD.value = false;
+        print('done loading');
         return DoctorStatusModel.fromJson(item.data());
       }).toList();
     });
@@ -142,6 +143,7 @@ class StatusController extends GetxController {
     return firestore.collection('pswd_status').snapshots().map((query) {
       return query.docs.map((item) {
         isPSLoading.value = false;
+        print('nagfalse');
         return PSWDStatusModel.fromJson(item.data());
       }).toList();
     });
