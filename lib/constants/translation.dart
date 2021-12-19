@@ -236,7 +236,8 @@ class LocalString extends Translations {
           'errordialog14': 'You have to either you reject the call or accept',
           'errordialog15': 'No result found',
           'errordialog16': 'Please make sure to select patient type',
-          'errordialog17': 'Please end the call first',
+          'errordialog17':
+              'Please end the call first or click the back button below',
           //menu
           'setting': 'Settings',
           'setting1': 'Change Language',
@@ -506,7 +507,8 @@ class LocalString extends Translations {
           'errordialog14': 'Kailangan mong tanggihan ang tawag o tanggapin',
           'errordialog15': 'Walang nakitang resulta',
           'errordialog16': 'Pakitiyak na pumili ng uri ng pasyente',
-          'errordialog17': 'Mangayaring tapusin muna ang tawag',
+          'errordialog17':
+              'Mangayaring tapusin muna ang tawag o i click ang back button sa ibaba',
           //menu
           'setting': 'Mga setting',
           'setting1': 'Baguhin ang Wika',
@@ -774,7 +776,8 @@ class LocalString extends Translations {
           'errordialog14': 'Kinahanglang isalikway nimo ang tawag o dawaton',
           'errordialog15': 'Walang nakitang resulta',
           'errordialog16': 'Palihug siguroha ang pagpili sa uri sa pasyente',
-          'errordialog17': 'Palihug tapusa una and tawag',
+          'errordialog17':
+              'Palihug tapusa una and tawag or i click ang back button sa baba',
 
           //menu
           'setting': 'Settings',
