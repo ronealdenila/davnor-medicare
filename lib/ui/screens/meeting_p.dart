@@ -76,12 +76,10 @@ class _PSWDInterviewState extends State<PSWDInterview> {
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Obx(() => doneLoad.value
-                              ? SizedBox(width: 0, height: 0)
-                              : Padding(
-                                  padding: const EdgeInsets.only(right: 50),
-                                  child: meetConfig(),
-                                )),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 50),
+                            child: meetConfig(),
+                          ),
                           Container(
                               width: width * 0.60,
                               child: Padding(
@@ -108,7 +106,9 @@ class _PSWDInterviewState extends State<PSWDInterview> {
   }
 
   Future<bool> _onBackPressed() {
-    showSimpleErrorDialog(errorDescription: "Please end the call first");
+    showSimpleErrorDialog(
+        errorDescription:
+            "Please end the call first or click the back button below");
     return false as Future<bool>;
   }
 
@@ -118,6 +118,17 @@ class _PSWDInterviewState extends State<PSWDInterview> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          IconButton(
+              onPressed: () async {
+                await endCall(acceptedMA.accMA[0].requesterID!);
+                Get.back();
+                JitsiMeet.closeMeeting();
+              },
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+          verticalSpace25,
           Align(
             alignment: Alignment.center,
             child: SizedBox(

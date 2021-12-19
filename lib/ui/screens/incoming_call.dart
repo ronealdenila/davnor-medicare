@@ -65,7 +65,10 @@ class _CallSessionState extends State<CallSession> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => callAccepted.value
-                          ? SizedBox(width: 0, height: 0)
+                          ? Padding(
+                              padding: const EdgeInsets.only(right: 50),
+                              child: webConfig(),
+                            )
                           : Padding(
                               padding: const EdgeInsets.only(right: 50),
                               child: meetConfig(),
@@ -99,8 +102,7 @@ class _CallSessionState extends State<CallSession> {
 
   Future<bool> _onBackPressed() {
     if (callAccepted.value) {
-      showSimpleErrorDialog(
-          errorDescription: 'errordialog17'.tr); //TRANSLATE
+      showSimpleErrorDialog(errorDescription: 'errordialog17'.tr); //TRANSLATE
     } else {
       showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
     }
@@ -108,99 +110,113 @@ class _CallSessionState extends State<CallSession> {
   }
 
   Widget meetConfig() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage(
-                stats.incCall[0].from == 'doctor' ? doctorDefault : maImage),
-          ),
-          verticalSpace35,
-          Text(
-            '${stats.incCall[0].callerName}',
-            style: subtitle18Medium,
-          ),
-          verticalSpace5,
-          Text(
-            'is calling....',
-            style: body16Regular,
-          ),
-          verticalSpace50,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      await acceptCall();
-                    },
-                    child:
-                        Icon(Icons.call_rounded, color: Colors.white, size: 40),
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(12),
-                      primary: Color(0xFF11d87b),
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 80,
+              backgroundImage: AssetImage(
+                  stats.incCall[0].from == 'doctor' ? doctorDefault : maImage),
+            ),
+            verticalSpace35,
+            Text(
+              '${stats.incCall[0].callerName}',
+              style: subtitle18Medium,
+            ),
+            verticalSpace5,
+            Text(
+              'is calling....',
+              style: body16Regular,
+            ),
+            verticalSpace50,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await acceptCall();
+                      },
+                      child: Icon(Icons.call_rounded,
+                          color: Colors.white, size: 40),
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(12),
+                        primary: Color(0xFF11d87b),
+                      ),
                     ),
-                  ),
-                  verticalSpace5,
-                  Text('Accept')
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      await rejectCall(); //clear data except from
-                    },
-                    child: Icon(Icons.close_rounded,
-                        color: Colors.white, size: 40),
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(12),
-                      primary: Colors.red,
+                    verticalSpace5,
+                    Text('Accept')
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await rejectCall(); //clear data except from
+                      },
+                      child: Icon(Icons.close_rounded,
+                          color: Colors.white, size: 40),
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(12),
+                        primary: Colors.red,
+                      ),
                     ),
-                  ),
-                  verticalSpace5,
-                  Text('Reject'),
-                ],
-              )
-            ],
-          )
-        ],
+                    verticalSpace5,
+                    Text('Reject'),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget webConfig() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: SizedBox(
-            width: 130,
-            height: 130,
-            child: Image.asset(
-              logo,
-              fit: BoxFit.cover,
+    return SingleChildScrollView(
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+              onPressed: () async {
+                await endCall(auth.currentUser!.uid);
+                JitsiMeet.closeMeeting();
+              },
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                size: 30,
+              )),
+          verticalSpace25,
+          Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 130,
+              height: 130,
+              child: Image.asset(
+                logo,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        verticalSpace20,
-        Text(
-          subj.value,
-          style: body16Regular,
-        ),
-      ],
-    ));
+          verticalSpace20,
+          Text(
+            subj.value,
+            style: body16Regular,
+          ),
+        ],
+      )),
+    );
   }
 
   Future<void> acceptCall() async {
