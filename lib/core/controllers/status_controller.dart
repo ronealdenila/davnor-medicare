@@ -4,7 +4,6 @@ import 'package:davnor_medicare/core/models/cons_stats_model.dart';
 import 'package:davnor_medicare/core/models/status_model.dart';
 import 'package:davnor_medicare/core/services/logger_service.dart';
 import 'package:davnor_medicare/ui/screens/incoming_call.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -54,11 +53,7 @@ class StatusController extends GetxController {
             Get.to(() => CallSession());
           } else if (!incCall[0].isCalling! && atCallSession.value) {
             atCallSession.value = false;
-            if (!kIsWeb) {
-              Get.offAll(() => PatientHomeScreen());
-            } else {
-              Get.back();
-            }
+            Get.back();
           }
         }
       }

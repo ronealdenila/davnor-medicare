@@ -534,7 +534,7 @@ class LocalString extends Translations {
           'icons14': 'Sakit sa Lalamunan ',
           'icons15': 'Pulmonya',
           //dropdown
-          'dropdown': 'Anong uri',
+          'dropdown': 'Uri',
         },
 
         //BISAYA
@@ -803,7 +803,7 @@ class LocalString extends Translations {
           'icons14': 'Sakit nga Tutunlan',
           'icons15': 'Pneumonia',
           //dropdown
-          'dropdown': 'Anong uri'
+          'dropdown': 'Uri'
         }
       };
 }
