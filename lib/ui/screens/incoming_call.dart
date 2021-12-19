@@ -1,9 +1,9 @@
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
-import 'package:davnor_medicare/core/controllers/live_cons_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
+import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
@@ -12,18 +12,18 @@ import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'dart:io' show Platform;
 
-class IncomingCallScreen extends StatefulWidget {
+class CallSession extends StatefulWidget {
   @override
-  State<IncomingCallScreen> createState() => _IncomingCallScreenState();
+  State<CallSession> createState() => _CallSessionState();
 }
 
-class _IncomingCallScreenState extends State<IncomingCallScreen> {
+class _CallSessionState extends State<CallSession> {
   static AuthController authController = Get.find();
+  final fetchedData = authController.patientModel.value!;
   final StatusController stats = Get.find();
   final serverText = TextEditingController();
-  final nameText =
-      '${authController.patientModel.value!.firstName!} ${authController.patientModel.value!.lastName!}';
   final RxBool callAccepted = false.obs;
+  final RxString subj = "".obs;
 
   @override
   void initState() {
@@ -40,6 +40,9 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
         JitsiMeet.closeMeeting();
       }
     });
+    subj.value = stats.incCall[0].from == 'doctor'
+        ? 'Virtual Consultation'
+        : 'PSWD Interview';
   }
 
   @override
@@ -57,36 +60,39 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
           ),
-          child: kIsWeb
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: Get.width * 0.30,
-                      child: Obx(() =>
-                          callAccepted.value ? webConfig() : meetConfig()),
-                    ),
-                    Container(
-                        width: Get.width * 0.60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                              color: Colors.white54,
-                              child: SizedBox(
-                                width: Get.width * 0.60 * 0.70,
-                                height: Get.width * 0.60 * 0.70,
-                                child: JitsiMeetConferencing(
-                                  extraJS: [
-                                    // extraJs setup example
-                                    '<script>function echo(){console.log("echo!!!")};</script>',
-                                    '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                  ],
-                                ),
-                              )),
-                        ))
-                  ],
-                )
-              : meetConfig(),
+          child: Center(
+            child: kIsWeb
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Obx(() => callAccepted.value
+                          ? SizedBox(width: 0, height: 0)
+                          : Padding(
+                              padding: const EdgeInsets.only(right: 50),
+                              child: meetConfig(),
+                            )),
+                      Container(
+                          width: Get.width * 0.60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                                color: Colors.white54,
+                                child: SizedBox(
+                                  width: Get.width * 0.60 * 0.70,
+                                  height: Get.width * 0.60 * 0.70,
+                                  child: JitsiMeetConferencing(
+                                    extraJS: [
+                                      // extraJs setup example
+                                      '<script>function echo(){console.log("echo!!!")};</script>',
+                                      '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                                    ],
+                                  ),
+                                )),
+                          ))
+                    ],
+                  )
+                : meetConfig(),
+          ),
         ),
       ),
     );
@@ -191,7 +197,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
         ),
         verticalSpace20,
         Text(
-          'Virtual Consultation',
+          subj.value,
           style: body16Regular,
         ),
       ],
@@ -245,6 +251,9 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
       FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
       FeatureFlagEnum.CLOSE_CAPTIONS_ENABLED: false,
       FeatureFlagEnum.CHAT_ENABLED: false,
+      FeatureFlagEnum.INVITE_ENABLED: false,
+      FeatureFlagEnum.RAISE_HAND_ENABLED: false,
+      FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: true,
       FeatureFlagEnum.MEETING_PASSWORD_ENABLED: false,
       FeatureFlagEnum.CALENDAR_ENABLED: false,
     };
@@ -257,8 +266,9 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
     } // Define meetings options here
     var options = JitsiMeetingOptions(room: stats.incCall[0].channelId!)
       ..serverURL = serverUrl
-      ..subject = "Virtual Consultation"
-      ..userDisplayName = nameText
+      ..subject = subj.value
+      ..userDisplayName = '${fetchedData.firstName} ${fetchedData.lastName}'
+      ..userAvatarURL = '${fetchedData.profileImage}'
       ..audioOnly = false
       ..audioMuted = false
       ..videoMuted = false
@@ -269,7 +279,20 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
         "height": "100%",
         "enableWelcomePage": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": nameText}
+        "userInfo": {
+          "displayName": '${fetchedData.firstName} ${fetchedData.lastName}'
+        },
+        "configOverwrite": {
+          "prejoinPageEnabled": false,
+        },
+        "interfaceConfigOverwrite": {
+          "TOOLBAR_BUTTONS": [
+            "microphone",
+            "camera",
+            "fullscreen",
+            "hangup",
+          ]
+        },
       };
 
     debugPrint("JitsiMeetingOptions: $options");
@@ -307,7 +330,11 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
   void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
     await endCall(auth.currentUser!.uid);
-    Get.back();
+    if (!kIsWeb) {
+      Get.offAll(() => PatientHomeScreen());
+    } else {
+      Get.back();
+    }
     JitsiMeet.closeMeeting();
   }
 

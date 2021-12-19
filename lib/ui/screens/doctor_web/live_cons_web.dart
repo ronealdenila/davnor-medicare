@@ -476,7 +476,7 @@ class _LiveConsultationWebState extends State<LiveConsultationWeb> {
       'didReject': false,
       'channelId': liveCont.liveCons[0].consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    }).then((value) => Get.to(() => Meeting()));
+    }).then((value) => Get.to(() => VirtualConsultation()));
   }
 
   void confirmationDialog() {

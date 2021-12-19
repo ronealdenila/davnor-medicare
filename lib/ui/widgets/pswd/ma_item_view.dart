@@ -284,7 +284,7 @@ class PSWDItemView extends GetResponsiveView {
       'didReject': false,
       'channelId': model.maID,
       'callerName': '${fetchedData!.lastName!} (PSWD Personnel)'
-    }).then((value) => Get.to(() => Meeting2()));
+    }).then((value) => Get.to(() => PSWDInterview()));
   }
 
   Widget attachedPhotos() {

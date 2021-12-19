@@ -13,17 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
-class Meeting2 extends StatefulWidget {
+class PSWDInterview extends StatefulWidget {
   @override
-  _Meeting2State createState() => _Meeting2State();
+  State<PSWDInterview> createState() => _PSWDInterviewState();
 }
 
-class _Meeting2State extends State<Meeting2> {
+class _PSWDInterviewState extends State<PSWDInterview> {
   static AuthController authController = Get.find();
+  final fetchedData = authController.pswdModel.value!;
   final serverText = TextEditingController();
-  final subjectText = TextEditingController(text: "Virtual Consultation");
-  final name =
-      '${authController.pswdModel.value!.firstName!} ${authController.pswdModel.value!.lastName!}';
   final CallingPatientController callController =
       Get.put(CallingPatientController(), permanent: true);
   final AcceptedMAController acceptedMA = Get.find();
@@ -76,12 +74,14 @@ class _Meeting2State extends State<Meeting2> {
               child: Center(
                 child: kIsWeb
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: width * 0.30,
-                            child: meetConfig(),
-                          ),
+                          Obx(() => doneLoad.value
+                              ? SizedBox(width: 0, height: 0)
+                              : Padding(
+                                  padding: const EdgeInsets.only(right: 50),
+                                  child: meetConfig(),
+                                )),
                           Container(
                               width: width * 0.60,
                               child: Padding(
@@ -131,7 +131,7 @@ class _Meeting2State extends State<Meeting2> {
           ),
           verticalSpace20,
           Text(
-            'Virtual Consultation',
+            'PSWD Interview',
             style: body16Regular,
           ),
           verticalSpace18,
@@ -161,15 +161,19 @@ class _Meeting2State extends State<Meeting2> {
       FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
       FeatureFlagEnum.CLOSE_CAPTIONS_ENABLED: false,
       FeatureFlagEnum.CHAT_ENABLED: false,
+      FeatureFlagEnum.INVITE_ENABLED: false,
+      FeatureFlagEnum.RAISE_HAND_ENABLED: false,
+      FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: true,
       FeatureFlagEnum.MEETING_PASSWORD_ENABLED: false,
       FeatureFlagEnum.CALENDAR_ENABLED: false,
     };
     // Define meetings options here
     var options = JitsiMeetingOptions(room: acceptedMA.accMA[0].maID!)
       ..serverURL = serverUrl
-      ..subject = "Virtual Consultation"
-      ..userDisplayName = name
+      ..subject = "PSWD Interview"
+      ..userDisplayName = '${fetchedData.firstName} ${fetchedData.lastName}'
       ..audioOnly = false
+      ..userAvatarURL = '${fetchedData.profileImage}'
       ..audioMuted = false
       ..videoMuted = false
       ..featureFlags.addAll(featureFlags)
@@ -180,7 +184,19 @@ class _Meeting2State extends State<Meeting2> {
         "enableWelcomePage": false,
         " prejoinPageEnabled": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": name}
+        "userInfo": {
+          "displayName": '${fetchedData.firstName} ${fetchedData.lastName}'
+        },
+        "configOverwrite": {"prejoinPageEnabled": false},
+        "interfaceConfigOverwrite": {
+          "TOOLBAR_BUTTONS": [
+            'microphone',
+            'camera',
+            'fullscreen',
+            'hangup',
+            'videobackgroundblur',
+          ]
+        },
       };
 
     debugPrint("JitsiMeetingOptions: $options");

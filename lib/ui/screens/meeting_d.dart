@@ -14,17 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
-class Meeting extends StatefulWidget {
+class VirtualConsultation extends StatefulWidget {
   @override
-  _MeetingState createState() => _MeetingState();
+  State<VirtualConsultation> createState() => _VirtualConsultationState();
 }
 
-class _MeetingState extends State<Meeting> {
+class _VirtualConsultationState extends State<VirtualConsultation> {
   static AuthController authController = Get.find();
+  final fetchedData = authController.doctorModel.value!;
   final serverText = TextEditingController();
-  final subjectText = TextEditingController(text: "Virtual Consultation");
-  final name =
-      '${authController.doctorModel.value!.firstName!} ${authController.doctorModel.value!.lastName!}';
   final CallingPatientController callController =
       Get.put(CallingPatientController(), permanent: true);
   final LiveConsController liveCont = Get.find();
@@ -66,7 +64,6 @@ class _MeetingState extends State<Meeting> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
@@ -77,30 +74,29 @@ class _MeetingState extends State<Meeting> {
               child: Center(
                 child: kIsWeb
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Obx(() => doneLoad.value
+                              ? SizedBox(width: 0, height: 0)
+                              : Padding(
+                                  padding: const EdgeInsets.only(right: 50),
+                                  child: meetConfig(),
+                                )),
                           Container(
-                            width: width * 0.30,
-                            child: meetConfig(),
-                          ),
-                          Container(
-                              width: width * 0.60,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                    color: Colors.white54,
-                                    child: SizedBox(
-                                      width: width * 0.60 * 0.70,
-                                      height: width * 0.60 * 0.70,
-                                      child: JitsiMeetConferencing(
-                                        extraJS: [
-                                          // extraJs setup example
-                                          '<script>function echo(){console.log("echo!!!")};</script>',
-                                          '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                        ],
-                                      ),
-                                    )),
-                              ))
+                              width: Get.width * 0.60,
+                              child: Card(
+                                  color: Colors.white54,
+                                  child: SizedBox(
+                                    width: Get.width * 0.60 * 0.70,
+                                    height: Get.width * 0.60 * 0.70,
+                                    child: JitsiMeetConferencing(
+                                      extraJS: [
+                                        // extraJs setup example
+                                        '<script>function echo(){console.log("echo!!!")};</script>',
+                                        '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                                      ],
+                                    ),
+                                  ))),
                         ],
                       )
                     : meetConfig(),
@@ -162,6 +158,9 @@ class _MeetingState extends State<Meeting> {
       FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
       FeatureFlagEnum.CLOSE_CAPTIONS_ENABLED: false,
       FeatureFlagEnum.CHAT_ENABLED: false,
+      FeatureFlagEnum.INVITE_ENABLED: false,
+      FeatureFlagEnum.RAISE_HAND_ENABLED: false,
+      FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: true,
       FeatureFlagEnum.MEETING_PASSWORD_ENABLED: false,
       FeatureFlagEnum.CALENDAR_ENABLED: false,
     };
@@ -179,7 +178,8 @@ class _MeetingState extends State<Meeting> {
     var options = JitsiMeetingOptions(room: liveCont.liveCons[0].consID!)
       ..serverURL = serverUrl
       ..subject = "Virtual Consultation"
-      ..userDisplayName = name
+      ..userDisplayName = '${fetchedData.firstName!} ${fetchedData.lastName!}'
+      ..userAvatarURL = '${fetchedData.profileImage!}'
       ..audioOnly = false
       ..audioMuted = false
       ..videoMuted = false
@@ -189,9 +189,20 @@ class _MeetingState extends State<Meeting> {
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
-        " prejoinPageEnabled": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": name}
+        "userInfo": {
+          "displayName": '${fetchedData.firstName!} ${fetchedData.lastName!}'
+        },
+        "configOverwrite": {"prejoinPageEnabled": false},
+        "interfaceConfigOverwrite": {
+          "TOOLBAR_BUTTONS": [
+            'microphone',
+            'camera',
+            'fullscreen',
+            'hangup',
+            'videobackgroundblur',
+          ]
+        },
       };
 
     debugPrint("JitsiMeetingOptions: $options");

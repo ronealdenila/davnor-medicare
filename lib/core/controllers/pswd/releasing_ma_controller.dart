@@ -15,10 +15,10 @@ import 'package:intl/intl.dart';
 class ReleasingMAController extends GetxController {
   final log = getLogger('Releasing MA Controller');
   final NavigationController navigationController = Get.find();
-  RxList<OnProgressMAModel> toRelease = RxList<OnProgressMAModel>([]);
+  final RxList<OnProgressMAModel> toRelease = RxList<OnProgressMAModel>([]);
   final RxList<OnProgressMAModel> filteredList = RxList<OnProgressMAModel>();
   final TextEditingController rlsFilter = TextEditingController();
-  RxBool isLoading = true.obs;
+  final RxBool isLoading = true.obs;
   final MAHistoryController maHController = Get.find();
   final MenuController menuController = Get.find();
 

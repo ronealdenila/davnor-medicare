@@ -9,21 +9,22 @@ import 'package:get/get.dart';
 
 class StatusController extends GetxController {
   final log = getLogger('Status Controller');
-
   final AuthController authController = Get.find();
-  RxList<PatientStatusModel> patientStatus = RxList<PatientStatusModel>([]);
-  RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
-  RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
-  RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
-  RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>(); //doc
-  RxBool isLoading = true.obs;
-  RxBool isCallStatsLoading = true.obs;
-  RxBool isPSLoading = true.obs;
-  RxBool atCallSession = false.obs;
+  final RxList<PatientStatusModel> patientStatus =
+      RxList<PatientStatusModel>([]);
+  final RxList<DoctorStatusModel> doctorStatus = RxList<DoctorStatusModel>([]);
+  final RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
+  final RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
+  final RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>(); //doc
+  final RxBool isLoading = true.obs;
+  final RxBool isCallStatsLoading = true.obs;
+  final RxBool isPSLoading = true.obs;
+  final RxBool atCallSession = false.obs;
 
   @override
   void onReady() {
     super.onReady();
+    log.i('Status Controller');
     if (authController.userRole == 'patient') {
       if (!kIsWeb) {
         setDeviceToken();
@@ -45,10 +46,11 @@ class StatusController extends GetxController {
     super.onInit();
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
+        print('object');
         if (!isCallStatsLoading.value) {
           if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
             atCallSession.value = true;
-            Get.to(() => IncomingCallScreen());
+            Get.to(() => CallSession());
           } else if (!incCall[0].isCalling! && atCallSession.value) {
             atCallSession.value = false;
             Get.back();

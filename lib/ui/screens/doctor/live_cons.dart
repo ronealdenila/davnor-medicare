@@ -249,6 +249,6 @@ class LiveConsultationScreen extends StatelessWidget {
       'didReject': false,
       'channelId': consData.consID,
       'callerName': 'Dr. ${fetchedData!.lastName!} (${fetchedData!.title!})'
-    }).then((value) => Get.to(() => Meeting()));
+    }).then((value) => Get.to(() => VirtualConsultation()));
   }
 }
