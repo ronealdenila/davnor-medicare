@@ -235,6 +235,7 @@ class LocalString extends Translations {
           'errordialog13': 'Please provide valid ID',
           'errordialog14': 'You have to either you reject the call or accept',
           'errordialog15': 'No result found',
+          'errordialog16': 'Please make sure to select patient type',
           //menu
           'setting': 'Settings',
           'setting1': 'Change Language',
@@ -260,7 +261,9 @@ class LocalString extends Translations {
           'icons12': 'Asthma',
           'icons13': 'Food Allergy',
           'icons14': 'Sore Throat',
-          'icons15': 'Pneumonia'
+          'icons15': 'Pneumonia',
+          //dropdown
+          'dropdown': 'Type',
         },
 
         //TAGALOG
@@ -501,6 +504,7 @@ class LocalString extends Translations {
           'errordialog13': 'Mangyaring magbigay ng wastong ID',
           'errordialog14': 'Kailangan mong tanggihan ang tawag o tanggapin',
           'errordialog15': 'Walang nakitang resulta',
+           'errordialog16': 'Pakitiyak na pumili ng uri ng pasyente',
           //menu
           'setting': 'Mga setting',
           'setting1': 'Baguhin ang Wika',
@@ -526,7 +530,9 @@ class LocalString extends Translations {
           'icons12': 'Hika',
           'icons13': 'Allergy sa Pagkain',
           'icons14': 'Sakit sa Lalamunan ',
-          'icons15': 'Pulmonya'
+          'icons15': 'Pulmonya',
+          //dropdown
+          'dropdown': 'Anong Uri',
         },
 
         //BISAYA
@@ -765,6 +771,7 @@ class LocalString extends Translations {
           'errordialog13': 'Palihug paghatag ug balido nga ID',
           'errordialog14': 'Kinahanglang isalikway nimo ang tawag o dawaton',
           'errordialog15': 'Walang nakitang resulta',
+           'errordialog16': 'Palihug siguroha ang pagpili sa uri sa pasyente',
           //menu
           'setting': 'Settings',
           'setting1': 'Ilisan ang Pinulongan',
@@ -790,7 +797,9 @@ class LocalString extends Translations {
           'icons12': 'Asma',
           'icons13': 'Allergy sa Pagkaon',
           'icons14': 'Sakit nga Tutunlan',
-          'icons15': 'Pneumonia'
+          'icons15': 'Pneumonia',
+          //dropdown
+          'dropdown': 'Unsa nga Uri'
         }
       };
 }

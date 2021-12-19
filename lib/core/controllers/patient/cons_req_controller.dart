@@ -176,8 +176,7 @@ class ConsRequestController extends GetxController {
   Future<void> submitConsultRequestWeb() async {
     if (typeP.value == '') {
       showSimpleErrorDialog(
-          errorDescription:
-              'Please make sure to select patient type'); //TRANSLATE
+          errorDescription: 'errordialog16'.tr); //TRANSLATE
     } else {
       await initCategoryForWeb();
       if (categoryID.value == '') {
@@ -309,8 +308,7 @@ class ConsRequestController extends GetxController {
   Future<void> nextButton() async {
     if (typeP.value == '') {
       showSimpleErrorDialog(
-          errorDescription:
-              'Please make sure to select patient type'); //TRANSLATE
+          errorDescription: 'errordialog16'.tr); //TRANSLATE
     } else {
       if (categoryHolder == '') {
         await getconsultationCategory(specialistD.value);
