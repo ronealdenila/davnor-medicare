@@ -167,7 +167,7 @@ class ResponsiveBody extends GetResponsiveView {
                           width: 160,
                           child: CustomDropdown(
                             givenKey: cofdpKey1,
-                            hintText: 'Type', //TRANSLATE
+                            hintText: 'dropdown'.tr,
                             dropdownItems: cSenior,
                             onChanged: (Item? item) =>
                                 consController.typeP.value = item!.name,

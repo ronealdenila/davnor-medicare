@@ -175,8 +175,7 @@ class ConsRequestController extends GetxController {
 
   Future<void> submitConsultRequestWeb() async {
     if (typeP.value == '') {
-      showSimpleErrorDialog(
-          errorDescription: 'errordialog16'.tr); //TRANSLATE
+      showSimpleErrorDialog(errorDescription: 'errordialog16'.tr);
     } else {
       await initCategoryForWeb();
       if (categoryID.value == '') {
@@ -307,8 +306,7 @@ class ConsRequestController extends GetxController {
 
   Future<void> nextButton() async {
     if (typeP.value == '') {
-      showSimpleErrorDialog(
-          errorDescription: 'errordialog16'.tr); //TRANSLATE
+      showSimpleErrorDialog(errorDescription: 'errordialog16'.tr);
     } else {
       if (categoryHolder == '') {
         await getconsultationCategory(specialistD.value);

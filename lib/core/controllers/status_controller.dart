@@ -25,7 +25,7 @@ class StatusController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    log.i('Status Controller');
+    log.i('On Ready Status Controller');
     if (authController.userRole == 'patient') {
       if (!kIsWeb) {
         setDeviceToken();
@@ -47,7 +47,6 @@ class StatusController extends GetxController {
     super.onInit();
     ever(incCall, (value) {
       if (authController.userRole == 'patient') {
-        print('object');
         if (!isCallStatsLoading.value) {
           if (incCall[0].isCalling! && !incCall[0].patientJoined!) {
             atCallSession.value = true;
@@ -118,6 +117,7 @@ class StatusController extends GetxController {
         .map((query) {
       return query.docs.map((item) {
         isLoading.value = false;
+        print('done loading');
         return DoctorStatusModel.fromJson(item.data());
       }).toList();
     });
@@ -142,6 +142,7 @@ class StatusController extends GetxController {
     return firestore.collection('pswd_status').snapshots().map((query) {
       return query.docs.map((item) {
         isPSLoading.value = false;
+        print('nagfalse');
         return PSWDStatusModel.fromJson(item.data());
       }).toList();
     });

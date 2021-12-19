@@ -31,9 +31,8 @@ class AllControllerBinding implements Bindings {
     Get.put<AuthController>(AuthController(), permanent: true);
     Get.put<NavigationController>(NavigationController(), permanent: true);
     Get.put<ArticleController>(ArticleController(), permanent: true);
+    Get.put<StatusController>(StatusController(), permanent: true);
     Get.lazyPut<AppController>(() => AppController());
-    Get.lazyPut<StatusController>(() => StatusController());
-    Get.lazyPut<ArticleController>(() => ArticleController());
     Get.lazyPut<AttachedPhotosController>(() => AttachedPhotosController());
 
     //patient
