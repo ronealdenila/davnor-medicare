@@ -17,7 +17,8 @@ class StatusController extends GetxController {
   final RxList<PSWDStatusModel> pswdPStatus = RxList<PSWDStatusModel>([]);
   final RxList<IncomingCallModel> incCall = RxList<IncomingCallModel>([]);
   final RxList<ConsStatusModel> statusList = RxList<ConsStatusModel>(); //doc
-  final RxBool isLoading = true.obs;
+  final RxBool isLoadingP = true.obs;
+  final RxBool isLoadingD = true.obs;
   final RxBool isCallStatsLoading = true.obs;
   final RxBool isPSLoading = true.obs;
   final RxBool atCallSession = false.obs;
@@ -86,7 +87,7 @@ class StatusController extends GetxController {
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
-        isLoading.value = false;
+        isLoadingP.value = false;
         return PatientStatusModel.fromJson(item.data());
       }).toList();
     });
@@ -116,7 +117,7 @@ class StatusController extends GetxController {
         .snapshots()
         .map((query) {
       return query.docs.map((item) {
-        isLoading.value = false;
+        isLoadingD.value = false;
         print('done loading');
         return DoctorStatusModel.fromJson(item.data());
       }).toList();

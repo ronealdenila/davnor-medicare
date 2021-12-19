@@ -237,7 +237,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftMagenta[60],
                 secondaryColor: verySoftMagentaCustomColor,
                 onTap: () {
-                  if (stats.isLoading.value) {
+                  if (stats.isLoadingD.value) {
                     showSimpleErrorDialog(
                         errorDescription:
                             'Please wait while we are currently connecting to the server');
@@ -260,7 +260,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 color: verySoftOrange[60],
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
-                  if (stats.isLoading.value) {
+                  if (stats.isLoadingD.value) {
                     showSimpleErrorDialog(
                         errorDescription:
                             'Please wait while we are currently connecting to the server');
@@ -291,7 +291,7 @@ class DoctorHomeScreen extends StatelessWidget {
   }
 
   Widget doctorStatus() {
-    if (!stats.isLoading.value) {
+    if (!stats.isLoadingD.value) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,

@@ -65,7 +65,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   }
 
   Widget notificationIcon(BuildContext context) {
-    if (stats.isLoading.value) {
+    if (stats.isLoadingP.value) {
       return notifIconNormal(context);
     }
     return stats.patientStatus[0].notifBadge == 0

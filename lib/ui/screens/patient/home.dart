@@ -175,7 +175,7 @@ class PatientHomeScreen extends StatelessWidget {
               color: verySoftMagenta[60],
               secondaryColor: verySoftMagentaCustomColor,
               onTap: () {
-                if (stats.isLoading.value) {
+                if (stats.isLoadingP.value) {
                   showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                 } else {
                   if (stats.patientStatus[0].pStatus!) {
@@ -212,7 +212,7 @@ class PatientHomeScreen extends StatelessWidget {
                 color: verySoftOrange[60],
                 secondaryColor: verySoftOrangeCustomColor,
                 onTap: () {
-                  if (stats.isLoading.value) {
+                  if (stats.isLoadingP.value) {
                     showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                   } else {
                     Get.to(() => MADescriptionScreen());
@@ -225,7 +225,7 @@ class PatientHomeScreen extends StatelessWidget {
               color: verySoftRed[60],
               secondaryColor: verySoftRedCustomColor,
               onTap: () {
-                if (stats.isLoading.value) {
+                if (stats.isLoadingP.value) {
                   showSimpleErrorDialog(errorDescription: 'errordialog1'.tr);
                 } else {
                   if (stats.patientStatus[0].pStatus!) {
@@ -256,7 +256,7 @@ class PatientHomeScreen extends StatelessWidget {
   }
 
   Widget notificationIcon() {
-    if (stats.isLoading.value) {
+    if (stats.isLoadingP.value) {
       return notifIconNormal();
     }
     return stats.patientStatus[0].notifBadge == 0
@@ -353,8 +353,10 @@ class PatientHomeScreen extends StatelessWidget {
   void currentConsultation() {
     if (liveCont.liveCons.isNotEmpty) {
       Get.to(() => LiveChatScreen(), arguments: liveCont.liveCons[0]);
+    } else {
+      showErrorDialog(
+          errorTitle: 'action9'.tr, errorDescription: 'action10'.tr);
     }
-    showErrorDialog(errorTitle: 'action9'.tr, errorDescription: 'action10'.tr);
   }
 
   Future<void> resetBadge() async {
