@@ -51,7 +51,11 @@ class StatusController extends GetxController {
             atCallSession.value = true;
             Get.to(() => IncomingCallScreen());
           } else if (!incCall[0].isCalling! && atCallSession.value) {
-            Get.offAll(() => PatientHomeScreen());
+            if (kIsWeb) {
+              Get.back();
+            } else {
+              Get.offAll(() => PatientHomeScreen());
+            }
           }
         }
       }
