@@ -1,16 +1,15 @@
+import 'dart:io';
 import 'package:davnor_medicare/core/controllers/auth_controller.dart';
 import 'package:davnor_medicare/core/controllers/status_controller.dart';
 import 'package:davnor_medicare/constants/asset_paths.dart';
 import 'package:davnor_medicare/constants/firebase.dart';
 import 'package:davnor_medicare/helpers/dialogs.dart';
-import 'package:davnor_medicare/ui/screens/patient/home.dart';
 import 'package:davnor_medicare/ui/shared/styles.dart';
 import 'package:davnor_medicare_ui/davnor_medicare_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'dart:io' show Platform;
 
 class CallSession extends StatefulWidget {
   @override
@@ -232,8 +231,6 @@ class _CallSessionState extends State<CallSession> {
       'channelId': '',
       'callerName': ''
     }).then((value) {
-      Get.back();
-      callAccepted.value = false;
       JitsiMeet.closeMeeting();
     });
   }
@@ -330,11 +327,6 @@ class _CallSessionState extends State<CallSession> {
   void _onConferenceTerminated(message) async {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
     await endCall(auth.currentUser!.uid);
-    if (!kIsWeb) {
-      Get.offAll(() => PatientHomeScreen());
-    } else {
-      Get.back();
-    }
     JitsiMeet.closeMeeting();
   }
 
