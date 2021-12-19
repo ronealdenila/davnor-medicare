@@ -100,7 +100,7 @@ class _CallSessionState extends State<CallSession> {
   Future<bool> _onBackPressed() {
     if (callAccepted.value) {
       showSimpleErrorDialog(
-          errorDescription: "Please end the call first"); //TRANSLATE
+          errorDescription: 'errordialog17'.tr); //TRANSLATE
     } else {
       showSimpleErrorDialog(errorDescription: 'errordialog14'.tr);
     }

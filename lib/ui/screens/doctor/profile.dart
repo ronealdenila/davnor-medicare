@@ -80,7 +80,7 @@ class DoctorProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
-                            Icons.perm_contact_calendar,
+                            Icons.info_outline,
                             color: Colors.white,
                             size: 24,
                           ),
@@ -127,7 +127,7 @@ class DoctorProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
-                            Icons.perm_contact_calendar,
+                            Icons.info_outline,
                             color: Colors.white,
                             size: 24,
                           ),
@@ -174,7 +174,7 @@ class DoctorProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: const Icon(
-                            Icons.perm_contact_calendar,
+                            Icons.schedule_outlined,
                             color: Colors.white,
                             size: 24,
                           ),
