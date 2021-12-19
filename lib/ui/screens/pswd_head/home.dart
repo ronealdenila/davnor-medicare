@@ -31,7 +31,7 @@ class PSWDHeadHomeScreen extends StatelessWidget {
   final AttachedPhotosController pswdController =
       Get.put(AttachedPhotosController(), permanent: true);
   final AppController appController = Get.find();
-  final StatusController stats = Get.find();
+  final StatusController stats = Get.put(StatusController());
   final ForApprovalController faController =
       Get.put(ForApprovalController(), permanent: true);
   final MAHistoryController hController =

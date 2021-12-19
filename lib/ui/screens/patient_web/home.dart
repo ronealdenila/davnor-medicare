@@ -40,7 +40,7 @@ class PatientWebHomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKeyP = GlobalKey();
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
-  final StatusController stats = Get.find();
+  final StatusController stats = Get.put(StatusController());
   final ArticleController articleService = Get.find();
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);

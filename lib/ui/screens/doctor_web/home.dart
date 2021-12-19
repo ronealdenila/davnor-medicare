@@ -39,7 +39,7 @@ class DoctorWebHomeScreen extends StatelessWidget {
       Get.put(LiveConsController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController(), permanent: true);
-  final StatusController stats = Get.find();
+  final StatusController stats = Get.put(StatusController());
 
   @override
   Widget build(BuildContext context) {
