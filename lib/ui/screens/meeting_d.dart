@@ -192,8 +192,8 @@ class _VirtualConsultationState extends State<VirtualConsultation> {
       ..userDisplayName = '${fetchedData.firstName!} ${fetchedData.lastName!}'
       ..userAvatarURL = '${fetchedData.profileImage!}'
       ..audioOnly = false
-      ..audioMuted = false
-      ..videoMuted = false
+      ..audioMuted = true
+      ..videoMuted = true
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
         "roomName": liveCont.liveCons[0].consID!,

@@ -323,6 +323,7 @@ class PatientHomeScreen extends StatelessWidget {
     if (articleService.doneLoading.value &&
         articleService.articlesList.isNotEmpty) {
       return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: 3,
           itemBuilder: (context, index) {

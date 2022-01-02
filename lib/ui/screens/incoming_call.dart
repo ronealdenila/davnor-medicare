@@ -283,8 +283,8 @@ class _CallSessionState extends State<CallSession> {
       ..userDisplayName = '${fetchedData.firstName} ${fetchedData.lastName}'
       ..userAvatarURL = '${fetchedData.profileImage}'
       ..audioOnly = false
-      ..audioMuted = false
-      ..videoMuted = false
+      ..audioMuted = true
+      ..videoMuted = true
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
         "roomName": stats.incCall[0].channelId!,

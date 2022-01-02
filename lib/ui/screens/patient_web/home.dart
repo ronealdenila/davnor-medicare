@@ -163,45 +163,41 @@ class PatientWebHomeScreen extends StatelessWidget {
       leading: ResponsiveLeading(scaffoldKeyP),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: Flexible(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Spacer(),
-            Obx(() => notificationIcon(context)),
-            horizontalSpace25,
-            Flexible(
-              child: DropdownButton(
-                icon: const Icon(Icons.keyboard_arrow_down),
-                iconSize: 40,
-                underline: Container(),
-                hint: authController.doneInitData.value
-                    ? Text(fetchedData!.firstName!,
-                        style: const TextStyle(color: Colors.black))
-                    : Text('Loading...'),
-                items: [
-                  DropdownMenuItem(
-                    onTap: () {
-                      navigationController
-                          .navigateToWithBack(Routes.PATIENT_WEB_PROFILE);
-                    },
-                    value: 2,
-                    child: Text('Profile'),
-                  ),
-                  DropdownMenuItem(
-                    onTap: () {
-                      authController.signOut();
-                    },
-                    value: 2,
-                    child: Text('Logout'),
-                  )
-                ],
-                onChanged: (int? newValue) {},
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Spacer(),
+          Obx(() => notificationIcon(context)),
+          horizontalSpace25,
+          DropdownButton(
+            icon: const Icon(Icons.keyboard_arrow_down),
+            iconSize: 40,
+            underline: Container(),
+            hint: authController.doneInitData.value
+                ? Text(fetchedData!.firstName!,
+                    style: const TextStyle(color: Colors.black))
+                : Text('Loading...'),
+            items: [
+              DropdownMenuItem(
+                onTap: () {
+                  navigationController
+                      .navigateToWithBack(Routes.PATIENT_WEB_PROFILE);
+                },
+                value: 2,
+                child: Text('Profile'),
               ),
-            ),
-            horizontalSpace10
-          ],
-        ),
+              DropdownMenuItem(
+                onTap: () {
+                  authController.signOut();
+                },
+                value: 2,
+                child: Text('Logout'),
+              )
+            ],
+            onChanged: (int? newValue) {},
+          ),
+          horizontalSpace10
+        ],
       ),
     );
   }

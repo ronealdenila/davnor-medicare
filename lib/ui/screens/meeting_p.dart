@@ -185,8 +185,8 @@ class _PSWDInterviewState extends State<PSWDInterview> {
       ..userDisplayName = '${fetchedData.firstName} ${fetchedData.lastName}'
       ..audioOnly = false
       ..userAvatarURL = '${fetchedData.profileImage}'
-      ..audioMuted = false
-      ..videoMuted = false
+      ..audioMuted = true
+      ..videoMuted = true
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
         "roomName": acceptedMA.accMA[0].maID!,

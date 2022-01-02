@@ -361,9 +361,10 @@ class ResponsiveView extends GetResponsiveView {
                               color: verySoftRed[60],
                               secondaryColor: verySoftRedCustomColor,
                               onTap: () {
-                                menuController.changeActiveItemTo('Dashboard');
+                                menuController.changeActiveItemTo(
+                                    'Consultation Requests');
                                 navigationController
-                                    .navigateTo(Routes.DOC_WEB_HOME);
+                                    .navigateTo(Routes.CONS_REQ_WEB);
                               }),
                         ),
                       ],
@@ -609,10 +610,10 @@ class ResponsiveView extends GetResponsiveView {
                                       color: verySoftRed[60],
                                       secondaryColor: verySoftRedCustomColor,
                                       onTap: () {
-                                        menuController
-                                            .changeActiveItemTo('Dashboard');
+                                        menuController.changeActiveItemTo(
+                                            'Consultation Requests');
                                         navigationController
-                                            .navigateTo(Routes.DOC_WEB_HOME);
+                                            .navigateTo(Routes.CONS_REQ_WEB);
                                       }),
                                 ),
                               ],
