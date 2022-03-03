@@ -33,7 +33,7 @@ import 'package:get/get.dart';
 
 class PatientWebHomeScreen extends StatelessWidget {
   final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
+      Get.put(ConsHistoryController());
   final AppController appController = Get.find();
   final PatientMenuController menuController =
       Get.put(PatientMenuController(), permanent: true);

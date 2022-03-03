@@ -75,6 +75,7 @@ class ResponsiveBody extends GetResponsiveView {
                     print(consHController.searchKeyword.text);
                     consHController.filterForDoctor(
                         name: consHController.searchKeyword.text);
+                    selectedIndex.value = 0;
                   },
                   child: Card(
                     elevation: 6,
@@ -99,6 +100,8 @@ class ResponsiveBody extends GetResponsiveView {
                 verticalSpace15,
                 InkWell(
                   onTap: () {
+                    doneLoad.value = false;
+                    selectedIndex.value = 0;
                     consHController.refreshD();
                   },
                   child: Card(
@@ -351,15 +354,24 @@ class ResponsiveBody extends GetResponsiveView {
         consHController.consHistory.isEmpty) {
       return Container();
     }
-    if (doneLoad.value) {
+    if (consHController.filtering.value &&
+        consHController.filteredListforDoc.length == 0) {
+      return Container();
+    }
+    if (consHController.filtering.value &&
+        consHController.filteredListforDoc[selectedIndex.value].patient.value ==
+            null) {
+      return Container();
+    }
+    if (doneLoad.value && consHController.reloadChat.value == false) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           screen.isDesktop
               ? topHeaderRequest(
-                  consHController.consHistory[selectedIndex.value])
+                  consHController.filteredListforDoc[selectedIndex.value])
               : topHeaderRequestWeb(
-                  consHController.consHistory[selectedIndex.value]),
+                  consHController.filteredListforDoc[selectedIndex.value]),
           Expanded(
               child: ListView.builder(
             controller: _scrollController3,
@@ -381,17 +393,19 @@ class ResponsiveBody extends GetResponsiveView {
     }
 
     doneLoad.value = true;
+    consHController.reloadChat.value = false;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         screen.isDesktop
-            ? topHeaderRequest(consHController.consHistory[selectedIndex.value])
+            ? topHeaderRequest(
+                consHController.filteredListforDoc[selectedIndex.value])
             : topHeaderRequestWeb(
-                consHController.consHistory[selectedIndex.value]),
+                consHController.filteredListforDoc[selectedIndex.value]),
         Expanded(
           child: FutureBuilder(
               future: consHController.getChatHistory(
-                  consHController.consHistory[selectedIndex.value]),
+                  consHController.filteredListforDoc[selectedIndex.value]),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
@@ -556,158 +570,173 @@ class ResponsiveBody extends GetResponsiveView {
         null) {
       return Container();
     }
+    if (consHController.filtering.value &&
+        consHController.filteredListforDoc.length == 0) {
+      return Container();
+    }
+    if (consHController.filtering.value &&
+        consHController.filteredListforDoc[selectedIndex.value].patient.value ==
+            null) {
+      return Container();
+    }
     return SingleChildScrollView(
       controller: _scrollController1,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-          Widget>[
-        Container(
-          width: Get.width,
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color(0xFFCBD4E1),
-              ),
-            ),
-          ),
-          child: Column(children: <Widget>[
-            verticalSpace15,
-            Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: Get.width,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Color(0xFFCBD4E1),
+                  ),
                 ),
-                child:
-                    getPhoto(consHController.consHistory[selectedIndex.value])),
-            verticalSpace20,
-            Text(
-              consHController.getPatientName(
-                  consHController.consHistory[selectedIndex.value]),
-              maxLines: 5,
-              overflow: TextOverflow.ellipsis,
-              style: subtitle18Medium,
-              textAlign: TextAlign.center,
+              ),
+              child: Column(children: <Widget>[
+                verticalSpace15,
+                Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: getPhoto(consHController
+                        .filteredListforDoc[selectedIndex.value])),
+                verticalSpace20,
+                Text(
+                  consHController.getPatientName(
+                      consHController.filteredListforDoc[selectedIndex.value]),
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: subtitle18Medium,
+                  textAlign: TextAlign.center,
+                ),
+                verticalSpace25
+              ]),
             ),
-            verticalSpace25
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalSpace35,
+                  Text('Consultation Info',
+                      textAlign: TextAlign.left,
+                      style: body16Regular.copyWith(
+                          color: const Color(0xFF727F8D))),
+                  verticalSpace20,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                            consHController
+                                .filteredListforDoc[selectedIndex.value]
+                                .fullName!,
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Age of Patient',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                            consHController
+                                .filteredListforDoc[selectedIndex.value].age!,
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Date Requested',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                            consHController.convertDate(consHController
+                                .filteredListforDoc[selectedIndex.value]
+                                .dateRqstd!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Consultation Started',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                            consHController.convertDate(consHController
+                                .filteredListforDoc[selectedIndex.value]
+                                .dateConsStart!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                  verticalSpace15,
+                  Wrap(
+                    runSpacing: 8,
+                    children: [
+                      const SizedBox(
+                        width: 170,
+                        child: Text('Consultation Ended',
+                            textAlign: TextAlign.left, style: body14SemiBold),
+                      ),
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                            consHController.convertDate(consHController
+                                .filteredListforDoc[selectedIndex.value]
+                                .dateConsEnd!),
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: body14Regular),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ]),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              verticalSpace35,
-              Text('Consultation Info',
-                  textAlign: TextAlign.left,
-                  style:
-                      body16Regular.copyWith(color: const Color(0xFF727F8D))),
-              verticalSpace20,
-              Wrap(
-                runSpacing: 8,
-                children: [
-                  const SizedBox(
-                    width: 170,
-                    child: Text('Patient',
-                        textAlign: TextAlign.left, style: body14SemiBold),
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                        consHController
-                            .consHistory[selectedIndex.value].fullName!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ],
-              ),
-              verticalSpace15,
-              Wrap(
-                runSpacing: 8,
-                children: [
-                  const SizedBox(
-                    width: 170,
-                    child: Text('Age of Patient',
-                        textAlign: TextAlign.left, style: body14SemiBold),
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                        consHController.consHistory[selectedIndex.value].age!,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ],
-              ),
-              verticalSpace15,
-              Wrap(
-                runSpacing: 8,
-                children: [
-                  const SizedBox(
-                    width: 170,
-                    child: Text('Date Requested',
-                        textAlign: TextAlign.left, style: body14SemiBold),
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                        consHController.convertDate(consHController
-                            .consHistory[selectedIndex.value].dateRqstd!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ],
-              ),
-              verticalSpace15,
-              Wrap(
-                runSpacing: 8,
-                children: [
-                  const SizedBox(
-                    width: 170,
-                    child: Text('Consultation Started',
-                        textAlign: TextAlign.left, style: body14SemiBold),
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                        consHController.convertDate(consHController
-                            .consHistory[selectedIndex.value].dateConsStart!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ],
-              ),
-              verticalSpace15,
-              Wrap(
-                runSpacing: 8,
-                children: [
-                  const SizedBox(
-                    width: 170,
-                    child: Text('Consultation Ended',
-                        textAlign: TextAlign.left, style: body14SemiBold),
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                        consHController.convertDate(consHController
-                            .consHistory[selectedIndex.value].dateConsEnd!),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: body14Regular),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ]),
     );
   }
 

@@ -26,6 +26,8 @@ class MAHistoryController extends GetxController {
   //searching MA history in patient side...
   RxList<MAHistoryModel> filteredListforP = RxList<MAHistoryModel>([]);
 
+  RxBool filtering = false.obs;
+
   @override
   void onReady() {
     super.onReady();
@@ -49,11 +51,13 @@ class MAHistoryController extends GetxController {
   void refresh() {
     filteredListforP.clear();
     filteredListforP.assignAll(maHistoryList);
+    filtering.value = false;
   }
 
   void refreshPSWD() {
     filteredListforPSWD.clear();
     filteredListforPSWD.assignAll(maHistoryList);
+    filtering.value = false;
   }
 
   Stream<List<MAHistoryModel>> getMAHistoryForPatient() {
@@ -124,6 +128,7 @@ class MAHistoryController extends GetxController {
 
   filter({required String name, required bool last30days}) {
     filteredListforPSWD.clear();
+    filtering.value = true;
 
     //filter for name only
     if (name != '' && !last30days) {
@@ -174,7 +179,7 @@ class MAHistoryController extends GetxController {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         color: Colors.white,
-        height: kIsWeb ? Get.height * 0.32 : Get.height * .45,
+        height: kIsWeb ? Get.height * 0.40 : Get.height * .45,
         width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,7 +199,7 @@ class MAHistoryController extends GetxController {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         color: Colors.white,
-        height: kIsWeb ? Get.height * 0.32 : Get.height * .45,
+        height: kIsWeb ? Get.height * 0.40 : Get.height * .45,
         width: kIsWeb ? Get.width * 0.20 : Get.width * .9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,6 +228,7 @@ class MAHistoryController extends GetxController {
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     filteredListforP.clear(); //p
+    filtering.value = true;
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
     print(maHistoryList.length);
     for (var i = 0; i < maHistoryList.length; i++) {
@@ -252,6 +258,7 @@ class MAHistoryController extends GetxController {
 
   void onSelectionChangedPSWD(DateRangePickerSelectionChangedArgs args) {
     filteredListforPSWD.clear();
+    filtering.value = true;
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
     print(maHistoryList.length);
     for (var a = 0; a < maHistoryList.length; a++) {

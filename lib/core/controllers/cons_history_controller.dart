@@ -32,6 +32,9 @@ class ConsHistoryController extends GetxController {
   RxList<ConsultationHistoryModel> filteredListforP =
       RxList<ConsultationHistoryModel>([]);
 
+  RxBool filtering = false.obs;
+  RxBool reloadChat = false.obs;
+
   @override
   void onReady() {
     super.onReady();
@@ -84,11 +87,14 @@ class ConsHistoryController extends GetxController {
   void refresh() {
     filteredListforP.clear();
     filteredListforP.assignAll(consHistory);
+    filtering.value = false;
   }
 
   void refreshD() {
+    searchKeyword.clear();
     filteredListforDoc.clear();
     filteredListforDoc.assignAll(consHistory);
+    filtering.value = false;
   }
 
   Future<void> getAdditionalData(ConsultationHistoryModel model) async {
@@ -153,9 +159,9 @@ class ConsHistoryController extends GetxController {
   }
 
   Future<void> getChatHistory(ConsultationHistoryModel model) async {
-    if (!kIsWeb) {
-      chatHistory.clear();
-    }
+    //if (!kIsWeb) {
+    chatHistory.clear();
+    //}
     print(model.consID);
     await firestore
         .collection('chat')
@@ -172,6 +178,7 @@ class ConsHistoryController extends GetxController {
 
   filterForDoctor({required String name}) {
     filteredListforDoc.clear();
+    filtering.value = true;
 
     //filter for name of patient only
     if (name != '') {
@@ -184,6 +191,7 @@ class ConsHistoryController extends GetxController {
         }
       }
     }
+    reloadChat.value = true;
   }
 
   showDialog(context) {
@@ -222,6 +230,7 @@ class ConsHistoryController extends GetxController {
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     filteredListforP.clear();
+    reloadChat.value = true;
     Timestamp myTimeStamp = Timestamp.fromDate(args.value);
     for (var i = 0; i < consHistory.length; i++) {
       String dateConstant =

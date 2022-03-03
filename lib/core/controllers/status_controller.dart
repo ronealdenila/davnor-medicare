@@ -138,7 +138,6 @@ class StatusController extends GetxController {
     return firestore.collection('pswd_status').snapshots().map((query) {
       return query.docs.map((item) {
         isPSLoading.value = false;
-        print('nagfalse');
         return PSWDStatusModel.fromJson(item.data());
       }).toList();
     });

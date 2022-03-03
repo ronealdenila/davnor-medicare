@@ -33,11 +33,6 @@ dependencies:
 
   #jitsi
   jitsi_meet: ^4.0.0
-  jitsi_meet_web_plugin: ^2.0.0
-
-  #agora
-  #agora_rtc_engine: ^4.1.0-alpha.2
-  #permission_handler: ^6.0.2
 
   #date picker
   syncfusion_flutter_datepicker: ^19.3.47

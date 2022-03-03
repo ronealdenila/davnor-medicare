@@ -201,6 +201,10 @@ class ResponsiveBody extends GetResponsiveView {
     if (maHController.maHistoryList.isEmpty || maHController.isLoading.value) {
       return SizedBox();
     }
+    if (maHController.filtering.value &&
+        maHController.filteredListforP.length == 0) {
+      return SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -235,7 +239,7 @@ class ResponsiveBody extends GetResponsiveView {
           ),
           Flexible(
             child: Text(
-                maHController.maHistoryList[selectedIndex.value].fullName!,
+                maHController.filteredListforP[selectedIndex.value].fullName!,
                 style: caption15RegularNeutral),
           ),
         ],
@@ -249,7 +253,8 @@ class ResponsiveBody extends GetResponsiveView {
               child: Text('Patient Age',
                   textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
-            child: Text(maHController.maHistoryList[selectedIndex.value].age!,
+            child: Text(
+                maHController.filteredListforP[selectedIndex.value].age!,
                 style: caption15RegularNeutral),
           ),
         ],
@@ -264,7 +269,7 @@ class ResponsiveBody extends GetResponsiveView {
                   textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
             child: Text(
-                maHController.maHistoryList[selectedIndex.value].address!,
+                maHController.filteredListforP[selectedIndex.value].address!,
                 style: caption15RegularNeutral),
           ),
         ],
@@ -279,7 +284,7 @@ class ResponsiveBody extends GetResponsiveView {
                   textAlign: TextAlign.left, style: caption15Medium)),
           Flexible(
             child: Text(
-                maHController.maHistoryList[selectedIndex.value].gender!,
+                maHController.filteredListforP[selectedIndex.value].gender!,
                 style: caption15RegularNeutral),
           ),
         ],
@@ -294,7 +299,8 @@ class ResponsiveBody extends GetResponsiveView {
                 textAlign: TextAlign.left, style: caption15Medium),
           ),
           Flexible(
-            child: Text(maHController.maHistoryList[selectedIndex.value].type!,
+            child: Text(
+                maHController.filteredListforP[selectedIndex.value].type!,
                 style: caption15RegularNeutral),
           ),
         ],
@@ -323,7 +329,8 @@ class ResponsiveBody extends GetResponsiveView {
             ),
             Flexible(
               child: Text(
-                  maHController.maHistoryList[selectedIndex.value].receivedBy!,
+                  maHController
+                      .filteredListforP[selectedIndex.value].receivedBy!,
                   style: caption15RegularNeutral),
             ),
           ],
@@ -342,7 +349,7 @@ class ResponsiveBody extends GetResponsiveView {
                 Flexible(
                   child: Text(
                       maHController
-                          .maHistoryList[selectedIndex.value].pharmacy!,
+                          .filteredListforP[selectedIndex.value].pharmacy!,
                       style: caption15RegularNeutral),
                 ),
               ],
@@ -357,7 +364,7 @@ class ResponsiveBody extends GetResponsiveView {
                         textAlign: TextAlign.left, style: caption15Medium)),
                 Flexible(
                   child: Text(
-                      'Php ${maHController.maHistoryList[selectedIndex.value].medWorth}',
+                      'Php ${maHController.filteredListforP[selectedIndex.value].medWorth!}',
                       style: caption15RegularNeutral),
                 ),
               ],
@@ -370,7 +377,7 @@ class ResponsiveBody extends GetResponsiveView {
 
   Widget attachedPhotos() {
     controller.splitFetchedImage(
-        '${maHController.maHistoryList[selectedIndex.value].validID}>>>${maHController.maHistoryList[selectedIndex.value].prescriptions}');
+        '${maHController.filteredListforP[selectedIndex.value].validID}>>>${maHController.filteredListforP[selectedIndex.value].prescriptions}');
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -431,7 +438,7 @@ class ResponsiveBody extends GetResponsiveView {
             Flexible(
               child: Text(
                 appController.convertTimeStamp(maHController
-                    .maHistoryList[selectedIndex.value].dateRqstd!),
+                    .filteredListforP[selectedIndex.value].dateRqstd!),
                 style: caption15RegularNeutral,
               ),
             ),
@@ -449,7 +456,7 @@ class ResponsiveBody extends GetResponsiveView {
             Flexible(
               child: Text(
                 appController.convertTimeStamp(maHController
-                    .maHistoryList[selectedIndex.value].dateClaimed!),
+                    .filteredListforP[selectedIndex.value].dateClaimed!),
                 style: caption15RegularNeutral,
               ),
             )

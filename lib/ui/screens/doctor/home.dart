@@ -31,17 +31,16 @@ class DoctorHomeScreen extends StatelessWidget {
   final DoctorMenuController menuController = Get.put(DoctorMenuController(),
       permanent: true); //unused for mobile but added
   final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
+      Get.put(ConsHistoryController());
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
   final ConsultationsController consRequests =
       Get.put(ConsultationsController(), permanent: true);
-  final StatusController stats = Get.put(StatusController(), permanent: true);
+  final StatusController stats = Get.put(StatusController());
   final DoctorFunctions func = DoctorFunctions();
   static AuthController authController = Get.find();
   final fetchedData = authController.doctorModel.value;
-  final ProfileController profileController =
-      Get.put(ProfileController(), permanent: true);
+  final ProfileController profileController = Get.put(ProfileController());
 
   final RxInt count = 1.obs;
   final RxInt countAdd = 1.obs; //for additionals

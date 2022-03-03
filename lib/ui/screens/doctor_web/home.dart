@@ -29,7 +29,7 @@ import 'package:flutter/cupertino.dart';
 
 class DoctorWebHomeScreen extends StatelessWidget {
   final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
+      Get.put(ConsHistoryController());
   final ArticleController articleService = Get.find();
   final AuthController authController = Get.find();
   final DoctorMenuController menuController =

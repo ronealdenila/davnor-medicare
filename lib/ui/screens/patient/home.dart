@@ -39,14 +39,14 @@ class PatientHomeScreen extends StatelessWidget {
   final ConsRequestController consController =
       Get.put(ConsRequestController(), permanent: true);
   final ConsHistoryController consHController =
-      Get.put(ConsHistoryController(), permanent: true);
+      Get.put(ConsHistoryController());
   final AppController appController = Get.find();
   static AuthController authController = Get.find();
   final List<ArticleModel> articleList = articleService.articlesList;
   final fetchedData = authController.patientModel.value;
   final LiveConsController liveCont =
       Get.put(LiveConsController(), permanent: true);
-  final StatusController stats = Get.put(StatusController(), permanent: true);
+  final StatusController stats = Get.put(StatusController());
   final ProfileController profileController = Get.put(ProfileController());
 
   @override

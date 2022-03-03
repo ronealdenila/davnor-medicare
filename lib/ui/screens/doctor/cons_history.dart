@@ -66,12 +66,13 @@ class DocConsHistoryScreen extends StatelessWidget {
                           if (consHController.isLoading.value) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog'.tr);
-                          } else if (consHController.consHistory.isEmpty &&
-                              consHController.filteredListforP.isEmpty) {
+                          } else if (consHController.consHistory.isEmpty) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog1'.tr);
                           } else {
-                            consHController.refreshD();
+                            print(consHController.searchKeyword.text);
+                            consHController.filterForDoctor(
+                                name: consHController.searchKeyword.text);
                           }
                         },
                         child: Card(
@@ -100,13 +101,12 @@ class DocConsHistoryScreen extends StatelessWidget {
                           if (consHController.isLoading.value) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog'.tr);
-                          } else if (consHController.consHistory.isEmpty) {
+                          } else if (consHController.consHistory.isEmpty &&
+                              consHController.filteredListforP.isEmpty) {
                             showSimpleErrorDialog(
                                 errorDescription: 'conslog1'.tr);
                           } else {
-                            print(consHController.searchKeyword.text);
-                            consHController.filterForDoctor(
-                                name: consHController.searchKeyword.text);
+                            consHController.refreshD();
                           }
                         },
                         child: Card(

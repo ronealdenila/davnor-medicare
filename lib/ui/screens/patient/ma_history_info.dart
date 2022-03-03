@@ -17,9 +17,13 @@ class MAHistoryInfoScreen extends StatelessWidget {
   final MAHistoryController maHController = Get.find();
   final MAHistoryModel maHistoryItem = Get.arguments as MAHistoryModel;
   final AttachedPhotosController controller = Get.find();
+  final RxList<String> holdImages = RxList<String>([]);
 
   @override
   Widget build(BuildContext context) {
+    holdImages.assignAll(maHistoryItem.prescriptions!.split('>>>'));
+    holdImages.removeLast();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
@@ -279,8 +283,9 @@ class MAHistoryInfoScreen extends StatelessWidget {
                     onTap: () async {
                       controller.selectedIndex.value = 0;
                       controller.fetchedImages.clear();
-                      controller.splitFetchedImage(
-                          '${maHistoryItem.validID}>>>${maHistoryItem.prescriptions}');
+                      controller.fetchedImages.assignAll(holdImages);
+                      controller.fetchedImages
+                          .insert(0, '${maHistoryItem.validID}');
                       Get.to(() => PhotoViewerScreen());
                     },
                     text: 'mah14'.tr,
